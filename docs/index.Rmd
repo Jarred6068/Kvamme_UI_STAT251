@@ -1,7 +1,10 @@
 ---
-title: "Example_Page"
-author: "STAT 251 Section 03"
-date: "2024-01-02"
+title: "STAT251-03 Home Page"
+author:
+  name: "Instructor: Jarred Kvamme"
+  email: "jarredk@uidaho.edu"
+date: "Spring 2023"
+description: "enter description here"
 output: html_document
 ---
 
