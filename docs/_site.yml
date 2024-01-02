@@ -1,0 +1,9 @@
+Name: "STAT251-03"
+navbar:
+  title: "STAT251-03"
+  left: 
+  - text: "Syllabus"
+    href: index.html
+  - text: "Lectures"
+    href: lectures.html
+output_dir: docs
