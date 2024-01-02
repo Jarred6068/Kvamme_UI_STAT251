@@ -4,7 +4,6 @@ author:
   name: "Instructor: Jarred Kvamme"
   email: "jarredk@uidaho.edu"
 date: "Spring 2023"
-description: "enter description here"
 output: html_document
 ---
 
