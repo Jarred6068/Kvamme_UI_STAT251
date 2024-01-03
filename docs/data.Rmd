@@ -1,0 +1,270 @@
+---
+title: "STAT251-03 Project Data"
+output: html_document
+header-includes:
+  \usepackage{float}
+urlcolor: blue  
+#bibliography: home2bibs.bib
+---
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=5, fig.height=3, fig.pos = "H")
+library(kableExtra)
+library(knitr)
+```
+
+
+## Project Description: 
+This project is worth 25 points, and it will be due in Canvas on **December 10th at midnight**. The objective of this project is to engage you in a hands-on exploration of statistical analysis. In this project you will demonstrate your understanding of the main tenets of statistical description and inference that we have learned in this class. You will start by selecting and investigating two variables from one of three provided datasets: Dataset A, Dataset B, or Dataset C. A detailed description of each dataset is given below
+
+## Data
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(MASS)
+#datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/'
+dataset1 = MASS::UScereal
+#write.csv(dataset1, file = paste0(datapath,'Dataset_A_US_Cereal.csv'))
+dataset2 = MASS::birthwt
+#write.csv(dataset2, file = paste0(datapath,'Dataset_B_Birth_Weights.csv'))
+dataset3 = MASS::Cars93
+#write.csv(dataset3, file = paste0(datapath,'Dataset_C_Cars.csv'))
+library(DT)
+dt1 <-   datatable(as.data.frame(dataset1), rownames=T, 
+            # filter = 'top',
+              callback=JS('$("a.buttons-collection").css("background","#008CBA");
+           $("a.buttons-collection").css("font-size","15px");
+           $("a.buttons-collection").css("border-radius", "8px");
+           $("a.buttons-collection").css("margin-right","0px");
+           return table;'),
+        extensions = 'Buttons',
+        options = list(searching=F,
+                       paging = T,
+                       bInfo = F,
+                       columnDefs = list(list(className = 'dt-left',  targets = 0),
+                                         list(className = 'dt-center',  targets = 1:10)),
+                       pageLength = 1,
+                       initComplete = JS("function(settings, json) {",
+                                         "$(this.api().table().header()).css({'background-color': '#99ccff', 'color': '#003333'});",
+                                         "}"),
+                       dom = 'Bfrtip',
+                       buttons = list(
+                                      list(extend = 'collection',
+                                           buttons = c('excel', 'csv'),
+                                           text = 'DOWNLOAD: Dataset A')
+                       )
+        )
+  )
+
+
+dt2 <-   datatable(dataset2, rownames=T, 
+            # filter = 'top',
+              callback=JS('$("a.buttons-collection").css("background","#008CBA");
+           $("a.buttons-collection").css("font-size","15px");
+           $("a.buttons-collection").css("border-radius", "8px");
+           $("a.buttons-collection").css("margin-right","0px");
+           return table;'),
+        extensions = 'Buttons',
+        options = list(searching=F,
+                       paging = T,
+                       bInfo = F,
+                       columnDefs = list(list(className = 'dt-left',  targets = 0),
+                                         list(className = 'dt-center',  targets = 1:10)),
+                       pageLength = 1,
+                       initComplete = JS("function(settings, json) {",
+                                         "$(this.api().table().header()).css({'background-color': '#99ccff', 'color': '#003333'});",
+                                         "}"),
+                       dom = 'Bfrtip',
+                       buttons = list(
+                                      list(extend = 'collection',
+                                           buttons = c('excel', 'csv'),
+                                           text = 'DOWNLOAD: Dataset B')
+                       )
+        )
+  )
+
+
+dt3 <-   datatable(dataset3, rownames=T, 
+            # filter = 'top',
+              callback=JS('$("a.buttons-collection").css("background","#008CBA");
+           $("a.buttons-collection").css("font-size","15px");
+           $("a.buttons-collection").css("border-radius", "8px");
+           $("a.buttons-collection").css("margin-right","0px");
+           return table;'),
+        extensions = 'Buttons',
+        options = list(searching=F,
+                       paging = T,
+                       bInfo = F,
+                       columnDefs = list(list(className = 'dt-left',  targets = 0),
+                                         list(className = 'dt-center',  targets = 1:10)),
+                       pageLength = 1,
+                       initComplete = JS("function(settings, json) {",
+                                         "$(this.api().table().header()).css({'background-color': '#99ccff', 'color': '#003333'});",
+                                         "}"),
+                       dom = 'Bfrtip',
+                       buttons = list(
+                                      list(extend = 'collection',
+                                           buttons = c('excel', 'csv'),
+                                           text = 'DOWNLOAD: Dataset C')
+                       )
+        )
+  )
+
+```
+<br>
+
+# Dataset A: US Cereals Data
+
+```{r, echo=FALSE}
+dt1
+```
+
+The UScereal data has 65 rows (cereals) and 11 columns (nutrition facts). The data come from the 1993 ASA Statistical Graphics Exposition, and are taken from the mandatory FDA food label. The data have been normalized here to a portion of one American cup.
+
+This dataset contains the following variables:
+* **Mfr (qualitative)** - manufacturer, represented by its first initial: G=General Mills,
+K=Kelloggs, N=Nabisco, P=Post, Q=Quaker Oats, R=Ralston Purina.
+
+* **Calories (quantitative)**- number of calories in one portion.
+
+* **Protein (quantitative)** - grams of protein in one portion.
+
+* **Fat (quantitative)** - grams of fat in one portion.
+
+* **Sodium (quantitative)** - milligrams of sodium in one portion.
+
+* **Fibre (quantitative)** - grams of dietary fibre in one portion.
+
+* **Carbo (quantitative)** - grams of complex carbohydrates in one portion.
+
+* **Sugars (quantitative)** - grams of sugars in one portion.
+
+* **Shelf (qualitative)** - display shelf (1, 2, or 3, counting from the floor).
+
+* **Potassium (quantitative)** - grams of potassium.
+
+* **Vitamins (qualitative)** - vitamins and minerals (none, enriched, or 100$\%$).
+
+**References:**
+
+Venables, W. N. and Ripley, B. D. (1999)** Modern Applied Statistics with S-PLUS. Third Edition. Springer.
+
+A detailed description of this data can be found [here](http://lib.stat.cmu.edu/datasets/1993.expo/)
+
+<br>
+
+# Dataset B: Infant Birthweights
+
+```{r, echo=FALSE}
+dt2
+```
+
+
+This dataset contains 10 variables. The data were collected at the Baystate Medical Center, Springfield, Mass during the year 1986. The data contains risk factors associated with low infant birth weight.
+
+This dataset contains the following variables:
+
+* **Low (qualitative)** - indicator of birth weight less than 2.5 kg. (1 = less than 2.5 kg, 0 = greater than 2.5 kg)
+
+* **Age (quantitative)** - mother's age in years.
+
+* **Lwt (quantitative)** - mother's weight in pounds at last menstrual period.
+
+* **Race (qualitative)** - mother's race (1 = white, 2 = black, 3 = other).
+
+* **Smoke (qualitative)** – indicator of smoking status during pregnancy. (1 = active smoker, 0 = not active smoker)
+
+* **Ptl (quantitative)** - number of previous premature labours.
+
+* **Ht (qualitative)** – indicator of history of hypertension. (1 = history of hypertension, 0 = no history of hypertension)
+
+* **Ui (qualitative)** – indicator of presence of uterine irritability. (1 = presence of uterine irritability, 0 = no presence of uterine irritability)
+
+* **Ftv (quantitative)** - number of physician visits during the first trimester.
+
+* **Bwt (quantitative)** birth weight in grams.
+
+**References:**
+
+__Venables, W. N. and Ripley, B. D. (2002) Modern Applied Statistics with S. Fourth edition. Springer.__
+
+__Hosmer, D.W. and Lemeshow, S. (1989) Applied Logistic Regression. New York: Wiley__
+
+
+
+
+<bf>
+
+# Dataset C: Car Sales 1993
+
+```{r, echo=FALSE}
+dt3
+```
+
+This dataset contains 27 variables for 93 new cars for the 1993 model year. Measures given include price, mpg ratings, engine size, body size, and indicators of features. Cars were selected at random from among 1993 passenger car models that were listed in both the Consumer Reports issue and the PACE Buying Guide. Pickup trucks and Sport/Utility vehicles were eliminated due to incomplete information in the Consumer Reports source. Duplicate models (e.g., Dodge Shadow and Plymouth Sundance) were listed at most once.
+
+This dataset contains the following variables:
+
+* **Manufacturer (qualitative)** - Manufacturer.
+
+* **Model (qualitative)** - Model.
+
+* **Type (qualitative)** – Type of vehicle ("Small", "Sporty", "Compact", "Midsize", "Large" and "Van").
+
+* **Min.Price (quantitative)** - Minimum Price (in thousands of dollars): price for a basic version of the vehicle
+
+* **Price (quantitative)** - Midrange Price (in thousands of dollars): average of Min.Price and Max.Price.
+
+* **Max.Price (quantitative)** - Maximum Price (in thousands of dollars): price for “a premium version” of the vehicle.
+
+* **MPG.city (quantitative)** – City fuel efficiency (in miles per US gallon by EPA rating).
+
+* **MPG.highway (quantitative)** - Highway fuel efficiency (in miles per US gallon by EPA rating).
+
+* **AirBags (qualitative)** - Air Bags standard (none, driver only, driver & passenger.)
+
+* **DriveTrain (qualitative)** - Drive train type (rear wheel, front wheel or 4WD).
+
+* **Cylinders (quantitative)** - Number of engine cylinders (missing for Mazda RX-7, which has a rotary engine).
+
+* **EngineSize (quantitative)** - Engine size (litres).
+
+* **Horsepower (quantitative)** - Horsepower (maximum).
+
+* **RPM (quantitative)** - RPM (revolutions per minute at maximum horsepower).
+
+* **Rev.per.mile (quantitative)** - Engine revolutions per mile (in highest gear).
+
+* **Man.trans.avail (qualitative)** - Is a manual transmission version available? (yes or no).
+
+* **Fuel.tank.capacity (quantitative)** - Fuel tank capacity (US gallons).
+
+* **Passengers (quantitative)** - Passenger capacity (number of persons)
+
+* **Length (quantitative)** - Length of the vehicle (inches).
+
+* **Wheelbase (quantitative)** – Wheelbase of the vehicle (inches).
+
+* **Width (quantitative)** - Width of the vehicle (inches).
+
+* **Turn.circle (quantitative)** - U-turn space (feet).
+
+* **Rear.seat.room (quantitative)** - Rear seat room (inches) (missing for 2-seater vehicles).
+
+* **Luggage.room (quantitative)** - Luggage capacity (cubic feet) (missing for vans).
+
+* **Weight (quantitative)** – Weight of the vehicle (pounds).
+
+* **Origin (qualitative)** - Of non-USA or USA company origins?
+
+* **Make (qualitative)** - Combination of Manufacturer and Model.
+
+**References:**
+
+__Venables, W. N. and Ripley, B. D. (1999) Modern Applied Statistics with S-PLUS. Third Edition. Springer.__
+
+__Lock, R. H. (1993) 1993 New Car Data. Journal of Statistics Education 1(1). doi: 10.1080/10691898.1993.11910459__

@@ -1,5 +1,6 @@
 ---
-title: "Syllabus"
+title: "Week 2 Notes"
+author: "STAT 251 Section 03"
 output: html_document
 ---
 
@@ -7,6 +8,4 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Course Syllabus::
-
-
+## Notes are written here

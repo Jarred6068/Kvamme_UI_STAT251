@@ -1,5 +1,5 @@
 ---
-title: "Syllabus"
+title: "STAT251-03 Course Resources"
 output: html_document
 ---
 
@@ -7,6 +7,4 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Course Syllabus::
-
-
+## Standard Normal Distribution Table

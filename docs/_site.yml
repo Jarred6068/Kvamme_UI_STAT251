@@ -1,31 +1,39 @@
-name: "Website Title"
+name: "Spring 2024 STAT251-03 Course Website"
 exclude: ["download", "libs"]
 output_dir: "." ## if making website hostable on github with jekyll
 navbar:
-  title: "NavBar Title"
+  title: "STAT251-03"
   right:
     - text: "Home"
       href: index.html
-    - text: 'About'
+    - text: 'Syllabus'
       href: about.html
-    - text: 'Whatever Menu' ## setting up a drop down menu
+    - text: 'Lectures' ## setting up a drop down menu
       menu:
-        - text: 'Whatever Menu 1'
-          href: whatevermenu1.html
-        - text: 'Whatever Menu 2'
-          href: whatevermenu2.html
-        - text: 'Whatever Menu 3'
-          href: whatevermenu3.html
-    - text: 'Unicorns'
-      href: unicorns.html
-    - text: 'Downloads'
-      href: downloads.html
+        - text: 'Lecture 1'
+          href: lecturemenu1.html
+        - text: 'Lecture 2'
+          href: lecturemenu2.html
+        - text: 'Lecture 3'
+          href: lecturemenu3.html
+    - text: 'Homeworks'
+      menu:
+        - text: 'Week 1 Homework'
+          href: week1homeworks.html
+    - text: "Course Project"
+      menu:
+      - text: "Project Description"
+        href: project.html
+      - text: "Data"
+        href: data.html
+    - text: 'Course Resources'
+      href: resources.html
 
 output:
   html_document:
-    lib_dir: 'libs' ## If you have a custom set of R libraries
+##    lib_dir: 'libs' ## If you have a custom set of R libraries
     theme: sandstone ## Preference
     highlight: textmate ## Preference
     include:
-      after_body: footer.html ## Input html for a custom footer
+##      after_body: footer.html ## Input html for a custom footer
     css: styles.css ## custom CSS
