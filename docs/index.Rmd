@@ -2,8 +2,7 @@
 title: "STAT251-03 Home Page"
 author:
   name: "Instructor: Jarred Kvamme"
-  email: "jarredk@uidaho.edu"
-date: "Spring 2023"
+  email: "Email: jarredk@uidaho.edu"
 output: html_document
 ---
 
@@ -11,22 +10,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-```
+This site contains material for Jarred Kvamme's Statistical Methods course (STAT 251-03) at the University of Idaho for the spring semester of 2024.
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+![](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/images/it_was_i.png)
+
+**https://xkcd.com/1772**

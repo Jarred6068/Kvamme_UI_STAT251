@@ -6,8 +6,10 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: 'Syllabus'
+    - text: 'About The Instructor'
       href: about.html
+    - text: 'Syllabus'
+      href: syllabus.html
     - text: 'Lectures' ## setting up a drop down menu
       menu:
         - text: 'Lecture 1'
@@ -20,6 +22,10 @@ navbar:
       menu:
         - text: 'Week 1 Homework'
           href: week1homeworks.html
+    - text: 'Exam Study Guides'
+      menu:
+        - text: 'Exam 1 Study Guide'
+          href: exam1studyguide.html
     - text: "Course Project"
       menu:
       - text: "Project Description"

@@ -1,0 +1,49 @@
+---
+title: "Syllabus"
+output: html_document
+header-includes:
+  \usepackage{float}
+  \usepackage{hyperref}
+urlcolor: blue  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# STAT 251 Statistical Methods Section 03
+* **Instructor:** Jarred M. Kvamme (pronounced ``Kuh-Wah-mee"), PhD Candidate and instructor, Department of Bioinformatics and Computational Biology. **Email** [jarredk@uidaho.edu](jarredk@uidaho.edu). My office is in the basement level of Brink Hall - **Room Number B-17** - My office hours are 11:30AM - 1:30PM Monday, Wednesday, and Friday. I am also available to meet by appointment
+	
+* **Teaching Assistant:** Jacob Hofer. **Email:** [jhofer@uidaho.edu](jhofer@uidaho.edu)
+
+* **Meeting Time:** This course is scheduled to meet from 9:30AM-10:20AM MWF in TLC Room 040
+	
+* **Learning Outcomes:** Introduction to statistical methods including statistical description, data displays, design of statistical studies, basic sampling methods, descriptive statistics, probability and sampling distributions; interval and point estimation, statistical inference in surveys and experiments, simple linear regression regression, and analysis of variance.
+	
+* **Prerequisites:** One of the following: Math 143 (with a ‘C’ or better), Math 160, Math 170, or sufficient score on SAT, ACT, or math placement test [see https://www.uidaho.edu/registrar/registration/placement](www.uidaho.edu/registrar/registration/placement)
+	
+* **Course Materials:**
+  * **Textbook:** [Barbara Illowsky, Susan Dean, et. al. (2017). Introductory Statistics. OpenStax. Licensed under a Creative Commons Attribution 4.0 International License (CC BY 4.0).  OpenStax.org.](https://openstax.org/details/books/introductory-statistics) You can either use the PDF version or buy a hard copy from various sites, including OpenStax.org, Amazon.com, etc.
+			
+  * **Calculator:** You will need any type of calculator that has the exponent and square-root function for homework and tests.
+
+  * **Course Website:** Course materials including lecture notes, homework assignments, study guides, this syllabus, and other materials can be found on the [course website](https://jarred6068.github.io/UI_STAT251-03_Spring_2024/)
+	
+* **Attendance:** Class attendance is required. Excluding holidays and examination days there are xx days of lecture. You are permitted to miss up to four days of lecture with no penalty, so your attendance will be computed as the proportion of days attending out of a total of xx days. Beyond those four days you may only be excused for appropriate documented university sanctioned events or extreme circumstances (such as sudden illness). If you cannot attend your courses for an extended time due to a health-related issue or family emergency (e.g., COVID or death in the family), you should file a [VandalCare](https://www.uidaho.edu/student-affairs/dean-of-students/vandalcare) Report or contact the [The Dean of Students](https://www.uidaho.edu/student-affairs/dean-of-students) so that the university can document your absence and contact your instructors. You should plan to reserve your four “free” days of non-attendance for other short-term absences due to illness or other reasons. You may not be counted as being in attendance if you are not engaged in class (e.g., sleeping, using your phone/computer), arrive to class late, or leave class early. Attendance will be recorded daily via a one-question quiz in [Canvas](https://canvas.uidaho.edu/courses/25778). 
+	
+* **Assessment:**
+  * **Homework:** Homework assignments will be made available periodically on the course website under the _Homeworks_ tab. Homework assignments will periodically be collected and graded based on completion. Students will be notified one lecture day prior to collecting homework assignments. Assignments will be submitted to *Canvas* as a text or image file. Some exam problems are based on homework problems (although the numbers may be changed) so it is highly recommended that you complete all homework assignments before each examination in advance.
+			
+  * **Exams:** There will be 3 midterm examinations and each will be worth **50 points**. The tentative dates of these exams are **9/6, 9/25, 10/11**. Students will have the entire 50 minute class period to complete their exam. Calculators are permitted (and sometimes necessary) for examinations, but must not be capable of wireless communication. Notes and calculators used during the examination may not be shared. Students are expected to bring their own calculators on examination days. Study guides for examinations will be made available on the course website in the _studey guides section_ typically two lecture days before the examination. Make-ups for missed examinations will only be permitted for documented university sanctioned events or in extreme circumstances. Notice of a missed examination due to a foreseeable absence must be given at least one week before the scheduled day of the examination. Notice of a missed examination due to unforeseeable absence must be made before the end of the day for which the examination was scheduled. If I contact you to schedule a make-up you must respond promptly (i.e., the same day) or you may not be able to make it up.
+			
+  * **Final Exam:** The final examination is on **Monday, May 6th from 8:00 AM to 10:00 AM**. The final examination may not be taken at another time unless, as according to university policy, you have more than two final examinations on that day, or a conflict with a documented university sanctioned event. The amount of time permitted to complete the final examination is two hours (120 minutes). The final examination is like that of the other examinations except that it is comprehensive and longer. A study guide for the final examination will be made available. Policies regarding the first six examinations also apply to the final examination, except that you are permitted to use up to **five pages** of notes for the final examination (8.5 by 11 inches maximum, writing on both sides is fine).
+			
+  * **Grading:** The first four examinations altogether are worth $60\%$ of your course grade. Each examination is worth $15\%$ of your course grade. The final examination is worth $25\%$ of your course grade. The final examination may not be dropped. The remaining $15\%$ of your grade is based on attendance ($5\%$) and homework ($10\%$). Letter grades for the course will be assigned according to the following rubric: A ($87.5\%-100\%$), B ($75\%-87.5\%$), C ($62.5\%-75\%$), D ($50\%-62.5\%$), F (less than $50\%$). Course grades are based solely on the examination scores, attendance, collected homeworks, and the grading rubric described above. Changes to the grading system (e.g., the grade rubric or the weights) will not result in any students getting a lower letter grade than that obtained using the system described above. Grades will be updated periodically in [Canvas]() so that you may track your progress in the course.
+
+* **Drop-in Tutoring:** The Statistics Assistance Center (SAC) is a free drop-in tutoring service located in the library [See link here](\href{https://www.uidaho.edu/sci/mathstat/centers/sac) for more information. Tutoring is also available through Academic Support Programs [see link here](https://www.uidaho.edu/current-students/academic-support/asp/tcs/tutoring).
+	
+* **Academic Honesty:** You are responsible for being aware of the policies of the University of Idaho on academic honesty. See Section A-1 of Article II of the [Student Code of Conduct](https://www.uidaho.edu/student-affairs/dean-of-students/student-conduct/students). This includes but is not limited to cheating, facilitation of cheating, and furnishing false information or false representation. **Breaches of academic honesty will not be tolerated, and will result in a F for the course and referral to the Dean of Students for further disciplinary action**
+	
+* **Disability Access:** Reasonable accommodations are available for students who have documented temporary or permanent disabilities. All accommodations must be approved through the Center for Disability Access and Resources (CDAR) located in the Bruce M. Pitman Center, Suite 127 in order to notify your instructor(s) as soon as possible regarding accommodation(s) needed for the course. Contact CDAR at 208-885-6307 or \href{mailto:cdar@uidaho.edu}{cdar@uidaho.edu}. For more information follow the link [here](https://www.uidaho.edu/current-students/cdar).
+	
+* **Title IX:** University of Idaho is committed to creating a safe learning environment for all students. Consistent with this, UI policy and Title IX prohibit sexual misconduct, which includes sex or gender based harassment, sexual assault, intimate partner violence, stalking, and retaliation. If you have experienced any form of sexual misconduct, know that help and support are available. Please be aware that all University of Idaho employees are mandatory reporters and are required to report any information they receive about sexual misconduct to the university’s Title IX Coordinator within 24 hours (Idaho State Board Policy, Section I, I.T.). [see link](https://www.uidaho.edu/ocri/title-nine/resources) to learn more about which resources on campus and within our community are confidential. If you would like to report an incident, you may do so anonymously by visiting [www.uidaho.edu/vandalcare](https://www.uidaho.edu/student-affairs/dean-of-students/vandalcare?utm_campaign=vandal-care-reports&utm_content=bias-committee&utm_medium=varied&utm_source=sa-vandalcare) or you can directly contact the Office of Civil Rights and Investigations at **208-885-4285** or [ocri@uidaho.edu](ocri@uidaho.edu).

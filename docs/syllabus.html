@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Syllabus</title>
+
+<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-03</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About The Instructor</a>
+</li>
+<li>
+  <a href="syllabus.html">Syllabus</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lecturemenu1.html">Lecture 1</a>
+    </li>
+    <li>
+      <a href="lecturemenu2.html">Lecture 2</a>
+    </li>
+    <li>
+      <a href="lecturemenu3.html">Lecture 3</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="week1homeworks.html">Week 1 Homework</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="exam1studyguide.html">Exam 1 Study Guide</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="resources.html">Course Resources</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Syllabus</h1>
+
+</div>
+
+
+<div id="stat-251-statistical-methods-section-03"
+class="section level1">
+<h1>STAT 251 Statistical Methods Section 03</h1>
+<ul>
+<li><p><strong>Instructor:</strong> Jarred M. Kvamme (pronounced
+``Kuh-Wah-mee”), PhD Candidate and instructor, Department of
+Bioinformatics and Computational Biology. <strong>Email</strong> <a
+href="jarredk@uidaho.edu">jarredk@uidaho.edu</a>. My office is in the
+basement level of Brink Hall - <strong>Room Number B-17</strong> - My
+office hours are 11:30AM - 1:30PM Monday, Wednesday, and Friday. I am
+also available to meet by appointment</p></li>
+<li><p><strong>Teaching Assistant:</strong> Jacob Hofer.
+<strong>Email:</strong> <a
+href="jhofer@uidaho.edu">jhofer@uidaho.edu</a></p></li>
+<li><p><strong>Meeting Time:</strong> This course is scheduled to meet
+from 9:30AM-10:20AM MWF in TLC Room 040</p></li>
+<li><p><strong>Learning Outcomes:</strong> Introduction to statistical
+methods including statistical description, data displays, design of
+statistical studies, basic sampling methods, descriptive statistics,
+probability and sampling distributions; interval and point estimation,
+statistical inference in surveys and experiments, simple linear
+regression regression, and analysis of variance.</p></li>
+<li><p><strong>Prerequisites:</strong> One of the following: Math 143
+(with a ‘C’ or better), Math 160, Math 170, or sufficient score on SAT,
+ACT, or math placement test <a
+href="www.uidaho.edu/registrar/registration/placement">see
+https://www.uidaho.edu/registrar/registration/placement</a></p></li>
+<li><p><strong>Course Materials:</strong></p>
+<ul>
+<li><p><strong>Textbook:</strong> <a
+href="https://openstax.org/details/books/introductory-statistics">Barbara
+Illowsky, Susan Dean, et. al. (2017). Introductory Statistics. OpenStax.
+Licensed under a Creative Commons Attribution 4.0 International License
+(CC BY 4.0). OpenStax.org.</a> You can either use the PDF version or buy
+a hard copy from various sites, including OpenStax.org, Amazon.com,
+etc.</p></li>
+<li><p><strong>Calculator:</strong> You will need any type of calculator
+that has the exponent and square-root function for homework and
+tests.</p></li>
+<li><p><strong>Course Website:</strong> Course materials including
+lecture notes, homework assignments, study guides, this syllabus, and
+other materials can be found on the <a
+href="https://jarred6068.github.io/UI_STAT251-03_Spring_2024/">course
+website</a></p></li>
+</ul></li>
+<li><p><strong>Attendance:</strong> Class attendance is required.
+Excluding holidays and examination days there are xx days of lecture.
+You are permitted to miss up to four days of lecture with no penalty, so
+your attendance will be computed as the proportion of days attending out
+of a total of xx days. Beyond those four days you may only be excused
+for appropriate documented university sanctioned events or extreme
+circumstances (such as sudden illness). If you cannot attend your
+courses for an extended time due to a health-related issue or family
+emergency (e.g., COVID or death in the family), you should file a <a
+href="https://www.uidaho.edu/student-affairs/dean-of-students/vandalcare">VandalCare</a>
+Report or contact the <a
+href="https://www.uidaho.edu/student-affairs/dean-of-students">The Dean
+of Students</a> so that the university can document your absence and
+contact your instructors. You should plan to reserve your four “free”
+days of non-attendance for other short-term absences due to illness or
+other reasons. You may not be counted as being in attendance if you are
+not engaged in class (e.g., sleeping, using your phone/computer), arrive
+to class late, or leave class early. Attendance will be recorded daily
+via a one-question quiz in <a
+href="https://canvas.uidaho.edu/courses/25778">Canvas</a>.</p></li>
+<li><p><strong>Assessment:</strong></p>
+<ul>
+<li><p><strong>Homework:</strong> Homework assignments will be made
+available periodically on the course website under the
+<em>Homeworks</em> tab. Homework assignments will periodically be
+collected and graded based on completion. Students will be notified one
+lecture day prior to collecting homework assignments. Assignments will
+be submitted to <em>Canvas</em> as a text or image file. Some exam
+problems are based on homework problems (although the numbers may be
+changed) so it is highly recommended that you complete all homework
+assignments before each examination in advance.</p></li>
+<li><p><strong>Exams:</strong> There will be 3 midterm examinations and
+each will be worth <strong>50 points</strong>. The tentative dates of
+these exams are <strong>9/6, 9/25, 10/11</strong>. Students will have
+the entire 50 minute class period to complete their exam. Calculators
+are permitted (and sometimes necessary) for examinations, but must not
+be capable of wireless communication. Notes and calculators used during
+the examination may not be shared. Students are expected to bring their
+own calculators on examination days. Study guides for examinations will
+be made available on the course website in the <em>studey guides
+section</em> typically two lecture days before the examination. Make-ups
+for missed examinations will only be permitted for documented university
+sanctioned events or in extreme circumstances. Notice of a missed
+examination due to a foreseeable absence must be given at least one week
+before the scheduled day of the examination. Notice of a missed
+examination due to unforeseeable absence must be made before the end of
+the day for which the examination was scheduled. If I contact you to
+schedule a make-up you must respond promptly (i.e., the same day) or you
+may not be able to make it up.</p></li>
+<li><p><strong>Final Exam:</strong> The final examination is on
+<strong>Monday, May 6th from 8:00 AM to 10:00 AM</strong>. The final
+examination may not be taken at another time unless, as according to
+university policy, you have more than two final examinations on that
+day, or a conflict with a documented university sanctioned event. The
+amount of time permitted to complete the final examination is two hours
+(120 minutes). The final examination is like that of the other
+examinations except that it is comprehensive and longer. A study guide
+for the final examination will be made available. Policies regarding the
+first six examinations also apply to the final examination, except that
+you are permitted to use up to <strong>five pages</strong> of notes for
+the final examination (8.5 by 11 inches maximum, writing on both sides
+is fine).</p></li>
+<li><p><strong>Grading:</strong> The first four examinations altogether
+are worth <span class="math inline">\(60\%\)</span> of your course
+grade. Each examination is worth <span
+class="math inline">\(15\%\)</span> of your course grade. The final
+examination is worth <span class="math inline">\(25\%\)</span> of your
+course grade. The final examination may not be dropped. The remaining
+<span class="math inline">\(15\%\)</span> of your grade is based on
+attendance (<span class="math inline">\(5\%\)</span>) and homework
+(<span class="math inline">\(10\%\)</span>). Letter grades for the
+course will be assigned according to the following rubric: A (<span
+class="math inline">\(87.5\%-100\%\)</span>), B (<span
+class="math inline">\(75\%-87.5\%\)</span>), C (<span
+class="math inline">\(62.5\%-75\%\)</span>), D (<span
+class="math inline">\(50\%-62.5\%\)</span>), F (less than <span
+class="math inline">\(50\%\)</span>). Course grades are based solely on
+the examination scores, attendance, collected homeworks, and the grading
+rubric described above. Changes to the grading system (e.g., the grade
+rubric or the weights) will not result in any students getting a lower
+letter grade than that obtained using the system described above. Grades
+will be updated periodically in <a href="">Canvas</a> so that you may
+track your progress in the course.</p></li>
+</ul></li>
+<li><p><strong>Drop-in Tutoring:</strong> The Statistics Assistance
+Center (SAC) is a free drop-in tutoring service located in the library
+<a href="\href%7Bhttps://www.uidaho.edu/sci/mathstat/centers/sac">See
+link here</a> for more information. Tutoring is also available through
+Academic Support Programs <a
+href="https://www.uidaho.edu/current-students/academic-support/asp/tcs/tutoring">see
+link here</a>.</p></li>
+<li><p><strong>Academic Honesty:</strong> You are responsible for being
+aware of the policies of the University of Idaho on academic honesty.
+See Section A-1 of Article II of the <a
+href="https://www.uidaho.edu/student-affairs/dean-of-students/student-conduct/students">Student
+Code of Conduct</a>. This includes but is not limited to cheating,
+facilitation of cheating, and furnishing false information or false
+representation. <strong>Breaches of academic honesty will not be
+tolerated, and will result in a F for the course and referral to the
+Dean of Students for further disciplinary action</strong></p></li>
+<li><p><strong>Disability Access:</strong> Reasonable accommodations are
+available for students who have documented temporary or permanent
+disabilities. All accommodations must be approved through the Center for
+Disability Access and Resources (CDAR) located in the Bruce M. Pitman
+Center, Suite 127 in order to notify your instructor(s) as soon as
+possible regarding accommodation(s) needed for the course. Contact CDAR
+at 208-885-6307 or . For more information follow the link <a
+href="https://www.uidaho.edu/current-students/cdar">here</a>.</p></li>
+<li><p><strong>Title IX:</strong> University of Idaho is committed to
+creating a safe learning environment for all students. Consistent with
+this, UI policy and Title IX prohibit sexual misconduct, which includes
+sex or gender based harassment, sexual assault, intimate partner
+violence, stalking, and retaliation. If you have experienced any form of
+sexual misconduct, know that help and support are available. Please be
+aware that all University of Idaho employees are mandatory reporters and
+are required to report any information they receive about sexual
+misconduct to the university’s Title IX Coordinator within 24 hours
+(Idaho State Board Policy, Section I, I.T.). <a
+href="https://www.uidaho.edu/ocri/title-nine/resources">see link</a> to
+learn more about which resources on campus and within our community are
+confidential. If you would like to report an incident, you may do so
+anonymously by visiting <a
+href="https://www.uidaho.edu/student-affairs/dean-of-students/vandalcare?utm_campaign=vandal-care-reports&amp;utm_content=bias-committee&amp;utm_medium=varied&amp;utm_source=sa-vandalcare">www.uidaho.edu/vandalcare</a>
+or you can directly contact the Office of Civil Rights and
+Investigations at <strong>208-885-4285</strong> or <a
+href="ocri@uidaho.edu">ocri@uidaho.edu</a>.</p></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
