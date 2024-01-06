@@ -6,17 +6,17 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: 'About The Instructor'
+    - text: 'About'
       href: about.html
     - text: 'Syllabus'
       href: syllabus.html
     - text: 'Lectures' ## setting up a drop down menu
       menu:
-        - text: 'Lecture 1'
+        - text: 'Week 1'
           href: lecturemenu1.html
-        - text: 'Lecture 2'
+        - text: 'Week 2'
           href: lecturemenu2.html
-        - text: 'Lecture 3'
+        - text: 'Week 3'
           href: lecturemenu3.html
     - text: 'Homeworks'
       menu:
@@ -32,8 +32,10 @@ navbar:
         href: project.html
       - text: "Data"
         href: data.html
-    - text: 'Course Resources'
-      href: resources.html
+    - text: 'Resources'
+      menu:
+        - text: 'Histogram maker'
+          href: shiny_htmls/app1.html
 
 output:
   html_document:

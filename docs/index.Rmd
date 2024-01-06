@@ -1,5 +1,5 @@
 ---
-title: "STAT251-03 Home Page"
+title: "STAT251-03 Statistical Methods Home Page"
 author:
   name: "Instructor: Jarred Kvamme"
   email: "Email: jarredk@uidaho.edu"
