@@ -35,7 +35,7 @@ navbar:
     - text: 'Resources'
       menu:
         - text: 'Histogram maker'
-          href: shiny_htmls/app1.html
+          href: histogram_viewer/app1.html
 
 output:
   html_document:
