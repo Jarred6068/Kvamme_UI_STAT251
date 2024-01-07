@@ -96,6 +96,7 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output){
   output$distPlot <- renderPlot({
+    set.seed(111)
     if(input$model == 'Bernoulli'){
       d = rbinom(n=input$ss, size = 1, p = input$prob1)
     }else if(input$model == 'Binomial'){
