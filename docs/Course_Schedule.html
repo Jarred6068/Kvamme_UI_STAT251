@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Course Schedule</title>
+
+<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-03</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lecturemenu1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="lecturemenu2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="lecturemenu3.html">Week 3</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="week1homeworks.html">Week 1 Homework</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="exam1studyguide.html">Exam 1 Study Guide</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="histogram_viewer/index.html">Histogram maker</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Course Schedule</h1>
+
+</div>
+
+
+<table>
+<tr>
+<td>
+<strong>WEEK 1</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+January 8, 2024
+</td>
+<td>
+NO CLASS
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+January 10, 2024
+</td>
+<td>
+Introduction: The big picture
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+January 12, 2024
+</td>
+<td>
+Describing and visualizing distributions
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 2</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+January 15, 2024
+</td>
+<td>
+No Class
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+January 17, 2024
+</td>
+<td>
+Summary measures, measures of variability, boxplots
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+January 19, 2024
+</td>
+<td>
+Summary measures, measures of variability, boxplots
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 3</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+January 22, 2024
+</td>
+<td>
+The normal distribution
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+January 24, 2024
+</td>
+<td>
+transformations, z-scores
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+January 26, 2024
+</td>
+<td>
+Identifying outliers, margin of error
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 4</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+January 29, 2024
+</td>
+<td>
+Study and sampling designs
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+January 31, 2024
+</td>
+<td>
+Exam 1 Review
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+February 2, 2024
+</td>
+<td>
+Exam 1
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 5</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+February 5, 2024
+</td>
+<td>
+Introduction to Probability
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+February 7, 2024
+</td>
+<td>
+Random Variables and Discrete Probability Distributions
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+February 9, 2024
+</td>
+<td>
+Continuous probability distributions
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 6</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+February 12, 2024
+</td>
+<td>
+Sampling distributions of means and proportions
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+February 14, 2024
+</td>
+<td>
+Central Limit Theorem (CLT) and estimation
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+February 16, 2024
+</td>
+<td>
+Introduction to confidence intervals
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 7</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+February 19, 2024
+</td>
+<td>
+NO CLASS
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+February 21, 2024
+</td>
+<td>
+Confidence Intervals for a population mean
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+February 23, 2024
+</td>
+<td>
+Confidence Intervals for a population proportion
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 8</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+February 26, 2024
+</td>
+<td>
+Bootstrap confidence intervals
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+February 28, 2024
+</td>
+<td>
+Sampling with/without replacement, estimation for a population total
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+March 1, 2024
+</td>
+<td>
+Estimation for a population total
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 9</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+March 4, 2024
+</td>
+<td>
+Choosing a minimum sample size, assumptions of estimators
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+March 6, 2024
+</td>
+<td>
+Exam 2 Review
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+March 8, 2024
+</td>
+<td>
+Exam 2
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 10</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+March 11, 2024
+</td>
+<td>
+Spring Recess no Class
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+March 13, 2024
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+March 15, 2024
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 11</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+March 18, 2024
+</td>
+<td>
+Introduction to significance tests, Pvalues
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+March 20, 2024
+</td>
+<td>
+Tests for a population proportion
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+March 22, 2024
+</td>
+<td>
+NO CLASS
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 12</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+March 25, 2024
+</td>
+<td>
+Tests for a population mean
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+March 27, 2024
+</td>
+<td>
+Composite hypotheses, relationship between confidence intervals and
+hypothesis tests, the sign test
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+March 29, 2024
+</td>
+<td>
+Making decisions, types of errors in hypothesis test, statistical power
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 13</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+April 1, 2024
+</td>
+<td>
+Introduction to two-sample tests, independent vs dependent samples
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+April 3, 2024
+</td>
+<td>
+Tests for comparing two independent proportions or two independent means
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+April 5, 2024
+</td>
+<td>
+Tests for dependent samples, causal inference
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 14</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+April 8, 2024
+</td>
+<td>
+Introduction to analyzing categorical variables
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+April 10, 2024
+</td>
+<td>
+Goodness-of-fit tests and tests of independence
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+April 12, 2024
+</td>
+<td>
+Cramers V, McNemars Test, Fishers exact test
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 15</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+April 15, 2024
+</td>
+<td>
+Exam 3 Review
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+April 17, 2024
+</td>
+<td>
+Exam 3
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+April 19, 2024
+</td>
+<td>
+Measures of association
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>WEEK 16</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+April 22, 2024
+</td>
+<td>
+Correlation and simple linear regression
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+April 24, 2024
+</td>
+<td>
+Coefficient of determination, tests for slope coefficients
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+April 26, 2024
+</td>
+<td>
+ANOVA
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>No Exam WEEK</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Day</strong>
+</td>
+<td>
+<strong>Date</strong>
+</td>
+<td>
+<strong>Topic</strong>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+April 29, 2024
+</td>
+<td>
+ANOVA continued
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+May 1, 2024
+</td>
+<td>
+Final exam informal review, course project due at midnight
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+May 3, 2024
+</td>
+<td>
+No Class
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Final Exam WEEK</strong>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Monday
+</td>
+<td>
+May 6, 2024
+</td>
+<td>
+Final Exam Day, Time: 8:00 am - 10:00 am
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Wednesday
+</td>
+<td>
+May 8, 2024
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+Friday
+</td>
+<td>
+May 10, 2024
+</td>
+</tr>
+</table>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

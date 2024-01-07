@@ -9,7 +9,11 @@ navbar:
     - text: 'About'
       href: about.html
     - text: 'Syllabus'
-      href: syllabus.html
+      menu:
+        - text: 'Course Syllabus'
+          href: syllabus.html
+        - text: 'Course Schedule'
+          href: Course_Schedule.html
     - text: 'Lectures' ## setting up a drop down menu
       menu:
         - text: 'Week 1'
