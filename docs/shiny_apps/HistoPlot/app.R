@@ -12,7 +12,7 @@ library(shiny)
 ui <- fluidPage(
   titlePanel('Histogram Sandbox'),
   sidebarLayout(
-    sidebarPanel(width = 3, 
+    sidebarPanel(width = 4, 
       #input select
       selectInput(inputId = "model",
       label = "Select Model",
@@ -21,96 +21,71 @@ ui <- fluidPage(
       #Bernoulli dist
       conditionalPanel(condition = "input.model == 'Bernoulli'",
                        h5("Bernoulli Parameters"),
-                       sliderInput(inputId = "p",
-                                   label = "p:",
+                       sliderInput(inputId = "prob1",
+                                   label = "Probability of Success:",
                                    min = 0,
                                    max = 1,
-                                   value = 0.5),
-                       sliderInput(inputId = "samplesize",
-                                   label = "Sample Size:", 
-                                   min = 10, 
-                                   max = 1000, 
-                                   value = 50)),
+                                   value = 0.5)),
       #Binomial dist
       conditionalPanel(condition = "input.model == 'Binomial'",
                        h5("Binomial Parameters"),
-                       sliderInput(inputId = "n",
-                                   label = "n:",
+                       sliderInput(inputId = "ntrials",
+                                   label = "Number of Trials:",
                                    min = 0,
                                    max = 100,
                                    value = 20),
-                       sliderInput(inputId = "p",
-                                   label = "p:",
+                       sliderInput(inputId = "prob2",
+                                   label = "Probability of Success:",
                                    min = 0,
                                    max = 1,
-                                   value = 0.5),
-                       sliderInput(inputId = "samplesize",
-                                   label = "Sample Size:", 
-                                   min = 10, 
-                                   max = 1000, 
-                                   value = 50)),
+                                   value = 0.5)),
       #Poisson dist
       conditionalPanel(condition = "input.model == 'Poisson'",
                        h5("Poisson Parameters"),
-                       sliderInput(inputId = "rate",
-                                   label = "rate:",
-                                   min = 0,
+                       sliderInput(inputId = "rate1",
+                                   label = "Rate:",
+                                   min = 1,
                                    max = 10,
-                                   value = 1),
-                       sliderInput(inputId = "samplesize",
-                                   label = "Sample Size:", 
-                                   min = 10, 
-                                   max = 1000, 
-                                   value = 50)),
+                                   value = 1)),
       #Uniform dist
       conditionalPanel(condition = "input.model == 'Uniform'",
                        h5("Uniform Parameters"),
                        sliderInput(inputId = "min",
-                                   label = "min:",
+                                   label = "Minimum Value:",
                                    min = 0,
                                    max = 100,
                                    value = 0),
                        sliderInput(inputId = "max",
-                                   label = "max:",
+                                   label = "Maximum Value:",
                                    min = 0,
                                    max = 100,
-                                   value = 1),
-                       sliderInput(inputId = "samplesize",
-                                   label = "Sample Size:", 
-                                   min = 10, 
-                                   max = 1000, 
-                                   value = 50)),
+                                   value = 1)),
       #Exponential dist
       conditionalPanel(condition = "input.model == 'Exponential'",
                        h5("Exponential Parameters"),
-                       sliderInput(inputId = "rate",
-                                   label = "rate:",
+                       sliderInput(inputId = "rate2",
+                                   label = "Rate Parameter:",
                                    min = 0,
                                    max = 100,
-                                   value = 1),
-                       sliderInput(inputId = "samplesize",
-                                   label = "Sample Size:", 
-                                   min = 10, 
-                                   max = 1000, 
-                                   value = 50)),
+                                   value = 1)),
       #Normal dist  
       conditionalPanel(condition = "input.model == 'Normal'",
                        h5("Normal Parameters"),
                        sliderInput(inputId = "mean",
-                                   label = "mean:",
+                                   label = "Mean:",
                                    min = 0,
                                    max = 100,
                                    value = 0),
                        sliderInput(inputId = "sd",
-                                   label = "sd:",
+                                   label = "Standard Deviation:",
                                    min = 0.1,
                                    max = 100,
-                                   value = 1),
-                      sliderInput(inputId = "samplesize",
-                                  label = "Sample Size:", 
-                                  min = 10, 
-                                  max = 1000, 
-                                  value = 50)),
+                                   value = 1)),
+      sliderInput(inputId = "ss",
+                  label = "Sample Size:", 
+                  min = 10, 
+                  max = 10000, 
+                  value = 50),
     
     
     ),
@@ -122,17 +97,17 @@ ui <- fluidPage(
 server <- function(input, output){
   output$distPlot <- renderPlot({
     if(input$model == 'Bernoulli'){
-      d = rbinom(n=input$samplesize, size = 1, p = input$p)
+      d = rbinom(n=input$ss, size = 1, p = input$prob1)
     }else if(input$model == 'Binomial'){
-      d = rbinom(n=input$samplesize, size = input$n, p = input$p)
+      d = rbinom(n=input$ss, size = input$ntrials, p = input$prob2)
     }else if(input$model == 'Poisson'){
-      d = rpois(n=input$samplesize, lambda = input$rate)
+      d = rpois(n=input$ss, lambda = input$rate1)
     }else if(input$model == 'Uniform'){
-      d = runif(n=input$samplesize, min = input$min, max = input$max)
+      d = runif(n=input$ss, min = input$min, max = input$max)
     }else if(input$model == 'Exponential'){
-      d = rexp(n=input$samplesize, rate = input$rate)
+      d = rexp(n=input$ss, rate = input$rate2)
     }else if(input$model == 'Normal'){
-      d = rnorm(n=input$samplesize, mean = input$mean, sd = input$sd)
+      d = rnorm(n=input$ss, mean = input$mean, sd = input$sd)
     }
   
   
@@ -144,7 +119,7 @@ server <- function(input, output){
 }
 # server <- function(input, output) {
 #   output$distPlot <- renderPlot({
-#     hist(rnorm(input$samplesize),col='darkorchid',xlab="Sample",main="Standard Normally Distributed Sample")},
+#     hist(rnorm(input$ss),col='darkorchid',xlab="Sample",main="Standard Normally Distributed Sample")},
 #     height=300
 #   )
 # }
