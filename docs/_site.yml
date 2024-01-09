@@ -16,12 +16,16 @@ navbar:
           href: Course_Schedule.html
     - text: 'Lectures' ## setting up a drop down menu
       menu:
-        - text: 'Week 1'
-          href: lecturemenu1.html
-        - text: 'Week 2'
-          href: lecturemenu2.html
-        - text: 'Week 3'
-          href: lecturemenu3.html
+        - text: 'Lecture Notes'
+          menu: 
+          - text: 'Week 1'
+            href: lecturemenu1.html
+          - text: 'Week 2'
+            href: lecturemenu2.html
+          - text: 'Week 3'
+            href: lecturemenu3.html
+        - text: 'Lecture Slides'
+          href: lecslidesindex.html
     - text: 'Homeworks'
       menu:
         - text: 'Assignments'
@@ -32,6 +36,8 @@ navbar:
           menu: 
           - text: 'Hmwk 1 Solutions'
             href: homeworks/week1homework_solns.html
+        - text: 'Reading & Extra Problems'
+          href: homeworks/reading_and_book_problems.html
     - text: 'Exam Study Guides'
       menu:
         - text: 'Exam 1 Study Guide'
