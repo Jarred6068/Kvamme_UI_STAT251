@@ -1,0 +1,489 @@
+---
+title: "Homework 1 Solutions"
+output:
+  html_document: default
+  pdf_document: default
+always_allow_html: true
+---
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=8, fig.height=8, fig.pos = "H")
+#knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
+library(kableExtra)
+library(knitr)
+library(latex2exp)
+library(gridExtra)
+library(ggpubr)
+library(ggthemes)
+library(plyr)
+path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
+set.seed(123)
+
+#<span style="color: red;">text</span>
+```
+
+
+
+
+${\bf (1)}$	Define the following terms: 
+
+* **(a)** Population - the collection of all possible persons, events, or objects of interest
+* **(b)** Sample - the subset of the population that we actually observe (the observed observations) 
+* **(c)** Parameter - A numerical characteristic of a population (alternatively: A function of the entire population) 
+* **(d)** Statistic -  A numerical characteristic of a sample (alternatively: A function of the sample) 
+
+
+${\bf (2)}$ Explain the difference between a **qualitative** (categorical) and a **quantitative** variable 
+
+<span style="color: red;">A qualitative variable is a non-numeric characteristic such as a name or label while a quantitative variable is numerical characteristic such as a measurement or count</span>
+
+
+${\bf (3)}$ Explain the difference between a **discrete** and a **continuous** variable and give an example of each
+
+<span style="color: red;">A discrete variable is a quantitative variable that takes on only distinct whole number (integer) values such as counts whereas a continuous variable is a quantitative variable that can assume any value within a certain interval such temperature or height</span>
+
+
+${\bf (4)}$ Explain the difference between a **nominal** and an **ordinal** variable and give an example of each
+
+<span style="color: red;">A nominal variable is a qualitative variable that has categories with no inherent ordering such as the names of a city or the brands or shoes. An ordinal variable is a qualitative variable that has an inherent ordering to its categories such as a Likert score or education level.</span>
+
+${\bf (5)}$ **At What age did women marry?**  A historian wants to estimate the average age at marriage of women in New England in the early 19th century. Within her state archives, she finds marriage records for the years $1800 - 1820$, which she treats as a sample of all marriage records from the early 19th century. The average age of the women in the records is $24.1$ years of age. Using the appropriate statistical method, she estimates that the average age of brides in the early $19^{th}$- century New England was between $23.5$ and $24.7$ years of age. 
+
+* **(a)** Which part of this example gives a descriptive summary of the data?
+<span style="color: red;">When she computes a mean of $24.1$ years of age from the marriage records</span>
+* **(b)** Which part of this example draws an inference about a population?
+<span style="color: red;">The part where she estimates the average age of women to be married in the 19th century to be between $23.5$ and $24.7$ years for the population</span>
+* **(c)** What population is the historian is studying?
+<span style="color: red;">All women who married in the 19th century}}
+\item[(d)]{The average age the historian computed from the historical records was 24.1 years of age.</span>
+* **(d)** The average age the historian computed from the historical records was 24.1 years of age. Is 24.1 years of age a statistic or a parameter? Why?
+<span style="color: red;">A statistic. The quantity $24.1$ was computed from a sample of marriage records spanning the first $20$ years of the century</span>
+
+
+${\bf (6)}$ Consider the following data obtained from flipping a coin 15 times. A value of $H$ denotes the coin was heads whereas a value of $T$ denotes the coin flip was tails.
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(123)
+df = data.frame(`coin flip result:` = sample(c("H", "T"), 15, replace = T))
+
+kable(t(df), format = 'html', booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+Compute the frequency table for the variable ``coin flip result" and answer the following questions:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(123)
+x1 = c('H', 'T')
+x2 = c(7,8)
+x3 = c('7/15 = 0.47','8/15 = 0.53')
+
+kable(cbind.data.frame(x1, x2, x3), format = 'html', col.names = c('Result', 'Frequency', 'Relative Frequency'), booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+* **(a)** What type of variable is ``Coin Flip Result"?
+<span style="color: red;">Qualitative nominal variable</span>
+* **(b)** What proportion of the coin flips were heads?
+<span style="color: red;">$0.47$ or $47\%$</span>
+* **(c)** Why do we not compute the cumulative relative frequency for this variable?
+<span style="color: red;">The variable is nominal and therefore has no inherent ordering for summing up the relative frequencies</span>
+* **(d)** What the best graphical display for this variable and why?
+<span style="color: red;">Since there are only two categories (heads or tails) a pie chart or bar graph would be sufficient to show the distribution</span>
+
+
+
+${\bf (7)}$ A survey about color preferences reported the age distribution of the people who responded. Below are the results
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(123)
+
+ag = c('1-18','19-24','25-25','36-60','51-69','70 and over')
+cts = c(10, 97, 70, 36, 14, 5)
+
+age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts'), rbind.data.frame(ag, cts))
+
+kable(age.dist, format = 'html', col.names = rep('', 7), booktabs = T, row.names = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+Use this table to answer parts a - d
+
+* **(a)** Compute the relative frequency for each age group
+<span style="color: red;">text</span>
+* **(b)** Make a bar graph where the heights of the bars are relative frequencies
+<span style="color: red;">text</span>
+* **(c)** Describe the distribution
+<span style="color: red;">text</span>
+* **(d)** Explain why your bar graph is not a histogram
+<span style="color: red;">text</span>
+
+${\bf (8)}$ Email spam is the curse of the internet. The table below gives a compilation of the most common types of spam 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(123)
+
+`Type of Spam` = c('Adult','Financial','Health','Leisure','Products','Scams')
+Percentage = c(14.5, 16.2, 7.3, 7.8, 21.0, 14.2)
+
+spam.dist = cbind.data.frame(`Type of Spam`, Percentage)
+
+kable(spam.dist, format = 'html', booktabs = T, row.names = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Use the table to answer the questions a and b
+
+* **(a)** Report the modal spam category
+<span style="color: red;">The modal category is "Products" because it has the highest frequency</span>
+* **(b)** Construct a **Pareto chart** using the table above
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+
+ggplot(data = spam.dist, aes(x = `Type of Spam`, y = sort(Percentage, decreasing = T)))+
+  geom_bar(stat = 'identity', color = 'black', fill = 'lightblue2')+
+  theme_hc()+
+  xlab('Type of Spam')+
+  ylab('Percentage')+
+  ggtitle('Pareto Chart of Spam Categories')
+```
+
+
+
+${\bf (9)}$
+
+
+
+${\bf (10)}$ Consider the following data from a survey conducted on college students in the state of Florida. As part of their research, surveyors recorded the high school performance (measured in grade point average - GPA) of 35 college students from across the state. For your convenience the data have been sorted from least to greatest:
+
+$$2.0, 2.1, 2.3, 2.8, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0,$$ 
+$$3.0, 3.0, 3.0, 3.1, 3.2, 3.3, 3.3, 3.4,  3.4, 3.4,$$ 
+$$3.4, 3.5, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7, 3.8,$$ 
+$$3.8, 3.8, 3.8, 4.0, 4.0$$
+
+
+The following frequency table gives the distribution of the variable high school GPA (with values rounded to nearest 0.5). Fill in the table and answer the following questions:
+
+```{r, fig.cap="Frequency Table for GPA after rounding values to the nearest 0.5",  echo=FALSE, warning=FALSE, message=FALSE}
+set.seed(123)
+#fldata = read.csv(paste0(path, 'fl_student_survey.csv'))
+#fldata$gpa_rounded = round_any(fldata$high_sch_GPA, 0.5)
+x_raw = c(2.0, 2.1, 2.3, 2.8, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0,3.0, 3.0, 3.0, 3.1, 3.2, 3.3, 3.3, 3.4,  3.4, 3.4,3.4, 3.5, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7, 3.8,3.8, 3.8, 3.8, 4.0, 4.0)
+x=round_any(x_raw, 0.5)
+hsGPA_values = sort(unique(x))
+hsGPA_freq = summary(as.factor(x))
+hsGPA_RF = hsGPA_freq/sum(hsGPA_freq)
+hsGPA_cRF = cumsum(hsGPA_RF)
+
+
+FT = cbind.data.frame(GPA = hsGPA_values, 
+                      Frequency = hsGPA_freq,
+                      `Relative frequency` = round(hsGPA_RF,2),
+                      `Cumulative RF` = round(hsGPA_cRF, 2))
+
+kable(FT, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+                      
+
+```
+
+
+* **(a)** What type of variable is GPA?
+<span style="color: red;">Quantitative continuous</span>
+* **(b)** What proportion of college students had a high school GPA $> 3.0$?
+<span style="color: red;">0.57</span>
+* **(c)** What proportion of college students had a high school GPA $< 3.0$?
+<span style="color: red;">0.09</span>
+* **(d)** What is the **mean** GPA in this sample?
+<span style="color: red;">$$\bar{x} = \frac{2.0+2.1+...+4.0+4.0}{35} = \frac{2(2)+1(2.5)+...+6(4)}{35} = 3.3$$</span>
+* **(e)** What is the **median** GPA in this sample?
+<span style="color: red;">median $= 3.4$</span>
+* **(f)** What is the **mode** of GPA in this sample?
+
+<span style="color: red;">Using the frequency table on the rounded values the mode is the value with the highest relative frequency $ = 3.5$</span>
+
+<span style="color: red;">(Using the raw data) the mode is the most frequent value observed in the data which is $3.0$ </span>
+
+
+* **(g)** Construct a dot plot for the variable GPA (hint use the frequency table)
+```{r, fig.cap = "(A) Dot plot using the rounded GPA values from the frequency table (B) Dot plot using the raw GPA values", fig.height=3, fig.width=7, echo=FALSE, message = FALSE, warning=FALSE}
+
+df = cbind.data.frame(Raw = x_raw, Rounded = x)
+B = ggplot(data = df, aes(x = Rounded))+
+  geom_dotplot(dotsize = 1)+
+  theme_classic()+
+  ylab("")+
+  xlab("Rounded Student High School GPA")+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank())
+A = ggplot(data = df, aes(x = Raw))+
+  geom_dotplot(dotsize = 1)+
+  theme_classic()+
+  ylab("")+
+  xlab("Student High School GPA")+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        panel.background = element_blank(),
+        axis.ticks.y = element_blank())
+
+
+ggarrange(B, A, labels = c("A", "B"), nrow = 1, ncol = 2)
+  
+```
+
+* **(h)** Construct a histogram for the variable GPA (hint use the frequency table)
+```{r, fig.cap = "(A) Histogram using the rounded GPA values (e.g 4 total bins) from the frequency table", fig.height=3, fig.width=4, echo=FALSE, message = FALSE, warning=FALSE, comment="", results="asis"}
+A = ggplot(data = df, aes(x = Rounded))+
+  geom_histogram(breaks = seq(2, 4, 0.5), color = 'black', fill = 'grey')+
+  theme_classic()+
+  ylab("Frequency")+
+  xlab("Rounded Student High School GPA")+
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 14))
+plot(A)
+```
+
+* **(i)** Construct a stem and leaf plot for the variable GPA
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+print("Using the Rounded GPA scores:")
+print(stem(df$Rounded))
+print("Using the Raw Data:")
+print(stem(df$Raw, scale = 3))
+```
+
+${\bf (11)}$ Which statistic is more resistant to outliers, the mean or median? Why?
+
+<span style="color: red;">The median is resistant to outliers because it relies on only the middle value (or middle two values if $n$ is even). Therefore, how far a value is from the center does not influence the median. The mean, however, is computed using \textbf{ALL} values in a sample distribution. This causes the mean to be pulled in the direction of extreme values.</span>
+
+${\bf (12)}$ Describe the shape of the following distributions and for each distribution identify if the mean will be larger, smaller or the same as the median.
+
+**(a)**
+<span style="color: red;">Skew right. The mean will be greater than median because the center of the data is pulled toward the right side of the distribution</span>
+
+
+```{r, fig.height=3, fig.width=4, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(123)
+sr = ggplot()+
+  geom_histogram(aes(x = rbeta(100000, 2, 10)), fill = 'lightblue', size = 1)+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab("")
+plot(sr)
+```
+
+
+**(b)**   
+<span style="color: red;">Symmetric/Bell shaped. The mean and the median will be equal</span>
+
+
+```{r, echo=FALSE, fig.height=3, fig.width=4, message=FALSE, warning=FALSE}
+set.seed(123)
+sym = ggplot()+
+  geom_histogram(aes(x = rnorm(100000)), fill = 'lightblue', size = 1)+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab("")
+plot(sym)
+```
+
+
+**(c)**   
+<span style="color: red;">Skew left. The mean will be less than median because the center of the data is pulled toward the left side of the distribution</span>
+
+
+```{r, echo=FALSE, fig.height=3, fig.width=4, message=FALSE, warning=FALSE}
+set.seed(123)
+sl = ggplot()+
+  geom_histogram(aes(x = rbeta(100000, 10, 2)), fill = 'lightblue', size = 1)+
+  theme_base()+
+  # geom_vline(xintercept = mean(rbeta(100000, 10, 2)), linetype = 'dotted', color = 'red')+
+  # geom_text(aes(x = mean(rbeta(100000, 10, 2)), y = 0), label = 'mean', color = 'red')+
+  # geom_vline(xintercept = median(rbeta(100000, 10, 2)), linetype = 'dotted', color = 'green')+
+  # geom_text(aes(x = mean(rbeta(100000, 10, 2)), y = 0), label = 'median', color = 'green')+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab("")
+plot(sl)
+```
+
+
+
+\newpage
+${\bf (13)}$ Consider the following four sets of observations of a quantitative variable $x$. For your convenience the observations have been sorted in increasing order. Match datasets $1-4$ with the correct histogram (labeled $A - D$)
+
+$$\text{Dataset 1} = \{0.1, 1.1, 2.6, 2.7, 3.4, 3.4, 4.1, 4.4, 8.8, 9.6\}$$
+$$\text{Dataset 2}= \{0.1, 0.3, 1.2, 2.4, 4.4, 4.5, 8.0, 8.9, 9.3, 9.3\}$$
+$$\text{Dataset 3} = \{1.1, 3.8, 5.3, 6.0, 6.2, 6.9, 7.9, 7.9, 8.1, 8.7\}$$
+$$\text{Dataset 4} = \{3.4, 4.5, 5.4, 5.6, 7.0, 8.5, 8.9, 9.2, 9.7, 9.7\}$$
+```{r, echo=FALSE, message=FALSE, warning=F}
+
+set.seed(123)
+
+
+a = c(0.1, 1.1, 2.6, 2.7, 3.4, 3.4, 4.1, 4.4, 8.8, 9.6)
+b = c(0.1, 0.3, 1.2, 2.4, 4.4, 4.5, 8.0, 8.9, 9.3, 9.3)
+c = c(1.1, 3.8, 5.3, 6.0, 6.2, 6.9, 7.9, 7.9, 8.1, 8.7)
+d = c(3.4, 4.5, 5.4, 5.6, 7.0, 8.5, 8.9, 9.2, 9.7, 9.7)
+
+par(mfrow = c(2,2))
+hist(a, xlab = "", breaks = seq(0, 10, 2), main = "Distribution A")
+hist(c, xlab = "", breaks = seq(0, 10, 2), main = "Distribution B")
+hist(d, xlab = "", breaks = seq(0, 10, 2), main = "Distribution C")
+hist(b, xlab = "", breaks = seq(0, 10, 2), main = "Distribution D")
+par(mfrow = c(1,1))
+```
+
+
+* <span style="color: red;">Dataset 1 goes with histogram A</span> 
+* <span style="color: red;">Dataset 2 goes with histogram D</span>
+* <span style="color: red;">Dataset 3 goes with histogram B</span>
+* <span style="color: red;">Dataset 4 goes with histogram C</span>
+
+
+${\bf (14)}$ Consider the following set of 10 observations of a variable $X$ sorted from least to greatest:
+$$3.3, 3.8, 4.0, 4.8, 4.8, 5.1, 5.2, 5.6, 5.7, 6.9$$
+Use the data to answer parts a-b
+
+* **(a)** Given the data, compute the $50^{th}$ percentile of $X$ 
+<span style="color: red;">$$\frac{4.8+5.1}{2} = 4.95$$</span>
+* **(b)** Compute Interquartile Range (IQR) range of $X$
+<span style="color: red;">$$IQR = 5.6 - 4.0 = 1.6$$</span>
+
+
+${\bf (15)}$ Consider the following $n = 20$ observations of the sugar and sodium content of several popular cereal brands and answer questions a - g:
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+cereal = read.csv(paste0(path, 'cereal.csv'))
+kable(cereal, format = 'html', col.names = c("Brand", "Sodium (mg)", "Sugar (g)", 'Type'))%>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(4, width = "18em")%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+* **(a)** Construct a histogram of the data using the following bins: $\leq 2 (g)$, $2 - 4 (g)$, 
+$4 - 6 (g)$, $6 - 8 (g)$,$8 - 10 (g)$, $10 - 12 (g)$, $12 - 14 (g)$,$14 - 16 (g)$,$> 16 (g)$ (hint start by creating a frequency table) 
+
+```{r, fig.cap = "(A) Histogram of the variable sugar (g) using the bins in the frequency table (above)", fig.height=3, fig.width=4, echo=FALSE, message = FALSE, warning=FALSE}
+A = ggplot(data = cereal, aes(x = Sugar))+
+  geom_histogram(breaks = seq(0, 20, 2), color = 'black', fill = 'grey')+
+  theme_classic()+
+  ylab("Frequency")+
+  xlab("Student High School GPA")+
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 14))
+plot(A)
+
+x_rounded = hist(cereal$Sugar, breaks = seq(0, 20, 2), plot = F)
+x_rf = x_rounded$counts/sum(x_rounded$counts)
+x_crf = cumsum(x_rf)
+
+Tabular = cbind.data.frame(`Sugar (g)` = c("< = 2 (g)", 
+                                           "2 - 4 (g)",
+                                           "4 - 6 (g)",
+                                           "6 - 8 (g)",
+                                           "8 - 10 (g)",
+                                           "10 - 12 (g)",
+                                           "12 - 14 (g)",
+                                           "14 - 16 (g)",
+                                           "> 16 (g)"),
+                           Frequency = x_rounded$counts[1:9],
+                           `RF(x)` = x_rf[1:9],
+                           `CRF(x)` = x_crf[1:9])
+
+kable(Tabular, caption = "Frequency table used to construct histogram for the variable \"Sugar (g)\"")
+  
+```
+
+
+<br>
+
+* **(b)** Compute the mean, median, and mode of the variable ``Sugar (g)"
+<span style="color: red;">Using the raw data there are 5 modes each with a frequency of 2
+mode(s) $= 3,4,11,12,14$</span>
+<span style="color: red;">median $= \frac{9+10}{2} = 9.5$</span>
+<span style="color: red;">$$\bar{x} = \frac{1}{20}\sum_{i=1}^{20} x_i = \frac{(11+18+5+14+...+3+11)}{20} = 8.75$$ (note that the mean may be slightly different if you used the frequency table above</span>
+
+* **(c)** Compute the variance and standard deviation of the variable ``Sugar (g)"
+<span style="color: red;">$$s^2 = \frac{1}{19}\sum_{i=1}^{19} (x-\bar{x})^2 = \frac{(11 - 8.75)^2 + (18-8.75)^2 + ...+(3-8.75)^2 + (11 - 8.75)^2}{19}$$  $$ = \frac{5.06 + 85.56 + ...+33.06+5.06}{19} = 28.3$$ $$s = \sqrt{s^2} = \sqrt{28.3} = 5.32$$</span>
+
+
+* **(d)** Compute the quartiles (Q1, Q2, Q3) and interquartile range of the variable ``Sugar (g)"
+<span style="color: red;">$$Q1 = 4, \ Q2 = \text{median} = 9.5, \ Q3 = 13, \ IQR = 13 - 4 = 9$$</span>
+
+* **(e)** Create a box and whisker plot for the variable ``Sugar (g)" and mark the Q1, Q2, and Q3 quartiles, the median and any potential outliers
+
+```{r, fig.cap = "Boxplot of Sugar content in 20 cereal brands", fig.height=5, fig.width=6, echo=FALSE, message = FALSE, warning=FALSE}
+X = cereal$Sugar
+
+mi = min(X)
+mx = max(X)
+Q1 = (4+4)/2
+med = 9.5
+Q3 = (12+14)/2
+estims = c(mi, Q1, med, Q3, mx)
+boxplot(X, horizontal = TRUE, axes = TRUE, staplewex = 1)
+text(x=estims-0.1, labels =paste(c("Min", "Q1","Median", "Q3", "Max"), 
+                                   estims, sep = "="), y=1.25, cex = 0.68)
+text(x=Q3-Q1, labels =paste("IQR", Q3 - Q1, sep = " = "), y=1.5, cex = 0.68)
+```
+
+* **(f)** Plot the Cumulative Distribution of the variable ``Sugar (g)"
+
+```{r, fig.cap = "Cumulative Distribution of Sugar (g)", fig.height=3, fig.width=4, echo=FALSE, message = FALSE, warning=FALSE}
+
+A=ggplot()+geom_step(aes(x = x_rounded$breaks[2:10], y = x_crf[1:9]), size = 0.8)+
+  geom_point(aes(x = x_rounded$breaks[2:10], y = x_crf[1:9]), size = 3)+
+  theme_hc()+
+  xlab('Sugar (g)')+
+  ylab('Cumulative Relative Frequency')+
+  scale_x_continuous(breaks = seq(0, 20, 2))+
+  scale_y_continuous(breaks = seq(0, 1, 0.1))+
+  theme(axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        axis.title.x = element_text(size = 12))
+  
+  plot(A)
+```
+
+* **(g)** What proportion of cereals have a sugar content less than or equal to 10 grams?
+<span style="color: red;">$$55\%$$</span>
+
+
+
+<!-- **(16)** True or False: The range is the best descriptive statistic for the spread of a distribution (Explain your answer) -->
+
+<!-- **(17)** True or False: The standard deviation $s$ is the square of the variance -->
+<!-- * **(a)** True -->
+<!-- * **(b)** False -->
+
+<!-- **(18)** True or False: A **deviation} is defined as the most frequent value in a distribution -->
+<!-- * **(a)** True -->
+<!-- * **(b)** False -->
+
+
+
+
+
+
+
+
+
+
+
+
+

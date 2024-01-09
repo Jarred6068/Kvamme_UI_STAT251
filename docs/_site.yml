@@ -24,8 +24,14 @@ navbar:
           href: lecturemenu3.html
     - text: 'Homeworks'
       menu:
-        - text: 'Week 1 Homework'
-          href: week1homeworks.html
+        - text: 'Assignments'
+          menu:
+          - text: 'Homework 1'
+            href: homeworks/week1homework.html
+        - text: 'Solutions'
+          menu: 
+          - text: 'Hmwk 1 Solutions'
+            href: homeworks/week1homework_solns.html
     - text: 'Exam Study Guides'
       menu:
         - text: 'Exam 1 Study Guide'
@@ -38,8 +44,12 @@ navbar:
         href: data.html
     - text: 'Resources'
       menu:
-        - text: 'Histogram maker'
-          href: histogram_viewer/index.html
+        - text: 'Apps'
+          menu:
+          - text: 'Histogram maker'
+            href: histogram_viewer/index.html
+        - text: 'SAC schedule'
+          href: sac_scedule.html
 
 output:
   html_document:
