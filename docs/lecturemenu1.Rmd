@@ -22,7 +22,7 @@ library(ggpubr)
 
 * **data** are pieces of factual information, such as measurements which are recorded and used for the purpose of analysis. In summary, data is the raw information from which statistics are created. Statistics are the results of data analysis - its interpretation and presentation. 
 
-* Typically data are represented in a square table called a data table. The fundamental unit of data is an **observation** - a single __row__ of data table representing a set of measurements on one or more __variables__. 
+* Typically data are represented in a square table called a data table. The fundamental unit of data is an **observation** - a single __row__ of a data table representing a set of measurements on one or more __variables__. 
 
 * A **variable** is a characteristic of an observation. In a typical data table, the variables are represented by the __columns__ of the data table.  
 
@@ -65,9 +65,9 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 * Variables are distinguished by the type of information they represent. One basic distinction is between **qualitative** variables and **quantitative** variables. 
 
-  * **qualitative variables** - also called categorical variables. Qualitative variables represent non numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the stormtrooper data above?
+  * **qualitative variables** - also called categorical variables, represent non numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the stormtrooper data above?
 
-  * **quantitative variables** - Sometimes referred to as numeric variables. Quantitative variables are numerical characteristics which have an inherent order or ranking. In the egyptian skull data which variables are quantitative variables?
+  * **quantitative variables** - Sometimes referred to as numeric variables, are numerical characteristics which have an inherent order or ranking. In the Egyptian skull data which variables are quantitative variables?
 
 * Qualitative variables can be further divided between **nominal** and **ordinal** variables. 
 
@@ -79,9 +79,9 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
     
 * Quantitative variables can also be further divided between two sub-categories: **discrete** and **continuous** variables.
 
-  * **discrete variables** - these quantitative variables that take on distinct, countable values (i.e whole numbers or integers) such $0,1,2,3 ...$. Any quantitative variable that represents counts of objects/items are quantitative discrete. For example, age is a count of the number of year someone/something has been alive. 
+  * **discrete variables** - are quantitative variables that take on distinct, countable values (i.e whole numbers or integers) such $0,1,2,3 ...$. Any quantitative variable that represents counts of objects/items are quantitative discrete. For example, age is a count of the number of year someone/something has been alive. 
 
-  * **continuous variables** - variables that can take on infinite number of values within an interval of any two specific values (e.g temperature $^{\circ} C / ^{\circ} F$, height in inches, speed in miles per hour).
+  * **continuous variables** - are variables that can take on infinite number of values within an interval of any two specific values (e.g temperature $^{\circ} C / ^{\circ} F$, height in inches, speed in miles per hour).
 
 
 
@@ -92,9 +92,7 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 * For many populations, it is very difficult or even impossible to observe all members of the population. To tackle this challenge statistics uses **samples** to learn about the properties of a population. A **sample** is a subset of the population that is actually observed. You can think of a sample as a set of the observed observations. 
 
-  * The idea of
-Sampling is to select a portion or individuals
-or objects that are representative of the population
+  * The idea of sampling is to select a portion of individuals or objects that are representative of the population
 
    * To illustrate the distinction between a sample and a population, let's take the example of a wildlife biologist researching the paw size of mountain lions in the state of Idaho. In this scenario, the population being examined encompasses all the mountain lions residing in the state, totaling approximately 2,000 individuals. However, due to the considerable challenges and expenses associated with tracking and observing every existing member, the biologist opts to document the paw size of a more manageable subset of 20 mountain lions. The 20 mountain lions for which the biologist records paw sizes constitute a sample from the larger population of mountain lions.
    
@@ -103,9 +101,9 @@ or objects that are representative of the population
 
 ### Statistics vs. Parameters
 
-* Statistics primarily deals with **estimation** – the process of inferring an unknown quantity about a population using set of sample data. A **estimator** is a mathematical function that **estimates** a given **statistic** based on observed data. 
+* Statistics primarily deals with **estimation** – the process of inferring an unknown quantity about a population using set of sample data. An **estimator** is a mathematical function that **estimates** a given **statistic** based on observed data. 
   
-  * Therefore, a **statistic** is a <u>numerical characteristic of a sample</u> that represents a property of the population called a **parameter**. Parameters are <u>numerical characteristic of a population</u> that can be estimated via a statistic. 
+  * Therefore, a **statistic** is a <u>numerical characteristic of a sample</u> that represents a property of the population called a **parameter**. Parameters are <u>numerical characteristics of a population</u> that can be estimated via a statistic. 
   
 * We will use Greek letters such as $\theta, \sigma, \mu$ to represent parameters. These symbols with "hats" like $\hat{\theta}, \hat{\sigma}, \hat{\mu}$ are used to represent estimators/statistics.
 
@@ -116,7 +114,7 @@ or objects that are representative of the population
   $$ \hat{p} = \frac{\text{All observations in category}}{N}$$
   The sample proportion $\hat{p}$ is used to estimate the population proportion $p$ 
   
-  * The **arithmetic mean** (sometimes called average) describes the center of a set of population or set of data. The **sample mean** $\bar{x}$ describes the central tendency of the observation in the sample. The <i>population mean</i> describes the central tendency of the entire population. The sample mean is defined mathematically as 
+  * The **arithmetic mean** (sometimes called average) describes the center of a population or set of data. The **sample mean** $\bar{x}$ describes the central tendency of the observation in the sample. The <i>population mean</i> describes the central tendency of the entire population. The sample mean is defined mathematically as 
   $$\bar{x} =  \sum_{i = 1}^{n} \frac{x_i}{n}$$
   The population mean is defined mathematically as
   $$ \mu = \sum_{i = 1}^{N} \frac{x_i}{N}$$
@@ -134,7 +132,7 @@ Recall that statistics is a science that deals with the collection, description,
 
 * **Descriptive statistics** - refers to a organizational step that occurs before we do any analysis or make any decisions/predictions. It includes describing the observations in a sample using  statistics or describing a population using parameters. It can also include graphical summaries of a sample or population. 
 
-* **Inferential statistics** - refers to using a sample (usually a statistic) to answer a question about a population such as estimating the value of a parameter. It includes estimating paramters, making decisions, and prediction. 
+* **Inferential statistics** - refers to using a sample (usually a statistic) to answer a question about a population such as estimating the value of a parameter. It includes estimating parameters, making decisions, and prediction. 
 
 * **Key Point:** Descriptive statistics can be applied to samples or populations. Inferential statistics are only applied to samples in order to make inferences about a population.  
 
