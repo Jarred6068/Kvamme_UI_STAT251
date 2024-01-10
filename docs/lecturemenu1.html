@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -390,8 +392,932 @@ $(document).ready(function () {
 </div>
 
 
-<div id="notes-are-written-here" class="section level2">
-<h2>Notes are written here</h2>
+<div id="lecture-1" class="section level1">
+<h1>Lecture 1</h1>
+<div id="data-observations-variables" class="section level3">
+<h3>Data, observations, variables</h3>
+<ul>
+<li><p><strong>Statistics</strong> is a scientific field that deals with
+the collection, description, analysis, interpretation, and presentation
+of data. We see and use data in nearly all aspects of our everyday
+lives: politics, medicine, forecasting, finance, marketing, etc. In
+short, we use statistics to ask and answer scientific questions and make
+predictions. To put it another way, statistics is the science of
+<strong>data</strong></p></li>
+<li><p><strong>data</strong> are pieces of factual information, such as
+measurements which are recorded and used for the purpose of analysis. In
+summary, data is the raw information from which statistics are created.
+Statistics are the results of data analysis - its interpretation and
+presentation.</p></li>
+<li><p>Typically data are represented in a square table called a data
+table. The fundamental unit of data is an <strong>observation</strong> -
+a single <strong>row</strong> of data table representing a set of
+measurements on one or more <strong>variables</strong>.</p></li>
+<li><p>A <strong>variable</strong> is a characteristic of an
+observation. In a typical data table, the variables are represented by
+the <strong>columns</strong> of the data table.</p></li>
+</ul>
+<p>The following example are fictional data consisting of 20
+observations of the height, age, and blaster accuracy of stormtroopers
+graduating from the imperial stormtrooper academy.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Identification Number
+</th>
+<th style="text-align:left;">
+Duty Posting
+</th>
+<th style="text-align:right;">
+Height (cm)
+</th>
+<th style="text-align:right;">
+Age
+</th>
+<th style="text-align:right;">
+Blaster Accuracy
+</th>
+<th style="text-align:left;">
+Rank
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+FN-2414
+</td>
+<td style="text-align:left;">
+Berchest Station
+</td>
+<td style="text-align:right;">
+184.9
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+0.62
+</td>
+<td style="text-align:left;">
+PV1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2462
+</td>
+<td style="text-align:left;">
+Death Star
+</td>
+<td style="text-align:right;">
+193.3
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:left;">
+PV2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2178
+</td>
+<td style="text-align:left;">
+Death Star
+</td>
+<td style="text-align:right;">
+191.0
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+<td style="text-align:left;">
+CPL
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2525
+</td>
+<td style="text-align:left;">
+Lothal
+</td>
+<td style="text-align:right;">
+186.7
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+0.61
+</td>
+<td style="text-align:left;">
+PFC
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2194
+</td>
+<td style="text-align:left;">
+Corellia
+</td>
+<td style="text-align:right;">
+194.6
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:left;">
+PV1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2937
+</td>
+<td style="text-align:left;">
+Fondor Ship Yard
+</td>
+<td style="text-align:right;">
+191.9
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+<td style="text-align:left;">
+PV2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2817
+</td>
+<td style="text-align:left;">
+Fondor Ship Yard
+</td>
+<td style="text-align:right;">
+189.5
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.59
+</td>
+<td style="text-align:left;">
+CPL
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2117
+</td>
+<td style="text-align:left;">
+Death Star
+</td>
+<td style="text-align:right;">
+193.5
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:left;">
+PFC
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2298
+</td>
+<td style="text-align:left;">
+Corellia
+</td>
+<td style="text-align:right;">
+193.4
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:left;">
+PV1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2228
+</td>
+<td style="text-align:left;">
+Berchest Station
+</td>
+<td style="text-align:right;">
+193.2
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:left;">
+PV2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2243
+</td>
+<td style="text-align:left;">
+Death Star
+</td>
+<td style="text-align:right;">
+192.8
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.69
+</td>
+<td style="text-align:left;">
+CPL
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2013
+</td>
+<td style="text-align:left;">
+Corellia
+</td>
+<td style="text-align:right;">
+192.3
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+0.62
+</td>
+<td style="text-align:left;">
+PFC
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2373
+</td>
+<td style="text-align:left;">
+Lothal
+</td>
+<td style="text-align:right;">
+190.3
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.60
+</td>
+<td style="text-align:left;">
+PV1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2664
+</td>
+<td style="text-align:left;">
+Berchest Station
+</td>
+<td style="text-align:right;">
+189.5
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:left;">
+PV2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2601
+</td>
+<td style="text-align:left;">
+Fondor Ship Yard
+</td>
+<td style="text-align:right;">
+189.2
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.73
+</td>
+<td style="text-align:left;">
+CPL
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2602
+</td>
+<td style="text-align:left;">
+Lothal
+</td>
+<td style="text-align:right;">
+188.2
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.62
+</td>
+<td style="text-align:left;">
+PFC
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2767
+</td>
+<td style="text-align:left;">
+Death Star
+</td>
+<td style="text-align:right;">
+189.8
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.76
+</td>
+<td style="text-align:left;">
+PV1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2708
+</td>
+<td style="text-align:left;">
+Death Star
+</td>
+<td style="text-align:right;">
+186.3
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.61
+</td>
+<td style="text-align:left;">
+PV2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2090
+</td>
+<td style="text-align:left;">
+Fondor Ship Yard
+</td>
+<td style="text-align:right;">
+197.7
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+0.64
+</td>
+<td style="text-align:left;">
+CPL
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FN-2952
+</td>
+<td style="text-align:left;">
+Corellia
+</td>
+<td style="text-align:right;">
+194.5
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+0.57
+</td>
+<td style="text-align:left;">
+PFC
+</td>
+</tr>
+</tbody>
+</table>
+<p>The following are 15 observations of study done on the morphology of
+Egyptian skulls from 5 epochs of Egyptian history. For each skull, the
+epoch, and several measurements characterizing the shape of the skull
+are recorded.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Epoch
+</th>
+<th style="text-align:right;">
+maximal breadth
+</th>
+<th style="text-align:right;">
+basiregmatic height
+</th>
+<th style="text-align:right;">
+basilveolar length
+</th>
+<th style="text-align:right;">
+nasal height
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c200BC
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:right;">
+130
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:right;">
+53
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c3300BC
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+134
+</td>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c4000BC
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+138
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c4000BC
+</td>
+<td style="text-align:right;">
+124
+</td>
+<td style="text-align:right;">
+138
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c200BC
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+99
+</td>
+<td style="text-align:right;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c4000BC
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+134
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c1850BC
+</td>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c3300BC
+</td>
+<td style="text-align:right;">
+129
+</td>
+<td style="text-align:right;">
+126
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c4000BC
+</td>
+<td style="text-align:right;">
+132
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c200BC
+</td>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:right;">
+136
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c200BC
+</td>
+<td style="text-align:right;">
+141
+</td>
+<td style="text-align:right;">
+130
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c3300BC
+</td>
+<td style="text-align:right;">
+126
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c200BC
+</td>
+<td style="text-align:right;">
+129
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c4000BC
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:right;">
+47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c3300BC
+</td>
+<td style="text-align:right;">
+131
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:right;">
+51
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="types-of-variables" class="section level3">
+<h3>Types of variables</h3>
+<ul>
+<li><p>Variables are distinguished by the type of information they
+represent. One basic distinction is between <strong>qualitative</strong>
+variables and <strong>quantitative</strong> variables.</p>
+<ul>
+<li><p><strong>qualitative variables</strong> - also called categorical
+variables. Qualitative variables represent non numeric qualities or
+characteristics that can be placed in distinct categories. What are the
+qualitative variables in the stormtrooper data above?</p></li>
+<li><p><strong>quantitative variables</strong> - Sometimes referred to
+as numeric variables. Quantitative variables are numerical
+characteristics which have an inherent order or ranking. In the egyptian
+skull data which variables are quantitative variables?</p></li>
+</ul></li>
+<li><p>Qualitative variables can be further divided between
+<strong>nominal</strong> and <strong>ordinal</strong> variables.</p>
+<ul>
+<li><p><strong>nominal variables</strong> - non numeric qualities or
+characteristics that can be placed in distinct categories that do not
+have a natural ordering. Examples of variables that cannot be ordered
+are gender, race, eye color, or political party. In the stormtrooper
+data, which variables would be considered nominal variables?</p></li>
+<li><p><strong>ordinal variables</strong> - non numeric qualities or
+characteristics that can be placed in distinct categories with an
+inherent ordering. Examples include education level (i.e bachelors,
+masters, PhD) or temperatures (i.e cool, warm, hot).</p>
+<ul>
+<li><strong>Likert scale</strong> responses are a common example of
+ordinal variables that are typically found in surveys. A <strong>Likert
+scale</strong> is a rating scale used to measure opinions, attitudes, or
+behaviors. It consists of a statement or a question, followed by a
+series of five or seven answer statements. Respondents choose the option
+that best corresponds with how they feel about the statement or
+question.</li>
+</ul></li>
+</ul></li>
+<li><p>Quantitative variables can also be further divided between two
+sub-categories: <strong>discrete</strong> and
+<strong>continuous</strong> variables.</p>
+<ul>
+<li><p><strong>discrete variables</strong> - these quantitative
+variables that take on distinct, countable values (i.e whole numbers or
+integers) such <span class="math inline">\(0,1,2,3 ...\)</span>. Any
+quantitative variable that represents counts of objects/items are
+quantitative discrete. For example, age is a count of the number of year
+someone/something has been alive.</p></li>
+<li><p><strong>continuous variables</strong> - variables that can take
+on infinite number of values within an interval of any two specific
+values (e.g temperature <span class="math inline">\(^{\circ} C /
+^{\circ} F\)</span>, height in inches, speed in miles per
+hour).</p></li>
+</ul></li>
+</ul>
+</div>
+<div id="populations-and-samples" class="section level3">
+<h3>Populations and samples</h3>
+<ul>
+<li><p>Statistics is generally concerned with studying properties of a
+<strong>population</strong>. You can think of a population as a
+collection of all possible persons, things, or objects that you are
+studying. Another way to think of a population is as a collection of all
+possible observations of a variable - both observed and unobserved.</p>
+<ul>
+<li>A population can be finite (countable) or infinite (uncountable).
+Many populations are so large that we treat them as if they are
+infinite. For example, the population of students taking STAT 251
+section 03 is a finite set of 60 individuals. Alternatively, the number
+of germs living in a patients body is effectively infinite.</li>
+</ul></li>
+<li><p>For many populations, it is very difficult or even impossible to
+observe all members of the population. To tackle this challenge
+statistics uses <strong>samples</strong> to learn about the properties
+of a population. A <strong>sample</strong> is a subset of the population
+that is actually observed. You can think of a sample as a set of the
+observed observations.</p>
+<ul>
+<li><p>The idea of Sampling is to select a portion or individuals or
+objects that are representative of the population</p></li>
+<li><p>To illustrate the distinction between a sample and a population,
+let’s take the example of a wildlife biologist researching the paw size
+of mountain lions in the state of Idaho. In this scenario, the
+population being examined encompasses all the mountain lions residing in
+the state, totaling approximately 2,000 individuals. However, due to the
+considerable challenges and expenses associated with tracking and
+observing every existing member, the biologist opts to document the paw
+size of a more manageable subset of 20 mountain lions. The 20 mountain
+lions for which the biologist records paw sizes constitute a sample from
+the larger population of mountain lions.</p></li>
+</ul></li>
+<li><p>In statistics we typically represent the size (i.e number of
+observations) of a population with the letter <span
+class="math inline">\(N\)</span> and the size of a sample with the
+letter <span class="math inline">\(n\)</span>. In the above example of
+the wildlife biologist studying mountain lion paw size, the population
+has size <span class="math inline">\(N = 2,000\)</span> and the sample
+the biologist took was of size <span class="math inline">\(n =
+20\)</span>.</p></li>
+</ul>
+</div>
+<div id="statistics-vs.-parameters" class="section level3">
+<h3>Statistics vs. Parameters</h3>
+<ul>
+<li><p>Statistics primarily deals with <strong>estimation</strong> – the
+process of inferring an unknown quantity about a population using set of
+sample data. A <strong>estimator</strong> is a mathematical function
+that <strong>estimates</strong> a given <strong>statistic</strong> based
+on observed data.</p>
+<ul>
+<li>Therefore, a <strong>statistic</strong> is a <u>numerical
+characteristic of a sample</u> that represents a property of the
+population called a <strong>parameter</strong>. Parameters are
+<u>numerical characteristic of a population</u> that can be estimated
+via a statistic.</li>
+</ul></li>
+<li><p>We will use Greek letters such as <span
+class="math inline">\(\theta, \sigma, \mu\)</span> to represent
+parameters. These symbols with “hats” like <span
+class="math inline">\(\hat{\theta}, \hat{\sigma}, \hat{\mu}\)</span> are
+used to represent estimators/statistics.</p></li>
+<li><p>Two statistics that we will deal with in this course are the
+<strong>sample mean</strong> and <strong>sample proportion</strong>.</p>
+<ul>
+<li><p>A <strong>proportion</strong> describes the fraction of a whole
+that represent some property or category. It can be expressed as a value
+between <span class="math inline">\(0\)</span> and <span
+class="math inline">\(1\)</span> or as a percentage. The <strong>sample
+proportion</strong> <span class="math inline">\(\hat{p}\)</span> is the
+fraction of observations in the sample that represent a particular
+category. The <i>population proportion</i> is the fraction of
+observations in the population that represent a particular category. The
+sample proportion is defined mathematically as <span
+class="math display">\[ \hat{p} = \frac{\text{Number of observed
+observations in category}}{n}\]</span> The population proportion is
+defined mathematically as <span class="math display">\[ \hat{p} =
+\frac{\text{All observations in category}}{N}\]</span> The sample
+proportion <span class="math inline">\(\hat{p}\)</span> is used to
+estimate the population proportion <span
+class="math inline">\(p\)</span></p></li>
+<li><p>The <strong>arithmetic mean</strong> (sometimes called average)
+describes the center of a set of population or set of data. The
+<strong>sample mean</strong> <span
+class="math inline">\(\bar{x}\)</span> describes the central tendency of
+the observation in the sample. The <i>population mean</i> describes the
+central tendency of the entire population. The sample mean is defined
+mathematically as <span class="math display">\[\bar{x} =  \sum_{i =
+1}^{n} \frac{x_i}{n}\]</span> The population mean is defined
+mathematically as <span class="math display">\[ \mu = \sum_{i = 1}^{N}
+\frac{x_i}{N}\]</span> The sample mean <span
+class="math inline">\(\bar{x}\)</span> is used to estimate the
+population mean <span class="math inline">\(\mu\)</span></p></li>
+</ul></li>
+<li><p>The tools for estimation allow us to approximate almost
+everything about populations using only samples. With estimates we
+can:</p>
+<ul>
+<li>Assess differences among groups and relationships between
+variables.</li>
+<li>Describe populations. Examples of estimates include averages,
+proportions, measures of variation, and measures of relationship.</li>
+<li>Then we can ask and answer questions or formally, test and evaluate
+hypotheses.</li>
+</ul></li>
+</ul>
+</div>
+<div id="descriptive-vs-inferential-statistics" class="section level3">
+<h3>Descriptive vs Inferential Statistics</h3>
+<p>Recall that statistics is a science that deals with the collection,
+description, analysis, interpretation, and presentation of data. The
+collection of data is referred to as the <strong>design</strong>. In
+statistics, design concerns the formulation of statistical questions and
+the process/method in which we plan to collect data to answer our
+statistical question.</p>
+<ul>
+<li><p><strong>Descriptive statistics</strong> - refers to a
+organizational step that occurs before we do any analysis or make any
+decisions/predictions. It includes describing the observations in a
+sample using statistics or describing a population using parameters. It
+can also include graphical summaries of a sample or population.</p></li>
+<li><p><strong>Inferential statistics</strong> - refers to using a
+sample (usually a statistic) to answer a question about a population
+such as estimating the value of a parameter. It includes estimating
+paramters, making decisions, and prediction.</p></li>
+<li><p><strong>Key Point:</strong> Descriptive statistics can be applied
+to samples or populations. Inferential statistics are only applied to
+samples in order to make inferences about a population.</p></li>
+</ul>
+</div>
 </div>
 
 
