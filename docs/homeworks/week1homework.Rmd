@@ -1,8 +1,8 @@
 ---
 title: "Homework 1 Problems"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 always_allow_html: true
 ---
 
@@ -120,7 +120,15 @@ Use the table to answer the questions a and b
 
 
 
-${\bf (9)}$
+
+
+${\bf (9)}$ A farmer in Idaho is interested in the number of rainy days in a given year so he records the number of rainy $R$, cloudy $C$ and sunny $S$ days over two weeks in $May$. His observations are $$\{R,R,C,C,C,S,S,C,R,R,C,R,S,S\}$$. Use the farmers observations to answer the following questions.  
+
+* **(a)** Based on the farmers observations, what proportion of days were rainy? 
+
+* **(b)** Is the proportion in part **(a)** a statistic or a parameter? why?
+
+* **(c)** What population is the farmer studying? is it a finite or infinite population?
 
 
 

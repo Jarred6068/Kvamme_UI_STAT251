@@ -152,8 +152,14 @@ ggplot(data = spam.dist, aes(x = `Type of Spam`, y = sort(Percentage, decreasing
 
 
 
-${\bf (9)}$
+${\bf (9)}$ A farmer in Idaho is interested in the number of rainy days in a given year so he records the number of rainy $R$, cloudy $C$ and sunny $S$ days over two weeks in $May$. His observations are $$\{R,R,C,C,C,S,S,C,R,R,C,R,S,S\}$$. Use the farmers observations to answer the following questions.  
 
+* **(a)** Based on the farmers observations, what proportion of days were rainy? 
+<span style="color: red;">$$\hat{p}_{\text{rainy}} = \frac{5}{14} = 0.36$$ </span>
+* **(b)** Is the proportion in part **(a)** a statistic or a parameter? why?
+<span style="color: red;">It is a statistic because it was computed from a sample of 14 observations of the weather</span>
+* **(c)** What population is the farmer studying? is it a finite or infinite population?
+<span style="color: red;">The population is all 365 days in a given year. It is finite</span>
 
 
 ${\bf (10)}$ Consider the following data from a survey conducted on college students in the state of Florida. As part of their research, surveyors recorded the high school performance (measured in grade point average - GPA) of 35 college students from across the state. For your convenience the data have been sorted from least to greatest:
