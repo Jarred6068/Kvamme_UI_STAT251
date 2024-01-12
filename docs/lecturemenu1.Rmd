@@ -193,6 +193,8 @@ Formally, a **distribution** is a function that gives (a) the possible values of
   
 * We can also use the <i> cumulative relative frequency </i> to describe how often a variable occurs. The **cumulative relative frequency** is the proportion of values that are <i> less than or equal to </i> a given value in a distribution. 
 
+   * **Note**: As we say with the example about distracted teens, we can talk about the distribution of a categorical variable as well, however we <i>may not use</i> the cumulative relative frequency if there is no natural order to the variable values.  
+
 Consider the following hypothetical set of $10$ exam scores (out of 10 points) for students in a statistics course $$\{5, 6, 6, 7, 7, 7, 8, 9, 9, 10\}$$
 
 * the possible test scores are $5, 6, 7, 8, 9,$ and $10$. Lets try computing the frequency, relative frequency, and cumulative relative frequency for students who score a 6 on the exam. 
