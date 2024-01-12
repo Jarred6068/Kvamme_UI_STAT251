@@ -14,7 +14,7 @@ library(ggpubr)
 ```
 
 
-# Lecture 1
+# Lecture 1 - Introduction to statistical methods
 
 ### Data, observations, variables
 
@@ -136,3 +136,81 @@ Recall that statistics is a science that deals with the collection, description,
 
 * **Key Point:** Descriptive statistics can be applied to samples or populations. Inferential statistics are only applied to samples in order to make inferences about a population.  
 
+# Lecture 2 - Describing and Visualizing Distributions
+
+As we learned in the previous lecture, descriptive statistics is the first step to statistical analysis and involves the summary and organization of data. One of the main ways we can summarize data is describe the characteristics of the **distribution** of the variable(s) in the data. A distribution tells us something about what kinds of values a variable can have and how often they occur. 
+
+* Consider the following example: Are teens distracted by their cell phones? A study conducted by the Pew Research center surveyed 743 U.S teenagers ages 13-17 to understand how cell phones in class impacted their ability to concentrate. Each student was asked to rate the impact of cell phone use on their concentration based on a Likert scale. The data and a plot of the distribution of survey responses are given below
+
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+Student = c('1', '2', '3', '4', '$\\vdots$', '743')
+Age = c('13', '13', '15', '17', '$\\vdots$', '16')
+Response = c('Never','Sometimes', 'Never', 'Often', '$\\vdots$', 'Rarely')
+
+kable(cbind.data.frame(Student, Age, Response), format = 'html', digits = 2, row.names = F, booktabs = T, escape = FALSE)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+* What type of variable is <i>Age</i>? 
+* What type of variable is <i>Response</i>?
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=4, fig.cap = 'Figure 1. Distribution of student responses to survey question \" Are You Losing Focus In Class By Checking Your Cell Phone? \" '}
+#student attention likert responses
+set.seed(123)
+teen.data = cbind.data.frame(Response = factor(c("Often", "Sometimes", "Rarely", 'Never'),
+                                               levels = c('Never', "Rarely", "Sometimes", "Often")),
+                             `Proportion of Teens`= c(0.08,0.24,0.29,0.39))
+
+P1 = ggplot(data = teen.data, aes(x = Response, y = `Proportion of Teens`, fill = Response))+
+  geom_bar(stat = 'identity', color = 'black', size = 0.8)+
+  theme_hc()+
+  scale_y_continuous(breaks = seq(0, 0.5, 0.1))+
+  coord_flip()
+
+plot(P1+scale_fill_brewer(palette = 'Reds')+theme(legend.position = 'none')+
+       theme(axis.text.x = element_text(size = 15))+
+       theme(axis.text.y = element_text(size = 15, angle = 45))+
+       theme(axis.title.x = element_text(size = 18))+
+       theme(axis.title.y = element_text(size = 18))+
+       ggtitle("Are You Losing Focus In Class By Checking Your Cell Phone?"))
+
+
+```
+
+* Looking at the distribution of survey responses above, would you say that most teens feel they are distracted by their cell phones?
+
+## Distributions
+
+Formally, a **distribution** is a function that gives (a) the possible values of a variable and (b) how often each value occurs. The <i> how often </i> is usually described using <i> frequency </i> or <i> relative frequency </i>. 
+
+  * The **frequency** of a given value is simply a count of the number of times that the given values occurs
+  * The **relative frequency** of a given value is the proportion of times that the given value occurs
+  
+* We can also use the <i> cumulative relative frequency </i> to describe how often a variable occurs. The **cumulative relative frequency** is the proportion of values that are <i> less than or equal to </i> a given value in a distribution. 
+
+Consider the following hypothetical set of $10$ exam scores (out of 10 points) for students in a statistics course $$\{5, 6, 6, 7, 7, 7, 8, 9, 9, 10\}$$
+
+* the possible test scores are $5, 6, 7, 8, 9,$ and $10$. Lets try computing the frequency, relative frequency, and cumulative relative frequency for students who score a 6 on the exam. 
+  * The frequency for an exam score of $6$ is $freq(6) = 2$ because $2$ of the $10$ students had an exam score of $6$. 
+  
+  * Similarly, the relative frequency for an exam score of $6$ is $2/10 = 0.2$. 
+
+  * The cumulative relative frequency for an exam score of $6$ will be the total number of values in the data that are less than or equal to the value $6$. This will be the frequency of $5$'s plus the frequency of 6's which will be $1 + 2 = 3/10$ or $0.3$. Alternatively we could simply add the relative frequency for an exam score of $5$ to the relative frequency for an exam score of $6$: $0.1 + 0.2 = 0.3$
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+x = c(5, 6, 6, 7, 7, 7, 8, 9, 9, 10)
+cts = summary(as.factor(x))
+rf = cts/length(x)
+
+kable(cbind.data.frame(unique(x), cts, rf, cumsum(rf)), format = 'html', col.names = c('Score','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+* The table above is called a **frequency table** it is a tabular display of the distribution of a variable. 
