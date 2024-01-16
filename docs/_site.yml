@@ -53,11 +53,15 @@ navbar:
         - text: 'Apps'
           menu:
           - text: 'Histogram maker'
-            href: histogram_viewer/index.html
+            href: shiny_apps/HistoPlot/histogram_viewer/index.html
           - text: 'Statistic Calculator'
-            href: shiny_apps/Mean_calculator/webfiles/index.html
+            href: shiny_apps/Stat_calculator/webfiles/index.html
+          - text: 'Frequency Tables'
+            href: shiny_apps/Freq_table/webfiles/index.html
         - text: 'SAC schedule'
           href: sac_scedule.html
+        - text: 'R code'          
+          href: R_code.html
 
 output:
   html_document:
