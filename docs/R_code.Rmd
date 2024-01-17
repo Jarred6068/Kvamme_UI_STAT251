@@ -1,5 +1,5 @@
 ---
-title: "Download R Code From Class Here"
+title: "Example R Code"
 output: html_document
 ---
 

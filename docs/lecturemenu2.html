@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -374,7 +376,7 @@ $(document).ready(function () {
       </ul>
     </li>
     <li>
-      <a href="sac_scedule.html">SAC schedule</a>
+      <a href="sac_schedule.html">SAC schedule</a>
     </li>
     <li>
       <a href="R_code.html">R code</a>
@@ -396,8 +398,737 @@ $(document).ready(function () {
 </div>
 
 
-<div id="notes-are-written-here" class="section level2">
-<h2>Notes are written here</h2>
+<div id="lecture-3-wednesday-jan.-17th-2024" class="section level1">
+<h1>Lecture 3: Wednesday, Jan. 17th 2024</h1>
+<div id="describing-and-visualizing-distributions-continued"
+class="section level2">
+<h2>Describing and Visualizing Distributions (Continued)</h2>
+<p>Recall that descriptive statistics is a preliminary step to
+statistical inference and is concerned with summarizing and
+characterizing a set of data from a <u> sample or population </u>.
+Creating a <strong>frequency table</strong> can be a useful first step
+for describing the variables in a set of data. However, there are many
+other ways to describe or visualize data. This week we will introduce
+some different ways to visualize and describe a set of data and what we
+can learn from these descriptions.</p>
+<div id="more-on-frequency-tables" class="section level3">
+<h3>More on frequency tables</h3>
+<p>Recall that a <strong>frequency table</strong> shows the distribution
+of a variable organized as a table. The first column represents the
+possible values of the variable and the remaining columns describe how
+often each value occurs using frequency, relative frequency, cumulative
+relative frequency (if applicable) or potentially all three.</p>
+<p>We can create a frequency table for any type of variable. However,
+when dealing with quantitative continuous variables we cannot list all
+possible values because the number of possible values is infinite.
+Therefore, we usually have to make a decision about how we want to group
+values of the variable, a process called binning.
+<strong>Binning</strong> is a way to group numbers of more-or-less
+continuous values into a smaller number of “bins”. These bins represent
+a collection of values that fall into a certain range and make listing
+the possible values a lot easier.</p>
+<p>Consider the following trivial example using the quantitative
+continuous variable <span class="math display">\[X = \{1.23, \ 1.38, \
+1.76, \ 2.60, \ 2.60, \ 2.79, \ 2.89, \ 3.12, \ 3.15, \ 3.18, \ 3.65, \
+3.77, \ 3.87, \ 4.12, \ 4.41\}\]</span></p>
+<p>Each observation of the variable <span
+class="math inline">\(X\)</span> is measured with a precision of two
+decimal places, and no two observations in the sample are identical. As
+a result if we simply listed the possible values we would have <span
+class="math inline">\(15\)</span> unique values each with a frequency of
+<span class="math inline">\(1\)</span> which would produce a frequency
+table that wasn’t very informative. We can, instead, use binning to
+extract more meaningful information about the distribution of <span
+class="math inline">\(X\)</span>. Now consider the frequency table using
+binning:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Bin
+</th>
+<th style="text-align:right;">
+Frequency
+</th>
+<th style="text-align:right;">
+Relative Frequency
+</th>
+<th style="text-align:right;">
+Cumulative Relative Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(1 &lt; X \leq 1.5\)</span>
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(1.5 &lt; X \leq 2\)</span>
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(2 &lt; X \leq 2.5\)</span>
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(2.5 &lt; X \leq 3\)</span>
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+0.47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(3 &lt; X \leq 3.5\)</span>
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(3.5 &lt; X \leq 4\)</span>
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+0.87
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(4 &lt; X \leq 4.5\)</span>
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+<p>The following is another example using <span class="math inline">\(n
+= 272\)</span> observations collected on the waiting time between
+eruptions and the duration of the eruption of the Old Faithful geyser in
+Yellowstone National Park, Wyoming, USA.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Duration (min)
+</th>
+<th style="text-align:left;">
+Waiting Time (min)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3.6
+</td>
+<td style="text-align:left;">
+79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1.8
+</td>
+<td style="text-align:left;">
+54
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3.333
+</td>
+<td style="text-align:left;">
+74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2.283
+</td>
+<td style="text-align:left;">
+62
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4.533
+</td>
+<td style="text-align:left;">
+85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2.883
+</td>
+<td style="text-align:left;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4.7
+</td>
+<td style="text-align:left;">
+88
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3.6
+</td>
+<td style="text-align:left;">
+85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Consider a frequency table to describe the distribution of the
+variable <i> waiting time (min) </i></p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Waiting Time
+</th>
+<th style="text-align:right;">
+Frequency
+</th>
+<th style="text-align:right;">
+Relative Frequency
+</th>
+<th style="text-align:right;">
+Cumulative Relative Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(40 &lt; X \leq 45\)</span>
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(45 &lt; X \leq 50\)</span>
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.081
+</td>
+<td style="text-align:right;">
+0.096
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(50 &lt; X \leq 55\)</span>
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+0.121
+</td>
+<td style="text-align:right;">
+0.217
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(55 &lt; X \leq 60\)</span>
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.088
+</td>
+<td style="text-align:right;">
+0.305
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(60 &lt; X \leq 65\)</span>
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+0.051
+</td>
+<td style="text-align:right;">
+0.357
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(65 &lt; X \leq 70\)</span>
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.037
+</td>
+<td style="text-align:right;">
+0.393
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(70 &lt; X \leq 75\)</span>
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+0.099
+</td>
+<td style="text-align:right;">
+0.493
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(75 &lt; X \leq 80\)</span>
+</td>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:right;">
+0.199
+</td>
+<td style="text-align:right;">
+0.691
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(80 &lt; X \leq 85\)</span>
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+0.202
+</td>
+<td style="text-align:right;">
+0.893
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(85 &lt; X \leq 90\)</span>
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+0.085
+</td>
+<td style="text-align:right;">
+0.978
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(90 &lt; X \leq 95\)</span>
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(95 &lt; X \leq 100\)</span>
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>How long does a visitor typically have to wait before seeing old
+faithful erupt?</li>
+<li>Is there more than one “typical” value in this distribution?</li>
+</ul>
+<p><strong>IMPORTANT</strong>: one thing to consider is that grouping
+continuous data into discrete intervals leads to a loss of precision.
+Sometimes this can result in the loss of valuable information present in
+the original data. In addition, how we choose to bin the data (i.e how
+wide we make the intervals) may lead to different, sometimes erroneous,
+conclusions about the distribution and patterns within the data.</p>
+<p>Consider the frequency table for the <i>waiting time (min)</i> with
+only two bins</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Waiting Time
+</th>
+<th style="text-align:right;">
+Frequency
+</th>
+<th style="text-align:right;">
+Relative Frequency
+</th>
+<th style="text-align:right;">
+Cumulative Relative Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(40 &lt; X \leq 70\)</span>
+</td>
+<td style="text-align:right;">
+107
+</td>
+<td style="text-align:right;">
+0.393
+</td>
+<td style="text-align:right;">
+0.393
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(70 &lt; X \leq 100\)</span>
+</td>
+<td style="text-align:right;">
+165
+</td>
+<td style="text-align:right;">
+0.607
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>How does using only two bins/intervals alter your conclusion
+regarding the typical time a visitor must wait before witnessing Old
+Faithful’s eruption?</li>
+</ul>
+</div>
+<div id="features-of-a-distribution" class="section level3">
+<h3>Features of a distribution</h3>
+<p>Descriptive statistics or graphical summaries can tell us a lot about
+the variables in our data. Graphs help us visualize trends in the data,
+identify problematic observations, and can help inform the types of
+analyses we should use. We may be interested in certain features related
+to the distribution(s) of the variable(s) in our data, such as the <i>
+shape, center, and variability </i>.</p>
+<ul>
+<li><p><strong>shape</strong> refers to how observations cluster across
+the range of a variable. Certain aspects to note would be where
+observations are densely packed (values with high frequencies) and where
+are observations sparser (values with low frequencies). This can give us
+a feel for where a typical value would appear and what values may be
+considered “rare” or “extreme”.</p></li>
+<li><p><strong>Center</strong> refers to the ``middle point” on the
+distribution and also supplies information about where does a typical
+value falls.</p></li>
+<li><p><strong>Variability</strong> refers to how tightly observations
+cluster around the center of a distribution. When values are tightly
+packed they are said to have <i> low variability </i> vs when they are
+spread out they are said to have <i> high variability </i></p></li>
+<li><p><strong>modal category</strong> is a feature of qualitative data
+only and refers to the most frequent category of a qualitative
+variable.</p></li>
+</ul>
+</div>
+<div id="graphs-for-qualitative-data" class="section level3">
+<h3>Graphs for qualitative data</h3>
+<p>There are several graphs that can be used to display qualitative
+data. The most common are bar graphs and pie charts.</p>
+<ul>
+<li><p>A <strong>Bar graph</strong> is simple and widely used plot for
+displaying the distribution of categorical variables. Each category is
+represented by a bar, and the height of the bar corresponds to the
+frequency or proportion of observations in that category. When the bars
+are sorted in decreasing frequency it is called a <strong>Pareto
+chart</strong>.</p></li>
+<li><p>A <strong>Pie chart</strong> is useful for illustrating the
+proportional contribution of each category to the whole. Beyond this, it
+is not a particularly useful plot when describing the features of a
+distribution.</p></li>
+<li><p>Ex. Recall the example from <i> Week 1 </i> regarding the Pew
+Research survey asking teens to rate how distracted they are by their
+cell phones. The following are a bar graph and pie chart of student
+responses</p></li>
+</ul>
+<p><img src="lecturemenu2_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+<ul>
+<li>what is the modal category of the variable <i> Response </i>?</li>
+</ul>
+</div>
+<div id="graphs-for-quantitative-data" class="section level3">
+<h3>Graphs for quantitative data</h3>
+<p>There are also many plots that can be used with quantitative data.
+Some of the most commonly used graphs are listed below.</p>
+<ul>
+<li>A <strong>dot plot</strong> shows a dot for each observation placed
+just above the value on the number line for that observation. To
+construct a dot plot:
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>Draw a horizontal line, label it with the name of variable, and mark
+regular values of the variable on the line.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>For each observation, place a dot above its value on the number
+line.</li>
+</ol></li>
+</ul></li>
+<li>A <strong>stem and leaf plot</strong> is similar to a dot plot in
+that it displays individual observations of a variable. Each observation
+in the plot consists of a stem and a leaf. The <i> stem </i> is all of
+the digits except fo the last digit. The <i> leaf </i> is the last
+digit. For example, take the observation <span
+class="math inline">\(12.3\)</span> the stem for this observation is
+<span class="math inline">\(12\)</span> and the leaf is <span
+class="math inline">\(3\)</span>. To construct a stem and leaf plot:
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>Draw a table with two columns and label the left column “Stem” and
+the right column “leaf”.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>Next, sort the observations from smallest to largest and place the
+stems in the left column of the your table in increasing order.</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>in the left column, fill in the leaves of each stem in increasing
+order.</li>
+</ol></li>
+</ul></li>
+</ul>
+<p>Example: A dot plot constructed for the <span class="math inline">\(n
+= 272\)</span> observations collected on the waiting time between
+eruptions and the duration of the eruption of the Old Faithful geyser in
+Yellowstone National Park, Wyoming, USA.</p>
+<p><img src="lecturemenu2_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+<ul>
+<li>Think about the shape of this distribution and how it relates to the
+time that a typical visitor can expect to wait before the geyser erupts.
+Is the result consistent with the frequency table we constructed
+earlier?</li>
+</ul>
+<p>Example: A stem and leaf plot constructed for the <span
+class="math inline">\(n = 272\)</span> observations collected on the
+waiting time between eruptions and the duration of the eruption of the
+Old Faithful geyser in Yellowstone National Park, Wyoming, USA.</p>
+<pre><code>## 
+##   The decimal point is 1 digit(s) to the right of the |
+## 
+##   4 | 3
+##   4 | 55566666777788899999
+##   5 | 00000111111222223333333444444444
+##   5 | 555555666677788889999999
+##   6 | 00000022223334444
+##   6 | 555667899
+##   7 | 00001111123333333444444
+##   7 | 555555556666666667777777777778888888888888889999999999
+##   8 | 000000001111111111111222222222222333333333333334444444444
+##   8 | 55555566666677888888999
+##   9 | 00000012334
+##   9 | 6</code></pre>
+<p>Both dot plots and stem and leaf plots are excellent choices for
+discrete variables with a small to moderate number of observations.
+However, when a variable consists of many observations, has low
+variability, or is continuous, it can be difficult to constructs these
+two plots.</p>
+<ul>
+<li>When dealing with continuous data, it is often necessary to round
+observations to the nearest tenth before constructing either plot.</li>
+</ul>
+<p>The The following are alternatives that work for variables of any
+number of observations.</p>
+</div>
+<div id="more-graphs-for-quantitative-data" class="section level3">
+<h3>More graphs for quantitative data</h3>
+<ul>
+<li><p>A <strong>Histogram</strong> is a specialized type of bar graph.
+It uses bars to portray the frequencies or relative frequencies of the
+possible outcomes for a quantitative variable of either type. The
+histogram uses binning to condense the view of a quantitative variable
+into a smaller set of intervals which makes it particularly useful when
+the number of observations is large. The width of the bins is arbitrary
+but all bins should be the same length and cover all possible values of
+the data. The steps for constructing a histogram are:</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li>Divide the data into non-overlapping intervals (bins) of equal
+length.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li>Compute the frequency of each interval (this is the same as
+constructing the frequency table for the chosen bins)</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li>Label the <i>x</i>-axis with the midpoints or endpoints of each
+interval.</li>
+</ol></li>
+<li><ol start="4" style="list-style-type: decimal">
+<li>Draw a bar over each value or interval with height equal to its
+frequency or relative frequency</li>
+</ol></li>
+</ul></li>
+<li><p>In general, you can choose the the number of bins <span
+class="math inline">\(k\)</span> you wish to use and set the bin width
+<span class="math inline">\(w\)</span> accordingly or alternatively set
+the bin width you want and use the corresponding number of bins.</p>
+<ul>
+<li>formula for choosing the number of bins based on bin width <span
+class="math inline">\(w\)</span></li>
+</ul>
+<p><span class="math display">\[ k = \frac{\max \ x - \min
+x}{w}\]</span></p>
+<ul>
+<li>formula for choosing the width based on the number of bins <span
+class="math inline">\(k\)</span></li>
+</ul>
+<p><span class="math display">\[ w = \frac{\max x - \min
+x}{k}\]</span></p>
+<p>where <span class="math inline">\(\min\)</span> and <span
+class="math inline">\(\max\)</span> denote the smallest and larges
+values of the variable <span class="math inline">\(x\)</span>,
+respectively.</p></li>
+<li><p>How many bins should I use? This is actually a question that has
+received a lot of attention in the scientific literature. Typically, you
+want to be sure that you don’t use “too few” bins as this can causing
+misleading conclusions about the features of the distribution. There are
+several rules that are based on the coverage and number of observations
+of the variable:</p>
+<ul>
+<li><p><strong>square root method</strong> is defined as <span
+class="math inline">\(k = \text{round}(\sqrt{n})\)</span>. This is a
+fairly easy and safe rule for choosing the number of bins to use.
+However, for large sample sizes it can lead to a very large number of
+bins.</p></li>
+<li><p><strong>Sturges Rule</strong> is defined as <span
+class="math inline">\(k = \text{round}(\log_2 n)+1\)</span>. This method
+is not great for a small number of observations (i.e <span
+class="math inline">\(n &lt; 30\)</span>)</p></li>
+<li><p><strong>Rices Rule</strong> is defined as <span
+class="math inline">\(k = 2\sqrt[3]{n}\)</span>. This rule is a nice
+intermediate between Sturges Rule and the square root method.</p></li>
+</ul></li>
+</ul>
+<p><img src="lecturemenu2_files/figure-html/unnamed-chunk-8-1.png" width="768" /></p>
+<p>Consider the following example of histograms constructed for the
+<span class="math inline">\(n = 272\)</span> observations collected on
+the waiting time between eruptions and the duration of the eruption of
+the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.</p>
+<p><img src="lecturemenu2_files/figure-html/unnamed-chunk-9-1.png" width="864" /></p>
+<p>If you’d like to read more about scaling interval widths you can
+check out these references:</p>
+<p><a
+href="https://scholar.archive.org/work/l44cm5gq65f4rojkkaey6cl5bq/access/wayback/http://www.esalq.usp.br/departamentos/lce/arquivos/aulas/2013/LCE0216/Sturges1926.pdf">Sturges,
+Herbert A.”The choice of a class interval.” Journal of the american
+statistical association 21.153 (1926): 65-66.</a></p>
+<p><a href="https://open.umn.edu/opentextbooks/formats/651">Lane, David.
+Online statistics education: A multimedia course of study. Association
+for the Advancement of Computing in Education (AACE), 2003. – Chapter 2
+“Graphing Distributions</a></p>
+</div>
+</div>
 </div>
 
 
