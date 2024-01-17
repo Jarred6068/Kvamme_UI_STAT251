@@ -13,8 +13,12 @@ library(ggthemes)
 library(ggpubr)
 ```
 
-# Lecture 3: Wednesday, Jan. 17th 2024 
+# CLASS CANCELED: Wednesday, Jan. 17th 2024 
+<br>
+<br>
+<br>
 
+# Lecture 3: Friday, Jan. 19th 2024 
 ## Describing and Visualizing Distributions (Continued)
 
 Recall that descriptive statistics is a preliminary step to statistical inference and is concerned with summarizing and characterizing a set of data from a <u> sample or population </u>. Creating a **frequency table** can be a useful first step for describing the variables in a set of data. However, there are many other ways to describe or visualize data. This week we will introduce some different ways to visualize and describe a set of data and what we can learn from these descriptions.
