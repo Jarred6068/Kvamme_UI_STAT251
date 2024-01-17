@@ -1,5 +1,5 @@
 ---
-title: "SAC Schedule"
+title: "Statistics Assistance Center (SAC) Schedule"
 output:
   html_document: default
 ---
