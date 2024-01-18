@@ -16,9 +16,11 @@ as .pdf
 <a href="./lecture_slides/Week 1/Week1_Lecture1_Slides_1_10_2024.pptx">Download File</a>
 as powerpoint
 
-### Lecture 2 - Lecture 3
+### Lecture 2 
 <a href="./lecture_slides/Week 1/Week1_Lecture2_Slides_1_12_2024.pdf">Download File</a>
 as .pdf
 
 <a href="./lecture_slides/Week 1/Week1_Lecture2_Slides_1_12_2024.pptx">Download File</a>
 as powerpoint
+
+### Lecture 3
