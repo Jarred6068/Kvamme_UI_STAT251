@@ -138,6 +138,7 @@ server <- function(input, output){
                        color = 'black', 
                        fill = input$fill,
                        binwidth = kw[[3]])+
+        theme(axis.text = element_text(size = 12))+
         xlab(input$xlabel_keystroke)+
         ylab(input$ylabel_keystroke)+
         ggtitle(plot_title, subtitle = paste0(kw[[1]]))
@@ -148,6 +149,7 @@ server <- function(input, output){
                                 color = 'black', 
                                 fill = input$fill,
                                 dotsize = as.numeric(input$dotsize))+
+        theme(axis.text = element_text(size = 12))+
         xlab(input$xlabel_keystroke)+
         ylab(input$ylabel_keystroke)+
         ggtitle(plot_title)
@@ -180,7 +182,7 @@ server <- function(input, output){
       text(x=interr, labels =paste("IQR", round(interr,1), sep = " = "), y=1.5, cex = 1.25)
       
     }else if(input$graph_option == 'Stem plot'){
-      pt
+      pt = 'other'
     }else if(input$graph_option == 'Barplot'){
       pt = 'ggplot'
       A = ggplot()+
@@ -188,24 +190,35 @@ server <- function(input, output){
                  stat = 'identity',
                  color = 'black',
                  fill = input$fill)+
+        theme(axis.text = element_text(size = 12))+
         xlab(input$xlabel_keystroke)+
         ylab(input$ylabel_keystroke)+
         ggtitle(plot_title)
       
-    }else if(input$graph_option == 'Pie-chart'){
-      
+    }else if(input$graph_option == 'Pie chart'){
+      pt = 'ggplot'
+      out$ft$prop = round(out$ft$frequency/sum(out$ft$frequency),2)
+      A = ggplot(out$ft, aes(x = "", y = prop, fill = X)) +
+        geom_col(color = "black") +
+        geom_text(aes(label = prop), 
+                  position = position_stack(vjust = 0.5), size = 10) +
+        coord_polar(theta = "y") +
+        theme_void()+
+        scale_fill_brewer(palette = 'Reds') +
+        theme(legend.text = element_text(size = 12))
     }
     
-    if (pt == 'ggplot'){
-      if(input$theme == 'classic'){
-        P = A + theme_classic2()
-      }else if (input$theme == 'HC'){
-        P = A + theme_hc() 
-      }else{
-        P = A + theme_bw()
-      }
-      
-      P + theme(axis.text = element_text(size = 12))
+    if (pt == 'ggplot' && input$graph_option != "Pie chart"){
+        if(input$theme == 'classic'){
+          P = A + theme_classic2()+theme(axis.title = element_text(size = 14))
+        }else if (input$theme == 'HC'){
+          P = A + theme_hc()+theme(axis.title = element_text(size = 14))
+        }else{
+          P = A + theme_bw()+theme(axis.title = element_text(size = 14))
+        }
+      plot(P)
+    }else{
+      plot(A)  
     }
     
   }))
