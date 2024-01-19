@@ -10,7 +10,7 @@ urlcolor: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<table>
+<table border="1" cellspacing="10" style="width:50%">
     <tr>
         <td>**WEEK 1**</td>
         <td></td>
@@ -80,7 +80,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>January 17, 2024</td>
-        <td>Summary measures, measures of variability, boxplots</td>
+        <td>CLASS CANCELED - Flooding TLC</td>
         <td></td>
     </tr>
     <tr>
@@ -92,7 +92,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>January 19, 2024</td>
-        <td>Summary measures, measures of variability, boxplots</td>
+        <td>Describing and visualizing distributions (continued)</td>
         <td></td>
     </tr>
     <tr>

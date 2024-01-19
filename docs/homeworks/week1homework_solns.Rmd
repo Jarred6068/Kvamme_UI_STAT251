@@ -103,23 +103,45 @@ set.seed(123)
 
 ag = c('1-18','19-24','25-25','36-60','51-69','70 and over')
 cts = c(10, 97, 70, 36, 14, 5)
+rf = c('<span style="color: red;">0.04</span>', 
+       '<span style="color: red;">0.42</span>',
+       '<span style="color: red;">0.30</span>',
+       '<span style="color: red;">0.16</span>',
+       '<span style="color: red;">0.06</span>',
+       '<span style="color: red;">0.02</span>')
 
-age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts'), rbind.data.frame(ag, cts))
+age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts', '<span style="color: red;">Relative Frequency</span>'), rbind.data.frame(ag, cts, rf))
 
-kable(age.dist, format = 'html', col.names = rep('', 7), booktabs = T, row.names = T)%>%
+kable(age.dist, format = 'html', col.names = rep('', 7), booktabs = T, row.names = F,escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
 Use this table to answer parts a - d
 
 * **(a)** Compute the relative frequency for each age group
-<span style="color: red;">text</span>
+
 * **(b)** Make a bar graph where the heights of the bars are relative frequencies
-<span style="color: red;">text</span>
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+set.seed(123)
+
+ag = c('1-18','19-24','25-35','36-60','51-69','70 and over')
+cts = c(10, 97, 70, 36, 14, 5)
+
+rf = cts/sum(cts)
+
+ggplot()+geom_bar(aes(x = ag, y = rf), stat = 'identity',
+                  color = 'black', fill = 'lightblue')+
+  theme_bw()+
+  xlab('Age Group')+
+  ylab('Relative Frequency')+
+  theme(axis.text = element_text(size = 12))
+
+
+```
 * **(c)** Describe the distribution
-<span style="color: red;">text</span>
+<span style="color: red;">the distribution is slightly right skew indicating that most respondants were between 19 and 35 years of age</span>
 * **(d)** Explain why your bar graph is not a histogram
-<span style="color: red;">text</span>
+<span style="color: red;">A histogram has intervals of equal length</span>
 
 ${\bf (8)}$ Email spam is the curse of the internet. The table below gives a compilation of the most common types of spam 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}

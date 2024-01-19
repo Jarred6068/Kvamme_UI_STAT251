@@ -83,7 +83,7 @@ ${\bf (7)}$ A survey about color preferences reported the age distribution of th
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 set.seed(123)
 
-ag = c('1-18','19-24','25-25','36-60','51-69','70 and over')
+ag = c('1-18','19-24','25-35','36-60','51-69','70 and over')
 cts = c(10, 97, 70, 36, 14, 5)
 
 age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts'), rbind.data.frame(ag, cts))

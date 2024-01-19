@@ -1,0 +1,45 @@
+---
+title: "App Descriptions"
+output:
+  html_document: default
+header-includes: \usepackage{float} \usepackage{hyperref}
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<style>
+        table,
+        td,
+        th {
+            border: 1px solid;
+            padding: 20px;
+        }
+ 
+        table {
+            text-align: center;
+        }
+</style>
+<table border="1" cellspacing="10" style="width:60%">
+    <tr>
+        <td>**App Name**</td>
+        <td>**Usage**</td>
+    </tr>
+    <tr>
+        <td>**Histogram maker**</td>
+        <td>This app allows you to plot the histogram of several different random variables. Parameters and sample size can be changed to study  how they affect shape and location. </td>
+    </tr>
+    <tr>
+        <td>**Statistic Calculator**</td>
+        <td>This tool allows you to calculate common descriptive statistics for quantitative or qualitative data by copying and pasting in comma separated values. Statistics include: mean, median, mode, range, stdev, variance, quartiles, and IQR</td>
+    </tr>
+    <tr>
+        <td>**Frequency Tables**</td>
+        <td>This tool allows you calculate frequency tables and histogram/bar plot for quantitative or qualitative variables by copying and pasting in comma separated values.</td>
+    </tr>
+    <tr>
+        <td>**Make Graphs**</td>
+        <td>This tool allows you plot graphs for quantitative and qualitative variables by copying and pasting in comma separated values. Plots include: pie graph, bar plot, stem plot, dot plot, histogram and boxplot</td>
+    </tr>
+</table>

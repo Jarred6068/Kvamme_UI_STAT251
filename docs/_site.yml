@@ -52,6 +52,8 @@ navbar:
       menu:
         - text: 'Apps'
           menu:
+          - text: 'App Descriptions'
+            href: shiny_apps/app_descriptions.html
           - text: 'Histogram maker'
             href: shiny_apps/HistoPlot/histogram_viewer/index.html
           - text: 'Statistic Calculator'

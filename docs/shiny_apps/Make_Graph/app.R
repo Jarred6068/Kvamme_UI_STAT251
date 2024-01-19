@@ -1,0 +1,214 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+library(shiny)
+library(ggpubr)
+library(ggthemes)
+
+convert.keystroke = function(keystroke_input){
+  indata = strsplit(keystroke_input, ',')[[1]]
+  if(sum(suppressWarnings(is.na(as.numeric(indata))))>0){
+    converted = as.character(indata)
+    values = unique(converted)
+    counts = summary(as.factor(converted))
+    input = as.factor(converted)
+  }else{
+    converted = as.numeric(indata)
+    if(sum(converted%%1)>0){
+      h = hist(converted, plot = F)
+      values = h$breaks[-1]
+      counts = h$counts
+    }else{
+      values = unique(converted)
+      counts = summary(as.factor(converted))
+    }
+    input = converted
+  }
+  ft = cbind.data.frame(X = values, frequency = counts)
+  return(list(ft = ft, data = input))
+}
+
+
+
+calc.binwidth = function(method, data){
+  n = length(data)
+  if(method == 'simple'){
+    k = round(sqrt(n))
+    w = (max(data) - min(data))/k
+  }else if(method == 'sturges'){
+    k = round(log2(n))+1
+    w = (max(data) - min(data))/k
+  }else if(method == 'rice'){
+    k = round(2*(n^(1/3)))
+    w = (max(data) - min(data))/k
+  }else{
+    k = NULL
+    w = NULL
+  }
+  
+  if(is.null(w)){
+    mes = ''
+  }else{
+    mes = paste0(k, " bins using method ", method)
+  }
+  
+  return(list(mes, k, w))
+}
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+  titlePanel('Make Plots'),
+  sidebarLayout(
+    sidebarPanel(width = 4, 
+                 #input select
+                 textInput(inputId = "keystroke_input", 
+                           label = "Enter Comma Separated Values (No spaces!)", 
+                           value = "1,2,3, ... or cat, dog, dog, ..."),
+
+                 selectInput(inputId = "plotting",
+                             label = "Select plot options",
+                             choices = c("standard", "custom"),
+                             selected = 'standard'),
+                
+                 selectInput(inputId = "graph_option",
+                             label = "Select graph",
+                             choices = c('Histogram','Dotplot', 
+                                         'Stem plot', 'Boxplot',
+                                         'Barplot', 'Pie chart'),
+                             selected = "Histogram"),
+                 
+                 conditionalPanel(condition = "input.plotting == 'custom'",
+                                  selectInput(inputId = "bin",
+                                              label = "bin method (histogram only)",
+                                              choices = c('automatic', 'simple', 'sturges', 'rice'),
+                                              selected = "automatic"),
+                                  selectInput(inputId = "theme",
+                                              label = "Select plot theme",
+                                              choices = c('classic', 'HC', 'BW'),
+                                              selected = "classic"),
+                                  textInput(inputId = "xlabel_keystroke", 
+                                            label = "x-axis label", 
+                                            value = "X"),
+                                  textInput(inputId = "ylabel_keystroke", 
+                                            label = "y-axis label", 
+                                            value = "Y"),
+                                  textInput(inputId = "title_keystroke", 
+                                            label = "plot title", 
+                                            value = NULL),
+                                  textInput(inputId = "fill", 
+                                            label = "plot fill", 
+                                            value = 'lightblue'),
+                                  textInput(inputId = "dotsize", 
+                                            label = "Dot size (dot plot only)", 
+                                            value = '1')),
+                 actionButton("Plot","Plot data")
+                 
+                 
+    ),
+    mainPanel("",
+              plotOutput("plot")
+    )
+  )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output){
+  
+  observeEvent(input$Plot,  output$plot <- renderPlot({
+    
+    if(is.null(input$title_keystroke)){
+      plot_title = paste(input$graph_option, ' of ', input$xlabel_keystroke)
+    }else{
+      plot_title = input$title_keystroke
+    }
+    #browser()
+    out = convert.keystroke(input$keystroke_input)
+    if(input$graph_option == 'Histogram'){
+      pt = 'ggplot'
+      kw = calc.binwidth(method = input$bin,
+                         data = out$data)
+      
+      A = ggplot()+
+        geom_histogram(aes(x = out$data), 
+                       color = 'black', 
+                       fill = input$fill,
+                       binwidth = kw[[3]])+
+        xlab(input$xlabel_keystroke)+
+        ylab(input$ylabel_keystroke)+
+        ggtitle(plot_title, subtitle = paste0(kw[[1]]))
+        
+    }else if(input$graph_option == 'Dotplot'){
+      pt = 'ggplot'
+      A = ggplot()+geom_dotplot(aes(x = out$data), 
+                                color = 'black', 
+                                fill = input$fill,
+                                dotsize = as.numeric(input$dotsize))+
+        xlab(input$xlabel_keystroke)+
+        ylab(input$ylabel_keystroke)+
+        ggtitle(plot_title)
+    }else if(input$graph_option == 'Boxplot'){
+      pt = 'bxp'
+      mini = min(out$data)
+      maxi = max(out$data)
+      med = median(out$data)
+      avg = mean(out$data)
+      q1 = quantile(out$data)[2]
+      q3 = quantile(out$data)[4]
+      interr = IQR(out$data)
+      stdev = sd(out$data)
+      estims = c(q1, med, q3)
+      boxplot(out$data, horizontal = TRUE, axes = FALSE, staplewex = 1,
+              xlab = input$xlabel_keytroke, main = plot_title,
+              col = input$fill)
+      text(x=estims, 
+           labels = paste(c("Q1","Q2", "Q3"), round(estims,1), 
+                                 sep = "="), 
+           y=1.25, cex = 1)
+      text(x=c(mini+(stdev/10), maxi - (stdev/10)), 
+           labels = paste(c("Min", "Max"), round(c(mini, maxi),1), 
+                          sep = "="), 
+           y=1.30, cex = 1)
+      text(x=avg, 
+           labels = paste(c("Mean"), round(avg,1), 
+                          sep = "="), 
+           y=1.35, cex = 1)
+      text(x=interr, labels =paste("IQR", round(interr,1), sep = " = "), y=1.5, cex = 1.25)
+      
+    }else if(input$graph_option == 'Stem plot'){
+      pt
+    }else if(input$graph_option == 'Barplot'){
+      pt = 'ggplot'
+      A = ggplot()+
+        geom_bar(aes(x = out$ft$X, y = out$ft$frequency),
+                 stat = 'identity',
+                 color = 'black',
+                 fill = input$fill)+
+        xlab(input$xlabel_keystroke)+
+        ylab(input$ylabel_keystroke)+
+        ggtitle(plot_title)
+      
+    }else if(input$graph_option == 'Pie-chart'){
+      
+    }
+    
+    if (pt == 'ggplot'){
+      if(input$theme == 'classic'){
+        P = A + theme_classic2()
+      }else if (input$theme == 'HC'){
+        P = A + theme_hc() 
+      }else{
+        P = A + theme_bw()
+      }
+      
+      P + theme(axis.text = element_text(size = 12))
+    }
+    
+  }))
+}
+
+shinyApp(ui = ui, server = server)
