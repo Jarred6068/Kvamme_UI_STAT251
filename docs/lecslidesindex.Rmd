@@ -24,3 +24,8 @@ as .pdf
 as powerpoint
 
 ### Lecture 3
+<a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pptx">Download File</a>
+as powerpoint
