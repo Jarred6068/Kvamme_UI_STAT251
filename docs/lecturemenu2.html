@@ -1128,6 +1128,115 @@ intermediate between Sturges Rule and the square root method.</p></li>
 the waiting time between eruptions and the duration of the eruption of
 the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.</p>
 <p><img src="lecturemenu2_files/figure-html/unnamed-chunk-9-1.png" width="864" /></p>
+<p><strong>Try it out</strong>: Construct a histogram for the following
+10 observations of the variable <span class="math inline">\(X\)</span>
+<span class="math display">\[X = \{
+-1.49,-0.65,-0.6,-0.54,-0.45,0.01,0.17,0.27,0.51,1.34 \}\]</span> using
+<span class="math inline">\(k = 4\)</span> bins/intervals</p>
+<ul>
+<li>In this example, we are given the desired number of bins, so we can
+use our equation to find the width of the bins <span
+class="math inline">\(w\)</span>.</li>
+</ul>
+<p><span class="math display">\[ w = \frac{1.34 - (-1.49)}{4} \approx
+\frac{3}{4} \ \text{or} \ 0.75 \]</span></p>
+<ul>
+<li>now that we know about how wide each interval should be we can
+easily comupute the intervals. First, let <span
+class="math inline">\(a\)</span> be the minimum value of <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(b\)</span> be the maximum value such that <span
+class="math inline">\(\min(X) = a, \max(X) = b\)</span>. The first
+interval is defined as <span class="math inline">\([a \leq X &lt;
+a+w]\)</span> which gives <span class="math inline">\([-1.5 \leq X &lt;
+-0.75]\)</span>. The second interval is given by <span
+class="math inline">\([-0.75 \leq X &lt; -0.75 + w]\)</span> or <span
+class="math inline">\([-0.75 \leq X &lt; 0]\)</span>. Continuing this
+pattern gives the remaining bins yields the following frequency
+table:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+X
+</th>
+<th style="text-align:right;">
+Frequency
+</th>
+<th style="text-align:right;">
+Relative Frequency
+</th>
+<th style="text-align:right;">
+Cumulative Relative Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(-1.5 &lt; X \leq -0.75\)</span>
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(-0.75 &lt; X \leq 0\)</span>
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(0 &lt; X \leq 0.75\)</span>
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+0.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(0.75 &lt; X \leq 1.5\)</span>
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>From the frequency table above, we can now easily construct the
+histogram of <span class="math inline">\(X\)</span> by simply drawing
+the appropriate bars over each interval/bin:</li>
+</ul>
+<p><img src="lecturemenu2_files/figure-html/unnamed-chunk-11-1.png" width="432" /></p>
 <p>If you’d like to read more about scaling interval widths you can
 check out these references:</p>
 <p><a

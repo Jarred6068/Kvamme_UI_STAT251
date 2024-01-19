@@ -278,6 +278,40 @@ ggarrange(A, B, C, D, nrow = 2, ncol = 2)
 ```
 
 
+**Try it out**: Construct a histogram for the following 10 observations of the variable $X$ 
+$$X = \{ -1.49,-0.65,-0.6,-0.54,-0.45,0.01,0.17,0.27,0.51,1.34 \}$$ 
+using $k = 4$ bins/intervals
+
+* In this example, we are given the desired number of bins, so we can use our equation to find the width of the bins $w$. 
+
+$$ w = \frac{1.34 - (-1.49)}{4} \approx \frac{3}{4} \ \text{or} \ 0.75 $$
+
+* now that we know about how wide each interval should be we can easily comupute the intervals. First, let $a$ be the minimum value of $X$ and $b$ be the maximum value such that $\min(X) = a, \max(X) = b$. The first interval is defined as $[a \leq X < a+w]$ which gives $[-1.5 \leq X < -0.75]$. The second interval is given by $[-0.75 \leq X < -0.75 + w]$ or $[-0.75 \leq X < 0]$. Continuing this pattern gives the remaining bins yields the following frequency table:
+
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=3, fig.width=4.5}
+set.seed(123)
+Bins = c('$-1.5 < X \\leq -0.75$', '$-0.75 < X \\leq 0$', '$0 < X \\leq 0.75$', '$0.75 < X \\leq 1.5$')
+freq = hist(c(-1.49,-0.65,-0.6,-0.54,-0.45,0.01,0.17,0.27,0.51,1.34), 
+            breaks = seq(-1.5, 1.5, 0.75), 
+            plot = F)$counts
+rf = freq/sum(freq)
+crf = cumsum(rf)
+
+ft = cbind.data.frame(Bins, freq, rf, crf)
+kable(ft, format = 'html', col.names = c('X','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+* From the frequency table above, we can now easily construct the histogram of $X$ by simply drawing the appropriate bars over each interval/bin: 
+
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=3, fig.width=4.5}
+hist(c(-1.49,-0.65,-0.6,-0.54,-0.45,0.01,0.17,0.27,0.51,1.34), 
+            breaks = seq(-1.5, 1.5, 0.75), 
+            plot = T, xlab = 'X', main = 'Histogram of X')
+```
+
+
 If you'd like to read more about scaling interval widths you can check out these references:
 
 [Sturges, Herbert A."The choice of a class interval." Journal of the american statistical association 21.153 (1926): 65-66.](https://scholar.archive.org/work/l44cm5gq65f4rojkkaey6cl5bq/access/wayback/http://www.esalq.usp.br/departamentos/lce/arquivos/aulas/2013/LCE0216/Sturges1926.pdf)
