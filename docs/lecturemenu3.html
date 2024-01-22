@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -402,8 +404,649 @@ $(document).ready(function () {
 </div>
 
 
-<div id="notes-are-written-here" class="section level2">
-<h2>Notes are written here</h2>
+<div id="lecture-4-monday-jan.-21st-2024" class="section level1">
+<h1>Lecture 4: Monday, Jan. 21st 2024</h1>
+<div id="describing-the-shape-of-a-distribution."
+class="section level2">
+<h2>Describing the shape of a distribution.</h2>
+<p>The purpose of a graph is to help us understand the data. Once the
+distribution of variable is plotted, you must ask yourself “what do I
+see?”. This is when were look for the features of a distribtuion such as
+shape, center and spread. This helps us to identify interesting patterns
+or potential <strong>outliers</strong> - individual data points that lie
+outside the normal pattern of the distribution.</p>
+<ul>
+<li><p>One of the first things we can look for are peaks of the
+distribution. A peak indicates values that are more likely to occur
+called the <strong>mode</strong>. A distribution can have no peaks, one
+peak, or multiple peaks. A distribution with one peak is said to be
+<strong>unimodal</strong>, a distribution with two peaks is
+<strong>bimodal</strong> and a distribution with multiple peaks is
+<strong>multimodal</strong>.</p>
+<ul>
+<li>bimodal or multimodal distributions typically indicate underlying
+population structure in the data. Take for example the following height
+data from Sir Francis Galton (1822–1911) who was an English
+statistician. Galton was interested in the relationship between the
+height of parents and their offspring. He accumulated the following
+observations of the height of 934 children from 205 families in
+1886.</li>
+</ul></li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+family
+</th>
+<th style="text-align:left;">
+father
+</th>
+<th style="text-align:left;">
+mother
+</th>
+<th style="text-align:left;">
+midparentHeight
+</th>
+<th style="text-align:left;">
+children
+</th>
+<th style="text-align:left;">
+childNum
+</th>
+<th style="text-align:left;">
+gender
+</th>
+<th style="text-align:left;">
+childHeight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+78.5
+</td>
+<td style="text-align:left;">
+67
+</td>
+<td style="text-align:left;">
+75.43
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+male
+</td>
+<td style="text-align:left;">
+73.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+78.5
+</td>
+<td style="text-align:left;">
+67
+</td>
+<td style="text-align:left;">
+75.43
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:left;">
+69.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+78.5
+</td>
+<td style="text-align:left;">
+67
+</td>
+<td style="text-align:left;">
+75.43
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:left;">
+69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+001
+</td>
+<td style="text-align:left;">
+78.5
+</td>
+<td style="text-align:left;">
+67
+</td>
+<td style="text-align:left;">
+75.43
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:left;">
+69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+75.5
+</td>
+<td style="text-align:left;">
+66.5
+</td>
+<td style="text-align:left;">
+73.66
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+male
+</td>
+<td style="text-align:left;">
+73.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+75.5
+</td>
+<td style="text-align:left;">
+66.5
+</td>
+<td style="text-align:left;">
+73.66
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+male
+</td>
+<td style="text-align:left;">
+72.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+75.5
+</td>
+<td style="text-align:left;">
+66.5
+</td>
+<td style="text-align:left;">
+73.66
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:left;">
+65.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+002
+</td>
+<td style="text-align:left;">
+75.5
+</td>
+<td style="text-align:left;">
+66.5
+</td>
+<td style="text-align:left;">
+73.66
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:left;">
+65.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+72.06
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+male
+</td>
+<td style="text-align:left;">
+71
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+003
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+72.06
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:left;">
+68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+204
+</td>
+<td style="text-align:left;">
+62.5
+</td>
+<td style="text-align:left;">
+63
+</td>
+<td style="text-align:left;">
+65.27
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:left;">
+57
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now consider the histogram for child height:</p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<ul>
+<li><p>We can see from the histogram on the left that there are two
+clearly visible peaks. By coloring and segregating the bars according to
+gender we produce the histogram on the left which shows that the two
+peaks correspond to the gender of the children with males being about 10
+inches taller on average.</p></li>
+<li><p>Another question we may ask about the shape of a distribution is
+whether the distribution is symmetric or if it is skewed. A distribution
+is <strong>symmetric</strong> is the values that are smaller and larger
+than its midpoint are mirror images. A distribution is <strong>skewed
+right</strong> is the values larger than the midpoint form a long tail.
+Conversely, a distribution is <strong>skewed left</strong> if the values
+less than the midpoint form a long tail to the left</p></li>
+</ul>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-3-1.png" width="576" /></p>
+<p>Many types of variables have distributions with predictable shapes.
+For example, variables that represent measurements of size from the same
+species and sex such as height, length, and age will have symmetric
+distributions. Variables related to money or finance on the other hand
+will often have skewed distributions. Skewness arises when there is a
+strict boundary on the values of a variable. For example, housing prices
+are always positive numbers and many houses will be a similar price
+while some houses many be really expensive. For example, consider the
+distribution of housing prices from the 1990 california housing census
+data downloaded from <a
+href="https://www.kaggle.com/datasets/camnugent/california-housing-prices?resource=download">Kaggle</a></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+<p>Lastly, one of the most important things a graphical summary of a
+variable can show is <strong>outliers</strong>. As previously noted,
+these are extreme values that fall far away from the normal pattern of
+the data. An outlier may be a result of measurement error or it can
+represent a real datapoint. Either way, outliers can strongly influence
+any analyses we conduct later on during statistical inference and are
+crucial to be aware of. Consider the following histogram of fuel
+efficiency (measured in miles per gallon) of several different car
+brands between 1999 and 2008 obtained from <a
+href="https://fueleconomy.gov/">https://fueleconomy.gov/</a></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+<ul>
+<li><p>How would you describe the shape of this distribution?</p></li>
+<li><p>From the histogram we can see there are two bars that fall far to
+the right of the rest of the distribution. The observations comprising
+these bars constitute potential outliers. In fact, these three
+observations belong to the 1990 volkswagen beetle and jetta which was
+extremely fuel efficient for its time</p></li>
+</ul>
+</div>
+<div id="describing-distributions-with-numbers" class="section level2">
+<h2>Describing distributions with numbers</h2>
+<p>Any description of the distribution of a variable is not complete
+without some numbers describing its <i>center</i> and <i>spread</i>.
+Previously, we learned how to describe shape by visually inspecting a
+graph of the data such as a histogram, stem plot, or dot plot. Now we
+will learn some statistics we can calculate that will tell us about
+spread and center. It’s important to note that we can calculate these
+descriptive statistics for any quantitative variables but NOT for
+qualitative variables. We will start by talking about statistics for
+quantifying the center of a distribution. Two measures of center are the
+<i>mean</i> and the <i>median</i></p>
+<div id="measures-of-center" class="section level3">
+<h3>Measures of center</h3>
+<p>The arithmetic <strong>mean</strong> (denoted <span
+class="math inline">\(\bar{x}\)</span>) is the average value of a set of
+observations and tells us the center of mass or balancing point of a
+distribution <span class="math display">\[\bar{x} = \sum_{i = 1}^n
+\frac{x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}\]</span></p>
+<ul>
+<li>the symbol <span class="math inline">\(\Sigma\)</span> means to “add
+up a set of values”. Therefore, the mean is the sum of all observations
+in the sample (or popultion) and divide the sum by the number of
+observations</li>
+<li>the mean is usually not equal to any of the values observed in the
+sample</li>
+<li>The mean is highly influenced by outliers. Outliers pull the value
+of the mean in their direction.</li>
+</ul>
+<p>The other measure of center is the <strong>median</strong> or middle
+value. To calculate the median, we must first arrange the data in order
+from least to greatest. If the number of observations <span
+class="math inline">\(n\)</span> is odd then the median is exactly the
+middle value. If the number of observations <span
+class="math inline">\(n\)</span> is even, then the median is the
+“average” of the two values in the middle.</p>
+<ul>
+<li>The median is resistant to outliers because it does not depend on
+their value like the mean does.</li>
+</ul>
+<p>Example: consider the following 8 observations of a quantiative
+variable <span class="math inline">\(X\)</span>: <span
+class="math display">\[X = \{ 1, 3, 5, 5, 6, 7, 7, 8\}\]</span> Compute
+the mean and median of <span class="math inline">\(X\)</span></p>
+<p><span class="math display">\[\bar{x} = \frac{1+3+5+5+6+7+7+8}{8} =
+5.25\]</span></p>
+<p><span class="math display">\[\text{median} = \frac{5+6}{2} =
+5.5\]</span></p>
+<p>Now consider a the mean and median when we include the outlier
+observation <span class="math inline">\(X = 22\)</span> and note it’s
+effect each statistic:</p>
+<p><span class="math display">\[X = \{ 1, 3, 5, 5, 6, 7, 7, 8,
+32\}\]</span></p>
+<p>The mean becomes <span class="math display">\[\bar{x} =
+\frac{1+3+5+5+6+7+7+8+32}{8} = 8.22\]</span></p>
+<p>The median becomes <span class="math display">\[\text{median} =
+6\]</span></p>
+<p>Notice that in the first set of calculations the mean was less than
+the median. Now, because of the presence of the outlier, the mean has
+surpassed the value of the median because the “weight” that the outlier
+carries in terms of its value.</p>
+<ul>
+<li>This example illustrates how the mean and median behave depending
+the shape of a distribution. Distributions with skew will pull the value
+of the mean in the direction of the tail while the median will always be
+close to the mode of the distribution</li>
+</ul>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-6-1.png" width="768" />
+### an alternative formula for the mean: We can also compute the mean
+using the frequency or relative frequency using the following
+formulas</p>
+<p>Using the frequency <span class="math display">\[\bar{x} = \sum_x
+\frac{x\times \text{freq}(x)}{n}\]</span></p>
+<p>Using the relative frequency <span class="math display">\[\bar{x} =
+\sum_x x \times rf(x) \]</span></p>
+<ul>
+<li>where <span class="math inline">\(\sum_x\)</span> means to sum over
+all values of x and <span class="math inline">\(freq(x)\)</span> and
+<span class="math inline">\(rf(x)\)</span> denote the frequency and
+relative frequency of <span class="math inline">\(x\)</span>
+respectively.</li>
+</ul>
+<p>Example: Sir Ronald Fisher’s famous iris data set gives the
+measurements in centimeters of the variables sepal length and width and
+petal length and width, respectively, for 50 flowers from each of 3
+species of iris. Consider the following frequency table of petal lengths
+rounded to the nearest whole centimeter</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Petal Length (cm)
+</th>
+<th style="text-align:right;">
+Frequency
+</th>
+<th style="text-align:right;">
+Relative Frequency
+</th>
+<th style="text-align:right;">
+Cumulative Relative Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.58
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can compute the mean petal length using either of our formulas
+from above:</p>
+<ul>
+<li>Using frequency</li>
+</ul>
+<p><span class="math display">\[\bar{x} =
+\frac{1(24)+2(26)+5(3)+4(34)+3(35)+6(24)+7(4)}{150}\approx 3.76
+\]</span></p>
+<ul>
+<li>Using the relative frequency</li>
+</ul>
+<p><span class="math display">\[\bar{x} =
+1(0.16)+2(0.17)+5(0.02)+4(0.23)+3(0.23)+6(0.16)+7(0.03)\approx
+3.76\]</span></p>
+</div>
+</div>
 </div>
 
 

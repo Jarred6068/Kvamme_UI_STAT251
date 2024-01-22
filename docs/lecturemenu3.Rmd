@@ -6,18 +6,269 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
 ```
 
-## Notes are written here
+# Lecture 4: Monday, Jan. 21st 2024
+
+## Describing the shape of a distribution. 
+
+The purpose of a graph is to help us understand the data. Once the distribution of variable is plotted, you must ask yourself "what do I see?". This is when were look for the features of a distribtuion such as shape, center and spread. This helps us to identify interesting patterns or potential **outliers** - individual data points that lie outside the normal pattern of the distribution.
+
+* One of the first things we can look for are peaks of the distribution. A peak indicates values that are more likely to occur called the **mode**. A distribution can have no peaks, one peak, or multiple peaks. A distribution with one peak is said to be **unimodal**, a distribution with two peaks is **bimodal** and a distribution with multiple peaks is **multimodal**.
+
+  * bimodal or multimodal distributions typically indicate underlying population structure in the data. Take for example the following height data from Sir Francis Galton (1822–1911) who was an English statistician. Galton was interested in the relationship between the height of parents and their offspring. He accumulated the following observations of the height of 934 children from 205 families in 1886. 
+  
+```{r, echo = F, message=F, warning=F, fig.height=4, fig.width=5}
+library(HistData)
+kable(rbind.data.frame(GaltonFamilies[1:10,], rep('$\\vdots$', 8), GaltonFamilies[934,]), format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+   Now consider the histogram for child height:
+  
+```{r, eval = T, echo = F, message=F, warning=F, fig.height=4, fig.width=10}
+library(HistData)
+n = dim(GaltonFamilies)[1]
+#k = round(sqrt(n))
+k = 28
+A = ggplot(data = GaltonFamilies, aes(x = childHeight))+
+  geom_histogram(color = 'black', bins = k, position = 'dodge')+
+  theme_bw()+
+  xlab('Height')+
+  ylab('Frequency')
+
+B = ggplot(data = GaltonFamilies, aes(x = childHeight, fill = gender))+
+  geom_histogram(color = 'black', bins = k, position = 'dodge')+
+  theme_bw()+
+  xlab('Height')+
+  ylab('Frequency')
+
+ggarrange(A, B, nrow = 1)
+```
+   
+   * We can see from the histogram on the left that there are two clearly visible peaks. By coloring and segregating the bars according to gender we produce the histogram on the left which shows that the two peaks correspond to the gender of the children with males being about 10 inches taller on average. 
+
+* Another question we may ask about the shape of a distribution is whether the distribution is symmetric or if it is skewed. A distribution is **symmetric** is the values that are smaller and larger than its midpoint are mirror images. A distribution is **skewed right** is the values larger than the midpoint form a long tail. Conversely, a distribution is **skewed left** if the values less than the midpoint form a long tail to the left
+
+```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=6}
+#distribution shapes
+set.seed(123)
+x1 = rbeta(100000, 2, 10)
+sr = ggplot()+
+  geom_density(aes(x = x1), fill = 'lightblue', size = 1)+
+  geom_vline(xintercept = mean(x1), color = 'red', linetype = 'dashed')+
+  geom_text(aes(x = mean(x1)+0.1, y = 0.3), label = 'midpoint', color = 'red')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Right')
+
+x2 = rnorm(100000)
+sym = ggplot()+
+  geom_density(aes(x = x2), fill = 'lightblue', size = 1)+
+  geom_vline(xintercept = mean(x2), color = 'red', linetype = 'dashed')+
+  geom_text(aes(x = mean(x2)+0.1, y = 0.2), label = 'midpoint', color = 'red')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Symmetric')
+
+x3 = rbeta(100000, 10, 2)
+sl = ggplot()+
+  geom_density(aes(x = x3), fill = 'lightblue', size = 1)+
+  geom_vline(xintercept = mean(x3), color = 'red', linetype = 'dashed')+
+  geom_text(aes(x = mean(x3)+0.1, y = 0.3), label = 'midpoint', color = 'red')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Left')
+
+x4 = c(rnorm(50000), rnorm(50000, 3))
+bm = ggplot()+
+  geom_density(aes(x = x4), fill = 'lightblue', size = 1)+
+  geom_vline(xintercept = mean(x4), color = 'red', linetype = 'dashed')+
+  geom_text(aes(x = mean(x4)+0.1, y = 0.1), label = 'midpoint', color = 'red')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Bimodal')
+
+ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
+```
 
 
+Many types of variables have distributions with predictable shapes. For example, variables that represent measurements of size from the same species and sex such as height, length, and age will have symmetric distributions. Variables related to money or finance on the other hand will often have skewed distributions. Skewness arises when there is a strict boundary on the values of a variable. For example, housing prices are always positive numbers and many houses will be a similar price while some houses many be really expensive. For example, consider the distribution of housing prices from the 1990 california housing census data downloaded from [Kaggle](https://www.kaggle.com/datasets/camnugent/california-housing-prices?resource=download)
 
+```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=8}
 
+housing = read.csv('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/housing.csv')
+k = round(sqrt(dim(housing)[1]))
+ggplot(data = housing, aes(x = median_house_value/1000))+
+  geom_histogram(color = 'black', bins = k, position = 'dodge')+
+  theme_bw()+
+  xlab('Median House Value')+
+  ylab('Frequency')
+```
 
+Lastly, one of the most important things a graphical summary of a variable can show is **outliers**. As previously noted, these are extreme values that fall far away from the normal pattern of the data. An outlier may be a result of measurement error or it can represent a real datapoint. Either way, outliers can strongly influence any analyses we conduct later on during statistical inference and are crucial to be aware of. Consider the following histogram of fuel efficiency (measured in miles per gallon) of several different car brands between 1999 and 2008 obtained from [https://fueleconomy.gov/](https://fueleconomy.gov/)
 
+```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=8}
+temp = ggplot2::mpg
+k = round(sqrt(dim(temp)[1]))
 
+idx = which(temp$hwy > mean(temp$hwy)+2.5*sd(temp$hwy))
+temp$is.outlier = rep('Not Outlier', dim(temp)[1])
+temp$is.outlier[idx] = 'Outlier'
+ggplot(data = temp, aes(x = hwy, fill = is.outlier))+
+  geom_histogram(color = 'black', bins = k+5)+
+  theme_bw()+
+  xlab('Highway miles per gallon')+
+  ylab('Frequency')
 
+```
 
+  * How would you describe the shape of this distribution?
+  
+  * From the histogram we can see there are two bars that fall far to the right of the rest of the distribution. The observations comprising these bars constitute potential outliers. In fact, these three observations belong to the 1990 volkswagen beetle and jetta which was extremely fuel efficient for its time 
+  
 
+## Describing distributions with numbers
 
+Any description of the distribution of a variable is not complete without some numbers describing its <i>center</i> and <i>spread</i>. Previously, we learned how to describe shape by visually inspecting a graph of the data such as a histogram, stem plot, or dot plot. Now we will learn some statistics we can calculate that will tell us about spread and center. It's important to note that we can calculate these descriptive statistics for any quantitative variables but NOT for qualitative variables. We will start by talking about statistics for quantifying the center of a distribution. Two measures of center are the <i>mean</i> and the <i>median</i>
+
+### Measures of center
+
+The arithmetic **mean** (denoted $\bar{x}$) is the average value of a set of observations and tells us the center of mass or balancing point of a distribution
+$$\bar{x} = \sum_{i = 1}^n \frac{x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}$$
+
+* the symbol $\Sigma$ means to "add up a set of values". Therefore, the mean is the sum of all observations in the sample (or popultion) and divide the sum by the number of observations
+* the mean is usually not equal to any of the values observed in the sample
+* The mean is highly influenced by outliers. Outliers pull the value of the mean in their direction. 
+  
+The other measure of center is the **median** or middle value. To calculate the median, we must first arrange the data in order from least to greatest. If the number of observations $n$ is odd then the median is exactly the middle value. If the number of observations $n$ is even, then the median is the "average" of the two values in the middle.
+
+* The median is resistant to outliers because it does not depend on their value like the mean does.
+
+Example: consider the following 8 observations of a quantiative variable $X$:
+$$X = \{ 1, 3, 5, 5, 6, 7, 7, 8\}$$
+Compute the mean and median of $X$
+
+$$\bar{x} = \frac{1+3+5+5+6+7+7+8}{8} = 5.25$$
+
+$$\text{median} = \frac{5+6}{2} = 5.5$$
+
+Now consider a the mean and median when we include the outlier observation $X = 22$ and note it's effect each statistic:
+
+$$X = \{ 1, 3, 5, 5, 6, 7, 7, 8, 32\}$$
+
+The mean becomes
+$$\bar{x} = \frac{1+3+5+5+6+7+7+8+32}{8} = 8.22$$
+
+The median becomes
+$$\text{median} = 6$$
+
+Notice that in the first set of calculations the mean was less than the median. Now, because of the presence of the outlier, the mean has surpassed the value of the median because the "weight" that the outlier carries in terms of its value. 
+
+ * This example illustrates how the mean and median behave depending the shape of a distribution. Distributions with skew will pull the value of the mean in the direction of the tail while the median will always be close to the mode of the distribution
+ 
+```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=8}
+#distribution shapes
+set.seed(123)
+x1 = rbeta(100000, 2, 10)
+sr = ggplot()+
+  geom_histogram(aes(x = x1), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x1)+0.1, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x1), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x1)+0.1, y = 0.1), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x1)-0.1, y = 0.15), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Right')
+
+x2 = rnorm(100000)
+sym = ggplot()+
+  geom_histogram(aes(x = x2), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x2)+0.05, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x2), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x2)+0.6, y = 0.1), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x2)-0.6, y = 0.15), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Symmetric')
+
+x3 = rbeta(100000, 10, 2)
+sl = ggplot()+
+  geom_histogram(aes(x = x3), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x3)-0.1, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x3), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x3)-0.1, y = 0.1), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x3)+0.1, y = 0.15), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Left')
+
+x4 = c(rnorm(50000), rnorm(50000, 3))
+bm = ggplot()+
+  geom_histogram(aes(x = x4), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x4)+0.05, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x4), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x4)+0.6, y = 0.05), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x4)-0.6, y = 0.1), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Bimodal')
+
+ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
+
+```
+### an alternative formula for the mean:
+We can also compute the mean using the frequency or relative frequency using the following formulas
+
+Using the frequency
+$$\bar{x} = \sum_x \frac{x\times \text{freq}(x)}{n}$$
+
+Using the relative frequency
+$$\bar{x} = \sum_x x \times rf(x) $$
+ 
+ * where $\sum_x$ means to sum over all values of x and $freq(x)$ and $rf(x)$ denote the frequency and relative frequency of $x$ respectively. 
+ 
+ Example: Sir Ronald Fisher's famous iris data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. Consider the following frequency table of petal lengths rounded to the nearest whole centimeter
+ 
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
+set.seed(123)
+freq = summary(as.factor(round(iris$Petal.Length)))
+rf = freq/sum(freq)
+crf = cumsum(rf)
+
+ft = cbind.data.frame(unique(round(iris$Petal.Length)), freq, rf, crf)
+kable(ft, format = 'html', col.names = c('Petal Length (cm)','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+We can compute the mean petal length using either of our formulas from above:
+
+* Using frequency
+
+$$\bar{x} = \frac{1(24)+2(26)+5(3)+4(34)+3(35)+6(24)+7(4)}{150}\approx 3.76 $$
+
+* Using the relative frequency
+
+$$\bar{x} = 1(0.16)+2(0.17)+5(0.02)+4(0.23)+3(0.23)+6(0.16)+7(0.03)\approx 3.76$$
 

@@ -13,6 +13,11 @@ library(ggthemes)
 library(ggpubr)
 ```
 
+# NO CLASS: Monday, Jan. 15th 2024 
+<br>
+<br>
+<br>
+
 # CLASS CANCELED: Wednesday, Jan. 17th 2024 
 <br>
 <br>

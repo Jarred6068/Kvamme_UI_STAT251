@@ -29,3 +29,11 @@ as .pdf
 
 <a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pptx">Download File</a>
 as powerpoint
+
+
+### Lecture 4
+<a href="./lecture_slides/Week 3/Week3_Lecture4_Slides_1_22_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 3/Week3_Lecture4_Slides_1_22_2024.pptx">Download File</a>
+as powerpoint
