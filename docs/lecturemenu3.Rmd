@@ -11,9 +11,10 @@ library(kableExtra)
 library(ggplot2)
 library(ggthemes)
 library(ggpubr)
+library(latex2exp)
 ```
 
-# Lecture 4: Monday, Jan. 21st 2024
+# Lecture 4: Monday, Jan. 22nd 2024
 
 ## Describing the shape of a distribution. 
 
@@ -279,3 +280,248 @@ We have several numerical quantatities that we can compute from a distribution t
 * The **mode** is the most frequent value or category of a variable. It corresponds to peaks on the distribution. The mode tells us what the most likely values in the distribution are. The following are some key things to consider about the mode 
   * The mode may not be unique. For example, a bimodal distribution will have two different values for the mode
   * The mode is NOT a measure of center. For symmetric distributions with a single peak it will be approximately the same as the median and mean but for distributions that are skewed or have multiple peaks the mode may not be anywhere near the center of the distribution. 
+
+
+# Lecture 5: Wednesday, Jan. 24th 2024
+
+### More measures of location
+Other useful measures of position are **percentiles**. The **$p^{th}$** percentile of a distribution is the value that has $p$ percent of the observations fall at or below it. Take the following simple example of 13 observations of the outcome of rolling a fair six-sided die
+$$X = \{1,2,2,2,2,2,3,4,4,5,5,6,6\}$$
+
+What is the $50^{th}$ percentile of $X$? Given the definition above the $50^{th}$ percentile of $X$ is $3$ because half of the observations in the sample are at or below 3. Consequently, the $50th$ percentile is also the median. By definition the median divides the data in equal halves with $50\%$ of observations at or below or the median and the remaining $50\%$ of observation having a value greater than or equal to the median.
+
+Two other commonly useful percentiles are the $25^{th}$, and $75^{th}$ percentiles. Together with the median we call these percentiles the quartiles because they divide a distribution into quarters.
+* We denote the first quartile ($25^{th}$ percentile) as $Q1$. It is the median of the lower half of the data.
+* We denote the $50^{th}$ percentile or median as $Q2$ 
+* We denote the third quartile ($75^{th}$ percentile) as $Q3$. It is the median of the upper half of the data 
+
+
+```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=8}
+#normal quantiles
+x = rnorm(1000000)
+probs <- c(0.25, 0.5, 0.75)
+quants <- quantile(x, prob=probs)
+dens = density(x)
+df = cbind.data.frame(x = dens$x, y = dens$y)
+df$quant <- factor(findInterval(df$x,quants))
+ggplot(aes(x = x, y = y), data = df)+
+  geom_line(color = 'black', size = 1)+
+  geom_ribbon(aes(ymin = 0, ymax = y, fill = quant), alpha = 0.5)+
+  scale_x_continuous(breaks = quants, labels = c(TeX('$Q1$'),
+                                                 TeX("$Q2$"), 
+                                                 TeX("$Q3$")),
+                     limits = c(-3,3))+
+  geom_vline(xintercept = quants[1], size = 1,
+             color = 'red', linetype = 'dashed')+
+  geom_vline(xintercept = quants[2], size = 1,
+             color = 'darkgreen', linetype = 'dashed')+
+  geom_vline(xintercept = quants[3], size =1,
+             color = 'blue', linetype = 'dashed')+
+  theme_minimal()+
+  theme(legend.position = 'none',
+        axis.text.x = element_text(size = 14, angle = 45),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank())
+```
+
+
+Example: Consider the following 15 exam scores of students in a statistics class:
+
+$$\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}$$
+
+Find the Q1, Q2, and Q3 quartiles for these exam scores. 
+* It's easiest to start with Q2 and work from there. Q2 is the median of the data and, since $n$ is odd will just be the middle value. In this example $Q2 = 73$. Now that we have the middle value we can divide the data into its upper and lower half. The lower half of the data contains the values
+
+$$\{61,61,65,65,66,68,69\}$$
+
+To find the first quartile we simply find the median of this subset of the observations which is $Q1 = 65$. Lastly we repeat this process for the upper half of the data to find the value of the third quantile. The upper half of the exam scores is the subset 
+
+$$\{ 74,75,76,78,79,90,94\}$$
+
+and the median is $78$, therefore $Q3 = 78$.
+
+
+### Measures of spread
+Even the simplest statistical description of a variable should include at least one measure of center and one measure of spread. The reason being that measures of center or location can be misleading if we do not consider how much the observations vary. Consider the following example which gives the distributions of the number of youtube video views of two content creators. 
+
+```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=8}
+set.seed(555)
+user1 = rnorm(100, 100000, 5000)
+user2 = rnorm(100, 108000, 25000)
+
+ytv = cbind.data.frame(`Content Creator` = c(rep('Creator 1', 100), rep('Creator 2', 100)),
+                        Views = c(user1, user2))
+
+ggplot(data = ytv, aes(x = Views, fill = `Content Creator`))+
+  geom_histogram(color = 'black', bins = 20, alpha = 0.8)+
+  geom_density(alpha = 0.3)+
+  theme_bw()+
+  xlab('Number of Video Views')+
+  ylab('Frequency')+
+  theme(legend.position = 'top', 
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 12))
+```
+
+From this example we can see that both distributions have approximately the same mean. However, Content Creator 2 has considerably more variability in the number of views and, on a good day, can potentially get up to double his normal number of views.  
+
+In some sense giving several percentiles or the quartiles together tells us how different values are spread out across the distribution but there are other measures of spread that are preferred. One of the first and simplest measures we can use is the range. The **range** measures the distance between the largest and smallest observation and can be computed by subtracting the minimum value from the maximum value. Because the range uses the two most extreme points of the data it is extremely susceptible to outliers. For this reason, the range is not a measure of spread that gets used often.
+
+A better measure of spread that can be computed from the first and third quartiles is the interquartile range or IQR. The **IQR** tells us how dispersed the inner $50\%$ of the data. 
+
+* The IQR is defined as
+
+  $$IQR = Q3 - Q1$$
+  
+* It measures the distance between $Q1$ and $Q3$
+
+* The IQR is very resistant to outliers since it ignores the extreme ends of a distribution
+
+* What is the IQR for the previous example of statistics students exam scores?
+
+### A five number summary
+
+Combining several numerical descriptors together is the best way to get a good feel for the characteristics of a distribution. A common method for summarizing a set of data is to use the **five number summary** which combines the minimum, maximum, and quartiles together. 
+
+* The five number summary: $\text{Miniumum} \ \ Q1 \ \ \text{Median} \ \ Q3 \ \  \text{Maximum}$
+
+Consider the five number summary of the statistics student exam scores:
+
+$$61 \ \ 65 \ \ 73 \ \ 78 \ \ 94$$
+
+The median tells us the center of the data, the quartiles show us the spread of the inner half of the data, the minimum and maximum tell us the total extent of spread in exam scores. 
+
+Often these five numbers are displayed graphically in a plot called a **box and whisker plot** (often called a boxplot). Together with the histogram, the boxplot is one of the most useful graphical summaries because it condenses a lot of information into an easy to create display.
+
+* Steps for constructing a boxplot:
+  * Mark the position of the first and second quartile and draw a box connecting them.
+  * Draw a line inside of the box showing the position of the median
+  * From each end of the box, draw a line extending outward $1.5 \times IQR$. Any points extending beyond this line are marked with individual points and are considered outliers.
+  
+Example: consider the boxplot constructed for our example of student exam scores
+
+$$\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}$$
+
+```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=6}
+Q1 = 65
+med = 73
+Q3 = 78
+IQR = 73
+minv = 61
+maxv = 91
+estims = c(minv, Q1, med, Q3, maxv)
+rv = c(61,61,65,65,66,68,69,73,74,75,76,78,79,90,94)
+
+boxplot(rv, horizontal = TRUE, axes = TRUE, staplewex = 1)
+text(x=estims, labels =paste(c("Min", "Q1","Median", "Q3", "Max"), estims, sep = "="), 
+     y=1.25, cex = 0.6)
+text(x=73, labels =paste("IQR", 13, sep = " = "), y=1.5, cex = 0.7)
+```
+  
+* boxplots are great for comparing distributions and identifying skew. Consider our example for comparing the youtube views of two content creators. 
+
+```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=6}
+set.seed(555)
+user1 = rnorm(100, 100000, 5000)
+user2 = rnorm(100, 108000, 25000)
+
+ytv = cbind.data.frame(`Content Creator` = c(rep('Creator 1', 100), rep('Creator 2', 100)),
+                        Views = c(user1, user2))
+
+ggplot(data = ytv, aes(x = Views, fill = `Content Creator`))+
+  geom_boxplot(color = 'black')+
+  theme_bw()+
+  xlab('Number of Video Views')+
+  ylab('Frequency')+
+  theme(legend.position = 'top', 
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 12))
+```
+
+* Using the boxplots makes the disparity in spread between the two Content Creators much more apparent. Boxplots are also great for identifying skew in a distribution. Consider the plot below which shows how you can interpret skew in relation to a boxplot.
+
+```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=6}
+
+a=rbeta(100000, 2, 10)
+b=rnorm(100000)
+c=rbeta(100000, 10, 2)
+d=c(rnorm(50000), rnorm(50000, 3))
+
+
+iqra = IQR(a)
+
+iqrb = IQR(b)
+iqrc = IQR(c)
+iqrd = IQR(d)
+
+
+sr = ggplot()+
+  geom_density(aes(x = a), fill = 'lightblue', size = 1)+
+  geom_boxplot(aes(x = a, y = 2), size = 1, fill = 'salmon', outlier.fill = 'red', outlier.shape = 21)+
+  geom_vline(xintercept = c(0, summary(a)[5]+(1.5*iqra)),
+             linetype = 'dotted', color = 'green2', size = 1)+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Right')
+sym = ggplot()+
+  geom_density(aes(x = b), fill = 'lightblue', size = 1)+
+  geom_boxplot(aes(x = b, y = 0.1), size = 1, fill = 'salmon', outlier.fill = 'red', outlier.shape = 21,
+               width = 0.1)+
+  geom_vline(xintercept = c(summary(b)[2]-(1.5*iqrb), summary(b)[5]+(1.5*iqrb)), 
+             linetype = 'dotted', color = 'green2', size = 1)+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Symmetric')
+
+sl = ggplot()+
+  geom_density(aes(x = c), fill = 'lightblue', size = 1)+
+  geom_boxplot(aes(x = c, y = 2), size = 1, fill = 'salmon', outlier.fill = 'red', outlier.shape = 21)+
+  geom_vline(xintercept = c(summary(c)[2]-(1.5*iqrc), 1),
+             linetype = 'dotted', color = 'green2', size = 1)+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Left')
+
+bm = ggplot()+
+  geom_density(aes(x = d), fill = 'lightblue', size = 1)+
+  geom_boxplot(aes(x = d, y = 0.06), size = 1, fill = 'salmon', 
+               outlier.fill = 'red', outlier.shape = 21, width = 0.05)+
+  geom_vline(xintercept = c(summary(d)[2]-(1.5*iqrd)+0.95, summary(d)[5]+(1.5*iqrd))-0.25,
+             linetype = 'dotted', color = 'green2', size = 1)+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Bimodal')
+
+ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
+
+
+```
+
+* Notice from the plot above that the boxplot will not show if the distribution has multiple peaks or gaps. For this reason, a boxplot should always be plotted along with a histogram to ensure you capture all important features of a distribution. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

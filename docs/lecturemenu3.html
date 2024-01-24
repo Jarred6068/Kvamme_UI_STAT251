@@ -404,8 +404,8 @@ $(document).ready(function () {
 </div>
 
 
-<div id="lecture-4-monday-jan.-21st-2024" class="section level1">
-<h1>Lecture 4: Monday, Jan. 21st 2024</h1>
+<div id="lecture-4-monday-jan.-22nd-2024" class="section level1">
+<h1>Lecture 4: Monday, Jan. 22nd 2024</h1>
 <div id="describing-the-shape-of-a-distribution."
 class="section level2">
 <h2>Describing the shape of a distribution.</h2>
@@ -1068,6 +1068,163 @@ mode may not be anywhere near the center of the distribution.</li>
 </ul></li>
 </ul>
 </div>
+</div>
+</div>
+<div id="lecture-5-wednesday-jan.-24th-2024" class="section level1">
+<h1>Lecture 5: Wednesday, Jan. 24th 2024</h1>
+<div id="more-measures-of-location" class="section level3">
+<h3>More measures of location</h3>
+<p>Other useful measures of position are <strong>percentiles</strong>.
+The <strong><span class="math inline">\(p^{th}\)</span></strong>
+percentile of a distribution is the value that has <span
+class="math inline">\(p\)</span> percent of the observations fall at or
+below it. Take the following simple example of 13 observations of the
+outcome of rolling a fair six-sided die <span class="math display">\[X =
+\{1,2,2,2,2,2,3,4,4,5,5,6,6\}\]</span></p>
+<p>What is the <span class="math inline">\(50^{th}\)</span> percentile
+of <span class="math inline">\(X\)</span>? Given the definition above
+the <span class="math inline">\(50^{th}\)</span> percentile of <span
+class="math inline">\(X\)</span> is <span
+class="math inline">\(3\)</span> because half of the observations in the
+sample are at or below 3. Consequently, the <span
+class="math inline">\(50th\)</span> percentile is also the median. By
+definition the median divides the data in equal halves with <span
+class="math inline">\(50\%\)</span> of observations at or below or the
+median and the remaining <span class="math inline">\(50\%\)</span> of
+observation having a value greater than or equal to the median.</p>
+<p>Two other commonly useful percentiles are the <span
+class="math inline">\(25^{th}\)</span>, and <span
+class="math inline">\(75^{th}\)</span> percentiles. Together with the
+median we call these percentiles the quartiles because they divide a
+distribution into quarters. * We denote the first quartile (<span
+class="math inline">\(25^{th}\)</span> percentile) as <span
+class="math inline">\(Q1\)</span>. It is the median of the lower half of
+the data. * We denote the <span class="math inline">\(50^{th}\)</span>
+percentile or median as <span class="math inline">\(Q2\)</span> * We
+denote the third quartile (<span class="math inline">\(75^{th}\)</span>
+percentile) as <span class="math inline">\(Q3\)</span>. It is the median
+of the upper half of the data</p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-8-1.png" width="768" /></p>
+<p>Example: Consider the following 15 exam scores of students in a
+statistics class:</p>
+<p><span
+class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
+<p>Find the Q1, Q2, and Q3 quartiles for these exam scores. * It’s
+easiest to start with Q2 and work from there. Q2 is the median of the
+data and, since <span class="math inline">\(n\)</span> is odd will just
+be the middle value. In this example <span class="math inline">\(Q2 =
+73\)</span>. Now that we have the middle value we can divide the data
+into its upper and lower half. The lower half of the data contains the
+values</p>
+<p><span class="math display">\[\{61,61,65,65,66,68,69\}\]</span></p>
+<p>To find the first quartile we simply find the median of this subset
+of the observations which is <span class="math inline">\(Q1 =
+65\)</span>. Lastly we repeat this process for the upper half of the
+data to find the value of the third quantile. The upper half of the exam
+scores is the subset</p>
+<p><span class="math display">\[\{ 74,75,76,78,79,90,94\}\]</span></p>
+<p>and the median is <span class="math inline">\(78\)</span>, therefore
+<span class="math inline">\(Q3 = 78\)</span>.</p>
+</div>
+<div id="measures-of-spread" class="section level3">
+<h3>Measures of spread</h3>
+<p>Even the simplest statistical description of a variable should
+include at least one measure of center and one measure of spread. The
+reason being that measures of center or location can be misleading if we
+do not consider how much the observations vary. Consider the following
+example which gives the distributions of the number of youtube video
+views of two content creators.</p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-9-1.png" width="768" /></p>
+<p>From this example we can see that both distributions have
+approximately the same mean. However, Content Creator 2 has considerably
+more variability in the number of views and, on a good day, can
+potentially get up to double his normal number of views.</p>
+<p>In some sense giving several percentiles or the quartiles together
+tells us how different values are spread out across the distribution but
+there are other measures of spread that are preferred. One of the first
+and simplest measures we can use is the range. The
+<strong>range</strong> measures the distance between the largest and
+smallest observation and can be computed by subtracting the minimum
+value from the maximum value. Because the range uses the two most
+extreme points of the data it is extremely susceptible to outliers. For
+this reason, the range is not a measure of spread that gets used
+often.</p>
+<p>A better measure of spread that can be computed from the first and
+third quartiles is the interquartile range or IQR. The
+<strong>IQR</strong> tells us how dispersed the inner <span
+class="math inline">\(50\%\)</span> of the data.</p>
+<ul>
+<li><p>The IQR is defined as</p>
+<p><span class="math display">\[IQR = Q3 - Q1\]</span></p></li>
+<li><p>It measures the distance between <span
+class="math inline">\(Q1\)</span> and <span
+class="math inline">\(Q3\)</span></p></li>
+<li><p>The IQR is very resistant to outliers since it ignores the
+extreme ends of a distribution</p></li>
+<li><p>What is the IQR for the previous example of statistics students
+exam scores?</p></li>
+</ul>
+</div>
+<div id="a-five-number-summary" class="section level3">
+<h3>A five number summary</h3>
+<p>Combining several numerical descriptors together is the best way to
+get a good feel for the characteristics of a distribution. A common
+method for summarizing a set of data is to use the <strong>five number
+summary</strong> which combines the minimum, maximum, and quartiles
+together.</p>
+<ul>
+<li>The five number summary: <span class="math inline">\(\text{Miniumum}
+\ \ Q1 \ \ \text{Median} \ \ Q3 \ \  \text{Maximum}\)</span></li>
+</ul>
+<p>Consider the five number summary of the statistics student exam
+scores:</p>
+<p><span class="math display">\[61 \ \ 65 \ \ 73 \ \ 78 \ \
+94\]</span></p>
+<p>The median tells us the center of the data, the quartiles show us the
+spread of the inner half of the data, the minimum and maximum tell us
+the total extent of spread in exam scores.</p>
+<p>Often these five numbers are displayed graphically in a plot called a
+<strong>box and whisker plot</strong> (often called a boxplot). Together
+with the histogram, the boxplot is one of the most useful graphical
+summaries because it condenses a lot of information into an easy to
+create display.</p>
+<ul>
+<li>Steps for constructing a boxplot:
+<ul>
+<li>Mark the position of the first and second quartile and draw a box
+connecting them.</li>
+<li>Draw a line inside of the box showing the position of the
+median</li>
+<li>From each end of the box, draw a line extending outward <span
+class="math inline">\(1.5 \times IQR\)</span>. Any points extending
+beyond this line are marked with individual points and are considered
+outliers.</li>
+</ul></li>
+</ul>
+<p>Example: consider the boxplot constructed for our example of student
+exam scores</p>
+<p><span
+class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-10-1.png" width="576" /></p>
+<ul>
+<li>boxplots are great for comparing distributions and identifying skew.
+Consider our example for comparing the youtube views of two content
+creators.</li>
+</ul>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-11-1.png" width="576" /></p>
+<ul>
+<li>Using the boxplots makes the disparity in spread between the two
+Content Creators much more apparent. Boxplots are also great for
+identifying skew in a distribution. Consider the plot below which shows
+how you can interpret skew in relation to a boxplot.</li>
+</ul>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-12-1.png" width="576" /></p>
+<ul>
+<li>Notice from the plot above that the boxplot will not show if the
+distribution has multiple peaks or gaps. For this reason, a boxplot
+should always be plotted along with a histogram to ensure you capture
+all important features of a distribution.</li>
+</ul>
 </div>
 </div>
 
