@@ -1,0 +1,92 @@
+---
+title: "Week 4 Notes"
+author: "STAT 251 Section 03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+```
+
+# Lecture 6: Monday, Jan. 29th 2024
+
+### Variance and standard deviation
+
+The five number summary is not the only numerical summary of a distribution. More commonly, a statistical description of a variable will include the mean as a measure of center and the **standard deviation** as a measure of spread. The **standard deviation** measures how far observations are from the center of a distribution. We denote the sample standard deviation as $s$ and the population standard deviation as $\sigma$. 
+
+The distance between a given observation and the center (i.e the mean) is call the **deviation**. A deviation can be represented mathematically as $x_i - \bar{x}$ where $x_i$ denotes an observation from the sample or population. Every observation in a sample or population has a deviation from the mean. 
+
+Before we can discuss how to compute the **standard deviation** of a variable we must first discuss its **variance**. The **variance** of a distribution is the sum of squared deviations of the observations in a sample from their mean. We represent the variance of a sample with the symbol $s^2$ and the variance of a population with $\sigma^2$. The sample variance is defined mathematically as:
+
+$$s^2 = \frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar{x})^2 = \frac{(x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \cdots (x_n - \bar{x})^2}{n-1}$$
+
+From the variance, the standard deviation becomes very easy to compute as is it simply the square root of the variance:
+
+$$ s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar{x})^2}$$
+
+The idea behind variance and standard deviation as measures of spread is straight forward. The deviations $x_i - \bar{x}$ tell us how dispersed the observations are about their center. Some of the deviations will be positive values and some will be negative because some values fall above and below the value of the mean, respectively. In fact, the sum of all deviations will be zero
+
+$$\sum_{i = 1}^n x_i - \bar{x} = 0$$
+
+squaring the deviations ensure that all of the distances are positive. As a result large deviations will have large positive values. The variance is the average squared deviation, so the standard deviation is a measure of the average deviation/distance that an observation falls the center of a distribution. Both $s^2$ and $s$ will be large if the observations are very spread out and will be very small if the observations are densely clustered around the mean. 
+
+Example: Compute the variance and standard deviation the height (in inches) of a sample of five college students from the University of Idaho
+
+$$ X = \{61,62,62,68,75\} $$
+
+The mean of this sample is $\bar{x} = 65.6$
+
+$$s^2 = \frac{(61-65.6)^2+(62-65.6)^2,(62-65.6)^2+(68 - 65.6)^2+(75-65.6)^2}{5-1} = 35.3$$
+
+and now we can take the square root to find the standard deviation
+
+$$s = \sqrt{35.3} \approx 5.9$$
+
+* One important thing to keep in mind is that the variance and standard deviation are both computed from ALL of the observations in a sample/population. As a result, they are influenced by the presence of outliers. Therefore, a large positive or negative outlier will increase the value of the variance or standard deviation. Consider what happens to the varaince and standard deviation of the height example above when a new observation is added with value $x = 92$
+
+$$ X = \{ 61,62,62,68,75,92\} $$
+
+Now the mean is $\bar{x} = 70$. The variance and standard deviation become
+
+$$s^2 = \frac{(61-70)^2+(62-70)^2,(62-70)^2+(68-70)^2+(75-70)+(92-70^2}{5-1} = 144.4$$
+
+and now we can take the square root to find the standard deviation
+
+$$s = \sqrt{144.4} \approx 12.01$$
+
+As we can see, the presence of this large, positive outlier has doubled the value of the standard deviation
+
+* Consider the following 20 observations of the sugar and sodium content in different brands of cereal in the US
+
+```{r, echo=F, message=F, warning=FALSE, fig.height=5, fig.width=6}
+cereal = read.csv('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/cereal.csv')
+
+
+kable(cereal, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+ggplot(data = cereal, aes(x = Sodium))+
+  geom_histogram(color = 'black', fill = 'lightgrey',bins = 5)+
+  geom_dotplot(size = 2)+
+  theme_hc()
+```
+
+
+* What is the largest positive deviation in this dataset? How does this deviation compare to the standard deviation of the entire dataset?
+
+* The largest deviation belongs to the cereal Rasin Bran which has a sodium content of 340 mg. It's deviation is $340 - 167 = 173$. The standard deviation for the whole dataset is about 77mg. This indicates that Rasin Bran has a much higher sodium content than majority of the cereal brands in this dataset. 
+
+
+
+
+
+
+
