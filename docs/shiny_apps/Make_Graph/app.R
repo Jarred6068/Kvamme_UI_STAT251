@@ -111,14 +111,14 @@ ui <- fluidPage(
                  
     ),
     mainPanel("",
-              plotOutput("plot")
+              plotOutput("plot"),
+              verbatimTextOutput("text")
     )
   )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output){
-  
   observeEvent(input$Plot,  output$plot <- renderPlot({
     
     if(is.null(input$title_keystroke)){
@@ -142,7 +142,9 @@ server <- function(input, output){
         xlab(input$xlabel_keystroke)+
         ylab(input$ylabel_keystroke)+
         ggtitle(plot_title, subtitle = paste0(kw[[1]]))
-        
+    }else if(input$graph_option == 'Stem plot'){
+      pt = 'ggplot'
+      A = ggplot()+geom_blank()+theme(axis.line.y = element_blank())
     }else if(input$graph_option == 'Dotplot'){
       pt = 'ggplot'
       A = ggplot()+geom_dotplot(aes(x = out$data), 
@@ -154,35 +156,79 @@ server <- function(input, output){
         ylab(input$ylabel_keystroke)+
         ggtitle(plot_title)
     }else if(input$graph_option == 'Boxplot'){
-      pt = 'bxp'
-      mini = min(out$data)
-      maxi = max(out$data)
-      med = median(out$data)
-      avg = mean(out$data)
-      q1 = quantile(out$data)[2]
-      q3 = quantile(out$data)[4]
-      interr = IQR(out$data)
+      pt = 'ggplot'
+      mini = round(min(out$data), 2)
+      maxi = round(max(out$data), 2)
+      med = round(median(out$data), 2)
+      avg = round(mean(out$data), 2)
+      q1 = round(as.numeric(quantile(out$data)[2]), 2)
+      q3 = round(as.numeric(quantile(out$data)[4]), 2)
+      interr = round(IQR(out$data),2)
       stdev = sd(out$data)
-      estims = c(q1, med, q3)
-      boxplot(out$data, horizontal = TRUE, axes = FALSE, staplewex = 1,
-              xlab = input$xlabel_keytroke, main = plot_title,
-              col = input$fill)
-      text(x=estims, 
-           labels = paste(c("Q1","Q2", "Q3"), round(estims,1), 
-                                 sep = "="), 
-           y=1.25, cex = 1)
-      text(x=c(mini+(stdev/10), maxi - (stdev/10)), 
-           labels = paste(c("Min", "Max"), round(c(mini, maxi),1), 
-                          sep = "="), 
-           y=1.30, cex = 1)
-      text(x=avg, 
-           labels = paste(c("Mean"), round(avg,1), 
-                          sep = "="), 
-           y=1.35, cex = 1)
-      text(x=interr, labels =paste("IQR", round(interr,1), sep = " = "), y=1.5, cex = 1.25)
+      upper.outliers.idx = which(out$data > q3+1.5*interr & out$data < maxi)
+      lower.outliers.idx = which(out$data < q1-1.5*interr & out$data > mini)
+      # boxplot(out$data, horizontal = TRUE, axes = FALSE, staplewex = 1,
+      #         xlab = input$xlabel_keytroke, main = plot_title,
+      #         col = input$fill)
+      # text(x=estims, 
+      #      labels = paste(c("Q1","Q2", "Q3"), round(estims,1), 
+      #                            sep = "="), 
+      #      y=1.25, cex = 1)
+      # text(x=c(mini+(stdev/10), maxi - (stdev/10)), 
+      #      labels = paste(c("Min", "Max"), round(c(mini, maxi),1), 
+      #                     sep = "="), 
+      #      y=1.30, cex = 1)
+      # text(x=avg, 
+      #      labels = paste(c("Mean"), round(avg,1), 
+      #                     sep = "="), 
+      #      y=1.35, cex = 1)
+      # text(x=interr, labels =paste("IQR", round(interr,1), sep = " = "), y=1.5, cex = 1.25)
+      #browser()
+      A = ggplot()+geom_boxplot(aes(x = out$data), 
+                                fill = 'lightgrey',
+                                outlier.shape = 23,
+                                outlier.fill = 'green',
+                                outlier.size = 5)+
+        geom_point(aes(x = c(mini, maxi), y = c(0, 0)), 
+                   shape = 21, 
+                   fill = 'red', 
+                   size = 5)+
+        geom_label(aes(x = mini, y = 0.05), label = paste('min =', mini, collapse = ''), 
+                   label.size = 0.3,)+
+        geom_label(aes(x = maxi, y = 0.05), label = paste('max =', maxi, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = med, y = 0.45), label = paste('median =', med, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = q1-(stdev/8), y = 0.405), label = paste('Q1 =', q1, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = q3+(stdev/8), y = 0.405), label = paste('Q3 =', q3, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = med, y = 0.495), label = paste('IQR =', interr, collapse = ''),
+                   label.size = 0.3,)+
+        scale_x_continuous(limits = c(plyr::round_any(mini-(stdev/2), 0.5), 
+                                      plyr::round_any(maxi+(stdev/2), 0.5)),
+                           n.breaks = 10)+
+        theme_classic()+
+        theme(axis.text.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              axis.text.x = element_text(size = 12),
+              axis.title.y = element_blank(),
+              axis.line.y = element_blank())+
+        xlab(input$xlabel_keystroke)+
+        ylab(input$ylabel_keystroke)+
+        ggtitle(plot_title)
       
-    }else if(input$graph_option == 'Stem plot'){
-      pt = 'other'
+      if(sum(lower.outliers.idx) != 0){
+        lower.outliers = out$data[lower.outliers.idx]
+        A = A+geom_text(aes(x = lower.outliers, y = -0.05), 
+                        label = paste(round(lower.outliers, 2)))
+      }
+      if(sum(upper.outliers.idx) != 0){
+        upper.outliers = out$data[upper.outliers.idx]
+        A = A+geom_text(aes(x = upper.outliers, y = -0.05), 
+                        label = paste(round(upper.outliers,2)))
+      }
+      
     }else if(input$graph_option == 'Barplot'){
       pt = 'ggplot'
       A = ggplot()+
@@ -209,6 +255,9 @@ server <- function(input, output){
     }
     
     if (pt == 'ggplot' && input$graph_option != "Pie chart"){
+      if(input$graph_option == 'Boxplot'){
+        plot(A)
+      }else{
         if(input$theme == 'classic'){
           P = A + theme_classic2()+theme(axis.title = element_text(size = 14))
         }else if (input$theme == 'HC'){
@@ -216,12 +265,22 @@ server <- function(input, output){
         }else{
           P = A + theme_bw()+theme(axis.title = element_text(size = 14))
         }
-      plot(P)
+        plot(P)
+      }
     }else{
       plot(A)  
     }
     
   }))
+  
+  observeEvent(input$Plot,  output$text <- renderPrint({
+    if(input$graph_option == 'Stem plot'){
+      out = convert.keystroke(input$keystroke_input)
+      print('Stem Plot')
+      stem(out$data)
+    }
+  }))
+  
 }
 
 shinyApp(ui = ui, server = server)

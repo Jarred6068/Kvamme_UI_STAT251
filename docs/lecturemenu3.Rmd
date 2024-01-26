@@ -396,7 +396,11 @@ Often these five numbers are displayed graphically in a plot called a **box and 
 * Steps for constructing a boxplot:
   * Mark the position of the first and second quartile and draw a box connecting them.
   * Draw a line inside of the box showing the position of the median
-  * From each end of the box, draw a line extending outward $1.5 \times IQR$. Any points extending beyond this line are marked with individual points and are considered outliers.
+  * From each end of the box, draw a line extending outward $1.5 \times IQR$. 
+    * The lower whisker is drawn to either the minimum value or $Q1 - 1.5 \times IQR$ depending on which is greater.
+    * The upper whisker extends to either the maximum value or $Q3 + 1.5 \times IQR$ depending on which is smaller
+  
+  * Any observations extending beyond $1.5 \times IQR$ below Q1 or above Q3 are marked and considered outliers.
   
 Example: consider the boxplot constructed for our example of student exam scores
 
@@ -417,6 +421,30 @@ text(x=estims, labels =paste(c("Min", "Q1","Median", "Q3", "Max"), estims, sep =
      y=1.25, cex = 0.6)
 text(x=73, labels =paste("IQR", 13, sep = " = "), y=1.5, cex = 0.7)
 ```
+  
+  
+Example2: consider the boxplot constructed for variable $X$
+
+$$X = \{-5.7, -2.6, -1.5, -1.3, -0.4, 0.2, 1.5, 2.2, 2.3, 2.6, 2.9, 10.4 \}$$
+
+```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=6}
+
+rv = c(-5.7, -2.6, -1.5, -1.3, -0.4, 0.2, 1.5, 2.2, 2.3, 2.6, 2.9, 10.4 )
+Q1 = median(rv[1:6])
+med = median(rv)
+Q3 = median(rv[7:12])
+IQR = Q3-Q1
+minv = min(rv)
+maxv = max(rv)
+estims = c(minv, Q1, med, Q3, maxv)
+
+
+boxplot(rv, horizontal = TRUE, axes = TRUE, staplewex = 1)
+text(x=estims+c(0.1,0,0,0,-0.5), labels =paste(c("Min", "Q1","Median", "Q3", "Max"), estims, sep = "="), 
+     y=c(1.3,1.25,1.3,1.25,1.3), cex = 0.6)
+text(x=73, labels =paste("IQR", 13, sep = " = "), y=1.5, cex = 0.7)
+```
+  
   
 * boxplots are great for comparing distributions and identifying skew. Consider our example for comparing the youtube views of two content creators. 
 
