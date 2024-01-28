@@ -1,0 +1,58 @@
+---
+title: "Exam 1 Study Guide"
+author: "STAT 251 Section 03"
+date: "2024-01-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+*  Know the “anatomy” of data (i.e., observations and variables, quantitative and categorical variables).
+
+*  Be able to identify the different types of quantitative and qualitative variables. 
+
+*  Understand samples versus populations.
+
+*  Understand statistics versus parameters.
+
+*  Understand descriptive versus inferential statistics.
+
+*  What is meant by a distribution?
+
+*  Be able to construct a frequency table from a small set of observations and know to find the frequency, relative frequency, and cumulative relative frequency 
+
+*  Know how to construct a dot plot, stem plot, and a histogram given a small set of observations.
+
+*  Be able to compute a mean, median, and mode given a small set of observations. Note that you should also know how to compute a mean using a frequency table.
+
+*  Know how to compute a proportion
+
+*  Know how to find the modal category of a qualitative variable
+
+*  Be able to compute and interpret the variance and standard deviation given a small set of observations
+
+*  Know how to compute the five-number summary of a variable.
+
+*  Understand how plot a cumulative distribution and use it to find the percentiles or quartiles of a distribution. 
+
+*  Know how a box plot is constructed from a five number summary.
+
+*  Know how to interpret the shape (symmetry, skew, modality) of a distribution and how it is related to the mean and median
+
+*  Know how to use the $1.5\times IQR$ Rule to identify outliers.
+
+*  Understand what it means to say that a summary measure is resistant to outliers, and which summary measures we have discussed that are resistant and which are not
+
+*  Be sure you understand the notation (i.e., symbols) we have used so far (e.g., $n,N,s,s^2,\bar{x}, \mu,\sigma,\sigma^2$
+
+	
+The following formulas will be provided on the the exam
+\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(X)\]
+	
+\[s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \ \ s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}\]
+
+\[ \text{range}(x) = \text{min}(x) - \text{max}(x), \ \ IQR = Q3 - Q1 \]
+	
+\[x < Q1 - 1.5 \times (Q3 - Q1), \ \  x > Q3 - 1.5\times(Q3-Q1)\]

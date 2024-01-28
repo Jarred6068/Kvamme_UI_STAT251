@@ -536,4 +536,4 @@ ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
 * Notice from the plot above that the boxplot will not show if the distribution has multiple peaks or gaps. For this reason, a boxplot should always be plotted along with a histogram to ensure you capture all important features of a distribution. 
 
 
-# Lecture 6: Friday, Jan. 26th 2024 - CLASS CANCELED
+# Friday, Jan. 26th 2024 - CLASS CANCELED

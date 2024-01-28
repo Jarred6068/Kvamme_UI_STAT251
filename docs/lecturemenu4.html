@@ -409,89 +409,14 @@ $(document).ready(function () {
 
 <div id="lecture-6-monday-jan.-29th-2024" class="section level1">
 <h1>Lecture 6: Monday, Jan. 29th 2024</h1>
-<div id="variance-and-standard-deviation" class="section level3">
-<h3>Variance and standard deviation</h3>
-<p>The five number summary is not the only numerical summary of a
-distribution. More commonly, a statistical description of a variable
-will include the mean as a measure of center and the <strong>standard
-deviation</strong> as a measure of spread. The <strong>standard
-deviation</strong> measures how far observations are from the center of
-a distribution. We denote the sample standard deviation as <span
-class="math inline">\(s\)</span> and the population standard deviation
-as <span class="math inline">\(\sigma\)</span>.</p>
-<p>The distance between a given observation and the center (i.e the
-mean) is call the <strong>deviation</strong>. A deviation can be
-represented mathematically as <span class="math inline">\(x_i -
-\bar{x}\)</span> where <span class="math inline">\(x_i\)</span> denotes
-an observation from the sample or population. Every observation in a
-sample or population has a deviation from the mean.</p>
-<p>Before we can discuss how to compute the <strong>standard
-deviation</strong> of a variable we must first discuss its
-<strong>variance</strong>. The <strong>variance</strong> of a
-distribution is the sum of squared deviations of the observations in a
-sample from their mean. We represent the variance of a sample with the
-symbol <span class="math inline">\(s^2\)</span> and the variance of a
-population with <span class="math inline">\(\sigma^2\)</span>. The
-sample variance is defined mathematically as:</p>
-<p><span class="math display">\[s^2 = \frac{1}{n-1}\sum_{i = 1}^n (x_i -
-\bar{x})^2 = \frac{(x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \cdots (x_n -
-\bar{x})^2}{n-1}\]</span></p>
-<p>From the variance, the standard deviation becomes very easy to
-compute as is it simply the square root of the variance:</p>
-<p><span class="math display">\[ s = \sqrt{s^2} =
-\sqrt{\frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar{x})^2}\]</span></p>
-<p>The idea behind variance and standard deviation as measures of spread
-is straight forward. The deviations <span class="math inline">\(x_i -
-\bar{x}\)</span> tell us how dispersed the observations are about their
-center. Some of the deviations will be positive values and some will be
-negative because some values fall above and below the value of the mean,
-respectively. In fact, the sum of all deviations will be zero</p>
-<p><span class="math display">\[\sum_{i = 1}^n x_i - \bar{x} =
-0\]</span></p>
-<p>squaring the deviations ensure that all of the distances are
-positive. As a result large deviations will have large positive values.
-The variance is the average squared deviation, so the standard deviation
-is a measure of the average deviation/distance that an observation falls
-the center of a distribution. Both <span
-class="math inline">\(s^2\)</span> and <span
-class="math inline">\(s\)</span> will be large if the observations are
-very spread out and will be very small if the observations are densely
-clustered around the mean.</p>
-<p>Example: Compute the variance and standard deviation the height (in
-inches) of a sample of five college students from the University of
-Idaho</p>
-<p><span class="math display">\[ X = \{61,62,62,68,75\} \]</span></p>
-<p>The mean of this sample is <span class="math inline">\(\bar{x} =
-65.6\)</span></p>
-<p><span class="math display">\[s^2 =
-\frac{(61-65.6)^2+(62-65.6)^2,(62-65.6)^2+(68 -
-65.6)^2+(75-65.6)^2}{5-1} = 35.3\]</span></p>
-<p>and now we can take the square root to find the standard
-deviation</p>
-<p><span class="math display">\[s = \sqrt{35.3} \approx 5.9\]</span></p>
-<ul>
-<li>One important thing to keep in mind is that the variance and
-standard deviation are both computed from ALL of the observations in a
-sample/population. As a result, they are influenced by the presence of
-outliers. Therefore, a large positive or negative outlier will increase
-the value of the variance or standard deviation. Consider what happens
-to the varaince and standard deviation of the height example above when
-a new observation is added with value <span class="math inline">\(x =
-92\)</span></li>
-</ul>
-<p><span class="math display">\[ X = \{ 61,62,62,68,75,92\}
-\]</span></p>
-<p>Now the mean is <span class="math inline">\(\bar{x} = 70\)</span>.
-The variance and standard deviation become</p>
-<p><span class="math display">\[s^2 =
-\frac{(61-70)^2+(62-70)^2,(62-70)^2+(68-70)^2+(75-70)+(92-70^2}{5-1} =
-144.4\]</span></p>
-<p>and now we can take the square root to find the standard
-deviation</p>
-<p><span class="math display">\[s = \sqrt{144.4} \approx
-12.01\]</span></p>
-<p>As we can see, the presence of this large, positive outlier has
-doubled the value of the standard deviation</p>
+<div id="percentiles-and-the-cumulative-distribution"
+class="section level3">
+<h3>Percentiles and the Cumulative Distribution</h3>
+<p>Another form of the distribution of a variable is called the
+cumulative distribution. The <strong>cumulative distribution</strong>
+shows the relationship between the value of a variable and the
+cumulative relative frequency. For discrete variables, the cumulative
+distribution can be represented as a <strong>step function</strong>.</p>
 <ul>
 <li>Consider the following 20 observations of the sugar and sodium
 content in different brands of cereal in the US</li>
@@ -796,7 +721,323 @@ C
 </tr>
 </tbody>
 </table>
-<p><img src="lecturemenu4_files/figure-html/unnamed-chunk-1-1.png" width="576" /></p>
+<ul>
+<li>The following is a frequency table for cereal sugar content.
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+X
+</th>
+<th style="text-align:right;">
+Frequency
+</th>
+<th style="text-align:right;">
+Cumulative Relative Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.55
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.85
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.90
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+</tr>
+</tbody>
+</table></li>
+<li>Using the cumulative relative frequency from the table above we can
+construct the cumulative distribution by plotting the cumulative
+relative frequency on the <span class="math inline">\(y\)</span>-axis
+and the corresponding values of cereal sugar content on the <span
+class="math inline">\(x\)</span>-axis</li>
+</ul>
+<p><img src="lecturemenu4_files/figure-html/unnamed-chunk-3-1.png" width="768" /></p>
+<ul>
+<li>The cumulative distribution is especially useful for quickly finding
+percentiles of a distribution. Use the plot above to confirm that the
+<span class="math inline">\(10^{th}\)</span>, <span
+class="math inline">\(25^{th}\)</span>, <span
+class="math inline">\(30^{th}\)</span>, <span
+class="math inline">\(50^{th}\)</span>, <span
+class="math inline">\(75^{th}\)</span>, and <span
+class="math inline">\(90^{th}\)</span> are <span
+class="math inline">\(1, 4, 1.5, 9.5, 13\)</span>, and <span
+class="math inline">\(15.5\)</span>, respectively.</li>
+</ul>
+<p><img src="lecturemenu4_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+<ul>
+<li>When using a plot of the cumulative distribution to find the
+quartiles or percentiles of a distribution use the folling rule:
+<ul>
+<li>if the number of observations is odd, then the <span
+class="math inline">\(p^{th}\)</span> percentile will be exactly the
+value of the point for which <span
+class="math inline">\(p\)</span>-percent of the observations fall
+below.</li>
+<li>if the number of observations is even, then the <span
+class="math inline">\(p^{th}\)</span> percentile will be the mid point
+of the horizontal bar</li>
+<li>Consider the example above for US cereals which had 20 observations.
+Because there are an even number of observations, we calculate the value
+of the <span class="math inline">\(90^{th}\)</span> percentile as 15.5
+and not 15 because 15.5 is the midpoint of the horizontal bar for that
+percentile.</li>
+</ul></li>
+</ul>
+</div>
+<div id="variance-and-standard-deviation" class="section level3">
+<h3>Variance and standard deviation</h3>
+<p>The five number summary is not the only numerical summary of a
+distribution. More commonly, a statistical description of a variable
+will include the mean as a measure of center and the <strong>standard
+deviation</strong> as a measure of spread. The <strong>standard
+deviation</strong> measures how far observations are from the center of
+a distribution. We denote the sample standard deviation as <span
+class="math inline">\(s\)</span> and the population standard deviation
+as <span class="math inline">\(\sigma\)</span>.</p>
+<p>The distance between a given observation and the center (i.e the
+mean) is call the <strong>deviation</strong>. A deviation can be
+represented mathematically as <span class="math inline">\(x_i -
+\bar{x}\)</span> where <span class="math inline">\(x_i\)</span> denotes
+an observation from the sample or population. Every observation in a
+sample or population has a deviation from the mean.</p>
+<p>Example: Consider the height (in inches) of a sample of five college
+students from the University of Idaho and their deviations</p>
+<p><span class="math display">\[ X = \{61,62,62,68,75\} \]</span></p>
+<p><img src="lecturemenu4_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
+<p>Before we can discuss how to compute the <strong>standard
+deviation</strong> of a variable we must first discuss its
+<strong>variance</strong>. The <strong>variance</strong> of a
+distribution is the sum of squared deviations of the observations in a
+sample from their mean. We represent the variance of a sample with the
+symbol <span class="math inline">\(s^2\)</span> and the variance of a
+population with <span class="math inline">\(\sigma^2\)</span>. The
+sample variance is defined mathematically as:</p>
+<p><span class="math display">\[s^2 = \frac{1}{n-1}\sum_{i = 1}^n (x_i -
+\bar{x})^2 = \frac{(x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \cdots (x_n -
+\bar{x})^2}{n-1}\]</span></p>
+<p>From the variance, the standard deviation becomes very easy to
+compute as is it simply the square root of the variance:</p>
+<p><span class="math display">\[ s = \sqrt{s^2} =
+\sqrt{\frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar{x})^2}\]</span></p>
+<p>The idea behind variance and standard deviation as measures of spread
+is straight forward. The deviations <span class="math inline">\(x_i -
+\bar{x}\)</span> tell us how dispersed the observations are about their
+center. Some of the deviations will be positive values and some will be
+negative because some values fall above and below the value of the mean,
+respectively. In fact, <i>the sum of all deviations will be zero</i></p>
+<p><span class="math display">\[\sum_{i = 1}^n x_i - \bar{x} =
+0\]</span></p>
+<p>squaring the deviations ensures that all of the distances are
+positive. As a result large deviations will have large positive values.
+The variance is the average squared deviation, so the standard deviation
+is a measure of the average deviation/distance that an observation falls
+the center of a distribution. Both <span
+class="math inline">\(s^2\)</span> and <span
+class="math inline">\(s\)</span> will be large if the observations are
+very spread out and will be very small if the observations are densely
+clustered around the mean.</p>
+<p>Example: Compute the variance and standard deviation the height (in
+inches) of a sample of five college students from the University of
+Idaho</p>
+<p><span class="math display">\[ X = \{61,62,62,68,75\} \]</span></p>
+<p>The mean of this sample is <span class="math inline">\(\bar{x} =
+65.6\)</span></p>
+<p><span class="math display">\[s^2 =
+\frac{(61-65.6)^2+(62-65.6)^2+(62-65.6)^2+(68 -
+65.6)^2+(75-65.6)^2}{5-1} = 35.3\]</span></p>
+<p>and now we can take the square root to find the standard
+deviation</p>
+<p><span class="math display">\[s = \sqrt{35.3} \approx 5.9\]</span></p>
+<ul>
+<li>One important thing to keep in mind is that the variance and
+standard deviation are both computed from ALL of the observations in a
+sample/population. As a result, they are influenced by the presence of
+outliers. Therefore, a large positive or negative outlier will increase
+the value of the variance or standard deviation. Consider what happens
+to the varaince and standard deviation of the height example above when
+a new observation is added with value <span class="math inline">\(x =
+92\)</span></li>
+</ul>
+<p><span class="math display">\[ X = \{ 61,62,62,68,75,92\}
+\]</span></p>
+<p>Now the mean is <span class="math inline">\(\bar{x} = 70\)</span>.
+The variance and standard deviation become</p>
+<p><span class="math display">\[s^2 =
+\frac{(61-70)^2+(62-70)^2+(62-70)^2+(68-70)^2+(75-70)+(92-70^2}{5-1} =
+144.4\]</span></p>
+<p>and now we can take the square root to find the standard
+deviation</p>
+<p><span class="math display">\[s = \sqrt{144.4} \approx
+12.01\]</span></p>
+<p>As we can see, the presence of this large, positive outlier has
+doubled the value of the standard deviation</p>
+<ul>
+<li>Consider the the cereal example from above. The following is a dot
+plot overlay-ed on the histogram of the variable sodium content (mg) of
+the cereals</li>
+</ul>
+<p><img src="lecturemenu4_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
 <ul>
 <li><p>What is the largest positive deviation in this dataset? How does
 this deviation compare to the standard deviation of the entire
@@ -807,6 +1048,35 @@ class="math inline">\(340 - 167 = 173\)</span>. The standard deviation
 for the whole dataset is about 77mg. This indicates that Rasin Bran has
 a much higher sodium content than majority of the cereal brands in this
 dataset.</p></li>
+</ul>
+<p><br> <br> You might have asked yourself “why is the variance divided
+by <span class="math inline">\(n-1\)</span> and not <span
+class="math inline">\(n\)</span>?”</p>
+<ul>
+<li><p>Recall that the sum of deviations is aways zero. Thus the last
+deviation can always be found once we know the other <span
+class="math inline">\(n-1\)</span> deviations. Take for example a set of
+two observations <span class="math inline">\(X = \{-5, 5\}\)</span>. The
+mean is <span class="math inline">\(0\)</span> and the deviations are
+also <span class="math inline">\(-5\)</span> and <span
+class="math inline">\(5\)</span>. If we only knew one of the deviations,
+say -5, then we know that the other deviation <i>must be 5</i> for their
+sum to be zero. This means that for any sum of deviations we are not
+averaging <span class="math inline">\(n\)</span> unrelated things but
+<span class="math inline">\(n-1\)</span>. The last observation is always
+related to the sum of previous observations. Thus only <span
+class="math inline">\(n-1\)</span> observations are allowed to <i>vary
+freely</i>.</p></li>
+<li><p>We call <span class="math inline">\(n-1\)</span> the
+<strong>degrees of freedom</strong> of the variance or standard
+deviation. This word comes up often in statistics. Another way to think
+about this quantity is that it represents the number of pieces of
+independent information that we have. When we estimate quantities from
+the sample, we use up degrees of freedom. When we compute the variance
+or standard deviation we must first <i>use up</i> a degree of freedom to
+estimate the mean. This leaves only <span
+class="math inline">\(n-1\)</span> degrees of freedom for the remaining
+estimate of the standard deviation or variance.</p></li>
 </ul>
 </div>
 </div>
