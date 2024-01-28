@@ -43,7 +43,7 @@ navbar:
     - text: 'Exam Study Guides'
       menu:
         - text: 'Exam 1 Study Guide'
-          href: exam1studyguide.html
+          href: exam1_study_guide.html
     - text: "Course Project"
       menu:
       - text: "Project Description"
