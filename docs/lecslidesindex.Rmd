@@ -48,8 +48,8 @@ as powerpoint
 
 
 ### Lecture 6
-<a href="./lecture_slides/Week 4/Week3_Lecture6_Slides_1_29_2024.pdf">Download File</a>
+<a href="./lecture_slides/Week 4/Week4_Lecture6_Slides_1_29_2024.pdf">Download File</a>
 as .pdf
 
-<a href="./lecture_slides/Week 4/Week3_Lecture6_Slides_1_29_2024.pptx">Download File</a>
+<a href="./lecture_slides/Week 4/Week4_Lecture6_Slides_1_29_2024.pptx">Download File</a>
 as powerpoint
