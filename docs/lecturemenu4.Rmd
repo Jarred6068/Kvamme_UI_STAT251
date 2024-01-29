@@ -198,7 +198,7 @@ $$ X = \{ 61,62,62,68,75,92\} $$
 
 Now the mean is $\bar{x} = 70$. The variance and standard deviation become
 
-$$s^2 = \frac{(61-70)^2+(62-70)^2+(62-70)^2+(68-70)^2+(75-70)+(92-70^2}{5-1} = 144.4$$
+$$s^2 = \frac{(61-70)^2+(62-70)^2+(62-70)^2+(68-70)^2+(75-70)+(92-70)^2}{5-1} = 144.4$$
 
 and now we can take the square root to find the standard deviation
 
