@@ -44,6 +44,12 @@ navbar:
       menu:
         - text: 'Exam 1 Study Guide'
           href: study_guides/exam1_study_guide.html
+        - text: 'Exam 1 Review'
+          menu: 
+            - text: 'Problems' 
+              href: Review_problems/exam1_review_problems.html
+            - text: 'Solutions'
+              href: Review_problems/exam1_review_problems_solns.html
     - text: "Course Project"
       menu:
       - text: "Project Description"

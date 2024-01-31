@@ -1,0 +1,307 @@
+---
+title: "Exam 1 Review Problems Solutions"
+author: "STAT 251 Section 03"
+date: "2024-01-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
+path2 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/'
+```
+
+
+
+${\bf (1)}$ For each statistic, denote whether it is resistant or not resistant to outliers:
+<ol type="a">
+  <li>sample mean $\bar{x}$ <span style="color: red;">not resistant</span> </li>
+  <li>median <span style="color: red;">resistant</span> </li>
+  <li>quartiles $Q1, Q3$ <span style="color: red;">resistant</span> </li>
+  <li>range <span style="color: red;">not resistant</span> </li>
+  <li>interquartile range (IQR) <span style="color: red;">resistant</span> </li>
+  <li>variance <span style="color: red;">not resistant</span> </li>
+  <li>standard deviation <span style="color: red;">not resistant</span> </li>
+</ol>
+
+${\bf (2)}$
+
+A survey of college students in Georgia asked the following questions:
+<ol type="a">
+
+  <li>Are you male or female? (recorded as male = 0, female = 1)</li>
+  
+  <li>What is you height in inches?</li>
+  
+  <li>Do you routinely smoke cigarettes? (recorded as no = 0, yes = 1)</li>
+  
+  <li>How many hours do you spend studying?</li>
+</ol>
+
+The figure below shows histograms of the student responses to each of these questions in scrambled order and without scale markings. Which histogram goes with each variable? Explain your reasoning.
+
+```{r, echo=FALSE, message=F, warning=F, fig.height=5, fig.width=8}
+
+gss = read.csv(paste0(path2, 'georgia_student_survey.csv'))
+k = ceiling(sqrt(dim(gss)[1]))
+
+A = ggplot(data = gss, aes(x = Gender))+
+  geom_histogram(color = 'black', fill = 'navy')+
+  theme_classic2()+
+  xlab('')+
+  ylab('Frequency')+
+  ggtitle('Variable: (a)')+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+B = ggplot(data = gss, aes(x = Studytime))+
+  geom_histogram(color = 'black', fill = 'navy', position = 'dodge', bins = k)+
+  theme_classic2()+
+  xlab('')+
+  ylab('Frequency')+
+  ggtitle('Variable: (d)')+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+
+C = ggplot(data = gss, aes(x = Height))+
+  geom_histogram(color = 'black', fill = 'navy', position = 'dodge', bins = k)+
+  theme_classic2()+
+  xlab('')+
+  ylab('Frequency')+
+  ggtitle('Variable: (b)')+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+
+D = ggplot(data = gss, aes(x = Smokecig))+
+  geom_histogram(color = 'black', fill = 'navy')+
+  theme_classic2()+
+  xlab('')+
+  ylab('Frequency')+
+  ggtitle('Variable: (c)')+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+
+ggarrange(A, B, C, D, nrow = 2, ncol = 2)
+
+```
+
+
+<br>
+<br>
+<br>
+<br>
+${\bf (3)}$
+Consider the following 10 observations of measurements made on Egyptian skulls from five epochs. Use this data to answer parts (a) - (d).
+
+```{r, echo=FALSE, message=F, warning=F, fig.height=5, fig.width=8}
+
+set.seed(555)
+library(HSAUR2)
+
+kable(skulls[sample(1:dim(skulls)[1], 10),], format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+<ol type="a">
+
+  <li>What type of variable is "Epoch"?
+  <span style="color: red;">Qualitative ordinal</span>
+  </li>
+  <li>Fill in the frequency table below for the variable "Epoch"</li>
+  
+
+```{r, echo=FALSE, message=F, warning=F, fig.height=5, fig.width=8}
+set.seed(555)
+x = skulls[sample(1:dim(skulls)[1], 10),]
+cts = summary(x$epoch)[which(summary(x$epoch)>0)]
+
+tbl = cbind.data.frame(names(cts), Frequency = cts)
+
+kable(tbl, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+<li>Use the frequency table from part a.) to construct a bar plot of the variable "Epoch"</li>
+
+
+
+```{r, echo=FALSE, message=F, warning=F, fig.height=4, fig.width=6}
+set.seed(555)
+x = skulls[sample(1:dim(skulls)[1], 10),]
+cts = summary(x$epoch)[which(summary(x$epoch)>0)]
+
+lbls = names(cts)
+ggplot()+geom_bar(aes(x = lbls, y = cts), 
+                  stat = 'identity',
+                  color = 'black')+
+  theme_bw()+
+  scale_y_continuous(limits = c(0, 5), breaks = seq(0, 5, 1))+
+  xlim(lbls)+
+  ylab('Frequency')+
+  xlab('Epoch')
+
+
+```
+
+<li>What proportion of the observations in the sample are from the epoch "c150AD"? 
+<span style="color: red;">$\hat{p}_{c150AD} = 0.5$</span> 
+</li>
+
+</ol>
+
+
+<br>
+<br>
+<br>
+<br>
+${\bf (4)}$
+Again, consider the 10 observations of measurements made on Egyptian skulls from five epochs given in problem $\bf (1)$. Answer parts (a) - (c) 
+<ol type="a">
+  <li>Construct a histogram for the variable $nh$ (nasal height) using the following intervals: $48 < X \leq 50$, $50< X \leq 52$, $52< X\leq 54$, and $54< X\leq 56$. Start by filling in the frequency table below</li>
+
+
+```{r, echo=FALSE, message=F, warning=F, fig.height=4, fig.width=4}
+set.seed(555)
+x = skulls[sample(1:dim(skulls)[1], 10),]
+cts = c(sum(x$nh<=50), sum(x$nh>50 & x$nh<=52), sum(x$nh>52 & x$nh<=54), sum(x$nh>54))
+
+tbl = cbind.data.frame(Interval = c('$48 < X \\leq 50$','$50< X \\leq 52$', '$52< X \\leq 54$', '$54< X \\leq 56$'), Frequency = cts)
+
+kable(tbl, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+ggplot()+geom_histogram(aes(x = x$nh), binwidth = 2, color = 'black', boundary = 0)+
+  theme_bw()+
+  #scale_y_continuous(limits = c(0, 4), breaks = seq(0, 4, 1))+
+  #scale_x_continuous(limits = c(min(x$nh), 56), breaks = seq(min(x$nh), 56, 2))+
+  ylab('Frequency')+
+  xlab('Nasal Height')
+
+
+```
+<li>Using the histogram above, what proportion of the skulls have a nasal height less than or equal to 54 milimeters? <span style="color: red;">$\hat{p} = \frac{4+1+3}{10} = 0.8$</span></li>
+
+<li>Describe the shape of the distribution above: <span style="color: red;"> asymmetric, bimodal</span></li>
+</ol>
+
+<br>
+<br>
+<br>
+<br>
+${\bf (5)}$
+
+Consider the following $15$ observations from an experiment on the growth of orange trees. Note that the age in years has been rounded to the nearest $1/2$
+```{r, echo=FALSE, message=F, warning=F, fig.height=4, fig.width=4}
+
+set.seed(555)
+
+x2 = Orange[sample(c(1:dim(Orange)[1]), 15),]
+
+ix = sort(x2$age, index.return = T)$ix
+
+x2 = x2[ix,]
+
+tbl = cbind.data.frame(`Age (years)` = plyr::round_any(x2$age/365, 0.5), `Circumference (mm)` = x2$circumference)
+kable(tbl, format = 'html', digits = 2, row.names = T, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+<ol type="a">
+  <li>What type of variable is "Age"? <span style="color: red;">quantitative continuous</span></li>
+  <li>What type of variable is "Circumference"? <span style="color: red;">quantitative discrete</span></li>
+  <li>Give the 5 number summary for the variable "Age": <span style="color: red;">$\min = 0.5$, $Q1 = 2.0$, median $(Q2) = 3$,  $Q3 = 4$, $\max = 4.5$</span></li>
+  <li>Construct a boxplot using the five number summary above, be sure to make note of any outliers <span style="color: red;">there are no outliers</span></li>
+  
+```{r, echo=FALSE, message=F, warning=F, fig.height=2, fig.width=5}
+
+set.seed(555)
+
+x2 = Orange[sample(c(1:dim(Orange)[1]), 15),]
+x2$age = plyr::round_any(x2$age/365, 0.5)
+ggplot()+geom_boxplot(aes(x = x2$age))+
+  theme_classic2()+
+  scale_x_continuous(limits = c(min(x2$age), max(x2$age)), breaks = seq(min(x2$age), max(x2$age), 0.5))+
+  xlab('Orange Tree Age (years)')+
+  theme(axis.line.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+</ol>
+
+
+<br>
+<br>
+<br>
+<br>
+${\bf (6)}$
+
+Consider the following frequency table for the magnitude of earthquakes recorded near the island nation of Fiji. 
+```{r, echo=FALSE, message=F, warning=F, fig.height=4, fig.width=4}
+
+set.seed(432)
+
+magr = plyr::round_any(quakes$mag, 0.5)
+xvals = sort(unique(magr))
+cts = summary(as.factor(magr))
+RF = cts/sum(cts)
+CRF = cumsum(RF)
+
+which = sample(1:6, 5, replace = T)
+cts2 = cts
+cts2[which[1]] = ''
+
+RF2 = RF
+RF2[which[2:3]] = ''
+
+CRF2 = CRF
+CRF2[which[4:5]] = ''
+tbl = rbind(cbind.data.frame(Magnitude = xvals, Frequency = cts, `Relative Frequency` = RF, `Cumulative Relative Frequency` = CRF ), c("Total", sum(cts), sum(RF), 1.0))
+kable(tbl, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')%>%
+  column_spec(4, width = "18em")
+
+
+```
+
+<ol type="a">
+  <li>Complete the frequency table above</li>
+  <li>Confirm that the mean magnitude of an earthquake is about $4.6$
+  <span style="color: red;">$$\frac{4 \times (191)+4.5 \times (492)+5 \times (238)+5.5 \times (72)+6 \times (6)+6.5 \times (1)}{1000} = 4.6$$</span>
+  or 
+  <span style="color: red;">$$4 \times ( 0.191)+4.5 \times ( 0.492)+5 \times ( 0.238)+5.5 \times ( 0.072)+6 \times ( 0.006)+6.5 \times ( 0.001) = 4.6$$</span>
+  </li>
+  <li>Plot the cumulative distribution of earthquake magnitude</li>
+```{r, echo=FALSE, message=F, warning=F, fig.height=4, fig.width=6}
+set.seed(432)
+
+magr = plyr::round_any(quakes$mag, 0.5)
+xvals = sort(unique(magr))
+cts = summary(as.factor(magr))
+ggplot()+geom_step(aes(x = xvals, y = cumsum(cts/sum(cts))), size = 1)+
+  geom_point(aes(x = xvals, y = cumsum(cts/sum(cts))), size = 2)+
+  theme_bw()+
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.1))+
+  scale_x_continuous(limits = c(min(xvals), max(xvals)), breaks = seq(min(xvals), max(xvals), 0.5))+
+  ylab('Cumulative Relative Frequency')+
+  xlab('Earthquake Magnitude')
+
+```
+  <li>Using the plot above, what the 75th percentile of the earthquake magnitude?
+  <span style="color: red;"> $Q3 = 5$</span>
+  </li>
+</ol>
+
+
