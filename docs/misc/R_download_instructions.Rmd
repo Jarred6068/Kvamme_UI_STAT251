@@ -1,0 +1,40 @@
+---
+title: "Instructions to Download R"
+author: "STAT 251 Section 03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+```
+
+Below are some brief instructions for downloading R and Rstudio. If you get stuck, this helpful link provides more detailed instructions with images for each step: 
+
+[install-r-and-r-studio-for-windows](https://teacherscollege.screenstepslive.com/a/1108074-install-r-and-r-studio-for-windows)
+
+# Instructions to download R and R-studio
+
+$R$ is a programming language and $R$-studio is a front-end program that allows a user to easily interface with $R$. These are two separate programs and must be downloaded and installed separately.
+
+### Step 1: Go to CRAN Website and Download R
+
+* use this link [https://cran.r-project.org/](https://cran.r-project.org/) to go to CRAN. Click the link for either the windows or macos installation - whichever applies to you.
+
+* Next read the instructions carefully, and when you're ready to proceed, click the link for "install R for the first time".
+
+* Download the mac or windows installation and follow the installation wizard instructions
+
+
+### Step 2: Next, Download RStudio
+
+* use this link [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/) to go to Rstudio developers website. Scroll toward the bottom of the page and click the macos or windows installation of Rstudio - whichever applies to you.
+
+* Once downloaded follow the instructions of the installation wizard
+
+### Step 3: Open R Studio and Begin Programming !!!
