@@ -291,7 +291,7 @@ by subtracting off the mean and dividing by the standard deviation, we are perfo
 
 $$z_i = \frac{x_i - \bar{x}}{s} \sim N(\bar{x} - \bar{x}, s/s)$$ 
 
-The distribution of $z_i$ is a special case of the normal distribution called the **standard normal distribution**. The standard normal distribution has a mean of zero and a standard deviation of one and we often define in symbols as $z_i \sim N(0,1)$
+The distribution of $z_i$ is a special case of the normal distribution called the **standard normal distribution**. The standard normal distribution has a mean of zero and a standard deviation of one and we often define this in symbols as $z_i \sim N(0,1)$
 
 Lets consider the following example using data collected on the air pollution of countries in the European Union:
 
@@ -335,3 +335,4 @@ ggplot(data = df, aes(x = value))+
 
 ```
 
+# Lecture 8: Wednesday, Feb.7th 2024
