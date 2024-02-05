@@ -73,7 +73,7 @@ navbar:
         - text: 'SAC schedule'
           href: sac_schedule.html
         - text: 'R code'          
-          href: R_code.html
+          href: misc/rcode_examples.html
 
 output:
   html_document:

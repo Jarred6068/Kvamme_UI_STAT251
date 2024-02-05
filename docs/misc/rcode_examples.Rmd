@@ -1,0 +1,406 @@
+---
+title: "R Code Examples"
+author: "STAT 251 Section 03"
+date: "2024-01-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+
+
+path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
+path2 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/'
+```
+
+In this example R-script, I will demonstrate how you can use R to construct some of the graphs and descriptive statistics that we have learned so far. As an example dataset, we will be analyzing data from A survey of college students in Georgia. The data is given below:  
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(MASS)
+#datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/'
+
+gss = read.csv(paste0(path2, 'georgia_student_survey.csv'))
+kable(gss, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', font_size = 11)
+
+```
+
+You can download the GA Student Survey dataset [here](https://img1.wsimg.com/blobby/go/bbca5dba-4947-4587-b40a-db346c01b1b3/downloads/georgia_student_survey.csv?ver=1701115032787)
+
+**Variable Description**
+
+ * Height - height measured in inches
+ 
+ * Gender - Gender recorded as female = 0, male = 1
+ 
+ * Haircut - Cost (in whole dollars) willing to spend on a haircut
+ 
+ * Job - If the student is employed (Yes = 1, No = 0)
+ 
+ * Studytime - Average time spent studying over a week (recorded in hours)
+ 
+ * Smokecig - If the student smokes recorded as No = 0 and Yes = 1
+ 
+ * Dated - Number of romantic dates in a typical week
+ 
+ * HSGPA - High school Grade Point Average (GPA)
+ 
+ * CGPA - College Grade Point Average (GPA) 
+ 
+ * HomeDist - Distance from home to collage (in miles)
+ 
+ * BrowseInternet - Time spent each day browsing the web (recorded in minutes)
+ 
+ * WatchTV - Time spent watching TV each day (recorded in minutes)
+ 
+ * Exercise - Average time spent exercising over a week (recorded in hours)
+ 
+ * ReadNewsP - Number of days a week the student reads the newspaper
+ 
+ * Vegan - Whether the student is a vegan (Yes = 1, No = 0)
+ 
+ * PoliticalDegree - Degree of conservatism or liberalism (1 = extremely liberal, 2 = liberal, 3 = slightly liberal, 4 = moderate, 5 = slightly conservative, 6 = conservative, 7 = extremely conservative)
+ 
+ * PoliticalAff - The self reported political affilation of the student (1 = Democrat, 2 = Republican, 3 = Democrat)
+ 
+ 
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+
+#One of the first things we can do to investigate a dataset is to use the str() and summary() commands. 
+
+# --> The str() command returns the type of each variable as interpreted by R. In R, there are four main types. Characters, Integers, Numeric, and Factor. A character is a qualitative variable. A factor is a qualitative variable that is represented with numeric values like 0 or 1. Integers are quantative discrete variables and numerics are for quantative continuous variables. 
+
+# --> The summary() command will give a five number summary for every variable in the dataset. Be careful of qualitative variables recorded as integers. A five-number summary for these variables must be carefully interpreted
+
+
+# Using str()
+str(gss)
+```
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+# using summary()
+summary(gss)
+```
+
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+#======================================================================
+#-----------------Description of a qualitative variable----------------
+#======================================================================
+
+#To demonstrate how to use R to create descriptive plots for qualitative variables, we will analyze the variable Gender. Note that there are several packages in R that can be used for plotting. R has a set of basic graphics that allow for plotting bar plots, boxplots, scatterplots and so on. However, it's most popular to use the ggplot2 package for high quality graphics. ggplot2 has a bit of a learning curve but it has a lot of flexibility for editing and customizing plots. The examples provided herein will be done with both basic R plotting and also with ggplot2
+
+# the following packages are used in this demonstration:
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+
+#to tell R that this is qualitative variable we must convert it to a "factor" this tells R to treat the 0 and 1 values as categories
+
+gss$Gender = as.factor(gss$Gender)
+# now the variable will be reported as a factor with two levels corresponding to the two genders in the data
+str(gss$Gender)
+# applying the summary() commmand to a factor will count the number of observations in each factor level
+summary(gss$Gender)
+
+```
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+#For both bar chart and the pie chart we need to supply the unique values and their proportions. We can compute the proportions (relative frequencies) by first computing the frequency using the summary() command
+#frequency
+freq = summary(gss$Gender)
+
+#relative frequency is then the frequency divided by the sample size (here rounded to the nearest hundredth)
+relative.freq = round(freq/sum(freq), 2)
+
+#now we will repackage the variable Gender as a frequency table:
+ft = cbind.data.frame(Gender = c('Female', 'Male'), Proportion = relative.freq)
+print(ft)
+
+# We will first demonstrate a pie chart and barplot using the basic plotting mechanics in R. You can use ?pie and ?barplot to read the documentation for these functions and learn more about the arguments
+
+# first argument is a set of non-negative values such as counts or proportions
+pie(ft$Proportion, 
+    #supply lables
+    labels = ft$Gender, 
+    #edit colors
+    col = c('red','orange'))
+
+#first argument is the height of the bars
+barplot(height = ft$Proportion, 
+        #supply the legend labels
+        legend = ft$Gender, 
+        #color the bars
+        col = c('red','orange'),
+        #additional arguments to change the position of the legend 
+        args.legend=list(
+      x=1,
+      y=1,
+      bty = "n"
+    ))
+
+```
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+#Any ggplot is built up from adding together different plot components. The general recipe is a basic plot frame ggplot() plus geometry elements that correspond to the custom plot components you want. Examples include:
+#geom_bar()
+#geom_boxplot()
+#geom_histogram()
+#geom_point()
+#geom_line()
+#geom_dot()
+#geom_step()
+# and many many more...
+#many of these components can be combined in differet ways.
+
+# every plot must include an aes() argument which is called the asthetics mapping. This tells ggplot which variable will be the x,y,and z coordinates, as well as coloring schemes and sizes of points or lines. 
+
+#Pie chart using the ggplot2 package
+pie1 = ggplot(ft, aes(x = "", y = Proportion, fill = Gender)) +
+  # geom_col is another type of barplot offered by ggplot2
+  geom_col(color = "black") +
+  #label the proportions onto plot
+  geom_text(aes(label = Proportion), 
+            position = position_stack(vjust = 0.6), size = 5) +
+  #convert bar plot into pie chart
+  coord_polar(theta = "y") +
+  # use reds palette
+  scale_fill_brewer(palette = 'Reds') +
+  #use void theme to remove all axes from plot area
+  theme_void()+
+  # change legend text side
+  theme(legend.text = element_text(size = 12))+
+  # Add a title 
+  ggtitle('Gender')
+
+plot(pie1)
+
+```
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+# Similarly, the ggplot can make barplots from the the same frequency table we created above:
+
+#bar chart
+BP1 = ggplot(data = ft, aes(x = Gender, y = Proportion, fill = Gender))+
+  #apply bar chart
+  geom_bar(stat = 'identity', color = 'black', size = 0.8)+
+  #use a base plotting theme - HC theme
+  theme_hc()+
+  #change the tick points of the y axis
+  scale_y_continuous(breaks = seq(0, 0.5, 0.1))+
+  #use reds color palette
+  scale_fill_brewer(palette = 'Reds')+
+  #set plot legend to top of plot
+  theme(legend.position = 'top')+
+  #the theme command controls various asthetics related to the plot area, margin, and text
+  theme(axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14))+
+  # Add a title to the plot
+       ggtitle("Gender")
+
+
+plot(BP1)
+```
+
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
+
+#======================================================================
+#----------------Description of a quantitative variable----------------
+#======================================================================
+
+#For a description of a quantitative variable we will analyze the variable Studytime which is the self recorded amount of time (in hours) that Georgia college students spent studying each week.
+
+
+#We will start by making a simple stem plot. R has a nice built in function called stem() which makes this process very simple and easy.
+
+print(gss$Studytime)
+
+#Looking at the values of the data, we can see that time is recorded to the nearest half hour. 
+
+#Stem plot
+stem(gss$Studytime)
+
+#by default stem() will try to choose the "prettiest" way to make the stem chart using an internal way of estimating the number of "bins" 
+
+#to control this you can set the "scale" argument. we will remake the stem plot using a scale value of 2 - this will prevent the rounding to the nearest even value that is seen in the previous plot 
+stem(gss$Studytime, scale = 2) 
+
+```
+
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=4, fig.width=5}
+
+#R base graphics does not have a good equivalent function for making dotplots...
+#Dot plot using ggplot
+ggplot(data = gss, aes(x = Studytime))+
+  geom_dotplot(dotsize = 0.5)+
+  theme_classic()+
+  #remove y lable
+  ylab("")+
+  #set x label
+  xlab("Study Time (hrs)")+
+  #give plot a title and subtitle
+  ggtitle('Dotplot of Student Study Time (Hrs)', subtitle = 'Georgia Student Survey')+
+  #rescale x axis to show more tick marks
+  scale_x_continuous(limits = c(min(gss$Studytime), max(gss$Studytime)), 
+                     breaks = seq(min(gss$Studytime), max(gss$Studytime), 1))+
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 14),
+        #remove y axis and background
+        panel.background = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank())
+
+
+#Next we will demonstrate how to construct histograms using base R and ggplot2. Note that both packages will usually automatically determine the number of bins to use. The hist() function in R uses the Sturges method as default which is a resonable choice for selecting the number of bins that we discussed in class. you can use ?hist to find out more about the input arguments for this function.
+#Histogram of studytime using Base R graphics
+hist(gss$Studytime, 
+     xlab = 'Study Time (hrs)',
+     ylab = 'Frequency',
+     main = 'College Student Weekly Time Spent Studying')
+
+
+#Note that geom_histogram will try to use 30 bins as its default. If you want to choose a custom number of bins or binwidths you can use additional arguments. Use ?geom_histogram() to see all arguments  
+#Histogram using ggplot2: 
+ggplot(data = gss, aes(x = Studytime))+
+  geom_histogram(color = 'black', fill = 'lightblue')+
+  theme_classic2()+
+  ylab("Frequency")+
+  xlab("Study Time (hrs)")+
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 14))
+
+
+# Histogram using ggplot2 and with simple square method for the number of bins
+#find the number of observations
+n = length(gss$Studytime)
+k = ceiling(sqrt(n)) # rounded up square root of the sample size
+
+ggplot(data = gss, aes(x = Studytime))+
+  geom_histogram(color = 'black', fill = 'lightblue', bins = k)+
+  theme_classic2()+
+  ylab("Frequency")+
+  xlab("Study Time (hrs)")+
+  theme(axis.text.x = element_text(size = 12),
+        axis.title.x = element_text(size = 14))
+
+```
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+#Next we demonstrate the boxplot using Base R graphics and ggplot2
+#Boxplot using base R
+
+boxplot(gss$Studytime, 
+        # make the boxplot horizontal instead of vertical
+        horizontal = T,
+        # set axis label
+        xlab = 'Study Time (Hrs)',
+        # set plot title
+        main = 'College Student Weekly Study Time')
+```
+
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+#if you want to label the boxplot you can use the text() function (this function is actually applicable to all base R plots)
+#find min, Q1, median, Q3, and max
+minss = min(gss$Studytime)
+Q1 = quantile(gss$Studytime, 0.25, type = 2)
+medss = median(gss$Studytime)
+Q3 = quantile(gss$Studytime, 0.75, type = 2)
+maxss = max(gss$Studytime)
+
+#now group all estims into a vector
+estimates = c(minss, Q1, medss, Q3, maxss)
+
+boxplot(gss$Studytime, 
+        # make the boxplot horizontal instead of vertical
+        horizontal = T,
+        # set axis label
+        xlab = 'Study Time (Hrs)',
+        # set plot title
+        main = 'College Student Weekly Study Time')
+# the estimates will serve as the x-coords on the plot
+text(x=estimates, 
+     # create the labels using the paste function 
+     labels =paste(c("Min", "Q1","Median", "Q3", "Max"), estimates, sep = "="),
+     # set the y-positions of the labels - labels will be offset so they dont overlap
+     y=c(1.3,1.25,1.3,1.25,1.3), cex = 0.6)
+#also add the IQR
+text(x=medss, labels =paste("IQR", Q3 - Q1, sep = " = "), y=1.5, cex = 0.7)
+
+
+```
+
+
+
+
+```{r, echo=T, message=FALSE, warning=FALSE, fig.height=6, fig.width=8}
+
+#Now using ggplot2 - Note that adding labels on ggplot2 is a bit more complicated but it can be done using the geom_label or geom_text functions
+minss = min(gss$Studytime)
+Q1 = quantile(gss$Studytime, 0.25, type = 2)
+medss = median(gss$Studytime)
+Q3 = quantile(gss$Studytime, 0.75, type = 2)
+maxss = max(gss$Studytime)
+
+ggplot()+
+  geom_boxplot(aes(x = gss$Studytime),
+               fill = 'lightgrey',
+               #choose shape of outlier points
+               outlier.shape = 23,
+               #choose fill color 
+               outlier.fill = 'green',
+               # choose size
+               outlier.size = 5)+
+        # add min and max values as points
+        geom_point(aes(x = c(minss, maxss), y = c(0, 0)), 
+                   shape = 21, 
+                   fill = 'red', 
+                   size = 4)+
+  
+  # label the min, Q1, median, Q3, and max
+        geom_label(aes(x = minss, y = 0.05), label = paste('min =', minss, collapse = ''), 
+                   label.size = 0.3,)+
+        geom_label(aes(x = maxss, y = 0.05), label = paste('max =', maxss, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = medss, y = 0.45), label = paste('median =', medss, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = Q1, y = 0.405), label = paste('Q1 =', Q1, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = Q3, y = 0.405), label = paste('Q3 =', Q3, collapse = ''),
+                   label.size = 0.3,)+
+        geom_label(aes(x = medss, y = 0.495), label = paste('IQR =', Q3-Q1, collapse = ''),
+                   label.size = 0.3)+
+        scale_x_continuous(limits = c(minss-0.5, 
+                                      maxss+0.5),
+                           n.breaks = 10)+
+        theme_classic()+
+        #remove y axis and change x-axis text size
+        theme(axis.text.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              axis.text.x = element_text(size = 12),
+              axis.title.y = element_blank(),
+              axis.line.y = element_blank())+
+        xlab('Study Time (Hrs)')+
+        ggtitle('College Student Weekly Study Time')
+
+```

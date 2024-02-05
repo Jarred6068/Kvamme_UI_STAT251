@@ -10,7 +10,7 @@ urlcolor: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<table border="1" cellspacing="10" style="width:50%">
+<table border="1" cellspacing="10" style="width:60%">
     <tr>
         <td>**WEEK 1**</td>
         <td></td>
@@ -92,7 +92,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>January 19, 2024</td>
-        <td>Describing and visualizing distributions (continued)</td>
+        <td>Distributions and frequency tables</td>
         <td></td>
     </tr>
     <tr>
@@ -110,7 +110,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Monday</td>
         <td>January 22, 2024</td>
-        <td>The normal distribution</td>
+        <td>Measures of location and position</td>
         <td></td>
     </tr>
     <tr>
@@ -122,7 +122,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>January 24, 2024</td>
-        <td>transformations, z-scores</td>
+        <td>Measures of spread, boxplot</td>
         <td></td>
     </tr>
     <tr>
@@ -134,7 +134,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>January 26, 2024</td>
-        <td>Identifying outliers, margin of error</td>
+        <td>CLASS CANCELED</td>
         <td></td>
     </tr>
     <tr>
@@ -152,7 +152,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Monday</td>
         <td>January 29, 2024</td>
-        <td>Study and sampling designs </td>
+        <td>Measures of spread, cumulative distributions </td>
         <td></td>
     </tr>
     <tr>
@@ -194,7 +194,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Monday</td>
         <td>February 5, 2024</td>
-        <td>Introduction to Probability</td>
+        <td>The normal distribution, z-scores, transformations</td>
         <td></td>
     </tr>
     <tr>
@@ -206,7 +206,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>February 7, 2024</td>
-        <td>Random Variables and Discrete Probability Distributions</td>
+        <td>Identifying outliers, margin of error, statistical significance</td>
         <td></td>
     </tr>
     <tr>
@@ -218,7 +218,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>February 9, 2024</td>
-        <td>Continuous probability distributions</td>
+        <td>Study and sampling designs</td>
         <td></td>
     </tr>
     <tr>
@@ -236,7 +236,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Monday</td>
         <td>February 12, 2024</td>
-        <td>Sampling distributions of means and proportions</td>
+        <td>Introduction to probability, random variables, discrete probability distributions</td>
         <td></td>
     </tr>
     <tr>
@@ -248,7 +248,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>February 14, 2024</td>
-        <td>Central Limit Theorem (CLT) and estimation</td>
+        <td>Discrete probability distributions</td>
         <td></td>
     </tr>
     <tr>
@@ -260,7 +260,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>February 16, 2024</td>
-        <td>Introduction to confidence intervals</td>
+        <td>Continuous probability distributions</td>
         <td></td>
     </tr>
     <tr>
@@ -290,7 +290,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>February 21, 2024</td>
-        <td>Confidence Intervals for a population mean   </td>
+        <td>Sampling distributions and the central limit theorem</td>
         <td></td>
     </tr>
     <tr>
@@ -302,7 +302,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>February 23, 2024</td>
-        <td>Confidence Intervals for a population proportion  </td>
+        <td>More on sampling distributions, Introduction to confidence intervals</td>
         <td></td>
     </tr>
     <tr>
@@ -320,7 +320,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Monday</td>
         <td>February 26, 2024</td>
-        <td>Bootstrap confidence intervals </td>
+        <td>Confidence Intervals for a population proportion</td>
         <td></td>
     </tr>
     <tr>
@@ -332,7 +332,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>February 28, 2024</td>
-        <td>Sampling with/without replacement, estimation for a population total</td>
+        <td>Confidence Intervals for a population mean</td>
         <td></td>
     </tr>
     <tr>
@@ -344,7 +344,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>March 1, 2024</td>
-        <td>Estimation for a population total</td>
+        <td>Bootstrap confidence intervals</td>
         <td></td>
     </tr>
     <tr>
