@@ -454,11 +454,21 @@ distributions</strong>. All normal distributions have the same general
 shape - a symmetric bell-shape curve. The mean is located where the peak
 is tallest. It also forms an axis of symmetry where both the left and
 right portions of the distribution are mirror images.</p>
-<p>The normal distribution has two parameters that govern its shape: *
-The mean <span class="math inline">\(\mu\)</span> determines where the
-center of the distribution is located on the real number line. * The
-standard deviation <span class="math inline">\(\sigma\)</span> governs
-its shape by how spread out the values are.</p>
+<p>The normal distribution has two parameters that govern its shape:</p>
+<ul>
+<li><p>The mean <span class="math inline">\(\mu\)</span> determines
+where the center of the distribution is located on the real number
+line.</p></li>
+<li><p>The standard deviation <span
+class="math inline">\(\sigma\)</span> governs its shape by how spread
+out the values are.</p></li>
+<li><p>We typically use the short hand notation <span
+class="math inline">\(x_i \sim N(\mu, \sigma)\)</span> to denote that an
+observation <span class="math inline">\(x_i\)</span> is normally
+distributed with population mean <span
+class="math inline">\(\mu\)</span> and population standard deviation
+<span class="math inline">\(\sigma\)</span>.</p></li>
+</ul>
 <p>The diagram below shows how <span
 class="math inline">\(\sigma\)</span> relates to the shape of a normal
 distribution</p>
@@ -523,11 +533,11 @@ properties. One of the most important is called the <i>empirical
 rule</i> (also called the 68-95-99.7 rule). The <strong>empirical
 rule</strong> states that for any approximately normal-shaped
 distribution with mean <span class="math inline">\(\mu\)</span> and
-standard deviation <span class="math inline">\(\sigma\)</span>: *
-approximately <span class="math inline">\(68\%\)</span> of the
-observations will have a value within 1 standard deviation of the
-mean</p>
+standard deviation <span class="math inline">\(\sigma\)</span>:</p>
 <ul>
+<li><p>approximately <span class="math inline">\(68\%\)</span> of the
+observations will have a value within 1 standard deviation of the
+mean</p></li>
 <li><p>approximately <span class="math inline">\(95\%\)</span> of the
 observations will have a value within 2 standard deviations of the
 mean</p></li>
@@ -535,7 +545,7 @@ mean</p></li>
 observations will have a value within 3 standard deviations of the
 mean</p></li>
 </ul>
-<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
 <p>Consider the distribution of the height of female college athletes
 from a survey of college students in the state of Georgia.</p>
 <p><img src="lecturemenu5_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
@@ -567,28 +577,42 @@ mean</p></li>
 </ul>
 <p>How can we easily tell how far an observation is from the mean?</p>
 <ul>
-<li>We can use something called a <strong>z-score</strong>. A z-score is
-standardization of an observation from a normal distribution that can be
-directly interpreted as the number of standard deviations the
-observation falls from the mean. Mathematically a z-score is defined
-as</li>
+<li><p>First, it is important to note that the value of <span
+class="math inline">\(\sigma\)</span> or <span
+class="math inline">\(s\)</span> is affected by the units of the
+variable. For example, in the distribution of college student heights
+above, height is recorded in inches and the standard deviation of
+college student height was about <span class="math inline">\(s =
+5\)</span>. However if, we have the same dataset and height was recorded
+in millimeters then the standard deviation would be much larger at <span
+class="math inline">\(s = 127\)</span> because the units have smaller
+increment. This makes comparing normal distributions, or determining
+outliers dependent on the scale of the underlying variable.</p></li>
+<li><p>To get around this, we can use something called a
+<strong>z-score</strong>. A z-score is standardization of an observation
+from a normal distribution that can be directly interpreted as the
+number of standard deviations the observation falls from the mean.
+Mathematically a z-score is defined as</p></li>
 </ul>
 <p><span class="math display">\[ z_i = \frac{\text{observation}
 -\text{mean}}{\text{standard deviation}} =  \frac{x_i - \bar{x}}{s}
 \]</span></p>
 <p>by subtracting off the mean and dividing by the standard deviation,
-we are performing a <i>linear transformation</i> of one variable into
-the units of a new variable. A z-score represents an observation from a
+we are performing a <i>linear transformation</i> to convert <span
+class="math inline">\(x\)</span> into a new unit scale. If the original
+distribution of <span class="math inline">\(X\)</span> is normal <span
+class="math inline">\(x_i \sim N(\bar{x}, s)\)</span>, then computing
+the z-score represents a rescaling of <span
+class="math inline">\(X\)</span> such that</p>
+<p><span class="math display">\[z_i = \frac{x_i - \bar{x}}{s} \sim
+N(\bar{x} - \bar{x}, s/s)\]</span></p>
+<p>The distribution of <span class="math inline">\(z_i\)</span> is a
 special case of the normal distribution called the <strong>standard
 normal distribution</strong>. The standard normal distribution has a
 mean of zero and a standard deviation of one and we often define in
 symbols as <span class="math inline">\(z_i \sim N(0,1)\)</span></p>
 <p>Lets consider the following example using data collected on the air
 pollution of countries in the European Union:</p>
-<pre class="r"><code>dat = read.csv(paste0(path3, &#39;EU_CO2.csv&#39;))
-
-kable(dat, format = &#39;html&#39;, col.names = c(&#39;Country&#39;, &#39;Abbreviation&#39;, &#39;C02 Emissions Per Capita (metric tons)&#39;), digits = 2, row.names = F, booktabs = T, escape = F)%&gt;%
-  kable_classic(full_width = F, html_font = &quot;Cambria&quot;)%&gt;%kable_styling(bootstrap_options = &#39;striped&#39;)</code></pre>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -914,12 +938,12 @@ GBR
 </tr>
 </tbody>
 </table>
-<p>The mean C02 emissions are <span class="math inline">\(\bar{x}
+<p>The mean of C02 emissions is <span class="math inline">\(\bar{x}
 \approx 7.9\)</span> with a standard deviation of <span
 class="math inline">\(s \approx 3.6\)</span>. Compute the <span
 class="math inline">\(z-score\)</span> for the C02 air pollution of the
 country Luxemborg. Is Luxemborg an outlier? If so, what does this mean
-in terms of its C02 pollutuion?</p>
+in terms of its C02 pollution?</p>
 <ul>
 <li><p>The z-score for Luxemborg is computed as <span
 class="math display">\[z = \frac{21.4 - 7.9}{3.6} =
@@ -930,6 +954,20 @@ classified as on outlier using the rules above. Thus by computing a
 z-score we can quickly discover how extreme an observation is relative
 to its distribution.</p></li>
 </ul>
+<p>A note about <i> linear transformations </i>:</p>
+<ul>
+<li>A linear or <i>affine</i> transformation of a variable DOES NOT
+change the shape of its underlying distribution. Thus, converting <span
+class="math inline">\(x_i\)</span> to <span
+class="math inline">\(z_i\)</span> does not “convert” the distribution
+of <span class="math inline">\(X\)</span> into a normal distribution,
+but instead, rescales the values <span
+class="math inline">\(x_i\)</span> to have zero center and unit
+variance. If <span class="math inline">\(x_i\)</span> comes from a
+highly skewed distribution the transformed z-scores will also have a
+skewed distribution. See plot below:</li>
+</ul>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 </div>
 </div>
 
