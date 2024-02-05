@@ -12,7 +12,7 @@
 <meta name="author" content="STAT 251 Section 03" />
 
 
-<title>Week 6 Notes</title>
+<title>Week 5 Notes</title>
 
 <script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -293,6 +295,9 @@ $(document).ready(function () {
         <li>
           <a href="lecturemenu4.html">Week 4</a>
         </li>
+        <li>
+          <a href="lecturemenu5.html">Week 5</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -413,7 +418,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Week 6 Notes</h1>
+<h1 class="title toc-ignore">Week 5 Notes</h1>
 <h4 class="author">STAT 251 Section 03</h4>
 
 </div>
@@ -421,8 +426,510 @@ $(document).ready(function () {
 
 <div id="lecture-7-monday-feb.5th-2024" class="section level1">
 <h1>Lecture 7: Monday, Feb.5th 2024</h1>
+<div id="density-curves" class="section level3">
+<h3>Density Curves</h3>
+<p>We have discussed previously that a histogram is a good tool for
+visualizing a distribution for most variables. Nevertheless, it is
+crucial to recognize that the bars in a histogram depict discrete
+frequencies corresponding to distinct values, or in the case of
+continuous variables, to discrete intervals. In contrast, the true
+nature of a continuous variable involves a distribution function that is
+inherently continuous. Consequently, this distribution is more
+accurately represented by a smooth curve rather than discrete bars. We
+call such a curve a <strong>density curve</strong> and the
+<i>density</i> component can be interpreted as a continuous measure of
+“how often” a value occurs. We will talk more about the nature of
+density later when we discuss probability. For now, it is useful to know
+that a density curve is how we represent the distribution of a
+continuous variable in theory. The plot below gives a visual example of
+the difference between a density curve and a histogram for a continuous
+random variable <span class="math inline">\(X\)</span></p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-1-1.png" width="576" /></p>
+</div>
 <div id="the-normal-distribution" class="section level3">
 <h3>The normal distribution</h3>
+<p>The density curve in the plot above is called a <i>normal curve</i>
+and represents a family of distributions called <strong>normal
+distributions</strong>. All normal distributions have the same general
+shape - a symmetric bell-shape curve. The mean is located where the peak
+is tallest. It also forms an axis of symmetry where both the left and
+right portions of the distribution are mirror images.</p>
+<p>The normal distribution has two parameters that govern its shape: *
+The mean <span class="math inline">\(\mu\)</span> determines where the
+center of the distribution is located on the real number line. * The
+standard deviation <span class="math inline">\(\sigma\)</span> governs
+its shape by how spread out the values are.</p>
+<p>The diagram below shows how <span
+class="math inline">\(\sigma\)</span> relates to the shape of a normal
+distribution</p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<ul>
+<li>A normal distribution with small <span
+class="math inline">\(\sigma\)</span> will be tall and skinny with a
+sharp peak. A normal distribution with a large <span
+class="math inline">\(\sigma\)</span> will be short with a broad rounded
+peak, like a hill.</li>
+</ul>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<ul>
+<li>From the plot above, we can see that two distributions with the same
+<span class="math inline">\(\sigma\)</span> will have the same general
+shape, but if they have different <span
+class="math inline">\(\\mu\)</span> the location of the center will be
+different. Thus changing the value of the mean <span
+class="math inline">\(\\mu\)</span> will shift the position of the
+distribution.</li>
+</ul>
+<p>The standard deviation <span class="math inline">\(\sigma\)</span>
+and the mean <span class="math inline">\(\mu\)</span> completely
+determine the shape of a normal distribution. As a result, the standard
+deviation is a natural measure of spread for normal-shaped distributions
+and we can approximate its value by eye. Take for example the density
+curve for a normal distribution with parameters <span
+class="math inline">\(\mu = 0\)</span> and <span
+class="math inline">\(\sigma = 1\)</span>.</p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
+<p>One standard deviation from the mean will always be the point on the
+curve where the slope transitions from increasingly steep to
+increasingly gradual. The red dot is plotted above the point at one
+standard deviation from the mean and indicates the position of this
+slope transition.</p>
+<p>The density curve of a normal distribution at any point <span
+class="math inline">\(x\)</span> is given by the function</p>
+<p><span class="math display">\[ f(x) =
+\frac{1}{\sigma\sqrt{2\pi}}e^{\frac{-1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+\]</span></p>
+<p>We will not make direct use of this function in this class however,
+this function represents a key point in the mathematical work in
+probability and statistics regarding variables that exhibit
+<i>normality</i></p>
+<p>Why is the normal distribution important?</p>
+<ul>
+<li><p>Many real variables have normal distributions. For example, most
+physical characteristics such as height, weight, length will have this
+distribution.</p></li>
+<li><p>Normal distributions are often good approximations to many kinds
+of chance outcomes such as counting the number of heads in many tosses
+of a fair coin (more on this later).</p></li>
+<li><p>Lastly, and most importantly, many statistical inference
+procedures that are based on normal distributions will still give good
+results for other roughly symmetric distributions.</p></li>
+</ul>
+</div>
+<div id="the-empirical-rule" class="section level3">
+<h3>The Empirical Rule</h3>
+<p>Although there are many different normal curves, they all have common
+properties. One of the most important is called the <i>empirical
+rule</i> (also called the 68-95-99.7 rule). The <strong>empirical
+rule</strong> states that for any approximately normal-shaped
+distribution with mean <span class="math inline">\(\mu\)</span> and
+standard deviation <span class="math inline">\(\sigma\)</span>: *
+approximately <span class="math inline">\(68\%\)</span> of the
+observations will have a value within 1 standard deviation of the
+mean</p>
+<ul>
+<li><p>approximately <span class="math inline">\(95\%\)</span> of the
+observations will have a value within 2 standard deviations of the
+mean</p></li>
+<li><p>approximately <span class="math inline">\(99.7\%\)</span> of the
+observations will have a value within 3 standard deviations of the
+mean</p></li>
+</ul>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+<p>Consider the distribution of the height of female college athletes
+from a survey of college students in the state of Georgia.</p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<ul>
+<li><p>Approximately, what proportion of the students will have a height
+between 60 and 70 inches?</p></li>
+<li><p>Approximately, what proportion of the students will have a height
+<span class="math inline">\(\geq 70\)</span> inches?</p></li>
+<li><p>Approximately, what proportion of the students will have a height
+between 55 and 75 inches?</p></li>
+</ul>
+</div>
+<div id="standardizing-observations-the-z-score" class="section level3">
+<h3>Standardizing Observations: The Z-score</h3>
+<p>From the empirical rule, we know that nearly all of the observations
+in a bell-shaped distribution will have a value within <span
+class="math inline">\(\pm 3\sigma\)</span> of the mean. Therefore, we
+can use the property of the empirical rule of normal distributions to
+come up with a criteria for defining outliers that is specific to these
+types of distributions.</p>
+<ul>
+<li><p>We can define an outlier as an observation whose value is more
+than <span class="math inline">\(3\sigma\)</span> greater than the mean
+or <span class="math inline">\(3\sigma\)</span> less than the
+mean.</p></li>
+<li><p>More commonly, outliers are defined as an observation whose value
+is more than <span class="math inline">\(\pm 2\sigma\)</span> from the
+mean</p></li>
+</ul>
+<p>How can we easily tell how far an observation is from the mean?</p>
+<ul>
+<li>We can use something called a <strong>z-score</strong>. A z-score is
+standardization of an observation from a normal distribution that can be
+directly interpreted as the number of standard deviations the
+observation falls from the mean. Mathematically a z-score is defined
+as</li>
+</ul>
+<p><span class="math display">\[ z_i = \frac{\text{observation}
+-\text{mean}}{\text{standard deviation}} =  \frac{x_i - \bar{x}}{s}
+\]</span></p>
+<p>by subtracting off the mean and dividing by the standard deviation,
+we are performing a <i>linear transformation</i> of one variable into
+the units of a new variable. A z-score represents an observation from a
+special case of the normal distribution called the <strong>standard
+normal distribution</strong>. The standard normal distribution has a
+mean of zero and a standard deviation of one and we often define in
+symbols as <span class="math inline">\(z_i \sim N(0,1)\)</span></p>
+<p>Lets consider the following example using data collected on the air
+pollution of countries in the European Union:</p>
+<pre class="r"><code>dat = read.csv(paste0(path3, &#39;EU_CO2.csv&#39;))
+
+kable(dat, format = &#39;html&#39;, col.names = c(&#39;Country&#39;, &#39;Abbreviation&#39;, &#39;C02 Emissions Per Capita (metric tons)&#39;), digits = 2, row.names = F, booktabs = T, escape = F)%&gt;%
+  kable_classic(full_width = F, html_font = &quot;Cambria&quot;)%&gt;%kable_styling(bootstrap_options = &#39;striped&#39;)</code></pre>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Country
+</th>
+<th style="text-align:left;">
+Abbreviation
+</th>
+<th style="text-align:right;">
+C02 Emissions Per Capita (metric tons)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Austria
+</td>
+<td style="text-align:left;">
+AUT
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Belgium
+</td>
+<td style="text-align:left;">
+BEL
+</td>
+<td style="text-align:right;">
+10.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bulgaria
+</td>
+<td style="text-align:left;">
+BGR
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Croatia
+</td>
+<td style="text-align:left;">
+HRV
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cyprus
+</td>
+<td style="text-align:left;">
+CYP
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Czech Republic
+</td>
+<td style="text-align:left;">
+CZE
+</td>
+<td style="text-align:right;">
+10.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Denmark
+</td>
+<td style="text-align:left;">
+DNK
+</td>
+<td style="text-align:right;">
+8.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Estonia
+</td>
+<td style="text-align:left;">
+EST
+</td>
+<td style="text-align:right;">
+13.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Finland
+</td>
+<td style="text-align:left;">
+FIN
+</td>
+<td style="text-align:right;">
+11.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:left;">
+FRA
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:left;">
+DEU
+</td>
+<td style="text-align:right;">
+9.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Greece
+</td>
+<td style="text-align:left;">
+GRC
+</td>
+<td style="text-align:right;">
+7.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hungary
+</td>
+<td style="text-align:left;">
+HUN
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ireland
+</td>
+<td style="text-align:left;">
+IRL
+</td>
+<td style="text-align:right;">
+8.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Italy
+</td>
+<td style="text-align:left;">
+ITA
+</td>
+<td style="text-align:right;">
+6.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Latvia
+</td>
+<td style="text-align:left;">
+LVA
+</td>
+<td style="text-align:right;">
+3.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lithuania
+</td>
+<td style="text-align:left;">
+LTU
+</td>
+<td style="text-align:right;">
+4.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Luxembourg
+</td>
+<td style="text-align:left;">
+LUX
+</td>
+<td style="text-align:right;">
+21.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Malta
+</td>
+<td style="text-align:left;">
+MLT
+</td>
+<td style="text-align:right;">
+6.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Netherlands
+</td>
+<td style="text-align:left;">
+NLD
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Poland
+</td>
+<td style="text-align:left;">
+POL
+</td>
+<td style="text-align:right;">
+8.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Portugal
+</td>
+<td style="text-align:left;">
+PRT
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Romania
+</td>
+<td style="text-align:left;">
+ROM
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Slovak Republic
+</td>
+<td style="text-align:left;">
+SVK
+</td>
+<td style="text-align:right;">
+6.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Slovenia
+</td>
+<td style="text-align:left;">
+SVN
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spain
+</td>
+<td style="text-align:left;">
+ESP
+</td>
+<td style="text-align:right;">
+5.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sweden
+</td>
+<td style="text-align:left;">
+SWE
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+United Kingdom
+</td>
+<td style="text-align:left;">
+GBR
+</td>
+<td style="text-align:right;">
+7.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>The mean C02 emissions are <span class="math inline">\(\bar{x}
+\approx 7.9\)</span> with a standard deviation of <span
+class="math inline">\(s \approx 3.6\)</span>. Compute the <span
+class="math inline">\(z-score\)</span> for the C02 air pollution of the
+country Luxemborg. Is Luxemborg an outlier? If so, what does this mean
+in terms of its C02 pollutuion?</p>
+<ul>
+<li><p>The z-score for Luxemborg is computed as <span
+class="math display">\[z = \frac{21.4 - 7.9}{3.6} =
+3.75\]</span></p></li>
+<li><p>This means that the C02 emissions for the country Luxemborg are
+about 3.75 standard deviations above the mean and is therefore
+classified as on outlier using the rules above. Thus by computing a
+z-score we can quickly discover how extreme an observation is relative
+to its distribution.</p></li>
+</ul>
 </div>
 </div>
 

@@ -1,5 +1,5 @@
 ---
-title: "Week 6 Notes"
+title: "Week 5 Notes"
 author: "STAT 251 Section 03"
 output: html_document
 ---
@@ -12,9 +12,291 @@ library(ggplot2)
 library(ggthemes)
 library(ggpubr)
 library(latex2exp)
+
+
+path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
+path2 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/'
+path3 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/data/'
 ```
 
 # Lecture 7: Monday, Feb.5th 2024
 
+
+### Density Curves
+
+We have discussed previously that a histogram is a good tool for visualizing a distribution for most variables. Nevertheless, it is crucial to recognize that the bars in a histogram depict discrete frequencies corresponding to distinct values, or in the case of continuous variables, to discrete intervals. In contrast, the true nature of a continuous variable involves a distribution function that is inherently continuous. Consequently, this distribution is more accurately represented by a smooth curve rather than discrete bars. We call such a curve a **density curve** and the <i>density</i> component can be interpreted as a continuous measure of "how often" a value occurs. We will talk more about the nature of density later when we discuss probability. For now, it is useful to know that a density curve is how we represent the distribution of a continuous variable in theory. The plot below gives a visual example of the difference between a density curve and a histogram for a continuous random variable $X$
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+df = cbind.data.frame(x = rnorm(100, 0, 1))
+k = ceiling(sqrt(100))
+ggplot(data = df, aes(x = x))+
+  geom_histogram(aes(x = x, y = ..density..), fill = 'lightgrey', color = 'black', bins = k)+
+  xlim(-4, 4)+
+  stat_function(fun = dnorm, size = 1)+
+  theme_classic()+
+  theme(axis.text = element_text(size = 12), axis.title = element_text(size = 14))+
+  xlab('X')+
+  ylab('Density')
+
+```
+
 ### The normal distribution
+
+The density curve in the plot above is called a <i>normal curve</i> and represents a family of distributions called **normal distributions**. All normal distributions have the same general shape - a symmetric bell-shape curve. The mean is located where the peak is tallest. It also forms an axis of symmetry where both the left and right portions of the distribution are mirror images. 
+
+The normal distribution has two parameters that govern its shape: 
+* The mean $\mu$ determines where the center of the distribution is located on the real number line. 
+* The standard deviation $\sigma$ governs its shape by how spread out the values are. 
+
+The diagram below shows how $\sigma$ relates to the shape of a normal distribution 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+set.seed(123)
+
+n = 100000
+A = ggplot()+
+  xlim(-6, 6)+
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), geom = 'density', fill = 'cyan1', size = 1)+
+  geom_segment(aes(x = 0, y = 0,  xend = 0, yend = dnorm(0)), size = 1)+
+  geom_segment(aes(x = 1, y = 0,  xend = 1, yend = dnorm(1)), size = 1)+
+  geom_segment(aes(x = 0, y = dnorm(0)/2,  xend = 1, yend = dnorm(0)/2), size = 1, arrow = arrow(length = unit(0.3, "cm")))+
+  geom_text(aes(x = 0.5, y = dnorm(0)/1.8), label = TeX('$\\sigma$'))+
+  theme_classic2()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('')+
+  ylab('Density')+
+  ggtitle(TeX('$\\mu_1 = 0$, $\\sigma_1 = 1$'))
+
+
+B = ggplot()+
+  xlim(-6, 6)+
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 2), geom = 'density', fill = '#F8766D', size = 1)+
+  geom_segment(aes(x = 0, y = 0,  xend = 0, yend = dnorm(0, 0, 2)), size = 1)+
+  geom_segment(aes(x = 2, y = 0,  xend = 2, yend = dnorm(2, 0, 2)), size = 1)+
+  geom_segment(aes(x = 0, y = dnorm(0, 0, 2)/2,  xend = 2, yend = dnorm(0, 0, 2)/2), size = 1, 
+               arrow = arrow(length = unit(0.3, "cm")))+
+  geom_text(aes(x = 1, y = dnorm(0, 0, 2)/1.8), label = TeX('$\\sigma$'))+
+  theme_classic2()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('')+
+  ylab('Density')+
+  ggtitle(TeX('$\\mu_2 = 0$, $\\sigma_2 = 2$'))
+
+C = ggplot()+
+  xlim(-6, 6)+
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 2), geom = 'density', 
+                fill = '#F8766D', size = 1, alpha = 0.5)+
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), geom = 'density', 
+                fill = 'cyan1', size = 1, alpha = 0.5)+
+  theme_classic2()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('')+
+  ylab('Density')
+
+
+plt.top = ggarrange(A, B, nrow = 1)
+
+ggarrange(plt.top, C, nrow = 2)
+```
+
+* A normal distribution with small $\sigma$ will be tall and skinny with a sharp peak. A normal distribution with a large $\sigma$ will be short with a broad rounded peak, like a hill.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+set.seed(123)
+
+n = 100000
+A = ggplot()+
+  xlim(-3, 3)+
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), geom = 'density', fill = 'cyan1', size = 1)+
+  theme_classic2()+
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = dnorm(0)), size = 1)+
+  geom_text(aes(x = 0.2, y = dnorm(0)/2), label = TeX('$\\mu_1$'))+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('')+
+  ylab('Density')+
+  ggtitle(TeX('$\\mu_1 = 0$, $\\sigma_1 = 1$'))
+
+
+B = ggplot()+
+  xlim(2, 8)+
+  stat_function(fun = dnorm, args = list(mean = 5, sd = 1), geom = 'density', fill = '#F8766D', size = 1)+
+  theme_classic2()+
+  geom_segment(aes(x = 5, y = 0, xend = 5, yend = dnorm(5, 5, 1)), size = 1)+
+  geom_text(aes(x = 5.2, y = dnorm(5, 5, 1)/2), label = TeX('$\\mu_2$'))+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('')+
+  ylab('Density')+
+  ggtitle(TeX('$\\mu_2 = 5$, $\\sigma_2 = 1$'))
+
+C = ggplot()+
+  xlim(-3, 8)+
+  stat_function(fun = dnorm, args = list(mean = 5, sd = 1), geom = 'density', 
+                fill = '#F8766D', size = 1, alpha = 0.5)+
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), geom = 'density', 
+                fill = 'cyan1', size = 1, alpha = 0.5)+
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = dnorm(0)), size = 1)+
+  geom_segment(aes(x = 5, y = 0, xend = 5, yend = dnorm(5, 5, 1)), size = 1)+
+  geom_segment(aes(x = 0, y = dnorm(0)/2, xend = 5, yend = dnorm(0)/2), size = 1, 
+               arrow = arrow(length = unit(0.4, "cm")))+
+  geom_text(aes(x = 2.5, y = dnorm(0)/1.8), label = TeX('$\\mu$'))+
+  theme_classic2()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('')+
+  ylab('Density')
+
+
+plt.top = ggarrange(A, B, nrow = 1)
+
+ggarrange(plt.top, C, nrow = 2)
+```
+
+* From the plot above, we can see that two distributions with the same $\sigma$ will have the same general shape, but if they have different $\\mu$ the location of the center will be different. Thus changing the value of the mean $\\mu$ will shift the position of the distribution. 
+
+
+The standard deviation $\sigma$ and the mean $\mu$ completely determine the shape of a normal distribution. As a result, the standard deviation is a natural measure of spread for normal-shaped distributions and we can approximate its value by eye. Take for example the density curve for a normal distribution with parameters $\mu = 0$ and $\sigma = 1$.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=5}
+set.seed(123)
+ggplot()+
+  xlim(-3, 3)+
+  stat_function(fun = dnorm, size = 1, color = 'red')+
+  geom_vline(xintercept = 1, size = 1, linetype = 'dashed')+
+  geom_hline(yintercept = 0, size = 1)+
+  geom_point(aes(x = 1, y = dnorm(1)), shape = 21, fill = 'red', size = 5)+
+  geom_text(aes(x = 1.2, y = dnorm(1)), label = TeX('$\\sigma$'))+
+  theme_classic2()
+```
+
+One standard deviation from the mean will always be the point on the curve where the slope transitions from increasingly steep to increasingly gradual. The red dot is plotted above the point at one standard deviation from the mean and indicates the position of this slope transition.
+
+The density curve of a normal distribution at any point $x$ is given by the function 
+
+\[ f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{\frac{-1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \]
+
+We will not make direct use of this function in this class however, this function represents a key point in the mathematical work in probability and statistics regarding variables that exhibit <i>normality</i>
+
+Why is the normal distribution important?
+
+* Many real variables have normal distributions. For example, most physical characteristics such as height, weight, length will have this distribution. 
+
+* Normal distributions are often good approximations to many kinds of chance outcomes such as counting the number of heads in many tosses of a fair coin (more on this later).
+
+* Lastly, and most importantly, many statistical inference procedures that are based on normal distributions will still give good results for other roughly symmetric distributions. 
+
+### The Empirical Rule
+Although there are many different normal curves, they all have common properties. One of the most important is called the <i>empirical rule</i> (also called the 68-95-99.7 rule). The **empirical rule** states that for any approximately normal-shaped distribution with mean $\mu$ and standard deviation $\sigma$:
+* approximately $68\%$ of the observations will have a value within 1 standard deviation of the mean
+
+* approximately $95\%$ of the observations will have a value within 2 standard deviations of the mean
+
+* approximately $99.7\%$ of the observations will have a value within 3 standard deviations of the mean
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=8}
+set.seed(123)
+x = sort(rnorm(1000000), decreasing = F)
+#normal quantiles
+ggplot()+
+  geom_density(aes(x = x), color = 'black', fill = 'lightblue', alpha = 0.5)+
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = c("", 
+                                                        TeX('$\\bar{x} - 3s$'),
+                                                        TeX("$\\bar{x} - 2s$"), 
+                                                        TeX("$\\bar{x} - 1s$"),
+                                                        TeX('$\\bar{x}'),
+                                                        TeX("$\\bar{x} + 1s$"), 
+                                                        TeX("$\\bar{x} + 2s$"),
+                                                        TeX("$\\bar{x} + 3s$"), 
+                                                        ""))+
+  geom_vline(xintercept = 0, size = 1,
+             color = 'black', linetype = 'dotted')+
+  geom_vline(xintercept = c(1, -1), size = 1,
+             color = 'red', linetype = 'dashed')+
+  geom_vline(xintercept = c(2, -2), size =1,
+             color = 'blue', linetype = 'dashed')+
+  geom_vline(xintercept = c(3, -3), size = 1,
+             color = 'green', linetype = 'dashed')+
+  theme_minimal()+
+  theme(axis.text.x = element_text(size = 14, angle = 45),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank())
+
+
+```
+
+
+Consider the distribution of the height of female college athletes from a survey of college students in the state of Georgia. 
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(222)
+gss = read.csv(paste0(path2, 'georgia_student_survey.csv'))
+ggplot()+xlim(50, 80)+geom_histogram(aes(x = rnorm(60, 65, 5), y = ..density..), 
+                        bins = ceiling(sqrt(60)), 
+                        color = 'black',
+                        fill = 'lightgrey')+
+  stat_function(fun = dnorm, args = list(mean = 65, sd = 5))+
+  theme_classic2()+
+  xlab('Height in inches')
+```
+
+* Approximately, what proportion of the students will have a height between 60 and 70 inches?
+
+* Approximately, what proportion of the students will have a height $\geq 70$ inches?
+
+* Approximately, what proportion of the students will have a height between 55 and 75 inches?
+
+### Standardizing Observations: The Z-score
+
+From the empirical rule, we know that nearly all of the observations in a bell-shaped distribution will have a value within $\pm 3\sigma$ of the mean. Therefore, we can use the property of the empirical rule of normal distributions to come up with a criteria for defining outliers that is specific to these types of distributions. 
+
+* We can define an outlier as an observation whose value is more than $3\sigma$ greater than the mean or  $3\sigma$ less than the mean. 
+
+* More commonly, outliers are defined as an observation whose value is more than $\pm 2\sigma$ from the mean
+
+How can we easily tell how far an observation is from the mean?
+
+* We can use something called a **z-score**. A z-score is standardization of an observation from a normal distribution that can be directly interpreted as the number of standard deviations the observation falls from the mean. Mathematically a z-score is defined as 
+
+\[ z_i = \frac{\text{observation} -\text{mean}}{\text{standard deviation}} =  \frac{x_i - \bar{x}}{s} \]
+
+by subtracting off the mean and dividing by the standard deviation, we are performing a <i>linear transformation</i> of one variable into the units of a new variable. A z-score represents an observation from a special case of the normal distribution called the **standard normal distribution**. The standard normal distribution has a mean of zero and a standard deviation of one and we often define in symbols as $z_i \sim N(0,1)$
+
+Lets consider the following example using data collected on the air pollution of countries in the European Union:
+
+```{r}
+
+dat = read.csv(paste0(path3, 'EU_CO2.csv'))
+
+kable(dat, format = 'html', col.names = c('Country', 'Abbreviation', 'C02 Emissions Per Capita (metric tons)'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+The mean C02 emissions are $\bar{x} \approx 7.9$ with a standard deviation of $s \approx 3.6$. Compute the $z-score$ for the C02 air pollution of the country Luxemborg. Is Luxemborg an outlier? If so, what does this mean in terms of its C02 pollutuion?
+
+
+* The z-score for Luxemborg is computed as 
+$$z = \frac{21.4 - 7.9}{3.6} = 3.75$$
+
+* This means that the C02 emissions for the country Luxemborg are about 3.75 standard deviations above the mean and is therefore classified as on outlier using the rules above. Thus by computing a z-score we can quickly discover how extreme an observation is relative to its distribution.  
+
+
+
+
+
 
