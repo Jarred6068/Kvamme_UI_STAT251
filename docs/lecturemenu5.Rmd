@@ -326,7 +326,7 @@ df = cbind.data.frame(value = c(x, z), Variable = c(rep('X',n1), rep('Z',n1)))
 k = ceiling(sqrt(n1))
 ggplot(data = df, aes(x = value))+
   geom_histogram(aes(y = ..density.., fill = Variable), color = 'black', bins = k,alpha = 0.5)+
-  geom_density(aes(color = Variable), size = 1)+
+  geom_density(aes(x = value, color = Variable), size = 1)+
   theme_classic2()+
   xlab('X')+
   ggtitle('Distribution of X')+
