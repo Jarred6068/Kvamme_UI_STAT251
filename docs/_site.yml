@@ -36,10 +36,14 @@ navbar:
           menu:
           - text: 'Homework 1'
             href: homeworks/week1homework.html
+          - text: 'Homework 2'
+            href: homeworks/week5homework.html
         - text: 'Solutions'
           menu: 
           - text: 'Hmwk 1 Solutions'
             href: homeworks/week1homework_solns.html
+          - text: 'Hmwk 2 Solutions'
+            href: homeworks/week5homework_solns.html
         - text: 'Reading & Extra Problems'
           href: homeworks/reading_and_book_problems.html
     - text: 'Exam Study Guides'
