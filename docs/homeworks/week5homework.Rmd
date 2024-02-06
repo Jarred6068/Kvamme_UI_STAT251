@@ -149,6 +149,11 @@ A = ggplot(data=FS, aes(x = total.length, fill = num.beads))+
 
 plot(A)
 #ggarrange(A, B, nrow = 2)
+
+print('-----------------2 bead whisker lengths-----------------')
+paste('comma separated values = ', paste0(round(bead2$total.length, 1), collapse = ','))
+print('-----------------3 bead whisker lengths-----------------')
+paste('comma separated values = ', paste0(round(bead3$total.length, 1), collapse = ','))
 ```
 
 (a) Using the boxplot above, do the whisker lengths for 2 bead and 3 bead whiskers follow a normal distribution? why or why not? 
@@ -180,6 +185,9 @@ B = ggplot(dat, aes(x = x, y = `CRF(x)`))+geom_step()+
   scale_y_continuous(breaks = seq(0, 1, 0.1))+
   scale_x_continuous(breaks = seq(min(dat$x), max(dat$x), 1))
 plot(B)
+
+
+paste('Comma separated values = ', paste0(x, collapse = ','))
 ```
 
 
