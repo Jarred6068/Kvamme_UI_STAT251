@@ -58,7 +58,7 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
 
 **Figure 1** Pinneped whisker morphology - Ginter et al. 2012           |  A juvenile Harp Seal
 :-------------------------:|:-------------------------:
-![](C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png)  |  ![](C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/Harpseal.jpg)
+![](C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png)  |  ![](C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/Harp_seal_whitecoat.jpg)
 
 <!-- \begin{figure} -->
 <!-- \centering -->
