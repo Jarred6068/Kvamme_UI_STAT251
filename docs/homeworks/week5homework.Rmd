@@ -183,7 +183,7 @@ plot(B)
 ```
 
 
-(a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Find the $2.5th$ and $97.5th$ percentiles of $X$. You can use the plot above to verify your solution
+(a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$. Compare your answer with the cumulative distribution plot above, why might the two answers differ? (hint: think about shape and how that relates to the empirical rule)
 
 (b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-7$ and $17$?
 

@@ -49,7 +49,7 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
 
 (a) Assuming a mean of $\bar{x} = 355$ and standard deviation of $s = 69$, in approximately what proportion of matches did the player have more than 423 bumps?
 
-<span style="color: red;">\[ z = \frac{423 - 355}{69} \approx 1\]. Therefore we ant to know what proportion of observations have a value $\geq 1s$ which is by the empirical rule is $13.5\%+2.5\% = 16\%$</span>
+<span style="color: red;">\[ z = \frac{423 - 355}{69} \approx 1\]. Therefore we want to know what proportion of observations have a value $\geq \bar{x}+1s$ which is by the empirical rule is $13.5\%+2.5\% = 16\%$</span>
 
 (b) Approximately what proportion of matches did the player have more than 217 bumps but fewer than 493 bumps?
 
@@ -153,7 +153,7 @@ text(x=locals[3], labels =paste("IQR", round(estims[4] - estims[2],2), sep = " =
 
 (c) Observation 20 has a total whisker length of 5.08 (cm), how many standard deviations is this observation from the mean whisker length? (hint compute the $z$-score for this observation)
 
-<span style="color: red;">The sample mean is $\bar{x} = 4.446$ and the sample standard deviation is $s = 0.188$ 
+<span style="color: red;">The sample mean is $\bar{x} = 4.446$ and the sample standard deviation is $s = 0.189$ 
 \[ z = \frac{5.08 - \bar{x}}{s} = \frac{5.080 - 4.446}{0.189} = 3.372  \]</span>
 
 
@@ -236,9 +236,9 @@ plot(B)
 ```
 
 
-(a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Find the $2.5th$ and $97.5th$ percentiles of $X$. You can use the plot above to verify your solution 
+(a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$ (hint: think about shape and how that relates to the empirical rule).
 
-<span style="color: red;">approximately -2.8 and 13.1</span>
+<span style="color: red;">approximately -2.8 and 13.1. Using the plot above the answers are approximately -2.5 and 11.1. The upper percentile differs because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with slight deviations from normality/span>
 
 (b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-7$ and $17$?
 
