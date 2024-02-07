@@ -111,7 +111,7 @@ Many types of variables have distributions with predictable shapes. For example,
 
 ```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=8}
 
-housing = read.csv('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/housing.csv')
+housing = read.csv('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/housing.csv')
 k = round(sqrt(dim(housing)[1]))
 ggplot(data = housing, aes(x = median_house_value/1000))+
   geom_histogram(color = 'black', bins = k, position = 'dodge')+

@@ -6,7 +6,7 @@ output:
 always_allow_html: true
 header-includes:
   \usepackage{float}
-bibliography: C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/home2bibs.bib
+bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home2bibs.bib
 ---
 
 
@@ -23,11 +23,11 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-mainpath = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/'
+mainpath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
 whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
 
-datapath = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/data/'
+datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 ```
 
 
@@ -56,9 +56,10 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
 (d) After playing a new match, the player logs 620 bumps. Calculate the $z$-score for this match and explain the meaning of the z-score in relation to the average number of bumps. How many standard deviations is the player's performance from the mean number of bumps?
 
 
+
 **Figure 1** Pinneped whisker morphology - Ginter et al. 2012           |  A juvenile Harp Seal
 :-------------------------:|:-------------------------:
-![](C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png)  |  ![](C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/Harp_seal_whitecoat.jpg)
+![](C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png)  |  ![](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Harp_seal_whitecoat.jpg)
 
 <!-- \begin{figure} -->
 <!-- \centering -->
@@ -73,8 +74,8 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
 <!-- \end{figure} -->
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 whiskers = read.csv(whiskpath)
-teach = read.csv(paste0(mainpath, 'Week_2/teacher_salary.csv'))
-ga = read.csv(paste0(mainpath, 'Week_2/georgia_student_survey.csv'))
+teach = read.csv(paste0(mainpath, 'teacher_salary.csv'))
+ga = read.csv(paste0(mainpath, 'georgia_student_survey.csv'))
 
 ```
 

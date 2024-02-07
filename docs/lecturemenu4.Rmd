@@ -22,9 +22,9 @@ Another form of the distribution of a variable is called the cumulative distribu
 * Consider the following 20 observations of the sugar and sodium content in different brands of cereal in the US
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=5, fig.width=6}
-cereal = read.csv('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/cereal.csv')
+cereal = read.csv('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/cereal.csv')
 
-
+#C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data
 kable(cereal, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```

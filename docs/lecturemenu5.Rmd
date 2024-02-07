@@ -13,10 +13,7 @@ library(ggthemes)
 library(ggpubr)
 library(latex2exp)
 
-
-path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
-path2 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/'
-path3 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/data/'
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 ```
 
 # Lecture 7: Monday, Feb.5th 2024
@@ -153,7 +150,7 @@ C = ggplot()+
   geom_segment(aes(x = 5, y = 0, xend = 5, yend = dnorm(5, 5, 1)), size = 1)+
   geom_segment(aes(x = 0, y = dnorm(0)/2, xend = 5, yend = dnorm(0)/2), size = 1, 
                arrow = arrow(length = unit(0.4, "cm")))+
-  geom_text(aes(x = 2.5, y = dnorm(0)/1.8), label = TeX('$\\mu$'))+
+  geom_text(aes(x = 2.5, y = dnorm(0)/1.8), label = TeX('$\\mu_2 - \\mu_1$'))+
   theme_classic2()+
   theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
         axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
@@ -251,7 +248,7 @@ Consider the distribution of the height of female college athletes from a survey
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 set.seed(222)
-gss = read.csv(paste0(path2, 'georgia_student_survey.csv'))
+gss = read.csv(paste0(path, 'georgia_student_survey.csv'))
 ggplot()+xlim(50, 80)+geom_histogram(aes(x = rnorm(60, 65, 5), y = ..density..), 
                         bins = ceiling(sqrt(60)), 
                         color = 'black',
@@ -297,7 +294,7 @@ Lets consider the following example using data collected on the air pollution of
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
 
-dat = read.csv(paste0(path3, 'EU_CO2.csv'))
+dat = read.csv(paste0(path, 'EU_CO2.csv'))
 
 kable(dat, format = 'html', col.names = c('Country', 'Abbreviation', 'C02 Emissions Per Capita (metric tons)'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
