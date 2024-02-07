@@ -178,9 +178,9 @@ The idea behind variance and standard deviation as measures of spread is straigh
 
 $$\sum_{i = 1}^n x_i - \bar{x} = 0$$
 
-squaring the deviations ensures that all of the distances are positive. As a result large deviations will have large positive values. The variance is the average squared deviation, so the standard deviation is a measure of the average deviation/distance that an observation falls from the center of a distribution. Both $s^2$ and $s$ will be large if the observations are very spread out and will be very small if the observations are densely clustered around the mean. 
+squaring the deviations ensures that all of the distances are positive. As a result large deviations will have large positive values. The variance is the average squared deviation, so the standard deviation is a measure of the average deviation/distance that an observation falls from the center of a distribution. Both $s^2$ and $s$ will be large if the observations are very spread out and will be small if the observations are densely clustered around the mean. 
 
-Example: Compute the variance and standard deviation the height (in inches) of a sample of five college students from the University of Idaho
+Example: Compute the variance and standard deviation in height (in inches) for a sample of five college students from the University of Idaho
 
 $$ X = \{61,62,62,68,75\} $$
 
@@ -208,7 +208,7 @@ As we can see, the presence of this large, positive outlier has doubled the valu
 
 
 
-* Consider the the cereal example from above. The following is a dot plot overlay-ed on the histogram of the variable sodium content (mg) of the cereals 
+* Consider the the cereal example from above. The following is a dot plot overlayed on the histogram of the variable sodium content (mg) of the cereals 
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=5, fig.width=6}
 
