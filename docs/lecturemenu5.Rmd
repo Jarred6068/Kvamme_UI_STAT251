@@ -164,7 +164,29 @@ plt.top = ggarrange(A, B, nrow = 1)
 ggarrange(plt.top, C, nrow = 2)
 ```
 
-* From the plot above, we can see that two distributions with the same $\sigma$ will have the same general shape, but if they have different $\\mu$ the location of the center will be different. Thus changing the value of the mean $\\mu$ will shift the position of the distribution. 
+* From the plot above, we can see that two distributions with the same $\sigma$ will have the same general shape, but if they have different $\\mu$ the location of the center will be different. Thus changing the value of the mean $\\mu$ will shift the position of the distribution on the real number line. 
+
+* The cumulative density curve for a normal distribution forms a shape like the letter S called a <i>sigmoid</i> curve. See the plot below
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=7}
+
+ggplot()+
+  xlim(-3,3)+
+  stat_function(fun = pnorm, args = list(mean = 0, sd = 1), geom = 'density', size = 1.2)+
+  theme_classic2()+
+  geom_segment(aes(x = -3, y = 0.5, xend = 0, yend = 0.5), size = 0.9, linetype = 'dotted')+
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = 0.5), size = 0.9, linetype = 'dotted')+
+  geom_text(aes(x = 0.1, y = 0.25), label = TeX('$\\mu$'))+
+  geom_segment(aes(x = -3, y = pnorm(1), xend = 1, yend = pnorm(1)), size = 0.9, linetype = 'dotted')+
+  geom_segment(aes(x = 1, y = 0, xend = 1, yend = pnorm(1)), size = 0.9, linetype = 'dotted')+
+  geom_text(aes(x = 1.25, y = pnorm(1)/2), label = TeX('$\\mu + 1\\sigma$'))+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12),
+        axis.title.x = element_text(size = 14), axis.title.y = element_text(size = 14))+
+  xlab('X')+
+  ylab('Cumulative Density')+
+  ggtitle('Cumulative Density Function Of The Normal Distribution')
+```
+
 
 
 The standard deviation $\sigma$ and the mean $\mu$ completely determine the shape of a normal distribution. As a result, the standard deviation is a natural measure of spread for normal-shaped distributions and we can approximate its value by eye. Take for example the density curve for a normal distribution with parameters $\mu = 0$ and $\sigma = 1$.
@@ -211,7 +233,7 @@ Although there are many different normal curves, they all have common properties
 set.seed(123)
 x = sort(rnorm(1000000), decreasing = F)
 #normal quantiles
-ggplot()+
+A = ggplot()+
   geom_density(aes(x = x), color = 'black', fill = 'lightblue', alpha = 0.5)+
   scale_x_continuous(breaks = seq(-4, 4, 1), labels = c("", 
                                                         TeX('$\\bar{x} - 3s$'),
@@ -238,7 +260,55 @@ ggplot()+
   theme(axis.text.x = element_text(size = 14, angle = 45),
         axis.text.y = element_blank(),
         axis.title.y = element_blank())
+plot(A)
+```
 
+* The plot below gives the empirical rule visualized on the cumulative density
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+
+B = ggplot()+
+  scale_x_continuous(limits = c(-4,4), breaks = seq(-4, 4, 1), labels = c("", 
+                                                        TeX('$\\bar{x} - 3s$'),
+                                                        TeX("$\\bar{x} - 2s$"), 
+                                                        TeX("$\\bar{x} - 1s$"),
+                                                        TeX('$\\bar{x}'),
+                                                        TeX("$\\bar{x} + 1s$"), 
+                                                        TeX("$\\bar{x} + 2s$"),
+                                                        TeX("$\\bar{x} + 3s$"), 
+                                                        ""))+
+  stat_function(fun = pnorm, args = list(mean = 0, sd = 1), 
+                color = 'black', fill = 'lightblue', alpha = 0.5, size = 1)+
+  geom_segment(aes(x = 0, y = 0, xend = 0, yend = pnorm(0)), size = 1,
+             color = 'black', linetype = 'dotted')+
+  geom_segment(aes(x = 1, y = 0, xend = 1, yend = pnorm(1)), size = 1,
+             color = 'red', linetype = 'dashed')+
+  geom_segment(aes(x = 2, y = 0, xend = 2, yend = pnorm(2)), size =1,
+             color = 'blue', linetype = 'dashed')+
+  geom_segment(aes(x = 3, y = 0, xend = 3, yend = pnorm(3)), size = 1,
+             color = 'green', linetype = 'dashed')+
+  geom_segment(aes(x = -4, y = pnorm(0), xend = 0, yend = pnorm(0)), size = 1,
+             color = 'black', linetype = 'dotted')+
+  geom_segment(aes(x = -4, y = pnorm(1), xend = 1, yend = pnorm(1)), size = 1,
+             color = 'red', linetype = 'dashed')+
+  geom_segment(aes(x = -4, y = pnorm(2), xend = 2, yend = pnorm(2)), size =1,
+             color = 'blue', linetype = 'dashed')+
+  geom_segment(aes(x = -4, y = pnorm(3), xend = 3, yend = pnorm(3)), size = 1,
+             color = 'green', linetype = 'dashed')+
+  geom_text(aes(x = mean(x)-sd(x)/2, y = 0.2), label = '50%')+
+  geom_text(aes(x = mean(x)+sd(x)/2, y = 0.2), label = '84%')+
+  geom_text(aes(x = mean(x)+(1.5*sd(x)), y = 0.2), label = '97.5%')+
+  geom_text(aes(x = mean(x)+2.5*sd(x), y = 0.2), label = '99.7%')+
+  geom_text(aes(x = mean(x)+3.5*sd(x), y = 0.2), label = '100%')+
+  theme_classic2()+
+  ylab('Cumulative Density')+
+  theme(axis.text.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 14))
+
+
+
+plot(B)
 
 ```
 
@@ -314,7 +384,7 @@ A note about <i> linear transformations </i>:
 
 * A linear or <i>affine</i> transformation of a variable DOES NOT change the shape of its underlying distribution. Thus, converting $x_i$ to $z_i$ does not "convert" the distribution of $X$ into a normal distribution, but instead, rescales the values $x_i$ to have zero center and unit variance. If $x_i$ comes from a highly skewed distribution the transformed z-scores will also have a skewed distribution. See plot below:
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
 set.seed(123)
 n1 = 1000
 x = rchisq(n1, 5)
@@ -333,3 +403,146 @@ ggplot(data = df, aes(x = value))+
 ```
 
 # Lecture 8: Wednesday, Feb.7th 2024
+
+### Sampling Distributions
+
+Consider a small study to estimate the average trunk diameter (in feet) of Western Red Ceders at the idlers rest nature preserve just outside of Moscow. The population distribution is given by the histogram and dot plot below. The population consists of $N = 109$ trees and the mean diameter is $\mu = 4.05$ with standard deviation $\sigma = 1.81$. The green diamond below denotes the value of the population mean diameter for trees at the Idler's Rest nature preserve. 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
+set.seed(235)
+wrc = rnorm(109, mean = 4, sd = 1.8)
+P1 = ggplot()+
+  geom_histogram(aes(x = wrc), color = 'black', fill = 'lightgrey')+
+  geom_dotplot(aes(x = wrc), dotsize = 1)+
+  geom_vline(xintercept = mean(wrc), color = 'green', size = 1)+
+  geom_point(aes(x = mean(wrc), y = 0), shape = 23, fill = 'green', size = 6)+
+  theme_classic2()+
+  ylab('Frequency')+
+  xlab('Tree Trunk Diameter In Feet')+
+  ggtitle('Distribution of Western Red Ceder Trunk Diameter')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+plot(P1)
+  
+```
+
+Assume that we want to estimate the population mean trunk diameter using a sample of $20$ trees selected at random from the nature preserve. 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
+set.seed(229)
+sel = sample(1:109, 20, replace = F)
+col = rep('black', 109)
+col[sel] = 'red'
+P2 = ggplot()+
+  geom_histogram(aes(x = wrc), color = 'black', fill = 'lightgrey')+
+  geom_dotplot(aes(x = wrc), dotsize = 1, shape = 21, fill = col)+
+  geom_vline(xintercept = mean(wrc), color = 'green', size = 1)+
+  geom_point(aes(x = mean(wrc), y = 0), shape = 23, fill = 'green', size = 6)+
+  geom_vline(xintercept = mean(wrc[sel]), color = 'red', size = 1)+
+  geom_point(aes(x = mean(wrc[sel]), y = 0), shape = 23, fill = 'red', size = 6)+
+  theme_classic2()+
+  ylab('Frequency')+
+  xlab('Tree Trunk Diameter In Feet')+
+  ggtitle('Distribution of Western Red Ceder Trunk Diameters')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+plot(P2)
+  
+```
+
+
+The 20 red dots in the plot above represent the trees we selected to measure the diameter. From this sample of 20 trees, we estimate the mean diameter to be $\bar{x}_1 = 4.35$ feet. Now imagine we repeat this process and gather a new sample of $20$ trees selected randomly from the population.  
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
+set.seed(1237)
+sel2 = sample(1:109, 20, replace = F)
+col = rep('black', 109)
+col[sel2] = 'blue'
+P3 = ggplot()+
+  geom_histogram(aes(x = wrc), color = 'black', fill = 'lightgrey')+
+  geom_dotplot(aes(x = wrc), dotsize = 1, shape = 21, fill = col)+
+  geom_vline(xintercept = mean(wrc), color = 'green', size = 1)+
+  geom_point(aes(x = mean(wrc), y = 0), shape = 23, fill = 'green', size = 6)+
+  geom_vline(xintercept = mean(wrc[sel2]), color = 'blue', size = 1)+
+  geom_point(aes(x = mean(wrc[sel2]), y = 0), shape = 23, fill = 'blue', size = 6)+
+  theme_classic2()+
+  ylab('Frequency')+
+  xlab('Tree Trunk Diameter In Feet')+
+  ggtitle('Distribution of Western Red Ceder Trunk Diameters')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+plot(P3)
+  
+```
+
+The blue dots in the plot above constitute the trees selected for measurement in the second sample. This time the sample mean is computed as $\bar{x}_2 = 2.98$ feet. Clearly, our estimate of $\mu$ is dependent on the sample we select. Now imagine that we repeat this process many times - selecting a sample of 20 trees, measuring their diameters and computing the sample mean. It's easy to imagine that we would produce a distribution of estimates of $\mu$. Such a distribution is called a **sampling distribution** and represents the distribution of a statistic. The sampling distribution of for mean diameter from $10,000$ samples of $n=20$ trees is given below. 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=8}
+newseeds = 1:10000
+xbar = NULL
+for(i in 1:10000){
+  set.seed(newseeds[i])
+  ix = sample(1:109, 20, replace = F)
+  xbar[i] = mean(wrc[ix])
+}
+
+P4 = ggplot()+
+  geom_histogram(aes(x = xbar), color = 'black', fill = 'lightgrey')+
+  geom_vline(xintercept = mean(wrc), color = 'green', size = 1)+
+  geom_point(aes(x = mean(wrc), y = 0), shape = 23, fill = 'green', size = 6)+
+  theme_classic2()+
+  ylab('Frequency')+
+  xlab(TeX('$\\bar{x}$'))+
+  ggtitle('Sampling Distribution of The Average Trunk Diameter')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+plot(P4)
+  
+```
+
+The variation in the sampling distribution of the mean shown above is because of the differences between the samples. Again, the green dot represents the population mean ($\mu$). From the plot, you can observe that the sampling distribution of $\bar{x}$ is centered at the true value of the population parameter.
+
+The **margin of error** of an estimate is how far we expect an estimate to fall from the true value of a population parameter. It defines a set of boundaries that allows us to quantify the how much an estimate is expected to vary between samples. Formally, it is the largest distance between the true population parameter and an estimate that is <u>not an outlier</u>. Thus if we use the $\pm 2\sigma$ rule to define outliers, the margin of error of our estimate is the interval $\hat{\theta} - 2\sigma < \theta < \hat{\theta} + 2\sigma$.
+
+
+In statistics, we often hear the words <i>significant</i> and <i>not significant</i> when a particular statistical result is discussed. A **Statistically significant** result is one that is decidedly <i>not</i> due to ordinary variation - this means a result that is not due to chance or coincidence. Thus, by convention, we consider statistically significant results a result that falls outside the **margin of error**. 
+
+## Study Design
+
+We've covered basic data analysis tools, like graphs and numbers, to describe individual variables and their distribution. Descriptive statistics help us assess data suitability, identify outliers, and spot patterns for further exploration. However, an exploratory analysis of a set of data is rarely evidence enough to draw any major conclusions about patterns we may observe. This is because patterns that emerge from descriptive statistics can arise from many different sources. 
+
+### Anecdotal Data 
+
+It is often tempting to draw conclusions based on our personal experiences or from second-hand accounts that are shared with us. An example of anecdotal evidence might be a person claiming that a particular herbal supplement cured their chronic headaches. Or A friend may claim that a starvation diet is healthy because they knew a few people who did it and they didn't experience any major health effects. However, <i>anecdotes</i> such as these are typically based on haphazardly selected individual cases and do not provide a sound basis for drawing conclusions.
+
+* Can you think of a time where you or someone you know made a claim based on anecdotal evidence?
+
+### Collecting Data
+
+Statistics is an incredibly important tool as it allows us to answer questions in an objective way. The validity of our conclusions begins with a careful approach to how we collect data. Because we live in a digital world, data is typically readily available online. Most governments around the world collect data and have national statistics offices. The U.S has many government agencies that collect and host data in the public domain including the National Agriculture Statistics Service, The U.S Census Bureau, and the National Center for Education Statistics - to name a few. Moreover, many companies now passively collect data on their customers through electronic apps, social media, or through E-commerce websites. 
+
+### Types of studies
+
+Most studies are concerned with the relationship between two variables or more variables. Typically, we observe how the distribution of a <i>response variable</i> (sometimes called a <i>dependent variable</i>) changes in relationship to some <i>explanatory variable</i> (also called the <i>independent variable</i>).
+
+Typically, the question of interest is if/how does the distribution of the **response variable** change in accordance to changes in the **explanatory** variable. 
+
+There are two primary study designs:
+ 
+* **Observational studies** - observe members of a population and measure variables of interest on those members but do not attempt to influence the responses. 
+
+  * An observation study is a <i>uncontrolled</i> study to investigate the relationship between a response and explanatory variable 
+
+* **Experimental studies** - deliberately impose changes on an explanatory variable (called treatments) and we observe how the response variable reacts to those changes. 
+
+  * An experimental study is a <i>controlled</i> study to investigate the relationship between a response and explanatory variable
+
+
+
+
+
+

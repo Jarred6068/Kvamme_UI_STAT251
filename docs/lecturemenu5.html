@@ -488,14 +488,18 @@ peak, like a hill.</li>
 </ul>
 <p><img src="lecturemenu5_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
 <ul>
-<li>From the plot above, we can see that two distributions with the same
-<span class="math inline">\(\sigma\)</span> will have the same general
-shape, but if they have different <span
+<li><p>From the plot above, we can see that two distributions with the
+same <span class="math inline">\(\sigma\)</span> will have the same
+general shape, but if they have different <span
 class="math inline">\(\\mu\)</span> the location of the center will be
 different. Thus changing the value of the mean <span
 class="math inline">\(\\mu\)</span> will shift the position of the
-distribution.</li>
+distribution on the real number line.</p></li>
+<li><p>The cumulative density curve for a normal distribution forms a
+shape like the letter S called a <i>sigmoid</i> curve. See the plot
+below</p></li>
 </ul>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>The standard deviation <span class="math inline">\(\sigma\)</span>
 and the mean <span class="math inline">\(\mu\)</span> completely
 determine the shape of a normal distribution. As a result, the standard
@@ -504,7 +508,7 @@ and we can approximate its value by eye. Take for example the density
 curve for a normal distribution with parameters <span
 class="math inline">\(\mu = 0\)</span> and <span
 class="math inline">\(\sigma = 1\)</span>.</p>
-<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-5-1.png" width="480" /></p>
 <p>One standard deviation from the mean will always be the point on the
 curve where the slope transitions from increasingly steep to
 increasingly gradual. The red dot is plotted above the point at one
@@ -551,10 +555,15 @@ mean</p></li>
 observations will have a value within 3 standard deviations of the
 mean</p></li>
 </ul>
-<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-6-1.png" width="960" /></p>
+<ul>
+<li>The plot below gives the empirical rule visualized on the cumulative
+density</li>
+</ul>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
 <p>Consider the distribution of the height of female college athletes
 from a survey of college students in the state of Georgia.</p>
-<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <ul>
 <li><p>Approximately, what proportion of the students will have a height
 between 60 and 70 inches?</p></li>
@@ -975,11 +984,141 @@ variance. If <span class="math inline">\(x_i\)</span> comes from a
 highly skewed distribution the transformed z-scores will also have a
 skewed distribution. See plot below:</li>
 </ul>
-<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
 </div>
 </div>
 <div id="lecture-8-wednesday-feb.7th-2024" class="section level1">
 <h1>Lecture 8: Wednesday, Feb.7th 2024</h1>
+<div id="sampling-distributions" class="section level3">
+<h3>Sampling Distributions</h3>
+<p>Consider a small study to estimate the average trunk diameter (in
+feet) of Western Red Ceders at the idlers rest nature preserve just
+outside of Moscow. The population distribution is given by the histogram
+and dot plot below. The population consists of <span
+class="math inline">\(N = 109\)</span> trees and the mean diameter is
+<span class="math inline">\(\mu = 4.05\)</span> with standard deviation
+<span class="math inline">\(\sigma = 1.81\)</span>. The green diamond
+below denotes the value of the population mean diameter for trees at the
+Idler’s Rest nature preserve.</p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
+<p>Assume that we want to estimate the population mean trunk diameter
+using a sample of <span class="math inline">\(20\)</span> trees selected
+at random from the nature preserve.</p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<p>The 20 red dots in the plot above represent the trees we selected to
+measure the diameter. From this sample of 20 trees, we estimate the mean
+diameter to be <span class="math inline">\(\bar{x}_1 = 4.35\)</span>
+feet. Now imagine we repeat this process and gather a new sample of
+<span class="math inline">\(20\)</span> trees selected randomly from the
+population.</p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-13-1.png" width="960" /></p>
+<p>The blue dots in the plot above constitute the trees selected for
+measurement in the second sample. This time the sample mean is computed
+as <span class="math inline">\(\bar{x}_2 = 2.98\)</span> feet. Clearly,
+our estimate of <span class="math inline">\(\mu\)</span> is dependent on
+the sample we select. Now imagine that we repeat this process many times
+- selecting a sample of 20 trees, measuring their diameters and
+computing the sample mean. It’s easy to imagine that we would produce a
+distribution of estimates of <span class="math inline">\(\mu\)</span>.
+Such a distribution is called a <strong>sampling distribution</strong>
+and represents the distribution of a statistic. The sampling
+distribution of for mean diameter from <span
+class="math inline">\(10,000\)</span> samples of <span
+class="math inline">\(n=20\)</span> trees is given below.</p>
+<p><img src="lecturemenu5_files/figure-html/unnamed-chunk-14-1.png" width="768" /></p>
+<p>The variation in the sampling distribution of the mean shown above is
+because of the differences between the samples. Again, the green dot
+represents the population mean (<span
+class="math inline">\(\mu\)</span>). From the plot, you can observe that
+the sampling distribution of <span
+class="math inline">\(\bar{x}\)</span> is centered at the true value of
+the population parameter.</p>
+<p>The <strong>margin of error</strong> of an estimate is how far we
+expect an estimate to fall from the true value of a population
+parameter. It defines a set of boundaries that allows us to quantify the
+how much an estimate is expected to vary between samples. Formally, it
+is the largest distance between the true population parameter and an
+estimate that is <u>not an outlier</u>. Thus if we use the <span
+class="math inline">\(\pm 2\sigma\)</span> rule to define outliers, the
+margin of error of our estimate is the interval <span
+class="math inline">\(\hat{\theta} - 2\sigma &lt; \theta &lt;
+\hat{\theta} + 2\sigma\)</span>.</p>
+<p>In statistics, we often hear the words <i>significant</i> and <i>not
+significant</i> when a particular statistical result is discussed. A
+<strong>Statistically significant</strong> result is one that is
+decidedly <i>not</i> due to ordinary variation - this means a result
+that is not due to chance or coincidence. Thus, by convention, we
+consider statistically significant results a result that falls outside
+the <strong>margin of error</strong>.</p>
+</div>
+<div id="study-design" class="section level2">
+<h2>Study Design</h2>
+<p>We’ve covered basic data analysis tools, like graphs and numbers, to
+describe individual variables and their distribution. Descriptive
+statistics help us assess data suitability, identify outliers, and spot
+patterns for further exploration. However, an exploratory analysis of a
+set of data is rarely evidence enough to draw any major conclusions
+about patterns we may observe. This is because patterns that emerge from
+descriptive statistics can arise from many different sources.</p>
+<div id="anecdotal-data" class="section level3">
+<h3>Anecdotal Data</h3>
+<p>It is often tempting to draw conclusions based on our personal
+experiences or from second-hand accounts that are shared with us. An
+example of anecdotal evidence might be a person claiming that a
+particular herbal supplement cured their chronic headaches. Or A friend
+may claim that a starvation diet is healthy because they knew a few
+people who did it and they didn’t experience any major health effects.
+However, <i>anecdotes</i> such as these are typically based on
+haphazardly selected individual cases and do not provide a sound basis
+for drawing conclusions.</p>
+<ul>
+<li>Can you think of a time where you or someone you know made a claim
+based on anecdotal evidence?</li>
+</ul>
+</div>
+<div id="collecting-data" class="section level3">
+<h3>Collecting Data</h3>
+<p>Statistics is an incredibly important tool as it allows us to answer
+questions in an objective way. The validity of our conclusions begins
+with a careful approach to how we collect data. Because we live in a
+digital world, data is typically readily available online. Most
+governments around the world collect data and have national statistics
+offices. The U.S has many government agencies that collect and host data
+in the public domain including the National Agriculture Statistics
+Service, The U.S Census Bureau, and the National Center for Education
+Statistics - to name a few. Moreover, many companies now passively
+collect data on their customers through electronic apps, social media,
+or through E-commerce websites.</p>
+</div>
+<div id="types-of-studies" class="section level3">
+<h3>Types of studies</h3>
+<p>Most studies are concerned with the relationship between two
+variables or more variables. Typically, we observe how the distribution
+of a <i>response variable</i> (sometimes called a <i>dependent
+variable</i>) changes in relationship to some <i>explanatory
+variable</i> (also called the <i>independent variable</i>).</p>
+<p>Typically, the question of interest is if/how does the distribution
+of the <strong>response variable</strong> change in accordance to
+changes in the <strong>explanatory</strong> variable.</p>
+<p>There are two primary study designs:</p>
+<ul>
+<li><p><strong>Observational studies</strong> - observe members of a
+population and measure variables of interest on those members but do not
+attempt to influence the responses.</p>
+<ul>
+<li>An observation study is a <i>uncontrolled</i> study to investigate
+the relationship between a response and explanatory variable</li>
+</ul></li>
+<li><p><strong>Experimental studies</strong> - deliberately impose
+changes on an explanatory variable (called treatments) and we observe
+how the response variable reacts to those changes.</p>
+<ul>
+<li>An experimental study is a <i>controlled</i> study to investigate
+the relationship between a response and explanatory variable</li>
+</ul></li>
+</ul>
+</div>
+</div>
 </div>
 
 
