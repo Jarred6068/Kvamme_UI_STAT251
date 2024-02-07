@@ -13,8 +13,8 @@ library(ggplot2)
 library(ggthemes)
 library(ggpubr)
 library(latex2exp)
-path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
-path2 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/'
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path2 = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 ```
 
 ${\bf (1)}$ For each statistic, denote whether it is resistant or not resistant to outliers:
@@ -287,7 +287,7 @@ ggplot()+geom_blank()+
   xlab('Earthquake Magnitude')
 
 ```
-  <li>Using the plot above, what the 75th percentile of the earthquake magnitude?</li>
+  <li>Using the plot above, what is the 75th percentile of the earthquake magnitude?</li>
 </ol>
 
 

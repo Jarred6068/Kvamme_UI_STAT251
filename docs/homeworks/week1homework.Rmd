@@ -20,7 +20,7 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 set.seed(123)
 ```
 
