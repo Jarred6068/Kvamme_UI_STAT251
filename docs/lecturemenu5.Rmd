@@ -621,11 +621,19 @@ The simplest type of experimental design is called a **completely randomized des
   
   * Each unit has an equal probability of being assigned to each treatment group
   
+  * Example: Imagine a pharmaceutical company conducting a clinical trial to evaluate the effectiveness of two different formulations of a pain relief medication. In a completely randomized design:
+  
+    * Group 1: Participants are randomly assigned to receive Formulation A of the pain relief medication.
+    * Group 2: Participants are randomly assigned to receive Formulation B of the pain relief medication.
+    
+    * The random assignment ensures that any individual differences among participants are equally distributed between the two groups. Both groups are then monitored for pain relief outcomes over the specified trial period. This design allows researchers to attribute any observed differences in pain relief between the two groups to the specific formulations of the medication, minimizing the impact of potential confounding variables.
+  
 **Multifactorial** experiments look at the effects of two or more treaments on a response simultaneously. There are many different types of mulitfactorial designs. Two commonly used designs are described below:
 
   * **Randomized block** - When subjects are not similar enough, detecting differences among the treatment groups can be difficult. We instead create groups called blocks. Blocks are organized so that units inside a block are more similar. Each block sees all treatments in random order
 
     * Example: an agricultural study where researchers are examining the yield of three different types of fertilizers (A, B, and C) across four different fields (Blocks 1 to 4). To control for potential variability in soil conditions, a randomized complete block design is employed. In this example, each block represents a different field, and within each block, every type of fertilizer is randomly assigned to different plots. This design helps account for potential variations in soil quality between fields. The randomization ensures that any uncontrolled factors affecting a specific block are equally distributed among the different fertilizer treatments, making it easier to attribute differences in yield to the actual effect of the fertilizers.
+  
   
   * **Matched pairs** - a design which takes measurements on each subject, usually once before the treatment and once after the treatment producing a set of paired measurements
 
