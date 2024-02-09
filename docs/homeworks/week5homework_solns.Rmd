@@ -243,13 +243,13 @@ paste('Comma separated values = ', paste0(x, collapse = ','))
 ```
 
 
-(a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$ (hint: think about shape and how that relates to the empirical rule).
+(a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$. Compare your answer with the cumulative distribution plot above, why might the two answers differ? (hint: think about shape and how that relates to the empirical rule)
 
-<span style="color: red;">approximately -7 and 17. Using the plot above the answers are approximately -2.5 and 11.1. The upper percentile differs because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with slight deviations from normality/span>
+<span style="color: red;">approximately $-7$ and $17$. Using the plot above the answers are approximately -2.5 and 11.1. The percentiles differ because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with deviations from normality/span>
 
-(b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-7$ and $17$?
+(b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-3$ and $13$?
 
-<span style="color: red;">if the mean is $\bar{x} = 5$ then both $-3$ and $13$ are two standard deviations from the mean e.g $-7 = \bar{x}-3s$ and $17 = \bar{x}+3s$. Under the empirical rule, appoximately $99.7\%$ data will fall in this interval </span>
+<span style="color: red;">if the mean is $\bar{x} = 5$ then both $-3$ and $13$ are two standard deviations from the mean e.g $-3 = \bar{x}-2s$ and $13 = \bar{x}+2s$. Under the empirical rule, appoximately $99.5\%$ data will fall in this interval </span>
 
 (c) Using the mean and standard deviation from part <i>a-b</i>, compute and interpret the z-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would these two observations be considered outliers under the $\pm 2s$ rule?
 

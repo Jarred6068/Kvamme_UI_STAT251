@@ -194,7 +194,7 @@ paste('Comma separated values = ', paste0(x, collapse = ','))
 
 (a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$. Compare your answer with the cumulative distribution plot above, why might the two answers differ? (hint: think about shape and how that relates to the empirical rule)
 
-(b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-7$ and $17$?
+(b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-3$ and $13$?
 
 (c) Using the mean and standard deviation from part <i>a-b</i>, compute and interpret the z-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would these two observations be considered outliers under the $\pm 2s$ rule?
 
