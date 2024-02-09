@@ -17,7 +17,7 @@
 <script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -31,10 +31,14 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/viz-1.8.2/viz.js"></script>
+<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="site_libs/grViz-binding-1.0.11/grViz.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -61,7 +65,6 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="styles.css" type="text/css" />
 
 
 
@@ -1118,6 +1121,223 @@ the relationship between a response and explanatory variable</li>
 </ul></li>
 </ul>
 </div>
+</div>
+</div>
+<div id="lecture-9-wednesday-feb.9th-2024" class="section level1">
+<h1>Lecture 9: Wednesday, Feb.9th 2024</h1>
+<div id="causation-vs-association" class="section level3">
+<h3>Causation vs Association</h3>
+<p>Both observational and experimental studies seek to quantify the
+relationship between the response and explanatory variables. If two
+variables are statistically related we say they share a statistical
+<i>association</i>. If two variables are causally related, then changes
+in the explanatory variable <i>cause</i> measurable changes in the
+response variable. It is important to note that an association between
+two variables <u> does not imply </u> that they have a cause and effect
+relationship.</p>
+<ul>
+<li><p>Experimental studies control the assignment of observations to
+the explanatory variable(s) through <i> randomization </i>. This means
+experimental studies control for factors that may influence a
+statistical relationship between two variables and provide good evidence
+for causal effects.</p></li>
+<li><p>Observational studies alone <i> cannot </i> definitively
+establish a causal relationship between two variables. This is because
+observational studies are prone to <strong>lurking variable</strong> -
+an unknown variable that the researchers did not account for in the
+study and has an association with both the response and explanatory
+variables. Lurking variables can create the illusion of a statistical
+relationship when none exists</p></li>
+</ul>
+<p>Example: Many studies have looked at the relationship between coffee
+consumption as an indicator for coronary artery disease. Studies that
+fail to adjust for other risk factors, like smoking, have often reported
+a positive association between these two variables. Thus smoking acts as
+a lurking variable, magnifying the relationship between drinking coffee
+and coronary artery disease risk</p>
+<div id="htmlwidget-89910f2d4f4462360747" style="width:384px;height:288px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-89910f2d4f4462360747">{"x":{"diagram":"\ndigraph {\n  graph []\n  node [shape = plaintext]\n    A [label = \"Coffee Consumption\"]\n    B [label = \"Heart Disease\"]\n    C [label = \"Smoking\"]\n  edge [minlen = 2]\n    A->B\n    C->A\n    C->B\n    { rank = same; A; B }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="experimental-design" class="section level3">
+<h3>Experimental Design</h3>
+<p>A study is considered an experiment when we actually manipulate
+explanatory variable in order to observe how it changes the outcomes of
+the response variables. Lets start with some terminology:</p>
+<ul>
+<li><p>The individuals (observations) on which the experiment is done
+are called <strong>experimental units</strong></p></li>
+<li><p>When the experimental units are human, we often refer to them as
+<strong>subjects</strong></p></li>
+<li><p>A specific experimental condition applied to the experimental
+units is called a <strong>treatment</strong></p></li>
+<li><p>Explanatory variables are called <strong>factors</strong> and the
+various conditions of the <strong>factors</strong> are called
+<strong>factor levels</strong>.</p></li>
+</ul>
+<p>Example: What are the effects of repeated exposure to an advertising
+message? The answer may be influenced by both the length of the add and
+the number of times it is seen. Consider an experiment which used
+undergraduate college students as subjects. All subjects were exposed to
+a 40 TV-show that included adds for a fast food chain. Subjects were
+randomized to either a 30-second or 90-second commercial. The same
+commercial was shown 1, 3 or 5 times randomly during the show. After
+viewing the show and commercials, students were asked to self report on
+a Likert scale how their craving level for the advertised food.</p>
+<ul>
+<li><p>what is the response variable?</p></li>
+<li><p>What are the factors that are manipulated?</p></li>
+<li><p>What are the factor levels?</p></li>
+</ul>
+<p>Both experimental studies and observational studies <i>use
+randomization</i> to select a sample of individuals from the population
+of interest. But, unlike observational studies, experiments control for
+the effect of lurking variables <u>through a second randomization</u>
+which allocates experimental units to the different levels of the
+treatment. This randomization balances the effect of any lurking
+variables so that the effects of the explanatory variable on the
+response can me isolated.</p>
+<ul>
+<li>The design of an experiment is said to be <strong>biased</strong> if
+it systematically favors certain outcomes.</li>
+</ul>
+<p>Some of the hallmarks of a good experiment include, having a control
+group and blinding to reduce bias:</p>
+<ul>
+<li><p>A <strong>Control group</strong> - is a group of subjects in the
+experiment who do not receive the treatment. A control group is used to
+control bias in an experiment because, by design, the only difference
+between the two groups is the treatment.</p></li>
+<li><p><strong>Blinding</strong> is a way of designing an experiment to
+ensure that subjects are unaware if they are in the treatment or control
+group</p></li>
+<li><p><strong>Double blinding</strong> - when both subjects and the
+researchers are unaware of who is assigned to the treatment group and
+who is assigned to the control group.</p></li>
+</ul>
+<p>The simplest type of experimental design is called a
+<strong>completely randomized design</strong> this design looks at the
+effects of a single treatment on a response variable.</p>
+<ul>
+<li><p>Experimental units are randomly assigned to each level of the
+treatment</p></li>
+<li><p>Each unit has an equal probability of being assigned to each
+treatment group</p></li>
+</ul>
+<p><strong>Multifactorial</strong> experiments look at the effects of
+two or more treaments on a response simultaneously. There are many
+different types of mulitfactorial designs. Two commonly used designs are
+described below:</p>
+<ul>
+<li><p><strong>Randomized block</strong> - When subjects are not similar
+enough, detecting differences among the treatment groups can be
+difficult. We instead create groups called blocks. Blocks are organized
+so that units inside a block are more similar. Each block sees all
+treatments in random order</p>
+<ul>
+<li>Example: an agricultural study where researchers are examining the
+yield of three different types of fertilizers (A, B, and C) across four
+different fields (Blocks 1 to 4). To control for potential variability
+in soil conditions, a randomized complete block design is employed. In
+this example, each block represents a different field, and within each
+block, every type of fertilizer is randomly assigned to different plots.
+This design helps account for potential variations in soil quality
+between fields. The randomization ensures that any uncontrolled factors
+affecting a specific block are equally distributed among the different
+fertilizer treatments, making it easier to attribute differences in
+yield to the actual effect of the fertilizers.</li>
+</ul></li>
+<li><p><strong>Matched pairs</strong> - a design which takes
+measurements on each subject, usually once before the treatment and once
+after the treatment producing a set of paired measurements</p>
+<ul>
+<li>Example: consider a study investigating the impact of a new tutoring
+method on students’ math performance. In this matched pairs design, each
+subject is paired with another based on their initial math proficiency.
+This pairing is based on the initial math scores of the students. After
+the tutoring interventions, the math performance of both students in
+each pair is measured again. By comparing the changes in performance
+within each pair, researchers can better assess whether the new tutoring
+method had a significant impact on math proficiency while controlling
+for initial differences in skill levels.</li>
+</ul></li>
+</ul>
+</div>
+<div id="surveys" class="section level3">
+<h3>Surveys</h3>
+<p>Surveys (called sample surveys in statistics) are a type of
+<i>observational study</i> where we select a subset of units from a
+population of such units for the purpose of making inferences about the
+distribution of all units (i.e., the population distribution).</p>
+<ul>
+<li><p>In statistics, a survey is really any information gathered from a
+sample of subjects.</p></li>
+<li><p>A <strong>census</strong> is a type of survey which attempts to
+gather information for all (or nearly all) subjects in a
+population</p></li>
+</ul>
+<p>A survey consists of two main components:</p>
+<ul>
+<li><p>A <strong>sampling frame</strong> which is a list of subjects in
+the population from which the sample will be collected</p></li>
+<li><p>And a <strong>sampling design</strong> which is the method that
+will be used to select subjects from the sampling frame.</p></li>
+</ul>
+<p>Any sampling design we choose should ensure that the sample we
+collect is representative of the <u>entire</u> population we are trying
+to estimate. Some common sampling designs include:</p>
+<ul>
+<li><p><strong>Convenience sampling</strong> is a type of
+<i>non-random</i> sampling that involves the sample being drawn from
+that part of the population that is close to hand.</p></li>
+<li><p><strong>Volunteer sample</strong> – a type of <i>non-random</i>
+sampling where participants self elect to be part of the study because
+they volunteer when asked or respond to advertisement.</p>
+<ul>
+<li>the most common type of convenience sampling</li>
+<li>often required when we don’t have a sampling frame for the
+population</li>
+<li>this is the type of sampling used for most medical experiments</li>
+</ul></li>
+</ul>
+<p>A sample is more likely to be representative of the population if we
+let chance, rather than convenience, determine which subjects are
+sampled. For this reason, we typically choose a sampling design that
+uses randomization to determine which units are selected from the
+sampling frame.</p>
+<ul>
+<li><strong>Simple random sampling</strong> (also just called random
+sampling) a type of <i>random</i> sampling where each subject in the
+sampling frame to has an <u>equal probability</u> of being selected for
+the sample.</li>
+</ul>
+<p>Random sampling can be done <i> with replacement</i> or <i>without
+replacement</i></p>
+<p>When we sample <strong>with replacement</strong>, each time we sample
+a subject from the population we put the subject back so that it can be
+sampled again.</p>
+<ul>
+<li>In general, for a population of size <span
+class="math inline">\(N\)</span> each subject will have a <span
+class="math inline">\(\frac{1}{N}\)</span> chance of being included in
+the sample.</li>
+</ul>
+<p>When we sample <strong>without replacement</strong>, then each time
+we sample a subject from the population we remove that subject from the
+sampling frame so that it cannot be selected again.</p>
+<ul>
+<li><p>This means that first subject will have a <span
+class="math inline">\(\frac{1}{N}\)</span> chance of being selected, the
+second a <span class="math inline">\(\frac{1}{N-1}\)</span>, the third a
+<span class="math inline">\(\frac{1}{N-2}\)</span> <span
+class="math inline">\(\cdots\)</span> and so on</p></li>
+<li><p>Sampling without replacement is common in most surveys because
+the sample size is usually small in comparison to the population size
+(i.e <span class="math inline">\(n &lt;&lt; N\)</span>) and thus it is
+approximately the same as sampling with replacement</p></li>
+</ul>
+</div>
+<div id="sources-of-bias-in-surveys" class="section level3">
+<h3>Sources of Bias In Surveys</h3>
 </div>
 </div>
 

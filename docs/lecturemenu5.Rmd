@@ -1,7 +1,14 @@
 ---
 title: "Week 5 Notes"
 author: "STAT 251 Section 03"
-output: html_document
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+
 ---
 
 ```{r setup, include=FALSE}
@@ -540,6 +547,156 @@ There are two primary study designs:
 * **Experimental studies** - deliberately impose changes on an explanatory variable (called treatments) and we observe how the response variable reacts to those changes. 
 
   * An experimental study is a <i>controlled</i> study to investigate the relationship between a response and explanatory variable
+  
+  
+# Lecture 9: Wednesday, Feb.9th 2024
+
+### Causation vs Association
+
+Both observational and experimental studies seek to quantify the relationship between the response and explanatory variables. If two variables are statistically related we say they share a statistical <i>association</i>. If two variables are causally related, then changes in the explanatory variable <i>cause</i> measurable changes in the response variable. It is important to note that an association between two variables <u> does not imply </u> that they have a cause and effect relationship. 
+
+  * Experimental studies control the assignment of observations to the explanatory variable(s) through <i> randomization </i>. This means experimental studies control for factors that may influence a statistical relationship between two variables and provide good evidence for causal effects.  
+ 
+  * Observational studies alone <i> cannot </i> definitively establish a causal relationship between two variables. This is because observational studies are prone to **lurking variable** - an unknown variable that the researchers did not account for in the study and has an association with both the response and explanatory variables. Lurking variables can create the illusion of a statistical relationship when none exists
+  
+
+Example: Many studies have looked at the relationship between coffee consumption as an indicator for coronary artery disease. Studies that fail to adjust for other risk factors, like smoking, have often reported a positive association between these two variables. Thus smoking acts as a lurking variable, magnifying the relationship between drinking coffee and coronary artery disease risk  
+
+
+```{r, echo=F, message=F, warning=F, fig.height=3, fig.width=4}
+DiagrammeR::grViz("
+digraph {
+  graph []
+  node [shape = plaintext]
+    A [label = 'Coffee Consumption']
+    B [label = 'Heart Disease']
+    C [label = 'Smoking']
+  edge [minlen = 2]
+    A->B
+    C->A
+    C->B
+    { rank = same; A; B }
+}
+")
+
+```
+
+
+### Experimental Design
+
+A study is considered an experiment when we actually manipulate explanatory variable in order to observe how it changes the outcomes of the response variables. Lets start with some terminology:
+
+  * The individuals (observations) on which the experiment is done are called **experimental units**
+  
+  * When the experimental units are human, we often refer to them as **subjects**
+  
+  * A specific experimental condition applied to the experimental units is called a **treatment**
+  
+  * Explanatory variables are called **factors** and the various conditions of the **factors** are called **factor levels**.
+  
+Example: What are the effects of repeated exposure to an advertising message? The answer may be influenced by both the length of the add and the number of times it is seen. Consider an experiment which used undergraduate college students as subjects. All subjects were exposed to a 40 TV-show that included adds for a fast food chain. Subjects were randomized to either a 30-second or 90-second commercial. The same commercial was shown 1, 3 or 5 times randomly during the show. After viewing the show and commercials, students were asked to self report on a Likert scale how their craving level for the advertised food. 
+
+* what is the response variable?
+
+* What are the factors that are manipulated?
+
+* What are the factor levels?
+
+Both experimental studies and observational studies <i>use randomization</i> to select a sample of individuals from the population of interest. But, unlike observational studies, experiments control for the effect of lurking variables <u>through a second randomization</u> which allocates experimental units to the different levels of the treatment. This randomization balances the effect of any lurking variables so that the effects of the explanatory variable on the response can me isolated. 
+
+ * The design of an experiment is said to be **biased** if it systematically favors certain outcomes. 
+ 
+Some of the hallmarks of a good experiment include, having a control group and blinding to reduce bias:
+
+  * A **Control group** - is a group of subjects in the experiment who do not receive the treatment. A control group is used to control bias in an experiment because, by design, the only difference between the two groups is the treatment. 
+ 
+  * **Blinding** is a way of designing an experiment to ensure that subjects are unaware if they are in the treatment or control group
+ 
+  * **Double blinding** - when both subjects and the researchers are unaware of who is assigned to the treatment group and who is assigned to the control group.
+
+
+The simplest type of experimental design is called a **completely randomized design** this design looks at the effects of a single treatment on a response variable. 
+  
+  * Experimental units are randomly assigned to each level of the treatment
+  
+  * Each unit has an equal probability of being assigned to each treatment group
+  
+**Multifactorial** experiments look at the effects of two or more treaments on a response simultaneously. There are many different types of mulitfactorial designs. Two commonly used designs are described below:
+
+  * **Randomized block** - When subjects are not similar enough, detecting differences among the treatment groups can be difficult. We instead create groups called blocks. Blocks are organized so that units inside a block are more similar. Each block sees all treatments in random order
+
+    * Example: an agricultural study where researchers are examining the yield of three different types of fertilizers (A, B, and C) across four different fields (Blocks 1 to 4). To control for potential variability in soil conditions, a randomized complete block design is employed. In this example, each block represents a different field, and within each block, every type of fertilizer is randomly assigned to different plots. This design helps account for potential variations in soil quality between fields. The randomization ensures that any uncontrolled factors affecting a specific block are equally distributed among the different fertilizer treatments, making it easier to attribute differences in yield to the actual effect of the fertilizers.
+  
+  * **Matched pairs** - a design which takes measurements on each subject, usually once before the treatment and once after the treatment producing a set of paired measurements
+
+    * Example: consider a study investigating the impact of a new tutoring method on students' math performance. In this matched pairs design, each subject is paired with another based on their initial math proficiency. This pairing is based on the initial math scores of the students. After the tutoring interventions, the math performance of both students in each pair is measured again. By comparing the changes in performance within each pair, researchers can better assess whether the new tutoring method had a significant impact on math proficiency while controlling for initial differences in skill levels.
+
+### Surveys
+
+Surveys (called sample surveys in statistics) are a type of <i>observational study</i> where we select a subset of units from a population of such units for the purpose of making inferences about the distribution of all units (i.e., the population distribution). 
+  
+  * In statistics, a survey is really any information gathered from a sample of subjects.
+  
+  * A **census** is a type of survey which attempts to gather information for all (or nearly all) subjects in a population
+  
+A survey consists of two main components:
+
+  * A **sampling frame** which is a list of subjects in the population from which the sample will be collected
+  
+  * And a **sampling design** which is the method that will be used to select subjects from the sampling frame. 
+
+
+Any sampling design we choose should ensure that the sample we collect is representative of the <u>entire</u> population we are trying to estimate. Some common sampling designs include: 
+
+  * **Convenience sampling** is a type of <i>non-random</i> sampling that involves the sample being drawn from that part of the population that is close to hand.
+  
+  * **Volunteer sample** –  a type of <i>non-random</i> sampling where participants self elect to be part of the study because they volunteer when asked or respond to advertisement.
+    
+    * the most common type of convenience sampling
+    * often required when we don’t have a sampling frame for the population
+    * this is the type of sampling used for most medical experiments
+
+A sample is more likely to be representative of the population if we let chance, rather than convenience, determine which subjects are sampled. For this reason, we typically choose a sampling design that uses randomization to determine which units are selected from the sampling frame.
+
+* **Simple random sampling** (also just called random sampling) a type of <i>random</i> sampling where each subject in the sampling frame to has an <u>equal probability</u> of being selected for the sample. 
+
+Random sampling can be done <i> with replacement</i> or <i>without replacement</i> 
+    
+When we sample **with replacement**, each time we sample a subject from the population we put the subject back so that it can be sampled again.
+ 
+  * In general, for a population of size $N$ each subject will have a $\frac{1}{N}$ chance of being included in the sample.
+
+
+When we sample **without replacement**, then each time we sample a subject from the population we remove that subject from the sampling frame so that it cannot be selected again. 
+
+  * This means that first subject will have a $\frac{1}{N}$ chance of being selected, the second a $\frac{1}{N-1}$, the third a $\frac{1}{N-2}$ $\cdots$ and so on
+  
+  * Sampling without replacement is common in most surveys because the sample size is usually small in comparison to the population size (i.e $n << N$) and thus it is approximately the same as sampling with replacement
+  
+### Sources of Bias In Surveys
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
