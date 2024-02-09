@@ -245,7 +245,7 @@ paste('Comma separated values = ', paste0(x, collapse = ','))
 
 (a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$ (hint: think about shape and how that relates to the empirical rule).
 
-<span style="color: red;">approximately -2.8 and 13.1. Using the plot above the answers are approximately -2.5 and 11.1. The upper percentile differs because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with slight deviations from normality/span>
+<span style="color: red;">approximately -7 and 17. Using the plot above the answers are approximately -2.5 and 11.1. The upper percentile differs because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with slight deviations from normality/span>
 
 (b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-7$ and $17$?
 

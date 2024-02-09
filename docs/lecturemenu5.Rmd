@@ -69,7 +69,7 @@ A = ggplot()+
   geom_segment(aes(x = 0, y = 0,  xend = 0, yend = dnorm(0)), size = 1)+
   geom_segment(aes(x = 1, y = 0,  xend = 1, yend = dnorm(1)), size = 1)+
   geom_segment(aes(x = 0, y = dnorm(0)/2,  xend = 1, yend = dnorm(0)/2), size = 1, arrow = arrow(length = unit(0.3, "cm")))+
-  geom_text(aes(x = 0.5, y = dnorm(0)/1.8), label = TeX('$\\sigma$'))+
+  geom_text(aes(x = 0.5, y = dnorm(0)/1.8), label = TeX('$\\sigma_1$'))+
   theme_classic2()+
   theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
         axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
@@ -86,7 +86,7 @@ B = ggplot()+
   geom_segment(aes(x = 2, y = 0,  xend = 2, yend = dnorm(2, 0, 2)), size = 1)+
   geom_segment(aes(x = 0, y = dnorm(0, 0, 2)/2,  xend = 2, yend = dnorm(0, 0, 2)/2), size = 1, 
                arrow = arrow(length = unit(0.3, "cm")))+
-  geom_text(aes(x = 1, y = dnorm(0, 0, 2)/1.8), label = TeX('$\\sigma$'))+
+  geom_text(aes(x = 1, y = dnorm(0, 0, 2)/1.8), label = TeX('$\\sigma_2$'))+
   theme_classic2()+
   theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
         axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
