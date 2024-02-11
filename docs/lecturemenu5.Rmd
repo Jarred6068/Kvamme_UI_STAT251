@@ -681,7 +681,7 @@ When we sample **without replacement**, then each time we sample a subject from 
   
   * Sampling without replacement is common in most surveys because the sample size is usually small in comparison to the population size (i.e $n << N$) and thus it is approximately the same as sampling with replacement
   
-### Sources of Bias In Surveys
+
 
 
 

@@ -23,6 +23,8 @@ as .pdf
 <a href="./lecture_slides/Week 1/Week1_Lecture2_Slides_1_12_2024.pptx">Download File</a>
 as powerpoint
 
+# Week 2
+
 ### Lecture 3
 <a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pdf">Download File</a>
 as .pdf
@@ -30,6 +32,7 @@ as .pdf
 <a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pptx">Download File</a>
 as powerpoint
 
+# Week 3
 
 ### Lecture 4
 <a href="./lecture_slides/Week 3/Week3_Lecture4_Slides_1_22_2024.pdf">Download File</a>
@@ -46,6 +49,7 @@ as .pdf
 <a href="./lecture_slides/Week 3/Week3_Lecture5_Slides_1_24_2024.pptx">Download File</a>
 as powerpoint
 
+# Week 4
 
 ### Lecture 6
 <a href="./lecture_slides/Week 4/Week4_Lecture6_Slides_1_29_2024.pdf">Download File</a>
@@ -54,6 +58,7 @@ as .pdf
 <a href="./lecture_slides/Week 4/Week4_Lecture6_Slides_1_29_2024.pptx">Download File</a>
 as powerpoint
 
+# Week 5
 
 ### Lecture 7
 <a href="./lecture_slides/Week 5/Week5_Lecture7_Slides_2_5_2024.pdf">Download File</a>
@@ -74,4 +79,13 @@ as powerpoint
 as .pdf
 
 <a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_2_9_2024.pptx">Download File</a>
+as powerpoint
+
+# Week 6
+
+### Lecture 10
+<a href="./lecture_slides/Week 5/Week5_Lecture7_Slides_2_5_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 5/Week5_Lecture7_Slides_2_5_2024.pptx">Download File</a>
 as powerpoint
