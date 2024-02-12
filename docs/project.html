@@ -436,7 +436,7 @@ $(document).ready(function () {
 to engage you in a hands-on exploration of statistical analysis. In this
 project you will demonstrate your understanding of the main tenets of
 statistical description and inference that we have learned in this
-class. For this project, you will need to find a data related to a topic
+class. For this project, you will need to find data related to a topic
 that interests you such as finance, medicine, sports, ecology, etc. From
 this data, you will need to choose one or two variables that relate to a
 statistical question that interests you and analyze the data using the
@@ -445,10 +445,12 @@ website. Complete the instructions for steps 1-3 to conduct a thorough
 statistical analysis of your chosen variables. Write up your results as
 a short report (1-5 pages). You may use any statistical software
 available to you to analyze your chosen variables (for example:
-Microsoft Excel, R, SAS, Python, MATLAB, SPSS, or other). In addition, I
-have included several websites (links below) which can be used to
-explore publicly available datasets. I have also provided several links
-for online software that can be be used to complete your analyses:</p>
+Microsoft Excel, R, SAS, Python, MATLAB, SPSS, or other). The
+applications in the “resources” tab on the <a href="">course website</a>
+may also be used. I have also provided several links for online software
+that can be be used to complete your analyses. In addition, I have
+included several websites (links below) which can be used to explore
+publicly available datasets.</p>
 </div>
 <div id="links-for-public-data" class="section level2">
 <h2>Links for public data</h2>
@@ -519,13 +521,16 @@ descriptive plots.</p>
 <div id="assessment-criteria" class="section level2">
 <h2>Assessment Criteria:</h2>
 <ul>
-<li>Clarity and relevance of the chosen statistical question.</li>
+<li>Clarity and relevance of the chosen statistical question
+(5pts).</li>
 <li>Accuracy and completeness of the statistical description for each
-variable.</li>
-<li>Appropriateness of the chosen hypothesis and statistical test.</li>
+variable (5pts).</li>
+<li>Appropriateness of the chosen hypothesis and statistical test
+(5pts).</li>
 <li>Accuracy in conducting the statistical test and interpreting the
-results.</li>
-<li>Presentation quality of descriptive plots and written analysis.</li>
+results (5pts).</li>
+<li>Presentation quality of descriptive plots and written analysis
+(5pts).</li>
 </ul>
 </div>
 <div id="deliverables" class="section level2">
@@ -534,7 +539,8 @@ results.</li>
 <li>A written report documenting your entire statistical process,
 including the statistical question, descriptive statistics, hypothesis
 formulation, statistical test application, and conclusion.</li>
-<li>Visualizations of the chosen variables’ distributions.</li>
+<li>Visualizations of the chosen variables’ distributions including plot
+or table captions.</li>
 <li>Any additional insights or observations gained during the
 analysis.</li>
 <li>This project is designed to foster a deeper understanding of
@@ -553,12 +559,12 @@ of the provided datasets.</p>
 <ul>
 <li><p><strong>(A)</strong> Provide some background related to the
 dataset you chose such as what topic it relates to, how it was gathered,
-sampling method etc - if available. Provide a link and appropriate
+sampling method etc - if available. Provide a link or appropriate
 reference.</p></li>
 <li><p><strong>(B)</strong> Articulate a statistical question related to
 the dataset you chose and select one or two variables that relate to
 this question.</p></li>
-<li><p><strong>(B)</strong> Write a short description of the variable(s)
+<li><p><strong>(C)</strong> Write a short description of the variable(s)
 and how they relate to the question you are interested in
 exploring.</p></li>
 </ul>
@@ -619,12 +625,12 @@ construct a <strong>frequency table</strong> and identify the
 <ul>
 <li><p><strong>(B)</strong> Create at least one descriptive plot for
 each variable: (e.g., histogram, boxplot, dot plot, stem-and-leaf plot,
-pareto chart, pie chart, bar chart) to visualize their
-distribution.</p></li>
+pareto chart, pie chart, bar chart) to visualize their distribution. Be
+sure to include a caption for each plot.</p></li>
 <li><p><strong>(C)</strong> Using the descriptive statistics computed in
 parts A and B, write a short description of the shape, center, and
-variability of your chosen variables and make note of any
-outliers.</p></li>
+variability of your chosen variables. Make note of any outliers and how
+they may influence your results.</p></li>
 </ul>
 </div>
 <div id="hypothesis-formulation-and-testing" class="section level2">
@@ -632,25 +638,30 @@ outliers.</p></li>
 <p>Building on the statistical description in <strong>Part 2.</strong>,
 formulate a testable hypothesis (or multiple if you analyze the
 variables separately) related to your question in <strong>Part
-1</strong> that explores the relationship between the chosen variables.
-Depending on the nature of your question, be sure to choose the
-appropriate statistical test. This may include any of the tests we have
-talked about in class including: tests of means, proportions, or
-categorical tests such as one of the <span
-class="math inline">\(\chi^2\)</span>-tests or other relevant tests such
-as one of the non-parametric tests we’ve discussed.</p>
+1</strong> that explores the relationship between the chosen variables
+or compares it to a population parameter. Depending on the nature of
+your question, be sure to choose the appropriate statistical test or
+model. This may include any of the tests we have talked about in class
+such as: one and two-sample tests of means and proportions, categorical
+tests such as one of the <span
+class="math inline">\(\chi^2\)</span>-tests, non-parametric tests,
+bootstrap tests, regression, or ANOVA.</p>
 <ul>
-<li><p><strong>(A)</strong> Write a short description justifying your
-choice of hypothesis test and how it will help you answer the
-statistical question you outline in <strong>Part 1</strong>. Address any
-assumptions of the test and whether you data adheres to the assumptions.
-State the null and alternative hypotheses.</p></li>
-<li><p><strong>(B)</strong> Conduct the chosen statistical test: Give
-the critical value, degrees of freedom (if applicable), test statistic
-and <span class="math inline">\(pvalue\)</span> of the test.</p></li>
-<li><p><strong>(C)</strong> Interpret the results of your test and draw
-conclusions regarding the validity or rejection of the
-hypothesis.</p></li>
+<li><strong>(A)</strong> Write a short description justifying your
+choice of hypothesis test or model and how it will help you answer the
+statistical question you outline in <strong>Part 1</strong>. State the
+null and alternative hypotheses clearly and address any assumptions of
+the test and whether your data adheres to the assumptions.</li>
+<li><strong>(B)</strong> Conduct the chosen statistical test: Give the
+critical value, degrees of freedom (if applicable), test statistic and
+<span class="math inline">\(pvalue\)</span> of the test. If you are
+using regression - be sure to report the coefficient of determination,
+residual standard deviation, and coefficient estimates and their
+standard error. If you are conducting an ANOVA, be sure to report the
+appropriate ANOVA table include model and error sum of squares, mean
+squares, F-statistics, and pvalues.</li>
+<li><strong>(C)</strong> Interpret the results of your test(s) and draw
+conclusions regarding the validity or rejection of the hypothesis.</li>
 </ul>
 </div>
 </div>
