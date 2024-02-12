@@ -6,3 +6,4 @@ setwd("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/")
 
 #render your sweet site. 
 rmarkdown::render_site()
+
