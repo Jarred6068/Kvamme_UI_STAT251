@@ -84,8 +84,8 @@ as powerpoint
 # Week 6
 
 ### Lecture 10
-<a href="./lecture_slides/Week 6/Week5_Lecture10_Slides_2_12_2024.pdf">Download File</a>
+<a href="./lecture_slides/Week 6/Week6_Lecture10_Slides_2_12_2024.pdf">Download File</a>
 as .pdf
 
-<a href="./lecture_slides/Week 6/Week5_Lecture10_Slides_2_12_2024.pptx">Download File</a>
+<a href="./lecture_slides/Week 6/Week6_Lecture10_Slides_2_12_2024.pptx">Download File</a>
 as powerpoint
