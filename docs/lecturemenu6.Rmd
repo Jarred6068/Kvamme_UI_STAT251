@@ -25,12 +25,202 @@ path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 
 # Lecture 10: Monday, Feb.12th 2024
 
+### Sources of Bias In Surveys
+
+Last Friday, we introduced the idea of <i>randomization</i> as a means of selecting a sample from the population through a sampling design called **Simple random sampling**. Using random numbers to select individuals that are selected to be in the sample are representative of the true population. However, large surveys of the human population require more than just sampling design with randomization. 
+
+A good survey needs an accurate sampling frame for the population, which is rarely the case in surveys of large human populations. As a result, most surveys suffer from **undercoverage** - bias that is introduced from having an inaccurate sampling frame. For example, consider a survey of American households. Such a survey will not include homeless individuals, college students, or incarcerated persons. Thus population surveys usually have some degree of bias introduced by the individuals not included by the sampling frame.
+
+Other sources of bias in surveys include:
+
+**Nonresponse bias** - this is a more serious form of bias that occurs when individuals selected to be in the sample cannot be contacted or refuse to participate. 
+  
+  * For many sample survey's nonresponse bias is a considerable issue reaching $50\%$ or more of selected individuals.
+    
+  * nonresponse bias is typically higher in urban areas
+    
+  * An important thing to keep in mind is that nearly all political and opinion polls reported in the news fail to report their nonresponse rates.  
+
+**Response bias** - response bias occurs when the interview portion of a survey influences how individuals respond to the survey questions. Response bias can include:
+
+  * Poorly worded questions which may confuse respondents and influence how they select their answer. 
+    
+  * Questions about sensitive topics, such as illict drug use, in which respondants may lie about their behavior.
+    
+  * The race or sex of the interviewer can influence responses related to questions about race relations or feminism. 
+
+### More Complicated Sampling Designs
+
+**Systematic sampling** – A random sampling method in which the researcher selects every $k^{th}$ subject from an ordered sampling frame
+ 
+  * This method of sampling is useful when there is no sampling frame available.
+    
+  * Estimates obtained under this sampling design typically have a lower margin of error than simple random sampling and some cluster sampling designs.
+
+ 
+**Cluster sampling** – A type of sampling method in which the population is divided in a set of clusters and the researcher selects a simple random sample of the clusters. The sample then comprises all subjects in the selected clusters.
+ 
+  * The advantages of cluster sampling are that (a) it can be less expensive than simple or stratified random sampling and (b) it can be used when a sampling frame is unavailable 
+
+  * A disadvantage of cluster sampling is that the margin of error is often larger than what it would be for simple random sampling or stratified random sampling
+
+
+**Stratified random sampling** – A type of sampling method in which the population is separated into groups, call strata, based on some characteristic about the subjects. A simple random sample is then taken from each stratum. 
+
+  * Administrative convenience - It may be easier to conduct several smaller simple random sampling designs than coordinate one larger simple random sampling design.
+
+  * Interest in individual strata - The design ensures samples from all strata. A simple random sampling design might sample few or no elements from a stratum of interest.
+
+  * Smaller margin of error - By assuring samples from each strata, the combined sample tends to be more representative of the population, resulting in a smaller margin of error
 
 
 
 
+![**Figure 1** - visual depiction of sampling designs](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Sampling_designs.png)
+
+<br>
+<br>
+**Two – stage cluster sampling** - A type of sampling method in which the population is divided into a set of clusters and the researcher selects a simple random sample of the clusters. A simple random sample is then applied to each cluster
+ 
+  * Same advantages as cluster sampling
+    
+  * Usually has a smaller margin of error, because we can control two sample sizes: the number of clusters to sample, and the number of elements to sample from each sampled cluster
 
 
+![**Figure 2** - visual depiction of two-state cluster sampling](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/two_stage_cs.png)
+
+
+<br>
+<br>
+
+### Ethical studies
+
+Producing and using data to answer statistical questions may not seem like a big deal, but, like all human endeavors, it raises ethical concerns. The most prominent ethical issues arise when we collect data about people. Ethical considerations must be closely contemplated when we conduct experiments using human subjects. While an experiment may have potentially life saving benefits, it can also come with considerable risks that are bore solely by the participating subjects. Some ethical considerations that apply to any study are:
+
+* Informed consent - subjects participating in a survey or experiment are usually required to provide legal consent before data can be collected
+
+* Confidentiality - many studies on human subjects require that the data gather be kept confidential with proper security infrastructure in place to protect it. 
+
+    * Can you think of some examples of areas of study that may require confidentiality or informed consent?
+
+The University of Idaho, like all colleges and universities engaged in research, have a review board who is responsible for establishing ethics guidelines for conducting research and review studies which may require ethical considerations. The University of Idahos Office of Research Assurances website can be found [here](https://www.uidaho.edu/research/faculty/research-assurances)
+
+
+The following [link](https://www.esri.com/arcgis-blog/products/survey123/constituent-engagement/ethics/) from the Environmental Systems Research Institute, inc website provides a great overview of the survey ethics, design and implementation. 
+
+Similarly, this [link](https://www.nih.gov/health-information/nih-clinical-research-trials-you/guiding-principles-ethical-research) from the National Institutes of Health provides a brief overview of the guiding principles of ethical research. 
+
+### Connection with statistical inference
+
+Now that we have learned some different ways to conduct experimental studies and surveys, how does this connect with our ultimate goal of inferring things about a population, or making informed decisions? Recall that a **sampling distribution** is the distribution of a statistic that arises from taking <u>all possible samples</u> of the same size $n$ from the same population. 
+
+If we think of the population parameter $\theta$ as the bullseye of a target, then, ideally we would like our estimator $\hat{\theta}$ to fall close to or on the value of $/theta$. However, how we sample or conduct an experiment can influence the shape, center, and spread of the sampling distribution of a statistic. 
+
+* <i>Bias of a statistic</i> - concerns the center of a sampling distribution. A statistic is **unbiased** if the mean of its sampling distribution is equal to the true value of the population parameter.
+
+* <i>Variability of a statistic</i> - concerns the spread of its sampling distribution. The spread <u>is determined by the sampling design</u> and the sample size $n$. Larger sample sizes have smaller spreads.  
+
+```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=5}
+set.seed(123)
+n = 50
+library(ggforce)
+
+x1 = rnorm(n, 0, 0.5)
+y1 = rnorm(n, 0, 0.5)
+A = ggplot()+geom_point(aes(x = x1, y = y1), shape = 21, fill = 'red', size = 3)+
+  theme_void()+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 3), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 2), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 1), size = 1)+
+  geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
+  ggtitle('No Bias')+
+  ylab('Low Variance')+
+  theme(axis.title.y = element_text(14, angle = 90),
+        plot.title = element_text(hjust = 0.5))
+
+x2 = rnorm(n, 1, 0.5)
+y2 = rnorm(n, 1, 0.5)
+B = ggplot()+geom_point(aes(x = x2, y = y2), shape = 21, fill = 'red', size = 3)+
+  theme_void()+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 3), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 2), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 1), size = 1)+
+  geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
+  ggtitle('Biased')+
+  ylab('')+
+  theme(axis.title.y = element_text(14),
+        plot.title = element_text(hjust = 0.5))
+
+x3 = rnorm(n, 0, 1)
+y3 = rnorm(n, 0, 1)
+C = ggplot()+geom_point(aes(x = x3, y = y3), shape = 21, fill = 'red', size = 3)+
+  theme_void()+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 3), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 2), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 1), size = 1)+
+  geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
+  ggtitle('')+
+  ylab('High Variance')+
+  theme(axis.title.y = element_text(14, angle = 90),
+        plot.title = element_text(hjust = 0.5))
+
+x4 = rnorm(n, 1, 1)
+y4 = rnorm(n, 1, 1)
+D = ggplot()+geom_point(aes(x = x4, y = y4), shape = 21, fill = 'red', size = 3)+
+  theme_void()+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 3), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 2), size = 1)+
+  geom_circle(aes(x0 = 0, y0 = 0, r = 1), size = 1)+
+  geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
+  ggtitle('')+
+  ylab('')+
+  theme(axis.title.y = element_text(14),
+        plot.title = element_text(hjust = 0.5))
+
+ggarrange(A, B, C, D, nrow =2, ncol = 2)
+
+```
+
+
+
+
+The variation between samples means that estimates or values of a statistic are doomed to depart somewhat from the true population parameter simply by chance. The chance difference is called **sampling error** – which is how close our estimate is from the true population parameter 
+    
+  * Sampling error should not to be confused with the <i>margin of error</i> which is the maximum error that we might observe
+
+```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=8}
+
+set.seed(532)
+x = rnorm(1000, 5, 3)
+ss = x[sample(1:1000, 10)]
+k = ceiling(sqrt(1000))
+ggplot()+geom_histogram(aes(x = x, y = ..density..), bins = k, fill = 'lightgrey', color = 'black')+
+  theme_classic2()+
+  geom_vline(xintercept = mean(x)+2*sd(x), color = 'blue', size = 1.5, linetype = 'dotted')+
+  geom_vline(xintercept = mean(x)-2*sd(x), color = 'blue', size = 1.5, linetype = 'dotted')+
+  geom_segment(aes(x = mean(ss)+3, y = 0, xend = mean(ss)+3, yend = 0.15), 
+               color = 'red', size = 2, linetype = 'dotted')+
+  geom_segment(aes(x = mean(x)+2*sd(x), y = 0.05, xend= mean(x)-2*sd(x), yend = 0.05), 
+               size = 1.5, color = 'blue', 
+               arrow = arrow(length = unit(0.03, "npc"), ends = "both"))+
+  geom_segment(aes(x = mean(x), y = 0, xend= mean(x), yend = 0.15), 
+               size = 1.5, color = 'black', linetype = 'dashed')+
+  geom_segment(aes(x = mean(x), y = 0.1, xend= mean(ss)+3, yend = 0.1), 
+               size = 1.5, color = 'red',
+               arrow = arrow(length = unit(0.03, "npc"), ends = "both"))+
+  geom_text(aes(x = mean(x), y = 0.155), label = TeX('$\\theta$'), size = 8)+
+  geom_text(aes(x = mean(ss)+3, y = 0.155), label = TeX('$\\hat{\\theta}$'), size = 8,
+            color = 'red')+
+  geom_label(aes(x = mean(x) + (mean(ss)+3)/2, y = 0.11), label = 'Sampling Error', size = 5,
+            color = 'red')+
+  geom_label(aes(x = mean(x), y = 0.06), label = 'Margin of Error', size = 5,
+            color = 'blue')+
+  theme(axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank())
+  
+
+```
 
 
 

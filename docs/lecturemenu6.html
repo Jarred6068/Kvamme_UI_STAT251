@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="STAT 251 Section 03" />
+
+
+<title>Week 6 Notes</title>
+
+<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-03</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lecture Notes</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="lecturemenu1.html">Week 1</a>
+        </li>
+        <li>
+          <a href="lecturemenu2.html">Week 2</a>
+        </li>
+        <li>
+          <a href="lecturemenu3.html">Week 3</a>
+        </li>
+        <li>
+          <a href="lecturemenu4.html">Week 4</a>
+        </li>
+        <li>
+          <a href="lecturemenu5.html">Week 5</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="lecslidesindex.html">Lecture Slides</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assignments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework.html">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework.html">Homework 2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework_solns.html">Hmwk 1 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework_solns.html">Hmwk 2 Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="homeworks/reading_and_book_problems.html">Reading &amp; Extra Problems</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="study_guides/exam1_study_guide.html">Exam 1 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 1 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam1_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam1_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
+        </li>
+        <li>
+          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Histogram maker</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Make_Graph/webfiles/index.html">Make Graphs</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="sac_schedule.html">SAC schedule</a>
+    </li>
+    <li>
+      <a href="misc/rcode_examples.html">R code</a>
+    </li>
+    <li>
+      <a href="misc/R_download_instructions.html">Downloading R/Rstudio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week 6 Notes</h1>
+<h4 class="author">STAT 251 Section 03</h4>
+
+</div>
+
+
+<div id="lecture-10-monday-feb.12th-2024" class="section level1">
+<h1>Lecture 10: Monday, Feb.12th 2024</h1>
+<div id="sources-of-bias-in-surveys" class="section level3">
+<h3>Sources of Bias In Surveys</h3>
+<p>Last Friday, we introduced the idea of <i>randomization</i> as a
+means of selecting a sample from the population through a sampling
+design called <strong>Simple random sampling</strong>. Using random
+numbers to select individuals that are selected to be in the sample are
+representative of the true population. However, large surveys of the
+human population require more than just sampling design with
+randomization.</p>
+<p>A good survey needs an accurate sampling frame for the population,
+which is rarely the case in surveys of large human populations. As a
+result, most surveys suffer from <strong>undercoverage</strong> - bias
+that is introduced from having an inaccurate sampling frame. For
+example, consider a survey of American households. Such a survey will
+not include homeless individuals, college students, or incarcerated
+persons. Thus population surveys usually have some degree of bias
+introduced by the individuals not included by the sampling frame.</p>
+<p>Other sources of bias in surveys include:</p>
+<p><strong>Nonresponse bias</strong> - this is a more serious form of
+bias that occurs when individuals selected to be in the sample cannot be
+contacted or refuse to participate.</p>
+<ul>
+<li><p>For many sample survey’s nonresponse bias is a considerable issue
+reaching <span class="math inline">\(50\%\)</span> or more of selected
+individuals.</p></li>
+<li><p>nonresponse bias is typically higher in urban areas</p></li>
+<li><p>An important thing to keep in mind is that nearly all political
+and opinion polls reported in the news fail to report their nonresponse
+rates.</p></li>
+</ul>
+<p><strong>Response bias</strong> - response bias occurs when the
+interview portion of a survey influences how individuals respond to the
+survey questions. Response bias can include:</p>
+<ul>
+<li><p>Poorly worded questions which may confuse respondents and
+influence how they select their answer.</p></li>
+<li><p>Questions about sensitive topics, such as illict drug use, in
+which respondants may lie about their behavior.</p></li>
+<li><p>The race or sex of the interviewer can influence responses
+related to questions about race relations or feminism.</p></li>
+</ul>
+</div>
+<div id="more-complicated-sampling-designs" class="section level3">
+<h3>More Complicated Sampling Designs</h3>
+<p><strong>Systematic sampling</strong> – A random sampling method in
+which the researcher selects every <span
+class="math inline">\(k^{th}\)</span> subject from an ordered sampling
+frame</p>
+<ul>
+<li><p>This method of sampling is useful when there is no sampling frame
+available.</p></li>
+<li><p>Estimates obtained under this sampling design typically have a
+lower margin of error than simple random sampling and some cluster
+sampling designs.</p></li>
+</ul>
+<p><strong>Cluster sampling</strong> – A type of sampling method in
+which the population is divided in a set of clusters and the researcher
+selects a simple random sample of the clusters. The sample then
+comprises all subjects in the selected clusters.</p>
+<ul>
+<li><p>The advantages of cluster sampling are that (a) it can be less
+expensive than simple or stratified random sampling and (b) it can be
+used when a sampling frame is unavailable</p></li>
+<li><p>A disadvantage of cluster sampling is that the margin of error is
+often larger than what it would be for simple random sampling or
+stratified random sampling</p></li>
+</ul>
+<p><strong>Stratified random sampling</strong> – A type of sampling
+method in which the population is separated into groups, call strata,
+based on some characteristic about the subjects. A simple random sample
+is then taken from each stratum.</p>
+<ul>
+<li><p>Administrative convenience - It may be easier to conduct several
+smaller simple random sampling designs than coordinate one larger simple
+random sampling design.</p></li>
+<li><p>Interest in individual strata - The design ensures samples from
+all strata. A simple random sampling design might sample few or no
+elements from a stratum of interest.</p></li>
+<li><p>Smaller margin of error - By assuring samples from each strata,
+the combined sample tends to be more representative of the population,
+resulting in a smaller margin of error</p></li>
+</ul>
+<div class="float">
+<img
+src="misc/Sampling_designs.png"
+alt="Figure 1 - visual depiction of sampling designs" />
+<div class="figcaption"><strong>Figure 1</strong> - visual depiction of
+sampling designs</div>
+</div>
+<p><br> <br> <strong>Two – stage cluster sampling</strong> - A type of
+sampling method in which the population is divided into a set of
+clusters and the researcher selects a simple random sample of the
+clusters. A simple random sample is then applied to each cluster</p>
+<ul>
+<li><p>Same advantages as cluster sampling</p></li>
+<li><p>Usually has a smaller margin of error, because we can control two
+sample sizes: the number of clusters to sample, and the number of
+elements to sample from each sampled cluster</p></li>
+</ul>
+<div class="float">
+<img
+src="misc/two_stage_cs.png"
+alt="Figure 2 - visual depiction of two-state cluster sampling" />
+<div class="figcaption"><strong>Figure 2</strong> - visual depiction of
+two-state cluster sampling</div>
+</div>
+<p><br> <br></p>
+</div>
+<div id="ethical-studies" class="section level3">
+<h3>Ethical studies</h3>
+<p>Producing and using data to answer statistical questions may not seem
+like a big deal, but, like all human endeavors, it raises ethical
+concerns. The most prominent ethical issues arise when we collect data
+about people. Ethical considerations must be closely contemplated when
+we conduct experiments using human subjects. While an experiment may
+have potentially life saving benefits, it can also come with
+considerable risks that are bore solely by the participating subjects.
+Some ethical considerations that apply to any study are:</p>
+<ul>
+<li><p>Informed consent - subjects participating in a survey or
+experiment are usually required to provide legal consent before data can
+be collected</p></li>
+<li><p>Confidentiality - many studies on human subjects require that the
+data gather be kept confidential with proper security infrastructure in
+place to protect it.</p>
+<ul>
+<li>Can you think of some examples of areas of study that may require
+confidentiality or informed consent?</li>
+</ul></li>
+</ul>
+<p>The University of Idaho, like all colleges and universities engaged
+in research, have a review board who is responsible for establishing
+ethics guidelines for conducting research and review studies which may
+require ethical considerations. The University of Idahos Office of
+Research Assurances website can be found <a
+href="https://www.uidaho.edu/research/faculty/research-assurances">here</a></p>
+<p>The following <a
+href="https://www.esri.com/arcgis-blog/products/survey123/constituent-engagement/ethics/">link</a>
+from the Environmental Systems Research Institute, inc website provides
+a great overview of the survey ethics, design and implementation.</p>
+<p>Similarly, this <a
+href="https://www.nih.gov/health-information/nih-clinical-research-trials-you/guiding-principles-ethical-research">link</a>
+from the National Institutes of Health provides a brief overview of the
+guiding principles of ethical research.</p>
+</div>
+<div id="connection-with-statistical-inference" class="section level3">
+<h3>Connection with statistical inference</h3>
+<p>Now that we have learned some different ways to conduct experimental
+studies and surveys, how does this connect with our ultimate goal of
+inferring things about a population, or making informed decisions?
+Recall that a <strong>sampling distribution</strong> is the distribution
+of a statistic that arises from taking <u>all possible samples</u> of
+the same size <span class="math inline">\(n\)</span> from the same
+population.</p>
+<p>If we think of the population parameter <span
+class="math inline">\(\theta\)</span> as the bullseye of a target, then,
+ideally we would like our estimator <span
+class="math inline">\(\hat{\theta}\)</span> to fall close to or on the
+value of <span class="math inline">\(/theta\)</span>. However, how we
+sample or conduct an experiment can influence the shape, center, and
+spread of the sampling distribution of a statistic.</p>
+<ul>
+<li><p><i>Bias of a statistic</i> - concerns the center of a sampling
+distribution. A statistic is <strong>unbiased</strong> if the mean of
+its sampling distribution is equal to the true value of the population
+parameter.</p></li>
+<li><p><i>Variability of a statistic</i> - concerns the spread of its
+sampling distribution. The spread <u>is determined by the sampling
+design</u> and the sample size <span class="math inline">\(n\)</span>.
+Larger sample sizes have smaller spreads.</p></li>
+</ul>
+<p><img src="lecturemenu6_files/figure-html/unnamed-chunk-1-1.png" width="480" /></p>
+<p>The variation between samples means that estimates or values of a
+statistic are doomed to depart somewhat from the true population
+parameter simply by chance. The chance difference is called
+<strong>sampling error</strong> – which is how close our estimate is
+from the true population parameter</p>
+<ul>
+<li>Sampling error should not to be confused with the <i>margin of
+error</i> which is the maximum error that we might observe</li>
+</ul>
+<p><img src="lecturemenu6_files/figure-html/unnamed-chunk-2-1.png" width="768" /></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

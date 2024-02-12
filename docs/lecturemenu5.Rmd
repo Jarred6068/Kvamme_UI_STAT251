@@ -677,12 +677,17 @@ When we sample **with replacement**, each time we sample a subject from the popu
 
 When we sample **without replacement**, then each time we sample a subject from the population we remove that subject from the sampling frame so that it cannot be selected again. 
 
+
   * This means that first subject will have a $\frac{1}{N}$ chance of being selected, the second a $\frac{1}{N-1}$, the third a $\frac{1}{N-2}$ $\cdots$ and so on
   
   * Sampling without replacement is common in most surveys because the sample size is usually small in comparison to the population size (i.e $n << N$) and thus it is approximately the same as sampling with replacement
   
 
+The following are benefits of simple random sampling:
 
+* Mathematically simple to compute estimates such as $\bar{x}$ and $s^2$
+
+* Samples tend to be a good representation of the population
 
 
 
