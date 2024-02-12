@@ -118,7 +118,7 @@ If we think of the population parameter $\theta$ as the bullseye of a target, th
 
 * <i>Bias of a statistic</i> - concerns the center of a sampling distribution. A statistic is **unbiased** if the mean of its sampling distribution is equal to the true value of the population parameter.
 
-* <i>Variability of a statistic</i> - concerns the spread of its sampling distribution. The spread <u>is determined by the sampling design</u> and the sample size $n$. Larger sample sizes have smaller spreads.  
+* <i>Variability of a statistic</i> - concerns the spread of its sampling distribution. The spread <u>is determined by the sampling design</u> and the sample size $n$. Larger sample sizes have smaller spreads. 
 
 ```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=5}
 set.seed(123)
@@ -223,7 +223,15 @@ ggplot()+geom_histogram(aes(x = x, y = ..density..), bins = k, fill = 'lightgrey
 ```
 
 
+So why worry about sampling design?
 
+* randomization guarantees that the results we get from analyzing our data follow the <u> laws of probability</u>. 
+
+* Things like surveys and experiments cost precious resources like money, time, and effort. So when we estimate a population parameter, we want our estimate to be as precise as possible - i.e we want the margin of error to be as small as possible. 
+
+Under a randomized experiment or survey, we can reduce variability in the sampling distribution of a statistic by simply selecting a larger sample size. In fact, we can make the sampling error as small as we would like or at least as small as our bank accounts will allow!
+
+* And we can often further reduce variability in our estimate by choosing a design that accounts for things like subject or sample heterogeneity.  
 
 
 
