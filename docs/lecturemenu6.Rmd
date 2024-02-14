@@ -313,7 +313,7 @@ Think back to flipping a fair coin a single time, what is the probability that w
 
 Now imagine flipping a coin 4 times. We expect to see half of the flips be heads and half of the flips tails. However, we might see heads come up 3 times and tails once. The proportion of times we see heads is now $75\%$ which is much greater than our expectation of $50\%$.
 
-In both cases, the result defied our expectation but this is because the outcome of any small number of trials can vary quite a bit from our expectations. Imagine flipping a coin $10,000$ times. The result would be a proportion of heads very close to $0.5$. As we stated earlier, with random phenomena, the proportion of times that an event happens can be quite unpredictable in the short run, but very predictable in the long run. Thus probabilities quantify the "long-run" behavior or frequency of a particular event. 
+In both cases, the result defied our expectation but this is because the outcome of any small number of trials can vary quite different from our expectations. Imagine flipping a coin $10,000$ times. The result would be a proportion of heads very close to $0.5$. As we stated earlier, with random phenomena, the proportion of times that an event happens can be quite unpredictable in the short run, but very predictable in the long run. Thus probabilities quantify the "long-run" behavior or frequency of a particular event. 
 
 This long-run behavior is established by a property of mathematical probability called the **Law of Large Numbers** (LLN). The LLN states that the relative frequency of an event will tend to “approach” (in some sense) the probability of an event as the number of independent observations increases
 
@@ -361,7 +361,7 @@ ggplot(subset(exp.bernoulli, LN == 'Running Prop.'), aes(x = SS, y = Y))+
 
 One assumption that we made in the coin flip example was that the trials were **independent trials**. This means that the outcome of one flip of the coin did not depend on the outcome of a previous flip. 
 
-Practice: Consider rolling two fair six-sided die. What is the probability that 
+Practice: Consider rolling two fair, six-sided die. What is the probability that sum of the two die is less than 7?
 
 
 
