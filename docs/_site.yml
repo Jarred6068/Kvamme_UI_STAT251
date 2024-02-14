@@ -78,6 +78,8 @@ navbar:
             href: shiny_apps/Freq_table/webfiles/index.html
           - text: 'Make Graphs'
             href: shiny_apps/Make_Graph/webfiles/index.html
+          - text: 'LLN'
+            href: shiny_apps/LLN/webfiles/index.html
         - text: 'SAC schedule'
           href: sac_schedule.html
         - text: 'R code'          

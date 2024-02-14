@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -402,6 +404,9 @@ $(document).ready(function () {
         <li>
           <a href="shiny_apps/Make_Graph/webfiles/index.html">Make Graphs</a>
         </li>
+        <li>
+          <a href="shiny_apps/LLN/webfiles/index.html">LLN</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -632,6 +637,277 @@ would like or at least as small as our bank accounts will allow!</p>
 choosing a design that accounts for things like subject or sample
 heterogeneity.</li>
 </ul>
+</div>
+</div>
+<div id="lecture-11-wednesday-feb.14th-2024" class="section level1">
+<h1>Lecture 11: Wednesday, Feb.14th 2024</h1>
+<div id="introduction-to-probability" class="section level3">
+<h3>Introduction to probability</h3>
+<p>The reasoning of statistical inference relies on asking “how often
+would this method give the correct result if I used it many times?”.
+When we produce data by random sampling or through randomized
+experiments, the outcomes of our analysis are determined by the rules of
+mathematical probability.</p>
+<p>Tossing a coin, rolling a die, the weather, the change in stock
+market, or choosing a simple random sample, these are all <i>random
+phenomena</i> because their results cannot be predicted with <span
+class="math inline">\(100/%\)</span> accuracy each time. However, for
+each random phenomena there will be predictable patterns in the results.
+This is the basis of the idea of mathematical probability. An important
+note is that probability describes only the long-term frequencies or
+patterns of events. It is much less useful for quanitifying the chance
+outcomes of events in the short term.</p>
+</div>
+<div id="the-language-of-probability" class="section level3">
+<h3>The language of probability</h3>
+<ul>
+<li><p><strong>Probability</strong> is a measurement of the “likelihood”
+of an event as a number between 0 and 1. It describes the long-term
+frequency with which an event might occur. For example, we describe the
+probability of flipping a coin and getting heads as the number 0.5,
+which describes the chance that of the event of getting heads, assuming
+the coin is fair <span class="math inline">\(50\%\)</span>.</p></li>
+<li><p>An <strong>event</strong> is any possible outcome of a random
+phenomena or experiment. For example, the events that might occur when
+flipping a coin are getting heads or tails.</p></li>
+<li><p>The act of flipping a coin once is called a <strong>random
+trial</strong> - a process or experiment that has a set of well –
+defined possible outcomes. What distinguishes it as random is that there
+is more than one possible outcome e.g heads OR tails. What are the
+possible outcomes of rolling a single six-sided die?</p></li>
+<li><p>We call the set of all possible outcomes of random phenomena the
+<strong>sample space</strong>. It is common in probability theory to use
+capital <span class="math inline">\(S = \{\}\)</span> to denote the
+sample space mathematically. For example, the sample space of flipping a
+coin once is <span class="math inline">\(S = \{\text{Heads},
+\text{Tails} \}\)</span>. The sample of a single roll of a six-side die
+is <span class="math inline">\(S = \{1,2,3,4,5,6\}\)</span>.</p></li>
+<li><p>as a general rule, the probability of an event <span
+class="math inline">\(A\)</span> denoted <span
+class="math inline">\(P(A)\)</span> is:</p></li>
+</ul>
+<p><span class="math display">\[ P(A) = \frac{\text{Number of ways $A$
+can happen}}{\text{Total number of outcomes}} \]</span></p>
+<p>The denominator in the fraction of above is the sample space and the
+numerator represents the fraction of the sample space that includes
+<span class="math inline">\(A\)</span></p>
+<p>Consider rolling a fair single six-sided die. What is the probability
+that you would roll the number of six? What is the probability that you
+would not roll a six?. Knowing that the die is fair tells us that each
+number has an equal probability of occurring. Thus rolling any
+particular number on the die has a probability of <span
+class="math inline">\(1/6 = 0.167\)</span> and the probability of
+rolling any number but a six has to be <span
+class="math inline">\(1-(1/6) = 5/6 = 0.833\)</span>. This simple
+example demonstrates several of the rules of probability:</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li><span class="math inline">\(0\leq P(A)\leq 1\)</span> - This rule
+states that a valid probability must be a value between zero and
+one.</li>
+</ol></li>
+</ul>
+<p><br></p>
+<ul>
+<li><ol start="2" style="list-style-type: decimal">
+<li><span class="math inline">\(\sum_{i\in S} P(A_i) = 1\)</span> - This
+rule states probability of the entire sample space must be one.</li>
+</ol></li>
+</ul>
+<p><br></p>
+<ul>
+<li><ol start="3" style="list-style-type: decimal">
+<li><span class="math inline">\(P(A \cup B ) = P(A)+P(B)\)</span> - The
+two events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are said to be
+<strong>disjoint</strong> if they have no outcomes in common. For two
+disjoint events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>, the probability that either event
+occurs is the sum of their individual probabilities.</li>
+</ol></li>
+</ul>
+<p><br></p>
+<ul>
+<li><ol start="4" style="list-style-type: decimal">
+<li><span class="math inline">\(P(A&#39;) = 1-P(A)\)</span> - This rule
+states that the probability of the complement of an event <span
+class="math inline">\(A\)</span> is one minus the probability of the
+event <span class="math inline">\(A\)</span>. The symbol <span
+class="math inline">\(A&#39;\)</span> means complement of <span
+class="math inline">\(A\)</span> or “<span
+class="math inline">\(A\)</span>-not” and means a number or quantity
+required to make a group whole.</li>
+</ol></li>
+</ul>
+<p>Example: A standard deck of <span class="math inline">\(52\)</span>
+playing cards contains cards from four suits: hearts, diamonds, clubs,
+and spades. Each suit consists of 13 cards: an Ace, the cards with the
+numbers 2-10, a jack, a queen and a king card. Suppose you are playing a
+hand of poker and the dealer is about to deal everyone their first card.
+What is the probability that the card you are dealt is not a queen?</p>
+<ul>
+<li>the probability that the card is a queen is <span
+class="math inline">\(4/52\)</span> because there are four suits and
+each has one queen. Thus using rule three above we can conclude that the
+probability of NOT being dealt a queen card is <span
+class="math inline">\(1-\frac{4}{52} = \frac{48}{52}\)</span>.</li>
+</ul>
+</div>
+<div id="dealing-with-multiple-events" class="section level3">
+<h3>Dealing with multiple events</h3>
+<p>We are often interested in the probability of more than one event
+occurring simultaneously. The language of probability gives us tools to
+deal with outcomes of multiple events. A <strong>union</strong> of two
+or more events is that probability that any of the event occurs. If the
+events are disjoint then we can use rule <span
+class="math inline">\(3\)</span> above. If the events have outcomes in
+common then we must be sure not to double count the probability of their
+overlap. For two non-disjoint events <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>:</p>
+<p><span class="math display">\[ P(A\cup B) = P(A)+P(B)-P(A\cap B)
+\]</span></p>
+<p>the quantity <span class="math inline">\(P(A\cap B)\)</span> is
+called the <i>intersection</i> of events <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> and represents the fraction of the
+sample space that <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> have in common. In general, the
+intersection of two independent events is the probability that both
+events occur:</p>
+<p><span class="math display">\[P(A\cap B) = P(A)\cdot P(B)
+\]</span></p>
+<p>To illustrate this consider the following example: Some states are
+considering laws that will ban the use of cell phones while driving
+because they believe that the ban will reduce the number of
+phone-related accidents. One study classified these types of accidents
+by the day of the week when they occurred . For this example, we will
+use the values from this study as our probability model. Here are the
+probabilities</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Day
+</th>
+<th style="text-align:right;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Sun.
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mon.
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tues.
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wed.
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Thurs.
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fri.
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sat.
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+</tr>
+</tbody>
+</table>
+<p>What is the probability that an accident occurs on a weekend, that is
+on Saturday or Sunday?</p>
+<p><span class="math display">\[ P(\text{Saturday or Sunday}) =
+P(\text{Saturday})+P(\text{Sunday}) = 0.02+0.03 = 0.05 \]</span></p>
+<p>what is the probability that an individudal gets into an accident on
+Friday and again on Monday?</p>
+<p><span class="math display">\[ P(\text{Friday and Monday}) =
+P(\text{Friday})\cdot P(\text{Monday}) = 0.16\cdot 0.19 =
+0.03\]</span></p>
+</div>
+<div id="where-do-probabilities-come-from" class="section level3">
+<h3>Where do probabilities come from?</h3>
+<p>Think back to flipping a fair coin a single time, what is the
+probability that we get “heads”? Our intuition tells us that it is going
+to be <span class="math inline">\(1/2\)</span> if we have an equal
+chance of getting heads or tails, but how can we be sure that this is
+the likelihood of getting heads? Suppose that we flip a fair coin and it
+comes up tails, does this mean our intuition was wrong?</p>
+<p>Now imagine flipping a coin 4 times. We expect to see half of the
+flips be heads and half of the flips tails. However, we might see heads
+come up 3 times and tails once. The proportion of times we see heads is
+now <span class="math inline">\(75\%\)</span> which is much greater than
+our expectation of <span class="math inline">\(50\%\)</span>.</p>
+<p>In both cases, the result defied our expectation but this is because
+the outcome of any small number of trials can vary quite a bit from our
+expectations. Imagine flipping a coin <span
+class="math inline">\(10,000\)</span> times. The result would be a
+proportion of heads very close to <span
+class="math inline">\(0.5\)</span>. As we stated earlier, with random
+phenomena, the proportion of times that an event happens can be quite
+unpredictable in the short run, but very predictable in the long run.
+Thus probabilities quantify the “long-run” behavior or frequency of a
+particular event.</p>
+<p>This long-run behavior is established by a property of mathematical
+probability called the <strong>Law of Large Numbers</strong> (LLN). The
+LLN states that the relative frequency of an event will tend to
+“approach” (in some sense) the probability of an event as the number of
+independent observations increases</p>
+<div class="figure">
+<img src="lecturemenu6_files/figure-html/unnamed-chunk-4-1.png" alt="Figure: A demonstration of the Law of Large Numbers. The plot below represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trails. The red line indicates the expected proportion of $P(Heads) = 0.5$" width="960" />
+<p class="caption">
+Figure: A demonstration of the Law of Large Numbers. The plot below
+represents the running proportion of fair coin flips that come up heads
+for a large number of repeated independent trails. The red line
+indicates the expected proportion of <span
+class="math inline">\(P(Heads) = 0.5\)</span>
+</p>
+</div>
+<p>One assumption that we made in the coin flip example was that the
+trials were <strong>independent trials</strong>. This means that the
+outcome of one flip of the coin did not depend on the outcome of a
+previous flip.</p>
+<p>Practice: Consider rolling two fair six-sided die. What is the
+probability that</p>
 </div>
 </div>
 

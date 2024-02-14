@@ -234,8 +234,134 @@ Under a randomized experiment or survey, we can reduce variability in the sampli
 * And we can often further reduce variability in our estimate by choosing a design that accounts for things like subject or sample heterogeneity.  
 
 
+# Lecture 11: Wednesday, Feb.14th 2024
+
+### Introduction to probability
+
+The reasoning of statistical inference relies on asking "how often would this method give the correct result if I used it many times?". When we produce data by random sampling or through randomized experiments, the outcomes of our analysis are determined by the rules of mathematical probability. 
+
+Tossing a coin, rolling a die, the weather, the change in stock market, or choosing a simple random sample, these are all <i>random phenomena</i> because their results cannot be predicted with $100/%$ accuracy each time. However, for each random phenomena there will be predictable patterns in the results. This is the basis of the idea of mathematical probability. An important note is that probability describes only the long-term frequencies or patterns of events. It is much less useful for quanitifying the chance outcomes of events in the short term. 
+
+### The language of probability
+
+* **Probability** is a measurement of the “likelihood” of an event as a number between 0 and 1. It describes the long-term frequency with which an event might occur. For example, we describe the probability of flipping a coin and getting heads as the number 0.5, which describes the chance that of the event of getting heads, assuming the coin is fair $50\%$.
+
+* An **event** is any possible outcome of a random phenomena or experiment. For example, the events that might occur when flipping a coin are getting heads or tails. 
+
+* The act of flipping a coin once is called a **random trial** - a process or experiment that has a set of well – defined possible outcomes. What distinguishes it as random is that there is more than one possible outcome e.g heads OR tails. What are the possible outcomes of rolling a single six-sided die? 
+
+* We call the set of all possible outcomes of random phenomena the **sample space**. It is common in probability theory to use capital $S = \{\}$ to denote the sample space mathematically. For example, the sample space of flipping a coin once is $S = \{\text{Heads}, \text{Tails} \}$. The sample of a single roll of a six-side die is $S = \{1,2,3,4,5,6\}$.
+
+* as a general rule, the probability of an event $A$ denoted $P(A)$ is:
+
+\[ P(A) = \frac{\text{Number of ways $A$ can happen}}{\text{Total number of outcomes}} \]
+
+The denominator in the fraction of above is the sample space and the numerator represents the fraction of the sample space that includes $A$
+
+Consider rolling a fair single six-sided die. What is the probability that you would roll the number of six? What is the probability that you would not roll a six?. Knowing that the die is fair tells us that each number has an equal probability of occurring. Thus rolling any particular number on the die has a probability of $1/6 = 0.167$ and the probability of rolling any number but a six has to be $1-(1/6) = 5/6 = 0.833$. This simple example demonstrates several of the rules of probability:
+
+* 1. $0\leq P(A)\leq 1$ - This rule states that a valid probability must be a value between zero and one.
+
+<br>
+
+* 2. $\sum_{i\in S} P(A_i) = 1$ - This rule states probability of the entire sample space must be one. 
+
+<br>
+
+* 3. $P(A \cup B ) = P(A)+P(B)$ - The two events $A$ and $B$ are said to be **disjoint** if they have no outcomes in common. For two disjoint events $A$ and $B$, the probability that either event occurs is the sum of their individual probabilities. 
+
+<br>
+
+* 4. $P(A') = 1-P(A)$ - This rule states that the probability of the complement of an event $A$ is one minus the probability of the event $A$. The symbol $A'$ means complement of $A$ or “$A$-not” and means a number or quantity required to make a group whole.
+
+Example: A standard deck of $52$ playing cards contains cards from four suits: hearts, diamonds, clubs, and spades. Each suit consists of 13 cards: an Ace, the cards with the numbers 2-10, a jack, a queen and a king card. Suppose you are playing a hand of poker and the dealer is about to deal everyone their first card. What is the probability that the card you are dealt is not a queen?
+
+* the probability that the card is a queen is $4/52$ because there are four suits and each has one queen. Thus using rule three above we can conclude that the probability of NOT being dealt a queen card is $1-\frac{4}{52} = \frac{48}{52}$. 
+
+### Dealing with multiple events
+
+We are often interested in the probability of more than one event occurring simultaneously. The language of probability gives us tools to deal with outcomes of multiple events. A **union** of two or more events is that probability that any of the event occurs. If the events are disjoint then we can use rule $3$ above. If the events have outcomes in common then we must be sure not to double count the probability of their overlap. For two non-disjoint events $A$ and $B$:
+
+\[ P(A\cup B) = P(A)+P(B)-P(A\cap B) \]
+
+the quantity $P(A\cap B)$ is called the <i>intersection</i> of events $A$ and $B$ and represents the fraction of the sample space that $A$ and $B$ have in common. In general, the intersection of two independent events is the probability that both events occur:
+
+\[P(A\cap B) = P(A)\cdot P(B) \]
+
+To illustrate this consider the following example: Some states are considering laws that will ban the use of cell phones while driving because they believe that the ban will reduce the number of phone-related accidents. One study classified these types of accidents by the day of the week when they occurred \cite{}. For this example, we will use the values from this study as our probability model. Here are the probabilities 
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(Day = c('Sun.', 'Mon.', 'Tues.', 'Wed.','Thurs.', 'Fri.', 'Sat.'),
+                      Probability = c(0.03, 0.19, 0.18, 0.23, 0.19, 0.16, 0.02))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+What is the probability that an accident occurs on a weekend, that is on Saturday or Sunday?
+
+\[ P(\text{Saturday or Sunday}) = P(\text{Saturday})+P(\text{Sunday}) = 0.02+0.03 = 0.05 \]
+
+what is the probability that an individudal gets into an accident on Friday and again on Monday?
+
+\[ P(\text{Friday and Monday}) = P(\text{Friday})\cdot P(\text{Monday}) = 0.16\cdot 0.19 = 0.03\]
 
 
+### Where do probabilities come from?
+
+Think back to flipping a fair coin a single time, what is the probability that we get “heads”? Our intuition tells us that it is going to be $1/2$ if we have an equal chance of getting heads or tails, but how can we be sure that this is the likelihood of getting heads? Suppose that we flip a fair coin and it comes up tails, does this mean our intuition was wrong? 
+
+Now imagine flipping a coin 4 times. We expect to see half of the flips be heads and half of the flips tails. However, we might see heads come up 3 times and tails once. The proportion of times we see heads is now $75\%$ which is much greater than our expectation of $50\%$.
+
+In both cases, the result defied our expectation but this is because the outcome of any small number of trials can vary quite a bit from our expectations. Imagine flipping a coin $10,000$ times. The result would be a proportion of heads very close to $0.5$. As we stated earlier, with random phenomena, the proportion of times that an event happens can be quite unpredictable in the short run, but very predictable in the long run. Thus probabilities quantify the "long-run" behavior or frequency of a particular event. 
+
+This long-run behavior is established by a property of mathematical probability called the **Law of Large Numbers** (LLN). The LLN states that the relative frequency of an event will tend to “approach” (in some sense) the probability of an event as the number of independent observations increases
+
+```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=10, fig.cap='Figure: A demonstration of the Law of Large Numbers. The plot below represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trails. The red line indicates the expected proportion of $P(Heads) = 0.5$'}
+
+set.seed(432)
+S = 5000
+p = 0.5
+n = 1
+
+LLNbern<-function(S,p,n){
+  #S should be the max sample
+  #p is the probability of the outcome
+  #n is the number of trials in the experiment (for bernoulli = 1)
+  #NOTE: when n > 1 this function transfers to a binomial exper.
+  
+  avg=rep(0, S)
+  expected = n*p
+  positive.outcomes=cumsum(rbinom(S, n, p))
+  trials=c(1:S)
+  avg=positive.outcomes/trials
+  error = avg - expected
+  variance = c(0,unlist(lapply(c(2:S), function(x,y)  var(y[1:x]), y = avg)))
+  
+  
+  df = cbind.data.frame(Y = c(avg,variance), LN = c(rep("Running Prop.", S), rep("Var. In Prop.", S)),
+                        SS = rep(trials, 2))
+  
+  
+  return(df)
+  
+}
+
+exp.bernoulli = LLNbern(S, p, n)
+
+ggplot(subset(exp.bernoulli, LN == 'Running Prop.'), aes(x = SS, y = Y))+
+  geom_line(size = 1)+
+  theme_hc()+
+  geom_hline(yintercept = p, color = 'red', size = 1.2)+
+  xlab('Number of trials')+
+  ylab('Relative Frequency of Heads')+
+  ggtitle('Relative Frequency of Heads')
+
+```
+
+One assumption that we made in the coin flip example was that the trials were **independent trials**. This means that the outcome of one flip of the coin did not depend on the outcome of a previous flip. 
+
+Practice: Consider rolling two fair six-sided die. What is the probability that 
 
 
 
