@@ -199,7 +199,7 @@ paste('comma separated values = ', paste0(round(bead3$total.length, 1), collapse
 
 (a) Using the boxplot above, do the whisker lengths for 2 bead and 3 bead whiskers follow a normal distribution? why or why not? 
 
-<span style="color: red;">The distribution for 3 beads is normally distributed (given by the symmetry of boxplot) but the distribution for two beads is skewed</span>
+<span style="color: red;">The distribution for 2 beads is normally distributed (given by the symmetry of boxplot) but the distribution for 3 beads is skewed</span>
 
 (b) Suppose researchers observe two new Harp Seals (Denoted Seal 1 and Seal 2) and record their total whiskers lengths and the number of beads on the whiskers. Seal 1 has a total whisker length of 4.32 (cm) and the whisker has 3 beads. Seal 2 has a total whisker length of 4.34 (cm) but the whisker has only 2 beads. Suppose we want to know how they compare <i>relative</i> to the distribution of whiskers with the same number of beads. Confirm that the whisker length of seal 1 has a $z$-score of $-1.07$ while Seal 2 has a $z$-score of $-0.43$. Refer to the boxplot above
 
