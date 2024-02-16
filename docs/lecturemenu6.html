@@ -651,11 +651,11 @@ mathematical probability.</p>
 <p>Tossing a coin, rolling a die, the weather, the change in stock
 market, or choosing a simple random sample, these are all <i>random
 phenomena</i> because their results cannot be predicted with <span
-class="math inline">\(100/%\)</span> accuracy each time. However, for
+class="math inline">\(100\%\)</span> accuracy each time. However, for
 each random phenomena there will be predictable patterns in the results.
 This is the basis of the idea of mathematical probability. An important
 note is that probability describes only the long-term frequencies or
-patterns of events. It is much less useful for quanitifying the chance
+patterns of events. It is much less useful for quantifying the chance
 outcomes of events in the short term.</p>
 </div>
 <div id="the-language-of-probability" class="section level3">
@@ -664,9 +664,9 @@ outcomes of events in the short term.</p>
 <li><p><strong>Probability</strong> is a measurement of the “likelihood”
 of an event as a number between 0 and 1. It describes the long-term
 frequency with which an event might occur. For example, we describe the
-probability of flipping a coin and getting heads as the number 0.5,
-which describes the chance that of the event of getting heads, assuming
-the coin is fair <span class="math inline">\(50\%\)</span>.</p></li>
+probability of flipping a coin and getting heads as the number 0.5 or
+<span class="math inline">\(50\%\)</span> which is the long-term
+frequency of heads or many repeated flips.</p></li>
 <li><p>An <strong>event</strong> is any possible outcome of a random
 phenomena or experiment. For example, the events that might occur when
 flipping a coin are getting heads or tails.</p></li>
@@ -680,19 +680,20 @@ possible outcomes of rolling a single six-sided die?</p></li>
 capital <span class="math inline">\(S = \{\}\)</span> to denote the
 sample space mathematically. For example, the sample space of flipping a
 coin once is <span class="math inline">\(S = \{\text{Heads},
-\text{Tails} \}\)</span>. The sample of a single roll of a six-side die
-is <span class="math inline">\(S = \{1,2,3,4,5,6\}\)</span>.</p></li>
+\text{Tails} \}\)</span>. The sample space of a single roll of a fair
+six-side die is <span class="math inline">\(S =
+\{1,2,3,4,5,6\}\)</span>.</p></li>
 <li><p>as a general rule, the probability of an event <span
 class="math inline">\(A\)</span> denoted <span
 class="math inline">\(P(A)\)</span> is:</p></li>
 </ul>
 <p><span class="math display">\[ P(A) = \frac{\text{Number of ways $A$
 can happen}}{\text{Total number of outcomes}} \]</span></p>
-<p>The denominator in the fraction of above is the sample space and the
+<p>The denominator in the fraction above is the sample space and the
 numerator represents the fraction of the sample space that includes
 <span class="math inline">\(A\)</span></p>
 <p>Consider rolling a fair single six-sided die. What is the probability
-that you would roll the number of six? What is the probability that you
+that you would roll the number six? What is the probability that you
 would not roll a six?. Knowing that the die is fair tells us that each
 number has an equal probability of occurring. Thus rolling any
 particular number on the die has a probability of <span
@@ -711,7 +712,8 @@ one.</li>
 <ul>
 <li><ol start="2" style="list-style-type: decimal">
 <li><span class="math inline">\(\sum_{i\in S} P(A_i) = 1\)</span> - This
-rule states probability of the entire sample space must be one.</li>
+rule states that the probability of the entire sample space must be
+one.</li>
 </ol></li>
 </ul>
 <p><br></p>
@@ -720,10 +722,13 @@ rule states probability of the entire sample space must be one.</li>
 <li><span class="math inline">\(P(A \cup B ) = P(A)+P(B)\)</span> - The
 two events <span class="math inline">\(A\)</span> and <span
 class="math inline">\(B\)</span> are said to be
-<strong>disjoint</strong> if they have no outcomes in common. For two
-disjoint events <span class="math inline">\(A\)</span> and <span
+<strong>disjoint</strong> if they have no outcomes in common and so can
+never occur together. For two disjoint events <span
+class="math inline">\(A\)</span> and <span
 class="math inline">\(B\)</span>, the probability that either event
-occurs is the sum of their individual probabilities.</li>
+occurs is the sum of their individual probabilities. This is sometimes
+referred to as the <strong>addition rule for disjoint
+events</strong>.</li>
 </ol></li>
 </ul>
 <p><br></p>
@@ -736,7 +741,8 @@ event <span class="math inline">\(A\)</span>. The symbol <span
 class="math inline">\(A&#39;\)</span> means complement of <span
 class="math inline">\(A\)</span> or “<span
 class="math inline">\(A\)</span>-not” and means a number or quantity
-required to make a group whole.</li>
+required to make a group whole. This is often referred to as the
+<strong>complement rule</strong>.</li>
 </ol></li>
 </ul>
 <p>Example: A standard deck of <span class="math inline">\(52\)</span>
@@ -758,7 +764,7 @@ class="math inline">\(1-\frac{4}{52} = \frac{48}{52}\)</span>.</li>
 <p>We are often interested in the probability of more than one event
 occurring simultaneously. The language of probability gives us tools to
 deal with outcomes of multiple events. A <strong>union</strong> of two
-or more events is that probability that any of the event occurs. If the
+or more events is that probability that one or both events occur. If the
 events are disjoint then we can use rule <span
 class="math inline">\(3\)</span> above. If the events have outcomes in
 common then we must be sure not to double count the probability of their
@@ -767,16 +773,21 @@ class="math inline">\(A\)</span> and <span
 class="math inline">\(B\)</span>:</p>
 <p><span class="math display">\[ P(A\cup B) = P(A)+P(B)-P(A\cap B)
 \]</span></p>
-<p>the quantity <span class="math inline">\(P(A\cap B)\)</span> is
-called the <i>intersection</i> of events <span
-class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span> and represents the fraction of the
-sample space that <span class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span> have in common. In general, the
-intersection of two independent events is the probability that both
-events occur:</p>
+<p>This is the <strong>addition rule for non-disjoint event</strong>.
+The quantity <span class="math inline">\(P(A\cap B)\)</span> is called
+the <i>intersection</i> of events <span class="math inline">\(A\)</span>
+and <span class="math inline">\(B\)</span> and represents the fraction
+of the sample space that <span class="math inline">\(A\)</span> and
+<span class="math inline">\(B\)</span> have in common. In general, the
+intersection of two <u>independent events</u> is the probability that
+both events occur:</p>
 <p><span class="math display">\[P(A\cap B) = P(A)\cdot P(B)
 \]</span></p>
+<p>This is called the <strong>multiplication rule independent
+events</strong>. If two events are disjoint then their intersection is
+the empty set <span class="math inline">\(P(A\cap B) =
+\emptyset\)</span> and they are said to be <strong>mutually
+exclusive</strong>.</p>
 <p>To illustrate this consider the following example: Some states are
 considering laws that will ban the use of cell phones while driving
 because they believe that the ban will reduce the number of
@@ -858,11 +869,18 @@ Sat.
 on Saturday or Sunday?</p>
 <p><span class="math display">\[ P(\text{Saturday or Sunday}) =
 P(\text{Saturday})+P(\text{Sunday}) = 0.02+0.03 = 0.05 \]</span></p>
-<p>what is the probability that an individudal gets into an accident on
+<p>what is the probability that an individual gets into an accident on
 Friday and again on Monday?</p>
 <p><span class="math display">\[ P(\text{Friday and Monday}) =
 P(\text{Friday})\cdot P(\text{Monday}) = 0.16\cdot 0.19 =
 0.03\]</span></p>
+<p>again it is important to note that the intersection above assumes
+that the accidents on Friday and Monday are <i>independent events</i>.
+Two events are said to be <strong>independent</strong> if knowing that
+one event occurs <u>does not change the probability of the other event
+occurring</u>. To relate to the example above, we are assuming that
+getting in an accident on Friday does not change the probability that an
+individual gets into an accident on Monday.</p>
 </div>
 <div id="where-do-probabilities-come-from" class="section level3">
 <h3>Where do probabilities come from?</h3>
@@ -893,9 +911,9 @@ LLN states that the relative frequency of an event will tend to
 “approach” (in some sense) the probability of an event as the number of
 independent observations increases</p>
 <div class="figure">
-<img src="lecturemenu6_files/figure-html/unnamed-chunk-4-1.png" alt="Figure: A demonstration of the Law of Large Numbers. The plot below represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trails. The red line indicates the expected proportion of $P(Heads) = 0.5$" width="960" />
+<img src="lecturemenu6_files/figure-html/unnamed-chunk-4-1.png" alt="Figure: A demonstration of the Law of Large Numbers. The plot above represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trails. The red line indicates the expected proportion of $P(Heads) = 0.5$" width="960" />
 <p class="caption">
-Figure: A demonstration of the Law of Large Numbers. The plot below
+Figure: A demonstration of the Law of Large Numbers. The plot above
 represents the running proportion of fair coin flips that come up heads
 for a large number of repeated independent trails. The red line
 indicates the expected proportion of <span
@@ -906,8 +924,756 @@ class="math inline">\(P(Heads) = 0.5\)</span>
 trials were <strong>independent trials</strong>. This means that the
 outcome of one flip of the coin did not depend on the outcome of a
 previous flip.</p>
-<p>Practice: Consider rolling two fair, six-sided die. What is the
-probability that sum of the two die is less than 7?</p>
+</div>
+</div>
+<div id="lecture-12-wednesday-feb.16th-2024" class="section level1">
+<h1>Lecture 12: Wednesday, Feb.16th 2024</h1>
+<p>The sample space of a random process can consist of numbers such as
+the numbers on a six-sided die or qualitative values such as getting
+heads or tails from tossing a coin. However in statistics we typically
+deal with numerical outcomes such as the number of heads in a small
+number of tosses. When we record the outcomes of random process with
+numbers we get a <strong>random variable</strong>. We usually denote
+random variables with capital letters such as <span
+class="math inline">\(X\)</span> or <span
+class="math inline">\(Y\)</span>.</p>
+<p>Lets illustrate with an example: Suppose we toss a coin four times.
+We can record the outcome of the flips as a string of letters with <span
+class="math inline">\(H\)</span> representing heads and <span
+class="math inline">\(T\)</span> representing tails. The sample space of
+this event then consists of all possible permutations of four letter
+sequences of <span class="math inline">\(H\)</span>s and <span
+class="math inline">\(T\)</span>s (there are 16 total).</p>
+<p><span class="math display">\[S = \{ \text{HHHH}, \ \text{HTHH}, \
+\text{HHTH}, ... \} \]</span></p>
+<p>Let <span class="math inline">\(X\)</span> be the number of heads in
+four flips of coin. If the sequence we observe is <span
+class="math inline">\(HHTH\)</span>, then <span class="math inline">\(X
+= 3\)</span>. If the sequence is <span
+class="math inline">\(HTTH\)</span>, the <span class="math inline">\(X =
+2\)</span>. The possible values of <span
+class="math inline">\(X\)</span> are <span class="math inline">\(\{ 0,
+1, 2, 3, 4 \}\)</span>. Thus flipping a coin four times will give <span
+class="math inline">\(X\)</span> one of these possible values.</p>
+<ul>
+<li>The mathematical definition of a random variable is a function that
+maps from the sample space of an event to the real number line <span
+class="math inline">\(X: S \rightarrow \mathbb{R}\)</span></li>
+</ul>
+<p>Just like other variables, a random variable can be <i>discrete</i>
+or <i>continuous</i> and can be described by a distribution. The
+distribution of a random variable is called a probability distribution.
+A <strong>probability distribution</strong> is a function which assigns
+probabilities to different outcomes of a random variable.</p>
+<div id="discrete-random-variables-and-their-distributions"
+class="section level3">
+<h3>Discrete random variables and their distributions</h3>
+<p><strong>Discrete random variables</strong> have a countable number of
+outcomes. The distribution of discrete random variable is called a <i>
+discrete probability distribution </i> and consists of the possible
+outcomes and their probabilities. Often a discrete probability
+distribution can be represented as a table</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Value of X
+</th>
+<th style="text-align:left;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(x_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(x_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_2\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(x_3\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_3\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(x_k\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_k\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>A probability distribution must adhere to the rules of probability
+that we saw previously.</p>
+<ol style="list-style-type: decimal">
+<li><p>Every probability <span class="math inline">\(p_i\)</span> must
+be a number between 0 and 1.</p></li>
+<li><p>The sum of all probabilities for all outcomes of <span
+class="math inline">\(X\)</span> must add to one: <span
+class="math inline">\(\sum_i p_i = 1\)</span></p></li>
+</ol>
+<p>To find the probability of an event, we can simply add up the
+probabilities of the particular values of <span
+class="math inline">\(X\)</span> that make up that event.</p>
+<ul>
+<li>Example: Consider the following probability distribution giving the
+probabilities of getting various grades on a STAT 251 exam. The students
+grade on a four point scale with <span class="math inline">\(F =
+0\)</span>, <span class="math inline">\(D =1\)</span>, <span
+class="math inline">\(C = 2\)</span>, <span class="math inline">\(B =
+3\)</span> and <span class="math inline">\(A =4\)</span> is a random
+variable.</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+X
+</th>
+<th style="text-align:right;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+</tbody>
+</table>
+<p>Suppose a STAT 251 student is selected at random, what is the
+probability that the student score higher than a <span
+class="math inline">\(C\)</span> on the statistics exam? To choose at
+random means to give each student an equal probability of being
+selected. The probability that the student has an exam score higher than
+a <span class="math inline">\(C\)</span> is <span
+class="math inline">\(P(X&gt; 2)\)</span>. This is the same as asking
+what is the probability that <span class="math inline">\(X = 3\)</span>
+or <span class="math inline">\(X = 4\)</span>. Thus we can simply add
+the probabilities of these events such that <span
+class="math display">\[P(X &gt; 2) = P(X = 3)+P(X = 4) = 0.25+0.3 =
+0.55\]</span></p>
+<p>We can use a histogram to display a probability distribution just
+like we could when displaying the distribution of data. Consider the
+histogram for the probability distribution of statistics exam scores</p>
+<p><img src="lecturemenu6_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
+<p>The bars of histogram for a discrete probability distribution should
+add to one. In the plot on the the right the blue bars represent the
+probability that a student gets higher than a <span
+class="math inline">\(C\)</span> on the exam i.e <span
+class="math inline">\(P(X &gt; 2)\)</span></p>
+<p>We can generalize the probability that <span
+class="math inline">\(X\)</span> is greater than some set of outcomes by
+summing individual probabilties of the relevant events:</p>
+<p><span class="math display">\[ P(X &gt; a) = \sum_{x &gt; a} P(X = x)
+= 1 - P(X\leq a) \]</span></p>
+<p>Applying this equation to the example of student exam scores, we
+could have computed the probability that a student gets higher than a
+<span class="math inline">\(C\)</span> by computing the complement
+event</p>
+<p><span class="math display">\[P(X &gt; 2) = 1 - P(X\leq 2) \]</span>
+<span class="math display">\[= 1 - \sum_{x \leq 2} P(X) \]</span> <span
+class="math display">\[= 1-(0.05+0.10+0.30)\]</span> <span
+class="math display">\[= 0.55 \]</span></p>
+<p>We can summarize the probability that we observe a value of <span
+class="math inline">\(X\)</span> across a particular interval <span
+class="math inline">\((a, b)\)</span> by summing up the probabilities of
+each outcome of <span class="math inline">\(X\)</span> within that
+interval:</p>
+<p><span class="math display">\[ P(a\leq X \leq b) = \sum_{a\leq x\leq
+b} P(X = x)  \]</span></p>
+</div>
+<div id="mean-and-standard-deviation-of-discrete-random-variables"
+class="section level3">
+<h3>Mean and standard deviation of discrete random variables</h3>
+<p>The mean of a discrete random variable is</p>
+<p><span class="math display">\[\mu = \sum_{x} xP(x) \]</span></p>
+<p>where <span class="math inline">\(x\)</span> denotes a given outcome
+of the random variable <span class="math inline">\(X\)</span> and <span
+class="math inline">\(P(x)\)</span> denotes the probability of that
+outcome. Note that the <span class="math inline">\(x\)</span> below the
+summation sign here indicates that we sum over all possible values of
+<span class="math inline">\(X\)</span>.</p>
+<ul>
+<li>The mean of a random variable is also called its <strong>expected
+value</strong>. However this term can be misleading as we don’t
+necessarily expect an observation of a random variable to be close to
+its expected value.</li>
+</ul>
+<p>The variance of a discrete random variable is</p>
+<p><span class="math display">\[\sigma^2 = \sum_{x} (x - \mu)^2
+P(x)\]</span></p>
+<p>The standard deviation of a discrete random variable is</p>
+<p><span class="math display">\[ \sigma = \sqrt{\sigma^2} =
+\sqrt{\sum_{x} (x - \mu)^2 P(x)} \]</span></p>
+<p><strong>Example</strong>: Consider the following probability
+distribution for the random variable <span
+class="math inline">\(X\)</span> which denotes the number of spelling
+errors committed per minute of typing by a professional typist</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Value of X
+</th>
+<th style="text-align:right;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compute the mean number of typing errors per minute of typing <span
+class="math display">\[ \mu = (0\times 0.3 + 1\times 0.4 + 2 \times 0.2
++ 3\times 0.1) = 1.1\]</span></p>
+<p>Compute the variance in typing errors per minute of typing</p>
+<p><span class="math display">\[ \sigma^2 = \left[(0-1.1)^2\times 0.3 +
+(1-1.1)^2\times 0.4 + (2-1.1)^2 \times 0.2 + (3-1.1)^2\times 0.1\right]
+= 0.89\]</span></p>
+<p>Compute the standard deviation in typing errors per minute of
+typing</p>
+<p><span class="math display">\[ \sigma = \sqrt{0.89} =
+0.94\]</span></p>
+</div>
+<div id="deriving-sampling-distributions" class="section level3">
+<h3>Deriving sampling distributions</h3>
+<p>Two important probability distributions we encounter often in the
+statistics are the population distribution of a random variable and the
+sampling distribution of a statistic</p>
+<ul>
+<li><p>The <strong>population distribution</strong> is the probability
+distribution for the outcomes of a random variable</p></li>
+<li><p>The <strong>sampling distribution</strong> is the probability
+distribution for a statistic</p></li>
+</ul>
+<p>For a discrete random variable, the sampling distribution of a
+statistic can be derived through the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Enumerate all possible samples of size <span
+class="math inline">\(n\)</span> that can be drawn from the population.
+For each sample, calculate the sample mean, sample variance, or any
+other relevant statistic of interest.</p></li>
+<li><p>Determine the probability associated with each possible sample
+statistic. This involves using the population distribution to calculate
+the probability of obtaining each value of the sample
+statistic.</p></li>
+<li><p>Assemble the probabilities for each sample statistic to create
+the sampling distribution. This distribution describes the probabilities
+of observing different values of the sample statistic across all
+possible samples of size <span
+class="math inline">\(n\)</span>.</p></li>
+</ol>
+<p><strong>Example</strong>: Texas hold’em is a gambling game which
+starts with each player recieving two cards. Here is the population
+distribution for the number of aces delt in a two-card hand</p>
+<p><span class="math display">\[X = \text{Number of aces in a hand of
+poker} \]</span></p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+X
+</th>
+<th style="text-align:right;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+0.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+0.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+</tr>
+</tbody>
+</table>
+<p>Derive the sampling distribution for the proportion of aces in two
+consecutive hands of texas hold’em. To derive the sampling distribution
+we must define the sample space for the proportion of aces in two hands.
+The possibilities are given below</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Number of Acs in two hands
+</th>
+<th style="text-align:left;">
+Outcomes giving result
+</th>
+<th style="text-align:left;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((0,0) = \color{red}{1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(0.559\times 0.559 =
+\color{red}{0.312}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((0,1), (1,0) = \color{red}{2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2(0.559\times 0.382) =
+\color{red}{0.427}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((0, 2), (2,0), (1,1) =
+\color{red}{3}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2(0.559\times 0.059) + (0.382\times 0.382) =
+\color{red}{0.212}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((1,2), (2,1) = \color{red}{2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2(0.382\times 0.059) =
+\color{red}{0.045}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((2,2) = \color{red}{1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(0.059\times 0.059 =
+\color{red}{0.003}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore we can summarize the distribution of the proportion <span
+class="math inline">\(\hat{p}\)</span> of Aces in two hands of texas
+hold’em</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+<span class="math inline">\(\hat{p}\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(P(\hat{p})\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.312
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.427
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.382
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.045
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong> Consider the probability distribution of the
+random variable <span class="math inline">\(X\)</span>. Let <span
+class="math inline">\(X\)</span> represent the number of Coho salmon
+caught in an afternoon by a fly fisherman fishing the Clearwater
+river.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+X
+</th>
+<th style="text-align:right;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+0.59
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+</tr>
+</tbody>
+</table>
+<p>Derive the sampling distribution for the mean number of fish caught
+from a random sample of <span class="math inline">\(n = 3\)</span>
+afternoons of fishing</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Mean Number of Salmon Caught
+</th>
+<th style="text-align:left;">
+Outcomes giving result
+</th>
+<th style="text-align:left;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((0,0,0) = \color{red}{1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(0.589^3 = \color{red}{0.204}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((1,0,0), (0,1,0),(0,0,1) =
+\color{red}{3}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(3(0.589^2\times0.232) =
+\color{red}{0.241}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((1,1,0), (1,0,1), (0,1,1), (2,0,0),
+(0,2,0),(0,0,2) = \color{red}{6}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(3(0.232^2\times0.589) + 3(0.589^2\times
+0.179) = \color{red}{0.281}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((1,1,1), (2,1,0), (2,0,1), (0,2,1), (1,2,0),
+(1,0,2), (0,1,2) = \color{red}{7}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(0.232^3 + 6(0.589\times 0.232\times 0.179) =
+\color{red}{0.159}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.33
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((2,1,1), (1,2,1), (1,1,2), (2,2,0),
+(2,0,2),(0,2,2) = \color{red}{6}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(3(0.232^2\times0.179) + 3(0.179^2\times
+0.589) = \color{red}{0.085}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.67
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((1,2,2), (2,1,2),(2,2,1) =
+\color{red}{3}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(3(0.179^2\times0.232) =
+\color{red}{0.022}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((2,2,2) = \color{red}{1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(0.179^3 = \color{red}{0.006}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore we can summarize the distribution of the proportion <span
+class="math inline">\(\bar{X}\)</span> of Aces in two hands of texas
+hold’em</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+<span class="math inline">\(\bar{X}\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(P(\bar{X})\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.204
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:right;">
+0.241
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:right;">
+0.281
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+0.159
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.33
+</td>
+<td style="text-align:right;">
+0.085
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.67
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="special-discrete-distributions" class="section level3">
+<h3>Special discrete distributions</h3>
+<div id="the-bernoulli-distribution" class="section level4">
+<h4>The Bernoulli distribution</h4>
+</div>
+<div id="the-binomial-distribution" class="section level4">
+<h4>The binomial distribution</h4>
+</div>
+<div id="the-poisson-distribution" class="section level4">
+<h4>The poisson distribution</h4>
+</div>
 </div>
 </div>
 

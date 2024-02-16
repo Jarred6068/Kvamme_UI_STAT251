@@ -240,39 +240,39 @@ Under a randomized experiment or survey, we can reduce variability in the sampli
 
 The reasoning of statistical inference relies on asking "how often would this method give the correct result if I used it many times?". When we produce data by random sampling or through randomized experiments, the outcomes of our analysis are determined by the rules of mathematical probability. 
 
-Tossing a coin, rolling a die, the weather, the change in stock market, or choosing a simple random sample, these are all <i>random phenomena</i> because their results cannot be predicted with $100/%$ accuracy each time. However, for each random phenomena there will be predictable patterns in the results. This is the basis of the idea of mathematical probability. An important note is that probability describes only the long-term frequencies or patterns of events. It is much less useful for quanitifying the chance outcomes of events in the short term. 
+Tossing a coin, rolling a die, the weather, the change in stock market, or choosing a simple random sample, these are all <i>random phenomena</i> because their results cannot be predicted with $100\%$ accuracy each time. However, for each random phenomena there will be predictable patterns in the results. This is the basis of the idea of mathematical probability. An important note is that probability describes only the long-term frequencies or patterns of events. It is much less useful for quantifying the chance outcomes of events in the short term. 
 
 ### The language of probability
 
-* **Probability** is a measurement of the “likelihood” of an event as a number between 0 and 1. It describes the long-term frequency with which an event might occur. For example, we describe the probability of flipping a coin and getting heads as the number 0.5, which describes the chance that of the event of getting heads, assuming the coin is fair $50\%$.
+* **Probability** is a measurement of the “likelihood” of an event as a number between 0 and 1. It describes the long-term frequency with which an event might occur. For example, we describe the probability of flipping a coin and getting heads as the number 0.5 or $50\%$ which is the long-term frequency of heads or many repeated flips.
 
 * An **event** is any possible outcome of a random phenomena or experiment. For example, the events that might occur when flipping a coin are getting heads or tails. 
 
 * The act of flipping a coin once is called a **random trial** - a process or experiment that has a set of well – defined possible outcomes. What distinguishes it as random is that there is more than one possible outcome e.g heads OR tails. What are the possible outcomes of rolling a single six-sided die? 
 
-* We call the set of all possible outcomes of random phenomena the **sample space**. It is common in probability theory to use capital $S = \{\}$ to denote the sample space mathematically. For example, the sample space of flipping a coin once is $S = \{\text{Heads}, \text{Tails} \}$. The sample of a single roll of a six-side die is $S = \{1,2,3,4,5,6\}$.
+* We call the set of all possible outcomes of random phenomena the **sample space**. It is common in probability theory to use capital $S = \{\}$ to denote the sample space mathematically. For example, the sample space of flipping a coin once is $S = \{\text{Heads}, \text{Tails} \}$. The sample space of a single roll of a fair six-side die is $S = \{1,2,3,4,5,6\}$.
 
 * as a general rule, the probability of an event $A$ denoted $P(A)$ is:
 
 \[ P(A) = \frac{\text{Number of ways $A$ can happen}}{\text{Total number of outcomes}} \]
 
-The denominator in the fraction of above is the sample space and the numerator represents the fraction of the sample space that includes $A$
+The denominator in the fraction above is the sample space and the numerator represents the fraction of the sample space that includes $A$
 
-Consider rolling a fair single six-sided die. What is the probability that you would roll the number of six? What is the probability that you would not roll a six?. Knowing that the die is fair tells us that each number has an equal probability of occurring. Thus rolling any particular number on the die has a probability of $1/6 = 0.167$ and the probability of rolling any number but a six has to be $1-(1/6) = 5/6 = 0.833$. This simple example demonstrates several of the rules of probability:
+Consider rolling a fair single six-sided die. What is the probability that you would roll the number six? What is the probability that you would not roll a six?. Knowing that the die is fair tells us that each number has an equal probability of occurring. Thus rolling any particular number on the die has a probability of $1/6 = 0.167$ and the probability of rolling any number but a six has to be $1-(1/6) = 5/6 = 0.833$. This simple example demonstrates several of the rules of probability:
 
 * 1. $0\leq P(A)\leq 1$ - This rule states that a valid probability must be a value between zero and one.
 
 <br>
 
-* 2. $\sum_{i\in S} P(A_i) = 1$ - This rule states probability of the entire sample space must be one. 
+* 2. $\sum_{i\in S} P(A_i) = 1$ - This rule states that the probability of the entire sample space must be one. 
 
 <br>
 
-* 3. $P(A \cup B ) = P(A)+P(B)$ - The two events $A$ and $B$ are said to be **disjoint** if they have no outcomes in common. For two disjoint events $A$ and $B$, the probability that either event occurs is the sum of their individual probabilities. 
+* 3. $P(A \cup B ) = P(A)+P(B)$ - The two events $A$ and $B$ are said to be **disjoint** if they have no outcomes in common and so can never occur together. For two disjoint events $A$ and $B$, the probability that either event occurs is the sum of their individual probabilities. This is sometimes referred to as the **addition rule for disjoint events**.
 
 <br>
 
-* 4. $P(A') = 1-P(A)$ - This rule states that the probability of the complement of an event $A$ is one minus the probability of the event $A$. The symbol $A'$ means complement of $A$ or “$A$-not” and means a number or quantity required to make a group whole.
+* 4. $P(A') = 1-P(A)$ - This rule states that the probability of the complement of an event $A$ is one minus the probability of the event $A$. The symbol $A'$ means complement of $A$ or “$A$-not” and means a number or quantity required to make a group whole. This is often referred to as the **complement rule**.
 
 Example: A standard deck of $52$ playing cards contains cards from four suits: hearts, diamonds, clubs, and spades. Each suit consists of 13 cards: an Ace, the cards with the numbers 2-10, a jack, a queen and a king card. Suppose you are playing a hand of poker and the dealer is about to deal everyone their first card. What is the probability that the card you are dealt is not a queen?
 
@@ -280,13 +280,15 @@ Example: A standard deck of $52$ playing cards contains cards from four suits: h
 
 ### Dealing with multiple events
 
-We are often interested in the probability of more than one event occurring simultaneously. The language of probability gives us tools to deal with outcomes of multiple events. A **union** of two or more events is that probability that any of the event occurs. If the events are disjoint then we can use rule $3$ above. If the events have outcomes in common then we must be sure not to double count the probability of their overlap. For two non-disjoint events $A$ and $B$:
+We are often interested in the probability of more than one event occurring simultaneously. The language of probability gives us tools to deal with outcomes of multiple events. A **union** of two or more events is that probability that one or both events occur. If the events are disjoint then we can use rule $3$ above. If the events have outcomes in common then we must be sure not to double count the probability of their overlap. For two non-disjoint events $A$ and $B$:
 
 \[ P(A\cup B) = P(A)+P(B)-P(A\cap B) \]
 
-the quantity $P(A\cap B)$ is called the <i>intersection</i> of events $A$ and $B$ and represents the fraction of the sample space that $A$ and $B$ have in common. In general, the intersection of two independent events is the probability that both events occur:
+This is the **addition rule for non-disjoint event**. The quantity $P(A\cap B)$ is called the <i>intersection</i> of events $A$ and $B$ and represents the fraction of the sample space that $A$ and $B$ have in common. In general, the intersection of two <u>independent events</u> is the probability that both events occur:
 
 \[P(A\cap B) = P(A)\cdot P(B) \]
+
+This is called the **multiplication rule independent events**. If two events are disjoint then their intersection is the empty set $P(A\cap B) = \emptyset$ and they are said to be **mutually exclusive**.  
 
 To illustrate this consider the following example: Some states are considering laws that will ban the use of cell phones while driving because they believe that the ban will reduce the number of phone-related accidents. One study classified these types of accidents by the day of the week when they occurred \cite{}. For this example, we will use the values from this study as our probability model. Here are the probabilities 
 
@@ -302,10 +304,11 @@ What is the probability that an accident occurs on a weekend, that is on Saturda
 
 \[ P(\text{Saturday or Sunday}) = P(\text{Saturday})+P(\text{Sunday}) = 0.02+0.03 = 0.05 \]
 
-what is the probability that an individudal gets into an accident on Friday and again on Monday?
+what is the probability that an individual gets into an accident on Friday and again on Monday?
 
 \[ P(\text{Friday and Monday}) = P(\text{Friday})\cdot P(\text{Monday}) = 0.16\cdot 0.19 = 0.03\]
 
+again it is important to note that the intersection above assumes that the accidents on Friday and Monday are <i>independent events</i>. Two events are said to be **independent** if knowing that one event occurs <u>does not change the probability of the other event occurring</u>. To relate to the example above, we are assuming that getting in an accident on Friday does not change the probability that an individual gets into an accident on Monday. 
 
 ### Where do probabilities come from?
 
@@ -317,7 +320,7 @@ In both cases, the result defied our expectation but this is because the outcome
 
 This long-run behavior is established by a property of mathematical probability called the **Law of Large Numbers** (LLN). The LLN states that the relative frequency of an event will tend to “approach” (in some sense) the probability of an event as the number of independent observations increases
 
-```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=10, fig.cap='Figure: A demonstration of the Law of Large Numbers. The plot below represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trails. The red line indicates the expected proportion of $P(Heads) = 0.5$'}
+```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=10, fig.cap='Figure: A demonstration of the Law of Large Numbers. The plot above represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trails. The red line indicates the expected proportion of $P(Heads) = 0.5$'}
 
 set.seed(432)
 S = 5000
@@ -361,14 +364,256 @@ ggplot(subset(exp.bernoulli, LN == 'Running Prop.'), aes(x = SS, y = Y))+
 
 One assumption that we made in the coin flip example was that the trials were **independent trials**. This means that the outcome of one flip of the coin did not depend on the outcome of a previous flip. 
 
-Practice: Consider rolling two fair, six-sided die. What is the probability that sum of the two die is less than 7?
+# Lecture 12: Wednesday, Feb.16th 2024
+
+The sample space of a random process can consist of numbers such as the numbers on a six-sided die or qualitative values such as getting heads or tails from tossing a coin. However in statistics we typically deal with numerical outcomes such as the number of heads in a small number of tosses. When we record the outcomes of random process with numbers we get a **random variable**. We usually denote random variables with capital letters such as $X$ or $Y$. 
+
+Lets illustrate with an example: Suppose we toss a coin four times. We can record the outcome of the flips as a string of letters with $H$ representing heads and $T$ representing tails. The sample space of this event then consists of all possible permutations of four letter sequences of $H$s and $T$s (there are 16 total). 
+
+\[S = \{ \text{HHHH}, \ \text{HTHH}, \ \text{HHTH}, ... \} \]
+
+Let $X$ be the number of heads in four flips of coin. If the sequence we observe is $HHTH$, then $X = 3$. If the sequence is $HTTH$, the $X = 2$. The possible values of $X$ are $\{ 0, 1, 2, 3, 4 \}$. Thus flipping a coin four times will give $X$ one of these possible values. 
+
+* The mathematical definition of a random variable is a function that maps from the sample space of an event to the real number line $X: S \rightarrow \mathbb{R}$
 
 
+Just like other variables, a random variable can be <i>discrete</i> or <i>continuous</i> and can be described by a distribution. The distribution of a random variable is called a probability distribution. A **probability distribution** is a function which assigns probabilities to different outcomes of a random variable.  
+  
+### Discrete random variables and their distributions
+
+**Discrete random variables** have a countable number of outcomes. The distribution of discrete random variable is called a <i> discrete probability distribution </i> and consists of the possible outcomes and their probabilities. Often a discrete probability distribution can be represented as a table 
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Value of X` = c('$x_1$', '$x_2$', '$x_3$', '$\\cdots$', '$x_k$'),
+                      Probability = c('$p_1$', '$p_2$', '$p_3$', '$\\cdots$', '$p_k$'))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
 
 
+A probability distribution must adhere to the rules of probability that we saw previously. 
+
+ 1. Every probability $p_i$ must be a number between 0 and 1. 
+  
+ 2. The sum of all probabilities for all outcomes of $X$ must add to one: $\sum_i p_i = 1$
 
 
+To find the probability of an event, we can simply add up the probabilities of the particular values of $X$ that make up that event. 
 
+* Example: Consider the following probability distribution giving the probabilities of getting various grades on a STAT 251 exam. The students grade on a four point scale with $F = 0$, $D =1$, $C = 2$, $B = 3$ and $A =4$ is a random variable.
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(X = c("0", "1", "2", "3", "4"),
+                      Probability = c(0.05, 0.10, 0.30, 0.25, 0.30))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+Suppose a STAT 251 student is selected at random, what is the probability that the student score higher than a $C$ on the statistics exam? To choose at random means to give each student an equal probability of being selected. The probability that the student has an exam score higher than a $C$ is $P(X> 2)$. This is the same as asking what is the probability that $X = 3$ or $X = 4$. Thus we can simply add the probabilities of these events such that 
+$$P(X > 2) = P(X = 3)+P(X = 4) = 0.25+0.3 = 0.55$$
+
+We can use a histogram to display a probability distribution just like we could when displaying the distribution of data. Consider the histogram for the probability distribution of statistics exam scores
+
+```{r, echo=FALSE, warning=F, message=FALSE, fig.height=4, fig.width=10}
+A = ggplot()+geom_bar(aes(x = c(0,1,2,3,4), y = c(0.05, 0.10, 0.30, 0.25, 0.30)), 
+                  stat = 'identity',
+                  color = 'black',
+                  fill = 'lightgrey')+
+  theme_classic2()+
+  xlab('X')+
+  ylab('Probability of X')+
+  ggtitle('Probability Distribution of X')
+
+B = ggplot()+geom_bar(aes(x = c(0,1,2,3,4), y = c(0.05, 0.10, 0.30, 0.25, 0.30)), 
+                  stat = 'identity',
+                  color = 'black',
+                  fill = c('lightgrey','lightgrey','lightgrey','lightblue1','lightblue1'))+
+  theme_classic2()+
+  xlab('X')+
+  ylab('Probability of X')+
+  ggtitle('Probability Distribution of X')
+  #scale_fill_identity(name = 'legend', guide = 'legend', labels = TeX('$P(X>2)$'))+
+  #guides(color = guide_legend(order = 1, override.aes = list(shape = c(16)))) +
+  #theme(legend.position = 'top')+
+  #geom_text(aes(x = 3.5, y = 0.2), label = TeX('$P(X>2)$'), size = 10)
+  
+
+ggarrange(A, B, nrow = 1)  
+```
+
+The bars of histogram for a discrete probability distribution should add to one. In the plot on the the right the blue bars represent the probability that a student gets higher than a $C$ on the exam i.e $P(X > 2)$
+
+We can generalize the probability that $X$ is greater than some set of outcomes by summing individual probabilties of the relevant events:
+
+\[ P(X > a) = \sum_{x > a} P(X = x) = 1 - P(X\leq a) \]
+
+Applying this equation to the example of student exam scores, we could have computed the probability that a student gets higher than a $C$ by computing the complement event
+
+\[P(X > 2) = 1 - P(X\leq 2) \]
+\[= 1 - \sum_{x \leq 2} P(X) \]
+\[= 1-(0.05+0.10+0.30)\]
+\[= 0.55 \]
+
+We can summarize the probability that we observe a value of $X$ across a particular interval $(a, b)$ by summing up the probabilities of each outcome of $X$ within that interval:
+
+\[ P(a\leq X \leq b) = \sum_{a\leq x\leq b} P(X = x)  \]
+
+### Mean and standard deviation of discrete random variables
+
+The mean of a discrete random variable is
+
+\[\mu = \sum_{x} xP(x) \]
+
+where $x$ denotes a given outcome of the random variable $X$ and $P(x)$ denotes the probability of that outcome. Note that the $x$ below the summation sign here indicates that we sum over all possible values of $X$. 
+
+ * The mean of a random variable is also called its **expected value**. However this term can be misleading as we don't necessarily expect an observation of a random variable to be close to its expected value.
+
+The variance of a discrete random variable is 
+
+\[\sigma^2 = \sum_{x} (x - \mu)^2 P(x)\]
+
+The standard deviation of a discrete random variable is 
+
+\[ \sigma = \sqrt{\sigma^2} = \sqrt{\sum_{x} (x - \mu)^2 P(x)} \]
+
+
+**Example**: Consider the following probability distribution for the random variable $X$ which denotes the number of spelling errors committed per minute of typing by a professional typist
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Value of X` = c(0:3),
+                      Probability = c(0.3,0.4,0.2,0.1))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+Compute the mean number of typing errors per minute of typing
+\[ \mu = (0\times 0.3 + 1\times 0.4 + 2 \times 0.2 + 3\times 0.1) = 1.1\]
+
+Compute the variance in typing errors per minute of typing
+
+\[ \sigma^2 = \left[(0-1.1)^2\times 0.3 + (1-1.1)^2\times 0.4 + (2-1.1)^2 \times 0.2 + (3-1.1)^2\times 0.1\right] = 0.89\]
+
+Compute the standard deviation in typing errors per minute of typing
+
+\[ \sigma = \sqrt{0.89} = 0.94\]
+
+### Deriving sampling distributions
+
+Two important probability distributions we encounter often in the statistics are the population distribution of a random variable and the sampling distribution of a statistic
+
+* The **population distribution** is the probability distribution for the outcomes of a random variable
+
+* The **sampling distribution** is the probability distribution for a statistic
+
+For a discrete random variable, the sampling distribution of a statistic can be derived through the following steps:
+
+ 1. Enumerate all possible samples of size $n$ that can be drawn from the population. For each sample, calculate the sample mean, sample variance, or any other relevant statistic of interest.
+ 
+ 2. Determine the probability associated with each possible sample statistic. This involves using the population distribution to calculate the probability of obtaining each value of the sample statistic.
+ 
+ 3. Assemble the probabilities for each sample statistic to create the sampling distribution. This distribution describes the probabilities of observing different values of the sample statistic across all possible samples of size $n$.
+ 
+ 
+**Example**: Texas hold'em is a gambling game which starts with each player recieving two cards. Here is the population distribution for the number of aces delt in a two-card hand
+
+\[X = \text{Number of aces in a hand of poker} \]
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(X = c("0", "1", "2"),
+                      Probability = c(0.559, 0.382, 0.059))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+Derive the sampling distribution for the proportion of aces in two consecutive hands of texas hold'em. To derive the sampling distribution we must define the sample space for the proportion of aces in two hands. The possibilities are given below
+
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Number of Acs in two hands` = c(0:4),
+                      `Outcomes giving result` = c('$(0,0) = \\color{red}{1}$', 
+                                                   '$(0,1), (1,0) = \\color{red}{2}$', 
+                                                   '$(0, 2), (2,0), (1,1) = \\color{red}{3}$',
+                                                   '$(1,2), (2,1) = \\color{red}{2}$', 
+                                                   '$(2,2) = \\color{red}{1}$'),
+                      Probability = c('$0.559\\times 0.559 = \\color{red}{0.312}$',
+                                      '$2(0.559\\times 0.382) = \\color{red}{0.427}$',
+                                      '$2(0.559\\times 0.059) + (0.382\\times 0.382) = \\color{red}{0.212}$',
+                                      '$2(0.382\\times 0.059) = \\color{red}{0.045}$',
+                                      '$0.059\\times 0.059 = \\color{red}{0.003}$'))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+Therefore we can summarize the distribution of the proportion $\hat{p}$ of Aces in two hands of texas hold'em 
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Number of Acs in two hands` = c(0:4),
+                      Probability = c(0.312, 0.427, 0.382, 0.045, 0.003))
+
+kable(df, format = 'html', col.names = c('$\\hat{p}$', '$P(\\hat{p})$'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+**Example** Consider the probability distribution of the random variable $X$. Let $X$ represent the number of Coho salmon caught in an afternoon by a fly fisherman fishing the Clearwater river.
+
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(X = c("0", "1", "2"),
+                      Probability = c(0.589, 0.232, 0.179))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+Derive the sampling distribution for the mean number of fish caught from a random sample of $n = 3$ afternoons of fishing
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Mean Number of Salmon Caught` = c(0.00, 0.33, 0.67, 1.00, 1.33, 1.67, 2.00),
+                      `Outcomes giving result` = c('$(0,0,0) = \\color{red}{1}$', 
+                                                   '$(1,0,0), (0,1,0),(0,0,1) = \\color{red}{3}$',
+                                                   '$(1,1,0), (1,0,1), (0,1,1), (2,0,0), (0,2,0),(0,0,2) = \\color{red}{6}$',
+                                                   '$(1,1,1), (2,1,0), (2,0,1), (0,2,1), (1,2,0), (1,0,2), (0,1,2) = \\color{red}{7}$',
+                                                   '$(2,1,1), (1,2,1), (1,1,2), (2,2,0), (2,0,2),(0,2,2) = \\color{red}{6}$',
+                                                   '$(1,2,2), (2,1,2),(2,2,1) = \\color{red}{3}$',
+                                                   '$(2,2,2) = \\color{red}{1}$'),
+                      
+                      Probability = c('$0.589^3 = \\color{red}{0.204}$',
+                                      '$3(0.589^2\\times0.232) = \\color{red}{0.241}$',
+                                      '$3(0.232^2\\times0.589) + 3(0.589^2\\times 0.179) = \\color{red}{0.281}$',
+                                      '$0.232^3 + 6(0.589\\times 0.232\\times 0.179) = \\color{red}{0.159}$',
+                                      '$3(0.232^2\\times0.179) + 3(0.179^2\\times 0.589) = \\color{red}{0.085}$',
+                                      '$3(0.179^2\\times0.232) = \\color{red}{0.022}$',
+                                      '$0.179^3 = \\color{red}{0.006}$'))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+Therefore we can summarize the distribution of the proportion $\bar{X}$ of Aces in two hands of texas hold'em 
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Number of Acs in two hands` = c(0.00, 0.33, 0.67, 1.00, 1.33, 1.67, 2.00),
+                      Probability = c(0.204, 0.241, 0.281, 0.159, 0.085, 0.022, 0.006))
+
+kable(df, format = 'html', col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+### Special discrete distributions
+
+#### The Bernoulli distribution
+
+#### The binomial distribution
+
+#### The poisson distribution
 
 
 
