@@ -24,7 +24,7 @@ ui <- fluidPage(
                              choices = c("P(X = k)", "P(X <= k)"),
                              selected = "P(X = k)"),
                  
-                 numericInput(inputId = k,
+                 numericInput(inputId = 'k',
                               label = "k",
                               value = 1),
                  
@@ -99,16 +99,16 @@ server <- function(input, output) {
 
   observeEvent(input$Compute,  output$distPlot <- renderPlot({
       set.seed(111)
-      browser()
+      #browser()
       if(input$rv == 'Binomial'){
         df = data.frame(success = 0:input$ntrials, 
                         prob = dbinom(x = 0:input$ntrials, size = input$ntrials, prob = input$probsuccess))
         if(input$probtype == 'P(X = k)'){
           
-          df %>% mutate(condition = ifelse(success = input$k, as.character(input$k), "failure")) 
+          df=df %>% mutate(condition = ifelse(success == input$k, as.character(input$k), "failure")) 
           
         }else{
-           df %>% mutate(Heads = ifelse(success <= input$k, as.character(input$k), "failure")) 
+           df=df %>% mutate(Heads = ifelse(success <= input$k, as.character(input$k), "failure")) 
         }
         
         ggplot(data = df, aes(x = factor(condition), y = prob, fill = condition)) +
@@ -122,9 +122,32 @@ server <- function(input, output) {
                x = "Successes (x)",
                y = "probability")+
           theme_classic2()
+      
+      #poisson
+      }else if(input$rv == 'Poisson'){
+        df = data.frame(events = 0:round(input$rate1+5*input$rate1), 
+                        prob = dpois(x = 0:round(input$rate1+5*input$rate1), 
+                                     lambda = input$rate1))
+        if(input$probtype == 'P(X = k)'){
+          
+          df=df %>% mutate(condition = ifelse(events == input$k, as.character(input$k), "not event")) 
+          
+        }else{
+          df=df %>% mutate(Heads = ifelse(success <= input$k, as.character(input$k), "not event")) 
+        }
+        
+        ggplot(data = df, aes(x = factor(condition), y = prob, fill = condition)) +
+          geom_col() +
+          geom_text(aes(label = round(prob,2), y = prob + 0.01),
+                    position = position_dodge(0.9),
+                    size = 3,
+                    vjust = 0)+
+          labs(title = paste0("Probability of X =", input$k, " Events."),
+               subtitle = paste0("Pois(lambda = ", input$rate1),
+               x = "Number of Events X",
+               y = "probability")+
+          theme_classic2()
       }
-      # }else if(input$model == 'Poisson'){
-      #   d = rpois(n=input$ss, lambda = input$rate1)
       # }else if(input$model == 'Uniform'){
       #   d = runif(n=input$ss, min = input$min, max = input$max)
       # }else if(input$model == 'Exponential'){
