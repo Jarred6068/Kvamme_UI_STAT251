@@ -1,0 +1,39 @@
+---
+title: "Normal Distribution: Z-table"
+author: "STAT 251 Section 03"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+z = seq(0, 3.9, 0.1)
+
+tab = cbind.data.frame(Z = z, `.00` = pnorm(z), `.01` = pnorm(z-0.01), `.02` = pnorm(z-0.02), `.03` = pnorm(z-0.03),
+                       `.04` = pnorm(z-0.04), `.05` = pnorm(z-0.05), `.06` = pnorm(z-0.06), `.07` = pnorm(z-0.07),
+                       `.08` = pnorm(z-0.08), `.09` = pnorm(z-0.09))
+
+kable(tab, caption = 'STANDARD NORMAL DISTRIBUTION: Table Values Represent AREA to the LEFT of the Z score.',
+      digits = 3, booktabs = T)%>%
+  kable_styling(font_size = 12)
+
+```

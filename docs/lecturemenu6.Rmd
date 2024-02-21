@@ -607,13 +607,7 @@ kable(df, format = 'html', col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), digits 
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-### Special discrete distributions
 
-#### The Bernoulli distribution
-
-#### The binomial distribution
-
-#### The poisson distribution
 
 
 

@@ -30,6 +30,8 @@ navbar:
             href: lecturemenu5.html
           - text: 'Week 6'
             href: lecturemenu6.html
+          - text: 'Week 7'
+            href: lecturemenu7.html
         - text: 'Lecture Slides'
           href: lecslidesindex.html
     - text: 'Homeworks'
@@ -80,8 +82,14 @@ navbar:
             href: shiny_apps/Make_Graph/webfiles/index.html
           - text: 'LLN'
             href: shiny_apps/LLN/webfiles/index.html
+          - text: 'Compute PMF'
+            href: shiny_apps/Compute_probs/webfiles/index.html
         - text: 'SAC schedule'
           href: sac_schedule.html
+        - text: 'Tables'
+          menu:  
+          - text: 'Z-table'
+            href: misc/Z_table.html
         - text: 'R code'          
           href: misc/rcode_examples.html
         - text: 'Downloading R/Rstudio'
