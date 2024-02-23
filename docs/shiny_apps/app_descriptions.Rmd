@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
         <td>**Usage**</td>
     </tr>
     <tr>
-        <td>**Histogram maker**</td>
+        <td>**Random Variables**</td>
         <td>This app allows you to plot the histogram of several different random variables. Parameters and sample size can be changed to study  how they affect shape and location. </td>
     </tr>
     <tr>
@@ -41,5 +41,10 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>**Make Graphs**</td>
         <td>This tool allows you plot graphs for quantitative and qualitative variables by copying and pasting in comma separated values. Plots include: pie graph, bar plot, stem plot, dot plot, histogram and boxplot</td>
+    </tr>
+    </tr>
+    <tr>
+        <td>**PMF/PDF Calculator**</td>
+        <td>This tool allows you calculate probabilities from several different probability distributions inlcuding: Binomial, Poisson, Normal, Uniform, and Exponential distributions</td>
     </tr>
 </table>
