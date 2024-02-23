@@ -81,7 +81,7 @@ $\bf (3)$ A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clu
 * Suppose a single card is drawn at random, what is the probability that it is a numbered?
 <span style="color: red;"></span>
 
-* What is the probability of that the selected card is the Ace of Spades (assume independence)? 
+* What is the probability that the selected card is the Ace of Spades (assume independence where necessary)? 
 <span style="color: red;"></span>
 
 $\bf (4)$ An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random with replacement. What is the probability that first ball is yellow and the second ball is red?
