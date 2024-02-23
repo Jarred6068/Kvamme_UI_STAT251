@@ -1,5 +1,5 @@
 ---
-title: "Homework 3 Solutions"
+title: "Homework 3"
 output:
   html_document: default
   pdf_document: default
