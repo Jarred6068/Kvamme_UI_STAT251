@@ -124,6 +124,8 @@ Example: The random variable $X$ models the number of hits in five at-bats for p
 
 * Compute the probability that Luis Arraez gets more than 4 hits in the next five at-bats
 
+# Lecture 14 Wednesday Feb. 23rd 2024
+
 ### The Poisson distribution
 
 The Poisson (pronounced "$\text{Pwa - s}\tilde o$") distribution is named after French Scientist Siméon Denis Poisson (1781–1840). It models the probability that a given number of events occur in a fixed interval of time, assuming the events occur independently of each other and with a known constant mean rate $\lambda$. Thus, a Poisson random variable has the following characteristics:

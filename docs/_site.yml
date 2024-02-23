@@ -42,6 +42,8 @@ navbar:
             href: homeworks/week1homework.html
           - text: 'Homework 2'
             href: homeworks/week5homework.html
+          - text: 'Homework 2'
+            href: homeworks/week7homework.html
         - text: 'Solutions'
           menu: 
           - text: 'Hmwk 1 Solutions'
