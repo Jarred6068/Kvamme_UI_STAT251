@@ -33,7 +33,7 @@ navbar:
           - text: 'Week 7'
             href: lecturemenu7.html
           - text: 'Week 8'
-            href: lecturemenu7.html
+            href: lecturemenu8.html
         - text: 'Lecture Slides'
           href: lecslidesindex.html
     - text: 'Homeworks'
