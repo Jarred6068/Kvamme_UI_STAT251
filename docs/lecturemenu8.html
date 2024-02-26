@@ -1,0 +1,2341 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="STAT 251 Section 03" />
+
+
+<title>Week 8 Notes</title>
+
+<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-03</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lecture Notes</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="lecturemenu1.html">Week 1</a>
+        </li>
+        <li>
+          <a href="lecturemenu2.html">Week 2</a>
+        </li>
+        <li>
+          <a href="lecturemenu3.html">Week 3</a>
+        </li>
+        <li>
+          <a href="lecturemenu4.html">Week 4</a>
+        </li>
+        <li>
+          <a href="lecturemenu5.html">Week 5</a>
+        </li>
+        <li>
+          <a href="lecturemenu6.html">Week 6</a>
+        </li>
+        <li>
+          <a href="lecturemenu7.html">Week 7</a>
+        </li>
+        <li>
+          <a href="lecturemenu7.html">Week 8</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="lecslidesindex.html">Lecture Slides</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assignments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework.html">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework.html">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/week7homework.html">Homework 3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework_solns.html">Hmwk 1 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework_solns.html">Hmwk 2 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week7homework_sols.html">Hmwk 3 Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="homeworks/reading_and_book_problems.html">Reading &amp; Extra Problems</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="study_guides/exam1_study_guide.html">Exam 1 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 1 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam1_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam1_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
+        </li>
+        <li>
+          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
+        </li>
+        <li>
+          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="sac_schedule.html">SAC schedule</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tables</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/Z_table.html">Z-table</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="misc/rcode_examples.html">R code</a>
+    </li>
+    <li>
+      <a href="misc/R_download_instructions.html">Downloading R/Rstudio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week 8 Notes</h1>
+<h4 class="author">STAT 251 Section 03</h4>
+
+</div>
+
+
+<div id="monday-feb.19th-2024---no-class" class="section level1">
+<h1>Monday, Feb.19th 2024 - NO CLASS</h1>
+</div>
+<div id="lecture-13-wednesday-feb.-21st-2024" class="section level1">
+<h1>Lecture 13 Wednesday Feb. 21st 2024</h1>
+<div id="common-discrete-distributions" class="section level3">
+<h3>Common discrete distributions</h3>
+<p>We can think of a probability distribution as a model of a particular
+random process. Some types of random variables are commonly encountered
+and thus common models of these random variables have emerged to
+describe their probability distributions. Below we will introduce a few
+of the most commonly used probability distributions for discrete random
+variables.</p>
+</div>
+<div id="the-bernoulli-distribution" class="section level3">
+<h3>The Bernoulli distribution</h3>
+<p>The Bernoulli distribution, named after Swiss mathematician Jacob
+Bernoulli, is the probability distribution of a discrete random variable
+with two possible outcomes <span class="math inline">\([0, 1]\)</span>
+where the outcome <span class="math inline">\(X = 1\)</span> occurs with
+probability <span class="math inline">\(p\)</span> and the outcome <span
+class="math inline">\(X = 0\)</span> occurs with probability <span
+class="math inline">\(1-p\)</span>. This random variable can be used to
+model any binary random process like flipping a coin, or any categorical
+variable with two categories such as male or female. The
+<strong>probability mass function</strong> - which we can think of as
+the function which assigns probabilities to different outcomes of random
+variable - is given below</p>
+<p><span class="math display">\[ P(X) = \begin{cases} p &amp; \
+\text{if} \  X = 1 \\
+                      (1-p) &amp; \ \text{if} \ X = 0
+          \end{cases}
+\]</span></p>
+<p>The Bernoulli distribution has a single parameter <span
+class="math inline">\(p\)</span> which is referred to as the
+“probability of success” - referring to the probability that the outcome
+we are interested happens - such as getting Heads in a single flip of a
+coin. We usually denote that a random variable <span
+class="math inline">\(X\)</span> follows a Bernoulli distribution
+mathematically as <span class="math display">\[ X \sim Bernoulli(p)
+\]</span></p>
+<p>In probability theory, the term <strong>expected value</strong> is
+often used instead of mean or average however they technically mean the
+same thing. The expected value of a probability distribution for a
+random variable <span class="math inline">\(X\)</span> is denoted
+mathematically as <span class="math inline">\(E[X]\)</span>. The
+Bernoulli distribution has the following expected value and
+variance:</p>
+<p><span class="math display">\[ E[X] = p  \]</span> <span
+class="math display">\[ Var[X] = p(1-p)\]</span></p>
+<p>where <span class="math inline">\(Var[X]\)</span> means the variance
+of the random variable <span class="math inline">\(X\)</span>.</p>
+<p>Its important to note than many types of random variables can be
+remodeled into a Bernoulli distribution. Take for example a random
+variable <span class="math inline">\(Z\)</span> which assigns the
+numbers <span class="math inline">\(0\)</span>, <span
+class="math inline">\(1\)</span>, or <span
+class="math inline">\(2\)</span>, to people who have one of three
+categories of pets: cats, dogs, or fish, respectively. The following
+table gives the probability distribution of <span
+class="math inline">\(Z\)</span>:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Z
+</th>
+<th style="text-align:left;">
+Probability
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_2\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_3\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If we are interested in whether a single randomly sampled individual
+has a dog as a pet, then we may consider having a dog as the
+“successful” outcome and all other outcomes as “failures”. Then the
+random variable <span class="math inline">\(Y\)</span> assigns a value
+of <span class="math inline">\(1\)</span> to an individual who has a dog
+as a pet with probability <span class="math inline">\(p_2\)</span> and a
+value of <span class="math inline">\(0\)</span> to an individual who
+does not have a dog with probability <span class="math inline">\(1 - p_2
+= p_1+p_3\)</span>. Thus the random variable <span
+class="math inline">\(Y\)</span> follows a Bernoulli distribution:</p>
+<p><span class="math display">\[ Y \sim Bernoulli(p_2) \]</span></p>
+</div>
+<div id="the-binomial-distribution" class="section level3">
+<h3>The binomial distribution</h3>
+<p>The binomial distribution is probably the most widely used discrete
+probability model. A binomial random variable counts the number of
+“successful” outcomes out of <span class="math inline">\(n\)</span>
+independent trials where each trial has probability of success <span
+class="math inline">\(p\)</span>. Like the Bernoulli random variable,
+the binomial distribution deals with <i>dichotomous</i> outcomes. In
+fact, a binomial random variable is a sum of <span
+class="math inline">\(n\)</span> independent draws from a Bernoulli
+distribution. Thus the defining characteristics of a binomial
+distribution are</p>
+<ul>
+<li><p>There is a basic random process with two possible outcomes
+denoted as “success” or “failure”</p></li>
+<li><p>There are <span class="math inline">\(n\)</span> independent
+repetitions of the random process</p></li>
+<li><p>the probability of success <span class="math inline">\(p\)</span>
+is constant all observations of the random process</p></li>
+</ul>
+<p>Thus the number of trials <span class="math inline">\(n\)</span> and
+the probability of success <span class="math inline">\(p\)</span> are
+parameters of the binomial distribution. A random variable <span
+class="math inline">\(X\)</span> which follows the binomial distribution
+is denoted mathematically as</p>
+<p><span class="math display">\[ X \sim Binom(n, p)  \]</span></p>
+<p>Typical applications of the binomial distribution involve
+experimental outcomes such as the number of patients who recovered from
+illness while taking an experimental drug. Or the number of salmon that
+successfully spawn in a creek on a given day of the week.</p>
+<p>The mean and variance of the binomial distribution are given by:</p>
+<p><span class="math display">\[ E[X] = np \]</span> <span
+class="math display">\[ Var[X] = np(1-p) \]</span></p>
+<p>The binomial distribution has the following probability mass
+function:</p>
+<p><span class="math display">\[ P(X = k) = \binom nk p^k
+(1-p)^{n-k}\]</span></p>
+<p>The first quantity is called the binomial coefficient and counts the
+number of ways to arrange <span class="math inline">\(k\)</span>
+successes among <span class="math inline">\(n\)</span> independent
+trials. Mathemtically it is defined as</p>
+<p><span class="math display">\[ \binom nk =
+\frac{n!}{k!(n-k)!}  \]</span></p>
+<p>The symbol <span class="math inline">\(!\)</span> is called a
+factorial. In mathematics, a factorial is the product of all positive
+integers less than or equal to a given positive integer and not
+including <span class="math inline">\(0\)</span>. <span
+class="math display">\[n! = n \times (n-1) \times (n-2) \times \dots
+\times 1 \]</span></p>
+<p>For example the quantity <span class="math inline">\(5!\)</span> is
+computed as</p>
+<p><span class="math display">\[ 5! = 5\times 4\times 3\times 2\times
+1\]</span></p>
+<p>It is also important to note that the quantity <span
+class="math inline">\(0! = 1\)</span> which is admittedly not
+intuitive.</p>
+<p>To explain in more detail, if we think of the <span
+class="math inline">\(n\)</span> trials as a sequence of <span
+class="math inline">\(k\)</span> ones (successes) and <span
+class="math inline">\(n-k\)</span> zeros (failures), then the binomial
+coefficient is essentially enumerating and counting all possible
+<i>permutations</i> of that sequence. Consider the possible sequences of
+two successes in three trials: there are three possible sequences of
+successes and failures we could observe:</p>
+<p><span class="math display">\[ (1, 1, 0) \\
+   (1, 0, 1) \\
+   (0, 1, 1)\]</span></p>
+<p>Using the binomial coefficient we have</p>
+<p><span class="math display">\[ \binom 32 = \frac{3!}{2! (3-2)!} =
+\frac{3\times 2\times 1}{2\times 1 \times 1} = 3 \]</span></p>
+<p>Example: The random variable <span class="math inline">\(X\)</span>
+models the number of hits in five at-bats for professional baseball
+player Luis Arraez of the Miami Marlins who has a hit percentage of
+<span class="math inline">\(79\%\)</span>. Thus <span
+class="math inline">\(X\)</span> is a binomial random variable <span
+class="math display">\[ X \sim Binom(n=5, p=0.79) \]</span></p>
+<ul>
+<li><p>Compute the probability that Luis Arraez gets <u>one hit</u> in
+the next five at-bats</p></li>
+<li><p>Compute the probability that Luis Arraez gets more than 4 hits in
+the next five at-bats</p></li>
+</ul>
+</div>
+</div>
+<div id="lecture-14-wednesday-feb.-23rd-2024" class="section level1">
+<h1>Lecture 14 Wednesday Feb. 23rd 2024</h1>
+<div id="the-poisson-distribution" class="section level3">
+<h3>The Poisson distribution</h3>
+<p>The Poisson (pronounced “<span class="math inline">\(\text{Pwa -
+s}\tilde o\)</span>”) distribution is named after French Scientist
+Siméon Denis Poisson (1781–1840). It models the probability that a given
+number of events occur in a fixed interval of time, assuming the events
+occur independently of each other and with a known constant mean rate
+<span class="math inline">\(\lambda\)</span>. Thus, a Poisson random
+variable has the following characteristics:</p>
+<ul>
+<li><p>The occurrence of one event does not affect the probability that
+a second event will occur. That is, events occur independently.</p></li>
+<li><p>The rate at which events occur is constant. The rate cannot be
+higher in some intervals and lower in other intervals.</p></li>
+<li><p>Two events cannot occur at exactly the same instant; instead, at
+each very small sub-interval exactly one event either occurs or does not
+occur.</p></li>
+<li><p>the events occur at rate <span
+class="math inline">\(\lambda\)</span> - also called the rate parameter
+- and is striclty positive <span class="math inline">\(\lambda \in
+(0,1)\)</span>.</p></li>
+</ul>
+<p>The probability mass function is given by</p>
+<p><span class="math display">\[ P(X = k) = \frac{\lambda^k
+e^{-\lambda}}{k!}\]</span></p>
+<p>where <span class="math inline">\(k\)</span> is the number of events
+occurring, <span class="math inline">\(\lambda\)</span> is the rate at
+which events occur. The quantity <span class="math inline">\(e\)</span>
+is called <i>Euhlers number</i>. It is a numerical constant that arises
+often in mathematics and can be characterized in many different ways.
+One definition occurs as the limit point of the sequence <span
+class="math inline">\((1+1/n)^n\)</span>:</p>
+<p><span class="math display">\[e = \lim_{n\rightarrow \infty} \left(
+1+\frac{1}{n} \right)^n \approx 2.7183 \]</span></p>
+<p>virtually all calculators will have a <i>natural exponentiation</i>
+button for this quantitiy which is defined as</p>
+<p><span class="math display">\[ e = \exp(1) \]</span></p>
+<p>The expected value and variance of a Poisson random variable are both
+given by the rate parameter <span
+class="math inline">\(\lambda\)</span></p>
+<p><span class="math display">\[ E[X] = \lambda\]</span> <span
+class="math display">\[ Var[X] = \lambda\]</span></p>
+<p>The Poisson distribution has a wide range of applications across
+scientific disciplines including finance, genetics, infectious disease,
+manufacturing and many more. Some examples of the poisson random
+variables are given below:</p>
+<ul>
+<li><p>The number of mutations on a strand of DNA occurring in a given
+unit of time</p></li>
+<li><p>The number of defective products produced per hour of assembly at
+a factory</p></li>
+<li><p>The number of bankruptcies filed in a given month</p></li>
+<li><p>The number of internet connection failures in a given
+month</p></li>
+</ul>
+<p>Example: Let the random variable <span
+class="math inline">\(Y\)</span> represent the number of phone calls
+placed to a call center each hour during peak customer service hours.
+Assume that calls typically occur at a rate of <span
+class="math inline">\(10\)</span> calls per hour.</p>
+<ul>
+<li><p>What is the probability that the call center receives <span
+class="math inline">\(8\)</span> calls in the next hour?</p></li>
+<li><p>What is the probability that the call center receives fewer than
+<span class="math inline">\(2\)</span> calls in the next hour?</p></li>
+</ul>
+</div>
+<div id="continuous-random-variables" class="section level3">
+<h3>Continuous random variables</h3>
+<p>Recall that continuous random variables have an uncountable number of
+outcomes. As a result finding probabilities for continuous random
+variables requires a heavier mathematical treatment. For continuous
+random variables, the function which assigns probabilities to different
+outcomes is called a <strong>probability density function</strong>.</p>
+<p>Since we cannot simply list the possible values of a continuous
+random variable and their probabilities, we have to rely on graphically
+displaying their distributions as we have done before. Consider the
+random variable <span class="math inline">\(X\)</span> with probability
+density function <span class="math inline">\(f(x)\)</span> given
+below</p>
+<p><img src="lecturemenu8_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
+<p>For a continuous distribution we cannot compute the probability that
+<span class="math inline">\(X\)</span> is equal to some particular value
+because <span class="math inline">\(X\)</span> can take on infinite
+number of values within a range. Thus the probability density is divided
+among an infinite number of outcomes making the probability of any one
+outcome effectively zero. We can however consider the probability of
+that <span class="math inline">\(X\)</span> takes on a value in some
+sub-interval of its domain. For example, we can compute the probability
+<span class="math inline">\(P(X&lt;0)\)</span>. Finding this probability
+amounts to finding the area underneath the probability density curve of
+<span class="math inline">\(X\)</span> in the interval <span
+class="math inline">\([-1, 0)\)</span>.</p>
+<div id="finding-probabilities-from-continuous-distributions"
+class="section level4">
+<h4>Finding probabilities from continuous distributions</h4>
+<p>Normally, the mathematics of calculus would be required to compute
+this probability and we would need to integrate <span
+class="math inline">\(f(x)\)</span> over this range of values. However,
+in the example above we can manually extrapolate the area under the
+curve. Notice that the area of the curve is divided into a grid. By
+finding the area of a single box in the graph, we can multiplying this
+area by the number of boxes in previously specified range to compute the
+total area under the curve. For example, the area of a single box is</p>
+<p><span class="math display">\[ \text{Area} = 0.25 \times 0.16 =
+0.04\]</span></p>
+<p>Now that we know the area of a single box on the plot</p>
+<p><span class="math display">\[P(X &lt; 0) = 0.04*17 = 0.68
+\]</span></p>
+<p>Lets consider another example: Below is the probability density
+function for a random variable <span
+class="math inline">\(W\)</span></p>
+<p><img src="lecturemenu8_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<ul>
+<li>Find the probability <span class="math inline">\(P(W \leq
+1)\)</span>. Again, to solve this we can extrapolate the area under the
+curve. Since the area between <span class="math inline">\(0\)</span> and
+<span class="math inline">\(1\)</span> of the distribution forms a
+right-angle triangle we can compute the area using the formula for the
+area of a triangle:</li>
+</ul>
+<p><span class="math display">\[\text{area of triange} = \frac{1}{2}(b
+\times h) \]</span></p>
+<p>where <span class="math inline">\(b\)</span> is the base length and
+<span class="math inline">\(h\)</span> is the height of the trangle.</p>
+<p><span class="math display">\[ P(W\leq 1) = \frac{1}{2}(1\times 0.2) =
+0.1 \]</span></p>
+</div>
+<div id="mean-and-variance-of-continuous-random-variables"
+class="section level4">
+<h4>Mean and variance of continuous random variables</h4>
+<ul>
+<li>The mean <span class="math inline">\(\mu\)</span> and variance <span
+class="math inline">\(\sigma^2\)</span> of continuous random variable
+cannot (usually) be defined or computed without calculus but their
+interpretations are the same as for discrete distributions</li>
+</ul>
+</div>
+<div id="the-normal-distribution-revisted" class="section level4">
+<h4>The normal distribution revisted</h4>
+<p>We can also talk about the normal distribution as a family of
+probability distributions. As before, the normal distribution has two
+parameters <span class="math inline">\(\mu\)</span> - the location
+parameter, and <span class="math inline">\(\sigma\)</span> the “spread”
+parameter. The normal distribution has the following probability density
+function</p>
+<p><span class="math display">\[ f(x) = \frac{1}{\sigma \sqrt{2\pi}}
+\cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}} \]</span></p>
+<p>Finding probability from the normal distribution is not as straight
+forward as the examples we did earlier. <u> we cannot easily extrapolate
+probabilities</u> from the graph of a normal distribution. While we may
+use the empirical rule to identify the approximate quantiles of normal
+distribution, finding exact probabilities would require us to use
+calculus as we have said before. For example, suppose <span
+class="math inline">\(X\)</span> is normally distributed with mean <span
+class="math inline">\(\mu\)</span> and standard deviation <span
+class="math inline">\(\sigma\)</span>. To find the probability <span
+class="math inline">\(P(a\leq X\leq b)\)</span> we would need to
+compute:</p>
+<p><span class="math display">\[ P(a\leq X\leq b) = \int_{a}^{b}
+\frac{1}{\sigma \sqrt{2\pi}} \cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}}
+\]</span></p>
+<p>However, these skills are outside the purveiw of this course.
+Luckily, the normal distribution is used so frequently in statistics
+that precomputed tables of probabilities are usually available. These
+tables are often referred to as <span class="math inline">\(Z\)</span>
+tables because they are based on the <strong>standard normal
+distribtion</strong>. In addition, because the normal distribution is
+symmetric, we usually only need to compute the probabilities for either
+the positive or negative half of the distribution. Here is an example of
+a <span class="math inline">\(Z\)</span>-table</p>
+<table class="table" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+STANDARD NORMAL DISTRIBUTION: Table Values Represent AREA to the LEFT of
+the Z score.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Z
+</th>
+<th style="text-align:right;">
+.00
+</th>
+<th style="text-align:right;">
+.01
+</th>
+<th style="text-align:right;">
+.02
+</th>
+<th style="text-align:right;">
+.03
+</th>
+<th style="text-align:right;">
+.04
+</th>
+<th style="text-align:right;">
+.05
+</th>
+<th style="text-align:right;">
+.06
+</th>
+<th style="text-align:right;">
+.07
+</th>
+<th style="text-align:right;">
+.08
+</th>
+<th style="text-align:right;">
+.09
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.500
+</td>
+<td style="text-align:right;">
+0.496
+</td>
+<td style="text-align:right;">
+0.492
+</td>
+<td style="text-align:right;">
+0.488
+</td>
+<td style="text-align:right;">
+0.484
+</td>
+<td style="text-align:right;">
+0.480
+</td>
+<td style="text-align:right;">
+0.476
+</td>
+<td style="text-align:right;">
+0.472
+</td>
+<td style="text-align:right;">
+0.468
+</td>
+<td style="text-align:right;">
+0.464
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.1
+</td>
+<td style="text-align:right;">
+0.540
+</td>
+<td style="text-align:right;">
+0.536
+</td>
+<td style="text-align:right;">
+0.532
+</td>
+<td style="text-align:right;">
+0.528
+</td>
+<td style="text-align:right;">
+0.524
+</td>
+<td style="text-align:right;">
+0.520
+</td>
+<td style="text-align:right;">
+0.516
+</td>
+<td style="text-align:right;">
+0.512
+</td>
+<td style="text-align:right;">
+0.508
+</td>
+<td style="text-align:right;">
+0.504
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+0.579
+</td>
+<td style="text-align:right;">
+0.575
+</td>
+<td style="text-align:right;">
+0.571
+</td>
+<td style="text-align:right;">
+0.567
+</td>
+<td style="text-align:right;">
+0.564
+</td>
+<td style="text-align:right;">
+0.560
+</td>
+<td style="text-align:right;">
+0.556
+</td>
+<td style="text-align:right;">
+0.552
+</td>
+<td style="text-align:right;">
+0.548
+</td>
+<td style="text-align:right;">
+0.544
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.3
+</td>
+<td style="text-align:right;">
+0.618
+</td>
+<td style="text-align:right;">
+0.614
+</td>
+<td style="text-align:right;">
+0.610
+</td>
+<td style="text-align:right;">
+0.606
+</td>
+<td style="text-align:right;">
+0.603
+</td>
+<td style="text-align:right;">
+0.599
+</td>
+<td style="text-align:right;">
+0.595
+</td>
+<td style="text-align:right;">
+0.591
+</td>
+<td style="text-align:right;">
+0.587
+</td>
+<td style="text-align:right;">
+0.583
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+0.655
+</td>
+<td style="text-align:right;">
+0.652
+</td>
+<td style="text-align:right;">
+0.648
+</td>
+<td style="text-align:right;">
+0.644
+</td>
+<td style="text-align:right;">
+0.641
+</td>
+<td style="text-align:right;">
+0.637
+</td>
+<td style="text-align:right;">
+0.633
+</td>
+<td style="text-align:right;">
+0.629
+</td>
+<td style="text-align:right;">
+0.626
+</td>
+<td style="text-align:right;">
+0.622
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.691
+</td>
+<td style="text-align:right;">
+0.688
+</td>
+<td style="text-align:right;">
+0.684
+</td>
+<td style="text-align:right;">
+0.681
+</td>
+<td style="text-align:right;">
+0.677
+</td>
+<td style="text-align:right;">
+0.674
+</td>
+<td style="text-align:right;">
+0.670
+</td>
+<td style="text-align:right;">
+0.666
+</td>
+<td style="text-align:right;">
+0.663
+</td>
+<td style="text-align:right;">
+0.659
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.726
+</td>
+<td style="text-align:right;">
+0.722
+</td>
+<td style="text-align:right;">
+0.719
+</td>
+<td style="text-align:right;">
+0.716
+</td>
+<td style="text-align:right;">
+0.712
+</td>
+<td style="text-align:right;">
+0.709
+</td>
+<td style="text-align:right;">
+0.705
+</td>
+<td style="text-align:right;">
+0.702
+</td>
+<td style="text-align:right;">
+0.698
+</td>
+<td style="text-align:right;">
+0.695
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+0.758
+</td>
+<td style="text-align:right;">
+0.755
+</td>
+<td style="text-align:right;">
+0.752
+</td>
+<td style="text-align:right;">
+0.749
+</td>
+<td style="text-align:right;">
+0.745
+</td>
+<td style="text-align:right;">
+0.742
+</td>
+<td style="text-align:right;">
+0.739
+</td>
+<td style="text-align:right;">
+0.736
+</td>
+<td style="text-align:right;">
+0.732
+</td>
+<td style="text-align:right;">
+0.729
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:right;">
+0.788
+</td>
+<td style="text-align:right;">
+0.785
+</td>
+<td style="text-align:right;">
+0.782
+</td>
+<td style="text-align:right;">
+0.779
+</td>
+<td style="text-align:right;">
+0.776
+</td>
+<td style="text-align:right;">
+0.773
+</td>
+<td style="text-align:right;">
+0.770
+</td>
+<td style="text-align:right;">
+0.767
+</td>
+<td style="text-align:right;">
+0.764
+</td>
+<td style="text-align:right;">
+0.761
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.9
+</td>
+<td style="text-align:right;">
+0.816
+</td>
+<td style="text-align:right;">
+0.813
+</td>
+<td style="text-align:right;">
+0.811
+</td>
+<td style="text-align:right;">
+0.808
+</td>
+<td style="text-align:right;">
+0.805
+</td>
+<td style="text-align:right;">
+0.802
+</td>
+<td style="text-align:right;">
+0.800
+</td>
+<td style="text-align:right;">
+0.797
+</td>
+<td style="text-align:right;">
+0.794
+</td>
+<td style="text-align:right;">
+0.791
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.841
+</td>
+<td style="text-align:right;">
+0.839
+</td>
+<td style="text-align:right;">
+0.836
+</td>
+<td style="text-align:right;">
+0.834
+</td>
+<td style="text-align:right;">
+0.831
+</td>
+<td style="text-align:right;">
+0.829
+</td>
+<td style="text-align:right;">
+0.826
+</td>
+<td style="text-align:right;">
+0.824
+</td>
+<td style="text-align:right;">
+0.821
+</td>
+<td style="text-align:right;">
+0.819
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.1
+</td>
+<td style="text-align:right;">
+0.864
+</td>
+<td style="text-align:right;">
+0.862
+</td>
+<td style="text-align:right;">
+0.860
+</td>
+<td style="text-align:right;">
+0.858
+</td>
+<td style="text-align:right;">
+0.855
+</td>
+<td style="text-align:right;">
+0.853
+</td>
+<td style="text-align:right;">
+0.851
+</td>
+<td style="text-align:right;">
+0.848
+</td>
+<td style="text-align:right;">
+0.846
+</td>
+<td style="text-align:right;">
+0.844
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+0.885
+</td>
+<td style="text-align:right;">
+0.883
+</td>
+<td style="text-align:right;">
+0.881
+</td>
+<td style="text-align:right;">
+0.879
+</td>
+<td style="text-align:right;">
+0.877
+</td>
+<td style="text-align:right;">
+0.875
+</td>
+<td style="text-align:right;">
+0.873
+</td>
+<td style="text-align:right;">
+0.871
+</td>
+<td style="text-align:right;">
+0.869
+</td>
+<td style="text-align:right;">
+0.867
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:right;">
+0.903
+</td>
+<td style="text-align:right;">
+0.901
+</td>
+<td style="text-align:right;">
+0.900
+</td>
+<td style="text-align:right;">
+0.898
+</td>
+<td style="text-align:right;">
+0.896
+</td>
+<td style="text-align:right;">
+0.894
+</td>
+<td style="text-align:right;">
+0.893
+</td>
+<td style="text-align:right;">
+0.891
+</td>
+<td style="text-align:right;">
+0.889
+</td>
+<td style="text-align:right;">
+0.887
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:right;">
+0.919
+</td>
+<td style="text-align:right;">
+0.918
+</td>
+<td style="text-align:right;">
+0.916
+</td>
+<td style="text-align:right;">
+0.915
+</td>
+<td style="text-align:right;">
+0.913
+</td>
+<td style="text-align:right;">
+0.911
+</td>
+<td style="text-align:right;">
+0.910
+</td>
+<td style="text-align:right;">
+0.908
+</td>
+<td style="text-align:right;">
+0.907
+</td>
+<td style="text-align:right;">
+0.905
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:right;">
+0.933
+</td>
+<td style="text-align:right;">
+0.932
+</td>
+<td style="text-align:right;">
+0.931
+</td>
+<td style="text-align:right;">
+0.929
+</td>
+<td style="text-align:right;">
+0.928
+</td>
+<td style="text-align:right;">
+0.926
+</td>
+<td style="text-align:right;">
+0.925
+</td>
+<td style="text-align:right;">
+0.924
+</td>
+<td style="text-align:right;">
+0.922
+</td>
+<td style="text-align:right;">
+0.921
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+0.945
+</td>
+<td style="text-align:right;">
+0.944
+</td>
+<td style="text-align:right;">
+0.943
+</td>
+<td style="text-align:right;">
+0.942
+</td>
+<td style="text-align:right;">
+0.941
+</td>
+<td style="text-align:right;">
+0.939
+</td>
+<td style="text-align:right;">
+0.938
+</td>
+<td style="text-align:right;">
+0.937
+</td>
+<td style="text-align:right;">
+0.936
+</td>
+<td style="text-align:right;">
+0.934
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.7
+</td>
+<td style="text-align:right;">
+0.955
+</td>
+<td style="text-align:right;">
+0.954
+</td>
+<td style="text-align:right;">
+0.954
+</td>
+<td style="text-align:right;">
+0.953
+</td>
+<td style="text-align:right;">
+0.952
+</td>
+<td style="text-align:right;">
+0.951
+</td>
+<td style="text-align:right;">
+0.949
+</td>
+<td style="text-align:right;">
+0.948
+</td>
+<td style="text-align:right;">
+0.947
+</td>
+<td style="text-align:right;">
+0.946
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.8
+</td>
+<td style="text-align:right;">
+0.964
+</td>
+<td style="text-align:right;">
+0.963
+</td>
+<td style="text-align:right;">
+0.962
+</td>
+<td style="text-align:right;">
+0.962
+</td>
+<td style="text-align:right;">
+0.961
+</td>
+<td style="text-align:right;">
+0.960
+</td>
+<td style="text-align:right;">
+0.959
+</td>
+<td style="text-align:right;">
+0.958
+</td>
+<td style="text-align:right;">
+0.957
+</td>
+<td style="text-align:right;">
+0.956
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+0.971
+</td>
+<td style="text-align:right;">
+0.971
+</td>
+<td style="text-align:right;">
+0.970
+</td>
+<td style="text-align:right;">
+0.969
+</td>
+<td style="text-align:right;">
+0.969
+</td>
+<td style="text-align:right;">
+0.968
+</td>
+<td style="text-align:right;">
+0.967
+</td>
+<td style="text-align:right;">
+0.966
+</td>
+<td style="text-align:right;">
+0.966
+</td>
+<td style="text-align:right;">
+0.965
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:right;">
+0.977
+</td>
+<td style="text-align:right;">
+0.977
+</td>
+<td style="text-align:right;">
+0.976
+</td>
+<td style="text-align:right;">
+0.976
+</td>
+<td style="text-align:right;">
+0.975
+</td>
+<td style="text-align:right;">
+0.974
+</td>
+<td style="text-align:right;">
+0.974
+</td>
+<td style="text-align:right;">
+0.973
+</td>
+<td style="text-align:right;">
+0.973
+</td>
+<td style="text-align:right;">
+0.972
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+0.982
+</td>
+<td style="text-align:right;">
+0.982
+</td>
+<td style="text-align:right;">
+0.981
+</td>
+<td style="text-align:right;">
+0.981
+</td>
+<td style="text-align:right;">
+0.980
+</td>
+<td style="text-align:right;">
+0.980
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+<td style="text-align:right;">
+0.978
+</td>
+<td style="text-align:right;">
+0.978
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:right;">
+0.986
+</td>
+<td style="text-align:right;">
+0.986
+</td>
+<td style="text-align:right;">
+0.985
+</td>
+<td style="text-align:right;">
+0.985
+</td>
+<td style="text-align:right;">
+0.985
+</td>
+<td style="text-align:right;">
+0.984
+</td>
+<td style="text-align:right;">
+0.984
+</td>
+<td style="text-align:right;">
+0.983
+</td>
+<td style="text-align:right;">
+0.983
+</td>
+<td style="text-align:right;">
+0.983
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+<td style="text-align:right;">
+0.987
+</td>
+<td style="text-align:right;">
+0.987
+</td>
+<td style="text-align:right;">
+0.987
+</td>
+<td style="text-align:right;">
+0.986
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.4
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.8
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.4
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.7
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+</tbody>
+</table>
+<p>The left-most column gives the <span
+class="math inline">\(Z\)</span>-score and the columns to right of this
+column are for additional decimal places of the <span
+class="math inline">\(Z\)</span>-score. The values in the table
+represent <span class="math inline">\(P(Z\leq z)\)</span> and denote the
+area to left of the <span class="math inline">\(Z\)</span>-score.</p>
+<ul>
+<li><p>We can compute the <span class="math inline">\(Z\)</span> for
+<strong>any</strong> normal random variable and use the table above to
+find it’s probability.</p></li>
+<li><p>Try it out: Suppose <span class="math inline">\(X\sim N(5,
+10)\)</span>. Compute the probability that <span
+class="math inline">\(X\geq 25\)</span></p></li>
+<li><p>Try it out: Suppose <span class="math inline">\(X\sim N(-2,
+4)\)</span>. Compute the probability that <span class="math inline">\(-3
+\leq X \leq 1\)</span></p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
