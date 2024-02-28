@@ -24,7 +24,160 @@ library(gganimate)
 path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 ```
 
-# Lecture 15Monday, Feb.26th 2024
+# Lecture 15 Monday, Feb.26th 2024
+
+#### The normal distribution revisted 
+
+We can also talk about the normal distribution as a family of probability distributions. As before, the normal distribution has two parameters $\mu$ - the location parameter, and $\sigma$ the "spread" parameter. The normal distribution has the following probability density function 
+
+\[ f(x) = \frac{1}{\sigma \sqrt{2\pi}} \cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}} \]
+
+Finding probability from the normal distribution is not as straight forward as the examples we did earlier. <u> we cannot easily extrapolate probabilities</u> from the graph of a normal distribution. While we may use the empirical rule to identify the approximate quantiles of normal distribution, finding exact probabilities would require us to use calculus as we have said before. For example, suppose $X$ is normally distributed with mean $\mu$ and standard deviation $\sigma$. To find the probability $P(a\leq X\leq b)$ we would need to compute:
+
+\[ P(a\leq X\leq b) = \int_{a}^{b} \frac{1}{\sigma \sqrt{2\pi}} \cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}} \]
+
+However, these skills are outside the purveiw of this course. Luckily, the normal distribution is used so frequently in statistics that precomputed tables of probabilities are usually available. These tables are often referred to as $Z$ tables because they are based on the **standard normal distribtion**. In addition, because the normal distribution is symmetric, we usually only need to compute the probabilities for either the positive or negative half of the distribution. Here is an example of a $Z$-table
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+z = seq(0, 3.9, 0.1)
+
+tab = cbind.data.frame(Z = z, `.00` = pnorm(z), `.01` = pnorm(z-0.01), `.02` = pnorm(z-0.02), `.03` = pnorm(z-0.03),
+                       `.04` = pnorm(z-0.04), `.05` = pnorm(z-0.05), `.06` = pnorm(z-0.06), `.07` = pnorm(z-0.07),
+                       `.08` = pnorm(z-0.08), `.09` = pnorm(z-0.09))
+
+kable(tab, caption = 'STANDARD NORMAL DISTRIBUTION: Table Values Represent AREA to the LEFT of the Z score.',
+      digits = 3, booktabs = T)%>%
+  kable_styling(font_size = 12)
+
+```
+
+The left-most column gives the $Z$-score and the columns to right of this column are for additional decimal places of the $Z$-score. The values in the table represent $P(Z\leq z)$ and denote the area to left of the $Z$-score. 
+
+* We can compute the $Z$ for **any** normal random variable and use the table above to find it's probability. 
+
+* Try it out: Suppose $X\sim N(5, 10)$. Compute the probability that $X\geq 25$
+
+The table above gives the area to left of the <u>positive</u> values of the standard normal distribution. Therefore to the find the probability $P(X\geq 25)$ we must do little bit of work. First we need to convert from the distribution of $X$ to the standard normal distribution $Z$. We can do so by computing the the $z$-score equivalent for $X = 25$
+
+\[ z = \frac{25 - 5}{10} = 2\]
+
+Thus asking to find $P(X \geq 25)$ is the same as $P(Z \geq 2)$. But we are not quite ready to use the $Z$ table above. As stated previously the $Z$ table gives the probabilities corresponding to the left of each $z$-score i.e $P(Z\leq z)$. If we want to use the table above we need to flip the inequality in $P(Z\geq 2)$ so its facing in the same direction as $P(Z\leq z)$. Luckily, we can accomplish this by finding the complementary event:
+
+\[P(Z\geq 2) = 1 - P(Z < 2) \]
+
+```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
+
+std = 10
+avg = 5
+A = ggplot(data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm) + 
+  stat_function(fun = dnorm, 
+                xlim = c(2,4),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(limits = c(-4, 4), breaks = seq(-4, 4, 1))+
+        labs(title = paste0("Standard Normal (Z) Distribution"),
+             subtitle = TeX(paste0("$Z\\sim N(\\mu = ", 0, ', \\sigma = ',1, ')$')),
+             x = "Z",
+            y = "Density(Z)")+
+        theme_classic2()+
+        theme(legend.position = 'none')
+
+
+B = ggplot(data.frame(x = c(avg-4*std, avg+4*std)), aes(x)) +
+  stat_function(fun = dnorm, 
+                args = list(mean = avg, sd = std)) + 
+    stat_function(fun = dnorm,
+                args = list(mean = avg, sd = std),
+                xlim = c(25,45),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(limits = c(avg-4*std, avg+4*std), breaks = seq(avg-4*std, avg+4*std, std))+
+        labs(title = paste0("Distribution of X"),
+             subtitle = TeX(paste0("$X\\sim N(\\mu = ", avg, ', \\sigma = ',std, ')$')),
+             x = "X",
+            y = "Density(X)")+
+        theme_classic2()+
+        theme(legend.position = 'none')
+
+
+ggarrange(A, B, nrow = 1)
+```
+
+We can easily find $P(Z < 2)$ using the table above which gives $P(Z < 2) = 0.977$. Therefore, the probability we were asked to find in the begining computed as 
+
+\[P(X\geq 25) = 1 - P(Z\leq 2) = 1 - 0.977 = 0.023 \]
+
+If we think about this, it makes sense intuitively. The value $25$ is two standard deviations above the mean of $X$. Thus we are finding an area in the upper tail region of a normal distribution which we would expect to correspond to a small probability since there is very little area under the curve in this region. 
+
+* Try it out: Suppose $X\sim N(-2, 4)$. Compute the probability that $-3 \leq X \leq 1$
+
+We can take a similar approach to answer this problem. One major difference is that now we are trying to find the area between the points $X = -3$ and $X = 1$. Again, since the table gives the probability corresponding to the <u>total area</u> to the left of each $z$-score, we can find the area between two points by subtracting the larger area from the smaller one: 
+
+\[P(-3 \leq X \leq 1) = P(X\leq 1) - P(X\leq -3) \]
+
+```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
+
+std = 4
+avg = -2
+A = ggplot(data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm) + 
+  stat_function(fun = dnorm, 
+                xlim = c(-0.25,0.75),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(limits = c(-4, 4), breaks = seq(-4, 4, 1))+
+        labs(title = paste0("Standard Normal (Z) Distribution"),
+             subtitle = TeX(paste0("$Z\\sim N(\\mu = ", 0, ', \\sigma = ',1, ')$')),
+             x = "Z",
+            y = "Density(Z)")+
+        theme_classic2()+
+        theme(legend.position = 'none')
+
+
+B = ggplot(data.frame(x = c(avg-4*std, avg+4*std)), aes(x)) +
+  stat_function(fun = dnorm, 
+                args = list(mean = avg, sd = std)) + 
+    stat_function(fun = dnorm,
+                args = list(mean = avg, sd = std),
+                xlim = c(-3,1),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(limits = c(avg-4*std, avg+4*std), breaks = seq(avg-4*std, avg+4*std, std))+
+        labs(title = paste0("Distribution of X"),
+             subtitle = TeX(paste0("$X\\sim N(\\mu = ", avg, ', \\sigma = ',std, ')$')),
+             x = "X",
+            y = "Density(X)")+
+        theme_classic2()+
+        theme(legend.position = 'none')
+
+
+ggarrange(A, B, nrow = 1)
+```
+
+However, since we don't have a table for the specific normal distribution of $X$ we must again convert to the standard normal distribution to find each probability:
+
+\[z_1 = \frac{1 - (-2)}{4} = 0.75\]
+
+\[z_2 = \frac{-3 - (-2)}{4} = -0.25\]
+
+\[P(Z\leq 0.75) = 0.773\]
+
+\[P(Z \leq -0.25) = 0.401\]
+
+Therefore, we can compute the original probability as
+
+\[ P(-3 \leq X \leq 1) = P(-0.25 \leq Z \leq 0.75) \]
+\[= P(Z\leq 0.75) - P(Z\leq -0.25)\]
+\[= 0.773 - 0.401 = 0.372\]
+
+
+# Lecture 16 Wednesday, Feb.28th 2024
 
 Now that we have a strong understanding of the theory of mathematical probability we can use it to connect back to estimation and statistical inference. At this point we have learned about three different probability distributions:
 
@@ -40,7 +193,7 @@ Now that we have a strong understanding of the theory of mathematical probabilit
 
 ### The Central Limit Theorem
 
-A statistic computed from a random sample or randomized experiment is a random variable whose probability distribution is given by the sampling distribution. One of the most famous results from probability theory says that the distribution of a the mean $\bar{x}$ of a random variable computed from a sample of size $n$ will be approximately normally distributed for large $n$. This result is referred to as the **Central Limit Theorem (CLT)**. Formally the CLT states that for a set of independent and identically distributed random variables $X_1, X_2, ... X_n$, 
+A statistic computed from a random sample or randomized experiment is a random variable whose probability distribution is given by the sampling distribution. One of the most famous results from probability theory says that the distribution of a the mean $\bar{x}$ of a random variable computed from a sample of size $n$ will be approximately normally distributed if $n$ is large. This result is referred to as the **Central Limit Theorem (CLT)**. Formally, the CLT states that for a set of independent and identically distributed random variables $X_1, X_2, ... X_n$, 
 
 \[\frac{\sqrt{n}(\bar{X} - \mu)}{\sigma} \xrightarrow{d} N(0,1)\]
 
@@ -50,8 +203,9 @@ Where $\xrightarrow{d}$ means "converge in distribution" and $\bar{X} = \frac{1}
 * Each random variable $X_i$ can be thought of as an observation in a sample from the population distribution $X$. 
 * Note that the CLT assumes that each $X_i$ comes from the same distribution, and that they all have finite variance. 
 
-Informally, this means that as the sample size increases the shape of a sampling distribution of $\bar{x}$ or $\hat{p}$ will “approach” that of a normal distribution - regardless of the distribution of data distribution of the sample. Therefore the sampling distributions of both $\bar{x}$ and $\hat{p}$ are approximately normal-shaped for moderate to large sample sizes $n$. 
+Informally, this means that as the sample size increases the shape of a sampling distribution of $\bar{x}$ or $\hat{p}$ will “approach” that of a normal distribution - regardless of the distribution of data distribution of the sample. Therefore the sampling distributions of both $\bar{x}$ and $\hat{p}$ are approximately normal-shaped for moderate to large sample sizes $n$.
 
+To illustrate, consider the animated plot below which shows the sampling distribution of $\hat{p}$. The distribution of a sample proportion is binomial distributed such that $\hat{p}\sim Binom(n, p)$ and has mean $p$ and with standard deviation $\sqrt\frac{p(1-p)}{n}$. However, for moderate values of $p$ and large $n$, the CLT states that $\hat{p}$ will be approximately normally distributed. From the animation below we can see that as $n$ gets large the distribution for $\hat{p}$ looks more and more continuous and bell-shaped. 
 
 ```{r, eval = F, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
 
@@ -65,21 +219,21 @@ for(j in 1:length(n)){
   props = NULL
   for(i in 1:resamples){
     X=rbinom(n[j], 1, prob = p)
-    
+
     props[i]=sum(X/n[j])
   }
   df = cbind.data.frame(sample.size = rep(n[j], resamples), props = props)
   df.list[[j]] = df
 }
 
-options(repr.plot.width = 5, repr.plot.height =6)
+options(repr.plot.width = 10, repr.plot.height =5)
 data.final = do.call('rbind.data.frame', df.list)
 #xn = sort(rnorm(10000, n[j]*p, sqrt(n[j]*p*(1-p))))
 #yn = dnorm(xn, mean = n[j]*p, sqrt(n[j]*p*(1-p)))
 
 #df = cbind.data.frame(ix = c(1:length(props)), props = props)
 #jpeg(paste0('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/CLTpics/',"SS_",i,".jpg"))
-ggplot(data = data.final, aes(x = props))+geom_histogram(aes(y = ..density..), 
+ggplot(data = data.final, aes(x = props))+geom_histogram(aes(y = ..density..),
                                                    #bins = ceiling(sqrt(n[j])),
                                                    #bins = 15,
                                                    binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3)),
@@ -90,7 +244,9 @@ ggplot(data = data.final, aes(x = props))+geom_histogram(aes(y = ..density..),
   xlab(TeX("$\\hat{p}"))+
   ylab("Probability Density")+
   theme(axis.text = element_text(size = 12),
-        axis.title = element_text(size = 14))+
+        axis.title = element_text(size = 14),
+        axis.ticks = element_text(size = 12),
+        title = element_text(size = 16))+
   ggtitle('Sampling Distribution of the Proportion')+
   labs(subtitle = 'n =  {closest_state}')+
   transition_states(sample.size, state_length = 3, transition_length = 3)
@@ -98,62 +254,73 @@ ggplot(data = data.final, aes(x = props))+geom_histogram(aes(y = ..density..),
 # plot(A)
 # dev.off()
 anim_save(paste0('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/CLT.gif'))
+```
 
+```{r, eval = T, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
+knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/CLT.gif")
 ```
 
 
-
+Consider the sample mean $\bar{x}$ computed from a sample of $n$ observations of a single roll of a fair six-sided die. The animated plot below shows the sampling distribution of $\bar{x}$ as number of observations $n$ is increased. By the CLT, the distribution of $\bar{x}$ looks more and more normal as $n$ is increased.
 
 
 ```{r, eval = F, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
-#Sampling Distribution of the Mean
-n=c(2, 3, 5, 8, 10,20,40, 80, 100, 200)
-resamples = 10000
-p = 0.5
-#sample.size = 100
-df.list = list()
-for(j in 1:length(n)){
-  props = NULL
-  for(i in 1:resamples){
-    X=sample(c(1:6), n[j], replace = TRUE)
-    
-    props[i]=mean(X)
-  }
-  df = cbind.data.frame(sample.size = rep(n[j], resamples), props = props)
-  df.list[[j]] = df
-}
+# #Sampling Distribution of the Mean
+# n=c(2, 3, 5, 8, 10,20,40, 80, 100, 200)
+# resamples = 10000
+# p = 0.5
+# #sample.size = 100
+# df.list = list()
+# for(j in 1:length(n)){
+#   props = NULL
+#   for(i in 1:resamples){
+#     X=sample(c(1:6), n[j], replace = TRUE)
+#     
+#     props[i]=mean(X)
+#   }
+#   df = cbind.data.frame(sample.size = rep(n[j], resamples), props = props)
+#   df.list[[j]] = df
+# }
+# 
+# options(repr.plot.width = 5, repr.plot.height =6)
+# data.final = do.call('rbind.data.frame', df.list)
+# #xn = sort(rnorm(10000, n[j]*p, sqrt(n[j]*p*(1-p))))
+# #yn = dnorm(xn, mean = n[j]*p, sqrt(n[j]*p*(1-p)))
+# 
+# #df = cbind.data.frame(ix = c(1:length(props)), props = props)
+# #jpeg(paste0('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/CLTpics/',"SS_",i,".jpg"))
+# ggplot(data = data.final, aes(x = props))+geom_histogram(aes(y = ..density..), 
+#                                                          #bins = ceiling(sqrt(n[j])),
+#                                                          #bins = 15,
+#                                                          binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3)),
+#                                                          color = 'black',
+#                                                          fill = 'lightblue')+
+#   geom_density()+
+#   theme_hc()+
+#   xlab(TeX("$\\bar{x}"))+
+#   ylab("Probability Density")+
+#   theme(axis.text = element_text(size = 12),
+#         axis.title = element_text(size = 14))+
+#   ggtitle('Sampling Distribution of the Mean')+
+#   labs(subtitle = 'n =  {closest_state}')+
+#   transition_states(sample.size, state_length = 3, transition_length = 3)
+# # jpeg(paste0('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/CLTpics/',"SS_",n[j],".jpg"))
+# # plot(A)
+# # dev.off()
+# anim_save('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/CLT_mean.gif')
 
-options(repr.plot.width = 5, repr.plot.height =6)
-data.final = do.call('rbind.data.frame', df.list)
-#xn = sort(rnorm(10000, n[j]*p, sqrt(n[j]*p*(1-p))))
-#yn = dnorm(xn, mean = n[j]*p, sqrt(n[j]*p*(1-p)))
-
-#df = cbind.data.frame(ix = c(1:length(props)), props = props)
-#jpeg(paste0('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/CLTpics/',"SS_",i,".jpg"))
-ggplot(data = data.final, aes(x = props))+geom_histogram(aes(y = ..density..), 
-                                                         #bins = ceiling(sqrt(n[j])),
-                                                         #bins = 15,
-                                                         binwidth = function(x) 2 * IQR(x) / (length(x)^(1/3)),
-                                                         color = 'black',
-                                                         fill = 'lightblue')+
-  geom_density()+
-  theme_hc()+
-  xlab(TeX("$\\bar{x}"))+
-  ylab("Probability Density")+
-  theme(axis.text = element_text(size = 12),
-        axis.title = element_text(size = 14))+
-  ggtitle('Sampling Distribution of the Mean')+
-  labs(subtitle = 'n =  {closest_state}')+
-  transition_states(sample.size, state_length = 3, transition_length = 3)
-# jpeg(paste0('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/CLTpics/',"SS_",n[j],".jpg"))
-# plot(A)
-# dev.off()
-anim_save('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/CLT_mean.gif')
-
-
+# if (knitr:::is_latex_output()) {
+#   knitr::asis_output('\\url{....}')
+# } else {
+#   
+# }
 
 #ggarrange(A, B, nrow = 1, ncol = 2)
 
+```
+
+```{r, eval = T, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
+knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/CLT_mean.gif")
 
 
 ```

@@ -29,68 +29,108 @@ whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Wh
 
 datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 #<span style="color: red;"></span>
+library(plyr)
+#library(VennDiagram)
+library(ggvenn)
 ```
 
 
 ### Definitions
 Define the following terms/concepts
 
-* a.) Sampling Error - <span style="color: red;"></span>
+* a.) Sampling Error - <span style="color: red;">how close a given estimate is from the true population parameter it is estimating</span>
 
-* b.) Law of Large Numbers - <span style="color: red;"></span>
+* b.) Law of Large Numbers - <span style="color: red;">A theorem in probability and statistics which states that the relative frequency of an event will tend to “approach” (in some sense) the probability of an event as the number of observations increases</span>
 
-* c.) Sample Space - <span style="color: red;"></span>
+* c.) Sample Space - <span style="color: red;">the collection of all possible outcomes of a random phenomena or experiment</span>
 
-* d.) Event - <span style="color: red;"></span>
+* d.) Event - <span style="color: red;">An outcome of a random phenomena or experiment</span>
 
-* e.) Union - <span style="color: red;"></span>
+* e.) Union - <span style="color: red;">the combined outcomes of two events</span>
 
-* f.) Intersection - <span style="color: red;"></span>
+* f.) Intersection - <span style="color: red;">the overlapping outcomes of two events</span>
 
-* g.) Conditional Probability - <span style="color: red;"></span>
+* g.) Random Trial - <span style="color: red;">a process or experiment that can be repeated
+with a well-defined set of possible outcomes.</span>
 
-* h.) Random Trial - <span style="color: red;"></span>
+* h.) Random Variable - <span style="color: red;">a function that maps from the sample space of event to a value</span>
 
-* i.) Random Variable - <span style="color: red;"></span>
+* i.) Probability distribution - <span style="color: red;">a function that gives the probabilities of different possible outcomes of a random variable</span>
 
-* j.) Probability distribution - <span style="color: red;"></span>
+* j.) Population distribution - <span style="color: red;">is the probability distribution for a single observation of a random variable</span>
 
-* k.) Population distribution - <span style="color: red;"></span>
+* k.) Continuous random variable - <span style="color: red;">A random variable with an uncountable number of outcomes</span>
 
-* l.) Continuous random variable - <span style="color: red;">A random variable with an uncountable number of outcomes</span>
+* l.) Discrete random variable - <span style="color: red;">A random variable with a countable number of outcomes</span>
 
-* m.) Discrete random variable - <span style="color: red;">A random variable with a countable number of outcomes</span>
+* m.) Probability Mass Function - <span style="color: red;">A function which assigns a probability to each outcome of a discrete random variable</span>
 
-* n.) Probability Mass Function - <span style="color: red;">A function which assigns a probability to each outcome of a discrete random variable</span>
-
-* o.) Probability Density Function - <span style="color: red;">A function which assigns probability density to different outcomes of a continuous random variable</span>
+* n.) Probability Density Function - <span style="color: red;">A function which assigns probability density to different outcomes of a continuous random variable</span>
 
 
 ## Simple probability
 
 $\bf (1)$ A fair coin is thrown 3 times. What is the probability that <u>at least</u> one heads is observed? 
 
-<span style="color: red;"></span>
+<span style="color: red;">
+\[P(\text{At least one heads}) = 1-P(\text{No Heads})\]
+The sample space of this event is 
+\[\mathbb{S} = \begin{bmatrix} \text{No heads} = (H,H,H) \\ 
+\text{1 Heads} = (H,T,T),(T,H,T),(T,T,H)  \\
+\text{2 Heads} = (H,H,T),(H,T,H),(T,H,H) \\
+\text{All Heads} = (H,H,H) \end{bmatrix} \]
+The sample space consists of 8 possible outcomes and there is only one outcome with "No Heads".
+\[ P(\text{At least one heads}) = 1-P(\text{No Heads}) = 1-\frac{1}{8} = \frac{7}{8} \]
+</span>
 
 $\bf (2)$ Suppose that in a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Create a Venn diagram that models this situation. What is the probability that a student is in the band or plays a sport?
 
-<span style="color: red;"></span>
+```{r, eval = T, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+setwd("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/")
+x1 = c(paste(rep('bs', 5), 1:5), paste(rep('b', 8), 1:8))
+x2 = c(paste(rep('bs', 5), 1:5), paste(rep('s', 15),1:15))
+
+# venn.diagram(x = list(x1, x2), category.names = c("Band", "Sports"),
+#              filename = 'myvenn.png',
+#              OUTPUT = T)
+
+class = list(Band = c(1:8),
+             Sport = c(1:5, 10:19))
+ggvenn(
+  class, 
+  fill_color = c("#0073C2FF", "#EFC000FF", "#868686FF"),
+  stroke_size = 0.5, set_name_size = 8,
+  text_size = 6
+  )
+
+#knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Venn_4set_pretty.png")
+```
+
+
+<span style="color: red;">Since these events are non-disjoint, we must use the formula for a union of two non-disjoint events:
+\[P(A\cup B) = P(A) + P(B) - P(A\cap B)\]
+\[= \frac{8}{30}+\frac{15}{30} - \frac{5}{30} =\frac{18}{30}\]</span>
 
 $\bf (3)$ A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards (9 numbered cards and 3 face cards, and an Ace). 
 
 * Suppose a single card is drawn at random, what is the probability that it is a numbered?
-<span style="color: red;"></span>
+
+<span style="color: red;">\[P(\text{Card is numbered}) = \frac{\text{Number of ways to get numbered card}}{\text{Total number of cards}} = \frac{9 \cdot 4}{52} \]</span>
 
 * What is the probability that the selected card is the Ace of Spades (assume independence where necessary)? 
-<span style="color: red;"></span>
+
+<span style="color: red;">Let $A$ be the event that a card drawn at random is an Ace and $B$ be the event that a card drawn at random is a Spades. We are interested in the $P(A\cap B)$ and we are told to assume independence. Therefore
+\[P(A\cap B) = P(A)\cdot P(B) = \frac{4}{52} \cdot \frac{13}{52} = \frac{1}{52}\]</span>
 
 $\bf (4)$ An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random with replacement. What is the probability that first ball is yellow and the second ball is red?
 
-<span style="color: red;"></span>
+<span style="color: red;">Since the balls are selected <u>with replacement</u> the two events are independent. Therefore, the intersection of the two events: $A$ first ball yellow and $B$ second ball is red is given by
+\[P(A\cap B) = \frac{4}{16} \cdot \frac{7}{16}  = \frac{7}{64}\]</span>
 
 $\bf (5)$ The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is Windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume that these three types of weather events are independent. What is the probability that a given day is both Rainy, Cloudy, and Windy?
 
-<span style="color: red;"></span>
+<span style="color: red;">We are told the events are independent and we wish to find the interection of $R$, $W$ and $C$:
+\[P(R\cap W\cap C) = (0.1)(0.2)(0.7) = 0.014 \]</span>
 
 ## Sampling Distributions, Means, and Variances
 
@@ -107,16 +147,86 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 ```
 
 * Derive the sampling distribution for the mean of $n=2$ observations of $X$
-```{}
+
+<span style="color: red;">The sample space for a mean of two observations of $X$ is given below.</span>
+```{r, echo=F, message=F, warning=F}
+x = expand.grid(`Observation 1` = c(1:4), `Observation 2` = c(1:4))
+df = cbind.data.frame(x, rowMeans(x))
+
+kable(df, format = 'html', col.names = c('Observation 1', 'Observation 2', '$\\bar{X}$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+<span style="color: red;">The sampling distribution of $\bar{X}$ is given by:</span>
+```{r, echo=F, message=F, warning=F}
+x = expand.grid(`Observation 1` = c(1:4), `Observation 2` = c(1:4))
+
+unq.means = unique(rowMeans(x))
+
+xlabs = apply(x, 1, function(x) paste0("(", paste(x, collapse = ","), ")",collapse = ''))
+
+df = cbind.data.frame(unq.means, paste0('$\\color{red}{',summary(as.factor(rowMeans(x))), '(0.25^2)', '=', 0.25^2*summary(as.factor(rowMeans(x))), '}$'))
+
+kable(df, format = 'html', digits = 2, col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+px = 0.25^2*summary(as.factor(rowMeans(x)))
+avg = sum(unq.means*px)
+sigma.sq = sum((unq.means-avg)^2*px)
+sigma = sqrt(sigma.sq)
 ```
 
 * Compute the population mean $\mu$ and population standard deviation $\sigma$ of $X$
-<span style="color: red;"></span>
+
+<span style="color: red;">\[\mu =\sum_x xP(x) \]
+\[= 1(0.0625)+2(0.125)+\cdots +3.5(0.125)+4(0.0625)\]
+\[= 2.5 \]</span>
+
+<span style="color: red;">\[\sigma =\sqrt{\sum_x (x-\mu)^2P(x)} \]
+\[= \sqrt{(1-2.5)^2(0.0625)+(2-2.5)^2(0.125)+\cdots +(3.5-2.5)^2(0.125)+(4-2.5)^2(0.0625)} \]
+\[= \sqrt{0.625} \]
+\[= 0.791\]</span>
 
 $\bf (7)$ A random variable $Y$ has two possible outcomes. The outcome $Y = 1$ occurs with probability $p = 0.23$. Derive the sampling distribution for the proportion of outcomes with $Y = 1$ in a sample of $n = 3$ observations of $Y$.
 
-```{}
+<span style="color: red;">The population distribution of $Y$ is given by:</span>
+```{r, echo=F, message=F, warning=F}
+df = cbind(`$Y$` = c(0,1), `$P(Y)$` = c(0.77, 0.23))
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
 
+<span style="color: red;">The sample space for the sample proportion of 3 observations of $Y$ is given below.</span>
+
+```{r, echo=F, message=F, warning=F}
+gr = expand.grid(`Observation 1`=c(0,1), `Observation 2`=c(0,1), `Observation 3`=c(0,1))
+df = cbind.data.frame(gr, `$\\hat{p}$`=rowMeans(gr)) 
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+<span style="color: red;">The sampling distribution of $\hat{p}$ is given by:</span>
+
+```{r, echo=F, message=F, warning=F}
+gr = expand.grid(`Observation 1`=c(0,1), `Observation 2`=c(0,1), `Observation 3`=c(0,1))
+df = cbind.data.frame(gr, `$\\hat{p}$`=rowMeans(gr)) 
+
+
+unq.props = unique(rowMeans(gr))
+cases = c(0.77^3, 0.23*0.77^2, 0.23^2*0.77, 0.23^3)
+case.labs = c('(0.77^3)', '(0.23 \\times 0.77^2)', '(0.23^2\\times 0.77)', '(0.23^3)')
+
+xlabs = apply(gr, 1, function(x) paste0("(", paste(x, collapse = ","), ")",collapse = ''))
+probs = paste0('$\\color{red}{',summary(as.factor(rowMeans(gr))), case.labs, '=', round(cases*summary(as.factor(rowMeans(gr))),3), '}$')
+
+
+df2 = cbind.data.frame(unq.props, probs)
+
+kable(df2, format = 'html', col.names = c('$\\hat{p}$','$P(\\hat{p})$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
 
@@ -136,10 +246,66 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 * Confirm that $X$ has a mean of $\mu = 30$ cubic feet and a standard deviation of $\sigma = 10$ cubic
 feet by computing them yourself.
 
-<span style="color: red;"></span>
+<span style="color: red;">\[\mu = \sum_x xP(x)\]
+\[ = 10(0.1)+20(0.2)+30(0.3)+40(0.4)\]
+\[ = 30\]</span>
+
+
+<span style="color: red;">\[\sigma = \sqrt{\sum_x (x-\mu)^2P(x)}\]
+\[ = \sqrt{(10-30)^2(0.1)+(20-30)^2(0.2)+(30-30)^2(0.3)+(40-30)^2(0.4)}\]
+\[ = \sqrt{100}\]
+\[ = 10\]</span>
 
 * Derive the sampling distribution for the mean tree volume in a sample of $n = 2$ trees.
-```{}
+
+<span style="color: red;">The sample space for the sample mean of 2 observations of tree volume is given below.</span>
+```{r, echo=F, message=F, warning=F}
+
+x = expand.grid(`Observation 1` = seq(10, 40, 10), `Observation 2` = seq(10, 40, 10))
+df = cbind.data.frame(x, rowMeans(x))
+
+kable(df, format = 'html', col.names = c('Observation 1', 'Observation 2', '$\\bar{X}$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+<span style="color: red;">The sampling distribution of $\bar{X}$ is given by:</span>
+
+```{r, echo=F, message=F, warning=F}
+
+x = expand.grid(`Observation 1` = seq(10, 40, 10), `Observation 2` = seq(10, 40, 10))
+
+unq.means = unique(rowMeans(x))
+
+xlabs = apply(x, 1, function(x) paste0("(", paste(x, collapse = ","), ")",collapse = ''))
+cases = c(0.1^2, 
+          2*0.1*0.2, 
+          2*0.1*0.3+0.2^2, 
+          2*0.4*0.1+2*0.2*0.3, 
+          2*0.2*0.4+0.3^2,
+          2*0.3*0.4,
+          0.4^2
+          )
+case.labs = c('(0.1)^2', 
+              '2(0.1 \\times 0.2)', 
+              '2(0.1\\times 0.3)+0.2^2', 
+              '2(0.4\\times 0.1)+2(0.2\\times 0.3)',
+              '2(0.2\\times 0.4)+0.3^2',
+              '2(0.3\\times 0.4)',
+              '(0.4)^2'
+              )
+
+xlabs = apply(gr, 1, function(x) paste0("(", paste(x, collapse = ","), ")",collapse = ''))
+probs = paste0('$\\color{red}{', case.labs, '=', round(cases,4), '}$')
+df2 = cbind.data.frame(unq.means, probs)
+
+kable(df2, format = 'html', digits = 2, col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+px = 0.25^2*summary(as.factor(rowMeans(x)))
+avg = sum(unq.means*px)
+sigma.sq = sum((unq.means-avg)^2*px)
+sigma = sqrt(sigma.sq)
 ```
 
 ## Deriving Probabilities From Discrete Distributions
@@ -149,47 +315,70 @@ $\bf (9)$ Michael Dickson, who plays for the Seattle Seahawks, is a punter in th
 ```{r, echo=FALSE, warning=F, message=F}
 
 df = cbind.data.frame(`$\\bar{X} =$ Mean Punt Distance` = c(35.33, 45.67, 55.00, 60.33, 65.67),
-                      `$P(\\bar{X})$` = c(0.3, 0.5, 0.08, 0.01, 0.01))
+                      `$P(\\bar{X})$` = c(0.4, 0.5, 0.08, 0.01, 0.01))
 kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
 
 * What is the probability the mean distance is 55 or more yards?
-<span style="color: red;"></span>
+
+<span style="color: red;">\[ P(\bar{X} \geq 55) = 1- P(\bar{X} < 55)\]
+\[ = 1-(0.4+0.5) = 0.1 \]</span>
 
 * What is the probability the mean distance is at least 35.33 yards?
-<span style="color: red;"></span>
 
-* What is the probability the mean distance is between 25 and 45.67 yards?
-<span style="color: red;"></span>
+<span style="color: red;">\[ P(\bar{X} \geq 35.33) = 1\]</span>
 
-* What is the probability the mean distance is 25 yards or 55 yards?
-<span style="color: red;"></span>
+* What is the probability the mean distance is between 35.33 and 45.67 yards?
 
-$\bf (10)$ A random variable $X$ follows a binomial distribution with with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 success, that is what is $P(X \leq 3)$?
+<span style="color: red;">
+\[P(35.33\leq \bar{X} \leq 45.67) = P(X = 35.33)+P(X = 45.67) = 0.9\]
+</span>
+
+* What is the probability the mean distance is 35.33 yards or 55 yards?
+
+<span style="color: red;">Let $A$ be the event $\bar{X} = 35.33$ and $B$ be the event $\bar{X} = 55$, then
+\[P(A\cup B) = P(X = 35.33)+P(X = 55) = 0.3+0.08 = 0.38 \]</span>
+
+
+
+
+$\bf (10)$ A random variable $X$ follows a binomial distribution with with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 successes, that is what is $P(X < 3)$?
 
 <span style="color: red;">Let $X \sim Binomial(p = 0.43, n = 8)$ then</span>
 
-\[ \color{red}{P(X \leq 3) =  P(X = 0)+P(X = 1)+P(X = 2)+P(X = 3)}\]
+\[ \color{red}{P(X < 3) =  P(X = 0)+P(X = 1)+P(X = 2)}\]
 
-\[ \color{red}{= \sum_{k = 0}^3 \frac{8!}{k!(8 - k)!} \times 0.43^{k} \times (1-0.43)^{8-k} = 0.534}\]
+\[ \color{red}{= \sum_{k = 0}^2 \frac{8!}{k!(8 - k)!} \times 0.43^{k} \times (1-0.43)^{8-k} \approx 0.256}\]
+
+
+
+
 
 $\bf (11)$ Tom Brady is a famous quarterback who recently retired from playing in the National Football League. During his career, the probability that Brady would complete a pass in a given play was $64.3\%$.  If a typical NFL team runs about $35$ offensive pass plays, what is the probability that Brady would complete exactly $28$ pass plays in a game?
 
 <span style="color: red;"> Let $X \sim Binomial(p = 0.643, n = 35)$ then
 
-\[\color{red}{P(X = 28) = \frac{35!}{28!(35 - 28)!} \times 0.643^{28}\times (1-0.643)^{35-28} = 0.021}\] 
+\[\color{red}{P(X = 28) = \frac{35!}{28!(35 - 28)!} \times 0.643^{28}\times (1-0.643)^{35-28} \approx 0.021}\] 
 
 </span>
 
 
 $\bf (12)$ A random variable $W$ follows a Poisson distribution with rate parameter $\lambda = 1.8$ events per hour. What is the probability of observing exactly four events in a given hour, that is what is $P(W = 4)$?
 
+<span style="color: red;">Let $W\sim Poisson(\lambda = 1.8)$
+\[P(W = 4) = \frac{1.8^4\cdot e^{-1.8}}{4!} \approx 0.072 \]</span>
+
 <br>
 
 $\bf (13)$ A factory experiences on average 3 equipment malfunctions per day, following a Poisson distribution with a rate parameter of 3. Calculate the probability that on a randomly selected day, the factory will <u>observe 3 or more</u> equipment malfunctions.
 
+<span style="color: red;">let $X$ represent the number of equipment failures in a given day for the factor, then \[X\sim Poisson(\lambda = 3)\]
+\[P(X\geq 3) = 1 - P(X< 3)\]
+\[P(X < 3) =  P(X = 0)+P(X = 1)+P(X = 2)\]
+\[= 1-\sum_{k=0}^2 \frac{1.8^k\cdot e^{-1.8}}{k!} \approx 0.577\]
+</span>
 
 ## Deriving Probabilities From Continuous Distributions
 
@@ -217,12 +406,19 @@ ggplot(data = dist, aes(x = val, y = dens))+geom_step(size = 1)+theme_pander()+
 Use the plot to find the following probabilities:
 
 * What is $P(X<0.6)$?
-<span style="color: red;">$P(X<0.6)= 5\times 0.05 = 0.25$</span>
+
+<span style="color: red;">
+In this plot the area comprising a single grid square is 
+\[ \text{Area of a rectangle} = \text{Base}\times\text{Height} = 0.167\times 0.3 \approx 0.05\]
+there are six grid squares between $0$ and $0.6$, therefore
+\[P(X<0.6)= 6\times 0.05 = 0.3\]</span>
 
 * What is $P(X>0.3)$?
-<span style="color: red;">$P(X>0.3)=18\times 0.05 = 0.9$</span>
+
+<span style="color: red;">$P(X>0.3)= 1-P(X\leq 0.3) = 1-(2*0.05) = 0.9$</span>
 
 * What is $P(1.5<X<1.8)$?
+
 <span style="color: red;">$P(1.5<X<1.8)=0.05$</span>
 
 
@@ -288,19 +484,21 @@ Use the plot to find the following probabilities (recall that the area of a tria
 
 * What is $P(Z<2)$?
 
-<span style="color: red;">$P(Z<2)=0.3$</span>
+<span style="color: red;">$P(Z<2)=0.5(2)(0.3) = 0.3$</span>
 
 * What is $P(2<Z<3)$?
 
-<span style="color: red;">$P(2<Z<3)=0.2$</span>
+<span style="color: red;">In this plot a single grid square has an area of $0.05$
+thus the area between $Z = 2$ and $Z = 3$ is given by
+$P(2<Z<3)=2(0.05)+(0.5)(1)(0.2) = 0.2$</span>
 
 * What is $P(Z>4)$?
 
-<span style="color: red;">$P(Z>4)=0.3$</span>
+<span style="color: red;">$P(Z>4) = P(Z<2) =0.3$</span>
 
-* Give the value of the $25th$ percentile of distribution of $Z$
+* Give the approximate value of the $25th$ percentile of distribution of $Z$
 
-<span style="color: red;">$Q1 = 1$</span>
+<span style="color: red;">$Q1 \approx 2$</span>
 
 
 
@@ -309,9 +507,9 @@ ${\bf 17.)}$ Assume the continuous random variable $X$ follows a normal distribu
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
 ggplot()+xlim(c(-40, 90))+
   stat_function(fun = dnorm, 
-                args = list(mean = 25, sd = 16),
+                args = list(mean = 25, sd = 4),
                 size = 1)+
-  scale_x_continuous(limits = c(-40, 90), breaks = seq(-40, 90, 20))+
+  scale_x_continuous(limits = c(0, 50), breaks = seq(0, 50, 10))+
   theme_classic2()+
   xlab('X')+
   ylab('Density')
@@ -362,37 +560,48 @@ Using a $Z$-table, find the following (approximate) probabilities for $X$. You c
 ${\bf 18.)}$ Suppose that a random variable $X$ follows a normal distribution with mean $\mu = -5$ and standard deviation $\sigma = 1.8$. Using the plot of a the $Z$-distribution below, shade in the area corresponding to the probability $P(-2< X <0.5)$
 
 
-<span style="color: red;">tart by finding the $z$-scores\[ P(-2<X<0.5) = P(X<0.5) - P(X<-2)  \]
+<span style="color: red;">start by finding the $z$-scores\[ P(-2<X<0.5) = P(X<0.5) - P(X<-2)  \]
 \[ z_{\text{lower}} = \frac{0.5 - (-5)}{1.8} = 3.06\]
 \[ z_{\text{upper}} = \frac{-2 - (-5)}{1.8} = 1.67\]
 \[P(-2<X<0.5) = P(1.67< Z < 3.06)  \]</span>
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
-nmean = 0
-nsd = 1
 
-d_limit <- function(x, lower, upper, mean, sd){
-    y = dnorm(x, mean, sd)
-    y[which(x < lower)] <- NA
-    y[which(x > upper)] <- NA
-    return(y)
-  }
-
-ggplot(data.frame(x = c(nmean - 4*nsd, nmean + 4*nsd)), aes(x = x))+
-        stat_function(fun = d_limit,
-                      args = list(lower=1.67, upper = 3.06, mean = 0, sd = 1), 
-                      geom = "area", 
-                      fill = "cyan3", 
-                      alpha = 0.4)+
-        stat_function(fun = dnorm,
-                      args = list(mean = nmean, sd = nsd),
-                      size = 1)+
+A = ggplot(data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm) + 
+  stat_function(fun = dnorm, 
+                xlim = c(1.67,3.06),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(limits = c(-4, 4), breaks = seq(-4, 4, 1))+
         labs(title = paste0("Standard Normal (Z) Distribution"),
-             subtitle = TeX(paste0("$Z\\sim N(\\mu = ", nmean, ', \\sigma = ',nsd, ')$')),
+             subtitle = TeX(paste0("$Z\\sim N(\\mu = ", 0, ', \\sigma = ',1, ')$')),
              x = "Z",
-            y = "Probability(Z)")+
+            y = "Density(Z)")+
         theme_classic2()+
         theme(legend.position = 'none')
+
+
+B = ggplot(data.frame(x = c(-5-4*1.8, -5+4*1.8)), aes(x)) +
+  stat_function(fun = dnorm, 
+                args = list(mean = -5, sd = 1.8)) + 
+    stat_function(fun = dnorm,
+                args = list(mean = -5, sd = 1.8),
+                xlim = c(-2,0.5),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(limits = c(-5-4*1.8, -5+4*1.8), breaks = seq(-5-4*1.8, -5+4*1.8, 1.8))+
+        labs(title = paste0("Distribution of X"),
+             subtitle = TeX(paste0("$X\\sim N(\\mu = ", -5, ', \\sigma = ',1.8, ')$')),
+             x = "X",
+            y = "Density(X)")+
+        theme_classic2()+
+        theme(legend.position = 'none')
+
+
+ggarrange(A, B, nrow = 1)
 ```
 
 

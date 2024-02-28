@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -342,7 +344,7 @@ $(document).ready(function () {
           <a href="homeworks/week5homework_solns.html">Hmwk 2 Solutions</a>
         </li>
         <li>
-          <a href="homeworks/week7homework_sols.html">Hmwk 3 Solutions</a>
+          <a href="homeworks/week7homework_solns.html">Hmwk 3 Solutions</a>
         </li>
       </ul>
     </li>
@@ -456,8 +458,1571 @@ $(document).ready(function () {
 </div>
 
 
-<div id="lecture-15monday-feb.26th-2024" class="section level1">
-<h1>Lecture 15Monday, Feb.26th 2024</h1>
+<div id="lecture-15-monday-feb.26th-2024" class="section level1">
+<h1>Lecture 15 Monday, Feb.26th 2024</h1>
+<div id="the-normal-distribution-revisted" class="section level4">
+<h4>The normal distribution revisted</h4>
+<p>We can also talk about the normal distribution as a family of
+probability distributions. As before, the normal distribution has two
+parameters <span class="math inline">\(\mu\)</span> - the location
+parameter, and <span class="math inline">\(\sigma\)</span> the “spread”
+parameter. The normal distribution has the following probability density
+function</p>
+<p><span class="math display">\[ f(x) = \frac{1}{\sigma \sqrt{2\pi}}
+\cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}} \]</span></p>
+<p>Finding probability from the normal distribution is not as straight
+forward as the examples we did earlier. <u> we cannot easily extrapolate
+probabilities</u> from the graph of a normal distribution. While we may
+use the empirical rule to identify the approximate quantiles of normal
+distribution, finding exact probabilities would require us to use
+calculus as we have said before. For example, suppose <span
+class="math inline">\(X\)</span> is normally distributed with mean <span
+class="math inline">\(\mu\)</span> and standard deviation <span
+class="math inline">\(\sigma\)</span>. To find the probability <span
+class="math inline">\(P(a\leq X\leq b)\)</span> we would need to
+compute:</p>
+<p><span class="math display">\[ P(a\leq X\leq b) = \int_{a}^{b}
+\frac{1}{\sigma \sqrt{2\pi}} \cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}}
+\]</span></p>
+<p>However, these skills are outside the purveiw of this course.
+Luckily, the normal distribution is used so frequently in statistics
+that precomputed tables of probabilities are usually available. These
+tables are often referred to as <span class="math inline">\(Z\)</span>
+tables because they are based on the <strong>standard normal
+distribtion</strong>. In addition, because the normal distribution is
+symmetric, we usually only need to compute the probabilities for either
+the positive or negative half of the distribution. Here is an example of
+a <span class="math inline">\(Z\)</span>-table</p>
+<table class="table" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+STANDARD NORMAL DISTRIBUTION: Table Values Represent AREA to the LEFT of
+the Z score.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Z
+</th>
+<th style="text-align:right;">
+.00
+</th>
+<th style="text-align:right;">
+.01
+</th>
+<th style="text-align:right;">
+.02
+</th>
+<th style="text-align:right;">
+.03
+</th>
+<th style="text-align:right;">
+.04
+</th>
+<th style="text-align:right;">
+.05
+</th>
+<th style="text-align:right;">
+.06
+</th>
+<th style="text-align:right;">
+.07
+</th>
+<th style="text-align:right;">
+.08
+</th>
+<th style="text-align:right;">
+.09
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.500
+</td>
+<td style="text-align:right;">
+0.496
+</td>
+<td style="text-align:right;">
+0.492
+</td>
+<td style="text-align:right;">
+0.488
+</td>
+<td style="text-align:right;">
+0.484
+</td>
+<td style="text-align:right;">
+0.480
+</td>
+<td style="text-align:right;">
+0.476
+</td>
+<td style="text-align:right;">
+0.472
+</td>
+<td style="text-align:right;">
+0.468
+</td>
+<td style="text-align:right;">
+0.464
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.1
+</td>
+<td style="text-align:right;">
+0.540
+</td>
+<td style="text-align:right;">
+0.536
+</td>
+<td style="text-align:right;">
+0.532
+</td>
+<td style="text-align:right;">
+0.528
+</td>
+<td style="text-align:right;">
+0.524
+</td>
+<td style="text-align:right;">
+0.520
+</td>
+<td style="text-align:right;">
+0.516
+</td>
+<td style="text-align:right;">
+0.512
+</td>
+<td style="text-align:right;">
+0.508
+</td>
+<td style="text-align:right;">
+0.504
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+0.579
+</td>
+<td style="text-align:right;">
+0.575
+</td>
+<td style="text-align:right;">
+0.571
+</td>
+<td style="text-align:right;">
+0.567
+</td>
+<td style="text-align:right;">
+0.564
+</td>
+<td style="text-align:right;">
+0.560
+</td>
+<td style="text-align:right;">
+0.556
+</td>
+<td style="text-align:right;">
+0.552
+</td>
+<td style="text-align:right;">
+0.548
+</td>
+<td style="text-align:right;">
+0.544
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.3
+</td>
+<td style="text-align:right;">
+0.618
+</td>
+<td style="text-align:right;">
+0.614
+</td>
+<td style="text-align:right;">
+0.610
+</td>
+<td style="text-align:right;">
+0.606
+</td>
+<td style="text-align:right;">
+0.603
+</td>
+<td style="text-align:right;">
+0.599
+</td>
+<td style="text-align:right;">
+0.595
+</td>
+<td style="text-align:right;">
+0.591
+</td>
+<td style="text-align:right;">
+0.587
+</td>
+<td style="text-align:right;">
+0.583
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+0.655
+</td>
+<td style="text-align:right;">
+0.652
+</td>
+<td style="text-align:right;">
+0.648
+</td>
+<td style="text-align:right;">
+0.644
+</td>
+<td style="text-align:right;">
+0.641
+</td>
+<td style="text-align:right;">
+0.637
+</td>
+<td style="text-align:right;">
+0.633
+</td>
+<td style="text-align:right;">
+0.629
+</td>
+<td style="text-align:right;">
+0.626
+</td>
+<td style="text-align:right;">
+0.622
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.691
+</td>
+<td style="text-align:right;">
+0.688
+</td>
+<td style="text-align:right;">
+0.684
+</td>
+<td style="text-align:right;">
+0.681
+</td>
+<td style="text-align:right;">
+0.677
+</td>
+<td style="text-align:right;">
+0.674
+</td>
+<td style="text-align:right;">
+0.670
+</td>
+<td style="text-align:right;">
+0.666
+</td>
+<td style="text-align:right;">
+0.663
+</td>
+<td style="text-align:right;">
+0.659
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.726
+</td>
+<td style="text-align:right;">
+0.722
+</td>
+<td style="text-align:right;">
+0.719
+</td>
+<td style="text-align:right;">
+0.716
+</td>
+<td style="text-align:right;">
+0.712
+</td>
+<td style="text-align:right;">
+0.709
+</td>
+<td style="text-align:right;">
+0.705
+</td>
+<td style="text-align:right;">
+0.702
+</td>
+<td style="text-align:right;">
+0.698
+</td>
+<td style="text-align:right;">
+0.695
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+0.758
+</td>
+<td style="text-align:right;">
+0.755
+</td>
+<td style="text-align:right;">
+0.752
+</td>
+<td style="text-align:right;">
+0.749
+</td>
+<td style="text-align:right;">
+0.745
+</td>
+<td style="text-align:right;">
+0.742
+</td>
+<td style="text-align:right;">
+0.739
+</td>
+<td style="text-align:right;">
+0.736
+</td>
+<td style="text-align:right;">
+0.732
+</td>
+<td style="text-align:right;">
+0.729
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:right;">
+0.788
+</td>
+<td style="text-align:right;">
+0.785
+</td>
+<td style="text-align:right;">
+0.782
+</td>
+<td style="text-align:right;">
+0.779
+</td>
+<td style="text-align:right;">
+0.776
+</td>
+<td style="text-align:right;">
+0.773
+</td>
+<td style="text-align:right;">
+0.770
+</td>
+<td style="text-align:right;">
+0.767
+</td>
+<td style="text-align:right;">
+0.764
+</td>
+<td style="text-align:right;">
+0.761
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.9
+</td>
+<td style="text-align:right;">
+0.816
+</td>
+<td style="text-align:right;">
+0.813
+</td>
+<td style="text-align:right;">
+0.811
+</td>
+<td style="text-align:right;">
+0.808
+</td>
+<td style="text-align:right;">
+0.805
+</td>
+<td style="text-align:right;">
+0.802
+</td>
+<td style="text-align:right;">
+0.800
+</td>
+<td style="text-align:right;">
+0.797
+</td>
+<td style="text-align:right;">
+0.794
+</td>
+<td style="text-align:right;">
+0.791
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.841
+</td>
+<td style="text-align:right;">
+0.839
+</td>
+<td style="text-align:right;">
+0.836
+</td>
+<td style="text-align:right;">
+0.834
+</td>
+<td style="text-align:right;">
+0.831
+</td>
+<td style="text-align:right;">
+0.829
+</td>
+<td style="text-align:right;">
+0.826
+</td>
+<td style="text-align:right;">
+0.824
+</td>
+<td style="text-align:right;">
+0.821
+</td>
+<td style="text-align:right;">
+0.819
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.1
+</td>
+<td style="text-align:right;">
+0.864
+</td>
+<td style="text-align:right;">
+0.862
+</td>
+<td style="text-align:right;">
+0.860
+</td>
+<td style="text-align:right;">
+0.858
+</td>
+<td style="text-align:right;">
+0.855
+</td>
+<td style="text-align:right;">
+0.853
+</td>
+<td style="text-align:right;">
+0.851
+</td>
+<td style="text-align:right;">
+0.848
+</td>
+<td style="text-align:right;">
+0.846
+</td>
+<td style="text-align:right;">
+0.844
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+0.885
+</td>
+<td style="text-align:right;">
+0.883
+</td>
+<td style="text-align:right;">
+0.881
+</td>
+<td style="text-align:right;">
+0.879
+</td>
+<td style="text-align:right;">
+0.877
+</td>
+<td style="text-align:right;">
+0.875
+</td>
+<td style="text-align:right;">
+0.873
+</td>
+<td style="text-align:right;">
+0.871
+</td>
+<td style="text-align:right;">
+0.869
+</td>
+<td style="text-align:right;">
+0.867
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:right;">
+0.903
+</td>
+<td style="text-align:right;">
+0.901
+</td>
+<td style="text-align:right;">
+0.900
+</td>
+<td style="text-align:right;">
+0.898
+</td>
+<td style="text-align:right;">
+0.896
+</td>
+<td style="text-align:right;">
+0.894
+</td>
+<td style="text-align:right;">
+0.893
+</td>
+<td style="text-align:right;">
+0.891
+</td>
+<td style="text-align:right;">
+0.889
+</td>
+<td style="text-align:right;">
+0.887
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:right;">
+0.919
+</td>
+<td style="text-align:right;">
+0.918
+</td>
+<td style="text-align:right;">
+0.916
+</td>
+<td style="text-align:right;">
+0.915
+</td>
+<td style="text-align:right;">
+0.913
+</td>
+<td style="text-align:right;">
+0.911
+</td>
+<td style="text-align:right;">
+0.910
+</td>
+<td style="text-align:right;">
+0.908
+</td>
+<td style="text-align:right;">
+0.907
+</td>
+<td style="text-align:right;">
+0.905
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:right;">
+0.933
+</td>
+<td style="text-align:right;">
+0.932
+</td>
+<td style="text-align:right;">
+0.931
+</td>
+<td style="text-align:right;">
+0.929
+</td>
+<td style="text-align:right;">
+0.928
+</td>
+<td style="text-align:right;">
+0.926
+</td>
+<td style="text-align:right;">
+0.925
+</td>
+<td style="text-align:right;">
+0.924
+</td>
+<td style="text-align:right;">
+0.922
+</td>
+<td style="text-align:right;">
+0.921
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+0.945
+</td>
+<td style="text-align:right;">
+0.944
+</td>
+<td style="text-align:right;">
+0.943
+</td>
+<td style="text-align:right;">
+0.942
+</td>
+<td style="text-align:right;">
+0.941
+</td>
+<td style="text-align:right;">
+0.939
+</td>
+<td style="text-align:right;">
+0.938
+</td>
+<td style="text-align:right;">
+0.937
+</td>
+<td style="text-align:right;">
+0.936
+</td>
+<td style="text-align:right;">
+0.934
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.7
+</td>
+<td style="text-align:right;">
+0.955
+</td>
+<td style="text-align:right;">
+0.954
+</td>
+<td style="text-align:right;">
+0.954
+</td>
+<td style="text-align:right;">
+0.953
+</td>
+<td style="text-align:right;">
+0.952
+</td>
+<td style="text-align:right;">
+0.951
+</td>
+<td style="text-align:right;">
+0.949
+</td>
+<td style="text-align:right;">
+0.948
+</td>
+<td style="text-align:right;">
+0.947
+</td>
+<td style="text-align:right;">
+0.946
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.8
+</td>
+<td style="text-align:right;">
+0.964
+</td>
+<td style="text-align:right;">
+0.963
+</td>
+<td style="text-align:right;">
+0.962
+</td>
+<td style="text-align:right;">
+0.962
+</td>
+<td style="text-align:right;">
+0.961
+</td>
+<td style="text-align:right;">
+0.960
+</td>
+<td style="text-align:right;">
+0.959
+</td>
+<td style="text-align:right;">
+0.958
+</td>
+<td style="text-align:right;">
+0.957
+</td>
+<td style="text-align:right;">
+0.956
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+0.971
+</td>
+<td style="text-align:right;">
+0.971
+</td>
+<td style="text-align:right;">
+0.970
+</td>
+<td style="text-align:right;">
+0.969
+</td>
+<td style="text-align:right;">
+0.969
+</td>
+<td style="text-align:right;">
+0.968
+</td>
+<td style="text-align:right;">
+0.967
+</td>
+<td style="text-align:right;">
+0.966
+</td>
+<td style="text-align:right;">
+0.966
+</td>
+<td style="text-align:right;">
+0.965
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:right;">
+0.977
+</td>
+<td style="text-align:right;">
+0.977
+</td>
+<td style="text-align:right;">
+0.976
+</td>
+<td style="text-align:right;">
+0.976
+</td>
+<td style="text-align:right;">
+0.975
+</td>
+<td style="text-align:right;">
+0.974
+</td>
+<td style="text-align:right;">
+0.974
+</td>
+<td style="text-align:right;">
+0.973
+</td>
+<td style="text-align:right;">
+0.973
+</td>
+<td style="text-align:right;">
+0.972
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+0.982
+</td>
+<td style="text-align:right;">
+0.982
+</td>
+<td style="text-align:right;">
+0.981
+</td>
+<td style="text-align:right;">
+0.981
+</td>
+<td style="text-align:right;">
+0.980
+</td>
+<td style="text-align:right;">
+0.980
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+<td style="text-align:right;">
+0.979
+</td>
+<td style="text-align:right;">
+0.978
+</td>
+<td style="text-align:right;">
+0.978
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:right;">
+0.986
+</td>
+<td style="text-align:right;">
+0.986
+</td>
+<td style="text-align:right;">
+0.985
+</td>
+<td style="text-align:right;">
+0.985
+</td>
+<td style="text-align:right;">
+0.985
+</td>
+<td style="text-align:right;">
+0.984
+</td>
+<td style="text-align:right;">
+0.984
+</td>
+<td style="text-align:right;">
+0.983
+</td>
+<td style="text-align:right;">
+0.983
+</td>
+<td style="text-align:right;">
+0.983
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+0.989
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+<td style="text-align:right;">
+0.988
+</td>
+<td style="text-align:right;">
+0.987
+</td>
+<td style="text-align:right;">
+0.987
+</td>
+<td style="text-align:right;">
+0.987
+</td>
+<td style="text-align:right;">
+0.986
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.4
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+<td style="text-align:right;">
+0.990
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.993
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+<td style="text-align:right;">
+0.992
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.996
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.8
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+<td style="text-align:right;">
+0.997
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+<td style="text-align:right;">
+0.998
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+<td style="text-align:right;">
+0.999
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.4
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.7
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+</tbody>
+</table>
+<p>The left-most column gives the <span
+class="math inline">\(Z\)</span>-score and the columns to right of this
+column are for additional decimal places of the <span
+class="math inline">\(Z\)</span>-score. The values in the table
+represent <span class="math inline">\(P(Z\leq z)\)</span> and denote the
+area to left of the <span class="math inline">\(Z\)</span>-score.</p>
+<ul>
+<li><p>We can compute the <span class="math inline">\(Z\)</span> for
+<strong>any</strong> normal random variable and use the table above to
+find it’s probability.</p></li>
+<li><p>Try it out: Suppose <span class="math inline">\(X\sim N(5,
+10)\)</span>. Compute the probability that <span
+class="math inline">\(X\geq 25\)</span></p></li>
+</ul>
+<p>The table above gives the area to left of the <u>positive</u> values
+of the standard normal distribution. Therefore to the find the
+probability <span class="math inline">\(P(X\geq 25)\)</span> we must do
+little bit of work. First we need to convert from the distribution of
+<span class="math inline">\(X\)</span> to the standard normal
+distribution <span class="math inline">\(Z\)</span>. We can do so by
+computing the the <span class="math inline">\(z\)</span>-score
+equivalent for <span class="math inline">\(X = 25\)</span></p>
+<p><span class="math display">\[ z = \frac{25 - 5}{10} = 2\]</span></p>
+<p>Thus asking to find <span class="math inline">\(P(X \geq 25)\)</span>
+is the same as <span class="math inline">\(P(Z \geq 2)\)</span>. But we
+are not quite ready to use the <span class="math inline">\(Z\)</span>
+table above. As stated previously the <span
+class="math inline">\(Z\)</span> table gives the probabilities
+corresponding to the left of each <span
+class="math inline">\(z\)</span>-score i.e <span
+class="math inline">\(P(Z\leq z)\)</span>. If we want to use the table
+above we need to flip the inequality in <span
+class="math inline">\(P(Z\geq 2)\)</span> so its facing in the same
+direction as <span class="math inline">\(P(Z\leq z)\)</span>. Luckily,
+we can accomplish this by finding the complementary event:</p>
+<p><span class="math display">\[P(Z\geq 2) = 1 - P(Z &lt; 2)
+\]</span></p>
+<p><img src="lecturemenu8_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<p>We can easily find <span class="math inline">\(P(Z &lt; 2)\)</span>
+using the table above which gives <span class="math inline">\(P(Z &lt;
+2) = 0.977\)</span>. Therefore, the probability we were asked to find in
+the begining computed as</p>
+<p><span class="math display">\[P(X\geq 25) = 1 - P(Z\leq 2) = 1 - 0.977
+= 0.023 \]</span></p>
+<p>If we think about this, it makes sense intuitively. The value <span
+class="math inline">\(25\)</span> is two standard deviations above the
+mean of <span class="math inline">\(X\)</span>. Thus we are finding an
+area in the upper tail region of a normal distribution which we would
+expect to correspond to a small probability since there is very little
+area under the curve in this region.</p>
+<ul>
+<li>Try it out: Suppose <span class="math inline">\(X\sim N(-2,
+4)\)</span>. Compute the probability that <span class="math inline">\(-3
+\leq X \leq 1\)</span></li>
+</ul>
+<p>We can take a similar approach to answer this problem. One major
+difference is that now we are trying to find the area between the points
+<span class="math inline">\(X = -3\)</span> and <span
+class="math inline">\(X = 1\)</span>. Again, since the table gives the
+probability corresponding to the <u>total area</u> to the left of each
+<span class="math inline">\(z\)</span>-score, we can find the area
+between two points by subtracting the larger area from the smaller
+one:</p>
+<p><span class="math display">\[P(-3 \leq X \leq 1) = P(X\leq 1) -
+P(X\leq -3) \]</span></p>
+<p><img src="lecturemenu8_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<p>However, since we don’t have a table for the specific normal
+distribution of <span class="math inline">\(X\)</span> we must again
+convert to the standard normal distribution to find each
+probability:</p>
+<p><span class="math display">\[z_1 = \frac{1 - (-2)}{4} =
+0.75\]</span></p>
+<p><span class="math display">\[z_2 = \frac{-3 - (-2)}{4} =
+-0.25\]</span></p>
+<p><span class="math display">\[P(Z\leq 0.75) = 0.773\]</span></p>
+<p><span class="math display">\[P(Z \leq -0.25) = 0.401\]</span></p>
+<p>Therefore, we can compute the original probability as</p>
+<p><span class="math display">\[ P(-3 \leq X \leq 1) = P(-0.25 \leq Z
+\leq 0.75) \]</span> <span class="math display">\[= P(Z\leq 0.75) -
+P(Z\leq -0.25)\]</span> <span class="math display">\[= 0.773 - 0.401 =
+0.372\]</span></p>
+</div>
+</div>
+<div id="lecture-16-wednesday-feb.28th-2024" class="section level1">
+<h1>Lecture 16 Wednesday, Feb.28th 2024</h1>
 <p>Now that we have a strong understanding of the theory of mathematical
 probability we can use it to connect back to estimation and statistical
 inference. At this point we have learned about three different
@@ -496,10 +2061,10 @@ sampling distribution. One of the most famous results from probability
 theory says that the distribution of a the mean <span
 class="math inline">\(\bar{x}\)</span> of a random variable computed
 from a sample of size <span class="math inline">\(n\)</span> will be
-approximately normally distributed for large <span
-class="math inline">\(n\)</span>. This result is referred to as the
-<strong>Central Limit Theorem (CLT)</strong>. Formally the CLT states
-that for a set of independent and identically distributed random
+approximately normally distributed if <span
+class="math inline">\(n\)</span> is large. This result is referred to as
+the <strong>Central Limit Theorem (CLT)</strong>. Formally, the CLT
+states that for a set of independent and identically distributed random
 variables <span class="math inline">\(X_1, X_2, ... X_n\)</span>,</p>
 <p><span class="math display">\[\frac{\sqrt{n}(\bar{X} - \mu)}{\sigma}
 \xrightarrow{d} N(0,1)\]</span></p>
@@ -523,6 +2088,30 @@ distribution of the sample. Therefore the sampling distributions of both
 class="math inline">\(\hat{p}\)</span> are approximately normal-shaped
 for moderate to large sample sizes <span
 class="math inline">\(n\)</span>.</p>
+<p>To illustrate, consider the animated plot below which shows the
+sampling distribution of <span class="math inline">\(\hat{p}\)</span>.
+The distribution of a sample proportion is binomial distributed such
+that <span class="math inline">\(\hat{p}\sim Binom(n, p)\)</span> and
+has mean <span class="math inline">\(p\)</span> and with standard
+deviation <span class="math inline">\(\sqrt\frac{p(1-p)}{n}\)</span>.
+However, for moderate values of <span class="math inline">\(p\)</span>
+and large <span class="math inline">\(n\)</span>, the CLT states that
+<span class="math inline">\(\hat{p}\)</span> will be approximately
+normally distributed. From the animation below we can see that as <span
+class="math inline">\(n\)</span> gets large the distribution for <span
+class="math inline">\(\hat{p}\)</span> looks more and more continuous
+and bell-shaped.</p>
+<p><img src="misc/CLT.gif" /><!-- --></p>
+<p>Consider the sample mean <span class="math inline">\(\bar{x}\)</span>
+computed from a sample of <span class="math inline">\(n\)</span>
+observations of a single roll of a fair six-sided die. The animated plot
+below shows the sampling distribution of <span
+class="math inline">\(\bar{x}\)</span> as number of observations <span
+class="math inline">\(n\)</span> is increased. By the CLT, the
+distribution of <span class="math inline">\(\bar{x}\)</span> looks more
+and more normal as <span class="math inline">\(n\)</span> is
+increased.</p>
+<p><img src="Data/CLT_mean.gif" /><!-- --></p>
 <p>Using the central limit theorem, the distributions for the the sample
 mean and sample proportion are both approximately normal for large
 samples</p>

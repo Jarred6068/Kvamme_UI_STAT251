@@ -47,23 +47,21 @@ Define the following terms/concepts
 
 * f.) Intersection
 
-* g.) Conditional Probability
+* g.) Random Trial
 
-* h.) Random Trial
+* h.) Random Variable
 
-* i.) Random Variable
+* i.) Probability distribution
 
-* j.) Probability distribution
+* j.) Population distribution
 
-* k.) Population distribution
+* k.) Continuous random variable
 
-* l.) Continuous random variable
+* l.) Discrete random variable 
 
-* m.) Discrete random variable 
+* m.) Probability Mass Function 
 
-* n.) Probability Mass Function 
-
-* o.) Probability Density Function 
+* n.) Probability Density Function 
 
 
 ## Simple probability
@@ -149,7 +147,7 @@ $\bf (9)$ Michael Dickson, who plays for the Seattle Seahawks, is a punter in th
 ```{r, echo=FALSE, warning=F, message=F}
 
 df = cbind.data.frame(`$\\bar{X} =$ Mean Punt Distance` = c(35.33, 45.67, 55.00, 60.33, 65.67),
-                      `$P(\\bar{X})$` = c(0.3, 0.5, 0.08, 0.01, 0.01))
+                      `$P(\\bar{X})$` = c(0.4, 0.5, 0.08, 0.01, 0.01))
 kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
@@ -163,11 +161,11 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%
 
 <br>
 
-* What is the probability the mean distance is between 25 and 45.67 yards?
+* What is the probability the mean distance is between 35.33 and 45.67 yards?
 
 <br>
 
-* What is the probability the mean distance is 25 yards or 55 yards?
+* What is the probability the mean distance is 35.33 yards or 55 yards?
 
 <br>
 
@@ -297,7 +295,7 @@ Use the plot to find the following probabilities (recall that the area of a tria
 
 <br>
 
-* Give the value of the $25th$ percentile of distribution of $Z$
+* Give the approximate value of the $25th$ percentile of distribution of $Z$
 
 <br>
 
@@ -308,9 +306,9 @@ ${\bf 17.)}$ Assume the continuous random variable $X$ follows a normal distribu
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
 ggplot()+xlim(c(-40, 90))+
   stat_function(fun = dnorm, 
-                args = list(mean = 25, sd = 16),
+                args = list(mean = 25, sd = 4),
                 size = 1)+
-  scale_x_continuous(limits = c(-40, 90), breaks = seq(-40, 90, 20))+
+  scale_x_continuous(limits = c(0, 50), breaks = seq(0, 50, 10))+
   theme_classic2()+
   xlab('X')+
   ylab('Density')
@@ -363,7 +361,7 @@ ggplot(data.frame(x = c(- 4, 4)), aes(x = x))+
         labs(title = paste0("Standard Normal (Z) Distribution"),
              subtitle = TeX(paste0("$Z\\sim N(\\mu = ", 0, ', \\sigma = ',1, ')$')),
              x = "Z",
-            y = "Probability(Z)")+
+            y = "Density(Z)")+
         theme_classic2()+
         theme(legend.position = 'none')
 ```
