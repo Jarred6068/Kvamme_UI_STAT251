@@ -128,3 +128,10 @@ as .pdf
 
 <a href="./lecture_slides/Week 8/Week8_Lecture15_Slides_2_26_2024.pptx">Download File</a>
 as powerpoint
+
+### Lecture 16
+<a href="./lecture_slides/Week 8/Week8_Lecture16_Slides_2_28_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 8/Week8_Lecture16_Slides_2_28_2024.pptx">Download File</a>
+as powerpoint
