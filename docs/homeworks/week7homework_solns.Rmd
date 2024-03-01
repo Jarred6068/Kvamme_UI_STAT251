@@ -546,12 +546,12 @@ Using a $Z$-table, find the following (approximate) probabilities for $X$. You c
 \[ z_{\text{upper}} = \frac{33-25}{4} = 2\]
 \[ P(0<Z<2) = P(Z<2) - P(Z<0) = 0.977 - 0.5 = 0.477\]</span>
 
-* What is What value of $X$ marks the $95th$ percentile of the distribution?
+* What is the value of $X$ marks the $95th$ percentile of the distribution?
 
 <span style="color: red;">the $95th$ percentile of a standard normal distribution is $z=1.645$ plugging this into the $z$-score equation and solving for $X$ gives
 \[ (z\times \sigma) + \mu = (1.645\times 4) + 25 = 31.58 \]</span>
 
-* What is What value of $X$ marks the $40th$ percentile of the distribution?
+* What is the value of $X$ marks the $40th$ percentile of the distribution?
 
 <span style="color: red;">the $40th$ percentile of a standard normal distribution is $z=-0.253$ 
 \[  (z\times \sigma) + \mu = (-0.253\times 4)+25 = 23.9 \]</span>

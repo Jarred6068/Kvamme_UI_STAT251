@@ -338,11 +338,11 @@ Using a $Z$-table, find the following (approximate) probabilities for $X$. You c
 
 <br>
 
-* What is What value of $X$ marks the $95th$ percentile of the distribution?
+* What is the value of $X$ marks the $95th$ percentile of the distribution?
 
 <br>
 
-* What is What value of $X$ marks the $40th$ percentile of the distribution?
+* What is the value of $X$ marks the $40th$ percentile of the distribution?
 
 <br>
 

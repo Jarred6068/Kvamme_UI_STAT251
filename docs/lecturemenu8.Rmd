@@ -371,13 +371,13 @@ A = ggplot(data.frame(x = c(-4, 4)), aes(x))+
 plot(A)
 ```
 
-Thus the sample mean we can say that 
+For the sample mean we can say that 
 
-\[P\left(\mu-2\sigma \leq \bar{x} \leq \mu+2\sigma \right) \approx 0.95\]
+\[P\left(\mu-2\frac{\sigma}{\sqrt{n}} \leq \bar{x} \leq \mu+2\frac{\sigma}{\sqrt{n}} \right) \approx 0.95\]
 
 Alternatively, this can be stated as 
 
-\[P(|\bar{x} - \mu|\leq \mu+2\sigma) \approx 0.95 \]
+\[P\left(|\bar{x} - \mu|\leq \mu+2\frac{\sigma}{\sqrt{n}}\right) \approx 0.95 \]
 
 
 Similarly, for the sample proportion we can say that
@@ -388,16 +388,14 @@ which can also be stated as
 \[P\left(|\hat{p} - p|\leq p+2\sqrt{\frac{p(1-p)}{n}}\right) \approx 0.95\]
 
 
-In other words, the probability that the sample mean $\bar{x}$ or sample proportion $\hat{p}$ will be within two standard deviations of the population mean $\mu$ or population proportion $p$ is approximately $0.95$. This distance is the **margin of error** that we have defined previously. The **margin of error** characterizes how much an estimate can be expected to deviate from the parameter its estimating. 
+In other words, the probability that the sample mean $\bar{x}$ or sample proportion $\hat{p}$ will be within two standard deviations of the population mean $\mu$ or population proportion $p$ is approximately $0.95$. This distance is the **margin of error** that we have defined previously. The **margin of error** characterizes how much an estimate can be expected to deviate from the parameter its estimating. In estimation, the standard deviation of a statistic is usually referred to as the **standard error** because it relates to the sampling error of a given observation of a statistic.
 
 
-We have now we have extended the definition of the margin of error to include a measure of probability that the sample statistic will be within a certain distance of the parameter its estimating. 
+We have extended the definition of the margin of error to include a measure of probability that the sample statistic will be within a certain distance of the parameter its estimating. The choice of probability being $0.95$ is arbitrary. We have the ability to to define the margin of error however we wish. For example: 
 
-The choice of probability being $0.95$ is arbitrary. We have the ability to to define the margin of error however we wish. For example: 
+\[P\left(|\bar{x}-\mu|\leq \mu+2\frac{\sigma}{\sqrt{n}} \right) \approx 0.68\]
 
-\[P\left(|\bar{x}-\mu|\leq \mu+\sigma \right) \approx 0.68\]
-
-In other words, the probability that the distance between $\bar{x}$ and $\mu$ does not exceed one standard deviation is approximatley $0.68$.
+In other words, the probability that the distance between $\bar{x}$ and $\mu$ does not exceed one standard error is approximately $0.68$.
 
 Consider the following example:
 
@@ -406,16 +404,206 @@ Consider the following example:
 
 ### Inference and Estimation
 
-statistical inference is used to draw conclusions about a population or process based on sample data. Inference has two general types: <i>significance test</i> (also referred to as <i>hypothesis testing</i>) and **estimation**. Estimation consists of *point estimates* such as $\bar{x}$, $\hat{p}$, $s^2$, and $s$. There other main type of estimation is called *interval estimation*. 
+statistical inference is used to draw conclusions about a population or process based on sample data. Inference has two general types: <i>significance test</i> (also referred to as <i>hypothesis testing</i>) and **estimation**. Estimation consists of
 
-Regardless of the type of inference that is being done, the underlying reasoning remains the same. In statistics, we use probability of means of substantiating our conclusions about a particular population or result. Probability allows us to determine the "strength" of a conclusion by taking into chance due ordinary variation.
+* *point estimation* consists of estimating the value of a parameter with the value of a statistic such as using $\bar{x}$, $\hat{p}$, $s^2$, and $s$ to estimate $\mu$, $p$, $\sigma^2$, and $\sigma$ (respectively). 
+* *interval estimation* consists of estimating the value of a parameter with an interval of values. The typical device we use is called a **confidence interval**.
+
+Regardless of the type of inference that is being done, the underlying reasoning remains the same. In statistics, we use probability as a means of substantiating our conclusions about a particular population or result. Probability allows us to determine the "strength" of a conclusion by taking into account the ordinary variation in estimation.
 
 ### Confidence Intervals
 
+A **interval estimate** aims to place bounds on the value of a population parameter. We saw previously that we can can talk about the probability with which an estimate falls within a particular interval. For example, we said that the interval which has a probability of 0.95 of containing $\bar{x}$ is given by 
+
+\[P\left(\mu-2\frac{\sigma}{\sqrt{n}} \leq \bar{x} \leq \mu+2\frac{\sigma}{\sqrt{n}} \right) \approx 0.95\]
+
+However, to say that $\bar{x}$ lies within two standard errors of $\mu$ is the same as saying that $\mu$ lies within two standard errors of $\bar{x}$. Therefore with a little bit of algebra we can show that 
+
+\[P\left(\bar{x}-2\frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{x}+2\frac{\sigma}{\sqrt{n}} \right) \approx 0.95\]
+
+Under repeated sampling, we can be confident that $95\%$ of all samples will capture the true value of $\mu$ in the interval $\left[\bar{x}-\frac{2\sigma}{\sqrt{n}}, \bar{x}+\frac{2\sigma}{\sqrt{n}}\right]$. 
+
+This is the rational behind the famous **confidence interval**. The language of statistics uses the long-run behavior of repeated sampling to describe our confidence in the results of any particular sample. In this case, we constructed the interval to have a long-run frequency $95\%$ of capturing the true parameter - called the confidence level of our interval. Therefore the **confidence level** of a confidence interval is the probability the estimated interval will contain the parameter <u>before the data are collected</u>. It is important to note that after the data are collected the <u>**interval either does or does not contain the parameter**</u>. 
+
+The general formula of a confidence interval consists of three parts: 
+
+  1. the point estimate (e.g the statistic) 
+  2. the standard score - used to control the confidence level of the interval
+  3. the standard error (standard deviation) of the point estimate
+
+```{r, eval = T, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
+knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Screenshot 2024-02-29 230856.png")
+```
+
+Applying this basic formula gives the following formula for a confidence interval for a population mean:
+
+\[ \bar{x}\pm z\frac{s}{\sqrt{n}} \Leftrightarrow \left[\bar{x}- z\frac{s}{\sqrt{n}}, \ \bar{x}+ z\frac{s}{\sqrt{n}}  \right] \]
+
+Notice in the equation above that we have substituted $\sigma$ with $s$ the sample standard deviation. This is because we typically do not know the true value of population standard deviation and must estimate it from the sample. 
+
+Similarly, the confidence interval for a population proportion is give by
+\[ \hat{p}\pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{\sqrt{n}}} \Leftrightarrow \left[\hat{p}- z\sqrt{\frac{\hat{p}(1-\hat{p})}{\sqrt{n}}}, \ \hat{p}+ z\sqrt{\frac{\hat{p}(1-\hat{p})}{\sqrt{n}}}  \right] \]
+
+Notice also that we have substitute $\hat{p}$ for $p$ in the standard error of $\hat{p}$. The quantity denoted by $z$ in the formulas above is the *standard score* mention previously. It controls how wide and therefore how confident we wish to be in our estimation. We can look up $z$ in a $Z$-table for any desired confidence level:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+df = cbind.data.frame(`$z$` = c(qnorm(1-0.1/2), qnorm(1-0.05/2), qnorm(1-0.01/2)),
+                      `Confidence Level` = c('$90\\%$', '$95\\%$', '$99\\%$'))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+* Try it out: Consider the following hypothetical example: The Imperial Army is evaluating the blaster accuracy of stormtroopers in their training program. A random sample of $n = 100$ stormtroopers is selected, and their blaster accuracy scores are recorded. The mean blaster accuracy for this sample is found to be $\bar{x} = 78.5\%$, and sample standard deviation $s = 4.5\%$. Suppose the officers running the training program wish to estimate the interval which has a confidence level of $95\%$ for containing the population mean blaster accuracy. The is interval is given by 
+
+\[P\left(78.5-2\frac{4.5}{\sqrt{100}} \leq \mu \leq 78.5+2\frac{4.5}{\sqrt{100}} \right) \approx 0.95\]
+
+Thus to compute this interval we would compute the lower and upper bounds of the probability statement above which gives
+
+\[78.5 \pm 2\frac{4.5}{\sqrt{100}} =  [77.6, 79.4]\]
+
+To interpret this result we would say that we are $95\%$ confident that the population mean blaster accuracy is no less than $77.6\%$ and no more than $79.4\%$. 
+
+* Note that in the above calculation we rounded $z = 1.96$ to be $z = 2$. 
+
+Assume that the true population blaster accuracy is $\mu = 77.9\%$ and the population standard deviation is $\sigma = 4.2\%$. The plot below shows how our confidence interval compares to the sampling distribution of $\bar{x}$.
+
+* Does the interval cover the true population mean?
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+set.seed(123)
+mu = 77.9
+sigma = 4.2
+n = 100
+#normal quantiles
+Aconf = ggplot(data.frame(x = c(mu - 4*sigma/sqrt(n), mu + 4*sigma/sqrt(n))), aes(x))+
+  stat_function(fun = dnorm,
+                args = list(mean = mu, sd = sigma/sqrt(n)),
+                size = 1) + 
+    stat_function(fun = dnorm,
+                  args = list(mean = mu, sd = sigma/sqrt(n)),
+                xlim = c(mu-2*sigma/sqrt(n),mu+2*sigma/sqrt(n)),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(breaks = seq(mu - 4*sigma/sqrt(n), mu + 4*sigma/sqrt(n), sigma/sqrt(n)))+
+  geom_text(aes(x = mu, y = dnorm(mu, mean = mu, sd = sigma/sqrt(n))/2), label = '0.95', size = 10)+
+  geom_point(aes(x = 78.5, y = 0), size = 4)+
+  geom_point(aes(x = mu, y = 0), shape = 22, size = 4, fill = 'black')+
+  geom_errorbarh(aes(x = 78.5, y = 0, xmin = 77.6, xmax = 79.4), height = 0.08, linewidth = 1.5)+
+  geom_text(aes(x = 78.5, y = -0.04), label = TeX('$\\bar{x}$'), size = 5)+
+  geom_text(aes(x = mu, y = -0.04), label = TeX('$\\mu$'), size = 5)+
+  theme_classic()+
+  ggtitle(TeX('Sampling Distribution of $\\bar{x}$'))+
+  theme(axis.text.x = element_text(size = 16),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+plot(Aconf)
+```
 
 
 
+In practice, once we compute the confidence interval we don't know for sure whether our confidence interval captures the true population parameter we are trying to estimate. It may be in the interval, it may not. But the choice in confidence level gives us flexibility in how confident we wish to be. We can increase the confidence level of our interval to give a higher probability that the interval will cover the true parameter. For example, suppose the imperial officers wish to increase the confidence level from $95\%$ to $99\%$. Now only $1$ in every $100$ samples will fail to cover the true population mean blaster accuracy. The downside however is that a higher confidence level corresponds to a wider confidence interval:
 
+\[\mu \pm 2.6\frac{4.5}{\sqrt{100}} =  [77.3, 79.7]\]
+
+As we can see in the plot below, the interval is now wider 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=12}
+set.seed(123)
+mu = 77.9
+sigma = 4.2
+n = 100
+z = 2.58
+xbar = 78.5
+s = 4.5
+#normal quantiles
+Bconf = ggplot(data.frame(x = c(mu - 4*sigma/sqrt(n), mu + 4*sigma/sqrt(n))), aes(x))+
+  stat_function(fun = dnorm,
+                args = list(mean = mu, sd = sigma/sqrt(n)),
+                size = 1) + 
+    stat_function(fun = dnorm,
+                  args = list(mean = mu, sd = sigma/sqrt(n)),
+                xlim = c(mu-z*sigma/sqrt(n),mu+z*sigma/sqrt(n)),
+                geom = "area",
+                fill = 'blue1',
+                alpha = 0.3)+
+  scale_x_continuous(breaks = seq(mu - 4*sigma/sqrt(n), mu + 4*sigma/sqrt(n), sigma/sqrt(n)))+
+  geom_text(aes(x = mu, y = dnorm(mu, mean = mu, sd = sigma/sqrt(n))/2), label = '0.99', size = 10)+
+  geom_point(aes(x = xbar, y = 0), size = 4)+
+  geom_point(aes(x = mu, y = 0), shape = 22, size = 4, fill = 'black')+
+  geom_errorbarh(aes(x = xbar, y = 0, xmin = xbar - z*s/sqrt(n), 
+                     xmax = xbar + z*s/sqrt(n)), height = 0.08, linewidth = 1.5)+
+  geom_text(aes(x = xbar, y = -0.04), label = TeX('$\\bar{x}$'), size = 5)+
+  geom_text(aes(x = mu, y = -0.04), label = TeX('$\\mu$'), size = 5)+
+  theme_classic()+
+  ggtitle(TeX('Sampling Distribution of $\\bar{x}$'))+
+  theme(axis.text.x = element_text(size = 16),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+
+
+ggarrange(Aconf, Bconf, nrow = 1)
+```
+
+In this fictional example, the standard error of $\bar{x}$ is quite small at $SE = 0.45$ so the confidence interval is only a little bit wider. In other cases, depending on the the sample size and sample standard deviation, increasing the confidence level may result in reduced precision in our estimate. 
+
+To further illustrate the concept of confidence and its correspondence to the long-run behavior of interval estimates, consider that each month for the next $100$ months, the Imperial army selects a sample of $100$ stormtroopers in the training program, records their blaster accuracy scores, and computes a $95\%$ confidence interval for the population mean blaster accuracy. 
+
+* What proportion of these confidence intervals are expected to contain to the true population mean accruacy. What proportion do not? The plot below gives the results of all $100$ confidence intervals 
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+
+set.seed(123)
+mu = 77.9
+sigma = 4.2
+n = 100
+z = 2.58
+xbar = 78.5
+s = 4.5
+ss = 100
+samples = lapply(c(1:ss), function(x) rnorm(n, mean = mu, sd = sigma))
+
+means.vec = unlist(lapply(samples, function(x) mean(x)))
+se.vec = unlist(lapply(samples, function(x) sd(x)/sqrt(n)))
+
+xpos = 1:100
+ymin = means.vec-2*se.vec
+ymax = means.vec+2*se.vec
+
+ix = which(mu < ymin | mu > ymax)
+
+ind = rep('True', 100)
+ind[ix] = 'False'
+
+df = cbind.data.frame(`$\\bar{x}$` = means.vec,
+                      `$SE$` = se.vec,
+                      xpos = xpos,
+                      `Covers Parameter` = ind)
+
+ggplot(data = df, aes(x = xpos, y = `$\\bar{x}$`, color = `Covers Parameter`))+
+  geom_hline(yintercept = mu, linetype = 'dashed', linewidth = 2, color = 'black')+
+  geom_point()+
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), height = 0.01, linewidth = 1)+
+  geom_text(aes(x = 0, y = mu+0.1), label = TeX('$\\mu$'), size = 6, color = 'black')+
+  theme_classic2()+
+  scale_x_continuous(breaks = seq(1, 100, 5))+
+  xlab('Sample number')+
+  ylab(TeX('$\\bar{x}$'))+
+  theme(legend.position = 'top',
+        legend.text = element_text(size = 12),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 12))
+
+
+```
+
+The plot above gives $100$ confidence intervals at the $95\%$ confidence level. Each confidence interval is constructed from a sample of 100 simulated observations from the population the distribution of stormtrooper blaster accuracy. As we can see from above, all but two of the confidence intervals covers the true value of the parameter $\mu$ (denoted by the black dotted line).
 
 
 
