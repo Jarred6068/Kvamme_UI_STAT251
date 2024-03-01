@@ -42,9 +42,9 @@ However, these skills are outside the purveiw of this course. Luckily, the norma
 
 z = seq(0, 3.9, 0.1)
 
-tab = cbind.data.frame(Z = z, `.00` = pnorm(z), `.01` = pnorm(z-0.01), `.02` = pnorm(z-0.02), `.03` = pnorm(z-0.03),
-                       `.04` = pnorm(z-0.04), `.05` = pnorm(z-0.05), `.06` = pnorm(z-0.06), `.07` = pnorm(z-0.07),
-                       `.08` = pnorm(z-0.08), `.09` = pnorm(z-0.09))
+tab = cbind.data.frame(Z = z, `.00` = pnorm(z), `.01` = pnorm(z+0.01), `.02` = pnorm(z+0.02), `.03` = pnorm(z+0.03),
+                       `.04` = pnorm(z+0.04), `.05` = pnorm(z+0.05), `.06` = pnorm(z+0.06), `.07` = pnorm(z+0.07),
+                       `.08` = pnorm(z+0.08), `.09` = pnorm(z+0.09))
 
 kable(tab, caption = 'STANDARD NORMAL DISTRIBUTION: Table Values Represent AREA to the LEFT of the Z score.',
       digits = 3, booktabs = T)%>%
@@ -338,24 +338,79 @@ We can use the CLT to compute the probability of a given value of a statistic. C
 
 Thus it is highly unlikely that the scientist would observe a mean length this short. 
 
+### Applying The Central Limit Theorem  
+
+The CLT allows us to identify the sampling distribution of $\bar{x}$ or $\hat{p}$. Now that we know the distribution of these two statistics we can make statements about the probability that $\bar{x}$ or $\hat{p}$ will be within a certain distance of the parameters $\mu$ and $p$. 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
+set.seed(123)
+#normal quantiles
+A = ggplot(data.frame(x = c(-4, 4)), aes(x))+
+  stat_function(fun = dnorm,
+                size = 1) + 
+    stat_function(fun = dnorm,
+                xlim = c(-2,2),
+                geom = "area",
+                fill = 'red1',
+                alpha = 0.3)+
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = c("", 
+                                                        "",
+                                                        TeX("$\\mu - 2\\sigma$"), 
+                                                        "",
+                                                        TeX('$\\mu$'),
+                                                        "", 
+                                                        TeX("$\\mu + 2\\sigma$"),
+                                                        "", 
+                                                        ""))+
+  geom_text(aes(x = 0, y = dnorm(0)/2), label = '0.95', size = 10)+
+  theme_classic()+
+  theme(axis.text.x = element_text(size = 14),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank())
+plot(A)
+```
+
+Thus the sample mean we can say that 
+
+\[P\left(\mu-2\sigma \leq \bar{x} \leq \mu+2\sigma \right) \approx 0.95\]
+
+Alternatively, this can be stated as 
+
+\[P(|\bar{x} - \mu|\leq \mu+2\sigma) \approx 0.95 \]
 
 
+Similarly, for the sample proportion we can say that
+
+\[P\left(p-2\sqrt{\frac{p(1-p)}{n}} \leq \hat{p} \leq p+2\sqrt{\frac{p(1-p)}{n}} \right) \approx 0.95\]
+
+which can also be stated as 
+\[P\left(|\hat{p} - p|\leq p+2\sqrt{\frac{p(1-p)}{n}}\right) \approx 0.95\]
 
 
+In other words, the probability that the sample mean $\bar{x}$ or sample proportion $\hat{p}$ will be within two standard deviations of the population mean $\mu$ or population proportion $p$ is approximately $0.95$. This distance is the **margin of error** that we have defined previously. The **margin of error** characterizes how much an estimate can be expected to deviate from the parameter its estimating. 
 
 
+We have now we have extended the definition of the margin of error to include a measure of probability that the sample statistic will be within a certain distance of the parameter its estimating. 
+
+The choice of probability being $0.95$ is arbitrary. We have the ability to to define the margin of error however we wish. For example: 
+
+\[P\left(|\bar{x}-\mu|\leq \mu+\sigma \right) \approx 0.68\]
+
+In other words, the probability that the distance between $\bar{x}$ and $\mu$ does not exceed one standard deviation is approximatley $0.68$.
+
+Consider the following example:
 
 
+# Lecture 17 Friday, March 1st 2024
 
+### Inference and Estimation
 
+statistical inference is used to draw conclusions about a population or process based on sample data. Inference has two general types: <i>significance test</i> (also referred to as <i>hypothesis testing</i>) and **estimation**. Estimation consists of *point estimates* such as $\bar{x}$, $\hat{p}$, $s^2$, and $s$. There other main type of estimation is called *interval estimation*. 
 
+Regardless of the type of inference that is being done, the underlying reasoning remains the same. In statistics, we use probability of means of substantiating our conclusions about a particular population or result. Probability allows us to determine the "strength" of a conclusion by taking into chance due ordinary variation.
 
-
-
-
-
-
-
+### Confidence Intervals
 
 
 
