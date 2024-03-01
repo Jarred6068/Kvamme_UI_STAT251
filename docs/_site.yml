@@ -66,6 +66,14 @@ navbar:
               href: Review_problems/exam1_review_problems.html
             - text: 'Solutions'
               href: Review_problems/exam1_review_problems_solns.html
+        - text: 'Exam 2 Study Guide'
+          href: study_guides/exam2_study_guide.html
+        - text: 'Exam 2 Review'
+          menu: 
+            - text: 'Problems' 
+              href: Review_problems/exam2_review_problems.html
+            - text: 'Solutions'
+              href: Review_problems/exam2_review_problems_solns.html
     - text: "Course Project"
       menu:
       - text: "Project Description"
