@@ -1,0 +1,217 @@
+---
+title: "Exam 2 Study Guide"
+author: "STAT 251 Section 03"
+date: "2024-03-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
+library(kableExtra)
+library(knitr)
+library(latex2exp)
+library(gridExtra)
+library(ggpubr)
+library(ggthemes)
+library(plyr)
+```
+
+# Content To Study
+
+Exam 2 will cover material beginning on **Week 5** through **Week 8**. This includes the following topics:
+
+* The normal distribution - Lecture 7
+
+* Experimental and sampling designs - Lectures 8 - 10
+
+* Probability Theory - Lectures 11 - 15
+
+* The Central Limit Theorem - Lecture 16
+
+### The Normal Distribution
+
+  1. Know how the mean and standard deviation affect the shape and location of a normal distribution
+  
+  2. Know the empirical rule and how it relates to the standard deviation of the normal distribution
+  
+  3. Know how to compute and interpret a $z$-score and how it relates to the **standard normal distribution**
+  
+  \[ z = \frac{x-\mu}{\sigma} \]
+
+### Experimental and Sampling Designs
+
+  1. Know the difference between **population distribution** and **sampling distribution**
+
+  1. Know how to define and identify the three experimental designs we discussed: **Completely randomized design**, **matched pairs design** and **randomized block design**.
+
+  2. Know the terminology for sampling designs (e.g Sampling Frame, Census, sample survey, etc.
+
+  3. Know how to define and identify the sampling designs we talked about in class: **Convenience Sampling, Systematic Sampling, Simple Random Sampling, Cluster Sampling, Stratified Random Sampling**
+
+  4. Know the difference between **Sampling Error** and **Margin of Error**. 
+
+  5. Know the difference between **Sampling With Replacement** vs **Sampling Without Replacement**
+  
+  6. Know the difference between **statistical association** and **causation**
+
+
+
+## Probability Theory
+
+  1. Be comfortable with the language of probability theory: e.g know how to define **Probability**, **Sample Space**, **Event**, **Random Trial**
+
+  2. Know the rules we discussed for probability: **Complement Rule**, **Addition Rule**, **Multiplication Rule** 
+
+  3. Know how to compute the probability of a **Complement** of an event, **Union** of two events, and **Intersection** of two independent events.
+
+  4. Know how to compute probabilities when sampling with vs without replacement. 
+
+  5. Know how to use a Venn Diagram to show the relationships between events
+
+  6. Know what is meant when two random variables are said to be **Disjoint (mutually exclusive)**
+
+  8. Know what is implied by the **Law of Large Numbers** (e.g the relative
+frequency of an event will approach the true probability of an event as the number of observations of the event increases)
+
+  9. Know the definitions of **Random variable**, and the difference between **Discrete Random Variables** versus **Continuous Random Variables**.
+
+  10. Understand what is meant by the **Probability distribution** <u>of a discrete random variable</u>.
+
+  12. Be able to compute the **mean**, **variance**, and **standard deviation** of a <u>discrete random variable</u> from its <u>probability distribution</u> (when given as a table of values and probabilities).
+
+### Rules and equations from of probability theory
+
+**The Complement Rule**:
+The probability of the complement of an event is one minus the probability of the event
+\[ P(A') = 1-P(A) \]
+
+**The Addition Rule**:
+The probability of the union of two events is the sum of their individual probabilities minus the probability of their intersection
+\[P(A\cup B) = P(A)+P(B)-P(A\cap B)\]
+
+**The Multiplication Rule For Two Independent Events**: 
+The probability of the intersection of two independent events is equal to the product of their individual probabilities
+\[ P(A\cap B) = P(A)\cdot P(B)\]
+
+**The Multiplication Rule For Dependent Events**:
+The probability of the intersection of two dependent events is equal to their conditional probability multiplied by the individual probability of the event being condition on
+\[ P(A\cap B) = P(A|B)\cdot P(B) \]
+
+**Mean of Discrete Random Variable** 
+\[ \mu =\sum_x x\cdot P(x) \]
+
+**Variance of Discrete Random Variable** 
+\[ \sigma^2 =\sum_x (x-\mu)^2\cdot P(x) \]
+
+**Standard Devation of Discrete Random Variable** 
+\[ \sigma =\sqrt{\sum_x (x-\mu)^2\cdot P(x)} \]
+
+
+
+### Finding Probabilities, Sampling Distributions, and The CLT
+
+  1. Understand what is meant by a population distribution and a sampling distribution.
+
+  2. Know how to compute probabilities for the **Bernoulli**, **Binomial**, and **Possion** distributions using their **probability mass functions** (PMF)
+  
+  3. Know the mean and standard deviation for the **Bernoulli**, **Binomial**, and **Poisson** random variables
+
+  4. Know how to compute probabilities using the probability distribution of a discrete random variable.
+
+  5. Know that the probability of a continuous variable corresponds to the area under the curve of its probability density function
+
+  6. Know the definition of the **cumulative distribution** of a random variable (e.g $P(X\leq z)$)
+
+  7. Know how to compute probabilities from a normal probability distribution using a $Z$-table (standard normal probability table).
+
+  8. Know how to derive the sampling distribution of the sample mean $\bar{x}$
+
+  9. Know how to derive the sampling distribution of the sample proportion $\hat{p}$
+  
+  10. Understand the central limit theory and how it relates to the sampling distribution of $\bar{x}$ and $\hat{p}$
+
+
+### Special Discrete Distributions
+
+* Be sure you are comfortable with finding probabilities from the following probability distributions:
+
+**Bernoulli Distribution** - It models a random experiment with two possible outcomes, often referred to as success and failure. The distribution is characterized by a single parameter, usually denoted as $p$, which represents the probability of success.
+
+\[PMF: \ \ P(x = k) = \begin{cases} p & \text{if} \  k = 1 \\
+                               (1-p) & \text{if} \ k = 0 \end{cases} \]
+                               
+* $p$ the probability of success 
+
+* the mean is given by $E[X] = p$
+
+* the variance is given by $Var[X] = p(1-p)$
+
+**The Binomial Distribution** - The binomial distribution is a discrete probability distribution that describes the number of successes in a fixed number of independent Bernoulli trials, where each trial has only two possible outcomes: success or failure.
+
+\[PMF: \ \ P(x = k) = \frac{n!}{k!(n-k)!}\cdot p^k \cdot (1-p)^{n-k} \]
+
+* $p$ - probability of success 
+
+* $k$ - number of successes
+
+* $n$ - number of independent trials (e.g sample size)
+
+* $\frac{n!}{k!(n-k)!}$ - the number of ways to have $k$ successes arranged among $n$ trials
+
+* the mean is given by $E[X] = np$
+
+* the variance is given by $Var[X] = np(1-p)$
+
+\[ P(X \leq a) = \sum_{k = 0}^a \frac{n!}{k!(n-k)!}\cdot p^k \cdot (1-p)^{n-k} \]
+
+**The Poisson Distribution** - a discrete probability distribution that models the number of events that occur within a fixed interval of time or space and with fixed rate $\lambda$
+
+\[PMF: \ \ P(X =k) = \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
+
+* $\lambda$ - the average rate at which events occur  
+
+* $k$ - a non-negative integer representing the number of events that occurred 
+
+* $n$ - number of independent trials (e.g sample size)
+
+* $\frac{n!}{k!(n-k)!}$ - the number of ways to have $k$ successes arranged among $n$ trials
+
+* the mean and variance are given by $E[X] = Var[X] = \lambda$
+
+\[ P(X \leq a) = \sum_{k = 0}^a \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Formulas:
+*  Be sure you understand the notation (i.e., symbols) we have used so far (e.g., $n,N,s,s^2,\bar{x}, \mu,\sigma,\sigma^2$)
+
+The following formulas will be provided on the the exam
+
+\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(X)\]
+	
+\[s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \ \ s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x}^2}\]
+
+\[ z = \frac{x - \mu}{\sigma} \]
+
+\[\mu = \sum_x x\cdot P(x) \]
+
+\[ \sigma^2 = \sum_x (x-\mu)^2\cdot P(x) \]
+
+\[\sigma = \sqrt{\sum_x (x-\mu)^2\cdot P(x)} \]
+
+\[P(A\cup B) = P(A)+P(B)-P(A\cap B) \]
+
+\[P(A\cap B) = P(A)\cdot P(B) \]
+
+\[ P(X > x) = 1 - P(X\leq x)  \]
+
+\[ P(a\leq X \leq b) = P(X\leq b) - P(X\leq a)\]
+
+\[ P(x = k) = \frac{n!}{k!(n-k)!}\cdot p^k \cdot (1-p)^{n-k}\]
+
+\[ P(X =k) = \frac{\lambda^k\cdot e^{-\lambda}}{k!}\]
