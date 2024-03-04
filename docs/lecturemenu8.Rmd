@@ -455,7 +455,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 
 ```
 
-* Try it out: Consider the following hypothetical example: The Imperial Army is evaluating the blaster accuracy of stormtroopers in their training program. A random sample of $n = 100$ stormtroopers is selected, and their blaster accuracy scores are recorded. The mean blaster accuracy for this sample is found to be $\bar{x} = 78.5\%$, and sample standard deviation $s = 4.5\%$. Suppose the officers running the training program wish to estimate the interval which has a confidence level of $95\%$ for containing the population mean blaster accuracy. The is interval is given by 
+* Try it out: Consider the following hypothetical example: The Imperial Army is evaluating the blaster accuracy of stormtroopers in their training program. A random sample of $n = 100$ stormtroopers is selected, and their blaster accuracy scores are recorded. The mean blaster accuracy for this sample is found to be $\bar{x} = 78.5\%$, and sample standard deviation $s = 4.5\%$. Suppose the officers running the training program wish to estimate the interval which has a confidence level of $95\%$ for containing the population mean blaster accuracy. This interval is given by 
 
 \[P\left(78.5-2\frac{4.5}{\sqrt{100}} \leq \mu \leq 78.5+2\frac{4.5}{\sqrt{100}} \right) \approx 0.95\]
 
@@ -506,7 +506,7 @@ plot(Aconf)
 
 
 
-In practice, once we compute the confidence interval we don't know for sure whether our confidence interval captures the true population parameter we are trying to estimate. It may be in the interval, it may not. But the choice in confidence level gives us flexibility in how confident we wish to be. We can increase the confidence level of our interval to give a higher probability that the interval will cover the true parameter. For example, suppose the imperial officers wish to increase the confidence level from $95\%$ to $99\%$. Now only $1$ in every $100$ samples will fail to cover the true population mean blaster accuracy. The downside however is that a higher confidence level corresponds to a wider confidence interval:
+In practice, once we compute the confidence interval we don't know for sure whether our confidence interval captures the true population parameter we are trying to estimate. It may be in the interval, it may not. But the choice in confidence level gives us flexibility in how confident we wish to be. We can increase the confidence level of our interval to give a higher probability that the interval will cover the true parameter. For example, suppose the imperial officers wish to increase the confidence level from $95\%$ to $99\%$. Now only $1$ in every $100$ samples will fail to cover the true population mean blaster accuracy. The downside, however, is that a higher confidence level corresponds to a wider confidence interval:
 
 \[\mu \pm 2.6\frac{4.5}{\sqrt{100}} =  [77.3, 79.7]\]
 
@@ -554,7 +554,7 @@ In this fictional example, the standard error of $\bar{x}$ is quite small at $SE
 
 To further illustrate the concept of confidence and its correspondence to the long-run behavior of interval estimates, consider that each month for the next $100$ months, the Imperial army selects a sample of $100$ stormtroopers in the training program, records their blaster accuracy scores, and computes a $95\%$ confidence interval for the population mean blaster accuracy. 
 
-* What proportion of these confidence intervals are expected to contain to the true population mean accruacy. What proportion do not? The plot below gives the results of all $100$ confidence intervals 
+* What proportion of these confidence intervals are expected to contain to the true population mean accuracy. What proportion do not? The plot below gives the results of all $100$ confidence intervals 
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
@@ -603,7 +603,7 @@ ggplot(data = df, aes(x = xpos, y = `$\\bar{x}$`, color = `Covers Parameter`))+
 
 ```
 
-The plot above gives $100$ confidence intervals at the $95\%$ confidence level. Each confidence interval is constructed from a sample of 100 simulated observations from the population the distribution of stormtrooper blaster accuracy. As we can see from above, all but two of the confidence intervals covers the true value of the parameter $\mu$ (denoted by the black dotted line).
+As we can see from the plot, all but two of the confidence intervals (highlighted in orange) covers the true value of the parameter $\mu$ (denoted by the black dotted line).
 
 
 
