@@ -24,7 +24,7 @@ library(gganimate)
 path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 ```
 
-# Lecture 18 Monday, March 3rd 2024
+# Lecture 18 Monday, March 4th 2024
 
 Last week we introduced the **confidence interval** which is used to estimate a parameter with an interval of values. We can choose how wide to make the confidence interval by selecting the **confidence level** - which is the probability that the interval will contain the true parameter value **<u>before</u>** the data are gathered. The confidence level is controlled via the standard score $z$. The standard score gives the number of standard errors to add and subtract from our estimate. Therefore, we must look up the appropriate standard score $z$ from the standard normal table.
 
