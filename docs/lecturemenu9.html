@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="STAT 251 Section 03" />
+
+
+<title>Week 9 Notes</title>
+
+<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-03</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lecture Notes</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="lecturemenu1.html">Week 1</a>
+        </li>
+        <li>
+          <a href="lecturemenu2.html">Week 2</a>
+        </li>
+        <li>
+          <a href="lecturemenu3.html">Week 3</a>
+        </li>
+        <li>
+          <a href="lecturemenu4.html">Week 4</a>
+        </li>
+        <li>
+          <a href="lecturemenu5.html">Week 5</a>
+        </li>
+        <li>
+          <a href="lecturemenu6.html">Week 6</a>
+        </li>
+        <li>
+          <a href="lecturemenu7.html">Week 7</a>
+        </li>
+        <li>
+          <a href="lecturemenu8.html">Week 8</a>
+        </li>
+        <li>
+          <a href="lecturemenu9.html">Week 9</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="lecslidesindex.html">Lecture Slides</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assignments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework.html">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework.html">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/week7homework.html">Homework 3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework_solns.html">Hmwk 1 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework_solns.html">Hmwk 2 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week7homework_solns.html">Hmwk 3 Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="homeworks/reading_and_book_problems.html">Reading &amp; Extra Problems</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="study_guides/exam1_study_guide.html">Exam 1 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 1 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam1_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam1_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="study_guides/exam2_study_guide.html">Exam 2 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 2 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam2_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam2_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
+        </li>
+        <li>
+          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
+        </li>
+        <li>
+          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="sac_schedule.html">SAC schedule</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tables</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/Z_table.html">Z-table</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="misc/rcode_examples.html">R code</a>
+    </li>
+    <li>
+      <a href="misc/R_download_instructions.html">Downloading R/Rstudio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week 9 Notes</h1>
+<h4 class="author">STAT 251 Section 03</h4>
+
+</div>
+
+
+<div id="lecture-18-monday-march-3rd-2024" class="section level1">
+<h1>Lecture 18 Monday, March 3rd 2024</h1>
+<p>Last week we introduced the <strong>confidence interval</strong>
+which is used to estimate a parameter with an interval of values. We can
+choose how wide to make the confidence interval by selecting the
+<strong>confidence level</strong> - which is the probability that the
+interval will contain the true parameter value
+<strong><u>before</u></strong> the data are gathered. The confidence
+level is controlled via the standard score <span
+class="math inline">\(z\)</span>. The standard score gives the number of
+standard errors to add and subtract from our estimate. Therefore, we
+must look up the appropriate standard score <span
+class="math inline">\(z\)</span> from the standard normal table.</p>
+<p>From last week we saw that for a <span
+class="math inline">\(95\%\)</span> confidence interval, we must add and
+subtract approximately <span class="math inline">\(z=2\)</span> standard
+errors from our estimate <span class="math inline">\(\bar{x}\)</span> or
+<span class="math inline">\(\hat{p}\)</span>. <span
+class="math inline">\(z\)</span> is sometimes referred to as the
+<strong>critical value</strong>. The critical value denotes the upper
+and lower bounds of the confidence interval. In general, if we wish to
+compute the <span class="math inline">\((1-\alpha)\%\)</span> confidence
+interval for the statistics <span class="math inline">\(\bar{x}\)</span>
+or <span class="math inline">\(\hat{p}\)</span>, then we must add and
+subtract <span class="math inline">\(z_{1-\alpha/2}\)</span> standard
+errors. The quantity <span class="math inline">\(\alpha/2\)</span>
+denotes the area that is divided amongst the two tails of the standard
+normal distribution.</p>
+<p>For example, for a <span class="math inline">\(90\%\)</span>
+confidence <span class="math inline">\(\alpha = 0.1\)</span>, and the
+corresponding critical value is <span class="math inline">\(z_{1-0.1/2}
+= z_{0.95}\)</span> which is the 95th percentile from the standard
+normal distribution. The table below gives several confidence levels,
+the corresponding values of <span class="math inline">\(\alpha\)</span>
+and critical values.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Confidence Level
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\alpha\)</span>
+</th>
+<th style="text-align:right;">
+critical value: <span class="math inline">\(z_{1-\alpha/2}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(80\%\)</span>
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+1.28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(85\%\)</span>
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+1.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(90\%\)</span>
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+1.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(95\%\)</span>
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+1.96
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(99\%\)</span>
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+2.58
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Try it out: give the confidence level and critical value for the
+<span class="math inline">\((1-\alpha)\%\)</span> confidence intervals
+with <span class="math inline">\(\alpha = 0.25\)</span>, <span
+class="math inline">\(\alpha = 0.08\)</span>, and <span
+class="math inline">\(\alpha = 0.03\)</span>.</li>
+</ul>
+<div id="an-alternative-confidence-interval-for-a-population-mean."
+class="section level3">
+<h3>An alternative confidence interval for a population mean.</h3>
+<p>Recall the confidence interval that we introduced for estimating the
+population mean:</p>
+<p><span class="math display">\[ \bar{x} \pm z\frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p>The confidence interval above is based on the assumption that the
+population standard deviation <span
+class="math inline">\(\sigma\)</span> is known. When <span
+class="math inline">\(\sigma\)</span> is known the sampling distribution
+of the <span class="math inline">\(\bar{x}\)</span> is approximately
+<span class="math inline">\(N(\mu, \sigma/\sqrt{n})\)</span>. However,
+we rarely know the value of <span class="math inline">\(\sigma\)</span>
+so we must approximate its value with the sample standard deviation
+<span class="math inline">\(s\)</span> to get</p>
+<p><span class="math display">\[ \bar{x} \pm z\frac{s}{\sqrt{n}}
+\]</span></p>
+<p>Unfortunately, the confidence level of the confidence interval above
+will tend to be less than specified. As a result, more confidence
+intervals will fail to cover the true parameter value than expected.</p>
+<ul>
+<li>Consider the following example: A social scientist is conducting a
+study to investigate the average time spent daily on social media by
+college students. Each week the scientists surveys five college students
+and asks them to report their time spent on social media. For each
+sample, the scientist computes the <span
+class="math inline">\(95\%\)</span> confidence interval for the mean
+time the students spent on social media. They repeat this process 100
+times. Suppose the population mean time spent on social media is <span
+class="math inline">\(\mu = 120\)</span> minutes with a standard
+deviation of <span class="math inline">\(\sigma = 10\)</span> minutes.
+The plot below shows 100 confidence intervals computed using <span
+class="math inline">\(\bar{x} \pm z\frac{s}{\sqrt{n}}\)</span> where
+each CI is computed from a sample of <span
+class="math inline">\(5\)</span> observations from <span
+class="math inline">\(N(120, 10)\)</span>:</li>
+</ul>
+<div class="figure">
+<img src="lecturemenu9_files/figure-html/unnamed-chunk-2-1.png" alt="**Figure**: Each point represents the sample mean from a hypothetical sample of 5 college students. The whiskers extending from each point give the coverage of the confidence interval computed for each sample. The black dotted line gives the value of hypothetical population mean time spent on social media. The CI's highlighted in red represent those that fail to capture the population mean" width="960" />
+<p class="caption">
+<strong>Figure</strong>: Each point represents the sample mean from a
+hypothetical sample of 5 college students. The whiskers extending from
+each point give the coverage of the confidence interval computed for
+each sample. The black dotted line gives the value of hypothetical
+population mean time spent on social media. The CI’s highlighted in red
+represent those that fail to capture the population mean
+</p>
+</div>
+<p>Based on the plot and example above, the actual proportion of
+confidence intervals that fail to capture the population mean is <span
+class="math inline">\(12\%\)</span>, which is much higher than the
+expected frequency of only <span class="math inline">\(5\%\)</span>.
+This occurs because the sampling distribution of <span
+class="math inline">\(\bar{x}\)</span> no longer follows a normal
+distribution. When we substitute <span
+class="math inline">\(s/\sqrt{n}\)</span> for <span
+class="math inline">\(\sigma/\sqrt{n}\)</span> the sampling distribution
+of <span class="math inline">\(\bar{x}\)</span> changes to a
+distribution called the <strong><span
+class="math inline">\(t\)</span>-distribution</strong>.</p>
+<p>Like the normal distribution, the <span
+class="math inline">\(t\)</span> distribution is a bell curve but it has
+“heavier tails” - that is to say, it has more probability density in the
+tails of the distribution.</p>
+<p><img src="lecturemenu9_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<p>The amount of probability density in the tails of a <span
+class="math inline">\(t\)</span> distribution is controlled by the
+<strong>degrees of freedom</strong> of the distribution. The confidence
+interval for <span class="math inline">\(\mu\)</span> that uses <span
+class="math inline">\(s/\sqrt{n}\)</span> instead of <span
+class="math inline">\(\sigma/\sqrt{n}\)</span> is given by</p>
+<p><span class="math display">\[ \bar{x} \pm t\frac{s}{\sqrt{n}}
+\]</span></p>
+<p>The quantity <span class="math inline">\(t\)</span> is called the
+<span class="math inline">\(t\)</span>-score and is the <span
+class="math inline">\(1-\alpha/2\)</span> percentile of <span
+class="math inline">\(t\)</span>-distribution with <span
+class="math inline">\(n-1\)</span> degrees of freedom denoted <span
+class="math inline">\(t(n-1)\)</span>. Like the standard score <span
+class="math inline">\(z\)</span>, we must look up the <span
+class="math inline">\(t\)</span>-score corresponding to the desired
+confidence level from a <span
+class="math inline">\(t\)</span>-distribution table:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Upper tail
+</th>
+<th style="text-align:left;">
+0.25
+</th>
+<th style="text-align:left;">
+0.2
+</th>
+<th style="text-align:left;">
+0.15
+</th>
+<th style="text-align:left;">
+0.125
+</th>
+<th style="text-align:left;">
+0.1
+</th>
+<th style="text-align:left;">
+0.075
+</th>
+<th style="text-align:left;">
+0.05
+</th>
+<th style="text-align:left;">
+0.025
+</th>
+<th style="text-align:left;">
+0.005
+</th>
+<th style="text-align:left;">
+0.0025
+</th>
+<th style="text-align:left;">
+5e-04
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Two tail
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.4
+</td>
+<td style="text-align:left;">
+0.3
+</td>
+<td style="text-align:left;">
+0.25
+</td>
+<td style="text-align:left;">
+0.2
+</td>
+<td style="text-align:left;">
+0.15
+</td>
+<td style="text-align:left;">
+0.1
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+0.01
+</td>
+<td style="text-align:left;">
+0.005
+</td>
+<td style="text-align:left;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(DF\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+1.376
+</td>
+<td style="text-align:left;">
+1.963
+</td>
+<td style="text-align:left;">
+2.414
+</td>
+<td style="text-align:left;">
+3.078
+</td>
+<td style="text-align:left;">
+4.165
+</td>
+<td style="text-align:left;">
+6.314
+</td>
+<td style="text-align:left;">
+12.706
+</td>
+<td style="text-align:left;">
+63.657
+</td>
+<td style="text-align:left;">
+127.321
+</td>
+<td style="text-align:left;">
+636.619
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0.816
+</td>
+<td style="text-align:left;">
+1.061
+</td>
+<td style="text-align:left;">
+1.386
+</td>
+<td style="text-align:left;">
+1.604
+</td>
+<td style="text-align:left;">
+1.886
+</td>
+<td style="text-align:left;">
+2.282
+</td>
+<td style="text-align:left;">
+2.92
+</td>
+<td style="text-align:left;">
+4.303
+</td>
+<td style="text-align:left;">
+9.925
+</td>
+<td style="text-align:left;">
+14.089
+</td>
+<td style="text-align:left;">
+31.599
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0.765
+</td>
+<td style="text-align:left;">
+0.978
+</td>
+<td style="text-align:left;">
+1.25
+</td>
+<td style="text-align:left;">
+1.423
+</td>
+<td style="text-align:left;">
+1.638
+</td>
+<td style="text-align:left;">
+1.924
+</td>
+<td style="text-align:left;">
+2.353
+</td>
+<td style="text-align:left;">
+3.182
+</td>
+<td style="text-align:left;">
+5.841
+</td>
+<td style="text-align:left;">
+7.453
+</td>
+<td style="text-align:left;">
+12.924
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0.741
+</td>
+<td style="text-align:left;">
+0.941
+</td>
+<td style="text-align:left;">
+1.19
+</td>
+<td style="text-align:left;">
+1.344
+</td>
+<td style="text-align:left;">
+1.533
+</td>
+<td style="text-align:left;">
+1.778
+</td>
+<td style="text-align:left;">
+2.132
+</td>
+<td style="text-align:left;">
+2.776
+</td>
+<td style="text-align:left;">
+4.604
+</td>
+<td style="text-align:left;">
+5.598
+</td>
+<td style="text-align:left;">
+8.61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+0.727
+</td>
+<td style="text-align:left;">
+0.92
+</td>
+<td style="text-align:left;">
+1.156
+</td>
+<td style="text-align:left;">
+1.301
+</td>
+<td style="text-align:left;">
+1.476
+</td>
+<td style="text-align:left;">
+1.699
+</td>
+<td style="text-align:left;">
+2.015
+</td>
+<td style="text-align:left;">
+2.571
+</td>
+<td style="text-align:left;">
+4.032
+</td>
+<td style="text-align:left;">
+4.773
+</td>
+<td style="text-align:left;">
+6.869
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+0.718
+</td>
+<td style="text-align:left;">
+0.906
+</td>
+<td style="text-align:left;">
+1.134
+</td>
+<td style="text-align:left;">
+1.273
+</td>
+<td style="text-align:left;">
+1.44
+</td>
+<td style="text-align:left;">
+1.65
+</td>
+<td style="text-align:left;">
+1.943
+</td>
+<td style="text-align:left;">
+2.447
+</td>
+<td style="text-align:left;">
+3.707
+</td>
+<td style="text-align:left;">
+4.317
+</td>
+<td style="text-align:left;">
+5.959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+0.711
+</td>
+<td style="text-align:left;">
+0.896
+</td>
+<td style="text-align:left;">
+1.119
+</td>
+<td style="text-align:left;">
+1.254
+</td>
+<td style="text-align:left;">
+1.415
+</td>
+<td style="text-align:left;">
+1.617
+</td>
+<td style="text-align:left;">
+1.895
+</td>
+<td style="text-align:left;">
+2.365
+</td>
+<td style="text-align:left;">
+3.499
+</td>
+<td style="text-align:left;">
+4.029
+</td>
+<td style="text-align:left;">
+5.408
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+0.706
+</td>
+<td style="text-align:left;">
+0.889
+</td>
+<td style="text-align:left;">
+1.108
+</td>
+<td style="text-align:left;">
+1.24
+</td>
+<td style="text-align:left;">
+1.397
+</td>
+<td style="text-align:left;">
+1.592
+</td>
+<td style="text-align:left;">
+1.86
+</td>
+<td style="text-align:left;">
+2.306
+</td>
+<td style="text-align:left;">
+3.355
+</td>
+<td style="text-align:left;">
+3.833
+</td>
+<td style="text-align:left;">
+5.041
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+0.703
+</td>
+<td style="text-align:left;">
+0.883
+</td>
+<td style="text-align:left;">
+1.1
+</td>
+<td style="text-align:left;">
+1.23
+</td>
+<td style="text-align:left;">
+1.383
+</td>
+<td style="text-align:left;">
+1.574
+</td>
+<td style="text-align:left;">
+1.833
+</td>
+<td style="text-align:left;">
+2.262
+</td>
+<td style="text-align:left;">
+3.25
+</td>
+<td style="text-align:left;">
+3.69
+</td>
+<td style="text-align:left;">
+4.781
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+0.7
+</td>
+<td style="text-align:left;">
+0.879
+</td>
+<td style="text-align:left;">
+1.093
+</td>
+<td style="text-align:left;">
+1.221
+</td>
+<td style="text-align:left;">
+1.372
+</td>
+<td style="text-align:left;">
+1.559
+</td>
+<td style="text-align:left;">
+1.812
+</td>
+<td style="text-align:left;">
+2.228
+</td>
+<td style="text-align:left;">
+3.169
+</td>
+<td style="text-align:left;">
+3.581
+</td>
+<td style="text-align:left;">
+4.587
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+0.697
+</td>
+<td style="text-align:left;">
+0.876
+</td>
+<td style="text-align:left;">
+1.088
+</td>
+<td style="text-align:left;">
+1.214
+</td>
+<td style="text-align:left;">
+1.363
+</td>
+<td style="text-align:left;">
+1.548
+</td>
+<td style="text-align:left;">
+1.796
+</td>
+<td style="text-align:left;">
+2.201
+</td>
+<td style="text-align:left;">
+3.106
+</td>
+<td style="text-align:left;">
+3.497
+</td>
+<td style="text-align:left;">
+4.437
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+0.695
+</td>
+<td style="text-align:left;">
+0.873
+</td>
+<td style="text-align:left;">
+1.083
+</td>
+<td style="text-align:left;">
+1.209
+</td>
+<td style="text-align:left;">
+1.356
+</td>
+<td style="text-align:left;">
+1.538
+</td>
+<td style="text-align:left;">
+1.782
+</td>
+<td style="text-align:left;">
+2.179
+</td>
+<td style="text-align:left;">
+3.055
+</td>
+<td style="text-align:left;">
+3.428
+</td>
+<td style="text-align:left;">
+4.318
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+0.694
+</td>
+<td style="text-align:left;">
+0.87
+</td>
+<td style="text-align:left;">
+1.079
+</td>
+<td style="text-align:left;">
+1.204
+</td>
+<td style="text-align:left;">
+1.35
+</td>
+<td style="text-align:left;">
+1.53
+</td>
+<td style="text-align:left;">
+1.771
+</td>
+<td style="text-align:left;">
+2.16
+</td>
+<td style="text-align:left;">
+3.012
+</td>
+<td style="text-align:left;">
+3.372
+</td>
+<td style="text-align:left;">
+4.221
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+0.692
+</td>
+<td style="text-align:left;">
+0.868
+</td>
+<td style="text-align:left;">
+1.076
+</td>
+<td style="text-align:left;">
+1.2
+</td>
+<td style="text-align:left;">
+1.345
+</td>
+<td style="text-align:left;">
+1.523
+</td>
+<td style="text-align:left;">
+1.761
+</td>
+<td style="text-align:left;">
+2.145
+</td>
+<td style="text-align:left;">
+2.977
+</td>
+<td style="text-align:left;">
+3.326
+</td>
+<td style="text-align:left;">
+4.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+0.691
+</td>
+<td style="text-align:left;">
+0.866
+</td>
+<td style="text-align:left;">
+1.074
+</td>
+<td style="text-align:left;">
+1.197
+</td>
+<td style="text-align:left;">
+1.341
+</td>
+<td style="text-align:left;">
+1.517
+</td>
+<td style="text-align:left;">
+1.753
+</td>
+<td style="text-align:left;">
+2.131
+</td>
+<td style="text-align:left;">
+2.947
+</td>
+<td style="text-align:left;">
+3.286
+</td>
+<td style="text-align:left;">
+4.073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+0.69
+</td>
+<td style="text-align:left;">
+0.865
+</td>
+<td style="text-align:left;">
+1.071
+</td>
+<td style="text-align:left;">
+1.194
+</td>
+<td style="text-align:left;">
+1.337
+</td>
+<td style="text-align:left;">
+1.512
+</td>
+<td style="text-align:left;">
+1.746
+</td>
+<td style="text-align:left;">
+2.12
+</td>
+<td style="text-align:left;">
+2.921
+</td>
+<td style="text-align:left;">
+3.252
+</td>
+<td style="text-align:left;">
+4.015
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+0.689
+</td>
+<td style="text-align:left;">
+0.863
+</td>
+<td style="text-align:left;">
+1.069
+</td>
+<td style="text-align:left;">
+1.191
+</td>
+<td style="text-align:left;">
+1.333
+</td>
+<td style="text-align:left;">
+1.508
+</td>
+<td style="text-align:left;">
+1.74
+</td>
+<td style="text-align:left;">
+2.11
+</td>
+<td style="text-align:left;">
+2.898
+</td>
+<td style="text-align:left;">
+3.222
+</td>
+<td style="text-align:left;">
+3.965
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+0.688
+</td>
+<td style="text-align:left;">
+0.862
+</td>
+<td style="text-align:left;">
+1.067
+</td>
+<td style="text-align:left;">
+1.189
+</td>
+<td style="text-align:left;">
+1.33
+</td>
+<td style="text-align:left;">
+1.504
+</td>
+<td style="text-align:left;">
+1.734
+</td>
+<td style="text-align:left;">
+2.101
+</td>
+<td style="text-align:left;">
+2.878
+</td>
+<td style="text-align:left;">
+3.197
+</td>
+<td style="text-align:left;">
+3.922
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+0.688
+</td>
+<td style="text-align:left;">
+0.861
+</td>
+<td style="text-align:left;">
+1.066
+</td>
+<td style="text-align:left;">
+1.187
+</td>
+<td style="text-align:left;">
+1.328
+</td>
+<td style="text-align:left;">
+1.5
+</td>
+<td style="text-align:left;">
+1.729
+</td>
+<td style="text-align:left;">
+2.093
+</td>
+<td style="text-align:left;">
+2.861
+</td>
+<td style="text-align:left;">
+3.174
+</td>
+<td style="text-align:left;">
+3.883
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+0.687
+</td>
+<td style="text-align:left;">
+0.86
+</td>
+<td style="text-align:left;">
+1.064
+</td>
+<td style="text-align:left;">
+1.185
+</td>
+<td style="text-align:left;">
+1.325
+</td>
+<td style="text-align:left;">
+1.497
+</td>
+<td style="text-align:left;">
+1.725
+</td>
+<td style="text-align:left;">
+2.086
+</td>
+<td style="text-align:left;">
+2.845
+</td>
+<td style="text-align:left;">
+3.153
+</td>
+<td style="text-align:left;">
+3.85
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+0.686
+</td>
+<td style="text-align:left;">
+0.859
+</td>
+<td style="text-align:left;">
+1.063
+</td>
+<td style="text-align:left;">
+1.183
+</td>
+<td style="text-align:left;">
+1.323
+</td>
+<td style="text-align:left;">
+1.494
+</td>
+<td style="text-align:left;">
+1.721
+</td>
+<td style="text-align:left;">
+2.08
+</td>
+<td style="text-align:left;">
+2.831
+</td>
+<td style="text-align:left;">
+3.135
+</td>
+<td style="text-align:left;">
+3.819
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;">
+0.686
+</td>
+<td style="text-align:left;">
+0.858
+</td>
+<td style="text-align:left;">
+1.061
+</td>
+<td style="text-align:left;">
+1.182
+</td>
+<td style="text-align:left;">
+1.321
+</td>
+<td style="text-align:left;">
+1.492
+</td>
+<td style="text-align:left;">
+1.717
+</td>
+<td style="text-align:left;">
+2.074
+</td>
+<td style="text-align:left;">
+2.819
+</td>
+<td style="text-align:left;">
+3.119
+</td>
+<td style="text-align:left;">
+3.792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+0.685
+</td>
+<td style="text-align:left;">
+0.858
+</td>
+<td style="text-align:left;">
+1.06
+</td>
+<td style="text-align:left;">
+1.18
+</td>
+<td style="text-align:left;">
+1.319
+</td>
+<td style="text-align:left;">
+1.489
+</td>
+<td style="text-align:left;">
+1.714
+</td>
+<td style="text-align:left;">
+2.069
+</td>
+<td style="text-align:left;">
+2.807
+</td>
+<td style="text-align:left;">
+3.104
+</td>
+<td style="text-align:left;">
+3.768
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+0.685
+</td>
+<td style="text-align:left;">
+0.857
+</td>
+<td style="text-align:left;">
+1.059
+</td>
+<td style="text-align:left;">
+1.179
+</td>
+<td style="text-align:left;">
+1.318
+</td>
+<td style="text-align:left;">
+1.487
+</td>
+<td style="text-align:left;">
+1.711
+</td>
+<td style="text-align:left;">
+2.064
+</td>
+<td style="text-align:left;">
+2.797
+</td>
+<td style="text-align:left;">
+3.091
+</td>
+<td style="text-align:left;">
+3.745
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+0.684
+</td>
+<td style="text-align:left;">
+0.856
+</td>
+<td style="text-align:left;">
+1.058
+</td>
+<td style="text-align:left;">
+1.178
+</td>
+<td style="text-align:left;">
+1.316
+</td>
+<td style="text-align:left;">
+1.485
+</td>
+<td style="text-align:left;">
+1.708
+</td>
+<td style="text-align:left;">
+2.06
+</td>
+<td style="text-align:left;">
+2.787
+</td>
+<td style="text-align:left;">
+3.078
+</td>
+<td style="text-align:left;">
+3.725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+0.684
+</td>
+<td style="text-align:left;">
+0.856
+</td>
+<td style="text-align:left;">
+1.058
+</td>
+<td style="text-align:left;">
+1.177
+</td>
+<td style="text-align:left;">
+1.315
+</td>
+<td style="text-align:left;">
+1.483
+</td>
+<td style="text-align:left;">
+1.706
+</td>
+<td style="text-align:left;">
+2.056
+</td>
+<td style="text-align:left;">
+2.779
+</td>
+<td style="text-align:left;">
+3.067
+</td>
+<td style="text-align:left;">
+3.707
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+0.684
+</td>
+<td style="text-align:left;">
+0.855
+</td>
+<td style="text-align:left;">
+1.057
+</td>
+<td style="text-align:left;">
+1.176
+</td>
+<td style="text-align:left;">
+1.314
+</td>
+<td style="text-align:left;">
+1.482
+</td>
+<td style="text-align:left;">
+1.703
+</td>
+<td style="text-align:left;">
+2.052
+</td>
+<td style="text-align:left;">
+2.771
+</td>
+<td style="text-align:left;">
+3.057
+</td>
+<td style="text-align:left;">
+3.69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+0.683
+</td>
+<td style="text-align:left;">
+0.855
+</td>
+<td style="text-align:left;">
+1.056
+</td>
+<td style="text-align:left;">
+1.175
+</td>
+<td style="text-align:left;">
+1.313
+</td>
+<td style="text-align:left;">
+1.48
+</td>
+<td style="text-align:left;">
+1.701
+</td>
+<td style="text-align:left;">
+2.048
+</td>
+<td style="text-align:left;">
+2.763
+</td>
+<td style="text-align:left;">
+3.047
+</td>
+<td style="text-align:left;">
+3.674
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+0.683
+</td>
+<td style="text-align:left;">
+0.854
+</td>
+<td style="text-align:left;">
+1.055
+</td>
+<td style="text-align:left;">
+1.174
+</td>
+<td style="text-align:left;">
+1.311
+</td>
+<td style="text-align:left;">
+1.479
+</td>
+<td style="text-align:left;">
+1.699
+</td>
+<td style="text-align:left;">
+2.045
+</td>
+<td style="text-align:left;">
+2.756
+</td>
+<td style="text-align:left;">
+3.038
+</td>
+<td style="text-align:left;">
+3.659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+0.683
+</td>
+<td style="text-align:left;">
+0.854
+</td>
+<td style="text-align:left;">
+1.055
+</td>
+<td style="text-align:left;">
+1.173
+</td>
+<td style="text-align:left;">
+1.31
+</td>
+<td style="text-align:left;">
+1.477
+</td>
+<td style="text-align:left;">
+1.697
+</td>
+<td style="text-align:left;">
+2.042
+</td>
+<td style="text-align:left;">
+2.75
+</td>
+<td style="text-align:left;">
+3.03
+</td>
+<td style="text-align:left;">
+3.646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+40
+</td>
+<td style="text-align:left;">
+0.681
+</td>
+<td style="text-align:left;">
+0.851
+</td>
+<td style="text-align:left;">
+1.05
+</td>
+<td style="text-align:left;">
+1.167
+</td>
+<td style="text-align:left;">
+1.303
+</td>
+<td style="text-align:left;">
+1.468
+</td>
+<td style="text-align:left;">
+1.684
+</td>
+<td style="text-align:left;">
+2.021
+</td>
+<td style="text-align:left;">
+2.704
+</td>
+<td style="text-align:left;">
+2.971
+</td>
+<td style="text-align:left;">
+3.551
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+0.679
+</td>
+<td style="text-align:left;">
+0.849
+</td>
+<td style="text-align:left;">
+1.047
+</td>
+<td style="text-align:left;">
+1.164
+</td>
+<td style="text-align:left;">
+1.299
+</td>
+<td style="text-align:left;">
+1.462
+</td>
+<td style="text-align:left;">
+1.676
+</td>
+<td style="text-align:left;">
+2.009
+</td>
+<td style="text-align:left;">
+2.678
+</td>
+<td style="text-align:left;">
+2.937
+</td>
+<td style="text-align:left;">
+3.496
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:left;">
+0.677
+</td>
+<td style="text-align:left;">
+0.845
+</td>
+<td style="text-align:left;">
+1.042
+</td>
+<td style="text-align:left;">
+1.157
+</td>
+<td style="text-align:left;">
+1.29
+</td>
+<td style="text-align:left;">
+1.451
+</td>
+<td style="text-align:left;">
+1.66
+</td>
+<td style="text-align:left;">
+1.984
+</td>
+<td style="text-align:left;">
+2.626
+</td>
+<td style="text-align:left;">
+2.871
+</td>
+<td style="text-align:left;">
+3.39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Z-score
+</td>
+<td style="text-align:left;">
+0.674
+</td>
+<td style="text-align:left;">
+0.842
+</td>
+<td style="text-align:left;">
+1.036
+</td>
+<td style="text-align:left;">
+1.15
+</td>
+<td style="text-align:left;">
+1.282
+</td>
+<td style="text-align:left;">
+1.44
+</td>
+<td style="text-align:left;">
+1.645
+</td>
+<td style="text-align:left;">
+1.96
+</td>
+<td style="text-align:left;">
+2.576
+</td>
+<td style="text-align:left;">
+2.807
+</td>
+<td style="text-align:left;">
+3.291
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Confidence Level:
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(50\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(60\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(70\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(75\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(80\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(85\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(90\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(95\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99.5\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99.9\%\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The table for the <span class="math inline">\(t\)</span> distribution
+is organized a little bit differently than the one we’ve seen previously
+for the standard normal distribution. The right-most column gives the
+degrees of freedom, columns give the different upper tail and two tail
+probabilities, and the values in the middle of the table are the <span
+class="math inline">\(t\)</span> scores that correspond to those
+probabilities.</p>
+<p>Use the table above to verify that the following <span
+class="math inline">\(t\)</span>-scores corresponding to each confidence
+level and sample size are correct.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Confidence Level
+</th>
+<th style="text-align:left;">
+Sample size
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\alpha\)</span>
+</th>
+<th style="text-align:right;">
+critical value: <span class="math inline">\(t_{1-\alpha/2}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(90\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n = 3\)</span>
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+2.35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(85\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n = 5\)</span>
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(95\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n = 10\)</span>
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(99\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n = 14\)</span>
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+2.98
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(80\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n = 22\)</span>
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+</tr>
+</tbody>
+</table>
+<p>One nice property of the <span
+class="math inline">\(t\)</span>-distribution is that it converges to
+the standard normal distribution as <span
+class="math inline">\(n\)</span> goes to infinity. Stated another way, a
+<span class="math inline">\(t\)</span>-distribution with <span
+class="math inline">\(\infty\)</span> degrees of freedom is exactly the
+standard normal distribution. This means that with large enough sample
+size, both the confidence interval based on the standard normal
+distribution and the one bases on the <span
+class="math inline">\(t\)</span> distribution should yield nearly
+identical results. In fact, for <span class="math inline">\(n \geq
+30\)</span> the difference between the standard normal distribution and
+<span class="math inline">\(t\)</span>-distribution is nearly
+indistinguishable.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
