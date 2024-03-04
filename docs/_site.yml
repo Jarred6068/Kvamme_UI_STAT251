@@ -106,6 +106,8 @@ navbar:
           menu:  
           - text: 'Z-table'
             href: misc/Z_table.html
+          - text: 't-table'
+            href: misc/t_table.html
         - text: 'R code'          
           href: misc/rcode_examples.html
         - text: 'Downloading R/Rstudio'
