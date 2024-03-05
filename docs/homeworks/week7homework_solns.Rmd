@@ -129,7 +129,7 @@ $\bf (4)$ An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two ba
 
 $\bf (5)$ The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is Windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume that these three types of weather events are independent. What is the probability that a given day is both Rainy, Cloudy, and Windy?
 
-<span style="color: red;">We are told the events are independent and we wish to find the interection of $R$, $W$ and $C$:
+<span style="color: red;">We are told the events are independent and we wish to find the intersection of $R$, $W$ and $C$:
 \[P(R\cap W\cap C) = (0.1)(0.2)(0.7) = 0.014 \]</span>
 
 ## Sampling Distributions, Means, and Variances
@@ -146,7 +146,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 
 ```
 
-* Derive the sampling distribution for the mean of $n=2$ observations of $X$
+* Derive the sampling distribution for the mean of $n=2$ observations of $\bar{X}$
 
 <span style="color: red;">The sample space for a mean of two observations of $X$ is given below.</span>
 ```{r, echo=F, message=F, warning=F}
@@ -377,7 +377,7 @@ $\bf (13)$ A factory experiences on average 3 equipment malfunctions per day, fo
 <span style="color: red;">let $X$ represent the number of equipment failures in a given day for the factor, then \[X\sim Poisson(\lambda = 3)\]
 \[P(X\geq 3) = 1 - P(X< 3)\]
 \[P(X < 3) =  P(X = 0)+P(X = 1)+P(X = 2)\]
-\[= 1-\sum_{k=0}^2 \frac{1.8^k\cdot e^{-1.8}}{k!} \approx 0.577\]
+\[= 1-\sum_{k=0}^2 \frac{3^k\cdot e^{-3}}{k!} \approx 0.577\]
 </span>
 
 ## Deriving Probabilities From Continuous Distributions
@@ -450,7 +450,7 @@ Use the plot to find the following probabilities (recall that the area of a tria
 
 * What is $P(Y>-0.25)$?
 
-<span style="color: red;">In this plot the area comprising a single grid square is \[ \text{Area of a rectangle} = \text{Base}\times\text{Height} = 0.25\times 0.16 \approx 0.04\] There are $13$ grid squares in the area between $-0.25$ and $1.0$ $P(Y>-0.25)=13\times 0.04 = 0.52$</span>
+<span style="color: red;">In this plot the area comprising a single grid square is \[ \text{Area of a rectangle} = \text{Base}\times\text{Height} = 0.25\times 0.16 \approx 0.04\] There are $14$ grid squares in the area between $-0.25$ and $1.0$ $P(Y>-0.25)=14\times 0.04 = 0.56$</span>
 
 * What is $P(-0.5<Y<0.25)$?
 
