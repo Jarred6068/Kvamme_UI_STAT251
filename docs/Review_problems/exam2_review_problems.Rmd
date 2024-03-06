@@ -118,7 +118,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%
 
 
 
-$\bf 11.)$ Consider the following distribution of the diameter at breast height (DBH) of a sample of Western red ceder trees. Assume that these trees have an average DBH of about 35 inches and the standard deviation for DBH is 6 lbs. Use the empirical rule to help you answer parts (a) and (b) and show any/all work.}
+$\bf 11.)$ Consider the following distribution of the diameter at breast height (DBH) of a sample of Western red ceder trees. Assume that these trees have an average DBH of about 35 inches and the standard deviation for DBH is 6 inches. Use the empirical rule to help you answer parts (a) and (b) and show any/all work.}
 
 ```{r, echo=FALSE, fig.height=2.5, fig.width=4, message=FALSE, warning=FALSE}
 set.seed(592)
@@ -145,7 +145,7 @@ plot(A)
 
   a. What proportion of trees have a DBH greater than 41 inches?
 
-  b. What proportion of trees have a DBH between 29 lbs and 35?
+  b. What proportion of trees have a DBH between 29 inches and 35 inches?
 
   c. Suppose you observe a tree with a DBH of 49.5 inches. Show how to compute and interpret the $z$-score for this tree
   
