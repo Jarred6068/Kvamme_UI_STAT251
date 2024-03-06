@@ -179,17 +179,18 @@ plot(A)
   a. What proportion of trees have a DBH greater than 41 inches?
   
   <span style="color: red;">compute the z-score: 
-  \[ 41\]</span>
+  \[ z = \frac{41- 35}{6} = 1\]
+  by the empirical rule we know from the empirical rule that approximately $16\%$ of observations will be $1\sigma$ above the mean</span>
 
-  b. What proportion of trees have a DBH between 29 lbs and 35?
+  b. What proportion of trees have a DBH between 29 inches and 35 inches?
   
-  <span style="color: red;"></span>
+  <span style="color: red;">$X = 29$ is $2\sigma$ below the mean and $X = 35$ is the mean. Therefore this is the same as asking "what is $P(-2 < Z < 0)$" - which by the empirical rule should include about $47.5\%$ of the observations </span>
 
   c. Suppose you observe a tree with a DBH of 49.5 inches. Show how to compute and interpret the $z$-score for this tree
   
-  <span style="color: red;"></span>
+  <span style="color: red;">\[z = \frac{49.5 - 35}{6} = 2.41 \] The tree is 2.41 standard deviations above the mean tree DBH and could be considered an outlier.</span>
   
   d. Compute the probability of observing a tree with a DBH greater than 49.5 inches (i.e $P(X > 49.5)$)
   
-  <span style="color: red;"></span>
+  <span style="color: red;">\[P(X > 49.5) = P(Z > 2.41) = 1-P(Z\leq 2.41) = 0.007\]</span>
 
