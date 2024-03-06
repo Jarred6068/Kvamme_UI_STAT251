@@ -1,0 +1,153 @@
+---
+title: "Exam 2 Review Problems"
+author: "STAT 251 Section 03"
+date: "2024-01-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path2 = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+```
+
+
+$\bf 1.)$ In the Star Wars universe, midichlorians are microscopic organisms that exist within the cells of all living beings and are believed to be connected to the Force. The number of midichlorians present in an individual's cells is thought to correlate with their Force sensitivity. Let $M$ be the random variable representing the midichlorian count of a Jedi or Force-sensitive character. Suppose that the mean midichlorian count is $452$ and the standard deviation is $33$. Let $\bar{x}$ be the mean from a sample of 40 observations of midichlorian counts. Give the mean and standard deviation for the sampling distribution of $\bar{x}$
+
+<br>
+<br>
+
+$\bf 2.)$ The Tillamook dairy company regularly conducts quality control services on their cheese products to make sure that it meets standards for taste and nutrition. The company produces three flavors of block cheese: Sharp Cheddar, Mozzarella, and Colby Jack. Once a month the company groups the cheeses by their flavor and selects a simple random sample of blocks from each flavor. A group of tasters then rates the sampled blocks for their flavor and texture qualities. This is an example of which type of sampling design?
+
+
+<br>
+<br>
+
+
+$\bf 3.)$ In the lush valleys of the Shire, hobbits are known for their fondness for good ale and hearty camaraderie. To explore the preferences of hobbits regarding different types of beer, a group of hobbit researchers visits the most popular tavern, "The Prancing Pony," during the annual Hobbiton Beer Festival. They ask patrons present at the festival to share their favorite brews. What is the name of the sampling design utilized by the hobbit researchers to study beer preferences among the hobbits of the Shire in the Lord of the Rings universe?
+
+
+<br>
+<br>
+
+
+$\bf 4.)$ In a medical study, each participant is paired with another participant who has similar characteristics, and both individuals in each pair receive different treatments to compare the effects. The objective is to minimize individual differences and control for variables, allowing a more accurate assessment of treatment effectiveness. What is the name of this statistical design?
+
+<br>
+<br>
+
+
+
+$\bf 5.)$ In a research study investigating the effects of a new medication, participants are randomly assigned to one of two groups: the treatment group, which receives the experimental drug, and the control group, which receives a placebo. The random allocation ensures that each participant has an equal chance of being in either group. What is the name of this statistical design?"
+
+
+<br>
+<br>
+
+$\bf 6.)$ In a galaxy far, far away, a research team is conducting an experiment to assess the impact of different lightsaber training techniques on the combat skills of Jedi apprentices. The researchers want to control for individual variations in Force sensitivity, so they organize the participants into blocks based on their initial lightsaber proficiency levels. Within each proficiency level, participants are randomly assigned to one of three training methods. What is the name of the statistical design employed
+
+<br>
+<br>
+
+
+$\bf 7.)$ A random variable $X$ follows a normal distribution with mean $\mu = -5$ and variance $\sigma^2 = 10$. 
+
+  a.) What is the probability of observing a value of $X$ greater than 15 (i.e $P(X>15)$)?}
+  
+  b.) What is the probability of observing a value of $X$ less than -8 (i.e $P(X<-8)$)?}
+
+  c.) What is the $30th$ percentile of $X$?
+
+
+<br>
+<br>
+
+
+$\bf 8.)$ A fisherman has a $58\%$ chance of catching a fish every time she makes a cast. Assume that each cast is independent. Show how to compute the probability that she catches $5$ fish in the next 10 casts. 
+
+
+
+<br>
+<br>
+
+
+
+$\bf 9.)$ On the desert planet of Arrakis, spice harvesters must frequently be evacuated from the spice beds to avoid attacks by sandworms. On average, each spice harvester must be evacuated twice in a 24 hour period. What is the probability that a harvester will not have to be evacuate in a given 24 hour period?
+
+
+
+<br>
+<br>
+
+
+$\bf 10.)$ A random variable $X$ has the following probability distribution}
+
+
+```{r, echo=FALSE, warning=F, message=F}
+df = cbind.data.frame(`$X$` = c(-1, 3), `$P(X)$` = c(0.1, 0.9))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+  a.) Using the table above, show how to compute the mean of $X$
+  
+  b.)Using the table above, show how to compute the variance of $X$
+  
+  c.Fill in the table below by deriving the sampling distribution for a mean of $n=2$ observations of $X$. Assume the observations are independent (hint: start by listing the sample space for the mean)
+
+```{r, echo=FALSE, warning=F, message=F}
+df = cbind.data.frame(`$\\bar{X}$` = c("", "",""), `$P(\\bar{X})$` = c("", "",""))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+
+
+<br>
+<br>
+
+
+
+$\bf 11.)$ Consider the following distribution of the diameter at breast height (DBH) of a sample of Western red ceder trees. Assume that these trees have an average DBH of about 35 inches and the standard deviation for DBH is 6 lbs. Use the empirical rule to help you answer parts (a) and (b) and show any/all work.}
+
+```{r, echo=FALSE, fig.height=2.5, fig.width=4, message=FALSE, warning=FALSE}
+set.seed(592)
+x = rnorm(1000, mean = 35, sd = 6)
+
+
+A = ggplot()+
+  geom_histogram(aes(x = x), bins = 16,color = 'black', fill = 'grey')+
+  scale_x_continuous(breaks = seq(17, 53, 6))+
+  theme_hc()+
+  theme(axis.text.x = element_text(size = 10),
+        axis.title.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 15))+
+  ylab('Frequency')+
+  xlab('Diameter Breast Height (DBH)')+
+  ggtitle('Distribution of Tree DBH',subtitle = 'For Wester Red Ceders')
+
+plot(A)
+#ggarrange(A, B, nrow = 1, ncol = 2)
+
+```
+
+
+  a. What proportion of trees have a DBH greater than 41 inches?
+
+  b. What proportion of trees have a DBH between 29 lbs and 35?
+
+  c. Suppose you observe a tree with a DBH of 49.5 inches. Show how to compute and interpret the $z$-score for this tree
+  
+  d. Compute the probability of observing a tree with a DBH greater than 49.5 inches (i.e $P(X > 49.5)$)
+
