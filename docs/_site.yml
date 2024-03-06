@@ -75,7 +75,7 @@ navbar:
             - text: 'Problems' 
               href: Review_problems/exam2_review_problems.html
             - text: 'Solutions'
-              href: Review_problems/exam2_review_problems_solns.html
+              href: Review_problems/exam2_review_problems_solns8.html
     - text: "Course Project"
       menu:
       - text: "Project Description"
