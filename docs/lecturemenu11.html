@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="STAT 251 Section 03" />
 
 
-<title>Course Schedule</title>
+<title>Week 9 Notes</title>
 
 <script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -32,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -478,1488 +481,343 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Course Schedule</h1>
+<h1 class="title toc-ignore">Week 9 Notes</h1>
+<h4 class="author">STAT 251 Section 03</h4>
 
 </div>
 
 
-<table border="1" cellspacing="10" style="width:60%">
+<div id="lecture-19-monday-march-18th-2024" class="section level1">
+<h1>Lecture 19 Monday, March 18th 2024</h1>
+<div id="review-of-confidence-intervals-for-p" class="section level3">
+<h3>Review of confidence intervals for <span
+class="math inline">\(p\)</span>:</h3>
+<p>Recall that <strong>confidence intervals</strong> are used to
+estimate the value of an <u>unknown parameter</u> with a interval of
+values. Confidence intervals serve two purposes: (1) they provide a
+range of possible values of the parameter and (2) they provide an
+indication of how accurate the estimate is i.e how <i>confident</i> we
+are in the results. A confidence interval has the general form</p>
+<p><span class="math display">\[ \text{point estimate} \ \pm \
+\text{margin of error}  \]</span></p>
+<p>The <i>confidence</i> portion comes from the <strong>confidence
+level</strong> which states the probability that the interval will give
+the correct result based on the long-run frequency of the method. That
+is, for a confidence level of <span class="math inline">\(95\%\)</span>,
+for example, we can expect approximately <span
+class="math inline">\(95\%\)</span> of confidence intervals to capture
+the value of the unknown parameter. However, for any given confidence
+interval, once it is computed the value of the parameter is either in
+the interval or not in the interval - but we do not know.</p>
+<p>Before the break, we discussed three confidence intervals: 2 for a
+population mean and one for a population proportion. We will review the
+latter first. The <span class="math inline">\((1 - \alpha)\%\)</span>
+confidence interval for estimating <span
+class="math inline">\(p\)</span> with <span
+class="math inline">\(\hat{p}\)</span> is given by</p>
+<p><span class="math display">\[ \hat{p} \ \pm \ z_{1 - \alpha/2} \
+\sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]</span></p>
+<p>where <span class="math inline">\(\hat{p}\)</span> denotes the sample
+proportion and</p>
+<p><span class="math display">\[ m = z_{1 - \alpha/2}
+\sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]</span></p>
+<p>denotes the margin of error.</p>
+<ul>
+<li><p><strong>Practice:</strong> Investors in the stock market are
+often interested in understanding the true proportion of stocks that go
+up and down each week. Suppose a random sample of <span
+class="math inline">\(150\)</span> stocks is taken, and it is found that
+<span class="math inline">\(82\)</span> of them have increased in value
+during the past week.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>compute the margin of error <span
+class="math inline">\(m\)</span></p></li>
+<li><p>Give the <span class="math inline">\(95\%\)</span> confidence
+interval for the true proportion of stocks <span
+class="math inline">\(p\)</span></p></li>
+<li><p>If you instead wanted the <span
+class="math inline">\(99\%\)</span> confidence interval for the same
+sample, would the margin of error be greater than, less than, or equal
+to the margin of error you computed in part (a)?</p></li>
+</ol></li>
+</ul>
+</div>
+<div id="review-of-confidence-intervals-for-mu" class="section level3">
+<h3>Review of confidence intervals for <span
+class="math inline">\(\mu\)</span>:</h3>
+<p>For estimating <span class="math inline">\(\mu\)</span> with <span
+class="math inline">\(\bar{x}\)</span>, we first proposed the following
+confidence interval</p>
+<p><span class="math display">\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \
+\frac{\sigma}{\sqrt{n}}\]</span></p>
+<p>where <span class="math inline">\(\bar{x}\)</span> denotes the sample
+mean and</p>
+<p><span class="math display">\[ m = z_{1 - \alpha/2} \
+\frac{\sigma}{\sqrt{n}}\]</span></p>
+<p>denotes the margin of error. Recall that this interval requires that
+we know the value of <span class="math inline">\(\sigma\)</span> - the
+population standard deviation. If we do not the value of <span
+class="math inline">\(sigma\)</span>, we could instead sub in the sample
+standard deviation <span class="math inline">\(s\)</span> in its place
+to get</p>
+<p><span class="math display">\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \
+\frac{s}{\sqrt{n}}\]</span></p>
+<p>However, as we discussed before the break, the confidence interval
+above, which is based on the standard normal distribution, will tend
+have a lower than expected confidence level when <span
+class="math inline">\(n\)</span> is small, say <span
+class="math inline">\(n \leq 30\)</span>. Instead, a better confidence
+interval that is based on the <span
+class="math inline">\(t\)</span>-distribution is given by</p>
+<p><span class="math display">\[ \bar{x} \ \pm \  t_{n-1, 1 - \alpha/2}
+\ \frac{s}{\sqrt{n}}\]</span></p>
+<p>where <span class="math inline">\(t_{n-1, 1 - \alpha/2}\)</span> is
+the <span class="math inline">\(1-\alpha/2\)</span> percentile of a
+<span class="math inline">\(t\)</span> distribution with <span
+class="math inline">\(n-1\)</span> degrees of freedom. The above
+confidence interval will give correct results regardless of sample size.
+Moreover, since the <span class="math inline">\(t\)</span>-distribution
+converges to the standard normal distribution for as <span
+class="math inline">\(n\)</span> gets large, the two methods tend to
+give identical results for <span class="math inline">\(n &lt;
+30\)</span>.</p>
+<ul>
+<li><strong>Practice</strong> Consider the following data table which
+gives the mean annual temperate in central park over 10 years of
+recordings starting in 2009.</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
 <tr>
-<td>
-<strong>WEEK 1</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-January 8, 2024
-</td>
-<td>
-NO CLASS
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-January 10, 2024
-</td>
-<td>
-Introduction: The big picture
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-January 12, 2024
-</td>
-<td>
-Describing and visualizing distributions
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 2</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-January 15, 2024
-</td>
-<td>
-No Class
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-January 17, 2024
-</td>
-<td>
-CLASS CANCELED - Flooding TLC
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-January 19, 2024
-</td>
-<td>
-Distributions and frequency tables
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 3</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-January 22, 2024
-</td>
-<td>
-Measures of location and position
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-January 24, 2024
-</td>
-<td>
-Measures of spread, boxplot
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-January 26, 2024
-</td>
-<td>
-CLASS CANCELED
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 4</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-January 29, 2024
-</td>
-<td>
-Measures of spread, cumulative distributions
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-January 31, 2024
-</td>
-<td>
-Exam 1 Review
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-February 2, 2024
-</td>
-<td>
-Exam 1
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 5</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-February 5, 2024
-</td>
-<td>
-The normal distribution, z-scores, transformations
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-February 7, 2024
-</td>
-<td>
-Identifying outliers, margin of error, statistical significance
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-February 9, 2024
-</td>
-<td>
-Study and sampling designs
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 6</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-February 12, 2024
-</td>
-<td>
-Introduction to probability, random variables, discrete probability
-distributions
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-February 14, 2024
-</td>
-<td>
-Discrete probability distributions
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-February 16, 2024
-</td>
-<td>
-Continuous probability distributions
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 7</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-February 19, 2024
-</td>
-<td>
-NO CLASS
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-February 21, 2024
-</td>
-<td>
-Sampling distributions and the central limit theorem
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-February 23, 2024
-</td>
-<td>
-More on sampling distributions, Introduction to confidence intervals
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 8</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-February 26, 2024
-</td>
-<td>
-Confidence Intervals for a population proportion
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-February 28, 2024
-</td>
-<td>
-Confidence Intervals for a population mean
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-March 1, 2024
-</td>
-<td>
-Bootstrap confidence intervals
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 9</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-March 4, 2024
-</td>
-<td>
-Choosing a minimum sample size, assumptions of estimators
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-March 6, 2024
-</td>
-<td>
-Exam 2 Review
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-March 8, 2024
-</td>
-<td>
-Exam 2
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 10</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-March 11, 2024
-</td>
-<td>
-Spring Recess no Class
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-March 13, 2024
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-March 15, 2024
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 11</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-March 18, 2024
-</td>
-<td>
-Introduction to significance tests, Pvalues
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-March 20, 2024
-</td>
-<td>
-Tests for a population proportion
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-March 22, 2024
-</td>
-<td>
-NO CLASS
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 12</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-March 25, 2024
-</td>
-<td>
-Tests for a population mean
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-March 27, 2024
-</td>
-<td>
-Composite hypotheses, relationship between confidence intervals and
-hypothesis tests, the sign test
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-March 29, 2024
-</td>
-<td>
-Making decisions, types of errors in hypothesis test, statistical power
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 13</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-April 1, 2024
-</td>
-<td>
-Introduction to two-sample tests, independent vs dependent samples
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-April 3, 2024
-</td>
-<td>
-Tests for comparing two independent proportions or two independent means
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-April 5, 2024
-</td>
-<td>
-Tests for dependent samples, causal inference
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 14</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-April 8, 2024
-</td>
-<td>
-Introduction to analyzing categorical variables
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-April 10, 2024
-</td>
-<td>
-Goodness-of-fit tests and tests of independence
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-April 12, 2024
-</td>
-<td>
-Cramers V, McNemars Test, Fishers exact test
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 15</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-April 15, 2024
-</td>
-<td>
-Exam 3 Review
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-April 17, 2024
-</td>
-<td>
-Exam 3
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-April 19, 2024
-</td>
-<td>
-Measures of association
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 16</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-April 22, 2024
-</td>
-<td>
-Correlation and simple linear regression
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Wednesday
-</td>
-<td>
-April 24, 2024
-</td>
-<td>
-Coefficient of determination, tests for slope coefficients
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Friday
-</td>
-<td>
-April 26, 2024
-</td>
-<td>
-ANOVA
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>No Exam WEEK</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-Monday
-</td>
-<td>
-April 29, 2024
-</td>
-<td>
-ANOVA continued
-</td>
-<td>
-</td>
+<th style="text-align:right;">
+Year
+</th>
+<th style="text-align:right;">
+Mean Annual Temp
+</th>
 </tr>
+</thead>
+<tbody>
 <tr>
-<td>
-</td>
-<td>
+<td style="text-align:right;">
+2009
 </td>
-<td>
+<td style="text-align:right;">
+54.0
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-Wednesday
-</td>
-<td>
-May 1, 2024
+<td style="text-align:right;">
+2010
 </td>
-<td>
-Final exam informal review, course project due at midnight
+<td style="text-align:right;">
+56.7
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
+<td style="text-align:right;">
+2011
 </td>
-<td>
+<td style="text-align:right;">
+56.4
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-Friday
-</td>
-<td>
-May 3, 2024
+<td style="text-align:right;">
+2012
 </td>
-<td>
-No Class
+<td style="text-align:right;">
+57.3
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-<strong>Final Exam WEEK</strong>
-</td>
-<td>
+<td style="text-align:right;">
+2013
 </td>
-<td>
+<td style="text-align:right;">
+55.3
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-Monday
-</td>
-<td>
-May 6, 2024
+<td style="text-align:right;">
+2014
 </td>
-<td>
-Final Exam Day, Time: 8:00 am - 10:00 am
+<td style="text-align:right;">
+54.4
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
+<td style="text-align:right;">
+2015
 </td>
-<td>
+<td style="text-align:right;">
+56.7
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-Wednesday
-</td>
-<td>
-May 8, 2024
+<td style="text-align:right;">
+2016
 </td>
-<td>
+<td style="text-align:right;">
+57.2
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
+<td style="text-align:right;">
+2017
 </td>
-<td>
+<td style="text-align:right;">
+56.3
 </td>
 </tr>
 <tr>
-<td>
-Friday
+<td style="text-align:right;">
+2018
 </td>
-<td>
-May 10, 2024
+<td style="text-align:right;">
+55.9
 </td>
 </tr>
+</tbody>
 </table>
+<ul>
+<li><p>Verify that the average mean annual temp is <span
+class="math inline">\(\bar{x} = 56.02\)</span> with standard deviation
+<span class="math inline">\(s \approx 1.13\)</span></p></li>
+<li><p>Given the <span class="math inline">\(95\%\)</span> confidence
+interval for mean annual temperature</p></li>
+</ul>
+</div>
+<div id="factors-that-influence-the-margin-of-error"
+class="section level3">
+<h3>Factors that influence the margin of error:</h3>
+<p>When we compute a confidence interval, we would like the interval to
+be as small as possible. Why? simply put, because we want the most
+precise estimate of the parameter that we can get. A small interval is
+the result of a small margin of error. However, several factors affect
+the width of the margin of error of an estimate. The margin of error of
+a confidence interval decreases as:</p>
+<ol style="list-style-type: decimal">
+<li><p>The confidence level decreases</p></li>
+<li><p>The population standard deviation <span
+class="math inline">\(\sigma\)</span> decreases</p></li>
+<li><p>The sample size <span class="math inline">\(n\)</span>
+increases</p></li>
+</ol>
+<p>First, we typically do not want to decrease the confidence level. By
+convention, most confidence intervals reported in academic journals are
+at least <span class="math inline">\(90\%\)</span> or greater. This is
+because we want to retain a high degree of <i>confidence</i> that our
+estimate is accurate. Secondly, we have no control over the value of the
+population standard deviation. <span
+class="math inline">\(\sigma\)</span> is a property of the population.
+If <span class="math inline">\(\sigma\)</span> is inherently large for
+the population under study, then we are out of luck in that regard.</p>
+<p>However, we are fortunate in that we can control the sample size of
+our study. Recall that the standard deviation for the sampling
+distributions of <span class="math inline">\(\bar{x}\)</span> and <span
+class="math inline">\(\hat{p}\)</span> both involve division by the
+number of observations in the sample <span
+class="math inline">\(n\)</span>. Therefore, we can reduce the margin of
+error of our estimate of <span class="math inline">\(\mu\)</span> or
+<span class="math inline">\(p\)</span> by increasing <span
+class="math inline">\(n\)</span> - the number of observations in the
+sample.</p>
+</div>
+<div id="choosing-a-minimum-sample-size" class="section level3">
+<h3>Choosing a minimum sample size</h3>
+<p>While it is nice that we can simply choose to observe a large number
+of observations from the population to get a small margin of error, real
+studies and surveys cost time, money, and effort on behalf of the
+researchers. Therefore, we want to avoid taking an arbitrarily large
+number of observations. Instead, we would like to observe only as many
+observations as needed to achieve a certain precision in our
+estimate.</p>
+<p>Luckily, with a little bit of algebra we can rearrange the formula
+for the margin of error to determine the sample size we required to
+achieve a desired level of precision.</p>
+<p>How do we choose <span class="math inline">\(n\)</span> for estimate
+<span class="math inline">\(p\)</span> with <span
+class="math inline">\(\hat{p}\)</span>? Consider that</p>
+<p><span class="math display">\[ m = z_{1-\alpha/2} \
+\sqrt{\frac{p(1-p)}{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2
+p(1-p)}{m^2}\]</span></p>
+<p>where <span class="math inline">\(m\)</span> denotes the margin of
+error, <span class="math inline">\(p\)</span> is the population
+proportion and <span class="math inline">\(z\)</span> is the standard
+score corresponding the desired <span
+class="math inline">\((1-\alpha/2)%\)</span> confidence level. Keep in
+mind that the formula above is used to determine the sample size needed
+when we designing a study to investigate the value of an unknown
+population proportion. Therefore, how do we choose the value <span
+class="math inline">\(p\)</span>? We have essentially two options</p>
+<ol style="list-style-type: decimal">
+<li><p>We can look for related studies or prior research to inform the
+value of <span class="math inline">\(p\)</span></p></li>
+<li><p>We can use <span class="math inline">\(p = 0.5\)</span> which
+gives the upper bound on the sample size:</p></li>
+</ol>
+<p><span class="math display">\[ n = \frac{z^2 p(1-p)}{m} \leq \frac{z^2
+0.5(1-0.5)}{m} \]</span></p>
+<p>The latter option is a conservative approach we can use when we have
+no prior information regarding the value of the population
+proportion.</p>
+<ul>
+<li><strong>Try it out: </strong> The sensitivity of a medical test is
+the probability of a positive result when the condition (e.g., disease)
+is present. Rapid strep tests have a sensitivity of about <span
+class="math inline">\(0.95\)</span>. A new rapid strep test has been
+developed but its sensitivity is unknown. How many tests would be
+necessary to estimate its sensitivity with a margin of error of <span
+class="math inline">\(0.02\)</span> at a confidence level of <span
+class="math inline">\(95\%\)</span>?</li>
+</ul>
+<p>How do we choose <span class="math inline">\(n\)</span> for estimate
+<span class="math inline">\(\mu\)</span> with <span
+class="math inline">\(\bar{x}\)</span>? Consider that</p>
+<p><span class="math display">\[ m = z_{1-\alpha/2} \
+\frac{\sigma}{\sqrt{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2
+\sigma^2}{m^2}\]</span></p>
+<p>Notice that the above equation for <span
+class="math inline">\(n\)</span> requires that we known <span
+class="math inline">\(\sigma\)</span>. So how can we choose the value of
+<span class="math inline">\(\sigma\)</span>?. Again we have two
+options:</p>
+<ol style="list-style-type: decimal">
+<li><p>Use prior research/knowledge to inform the value of <span
+class="math inline">\(\sigma\)</span></p></li>
+<li><p>We can use an educated guess about the possible range of <span
+class="math inline">\(\mu\)</span> and estimate <span
+class="math inline">\(\sigma\)</span> via</p></li>
+</ol>
+<p><span class="math display">\[ \sigma \approx \frac{\text{range}}{4}
+\]</span></p>
+<ul>
+<li><p><strong>Try it out: </strong> A researcher wants to estimate the
+mean number of hours college students spend scrolling TikTok each week.
+Previous studies suggest that the standard deviation of the weekly hours
+spent on TikTok is approximately 2.5 hours. The researcher desires a
+margin of error of no more than 0.5 hours. Compute the sample size the
+researcher needs to estimate the mean number of hours within the desired
+margin of error.</p></li>
+<li><p><strong>Try it out: </strong> A marketing research firm wants to
+estimate the average amount a student spends during the Spring break.
+They want to determine it to within <span
+class="math inline">\(\$120\)</span> with <span
+class="math inline">\(90\%\)</span> confidence. One can roughly say that
+amount a students spends ranges from <span
+class="math inline">\(\$100\)</span> to <span
+class="math inline">\(\$1700\)</span>. About how many students should
+they sample?</p></li>
+</ul>
+</div>
+<div id="assumptions-of-estimators" class="section level3">
+<h3>Assumptions of estimators</h3>
+</div>
+<div id="introduction-to-tests-of-significance" class="section level3">
+<h3>Introduction to tests of significance</h3>
+</div>
+</div>
 
 
 

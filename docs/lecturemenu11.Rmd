@@ -1,0 +1,156 @@
+---
+title: "Week 9 Notes"
+author: "STAT 251 Section 03"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+library(gganimate)
+
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+```
+
+# Lecture 19 Monday, March 18th 2024
+
+### Review of confidence intervals for $p$:
+
+Recall that **confidence intervals** are used to estimate the value of an <u>unknown parameter</u> with a interval of values. Confidence intervals serve two purposes: (1) they provide a range of possible values of the parameter and (2) they provide an indication of how accurate the estimate is i.e how <i>confident</i> we are in the results. A confidence interval has the general form
+
+\[ \text{point estimate} \ \pm \ \text{margin of error}  \]
+
+The <i>confidence</i> portion comes from the **confidence level** which states the probability that the interval will give the correct result based on the long-run frequency of the method. That is, for a confidence level of $95\%$, for example, we can expect approximately $95\%$ of confidence intervals to capture the value of the unknown parameter. However, for any given confidence interval, once it is computed the value of the parameter is either in the interval or not in the interval - but we do not know. 
+
+Before the break, we discussed three confidence intervals: 2 for a population mean and one for a population proportion. We will review the latter first. The $(1 - \alpha)\%$ confidence interval for estimating $p$ with $\hat{p}$ is given by
+
+\[ \hat{p} \ \pm \ z_{1 - \alpha/2} \ \sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]
+
+where $\hat{p}$ denotes the sample proportion and 
+
+\[ m = z_{1 - \alpha/2} \sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]
+
+denotes the margin of error. 
+
+
+* **Practice:** Investors in the stock market are often interested in understanding the true proportion of stocks that go up and down each week. Suppose a random sample of $150$ stocks is taken, and it is found that $82$ of them have increased in value during the past week.
+
+  (a) compute the margin of error $m$
+    
+  (b) Give the $95\%$ confidence interval for the true proportion of stocks $p$
+    
+  (c) If you instead wanted the $99\%$ confidence interval for the same sample, would the margin of error be greater than, less than, or equal to the margin of error you computed in part (a)?
+
+### Review of confidence intervals for $\mu$:
+
+For estimating $\mu$ with $\bar{x}$, we first proposed the following confidence interval
+
+\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \ \frac{\sigma}{\sqrt{n}}\]
+
+where $\bar{x}$ denotes the sample mean and 
+
+\[ m = z_{1 - \alpha/2} \ \frac{\sigma}{\sqrt{n}}\]
+
+denotes the margin of error. Recall that this interval requires that we know the value of $\sigma$ - the population standard deviation. If we do not the value of $sigma$, we could instead sub in the sample standard deviation $s$ in its place to get
+
+\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \ \frac{s}{\sqrt{n}}\]
+
+However, as we discussed before the break, the confidence interval above, which is based on the standard normal distribution, will tend have a lower than expected confidence level when $n$ is small, say $n \leq 30$. Instead, a better confidence interval that is based on the $t$-distribution is given by
+
+\[ \bar{x} \ \pm \  t_{n-1, 1 - \alpha/2} \ \frac{s}{\sqrt{n}}\]
+
+where $t_{n-1, 1 - \alpha/2}$ is the $1-\alpha/2$ percentile of a $t$ distribution with $n-1$ degrees of freedom. The above confidence interval will give correct results regardless of sample size. Moreover, since the $t$-distribution converges to the standard normal distribution for as $n$ gets large, the two methods tend to give identical results for $n < 30$.
+
+
+* **Practice** Consider the following data table which gives the mean annual temperate in central park over 10 years of recordings starting in 2009. 
+
+```{r, echo=F, message=F, warning=F}
+cpt = read.csv(file = paste0(path, 'central_park_temps.csv'))
+
+kable(cpt[141:150,c(1, 14)], col.names = c('Year', 'Mean Annual Temp'), format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+  * Verify that the average mean annual temp is $\bar{x} = 56.02$ with standard deviation $s \approx 1.13$ 
+
+  * Given the $95\%$ confidence interval for mean annual temperature
+  
+
+
+### Factors that influence the margin of error:
+
+When we compute a confidence interval, we would like the interval to be as small as possible. Why? simply put, because we want the most precise estimate of the parameter that we can get. A small interval is the result of a small margin of error. However, several factors affect the width of the margin of error of an estimate. The margin of error of a confidence interval decreases as:
+
+  1. The confidence level decreases 
+  
+  2. The population standard deviation $\sigma$ decreases
+  
+  3. The sample size $n$ increases
+  
+First, we typically do not want to decrease the confidence level. By convention, most confidence intervals reported in academic journals are at least $90\%$ or greater. This is because we want to retain a high degree of <i>confidence</i> that our estimate is accurate. Secondly, we have no control over the value of the population standard deviation. $\sigma$ is a property of the population. If $\sigma$ is inherently large for the population under study, then we are out of luck in that regard. 
+
+
+However, we are fortunate in that we can control the sample size of our study. Recall that the standard deviation for the sampling distributions of $\bar{x}$ and $\hat{p}$ both involve division by the number of observations in the sample $n$. Therefore, we can reduce the margin of error of our estimate of $\mu$ or $p$ by increasing $n$ - the number of observations in the sample. 
+
+### Choosing a minimum sample size
+
+While it is nice that we can simply choose to observe a large number of observations from the population to get a small margin of error, real studies and surveys cost time, money, and effort on behalf of the researchers. Therefore, we want to avoid taking an arbitrarily large number of observations. Instead, we would like to observe only as many observations as needed to achieve a certain precision in our estimate. 
+
+Luckily, with a little bit of algebra we can rearrange the formula for the margin of error to determine the sample size we required to achieve a desired level of precision. 
+
+How do we choose $n$ for estimate $p$ with $\hat{p}$? Consider that
+
+\[ m = z_{1-\alpha/2} \ \sqrt{\frac{p(1-p)}{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2 p(1-p)}{m^2}\]
+
+where $m$ denotes the margin of error, $p$ is the population proportion and $z$ is the standard score corresponding the desired $(1-\alpha/2)%$ confidence level. Keep in mind that the formula above is used to determine the sample size needed when we designing a study to investigate the value of an unknown population proportion. Therefore, how do we choose the value $p$? We have essentially two options
+
+  1. We can look for related studies or prior research to inform the value of $p$
+  
+  2. We can use $p = 0.5$ which gives the upper bound on the sample size:
+  
+\[ n = \frac{z^2 p(1-p)}{m} \leq \frac{z^2 0.5(1-0.5)}{m} \]
+
+The latter option is a conservative approach we can use when we have no prior information regarding the value of the population proportion.
+
+* **Try it out: **  The sensitivity of a medical test is the probability of a positive result when the condition (e.g., disease) is present. Rapid strep tests have a sensitivity of about $0.95$. A new rapid strep test has been developed but its sensitivity is unknown. How many tests would be necessary to estimate its sensitivity with a margin of error of $0.02$ at a confidence level of $95\%$?
+
+
+How do we choose $n$ for estimate $\mu$ with $\bar{x}$? Consider that
+
+
+\[ m = z_{1-\alpha/2} \ \frac{\sigma}{\sqrt{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2 \sigma^2}{m^2}\]
+
+Notice that the above equation for $n$ requires that we known $\sigma$. So how can we choose the value of $\sigma$?. Again we have two options:
+
+  1. Use prior research/knowledge to inform the value of $\sigma$
+  
+  2. We can use an educated guess about the possible range of $\mu$ and estimate $\sigma$ via
+  
+  \[ \sigma \approx \frac{\text{range}}{4} \]
+  
+  
+* **Try it out: ** A researcher wants to estimate the mean number of hours college students spend scrolling TikTok each week. Previous studies suggest that the standard deviation of the weekly hours spent on TikTok is approximately 2.5 hours. The researcher desires a margin of error of no more than 0.5 hours. Compute the sample size the researcher needs to estimate the mean number of hours within the desired margin of error. 
+
+
+* **Try it out: ** A marketing research firm wants to estimate the average amount a student spends during the Spring break. They want to determine it to within $\$120$ with $90\%$ confidence. One can roughly say that amount a students spends ranges from $\$100$ to $\$1700$. About how many students should they sample?
+
+
+
+### Assumptions of estimators
+
+
+### Introduction to tests of significance
