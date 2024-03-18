@@ -12,7 +12,7 @@
 <meta name="author" content="STAT 251 Section 03" />
 
 
-<title>Week 9 Notes</title>
+<title>Week 11 Notes</title>
 
 <script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -481,7 +481,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Week 9 Notes</h1>
+<h1 class="title toc-ignore">Week 11 Notes</h1>
 <h4 class="author">STAT 251 Section 03</h4>
 
 </div>
@@ -704,6 +704,9 @@ class="math inline">\(\sigma\)</span> decreases</p></li>
 <li><p>The sample size <span class="math inline">\(n\)</span>
 increases</p></li>
 </ol>
+<p><a
+href="https://digitalfirst.bfwpub.com/stats_applet/stats_applet_20_ciprop.html">See
+this link here</a> to check these properties yourself!</p>
 <p>First, we typically do not want to decrease the confidence level. By
 convention, most confidence intervals reported in academic journals are
 at least <span class="math inline">\(90\%\)</span> or greater. This is
@@ -813,6 +816,46 @@ they sample?</p></li>
 </div>
 <div id="assumptions-of-estimators" class="section level3">
 <h3>Assumptions of estimators</h3>
+<p>When we compute the confidence intervals that we have learned above
+we make a few assumptions about the data and the estimator:</p>
+<ul>
+<li><p>We assume the data constitute a random sample</p></li>
+<li><p>We assume that the statistic is unbiased</p></li>
+<li><p>We assume an infinite population size. <strong>Note</strong> that
+under small, finite populations the formulas for the confidence
+intervals will be different.</p></li>
+<li><p>That we can compute (approximately) the correct standard
+error</p></li>
+<li><p>The shape of the sampling distribution is approximately
+normal.</p></li>
+</ul>
+<p>To have a sampling distribution that is (approximately) normal in
+shape, we need at least one of the following two conditions:</p>
+<ol style="list-style-type: decimal">
+<li><p>The population distribution of the variable needs to be
+(approximately) normal in shape</p></li>
+<li><p>The sample size (n) is sufficiently large.</p></li>
+</ol>
+<div id="the-sampling-distribution-of-hatp" class="section level4">
+<h4>The sampling distribution of <span
+class="math inline">\(\hat{p}\)</span></h4>
+<ul>
+<li><p>The shape of the population distribution is never normal</p></li>
+<li><p>The sampling distribution is “sufficiently large” if both <span
+class="math inline">\(np \geq 15\)</span> and <span
+class="math inline">\(n(1-p) \geq 15\)</span>.</p></li>
+</ul>
+</div>
+<div id="the-sampling-distribution-of-hatp-1" class="section level4">
+<h4>The sampling distribution of <span
+class="math inline">\(\hat{p}\)</span></h4>
+<ul>
+<li><p>The shape of the population distribution <i>might</i> be normal -
+you can check this by plotting the data</p></li>
+<li><p>The sampling distribution will be approximately normal if <span
+class="math inline">\(n\)</span> is large enough</p></li>
+</ul>
+</div>
 </div>
 <div id="introduction-to-tests-of-significance" class="section level3">
 <h3>Introduction to tests of significance</h3>

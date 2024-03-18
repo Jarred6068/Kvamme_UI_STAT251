@@ -1,5 +1,5 @@
 ---
-title: "Week 9 Notes"
+title: "Week 11 Notes"
 author: "STAT 251 Section 03"
 output:
   html_document: default
@@ -101,6 +101,8 @@ When we compute a confidence interval, we would like the interval to be as small
   
   3. The sample size $n$ increases
   
+[See this link here](https://digitalfirst.bfwpub.com/stats_applet/stats_applet_20_ciprop.html) to check these properties yourself! 
+  
 First, we typically do not want to decrease the confidence level. By convention, most confidence intervals reported in academic journals are at least $90\%$ or greater. This is because we want to retain a high degree of <i>confidence</i> that our estimate is accurate. Secondly, we have no control over the value of the population standard deviation. $\sigma$ is a property of the population. If $\sigma$ is inherently large for the population under study, then we are out of luck in that regard. 
 
 
@@ -149,8 +151,39 @@ Notice that the above equation for $n$ requires that we known $\sigma$. So how c
 * **Try it out: ** A marketing research firm wants to estimate the average amount a student spends during the Spring break. They want to determine it to within $\$120$ with $90\%$ confidence. One can roughly say that amount a students spends ranges from $\$100$ to $\$1700$. About how many students should they sample?
 
 
-
 ### Assumptions of estimators
+When we compute the confidence intervals that we have learned above we make a few assumptions about the data and the estimator: 
+
+  * We assume the data constitute a random sample
+  
+  * We assume that the statistic is unbiased
+  
+  * We assume an infinite population size. **Note** that under small, finite populations the formulas for the confidence intervals will be different. 
+
+  * That we can compute (approximately) the correct standard error
+  
+  * The shape of the sampling distribution is approximately normal. 
+  
+To have a sampling distribution that is (approximately) normal in shape, we need at least one of the following two conditions:
+
+  1. The population distribution of the variable needs to be (approximately) normal in shape
+
+  
+  2. The sample size (n) is sufficiently large.
+
+
+#### The sampling distribution of $\hat{p}$
+
+  - The shape of the population distribution is never normal
+  
+  - The sampling distribution is "sufficiently large" if both $np \geq 15$ and $n(1-p) \geq 15$.
+  
+#### The sampling distribution of $\hat{p}$
+
+  - The shape of the population distribution <i>might</i> be normal - you can check this by plotting the data
+  
+  - The sampling distribution will be approximately normal if $n$ is large enough
+  
 
 
 ### Introduction to tests of significance
