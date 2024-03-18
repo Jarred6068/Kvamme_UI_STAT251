@@ -89,7 +89,7 @@ navbar:
           - text: 'App Descriptions'
             href: shiny_apps/app_descriptions.html
           - text: 'Convert files to csv text'
-            href: shiny_apps/Convert_file_to_text/index.html
+            href: shiny_apps/Convert_file_to_text/webfiles/index.html
           - text: 'Random Variables'
             href: shiny_apps/HistoPlot/histogram_viewer/index.html
           - text: 'Statistic Calculator'
