@@ -888,11 +888,11 @@ test this, the company purchases <span class="math inline">\(10\)</span>
 computers from a random sample of <span class="math inline">\(5\)</span>
 retailers that it supplies microchips. Each computer is run through the
 same set of high intensity tasks to test the chips and the proportion of
-chips that fail. From this experiment, you estimate the proportion of
-defective chips to be about <span class="math inline">\(2.053\%\)</span>
-with a standard error of <span class="math inline">\(0.014\%\)</span>
-which gives a difference in rates of <span
-class="math inline">\(0.053\%\)</span>.</p>
+chips that fail is estimated. From this experiment, you estimate the
+proportion of defective chips to be about <span
+class="math inline">\(2.053\%\)</span> with a standard error of <span
+class="math inline">\(0.019\%\)</span> which gives a difference in rates
+of <span class="math inline">\(0.00053\%\)</span>.</p>
 <ul>
 <li>From the estimate, can you conclude that the proportion of defective
 chips is greater than the expected rate of <span
@@ -900,21 +900,51 @@ class="math inline">\(2\%\)</span>?</li>
 </ul>
 <p>One way to answer this question is compute the probability of
 obtaining a difference as large or larger than the one you have
-observed. This probability is <span
-class="math inline">\(0.0037\)</span>. Since this probability is quite
-small, we conclude that observing a difference of <span
-class="math inline">\(0.053\)</span> is surprising if the defective rate
-of the sample is the same as the population rate of <span
-class="math inline">\(2\%\)</span>. Thus the sample provides evidence
-that the there is a higher than expected defective rate.</p>
+observed. This probability is <span class="math inline">\(0.48\)</span>.
+Since this probability is quite large, we conclude that observing a
+difference of <span class="math inline">\(0.00053\)</span> is not
+surprising if the defective rate of the sample is the same as the
+population rate of <span class="math inline">\(2\%\)</span>. In this
+case the sample supports the initial claim that the defective rate is
+about <span class="math inline">\(2\%\)</span>.</p>
 <p>A <strong>statistically significant</strong> result is one that is
 decidedly not due to “ordinary variation” in the data (i.e., not due to
 chance or not a coincidence). <strong>Significance tests</strong> are
 how we decide whether or not an observed result is statistically
-significant</p>
+significant.</p>
 <p>Consider a coin that is flipped <span
 class="math inline">\(n\)</span> times. The population distribution for
 a single flip is given below:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+X
+</th>
+<th style="text-align:left;">
+Probability(X)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Heads
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tails
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p(1-p)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
 <p>The value of <span class="math inline">\(p\)</span> implies something
 about the coin:</p>
 <ol style="list-style-type: decimal">
@@ -944,16 +974,19 @@ class="math inline">\(\hat{p} = 2/3\)</span> assuming <span
 class="math inline">\(p = 0.5\)</span> is about <span
 class="math inline">\(0.067\)</span>. What might we conclude about the
 coin?</p>
-<p>In both of these examples the probability we obtain is fairly small.
-There are two explanations for these probabilities:</p>
+<p>In this example, the probability we obtained is fairly small. There
+are two explanations for this probability:</p>
 <ol style="list-style-type: lower-roman">
-<li><p>We have observed something unusual</p></li>
-<li><p>The assumption that underlies the calculation is not
-true.</p></li>
+<li><p>We have observed something unusual (i.e the coin is fair we just
+got a large proportion of heads by coincidence)</p></li>
+<li><p>The assumption that underlies the calculation is not true. (i.e
+the coin is not fair and the population proportion <span
+class="math inline">\(p\)</span> is not equal to <span
+class="math inline">\(1/2\)</span>)</p></li>
 </ol>
 <p>So how unusual does a result need to be for us to consider the latter
-statement to be the truth of our result?</p>
-<p>In both of these example, we stated hypothesis about the value of the
+statement (ii) to be more plausible?</p>
+<p>In both of these example, we stated hypotheses about the value of the
 parameter and then proposed a counter hypothesis about that value. A
 significance test is a comparison between two such
 <strong>hypotheses</strong> about the the value of a parameter: a
@@ -969,14 +1002,19 @@ class="math inline">\(H_A\)</span>) is the hypothesis of “effect” or
 that “something interesting has happened”. The alternative hypothesis is
 usually that the population parameter falls in some range of values such
 as:</p>
-<p><span class="math display">\[H_A: \theta &gt; a \]</span> <span
-class="math display">\[H_A: \theta &lt; a \]</span> <span
+<p>The value of the parameter is greater than the value proposed in the
+null hypothesis <span class="math display">\[H_A: \theta &gt; a
+\]</span> The value of the parameter is less than the value proposed in
+the null hypothesis <span class="math display">\[H_A: \theta &lt; a
+\]</span> The value of the parameter is different than the value
+proposed in the null hypothesis (could be greater than or less than - we
+arent sure, we just suspect its different) <span
 class="math display">\[H_A: \theta \neq a \]</span></p>
 <ul>
-<li>the alternative hypothesis expresses our “suspicions we have about
-the data. <i> Is the defect rate higher than <span
-class="math inline">\(2\%\)</span></i> or <i> is the coin fair?
-</i>.</li>
+<li>the alternative hypothesis expresses our “suspicions” that we have
+about the data. For example, <i> we suspect the defect rate higher than
+<span class="math inline">\(2\%\)</span></i> or <i> we suspect the coin
+is not fair </i>.</li>
 </ul>
 </div>
 </div>
