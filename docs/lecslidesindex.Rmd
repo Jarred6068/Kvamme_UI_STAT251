@@ -152,3 +152,12 @@ as .pdf
 
 <a href="./lecture_slides/Week 9/Week9_Lecture18_Slides_3_4_2024.pptx">Download File</a>
 as powerpoint
+
+# Week 11
+
+### Lecture 20
+<a href="./lecture_slides/Week 11/Week11_Lecture20_Slides_3_20_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 11/Week11_Lecture20_Slides_3_20_2024.pptx">Download File</a>
+as powerpoint

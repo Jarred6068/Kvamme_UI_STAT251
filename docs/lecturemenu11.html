@@ -857,8 +857,127 @@ class="math inline">\(n\)</span> is large enough</p></li>
 </ul>
 </div>
 </div>
+</div>
+<div id="lecture-20-monday-march-20th-2024" class="section level1">
+<h1>Lecture 20 Monday, March 20th 2024</h1>
 <div id="introduction-to-tests-of-significance" class="section level3">
 <h3>Introduction to tests of significance</h3>
+<p>Confidence intervals are an appropriate tool when the goal is to
+<i>estimate</i> something about a population. The second part of
+statistical inference deals with a very different sort of goal:
+Significance tests (also called hypothesis tests) combine mathematics
+and logic to assess the validity of a claim about a population parameter
+using the evidence provided in a set of data. Specifically, we compare
+properties of a set of observed data to a hypothesis about the
+population. The hypothesis is a statement that asserts something about
+the value of the population parameters. The results of the test are
+expressed in terms of probability that measures the degree to which the
+data agree with claim laid out by the hypothesis.</p>
+<p><strong>Consider the following example</strong>: Imagine you are a
+quality control manager at a electronics company that produces
+microchips for personal computers. To ensure quality, the company tests
+all chips before they are sent out to retailers. The company claims
+that, thanks to their post-production testing, only about <span
+class="math inline">\(2\%\)</span> of their microchips are defective,
+but recent reports about customer feedback indicate that the chips might
+have an issue that causes the defective rate to be higher than <span
+class="math inline">\(2\%\)</span>. To address these concerns, you
+decide to conduct a study to test the claim that only <span
+class="math inline">\(2\%\)</span> of tested chips are defective. To
+test this, the company purchases <span class="math inline">\(10\)</span>
+computers from a random sample of <span class="math inline">\(5\)</span>
+retailers that it supplies microchips. Each computer is run through the
+same set of high intensity tasks to test the chips and the proportion of
+chips that fail. From this experiment, you estimate the proportion of
+defective chips to be about <span class="math inline">\(2.053\%\)</span>
+with a standard error of <span class="math inline">\(0.014\%\)</span>
+which gives a difference in rates of <span
+class="math inline">\(0.053\%\)</span>.</p>
+<ul>
+<li>From the estimate, can you conclude that the proportion of defective
+chips is greater than the expected rate of <span
+class="math inline">\(2\%\)</span>?</li>
+</ul>
+<p>One way to answer this question is compute the probability of
+obtaining a difference as large or larger than the one you have
+observed. This probability is <span
+class="math inline">\(0.0037\)</span>. Since this probability is quite
+small, we conclude that observing a difference of <span
+class="math inline">\(0.053\)</span> is surprising if the defective rate
+of the sample is the same as the population rate of <span
+class="math inline">\(2\%\)</span>. Thus the sample provides evidence
+that the there is a higher than expected defective rate.</p>
+<p>A <strong>statistically significant</strong> result is one that is
+decidedly not due to “ordinary variation” in the data (i.e., not due to
+chance or not a coincidence). <strong>Significance tests</strong> are
+how we decide whether or not an observed result is statistically
+significant</p>
+<p>Consider a coin that is flipped <span
+class="math inline">\(n\)</span> times. The population distribution for
+a single flip is given below:</p>
+<p>The value of <span class="math inline">\(p\)</span> implies something
+about the coin:</p>
+<ol style="list-style-type: decimal">
+<li><p>If <span class="math inline">\(p = 0.5\)</span> the coin is
+fair</p></li>
+<li><p>If <span class="math inline">\(p \neq 0.5\)</span> the coin is
+unfair.</p></li>
+</ol>
+<p>Assume we do not know the value of <span
+class="math inline">\(p\)</span>. We flip the coin <span
+class="math inline">\(30\)</span> times to produce a sample of <span
+class="math inline">\(n = 30\)</span> observations. It comes up heads
+<span class="math inline">\(20\)</span> times, so <span
+class="math inline">\(\hat{p} = 20/30 = 2/3 \approx 0.67\)</span> What
+might we decide about the value of <span
+class="math inline">\(p\)</span>?</p>
+<ol style="list-style-type: decimal">
+<li><p>Conclude that <span class="math inline">\(p =0.5\)</span>. The
+result that <span class="math inline">\(\hat{p} = 2/3\)</span>
+<strong>is not</strong> statistically significant.</p></li>
+<li><p>Conclude that <span class="math inline">\(p \neq 0.5\)</span>.
+The result that <span class="math inline">\(\hat{p} = 2/3\)</span>
+<strong>is</strong> statistically significant.</p></li>
+</ol>
+<p>The probability of observing a proportion of heads of <span
+class="math inline">\(\hat{p} = 2/3\)</span> assuming <span
+class="math inline">\(p = 0.5\)</span> is about <span
+class="math inline">\(0.067\)</span>. What might we conclude about the
+coin?</p>
+<p>In both of these examples the probability we obtain is fairly small.
+There are two explanations for these probabilities:</p>
+<ol style="list-style-type: lower-roman">
+<li><p>We have observed something unusual</p></li>
+<li><p>The assumption that underlies the calculation is not
+true.</p></li>
+</ol>
+<p>So how unusual does a result need to be for us to consider the latter
+statement to be the truth of our result?</p>
+<p>In both of these example, we stated hypothesis about the value of the
+parameter and then proposed a counter hypothesis about that value. A
+significance test is a comparison between two such
+<strong>hypotheses</strong> about the the value of a parameter: a
+<em>null hypothesis</em> and and <em>alternative hypothesis</em>.</p>
+<p>The <strong>null hypothesis</strong> (denote <span
+class="math inline">\(H_0\)</span>) is usually the hypothesis of “no
+effect” or that “nothing interesting is happening”. The null hypothesis
+is usually that the population parameter equals some value <span
+class="math inline">\(H_0: \theta = a\)</span> for some constant <span
+class="math inline">\(a\)</span></p>
+<p>The <strong>alternative hypothesis</strong> (denoted <span
+class="math inline">\(H_A\)</span>) is the hypothesis of “effect” or
+that “something interesting has happened”. The alternative hypothesis is
+usually that the population parameter falls in some range of values such
+as:</p>
+<p><span class="math display">\[H_A: \theta &gt; a \]</span> <span
+class="math display">\[H_A: \theta &lt; a \]</span> <span
+class="math display">\[H_A: \theta \neq a \]</span></p>
+<ul>
+<li>the alternative hypothesis expresses our “suspicions we have about
+the data. <i> Is the defect rate higher than <span
+class="math inline">\(2\%\)</span></i> or <i> is the coin fair?
+</i>.</li>
+</ul>
 </div>
 </div>
 

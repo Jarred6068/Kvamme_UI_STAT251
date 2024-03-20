@@ -185,5 +185,55 @@ To have a sampling distribution that is (approximately) normal in shape, we need
   - The sampling distribution will be approximately normal if $n$ is large enough
   
 
+# Lecture 20 Monday, March 20th 2024
 
 ### Introduction to tests of significance
+
+Confidence intervals are an appropriate tool when the goal is to <i>estimate</i> something about a population. The second part of statistical inference deals with a very different sort of goal: Significance tests (also called hypothesis tests) combine mathematics and logic to assess the validity of a claim about a population parameter using the evidence provided in a set of data. Specifically, we compare properties of a set of observed data to a hypothesis about the population. The hypothesis is a statement that asserts something about the value of the population parameters. The results of the test are expressed in terms of probability that measures the degree to which the data agree with claim laid out by the hypothesis. 
+
+**Consider the following example**: Imagine you are a quality control manager at a electronics company that produces microchips for personal computers. To ensure quality, the company tests all chips before they are sent out to retailers. The company claims that, thanks to their post-production testing, only about $2\%$ of their microchips are defective, but recent reports about customer feedback indicate that the chips might have an issue that causes the defective rate to be higher than $2\%$. To address these concerns, you decide to conduct a study to test the claim that only $2\%$ of tested chips are defective. To test this, the company purchases $10$ computers from a random sample of $5$ retailers that it supplies microchips. Each computer is run through the same set of high intensity tasks to test the chips and the proportion of chips that fail. From this experiment, you estimate the proportion of defective chips to be about $2.053\%$ with a standard error of $0.014\%$ which gives a difference in rates of $0.053\%$. 
+
+* From the estimate, can you conclude that the proportion of defective chips is greater than the expected rate of $2\%$? 
+
+One way to answer this question is compute the probability of obtaining a difference as large or larger than the one you have observed. This probability is $0.0037$. Since this probability is quite small, we conclude that observing a difference of $0.053$ is surprising if the defective rate of the sample is the same as the population rate of $2\%$. Thus the sample provides evidence that the there is a higher than expected defective rate. 
+
+
+A **statistically significant** result is one that is decidedly not due to “ordinary variation” in the data (i.e., not due to chance or not a coincidence). **Significance tests** are how we decide whether or not an observed result is statistically significant
+
+Consider a coin that is flipped $n$ times. The population distribution for a single flip is given below:
+
+
+The value of $p$ implies something about the coin:
+
+  1. If $p = 0.5$ the coin is fair
+  
+  2. If $p \neq 0.5$ the coin is unfair. 
+  
+Assume we do not know the value of $p$. We flip the coin $30$ times to produce a sample of $n = 30$ observations. It comes up heads $20$ times, so $\hat{p} = 20/30 = 2/3 \approx 0.67$ What might we decide about the value of $p$?
+
+  1. Conclude that $p =0.5$. The result that $\hat{p} = 2/3$ **is not** statistically significant.
+  
+  2. Conclude that $p \neq 0.5$. The result that $\hat{p} = 2/3$ **is** statistically significant.
+
+The probability of observing a proportion of heads of $\hat{p} = 2/3$ assuming $p = 0.5$ is about $0.067$. What might we conclude about the coin?
+
+In both of these examples the probability we obtain is fairly small. There are two explanations for these probabilities:
+
+  (i) We have observed something unusual
+  
+  (ii) The assumption that underlies the calculation is not true.
+  
+So how unusual does a result need to be for us to consider the latter statement to be the truth of our result?
+
+
+In both of these example, we stated hypothesis about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the the value of a parameter: a *null hypothesis* and and *alternative hypothesis*.
+
+The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = a$ for some constant $a$
+
+The **alternative hypothesis** (denoted $H_A$) is the hypothesis of “effect” or that “something interesting has happened”. The alternative hypothesis is usually that the population parameter falls in some range of values such as:
+
+\[H_A: \theta > a \]
+\[H_A: \theta < a \]
+\[H_A: \theta \neq a \]
+
+   - the alternative hypothesis expresses our "suspicions we have about the data. <i> Is the defect rate higher than $2\%$</i> or <i> is the coin fair? </i>.
