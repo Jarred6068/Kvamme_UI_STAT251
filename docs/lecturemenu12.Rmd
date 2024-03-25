@@ -1,0 +1,188 @@
+---
+title: "Week 12 Notes"
+author: "STAT 251 Section 03"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+library(gganimate)
+
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+
+##stat pack
+source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+
+```
+
+# Lecture 20 Monday, March 25th 2024
+
+**Warm Up:** Consider the following example - A gardener conducting an experiment to evaluate the effectiveness of a new fertilizer on the heights of tomato plants. They purchase 80 tomato plants from their local seedling outlet. The gardner randomly selects $40$ of plants to receive a fertilizer and water mixture and the remaining half to receive only water. After one month the mean height is recorded in both groups and the difference in height between the groups of tomato plants is measured. 
+
+The gardener suspects that the plants which received the new fertilizer will be taller than the plants that received only water. They set the null hypothesis to be "no difference in height" given by 
+
+\[ H_0: \mu_d = 0 \]
+
+where $\mu_d$ denotes the population mean difference in tomato plant height between the two experimental groups. We can use the sample mean difference $\bar{x}_d$ to estimate $\mu_d$ which is calculated as 
+
+\[\mu_d = \frac{1}{n}\sum_i x_{i} - y_i \]
+
+where $x_i$ is the height of tomato plants receiving the fertilizer and $y_i$ is the height the tomato plants receiving only water.
+
+The alternative hypothesis is
+
+\[ H_A: \mu_d > 0 \]
+
+The data from the gardeners experiment are shown below:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+x = rnorm(40, 45, 2.5)
+y = rnorm(40, 41, 4.1)
+
+diff = x - y
+
+df = cbind.data.frame(x, y, diff)
+
+kable(df, format = 'html', digits = 2, 
+      col.names = c('Height Fertilized (Inches)', 'Height Water Only (Inches)', 'Difference In Height (Inches)'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+The summary statistics from the gardeners data are listed below
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+x = rnorm(40, 45, 2.5)
+y = rnorm(40, 41, 4.1)
+
+diff = x - y
+
+xbar = mean(x)
+sdx = sd(x)
+ybar = mean(y)
+sdy = sd(y)
+md = mean(diff)
+sdmd = sd(diff)
+
+
+df = cbind.data.frame(c('Mean Height (Fertilized)', 'SD (Fertilized)', 'Mean Height (Water Only)', 'SD (Water Only)', 'Mean Difference (Ferlized - Water Only)', 'SD Difference'), 
+                      c(xbar, sdx, ybar, sdy, md, sdmd))
+
+
+kable(df, format = 'html', digits = 2, 
+      col.names = c('Name', 'Value'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+Recall from last week that a significance test is a test of the null hypothesis. To test the null hypothesis, we compute the scenario given by the alternative hypothesis under the assumption that the null is true. In the case of this gardeners experiment, we need to compute the probability of observing a mean difference larger than the difference we observed under the sampling distribution of the null hypothesis. In other words, "how likely is it that we would see a difference in height as large as the one we observed, assuming that the true difference is zero?" 
+
+\[P(X \geq \bar{x}_d | H_0 \ \text{true}) \]
+
+To compute this probability, we need convert the difference we observed into a standardized score that we can look up in one of our tables. Since we are discussing a "mean" difference we can use the $t$-distribution as we did before with confidence intervals:
+
+\[ t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}} \]
+
+Where $\bar{x}_d$ is the observed mean difference in height, $\mu_d$ is population mean difference under the null hypothesis, and $s_d$ is the observed standard deviation for the difference in height. The above formula converts the observed difference $\bar{x}_d$ to a $t$-score from a $t$-distribution with $n-1$ degrees of freedom under the assumption that the null hypothesis is true. $t_{obs}$ is called the **test statistic** - it measures the discrepancy (distance) between the point estimate of the parameter and the hypothesized value of the parameter under the null hypothesis. It tells us approximately how many standard deviations the observed mean difference is from the population mean difference under the null. 
+
+Using the above formula the Gardner calculates a $t$-score of $t_{obs} = 5.91$ with $39$ degrees of freedom. The probability from earlier can be re-framed in the context of the $t$-distribution
+
+\[P(t \geq t_{\text{obs}}| H_0 \ \text{true}) \]
+
+For the gardener's experiment, this probability is $3.45e^{-7}$, which is very small. 
+
+
+This probability is called the **p-value** and it measures the probability of observing an estimate as or more extreme than the the one we observed under the assumption that the null hypothesis is true. So what does this small probability mean? Just as we observed with coin flip example from last week it can mean one of two things:
+
+1. we observed something very unusual
+
+2. The assumption underling the calculation (i.e $\mu_d = 0$ no difference in mean height) is not true.
+
+We prefer the second conclusion we the $p$-value is "sufficiently" small and take it as evidence against the null hypothesis. So how small is small enough? By convention, most tests use a probability cutoff of $5\%$ or less which is called the **rejection threshold** of the test. The threshold of a test is denoted as $\alpha = 0.05$. $\alpha$ sets the boundary for how big (or small) the test statistic needs to be to conclude that the test statistic is statistically significant.
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+x = rnorm(40, 45, 2.5)
+y = rnorm(40, 41, 4.1)
+
+diff = x - y
+
+xbar = mean(x)
+sdx = sd(x)
+ybar = mean(y)
+sdy = sd(y)
+md = mean(diff)
+sdmd = sd(diff)
+
+gen.density.plot(bbox = c(-5, 5), n = 40, dist = 't', test = 'upper.tail', obs = md)
+#one.sample.t.test(m0 = 0, xbar = md, s = sdmd, n = 40, test = 'upper.tail')
+
+
+```
+
+What were the steps involved with this test?
+
+  * **step 1** - The first step in any hypothesis test is to address the assumptions we make about the data. The hypothesis tests we will learn in this class assume that the data are produced by a randomization process. There may also be assumptions about the population distribution.
+  
+  * **step 2** - Formulate the question you wish to evaluate and set up the null and alternative hypotheses.
+  
+  * **step 3** - Calculate the **test statistic** which measures the discrepancy (distance) between the the estimate of the parameter and the hypothesized value of the parameter under the null.
+  
+  * **step 4** - Compute the **$p$-value** - the probability of observing a value of a value of the test statistic that is as extreme or more extreme than the observed value given that the null hypothesis is true
+  
+  * **step 5** - Make a conclusion about the null hypothesis - we either (i) fail to reject the null hypothesis and conclude that there is not sufficient evidence in favor of the alternative or (ii) reject the null hypothsis in favor of the alternative
+
+
+With the examples of significance tests we have discussed thus far we have learned two formal significance tests: a test(s) tests concerning a population proportion $p$ and tests concerning a population mean $\mu$. 
+
+### Hypothesis tests concerning $\mu$
+
+
+### Hypothesis tests concerning $p$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -15,9 +15,13 @@ library(ggpubr)
 library(latex2exp)
 
 
-path = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_1/'
-path2 = 'C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/'
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path2 = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 ```
+
+<a href="C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R">Download File</a>
+
+
 
 In this example R-script, I will demonstrate how you can use R to construct some of the graphs and descriptive statistics that we have learned so far. As an example dataset, we will be analyzing data from A survey of college students in Georgia. The data is given below:  
 

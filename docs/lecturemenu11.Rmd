@@ -235,7 +235,7 @@ In this example, the probability we obtained is fairly small. There are two expl
 So how unusual does a result need to be for us to consider the latter statement (ii) to be more plausible?
 
 
-In both of these example, we stated hypotheses about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the the value of a parameter: a *null hypothesis* and and *alternative hypothesis*.
+In both of these examples, we stated hypotheses about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the the value of a parameter: a *null hypothesis* and and *alternative hypothesis*.
 
 The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = a$ for some constant $a$
 
@@ -245,7 +245,7 @@ The value of the parameter is greater than the value proposed in the null hypoth
 \[H_A: \theta > a \]
 The value of the parameter is less than the value proposed in the null hypothesis
 \[H_A: \theta < a \]
-The value of the parameter is different than the value proposed in the null hypothesis (could be greater than or less than - we arent sure, we just suspect its different)
+The value of the parameter is different than the value proposed in the null hypothesis (could be greater than or less than - we aren't sure, we just suspect its different)
 \[H_A: \theta \neq a \]
 
-   - the alternative hypothesis expresses our "suspicions" that we have about the data. For example, <i> we suspect the defect rate higher than $2\%$</i> or <i> we suspect the coin is not fair </i>.
+   - the alternative hypothesis expresses our "suspicions" that we have about the data. For example, <i> we suspect the defect rate is higher than $2\%$</i> or <i> we suspect the coin is not fair </i>.
