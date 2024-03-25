@@ -113,11 +113,16 @@ navbar:
         - text: 'Tables'
           menu:  
           - text: 'Z-table'
-            href: misc/Z_table.html
+            href: misc/Z_table.html 
           - text: 't-table'
             href: misc/t_table.html
-        - text: 'R code'          
-          href: misc/rcode_examples.html
+        - text: 'R code'
+          menu:
+          - text: 'plotting in R'
+            href: misc/rcode_examples.html
+          - text: 'Functions'          
+            href: misc/hp_r_code.html
+            
         - text: 'Downloading R/Rstudio'
           href: misc/R_download_instructions.html
 

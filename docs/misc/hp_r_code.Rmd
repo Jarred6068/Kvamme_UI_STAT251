@@ -1,0 +1,823 @@
+---
+title: "Significance Testing R Functions"
+author: "STAT 251 Section 03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+
+
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path2 = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+```
+
+
+```{r, echo=TRUE}
+
+
+#this function is a helper function for gen.density.plot
+d_limit <- function(x, alpha, test, dist, n) {
+  if(dist == 'z'){
+    y = dnorm(x)
+    q_a = qnorm(1-alpha)
+  }else{
+    y = dt(x, df = n-1)
+    q_a = qt(1-alpha, df = n-1)
+  }
+  
+  
+  if(test == 'two.tailed'){
+    y[which(x>-q_a & x<q_a)] <- NA  
+    return(y)
+  }else if (test == 'upper.tail'){
+    y[which(x < q_a)] <- NA
+    return(y)
+  }else{
+    y[which(x > -q_a)] <- NA
+    return(y)
+  }
+  
+}
+
+
+# this function plots a density curve for the z and t distributions and allows for shading the 
+# the rejection regions on the plot
+gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c('z','t'), alpha = 0.05, obs = 0.5,
+                          test = c('two.tailed','lower.tail', 'upper.tail'), shade = TRUE,
+                          txt.sz = 5){
+  
+  p = ggplot(data.frame(x = bbox), aes(x = x))+
+    theme_bw()
+  if(shade == TRUE){
+    p = p + stat_function(fun = d_limit,
+                          args = list(alpha = alpha,
+                                      test = test,
+                                      dist = dist,
+                                      n = n), 
+                          geom = "area", 
+                          fill = "cyan3", 
+                          alpha = 0.4)
+  }
+  if(dist == 'z'){
+    q_a = qnorm(1-alpha)
+    d_obs = dnorm(obs)
+    d_a = dnorm(q_a)
+    func = dnorm
+    args = list()
+    xlabel = "z"
+  }else{
+    q_a = qt(1-alpha, df = n-1)
+    d_obs = dt(obs, df = n-1)
+    d_a = dt(q_a, df = n-1)
+    func = dt
+    args = list(df = n-1)
+    xlabel = 't'
+  }
+  
+  if(test == 'two.tailed'){
+    xcoords = c(-q_a, q_a, obs)
+    ycoords = c(0,0,0)
+    xendcoords = c(-q_a, q_a, obs)
+    yendcoords = c(d_a, d_a, d_obs)
+    if(dist == 'z'){
+      lbl1 = c(TeX("$z_{\\alpha/2}$"),TeX("$z_{1-\\alpha/2}$"),TeX("$z_{obs}$"))
+    }else{
+      lbl1 = c(TeX("$t_{\\alpha/2}$"),TeX("$t_{1-\\alpha/2}$"),TeX("$t_{obs}$"))
+    }
+  }else if (test == 'upper.tail'){
+    xcoords = c(q_a, obs)
+    ycoords = c(0,0)
+    xendcoords = c(q_a, obs)
+    yendcoords = c(d_a, d_obs)
+    if(dist == 'z'){
+      lbl1 = c(TeX("$z_{1-\\alpha}$"),TeX("$z_{obs}$"))
+    }else{
+      lbl1 = c(TeX("$t_{1-\\alpha}$"),TeX("$t_{obs}$"))
+    }
+  }else{
+    xcoords = c(-q_a, obs)
+    ycoords = c(0,0)
+    xendcoords = c(-q_a, obs)
+    yendcoords = c(d_a, d_obs)
+    if(dist == 'z'){
+      lbl1 = c(TeX("$z_{\\alpha}$"), TeX("$z_{obs}$"))
+    }else{
+      lbl1 = c(TeX("$t_{\\alpha}$") ,TeX("$t_{obs}$"))
+    }
+  }
+  
+  if(test == 'two.tailed'){
+    final = p+stat_function(fun = func,
+                            args = args,
+                            size = 1)+
+      geom_segment(aes(x=xcoords[1:2],
+                       y=ycoords[1:2],
+                       xend=xendcoords[1:2],
+                       yend=yendcoords[1:2]),
+                   size = 0.9,
+                   linetype = 'dashed')+
+      geom_segment(aes(x=xcoords[3],
+                       y=ycoords[3],
+                       xend=xendcoords[3],
+                       yend=yendcoords[3]),
+                   size = 0.9,
+                   linetype = 'dashed')+
+      geom_point(aes(x = xcoords[1:2], y = ycoords[1:2]), size = 1.5)+
+      geom_label(aes(x = xcoords[1:2], y = ycoords[1:2]-0.025), label = lbl1[1:2], size = txt.sz)+
+      geom_point(aes(x = xcoords[3], y = ycoords[3]), size = 1.5)+
+      geom_label(aes(x = xcoords[3], y = ycoords[3]-0.025), label = lbl1[3], size = txt.sz)+
+      geom_hline(yintercept = 0, size = 1)+
+      xlab(xlabel)+
+      ylab('Probability Density')+
+      ggtitle(TeX('Distribution under $H_0$'))+
+      theme(axis.title.x = element_text(size = 14),
+            axis.title.y = element_text(size = 14))
+  }else{
+    final = p+stat_function(fun = func,
+                            args = args,
+                            size = 1)+
+      geom_segment(aes(x=xcoords,
+                       y=ycoords,
+                       xend=xendcoords,
+                       yend=yendcoords), 
+                   size = rep(0.9, length(xcoords)), 
+                   linetype = rep('dashed',length(xcoords)))+
+      geom_point(aes(x = xcoords, y = ycoords), size = 1.5)+
+      geom_label(aes(x = xcoords, y = ycoords-0.025), label = lbl1, size = txt.sz)+
+      geom_hline(yintercept = 0, size = 1)+
+      xlab(xlabel)+
+      ylab('Probability Density')+
+      ggtitle(TeX('Distribution under $H_0$'))+
+      theme(axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12))
+  }
+  
+  
+  return(final)
+}
+
+
+
+
+
+
+
+
+# standard error for a sample proportion 
+one.sample.prop.SE = function(phat, n){
+  SE = sqrt((phat*(1-phat))/n)
+  return(SE)
+}
+
+
+# confidence interval for a population proportion 
+one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
+  SE = one.sample.prop.SE(phat, n)
+  standard.score = qnorm(1-(alpha/2))
+  MOE = standard.score*SE
+  lower.bound = phat-MOE
+  upper.bound = phat+MOE
+  if(isTRUE(verbose)){
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+    print(noquote(paste0('Estimate = ', round(phat, 4))))
+    print(noquote(paste0('Critical Value  = ', round(standard.score, 4))))
+    print(noquote(paste0('Estimated Standard Error = ', round(SE, 4))))
+    print(noquote(paste0('Margin of error = ', round(MOE, 4))))
+    print(noquote(paste0((1-alpha)*100, ' % CI = ', paste0('[', round(max(lower.bound,0),4), ',',
+                                             round(min(upper.bound, 1), 4), ']', 
+                                             collapse = ''))))
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+  }
+  return(c(lower.bound, upper.bound))
+}
+
+
+
+# test for a population proportion 
+one.sample.prop.test = function(p0, x, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+                                verbose = TRUE){
+  
+  phat = x/n
+  estimate.SE = one.sample.prop.SE(phat, n)
+  Zobs = (phat - p0)/estimate.SE
+  if(test == 'two.tail'){
+    critical.value = qnorm((1-(alpha/2)))
+    alt.hyp = 'p != '
+    pvalue = 2*(1-pnorm(abs(Zobs)))
+  }else if(test == 'lower.tail'){
+    critical.value = qnorm(alpha)
+    alt.hyp = 'p < '
+    pvalue = pnorm(Zobs)
+  }else{
+    critical.value = qnorm(1-alpha)
+    alt.hyp = 'p > '
+    pvalue = 1-pnorm(Zobs)
+  }
+  
+  CI = one.sample.prop.CI(phat, n, alpha)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: p0 = ', p0)))
+    print(noquote(paste0('HA: ', alt.hyp, p0)))
+    print(noquote(paste0('estimate = ', round(phat,4))))
+    print(noquote(paste0('Estimated Standard Error = ', round(estimate.SE,4))))
+    print(noquote(paste0('Critical Value = ', round(critical.value, 4))))
+    print(noquote(paste0((1-alpha)*100, '% CI = ', paste0('[', max(round(CI[1],4), 0),',',
+                                                  round(CI[2],4),']', 
+                                                  collapse = ''))))
+    print(noquote(paste0('Test statistic = ', round(Zobs, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+  }
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+#standard error for a sample mean 
+one.sample.t.SE = function(s, n){
+  SE = s/sqrt(n)
+  return(SE)
+}
+
+
+#confidence interval for a population mean 
+one.sample.t.CI = function(xbar, s, n, alpha = 0.05, verbose = FALSE){
+  SE = one.sample.t.SE(s, n)
+  t.score = qt(1-(alpha/2), df = n-1)
+  MOE = t.score*SE
+  lower.bound = xbar-MOE
+  upper.bound = xbar+MOE
+  if(isTRUE(verbose)){
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+    print(noquote(paste0('Estimate = ', round(xbar, 4))))
+    print(noquote(paste0('Critical Value  = ', round(t.score, 4))))
+    print(noquote(paste0('Estimated Standard Error = ', round(SE, 4))))
+    print(noquote(paste0('Margin of error = ', round(MOE, 4))))
+    print(noquote(paste0((1-alpha)*100, ' % CI = ', paste0('[', round(lower.bound,4),',', 
+                                             round(upper.bound,4), ']',
+                                             collapse = ''))))
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+  }
+  return(c(lower.bound, upper.bound))
+}
+
+
+# one sample t test 
+one.sample.t.test = function(m0, xbar, s, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+                             verbose = TRUE){
+  
+  df = n - 1
+  estimate.SE = one.sample.t.SE(s, n)
+  tobs = (xbar - m0)/estimate.SE
+  if(test == 'two.tail'){
+    critical.value = qt((1-(alpha/2)), df = df)
+    alt.hyp = 'm != '
+    pvalue = 2*(1-pt(abs(tobs), df = df))
+  }else if(test == 'lower.tail'){
+    critical.value = qt(alpha, df = df)
+    alt.hyp = 'm < '
+    pvalue = pt(tobs, df = df)
+  }else{
+    critical.value = qt(1-alpha, df = df)
+    alt.hyp = 'm > '
+    pvalue = 1-pt(tobs, df = df)
+  }
+  
+  CI = one.sample.t.CI(xbar, s, n, alpha)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: m0 = ', m0)))
+    print(noquote(paste0('HA: ', alt.hyp, m0)))
+    print(noquote(paste0('Estimate = ', round(xbar,4))))
+    print(noquote(paste0('Estimated Standard Error = ', round(estimate.SE,4))))
+    print(noquote(paste0('Critical Value = ', round(critical.value, 4))))
+    print(noquote(paste0((1-alpha)*100, '% CI = ', paste0('[', max(round(CI[1],4), 0),',',
+                                                  round(CI[2],4),']', 
+                                                  collapse = ''))))
+    print(noquote(paste0('Test statistic = ', round(tobs, 4))))
+    print(noquote(paste0('Degrees of Freedom = ', round(df, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+  }
+} 
+
+
+
+
+#unpooled standard error for difference in two proportions
+two.sample.prop.SE = function(p1,p2,n1,n2){
+  SE = sqrt((p1*(1-p1)/n1)+(p2*(1-p2)/n2))
+  return(SE)
+}
+
+#computing confidence intervals for the difference between two population proportions
+two.sample.prop.CI = function(p1,p2,n1,n2,tail = 'two.tail',alpha = 0.05, verbose = FALSE){
+  diff = p1-p2
+  bounds=c(0,0)
+  if(tail != 'two.tail'){
+    Z = qnorm(1-alpha)
+  }else{
+    Z = qnorm(1-(alpha/2))
+  }
+  SE = two.sample.prop.SE(p1,p2,n1,n2)
+  MOE = Z*SE
+  bounds[1] = diff - MOE
+  bounds[2] = diff + MOE
+  bounds = sort(bounds)
+  if(isTRUE(verbose)){
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+    print(noquote(paste0('Estimate = ', round(diff, 4))))
+    print(noquote(paste0('Critical Value  = ', round(Z, 4))))
+    print(noquote(paste0('Estimated Standard Error = ', round(SE, 4))))
+    print(noquote(paste0('Margin of error = ', round(MOE, 4))))
+    print(noquote(paste0((1-alpha)*100, ' % CI = ', paste0('[',round(bounds[1], 4), ',', 
+                                                   round(bounds[2], 4), ']'))))
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+  }
+  
+  return(list(estimate = diff, interval = bounds, margin.of.error = MOE, critical.value = Z))
+}
+
+
+#two sample proportion test
+two.sample.prop.test = function(p0,p1,p2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+                                pooled = TRUE, verbose = TRUE){
+  
+  estimate = p1 - p2
+  estimate.SE = two.sample.prop.SE(p1, p2, n1, n2)
+  if(isTRUE(pooled)){
+    calc = 'pooled'
+    p.pooled = (p1+p2)/2
+    test.SE = sqrt( (p.pooled*(1-p.pooled))*(1/n1 + 1/n2) )
+  }else{
+    calc = 'unpooled'
+    test.SE = two.sample.prop.SE(p1,p2,n1,n2) 
+  }
+  Zobs = (estimate - p0)/test.SE
+  if(test == 'two.tail'){
+    critical.value = qnorm((1-(alpha/2)))
+    alt.hyp = 'p1 - p2 != '
+    pvalue = 2*(1-pnorm(abs(Zobs)))
+  }else if(test == 'lower.tail'){
+    critical.value = qnorm(alpha)
+    alt.hyp = 'p1 - p2 < '
+    pvalue = pnorm(Zobs)
+  }else{
+    critical.value = qnorm(1-alpha)
+    alt.hyp = 'p1 - p2 > '
+    pvalue = 1-pnorm(Zobs)
+  }
+  
+  CI = sort(c(estimate - critical.value * estimate.SE, estimate + critical.value * estimate.SE))
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: p1 - p2 = ', p0)))
+    print(noquote(paste0('HA: ', alt.hyp, p0)))
+    print(noquote(paste0('estimate = ', round(estimate,4))))
+    print(noquote(paste0(calc,' SE = ', round(test.SE,4))))
+    print(noquote(paste0((1-alpha)*100, '% CI = ', paste0('[', max(round(CI[1],4), 0),',',
+                                                  round(CI[2],4),']', 
+                                                  collapse = ''))))
+    print(noquote(paste0('Critical Value = ', round(critical.value,4))))
+    print(noquote(paste0('Test statistic = ', round(Zobs, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+  }
+} 
+
+
+#two sample unpooled standard error for means 
+two.sample.t.SE = function(s1,s2,n1,n2){
+  SE = sqrt((s1^2/n1)+(s2^2/n2))
+  return(SE)
+}
+
+#confidence intervals for a difference between two means
+two.sample.t.CI = function(x1,x2,s1,s2,n1,n2, tail = 'two.tail',alpha = 0.05, verbose = FALSE){
+  diff = x1-x2
+  bounds=c(0,0)
+  df = min(n1-1, n2-1)
+  if(tail != 'two.tail'){
+    t.crit = qt(1-alpha, df = df)
+  }else{
+    t.crit = qt(1-(alpha/2), df = df)
+  }
+  SE = two.sample.t.SE(s1,s2,n1,n2)
+  MOE = t.crit*SE
+  bounds[1] = diff - MOE
+  bounds[2] = diff + MOE
+  bounds = sort(bounds)
+  if(isTRUE(verbose)){
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+    print(noquote(paste0('Estimate = ', round(diff, 4))))
+    print(noquote(paste0('Critical Value  = ', round(t.crit, 4))))
+    print(noquote(paste0('Estimated Standard Error = ', round(SE, 4))))
+    print(noquote(paste0('Margin of error = ', round(MOE, 4))))
+    print(noquote(paste0((1-alpha)*100, ' % CI = ', paste0('[',round(bounds[1], 4), ',', 
+                                                   round(bounds[2], 4), ']'))))
+    print(noquote(paste0(rep('-', 50), collapse = '')))
+  }
+  
+  return(list(estimate = diff, interval = bounds, margin.of.error = MOE, critical.value = t.crit))
+}
+
+
+#two sample t test 
+two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+                             pooling = c('pooled', 'unpooled','approx.unpooled'), verbose = TRUE){
+  
+  estimate = x1 - x2
+  estimate.SE = two.sample.t.SE(s1, s2, n1, n2)
+  if(pooling == 'pooled'){
+    calc = 'pooled'
+    df = n1 + n2 - 2
+    s.pooled = sqrt( ((n1-1)*s1^2 + (n2-1)*s2^2)/(n1+n2-2))
+    test.SE = s.pooled * sqrt((1/n1)+(1/n2))
+  }else if (pooling == 'unpooled'){
+    calc = 'unpooled'
+    df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n-1)) + ((s2^2/n2)^2/(n2-2)))
+    test.SE = two.sample.t.SE(s1,s2,n1,n2) 
+  }else{
+    calc = 'approx.unpooled'
+    df = min(n1-1, n2-1)
+    test.SE = two.sample.t.SE(s1,s2,n1,n2) 
+  }
+  tobs = (estimate - m0)/test.SE
+  if(test == 'two.tail'){
+    critical.value = qt((1-(alpha/2)), df = df)
+    alt.hyp = 'm1 - m2 != '
+    pvalue = 2*(1-pt(abs(tobs), df = df))
+  }else if(test == 'lower.tail'){
+    critical.value = qt(alpha, df = df)
+    alt.hyp = 'm1 - m2 < '
+    pvalue = pnorm(tobs)
+  }else{
+    critical.value = qt(1-alpha, df = df)
+    alt.hyp = 'm1 - m2 > '
+    pvalue = 1-pnorm(tobs)
+  }
+  
+  CI = sort(c(estimate - critical.value * estimate.SE, estimate + critical.value * estimate.SE))
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: m1 - m2 = ', m0)))
+    print(noquote(paste0('HA: ', alt.hyp, m0)))
+    print(noquote(paste0('estimate = ', round(estimate,4))))
+    print(noquote(paste0(calc,' SE = ', round(test.SE,4))))
+    print(noquote(paste0((1-alpha)*100, '% CI = ', paste0('[',round(CI[1],4),',',
+                                                  round(CI[2],4),']', 
+                                                  collapse = ''))))
+    print(noquote(paste0('Critical Value = ', round(critical.value,4))))
+    print(noquote(paste0('Test statistic = ', round(tobs, 4))))
+    print(noquote(paste0('degrees of freedom = ', round(df, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+  }
+}
+
+
+
+
+# the classic sign test
+sign.test = function(p0, x1, x2, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+                     verbose = TRUE){
+  
+  diffs = x1 - x2
+  total.signs = sum(diffs>0)+sum(diffs<0)
+  positive.signs = sum(diffs>0)
+  
+  phat = positive.signs/total.signs
+  SE = sqrt(phat*(1-phat)/total.signs)
+  if(test == 'two.tail'){
+    upper.bound = qbinom(1-(alpha/2), total.signs, phat)
+    lower.bound = qbinom(alpha/2, total.signs, phat)
+    alt.hyp = 'p != '
+    pvalue = 2*(1-pbinom(positive.signs, total.signs, p0))
+    if(pvalue > 1){
+      pvalue = 1
+    }
+  }else if(test == 'lower.tail'){
+    upper.bound = qbinom(1-alpha/2, total.signs, phat)
+    lower.bound = qbinom(alpha/2, total.signs, phat)
+    alt.hyp = 'p < '
+    pvalue = pbinom(positive.signs, total.signs, p0)
+  }else{
+    upper.bound = qbinom(1-(alpha/2), total.signs, phat)
+    lower.bound = qbinom(alpha/2, total.signs, phat)
+    alt.hyp = 'p > '
+    pvalue = 1-pbinom(positive.signs, total.signs, p0)
+  }
+  
+  CI = c(lower.bound/total.signs, upper.bound/total.signs)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: p0 = ', p0)))
+    print(noquote(paste0('HA: ', alt.hyp, p0)))
+    print(noquote(paste0('# of positive signs = ', positive.signs)))
+    print(noquote(paste0('# of total signs = ', total.signs)))
+    print(noquote(paste0('Estimated P(+ sign) = ', round(phat, 4))))
+    print(noquote(paste0('Estimated Standard Error P(+ sign) = ', round(SE,4))))
+    print(noquote(paste0((1-alpha)*100, '% CI P(+ sign) = ', paste0('[', round(CI[1],4),',',
+                                                            round(CI[2],4),']', 
+                                                            collapse = ''))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+
+
+
+
+
+rank.sum.stat=function(X, Y){
+  D = sort(c(X, Y), decreasing = FALSE)
+  ranks = match(X,D)
+  S = sum(ranks)
+  return(S)
+}
+
+
+# the classic Wilcoxon sum-rank test for two indepdent samples
+Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, alpha = 0.05, 
+                                  test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE){
+  
+  if(is.null(S)){
+    S = rank.sum.stat(X,Y)
+    n1 = length(X)
+    n2 = length(Y)
+  }
+  
+  U = S - (n1*(n1+1))/2
+  if(test == 'two.tail'){
+    upper.bound = qwilcox(1-(alpha/2), n1, n2)
+    lower.bound = qwilcox(alpha/2, n1, n2)
+    alt.hyp = 'true location shift != '
+    pvalue = 2*pwilcox(U, n1, n2)
+    if(pvalue > 1){
+      pvalue = 1
+    }
+  }else if(test == 'lower.tail'){
+    upper.bound = qwilcox(1-(alpha/2), n1, n2)
+    lower.bound = qwilcox(alpha/2, n1, n2)
+    alt.hyp = 'true location shift is < '
+    pvalue = pwilcox(U, n1, n2)
+  }else{
+    upper.bound = qwilcox(1-(alpha/2), n1, n2)
+    lower.bound = qwilcox(alpha/2, n1, n2)
+    alt.hyp = 'true location shift is > '
+    pvalue = 1-pwilcox(U, n1, n2)
+  }
+  
+  CI = c(lower.bound, upper.bound)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: the true location shift = ', m0)))
+    print(noquote(paste0('HA: ', alt.hyp, m0)))
+    print(noquote(paste0('Sign rank statistic = ', S)))
+    print(noquote(paste0('Mann-Whitney U = ', round(U, 4))))
+    print(noquote(paste0('E[S] = ', round((n1*(n1+n2+1))/2, 4 ))))
+    print(noquote(paste0('SE(S) =', round(sqrt( (n1*n2*(n1+n2+1))/12 ), 4 ))))
+    print(noquote(paste0((1-alpha)*100, '% CI for S = ', paste0('[',max(round(CI[1],4),0),',',
+                                                            round(CI[2],4),']', 
+                                                            collapse = ''))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+
+#A simple function to compute the signed-rank statistic
+sign.rank.stat = function(X,Y, ...){
+  diffs = X-Y
+  negative = which(diffs < 0)
+  positive = which(diffs > 0)
+  if(sum(diffs == 0)>0){
+    omit = which(diffs == 0)
+    abs.diffs = abs(diffs[-omit])
+  }else{
+    abs.diffs = abs(diffs)
+  }
+  ranks = rank(abs.diffs, ...)
+  signed.ranks = ranks
+  signed.ranks[negative] = -1*ranks[negative]
+  W = sum(signed.ranks)
+  return(list(W = W, differences = diffs, absolute.diff = abs.diffs, ranks = ranks, signed.ranks = signed.ranks))
+}
+# the classic Wilcoxon sign-rank test for two dependent samples
+
+Wilcoxon.sign.rank.test = function(m0, X=NULL, Y=NULL, W=NULL, n=NULL,  alpha = 0.05, 
+                                  test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE,
+                                  ...){
+  
+  if(is.null(W)){
+    W = sign.rank.stat(X,Y,...)$W
+    if(length(X)==length(Y)){
+      n = length(X)
+      EW = m0
+      VW = (n*(n+1)*(2*n +1))/6
+      Z = (W-m0)/sqrt(VW)
+    }else{
+      stop('length(X) != length(Y)!...stopping')
+    }
+  }
+  
+
+  if(test == 'two.tail'){
+    crit = qnorm(1-alpha/2, EW, sqrt(VW))
+    alt.hyp = 'true location shift != '
+    pvalue = 2*(1-pnorm(W, EW, sqrt(VW)))
+    if(pvalue > 1){
+      pvalue = 1
+    }
+  }else if(test == 'lower.tail'){
+    crit = qnorm(alpha, EW, sqrt(VW))
+    alt.hyp = 'true location shift < '
+    pvalue = pnorm(W, EW, sqrt(VW))
+  }else{
+    crit = qnorm(1-alpha, EW, sqrt(VW))
+    alt.hyp = 'true location shift > '
+    pvalue = 1-pnorm(W, EW, sqrt(VW))
+  }
+  
+  upper.bound = qnorm(1-alpha/2, EW, sqrt(VW))*sqrt(VW)+EW
+  lower.bound = qnorm(alpha/2, EW, sqrt(VW))*sqrt(VW)+EW
+  CI = c(lower.bound, upper.bound)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: true location shift = ', m0)))
+    print(noquote(paste0('HA: ', alt.hyp, m0)))
+    print(noquote(paste0('Rank-Sum statistic = ', W)))
+    print(noquote(paste0('E[W] = ', round( EW, 4 ))))
+    print(noquote(paste0('SE(W) =', round(sqrt( VW ), 4 ))))
+    print(noquote(paste0('Approximate Z-statistic = ', round(Z, 4))))
+    print(noquote(paste0((1-alpha)*100, '% CI for W = ', paste0('[',round(CI[1],2),',',
+                                                        round(CI[2],2),']', 
+                                                        collapse = ''))))
+    print(noquote(paste0('critical value', round(crit, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+
+# a function to conduct the chi-square goodness of fit test
+chi.squared.GOF.test = function(observed.ct=NULL, expected.freq=NULL, expected.ct = NULL,  alpha = 0.05, 
+                                verbose = TRUE){
+  
+  n = sum(observed.ct)
+  if(is.null(expected.ct)){
+    if(is.null(expected.freq)){
+      stop('missing one of expected.freq or expected.ct')
+    }else{
+     expected.ct = n*expected.freq 
+    }
+  }else{
+    expect.freq = expected.ct/n
+  }
+  df = length(observed.ct)-1
+  chi.dist = (observed.ct - expected.ct)^2 / expected.ct
+  chi.obs = sum(chi.dist)
+  tabres = cbind.data.frame(Observed = observed.ct, Expected = round(expected.ct, 3), 
+                            Distance = round(chi.dist, 3))
+  row.names(tabres) = paste0('category ', 1:length(observed.ct))
+  
+  null.hyp = paste0(paste0('P(category ', 1:length(observed.ct), ') = '), round(expected.freq, 4))
+  alt.hyp ='The probabilities are different than those stated in H0'
+
+  crit = qchisq(1-alpha, df)
+  pvalue = 1-pchisq(chi.obs, df)
+  
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('H0: ', null.hyp)))
+    print(noquote(paste0('HA: ', alt.hyp)))
+    print(noquote(paste0('Degrees of freedom = ', df)))
+    print(paste0(rep('-', 54), collapse = ''))
+    print(tabres)
+    print(paste0(rep('-', 54), collapse = ''))
+    print(noquote(paste0('test statistic = ', round(chi.obs, 4))))
+    if(df == 1){
+      print(noquote(paste0('Z-statistic = ', round(sqrt(chi.obs), 4))))
+    }
+    print(noquote(paste0('critical value = ', round(crit, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+# chi square test of independence and homogeneity
+chi.squared.test = function(cont.table,  alpha = 0.05, test = c('homogeneity','independence'), 
+                            verbose = TRUE,...){
+  
+  r.t = rowSums(cont.table)
+  c.t = colSums(cont.table)
+  n = sum(cont.table)
+  exp.cts = outer(r.t, c.t)/n
+  ct.dists = (cont.table - exp.cts)^2/exp.cts
+  chi.obs = sum(ct.dists)
+  df = prod(dim(cont.table)-1)
+  
+  final.observed = cbind(rbind(cont.table, c.t), c(r.t, n))
+  colnames(final.observed) = c(paste0('Var A: category ', 1:dim(cont.table)[2]),'Row Total')
+  row.names(final.observed) = c(paste0('Var B: category ', 1:dim(cont.table)[1]),'Column Total')
+  
+  colnames(exp.cts) = paste0('Var B: category ', 1:dim(cont.table)[2])
+  row.names(exp.cts) = paste0('Var A: category ', 1:dim(cont.table)[1])
+  
+  colnames(ct.dists) = paste0('Var A: category ', 1:dim(cont.table)[2])
+  row.names(ct.dists) = paste0('Var B: category ', 1:dim(cont.table)[1])
+  
+
+  crit = qchisq(1-alpha, df)
+  if(test == 'homogeneity'){
+    null.hyp = 'The conditional distributions of the rows are homogeneous'
+    alt.hyp = 'The conditional distributions of the rows are not homogeneous'
+  }else{
+    null.hyp = 'The row variable and column variable are independent'
+    alt.hyp = 'The row variable and column variable are dependent'
+  }
+  pvalue = 1-pchisq(chi.obs, df)
+
+  
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: ', null.hyp)))
+    print(noquote(paste0('HA: ', alt.hyp)))
+    print(noquote(paste0('Degrees of freedom = ', df)))
+    print(noquote(paste0(rep('-', 54), collapse = '')))
+    print('Observed Counts')
+    print(round(final.observed, 4))
+    print('Expected Counts: (R * C)/n')
+    print(round(exp.cts, 4))
+    print('Distances: (observed - expected)^2 / expected')
+    print(round(ct.dists, 4))
+    print(noquote(paste0(rep('-', 54), collapse = '')))
+    print(noquote(paste0('test statistic = ', round(chi.obs, 4))))
+    if(df == 1){
+      print(noquote(paste0('Z-statistic = ', round(sqrt(chi.obs), 4))))
+    }
+    print(noquote(paste0('critical value = ', round(crit, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+```
