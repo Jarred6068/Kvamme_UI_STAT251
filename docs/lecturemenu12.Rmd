@@ -162,20 +162,43 @@ With the examples of significance tests we have discussed thus far we have learn
 
 # Lecture 22 Wednesday, March 27th 2024
 
+### Setting up the null and alternative hypothesis
+
+As we stated previously, the null hypothesis is a statement about the value of a population parameter. The alternative hypothesis is a statement about our suscpicions regarding the value of that parameter. The alternative hypothesis can be directional such as $H_A: p > p_0$ (called an upper tail test) or $H_A: p < p_0$ (called a lower tailed test). These types of alternative hypotheses are called *one-sided* because they direct our attention to either the lower or upper tail of the distribution of the test statistic. If our suspicion about the parameter is that it differs in either direction or if we are unsure, the alternative hypothesis is $H_A: p \neq p_0$ and the test is called *two-sided* because the suspicion includes both the lower and upper tails of the distribution of the test statistic. 
+
+Because the alternative hypothesis expresses some effect that we hope to find evidence for, we often begin by stating $H_A$ and then set up $H_0$ as the statement that the "hoped-for" effect is not present. It's important to note that the alternative hypothesis should express the hopes or suspicions we bring to the data. It is biased to first look at the data and then set up the alternative hypothesis based on what the data show. If you do not have a direction firmly in mind before gathering the data you must use a two.sided test. 
+
 ### Significance level, critical value, and decision making
 
 The **significance level** of test (denoted $\alpha$) is how we turn the $p$-value of a significance test into a <i>reject/not reject</i> decision about the null hypothesis. It sets how "strong" the evidence against the null needs to be in order for a result to be deemed statistically significant. The researcher determines the significance level before conducting the experiment.
 
+The **critical value** of a significance test is a point on the distribution of the test statistic that defines a set of values that call for rejecting the null hypothesis. 
+
+The critical value determines the boundary of the **rejection region** – the area in the tail (or tails) of the distribution of the test statistic for which a result is deemed significant. The rejection region has an area of exactly $\alpha$.
 
 
-### Hypothesis tests concerning $p$
+The significance level, critical value, and rejection region are all related to each other but we typically only set the significance level. The critical value and rejection region then follow from the specified significance level. All three of these things are used to help us turn the $p$-value of a hypothesis test into a formal decision about the null hypothesis. The decision rule is as follows:
+
+  1. If $p$-value $< \alpha$, then *reject* $H_0$ (results are statistically significant)
+  
+  2. If $p$-value $\geq \alpha$, then *do not reject* $H_0$ (results are <u>not</u> statistically significant)
+
+So how does this relate the to critical value and rejection region? We can state the decision rule in terms of both of these quantities but to do so is more nuanced and depends on the direction (or lack there of) of the alternative hypothesis. For example, consider the null hypothesis and alternative hypotheses
+
+\[ H_0: \mu_0 = 0 \]
+\[ H_A: \mu < \mu_0 \]
+
+The decision rule stated in terms 
+
+  1. If $p$-value $< \alpha$ then $t_{obs} < t_\alpha$; *reject* $H_0$ (results are statistically significant) - this is the same as saying "if the test statistic falls within the rejection region then <u>reject $H_0$</u>"
+  
+  2. If $p$-value $\geq \alpha$, then $t_{obs} \geq t_\alpha$; *do not reject* $H_0$ (results are <u>not</u> statistically significant) - this is the same as saying "if the test statistic does not fall within the rejection region then <u>do not reject $H_0$</u>"
+  
+The **critical value** and **rejection region** of a test depend on the significance level of the test and the direction of the alternative hypothesis. Consider the plots below: 
 
 
 
-### Hypothesis tests concerning $\mu$
-
-
-```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=10}
+```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=10, fig.cap='This plot depicts the decision rule for a given alternative hypothesis at a significance level $\\alpha = 0.05$. In each subplot, the rejection region is highlighted in turquoise and the critical value(s) are denoted by the vertical dashed lines.'}
 
 A = ggplot()+xlim(-4, 4)+theme_bw()+
   stat_function(fun = dnorm,
@@ -198,7 +221,7 @@ A = ggplot()+xlim(-4, 4)+theme_bw()+
   geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
   xlab('Z')+
   ylab('Probability Density')+
-  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p \neq c$'))+
+  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p \\neq c$'))+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
@@ -225,7 +248,7 @@ B = ggplot()+xlim(-4, 4)+theme_bw()+
   geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
   xlab('Z')+
   ylab('Probability Density')+
-  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p > c$'))+
+  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p > p_0$'))+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
@@ -250,23 +273,27 @@ C = ggplot()+xlim(-4, 4)+theme_bw()+
   #geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
   xlab('Z')+
   ylab('Probability Density')+
-  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p < c$'))+
+  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p < p_0$'))+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
 ggarrange(A, B, C, nrow = 3)
 ```
 
+
+Consider the six plots below which show the position of the critical value, and rejection region for the three types of alternative hypotheses at two significance levels. What do you notice about the relationship between the significance level and the rejection region?
+
+
 ```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=14}
 set.seed(123)
 
 md = NA
 A = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'upper.tail', obs = md, alpha = 0.05)
-A1 = A+ggtitle(TeX('$H_A: p > c$'))
+A1 = A+ggtitle(TeX('$H_A: p > p_0$'))
 B = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'lower.tail', obs = md, alpha = 0.05)
-B1 = B+ggtitle(TeX('$H_A: p < c$'))
+B1 = B+ggtitle(TeX('$H_A: p < p_0$'))
 C = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'two.tailed', obs = md, alpha = 0.05)
-C1 = C+ggtitle(TeX('$H_A: p \\neq c$'))
+C1 = C+ggtitle(TeX('$H_A: p \\neq p_0$'))
 
 AA = ggarrange(A1, B1, C1, nrow = 3)
 
@@ -275,11 +302,11 @@ AAf = annotate_figure(AA, top = text_grob(TeX('$\\alpha = 0.05$')), fig.lab.size
 
 
 A2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'upper.tail', obs = md, alpha = 0.01)+
-  ggtitle(TeX('$H_A: p > c$'))
+  ggtitle(TeX('$H_A: p > p_0$'))
 B2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'lower.tail', obs = md, alpha = 0.01)+
-  ggtitle(TeX('$H_A: p < c$'))
+  ggtitle(TeX('$H_A: p < p_0$'))
 C2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'two.tailed', obs = md, alpha = 0.01)+
-  ggtitle(TeX('$H_A: p \\neq c$'))
+  ggtitle(TeX('$H_A: p \\neq p_0$'))
 
 BB = ggarrange(A2, B2, C2, nrow = 3)
 BBf = annotate_figure(BB, top = text_grob(TeX('$\\alpha = 0.01$')), fig.lab.size = 16,
@@ -289,7 +316,7 @@ ggarrange(AAf, BBf, nrow = 1, ncol = 2)
 
 ```
 
-Notice from the plots above that the alternative hypothesis also impacts the how significant a result must be in order to reject the null. Specifically, the **rejection region** for the alternative hypotheses $H_A: p > c$ and $H_A: p < c$ are larger.
+Notice from the plots above that the alternative hypothesis also impacts the how significant a result must be in order to reject the null. Specifically, a result need not be as extreme when the alternative hypotheses $H_A: p > p_0$ and $H_A: p < p_0$ to be statistically significant. This is because when we suspected direction of the effect we have more information about the parameter which improves our ability to detect a significant result. 
 
 
 

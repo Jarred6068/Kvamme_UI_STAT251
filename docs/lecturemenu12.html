@@ -1203,6 +1203,34 @@ class="math inline">\(\mu\)</span>.</p>
 </div>
 <div id="lecture-22-wednesday-march-27th-2024" class="section level1">
 <h1>Lecture 22 Wednesday, March 27th 2024</h1>
+<div id="setting-up-the-null-and-alternative-hypothesis"
+class="section level3">
+<h3>Setting up the null and alternative hypothesis</h3>
+<p>As we stated previously, the null hypothesis is a statement about the
+value of a population parameter. The alternative hypothesis is a
+statement about our suscpicions regarding the value of that parameter.
+The alternative hypothesis can be directional such as <span
+class="math inline">\(H_A: p &gt; p_0\)</span> (called an upper tail
+test) or <span class="math inline">\(H_A: p &lt; p_0\)</span> (called a
+lower tailed test). These types of alternative hypotheses are called
+<em>one-sided</em> because they direct our attention to either the lower
+or upper tail of the distribution of the test statistic. If our
+suspicion about the parameter is that it differs in either direction or
+if we are unsure, the alternative hypothesis is <span
+class="math inline">\(H_A: p \neq p_0\)</span> and the test is called
+<em>two-sided</em> because the suspicion includes both the lower and
+upper tails of the distribution of the test statistic.</p>
+<p>Because the alternative hypothesis expresses some effect that we hope
+to find evidence for, we often begin by stating <span
+class="math inline">\(H_A\)</span> and then set up <span
+class="math inline">\(H_0\)</span> as the statement that the “hoped-for”
+effect is not present. It’s important to note that the alternative
+hypothesis should express the hopes or suspicions we bring to the data.
+It is biased to first look at the data and then set up the alternative
+hypothesis based on what the data show. If you do not have a direction
+firmly in mind before gathering the data you must use a two.sided
+test.</p>
+</div>
 <div id="significance-level-critical-value-and-decision-making"
 class="section level3">
 <h3>Significance level, critical value, and decision making</h3>
@@ -1213,22 +1241,83 @@ class="math inline">\(p\)</span>-value of a significance test into a
 “strong” the evidence against the null needs to be in order for a result
 to be deemed statistically significant. The researcher determines the
 significance level before conducting the experiment.</p>
+<p>The <strong>critical value</strong> of a significance test is a point
+on the distribution of the test statistic that defines a set of values
+that call for rejecting the null hypothesis.</p>
+<p>The critical value determines the boundary of the <strong>rejection
+region</strong> – the area in the tail (or tails) of the distribution of
+the test statistic for which a result is deemed significant. The
+rejection region has an area of exactly <span
+class="math inline">\(\alpha\)</span>.</p>
+<p>The significance level, critical value, and rejection region are all
+related to each other but we typically only set the significance level.
+The critical value and rejection region then follow from the specified
+significance level. All three of these things are used to help us turn
+the <span class="math inline">\(p\)</span>-value of a hypothesis test
+into a formal decision about the null hypothesis. The decision rule is
+as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>If <span class="math inline">\(p\)</span>-value <span
+class="math inline">\(&lt; \alpha\)</span>, then <em>reject</em> <span
+class="math inline">\(H_0\)</span> (results are statistically
+significant)</p></li>
+<li><p>If <span class="math inline">\(p\)</span>-value <span
+class="math inline">\(\geq \alpha\)</span>, then <em>do not reject</em>
+<span class="math inline">\(H_0\)</span> (results are <u>not</u>
+statistically significant)</p></li>
+</ol>
+<p>So how does this relate the to critical value and rejection region?
+We can state the decision rule in terms of both of these quantities but
+to do so is more nuanced and depends on the direction (or lack there of)
+of the alternative hypothesis. For example, consider the null hypothesis
+and alternative hypotheses</p>
+<p><span class="math display">\[ H_0: \mu_0 = 0 \]</span> <span
+class="math display">\[ H_A: \mu &lt; \mu_0 \]</span></p>
+<p>The decision rule stated in terms</p>
+<ol style="list-style-type: decimal">
+<li><p>If <span class="math inline">\(p\)</span>-value <span
+class="math inline">\(&lt; \alpha\)</span> then <span
+class="math inline">\(t_{obs} &lt; t_\alpha\)</span>; <em>reject</em>
+<span class="math inline">\(H_0\)</span> (results are statistically
+significant) - this is the same as saying “if the test statistic falls
+within the rejection region then <u>reject <span
+class="math inline">\(H_0\)</span></u>”</p></li>
+<li><p>If <span class="math inline">\(p\)</span>-value <span
+class="math inline">\(\geq \alpha\)</span>, then <span
+class="math inline">\(t_{obs} \geq t_\alpha\)</span>; <em>do not
+reject</em> <span class="math inline">\(H_0\)</span> (results are
+<u>not</u> statistically significant) - this is the same as saying “if
+the test statistic does not fall within the rejection region then <u>do
+not reject <span class="math inline">\(H_0\)</span></u>”</p></li>
+</ol>
+<p>The <strong>critical value</strong> and <strong>rejection
+region</strong> of a test depend on the significance level of the test
+and the direction of the alternative hypothesis. Consider the plots
+below:</p>
+<div class="figure">
+<img src="lecturemenu12_files/figure-html/unnamed-chunk-4-1.png" alt="This plot depicts the decision rule for a given alternative hypothesis at a significance level $\alpha = 0.05$. In each subplot, the rejection region is highlighted in turquoise and the critical value(s) are denoted by the vertical dashed lines." width="960" />
+<p class="caption">
+This plot depicts the decision rule for a given alternative hypothesis
+at a significance level <span class="math inline">\(\alpha =
+0.05\)</span>. In each subplot, the rejection region is highlighted in
+turquoise and the critical value(s) are denoted by the vertical dashed
+lines.
+</p>
 </div>
-<div id="hypothesis-tests-concerning-p" class="section level3">
-<h3>Hypothesis tests concerning <span
-class="math inline">\(p\)</span></h3>
-</div>
-<div id="hypothesis-tests-concerning-mu" class="section level3">
-<h3>Hypothesis tests concerning <span
-class="math inline">\(\mu\)</span></h3>
-<p><img src="lecturemenu12_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
+<p>Consider the six plots below which show the position of the critical
+value, and rejection region for the three types of alternative
+hypotheses at two significance levels. What do you notice about the
+relationship between the significance level and the rejection
+region?</p>
 <p><img src="lecturemenu12_files/figure-html/unnamed-chunk-5-1.png" width="1344" /></p>
 <p>Notice from the plots above that the alternative hypothesis also
 impacts the how significant a result must be in order to reject the
-null. Specifically, the <strong>rejection region</strong> for the
-alternative hypotheses <span class="math inline">\(H_A: p &gt;
-c\)</span> and <span class="math inline">\(H_A: p &lt; c\)</span> are
-larger.</p>
+null. Specifically, a result need not be as extreme when the alternative
+hypotheses <span class="math inline">\(H_A: p &gt; p_0\)</span> and
+<span class="math inline">\(H_A: p &lt; p_0\)</span> to be statistically
+significant. This is because when we suspected direction of the effect
+we have more information about the parameter which improves our ability
+to detect a significant result.</p>
 </div>
 </div>
 

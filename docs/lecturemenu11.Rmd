@@ -237,15 +237,15 @@ So how unusual does a result need to be for us to consider the latter statement 
 
 In both of these examples, we stated hypotheses about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the the value of a parameter: a *null hypothesis* and and *alternative hypothesis*.
 
-The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = c$ for some constant $c$
+The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = \theta_0$ for some constant $\theta_0$
 
 The **alternative hypothesis** (denoted $H_A$) is the hypothesis of “effect” or that “something interesting has happened”. The alternative hypothesis is usually that the population parameter falls in some range of values such as:
 
 The value of the parameter is greater than the value proposed in the null hypothesis
-\[H_A: \theta > c \]
+\[H_A: \theta > \theta_0  \]
 The value of the parameter is less than the value proposed in the null hypothesis
-\[H_A: \theta < c \]
+\[H_A: \theta < \theta_0 \]
 The value of the parameter is different than the value proposed in the null hypothesis (could be greater than or less than - we aren't sure, we just suspect its different)
-\[H_A: \theta \neq c \]
+\[H_A: \theta \neq \theta_0 \]
 
    - the alternative hypothesis expresses our "suspicions" that we have about the data. For example, <i> we suspect the defect rate is higher than $2\%$</i> or <i> we suspect the coin is not fair </i>.
