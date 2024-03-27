@@ -344,6 +344,9 @@ $(document).ready(function () {
         <li>
           <a href="homeworks/week7homework.html">Homework 3</a>
         </li>
+        <li>
+          <a href="homeworks/week12homework.html">Homework 4</a>
+        </li>
       </ul>
     </li>
     <li class="dropdown-submenu">
@@ -357,6 +360,9 @@ $(document).ready(function () {
         </li>
         <li>
           <a href="homeworks/week7homework_solns.html">Hmwk 3 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week12homework_solns.html">Hmwk 4 Solutions</a>
         </li>
       </ul>
     </li>
@@ -875,7 +881,7 @@ class="math inline">\(n\)</span> is large enough</p></li>
 <h3>Introduction to tests of significance</h3>
 <p>Confidence intervals are an appropriate tool when the goal is to
 <i>estimate</i> something about a population. The second part of
-statistical inference deals with a very different sort of goal:
+statistical inference deals with a very different sort of goal.
 Significance tests (also called hypothesis tests) combine mathematics
 and logic to assess the validity of a claim about a population parameter
 using the evidence provided in a set of data. Specifically, we compare
@@ -894,12 +900,12 @@ but recent reports about customer feedback indicate that the chips might
 have an issue that causes the defective rate to be higher than <span
 class="math inline">\(2\%\)</span>. To address these concerns, you
 decide to conduct a study to test the claim that only <span
-class="math inline">\(2\%\)</span> of tested chips are defective. To
-test this, the company purchases <span class="math inline">\(10\)</span>
-computers from a random sample of <span class="math inline">\(5\)</span>
-retailers that it supplies microchips. Each computer is run through the
-same set of high intensity tasks to test the chips and the proportion of
-chips that fail is estimated. From this experiment, you estimate the
+class="math inline">\(2\%\)</span> of chips are defective. To test this,
+the company purchases <span class="math inline">\(10\)</span> computers
+from a random sample of <span class="math inline">\(5\)</span> retailers
+that it supplies microchips. Each computer is run through the same set
+of high intensity tasks to test the chips and the proportion of chips
+that fail is estimated. From this experiment, you estimate the
 proportion of defective chips to be about <span
 class="math inline">\(2.053\%\)</span> with a standard error of <span
 class="math inline">\(0.019\%\)</span> which gives a difference in rates
@@ -909,14 +915,14 @@ of <span class="math inline">\(0.00053\%\)</span>.</p>
 chips is greater than the expected rate of <span
 class="math inline">\(2\%\)</span>?</li>
 </ul>
-<p>One way to answer this question is compute the probability of
+<p>One way to answer this question is to compute the probability of
 obtaining a difference as large or larger than the one you have
 observed. This probability is <span class="math inline">\(0.48\)</span>.
 Since this probability is quite large, we conclude that observing a
 difference of <span class="math inline">\(0.00053\)</span> is not
 surprising if the defective rate of the sample is the same as the
 population rate of <span class="math inline">\(2\%\)</span>. In this
-case the sample supports the initial claim that the defective rate is
+case, the sample supports the initial claim that the defective rate is
 about <span class="math inline">\(2\%\)</span>.</p>
 <p>A <strong>statistically significant</strong> result is one that is
 decidedly not due to “ordinary variation” in the data (i.e., not due to
@@ -996,7 +1002,9 @@ class="math inline">\(p\)</span> is not equal to <span
 class="math inline">\(1/2\)</span>)</p></li>
 </ol>
 <p>So how unusual does a result need to be for us to consider the latter
-statement (ii) to be more plausible?</p>
+statement (ii) to be more plausible? We will discuss this more later on,
+but, in general, this is an arbitrary choice that we must make when
+setting up our test.</p>
 <p>In both of these examples, we stated hypotheses about the value of
 the parameter and then proposed a counter hypothesis about that value. A
 significance test is a comparison between two such
@@ -1006,21 +1014,21 @@ significance test is a comparison between two such
 class="math inline">\(H_0\)</span>) is usually the hypothesis of “no
 effect” or that “nothing interesting is happening”. The null hypothesis
 is usually that the population parameter equals some value <span
-class="math inline">\(H_0: \theta = a\)</span> for some constant <span
-class="math inline">\(a\)</span></p>
+class="math inline">\(H_0: \theta = c\)</span> for some constant <span
+class="math inline">\(c\)</span></p>
 <p>The <strong>alternative hypothesis</strong> (denoted <span
 class="math inline">\(H_A\)</span>) is the hypothesis of “effect” or
 that “something interesting has happened”. The alternative hypothesis is
 usually that the population parameter falls in some range of values such
 as:</p>
 <p>The value of the parameter is greater than the value proposed in the
-null hypothesis <span class="math display">\[H_A: \theta &gt; a
+null hypothesis <span class="math display">\[H_A: \theta &gt; c
 \]</span> The value of the parameter is less than the value proposed in
-the null hypothesis <span class="math display">\[H_A: \theta &lt; a
+the null hypothesis <span class="math display">\[H_A: \theta &lt; c
 \]</span> The value of the parameter is different than the value
 proposed in the null hypothesis (could be greater than or less than - we
 aren’t sure, we just suspect its different) <span
-class="math display">\[H_A: \theta \neq a \]</span></p>
+class="math display">\[H_A: \theta \neq c \]</span></p>
 <ul>
 <li>the alternative hypothesis expresses our “suspicions” that we have
 about the data. For example, <i> we suspect the defect rate is higher

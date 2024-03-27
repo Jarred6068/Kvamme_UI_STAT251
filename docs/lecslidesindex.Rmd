@@ -153,11 +153,20 @@ as .pdf
 <a href="./lecture_slides/Week 9/Week9_Lecture18_Slides_3_4_2024.pptx">Download File</a>
 as powerpoint
 
-# Week 11
+# Week 11 - 12
 
-### Lecture 20
+### Lecture 20 - 21
 <a href="./lecture_slides/Week 11/Week11_Lecture20_Slides_3_20_2024.pdf">Download File</a>
 as .pdf
 
 <a href="./lecture_slides/Week 11/Week11_Lecture20_Slides_3_20_2024.pptx">Download File</a>
+as powerpoint
+
+
+### Lecture 22
+
+<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_26_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_26_2024.pptx">Download File</a>
 as powerpoint

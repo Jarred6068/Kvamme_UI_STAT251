@@ -54,6 +54,8 @@ navbar:
             href: homeworks/week5homework.html
           - text: 'Homework 3'
             href: homeworks/week7homework.html
+          - text: 'Homework 4'
+            href: homeworks/week12homework.html
         - text: 'Solutions'
           menu: 
           - text: 'Hmwk 1 Solutions'
@@ -62,6 +64,8 @@ navbar:
             href: homeworks/week5homework_solns.html
           - text: 'Hmwk 3 Solutions'
             href: homeworks/week7homework_solns.html
+          - text: 'Hmwk 4 Solutions'
+            href: homeworks/week12homework_solns.html
         - text: 'Reading & Extra Problems'
           href: homeworks/reading_and_book_problems.html
     - text: 'Exam Study Guides'

@@ -344,6 +344,9 @@ $(document).ready(function () {
         <li>
           <a href="homeworks/week7homework.html">Homework 3</a>
         </li>
+        <li>
+          <a href="homeworks/week12homework.html">Homework 4</a>
+        </li>
       </ul>
     </li>
     <li class="dropdown-submenu">
@@ -357,6 +360,9 @@ $(document).ready(function () {
         </li>
         <li>
           <a href="homeworks/week7homework_solns.html">Hmwk 3 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week12homework_solns.html">Hmwk 4 Solutions</a>
         </li>
       </ul>
     </li>
@@ -498,33 +504,36 @@ $(document).ready(function () {
 </div>
 
 
-<div id="lecture-20-monday-march-25th-2024" class="section level1">
-<h1>Lecture 20 Monday, March 25th 2024</h1>
-<p><strong>Warm Up:</strong> Consider the following example - A gardener
-conducting an experiment to evaluate the effectiveness of a new
+<div id="lecture-21-monday-march-25th-2024" class="section level1">
+<h1>Lecture 21 Monday, March 25th 2024</h1>
+<p><strong>Warm Up:</strong> Consider the following example - a gardener
+is conducting an experiment to evaluate the effectiveness of a new
 fertilizer on the heights of tomato plants. They purchase 80 tomato
-plants from their local seedling outlet. The gardner randomly selects
+plants from their local seedling outlet. The gardener randomly selects
 <span class="math inline">\(40\)</span> of plants to receive a
 fertilizer and water mixture and the remaining half to receive only
 water. After one month the mean height is recorded in both groups and
-the difference in height between the groups of tomato plants is
-measured.</p>
+the difference in height between the two experimental groups of tomato
+plants is measured.</p>
 <p>The gardener suspects that the plants which received the new
-fertilizer will be taller than the plants that received only water. They
-set the null hypothesis to be “no difference in height” given by</p>
+fertilizer will be tend to be taller than the plants that received only
+water. They set the null hypothesis to be “no difference in height”
+which can be thought of as “the fertilizer has no effect on tomato plant
+growth”.</p>
 <p><span class="math display">\[ H_0: \mu_d = 0 \]</span></p>
-<p>where <span class="math inline">\(\mu_d\)</span> denotes the
-population mean difference in tomato plant height between the two
-experimental groups. We can use the sample mean difference <span
+<p><span class="math inline">\(\mu_d\)</span> denotes the population
+mean difference in tomato plant height between the two experimental
+groups. We can use the sample mean difference <span
 class="math inline">\(\bar{x}_d\)</span> to estimate <span
 class="math inline">\(\mu_d\)</span> which is calculated as</p>
-<p><span class="math display">\[\mu_d = \frac{1}{n}\sum_i x_{i} - y_i
-\]</span></p>
+<p><span class="math display">\[\bar{x}_d = \frac{1}{n}\sum_i x_{i} -
+y_i \]</span></p>
 <p>where <span class="math inline">\(x_i\)</span> is the height of
 tomato plants receiving the fertilizer and <span
 class="math inline">\(y_i\)</span> is the height the tomato plants
 receiving only water.</p>
-<p>The alternative hypothesis is</p>
+<p>Since the suspicion is that the plants recieving fertilizer will be
+taller, the alternative hypothesis is</p>
 <p><span class="math display">\[ H_A: \mu_d &gt; 0 \]</span></p>
 <p>The data from the gardeners experiment are shown below:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -991,6 +1000,9 @@ Difference In Height (Inches)
 <th style="text-align:left;">
 Name
 </th>
+<th style="text-align:left;">
+Symbol
+</th>
 <th style="text-align:right;">
 Value
 </th>
@@ -999,7 +1011,21 @@ Value
 <tbody>
 <tr>
 <td style="text-align:left;">
+Sample size
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n\)</span>
+</td>
+<td style="text-align:right;">
+40.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Mean Height (Fertilized)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}\)</span>
 </td>
 <td style="text-align:right;">
 45.11
@@ -1009,6 +1035,9 @@ Mean Height (Fertilized)
 <td style="text-align:left;">
 SD (Fertilized)
 </td>
+<td style="text-align:left;">
+<span class="math inline">\(s_x\)</span>
+</td>
 <td style="text-align:right;">
 2.24
 </td>
@@ -1016,6 +1045,9 @@ SD (Fertilized)
 <tr>
 <td style="text-align:left;">
 Mean Height (Water Only)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{y}\)</span>
 </td>
 <td style="text-align:right;">
 40.97
@@ -1025,6 +1057,9 @@ Mean Height (Water Only)
 <td style="text-align:left;">
 SD (Water Only)
 </td>
+<td style="text-align:left;">
+<span class="math inline">\(s_y\)</span>
+</td>
 <td style="text-align:right;">
 3.93
 </td>
@@ -1033,6 +1068,9 @@ SD (Water Only)
 <td style="text-align:left;">
 Mean Difference (Ferlized - Water Only)
 </td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}_d\)</span>
+</td>
 <td style="text-align:right;">
 4.14
 </td>
@@ -1040,6 +1078,9 @@ Mean Difference (Ferlized - Water Only)
 <tr>
 <td style="text-align:left;">
 SD Difference
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(s_d\)</span>
 </td>
 <td style="text-align:right;">
 4.43
@@ -1056,20 +1097,21 @@ observed under the sampling distribution of the null hypothesis. In
 other words, “how likely is it that we would see a difference in height
 as large as the one we observed, assuming that the true difference is
 zero?”</p>
-<p><span class="math display">\[P(X \geq \bar{x}_d | H_0 \ \text{true})
-\]</span></p>
+<p><span class="math display">\[P(\bar{X} \geq \bar{x}_d | H_0 \
+\text{true}) \]</span></p>
 <p>To compute this probability, we need convert the difference we
 observed into a standardized score that we can look up in one of our
 tables. Since we are discussing a “mean” difference we can use the <span
 class="math inline">\(t\)</span>-distribution as we did before with
 confidence intervals:</p>
 <p><span class="math display">\[ t_{obs} = \frac{\bar{x}_d -
-\mu_d}{s_d/\sqrt{n}} \]</span></p>
-<p>Where <span class="math inline">\(\bar{x}_d\)</span> is the observed
+\mu_d}{s_d/\sqrt{n}}  = \frac{4.08 - 0}{4.43/\sqrt{40}} = 5.91 \sim
+t(n-1)\]</span></p>
+<p>Where <span class="math inline">\(\bar{x}_d\)</span> is the sample
 mean difference in height, <span class="math inline">\(\mu_d\)</span> is
 population mean difference under the null hypothesis, and <span
-class="math inline">\(s_d\)</span> is the observed standard deviation
-for the difference in height. The above formula converts the observed
+class="math inline">\(s_d\)</span> is the sample standard deviation for
+the difference in height. The above formula converts the observed
 difference <span class="math inline">\(\bar{x}_d\)</span> to a <span
 class="math inline">\(t\)</span>-score from a <span
 class="math inline">\(t\)</span>-distribution with <span
@@ -1088,32 +1130,44 @@ class="math inline">\(39\)</span> degrees of freedom. The probability
 from earlier can be re-framed in the context of the <span
 class="math inline">\(t\)</span>-distribution</p>
 <p><span class="math display">\[P(t \geq t_{\text{obs}}| H_0 \
-\text{true}) \]</span></p>
-<p>For the gardener’s experiment, this probability is <span
-class="math inline">\(3.45e^{-7}\)</span>, which is very small.</p>
+\text{true}) = 1-P(t&lt; t_{\text{obs}}|H_0 \ \text{true}) \]</span></p>
+<p>i.e the probability of observing a <span
+class="math inline">\(t\)</span> value greater than the one we observed
+when the true difference is assumed to be <span
+class="math inline">\(\mu_d = 0\)</span>. For the gardener’s experiment,
+this probability is <span class="math inline">\(3.45e^{-7} \approx
+0\)</span>, which is very small.</p>
 <p>This probability is called the <strong>p-value</strong> and it
 measures the probability of observing an estimate as or more extreme
 than the the one we observed under the assumption that the null
 hypothesis is true. So what does this small probability mean? Just as we
-observed with coin flip example from last week it can mean one of two
-things:</p>
+observed with the coin flip example from last week, it can mean one of
+two things:</p>
 <ol style="list-style-type: decimal">
-<li><p>we observed something very unusual</p></li>
+<li><p>We observed something very unusual</p></li>
 <li><p>The assumption underling the calculation (i.e <span
 class="math inline">\(\mu_d = 0\)</span> no difference in mean height)
 is not true.</p></li>
 </ol>
-<p>We prefer the second conclusion we the <span
+<p>We prefer the second conclusion when the <span
 class="math inline">\(p\)</span>-value is “sufficiently” small and take
 it as evidence against the null hypothesis. So how small is small
 enough? By convention, most tests use a probability cutoff of <span
 class="math inline">\(5\%\)</span> or less which is called the
-<strong>rejection threshold</strong> of the test. The threshold of a
-test is denoted as <span class="math inline">\(\alpha = 0.05\)</span>.
+<strong>significance level</strong> of the test. The significance level
+of a test is denoted as <span class="math inline">\(\alpha\)</span>. For
+the gardeners test <span class="math inline">\(\alpha = 0.05\)</span>.
 <span class="math inline">\(\alpha\)</span> sets the boundary for how
 big (or small) the test statistic needs to be to conclude that the test
-statistic is statistically significant.</p>
+statistic is <u>statistically significant</u>.</p>
 <p><img src="lecturemenu12_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>In the plot above, <span class="math inline">\(t_{1-\alpha}\)</span>
+denotes the boundary for significance in the gardners test. Any <span
+class="math inline">\(t\)</span>-value greater than <span
+class="math inline">\(t_{1-\alpha}\)</span> will have a
+<strong>p-value</strong> less than <span
+class="math inline">\(\alpha\)</span> and be deemd
+<i>significant</i></p>
 <p>What were the steps involved with this test?</p>
 <ul>
 <li><p><strong>step 1</strong> - The first step in any hypothesis test
@@ -1143,13 +1197,37 @@ have learned two formal significance tests: a test(s) tests concerning a
 population proportion <span class="math inline">\(p\)</span> and tests
 concerning a population mean <span
 class="math inline">\(\mu\)</span>.</p>
-<div id="hypothesis-tests-concerning-mu" class="section level3">
-<h3>Hypothesis tests concerning <span
-class="math inline">\(\mu\)</span></h3>
+</div>
+<div id="lecture-22-wednesday-march-27th-2024" class="section level1">
+<h1>Lecture 22 Wednesday, March 27th 2024</h1>
+<div id="significance-level-critical-value-and-decision-making"
+class="section level3">
+<h3>Significance level, critical value, and decision making</h3>
+<p>The <strong>significance level</strong> of test (denoted <span
+class="math inline">\(\alpha\)</span>) is how we turn the <span
+class="math inline">\(p\)</span>-value of a significance test into a
+<i>reject/not reject</i> decision about the null hypothesis. It sets how
+“strong” the evidence against the null needs to be in order for a result
+to be deemed statistically significant.</p>
+<p><img src="lecturemenu12_files/figure-html/unnamed-chunk-4-1.png" width="960" /></p>
+<p><img src="lecturemenu12_files/figure-html/unnamed-chunk-5-1.png" width="1344" /></p>
+<p>Notice from the plots above that the alternative hypothesis also
+impacts the how significant a result must be in order to reject the
+null. Specifically, the <strong>rejection region</strong> for the
+alternative hypotheses <span class="math inline">\(H_A: p &gt;
+c\)</span> and <span class="math inline">\(H_A: p &lt; c\)</span> are
+larger.</p>
 </div>
 <div id="hypothesis-tests-concerning-p" class="section level3">
 <h3>Hypothesis tests concerning <span
 class="math inline">\(p\)</span></h3>
+<p>In the both the microchip and coin flip examples from Week 11 we were
+dealing with a test about a population proportion <span
+class="math inline">\(p\)</span>.</p>
+</div>
+<div id="hypothesis-tests-concerning-mu" class="section level3">
+<h3>Hypothesis tests concerning <span
+class="math inline">\(\mu\)</span></h3>
 </div>
 </div>
 

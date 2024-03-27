@@ -115,9 +115,9 @@ gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c('z','t'), alpha = 0.0
                        yend=yendcoords[3]),
                    size = 0.9,
                    linetype = 'dashed')+
-      geom_point(aes(x = xcoords[1:2], y = ycoords[1:2]), size = 1.5)+
+      geom_point(aes(x = xcoords[1:2], y = ycoords[1:2]), size = 3)+
       geom_label(aes(x = xcoords[1:2], y = ycoords[1:2]-0.025), label = lbl1[1:2], size = txt.sz)+
-      geom_point(aes(x = xcoords[3], y = ycoords[3]), size = 1.5)+
+      geom_point(aes(x = xcoords[3], y = ycoords[3]), size = 3)+
       geom_label(aes(x = xcoords[3], y = ycoords[3]-0.025), label = lbl1[3], size = txt.sz)+
       geom_hline(yintercept = 0, size = 1)+
       xlab(xlabel)+
@@ -135,7 +135,7 @@ gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c('z','t'), alpha = 0.0
                        yend=yendcoords), 
                    size = rep(0.9, length(xcoords)), 
                    linetype = rep('dashed',length(xcoords)))+
-      geom_point(aes(x = xcoords, y = ycoords), size = 1.5)+
+      geom_point(aes(x = xcoords, y = ycoords), size = 3)+
       geom_label(aes(x = xcoords, y = ycoords-0.025), label = lbl1, size = txt.sz)+
       geom_hline(yintercept = 0, size = 1)+
       xlab(xlabel)+

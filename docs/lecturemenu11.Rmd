@@ -189,13 +189,13 @@ To have a sampling distribution that is (approximately) normal in shape, we need
 
 ### Introduction to tests of significance
 
-Confidence intervals are an appropriate tool when the goal is to <i>estimate</i> something about a population. The second part of statistical inference deals with a very different sort of goal: Significance tests (also called hypothesis tests) combine mathematics and logic to assess the validity of a claim about a population parameter using the evidence provided in a set of data. Specifically, we compare properties of a set of observed data to a hypothesis about the population. The hypothesis is a statement that asserts something about the value of the population parameters. The results of the test are expressed in terms of probability that measures the degree to which the data agree with claim laid out by the hypothesis. 
+Confidence intervals are an appropriate tool when the goal is to <i>estimate</i> something about a population. The second part of statistical inference deals with a very different sort of goal. Significance tests (also called hypothesis tests) combine mathematics and logic to assess the validity of a claim about a population parameter using the evidence provided in a set of data. Specifically, we compare properties of a set of observed data to a hypothesis about the population. The hypothesis is a statement that asserts something about the value of the population parameters. The results of the test are expressed in terms of probability that measures the degree to which the data agree with claim laid out by the hypothesis. 
 
-**Consider the following example**: Imagine you are a quality control manager at a electronics company that produces microchips for personal computers. To ensure quality, the company tests all chips before they are sent out to retailers. The company claims that, thanks to their post-production testing, only about $2\%$ of their microchips are defective, but recent reports about customer feedback indicate that the chips might have an issue that causes the defective rate to be higher than $2\%$. To address these concerns, you decide to conduct a study to test the claim that only $2\%$ of tested chips are defective. To test this, the company purchases $10$ computers from a random sample of $5$ retailers that it supplies microchips. Each computer is run through the same set of high intensity tasks to test the chips and the proportion of chips that fail is estimated. From this experiment, you estimate the proportion of defective chips to be about $2.053\%$ with a standard error of $0.019\%$ which gives a difference in rates of $0.00053\%$. 
+**Consider the following example**: Imagine you are a quality control manager at a electronics company that produces microchips for personal computers. To ensure quality, the company tests all chips before they are sent out to retailers. The company claims that, thanks to their post-production testing, only about $2\%$ of their microchips are defective, but recent reports about customer feedback indicate that the chips might have an issue that causes the defective rate to be higher than $2\%$. To address these concerns, you decide to conduct a study to test the claim that only $2\%$ of chips are defective. To test this, the company purchases $10$ computers from a random sample of $5$ retailers that it supplies microchips. Each computer is run through the same set of high intensity tasks to test the chips and the proportion of chips that fail is estimated. From this experiment, you estimate the proportion of defective chips to be about $2.053\%$ with a standard error of $0.019\%$ which gives a difference in rates of $0.00053\%$. 
 
 * From the estimate, can you conclude that the proportion of defective chips is greater than the expected rate of $2\%$? 
 
-One way to answer this question is compute the probability of obtaining a difference as large or larger than the one you have observed. This probability is $0.48$. Since this probability is quite large, we conclude that observing a difference of $0.00053$ is not surprising if the defective rate of the sample is the same as the population rate of $2\%$. In this case the sample supports the initial claim that the defective rate is about $2\%$.
+One way to answer this question is to compute the probability of obtaining a difference as large or larger than the one you have observed. This probability is $0.48$. Since this probability is quite large, we conclude that observing a difference of $0.00053$ is not surprising if the defective rate of the sample is the same as the population rate of $2\%$. In this case, the sample supports the initial claim that the defective rate is about $2\%$.
 
 
 A **statistically significant** result is one that is decidedly not due to “ordinary variation” in the data (i.e., not due to chance or not a coincidence). **Significance tests** are how we decide whether or not an observed result is statistically significant.
@@ -232,20 +232,20 @@ In this example, the probability we obtained is fairly small. There are two expl
   
   (ii) The assumption that underlies the calculation is not true. (i.e the coin is not fair and the population proportion $p$ is not equal to $1/2$)
   
-So how unusual does a result need to be for us to consider the latter statement (ii) to be more plausible?
+So how unusual does a result need to be for us to consider the latter statement (ii) to be more plausible? We will discuss this more later on, but, in general, this is an arbitrary choice that we must make when setting up our test.
 
 
 In both of these examples, we stated hypotheses about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the the value of a parameter: a *null hypothesis* and and *alternative hypothesis*.
 
-The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = a$ for some constant $a$
+The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = c$ for some constant $c$
 
 The **alternative hypothesis** (denoted $H_A$) is the hypothesis of “effect” or that “something interesting has happened”. The alternative hypothesis is usually that the population parameter falls in some range of values such as:
 
 The value of the parameter is greater than the value proposed in the null hypothesis
-\[H_A: \theta > a \]
+\[H_A: \theta > c \]
 The value of the parameter is less than the value proposed in the null hypothesis
-\[H_A: \theta < a \]
+\[H_A: \theta < c \]
 The value of the parameter is different than the value proposed in the null hypothesis (could be greater than or less than - we aren't sure, we just suspect its different)
-\[H_A: \theta \neq a \]
+\[H_A: \theta \neq c \]
 
    - the alternative hypothesis expresses our "suspicions" that we have about the data. For example, <i> we suspect the defect rate is higher than $2\%$</i> or <i> we suspect the coin is not fair </i>.
