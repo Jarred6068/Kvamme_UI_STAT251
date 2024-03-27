@@ -164,7 +164,16 @@ With the examples of significance tests we have discussed thus far we have learn
 
 ### Significance level, critical value, and decision making
 
-The **significance level** of test (denoted $\alpha$) is how we turn the $p$-value of a significance test into a <i>reject/not reject</i> decision about the null hypothesis. It sets how "strong" the evidence against the null needs to be in order for a result to be deemed statistically significant. 
+The **significance level** of test (denoted $\alpha$) is how we turn the $p$-value of a significance test into a <i>reject/not reject</i> decision about the null hypothesis. It sets how "strong" the evidence against the null needs to be in order for a result to be deemed statistically significant. The researcher determines the significance level before conducting the experiment.
+
+
+
+### Hypothesis tests concerning $p$
+
+
+
+### Hypothesis tests concerning $\mu$
+
 
 ```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=10}
 
@@ -282,12 +291,7 @@ ggarrange(AAf, BBf, nrow = 1, ncol = 2)
 
 Notice from the plots above that the alternative hypothesis also impacts the how significant a result must be in order to reject the null. Specifically, the **rejection region** for the alternative hypotheses $H_A: p > c$ and $H_A: p < c$ are larger.
 
-### Hypothesis tests concerning $p$
 
-In the both the microchip and coin flip examples from Week 11 we were dealing with a test about a population proportion $p$. 
-
-
-### Hypothesis tests concerning $\mu$
 
 
 

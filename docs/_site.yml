@@ -112,6 +112,8 @@ navbar:
             href: shiny_apps/LLN/webfiles/index.html
           - text: 'PMF/PDF Calculator'
             href: shiny_apps/Compute_probs/webfiles/index.html
+          - text: 'One Sample Tests'
+            href: shiny_apps/one_sample_hypothesis_tests/webfiles/index.html
         - text: 'SAC schedule'
           href: sac_schedule.html
         - text: 'Tables'

@@ -165,8 +165,8 @@ as powerpoint
 
 ### Lecture 22
 
-<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_26_2024.pdf">Download File</a>
+<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_27_2024.pdf">Download File</a>
 as .pdf
 
-<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_26_2024.pptx">Download File</a>
+<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_27_2024.pptx">Download File</a>
 as powerpoint

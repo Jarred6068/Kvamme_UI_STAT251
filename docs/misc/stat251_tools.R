@@ -187,10 +187,9 @@ one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
 
 
 # test for a population proportion 
-one.sample.prop.test = function(p0, x, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                                 verbose = TRUE){
   
-  phat = x/n
   estimate.SE = one.sample.prop.SE(phat, n)
   Zobs = (phat - p0)/estimate.SE
   if(test == 'two.tail'){

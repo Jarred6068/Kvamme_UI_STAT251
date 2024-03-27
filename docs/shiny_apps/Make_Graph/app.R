@@ -82,7 +82,7 @@ ui <- fluidPage(
                                          'Barplot', 'Pie chart'),
                              selected = "Histogram"),
                  
-                 conditionalPanel(condition = "input.plotting == 'custom'",
+                 conditionalPanel(condition = "input$plotting == 'custom'",
                                   selectInput(inputId = "bin",
                                               label = "bin method (histogram only)",
                                               choices = c('automatic', 'simple', 'sturges', 'rice'),
