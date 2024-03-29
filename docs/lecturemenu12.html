@@ -1687,19 +1687,69 @@ class="math inline">\(\alpha\)</span>).</p>
 <p>For example, the probability of committing a type I error for a
 right-tailed (or upper tail) test of a population mean is <span
 class="math display">\[ P( t &gt; t_{1-\alpha} | H_0 \ \text{True})
-\]</span></p>
+=\alpha \]</span></p>
 <p>Another type error that can occur is called a <strong>type II
 error</strong> (denoted <span class="math inline">\(\beta\)</span>).
 This type of error occurs when we fail to reject the null hypothesis but
 the alternative hypothesis is true.</p>
 <p>The probability of committing a type II error for a right-tailed (or
 upper tail) test of a population mean is <span class="math display">\[
-P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]</span></p>
+P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) =\beta \]</span></p>
 <p>Looking at the previous example it is easy to see that power is the
 complement of type II error rate.</p>
 <p><span class="math display">\[ Power = P(t \geq t_{1-\alpha} | H_0 \
 \text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not
 True}) \]</span> <span class="math display">\[ = 1-\beta \]</span></p>
+<p>The relationship between the result of a test and the truth
+underlying the test can be summarized as follows:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(H_0\)</span> is True
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(H_0\)</span> is False
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Decision: Reject <span class="math inline">\(H_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\alpha\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(1-\beta\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Decision: Fail To Reject <span class="math inline">\(H_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(1 - \alpha\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\beta\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This can be visualized in terms the distribution of the test
+statistic under the null and alternative hypotheses. The plot below
+shows the relationship between power, type I and type II error rates in
+a right-tailed test of a population mean conducted at the <span
+class="math inline">\(\alpha\)</span> significance level.</p>
+<p><img src="lecturemenu12_files/figure-html/unnamed-chunk-11-1.png" width="1152" />
+* in the plot above, the green region represents the probability of
+committing a type II error, the orange region the probability of
+committing a type I error and the pink/red region is the power of the
+test.</p>
 </div>
 </div>
 

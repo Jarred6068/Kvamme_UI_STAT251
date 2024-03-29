@@ -468,16 +468,121 @@ The significance level of a test, like the confidence level, tells us how reliab
 A **type I error** is the probability that we reject the null when the null is in fact true (denoted $\alpha$). 
 
 For example, the probability of committing a type I error for a right-tailed (or upper tail) test of a population mean is 
-\[ P( t > t_{1-\alpha} | H_0 \ \text{True}) \]
+\[ P( t > t_{1-\alpha} | H_0 \ \text{True}) =\alpha \]
 
 Another type error that can occur is called a **type II error** (denoted $\beta$). This type of error occurs when we fail to reject the null hypothesis but the alternative hypothesis is true.
 
 
 The probability of committing a type II error for a right-tailed (or upper tail) test of a population mean is 
-\[ P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]
+\[ P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) =\beta \]
 
 
 Looking at the previous example it is easy to see that power is the complement of type II error rate.
 
 \[ Power = P(t \geq t_{1-\alpha} | H_0 \ \text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]
 \[ = 1-\beta \]
+
+The relationship between the result of a test and the truth underlying the test can be summarized as follows:
+
+```{r, echo=FALSE, warning=F, message=F}
+
+df = rbind.data.frame(x = c('Decision: Reject $H_0$','$\\alpha$', '$1-\\beta$'),
+                      y = c('Decision: Fail To Reject $H_0$','$1 - \\alpha$', '$\\beta$'))
+
+kable(df, format = 'html', digits = 2, col.names = c('', '$H_0$ is True', '$H_0$ is False'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+
+This can be visualized in terms the distribution of the test statistic under the null and alternative hypotheses. The plot below shows the relationship between power, type I and type II error rates in a right-tailed test of a population mean conducted at the $\alpha$ significance level. 
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=6, fig.width=12}
+
+dlim_A = function(x, q, mean, sd, test){
+  q_a = q
+  y = dnorm(x, mean, sd)
+  
+  
+  if(test == 'two.tailed'){
+    y[which(x>-q_a & x<q_a)] <- NA  
+    return(y)
+  }else if (test == 'upper.tail'){
+    y[which(x < q_a)] <- NA
+    return(y)
+  }else{
+    y[which(x > q_a)] <- NA
+    return(y)
+  }
+  
+}
+
+dlim_0 = function(x, q, test){
+  q_a = q
+  y = dnorm(x)
+  
+  
+  if(test == 'two.tailed'){
+    y[which(x>-q_a & x<q_a)] <- NA  
+    return(y)
+  }else if (test == 'upper.tail'){
+    y[which(x < q_a)] <- NA
+    return(y)
+  }else{
+    y[which(x > q_a)] <- NA
+    return(y)
+  }
+  
+}
+
+
+alpha = 0.05
+data = cbind.data.frame(x = seq(-4, 7, 0.001))
+ggplot(data = data, aes(x = x, fill = 'grey'))+theme_bw()+
+  stat_function(fun = dnorm,
+                geom = 'area',
+                fill = 'blue',
+                alpha = 0.5)+
+  
+  stat_function(fun = dnorm,
+                args = list(mean = 3, sd = 1),
+                geom = 'area',
+                fill = 'red',
+                alpha = 0.5)+
+  
+  stat_function(fun = dlim_A,
+                args = list(q = qnorm(1-alpha)+.05, mean = 3, sd = 1, test = 'lower.tail'),
+                geom = 'area',
+                fill = 'green',
+                alpha = 0.9)+
+  stat_function(fun = dlim_0,
+                args = list(q = qnorm(1-alpha)-0.05, test = 'upper.tail'),
+                geom = 'area',
+                fill = 'orange',
+                alpha = 0.9)+
+  
+   stat_function(fun = dnorm,
+                size = 1.5)+
+  
+  stat_function(fun = dnorm,
+                args = list(mean = 3, sd = 1),
+                size = 1.5,
+                linetype = 'dashed')+
+  geom_segment(aes(x = qnorm(1-alpha), y = 0, xend = qnorm(1-alpha), yend = 0.4), size = 1, linetype = 'dotted')+
+  geom_text(aes(x = 0, y = dnorm(0)+0.05), label = 'Distribution Under H0', size = 6)+
+  geom_text(aes(x = 3, y = dnorm(3, 3, 1)+0.05), label = 'Distribution Under HA', size = 6)+
+  geom_text(aes(x = 1.3, y = dnorm(1.3, 3, 1)/2), label = TeX('$\\beta$'), size = 7)+
+  geom_text(aes(x = qnorm(1-alpha)+.4, y = dnorm(qnorm(1-alpha)+0.4)/2), label = TeX('$\\alpha$'), size = 7)+
+  geom_text(aes(x = 3, y = dnorm(3, 3, 1)/2), label = TeX('$1-\\beta$'), size = 9)+
+  scale_x_continuous(breaks=c(0, qnorm(1-alpha), 3),
+        labels=c(TeX('$\\mu_0$'), TeX('$Z_{1-\\alpha}$'), TeX('$\\mu > \\mu_0$')))+
+  ylab('Probability Density')+
+  xlab('')+
+  theme(axis.text = element_text(size = 18),
+        axis.title = element_text(size = 15)) 
+
+
+```
+* in the plot above, the green region represents the probability of committing a type II error, the orange region the probability of committing a type I error and the pink/red region is the power of the test. 

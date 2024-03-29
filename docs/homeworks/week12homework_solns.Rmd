@@ -1,0 +1,318 @@
+---
+title: "Homework 4"
+output:
+  html_document: default
+  pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home4bibs.bib
+---
+
+
+
+
+```{r setup, include=FALSE}
+set.seed(555)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
+#knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
+library(kableExtra)
+library(knitr)
+library(latex2exp)
+library(gridExtra)
+library(ggpubr)
+library(ggthemes)
+library(plyr)
+mainpath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
+whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+
+datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+#<span style="color: red;"></span>
+```
+
+
+### Definitions
+Define the following terms/concepts
+
+* a.) Describe the central limit theorem and its significance to the sampling distribution for a sample proportion or mean
+
+<span style="color: red;"></span>
+
+The Central Limit Theorem (CLT) is a fundamental concept in statistics that states that the sampling distribution of the sample mean or sample proportion approaches a normal distribution as the sample size increases, regardless of the shape of the population distribution, as long as the sample size is sufficiently large.
+
+* b.) Margin of error
+
+<span style="color: red;"></span>
+
+* c.) Describe the "basic form" of a confidence interval
+
+<span style="color: red;"></span>
+
+* d.) Confidence level
+
+<span style="color: red;"></span>
+
+* e.) Critical value
+
+<span style="color: red;"></span>
+
+* f.) When are $t$-distribution and standard normal distribution approximately the same shape?
+
+<span style="color: red;"></span>
+
+* g.) How are the degrees of freedom of a $t$-distribution related to its shape?
+
+<span style="color: red;"></span>
+
+* h.) Significance level
+
+<span style="color: red;"></span>
+
+* i.) Rejection region
+
+<span style="color: red;"></span>
+
+### Finding probabilities from the $t$ and $z$ distributions 
+
+$\bf (1)$ Use the appropriate table to find the probability of each $z$ or $t$ score.
+
+  * a.) $P(Z > 1.3)$
+  
+  * b.) $P(Z \leq 0.33)$
+  
+  * c.) $P(Z \leq -2.1)$
+  
+  * d.) $P(t > 1.97)$ with 5 degrees of freedom
+  
+  * e.) $P(t \leq 2.9)$ with 2 degrees of freedom 
+  
+  * f.) $P(t \geq -0.98)$ with 8 degrees of freedom
+
+### Finding standard scores and $\alpha$
+
+$\bf (2)$ Fill in the table below with the corresponding $\alpha$ level and critical value for each confidence interval for a population proportion.
+
+
+```{r, echo=F, message=F, warning=F}
+set.seed(555)
+alpha = c(0.1, 0.12, 0.03, 0.04, 0.22, 0.01)
+emptyvec = rep('', length(alpha))
+df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
+                      `$\\alpha$` = emptyvec,
+                      `critical value: $z_{1-\\alpha/2}$` = emptyvec)
+                      
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+
+$\bf (3)$ Fill in the table below with the corresponding $\alpha$ level and critical value for each confidence interval for a population mean.  
+
+
+```{r, echo=F, message=F, warning=F}
+set.seed(555)
+alpha = c(0.08, 0.14, 0.02, 0.001, 0.18, 0.05)
+n = c(5, 8, 11, 14, 40, 13)
+emptyvec = rep('', length(alpha))
+df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
+                      `Sample size` = paste0('$n = ', n, '$'),
+                      `$\\alpha$` = emptyvec,
+                      `critical value: $t_{n, 1-\\alpha/2}$` = emptyvec)
+                      
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+# Confidence intervals
+
+### Confidence intervals for a population proportion $p$
+
+$\bf (4)$ A survey conducted by the state of Georgia surveyed colleges students as part of a larger effort to characterized student behavior [@agresti2007art]. One the questions in the survey asked students to report their political party affiliation. The table below summarizes the proportion of students who reported being Republican, Democrat, or Independent.
+
+```{r, echo=F, message=F, warning=F}
+set.seed(555)
+gss = read.csv(file = paste0(mainpath, 'georgia_student_survey.csv'))     
+
+
+df = cbind.data.frame(`Political Party Affiliation` = c('Democrat', 'Republican', 'Independent'),
+                      Count = c(8, 36, 15),
+                      `$\\hat{p}$` = c(8, 36, 15)/sum(c(8,36,15)))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Using the table above, construct a $90\%$ confidence interval for the proportion of Independent college student voters in the state of Georgia. 
+
+<br>
+
+
+$\bf (5)$ As part of an effort to improve health services, a health club in the United Kingdom asked club members to complete an online survey [@andriesurvey]. One of the survey questions asked customers to rate their satisfaction level on a likert scale. The results of this survey question are summarized below
+
+```{r, echo=F, message=F, warning=F}
+set.seed(555)
+dat = surveydata::membersurvey
+
+df = cbind.data.frame(Response = levels(dat$Q12_1),
+                      Count = summary(dat$Q12_1),
+                      `$\\hat{p}$` = summary(dat$Q12_1)/sum(summary(dat$Q12_1)))
+
+
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F,
+      caption = "Customer responses for the survey question \"How satisfied are you with your membership of the organisation overall?\"")%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Using the table above, construct a $95\%$ confidence interval for the proportion of customers that are "very satisfied" or more.
+
+
+<br>
+
+### Confidence intervals for a population mean $\mu$
+
+$\bf (6)$ The following table summarizes variables from a random sample of $25$ observations from a dataset concerning housing in California taken from the 1990 census. The full dataset is featured in Aurélien Géron's book 'Hands-On Machine learning with Scikit-Learn and TensorFlow' [@geron2022hands]. Use the table to answer parts (a) and (b) 
+
+```{r, echo=F, message=F, warning=F}
+set.seed(555)
+hs = read.csv(file = paste0(mainpath, 'housing.csv'))
+
+hss = hs[sample(1:dim(hs)[1], 25), ]
+
+df = cbind.data.frame(`Variable`= c('Median Age of House Owner', 'Total Rooms', 'Total Bedrooms', 'Population of District', 'Number of Households', 'Median Family Income', 'Median House value'),
+                      `Sample Mean` = c(mean(hss$housing_median_age), mean(hss$total_rooms),
+                                        mean(hss$total_bedrooms), mean(hss$population),
+                                        mean(hss$households), mean(hss$median_income),
+                                        mean(hss$median_house_value)),
+                      `Sample Standard Deviation` = c(sd(hss$housing_median_age), sd(hss$total_rooms),
+                                        sd(hss$total_bedrooms), sd(hss$population),
+                                        sd(hss$households), sd(hss$median_income),
+                                        sd(hss$median_house_value)))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F,
+      caption = 'Summary statistics for housing data in California from the 1990 census. Estimates are derived from a random sample of 25 observations from Aurélien Géron\'s dataset featured in \'Hands-On Machine learning with Scikit-Learn and TensorFlow\', originally comprising observations from over 20,000 districts in California')%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+  * a.) Construct and interpret a $95\%$ confidence interval for the average median family income for households in California in 1990
+  
+  * b.) Construct and interpret a $99\%$ confidence interval for the average number of bedrooms for houses in California in 1990
+
+<br>
+
+
+### Choosing a minimum sample size
+
+$\bf (7)$ According to a 2023 study published by the Saudi Heart Association, a survey of college students from Taibah University in Medina, Saudi Arabia, found that 24% of students reported using e-cigarettes [@alzahrani2023prevalence]. Assuming a comparable rate of e-cigarette use in the U.S., what sample size is required to estimate the proportion of college students who use e-cigarettes within a margin of error of $1.5\%$? 
+
+<br>
+
+$\bf (8)$ Recent concerns over the rise in global infertility has drawn significant attention to the harmful effects of microplastics, PFAS, and highly processed foods [@zhang2022microplastics; @agarwal2015unique]. A study from 2002 published in found that approximately $15\%$ of couples worldwide experienced infertility [@sharlip2002best]. Assuming a similar rate of infertility in the U.S, compute the sample size needed to estimate infertility of U.S couples within a margin of error of $4\%$.
+
+<br>
+
+### Assumptions of estimators
+
+$\bf (9)$ Describe the assumptions associated with estimating $p$ with $\hat{p}$
+
+<br>
+
+$\bf (10)$ Describe the assumptions associated with estimating $\mu$ with $\bar{x}$
+
+<br>
+
+# Significance testing
+
+### Stating hypotheses
+
+$\bf (11)$ A pharmaceutical company produces a generic version of the pain reliever ibuprofen, marketing a tablet with a 200 milligram dose. Concerned about the accuracy of the dosing process, the manufacturer suspects that the machine filling the tablets may be malfunctioning leading to a smaller dose in each tablet. The manufacturer wishes to conduct a significance test to determine if the dose is significantly lower than 200 milligrams. State the null and alternative hypotheses for this test 
+
+<br>
+
+$\bf (12)$ A financial institution invests in a pharmaceutical company, which produces a widely prescribed antidepressant medication with a market value of $100 per share. Worried about potential discrepancies in the market valuation, the institution suspects that recent market trends may have led to an underestimation of the stock's value. The institution plans to conduct a significance test to determine if the stock's value has significantly increased. State the null and alternative hypotheses for this test.
+
+<br>
+
+$\bf (13)$ A semiconductor manufacturing company produces microchips with a target defect rate of 0.1% per batch. Concerned about the quality control process, the company suspects that recent changes in manufacturing procedures may have resulted in a change in the defect rate. The company intends to conduct a significance test to determine if the defect rate is significantly different than the target rate of 0.1%. State the null and alternative hypotheses for this test.
+
+<br>
+
+### The Decision Rule
+
+$\bf (14)$ For each set of hypotheses, significance level, and $p$-value. State whether the test <i>rejects</i> or <i>fails to reject</i> the null hypothesis.
+
+  * a.) $H_0: \mu = 0$; $H_A: \mu \neq 0$; $\alpha = 0.01$; $p$-value $= 0.0098$ 
+  
+  * b.) $H_0: p = 0.5$; $H_A: p > 0.5$; $\alpha = 0.05$; $p$-value $= 0.086$ 
+  
+  * c.) $H_0: \mu = 100$; $H_A: \mu < 100$; $\alpha = 0.001$; $p$-value $= 0.0015$
+  
+  * d.) $H_0: p = 0.9$; $H_A: p \neq 0.9$; $\alpha = 0.1$; $p$-value $= 0.053$
+  
+$\bf (15)$ For each set of hypotheses, significance level, sample size, and test statistic. Give the critical value and state whether the test <i>rejects</i> or <i>fails to reject</i> the null hypothesis.
+
+  * a.) $H_0: \mu = 15$; $H_A: \mu > 15$; $n = 33$; $\alpha = 0.05$; $t_{obs} = 2.13$ 
+  
+  * b.) $H_0: \mu = 0$; $H_A: \mu \neq 0$; $n = 14$; $\alpha = 0.01$ ; $t_{obs} = -4.1$ 
+  
+  * c.) $H_0: p = 0.5$; $H_A: p < 0.5$; $n = 120$; $\alpha = 0.1$; $Z_{obs} = -1.5$
+  
+  * d.) $H_0: p = 0.05$; $H_A: p \neq 0.05$; $n = 60$; $\alpha = 0.03$; $Z_{obs} = 1.95$
+
+<br>
+
+
+### Hypothesis tests for a population proportion $p$ 
+
+$\bf (16)$ A toy manufacturer claims that $50\%$ of their toy robots are defect-free. However, a quality control inspector suspects that the actual proportion of defect-free robots is different from what the manufacturer claims. To investigate, the inspector randomly selects $100$ toy robots from a production batch and examines them for defects. After the inspection, the inspector finds that $40$ out of the $100$ toy robots are defect-free. To test their suspicion, they set up a two-tailed hypothesis test with a significance level $\alpha = 0.1$ $H_0: p_0 = 0.5$ (manufacturer's claim) $H_A: p \neq p_0$.
+
+  * a.) Using the significance level above, is there enough evidence to conclude that the proportion of defect-free toy robots is different from the manufacturer's claim? 
+
+<br>
+
+$\bf (17)$ A pharmaceutical company has developed a new drug designed to cure a specific bacterial infection. They claim that their drug is effective, with a cure rate of $20\%$. However, a group of independent researchers believes that the cure rate less than what the pharmaceutical company claims. To investigate, the researchers conduct a clinical trial on $300$ patients suffering from the bacterial infection. After the trial, they find that $70$ out of the $300$ patients were cured using the new drug. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$ with $H_0: p_0 = 0.2$, $H_A: p < p_0$
+
+  * a.) Compute the critical value for this test
+
+  * b.) Compute the test statistic $Z_{obs}$
+
+  * c.) Compute the $p$-value
+
+  * d.) Is there enough evidence to conclude that the cure rate of the new drug is less than rate claimed by the pharmaceutical company? 
+
+<br>
+
+### Hypothesis tests for a population mean $\mu$
+
+$\bf (18)$ A soft drink company claims that their new "Zero Sugar" soda contains zero grams of added sugar per 12-ounce can. To test this claim, a random sample of 25 cans of this soda is selected. The sample mean is found to be 1.3 grams of added sugar per can, with a standard deviation of 0.5 grams. To determine if there is enough evidence to reject the company's claim and conclude that the soda does not contain zero grams of added sugar per can, a group of researchers are interested in testing the following hypotheses: $H_0: \mu_0 = 0$, $H_A: \mu \neq \mu_0$ at the $\alpha = 0.01$ significance level.
+
+  * a.) Using the significance level above, is there evidence that the soda produced by the soft drink company contains added sugars?
+
+<br>
+
+$\bf (19)$ A group of botanists is studying the growth rate of Venus fly traps in a controlled greenhouse environment. Based on historical data, the typical growth rate of Venus fly traps is believed to be $100$ millimeters per year. The botanists suspect that the current growth rate in their greenhouse is higher than this historical value. To investigate, they take a random sample of 40 Venus fly traps and measure their growth rates over a year. After the study, they find that the sample mean growth rate for the 40 Venus fly traps is 105 millimeters with a standard deviation of $12mm$. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$
+
+  * a.) State the null and alternative hypotheses
+
+  * b.) Compute the critical value for this test
+
+  * c.) Compute the test statistic $Z_{obs}$
+
+  * d.) Compute the $p$-value
+
+  * e.) Is there enough evidence to conclude that the current growth rate of Venus fly traps in the greenhouse is higher than the historical value of $100$ millimeters per year?
+
+<br>
+
+\newpage
+# References
