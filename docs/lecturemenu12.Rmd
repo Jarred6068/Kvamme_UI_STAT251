@@ -318,31 +318,166 @@ ggarrange(AAf, BBf, nrow = 1, ncol = 2)
 
 Notice from the plots above that the alternative hypothesis also impacts the how significant a result must be in order to reject the null. Specifically, a result need not be as extreme when the alternative hypotheses $H_A: p > p_0$ and $H_A: p < p_0$ to be statistically significant. This is because when we suspected direction of the effect we have more information about the parameter which improves our ability to detect a significant result. 
 
+# Lecture 22 Friday, March 29th 2024
+
+### Significance tests concerning $p$
+
+The following are the steps for conducting a significance tests for a population proportion:
+
+  1. **Assumptions**
+    
+  * The sample size is sufficiently large. The sample size is sufficiently large whenever $np_0 \geq 15$ and $n(1-p_0) \geq 15$ where $p_0$ is the value of $p$ specified under the null hypothesis. If these conditions are not met the inference may not be correct. 
+    
+  2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
+  
+  \[H_0: p_0 = c \]
+  
+  * the alternative hypotheses, critical values, and rejection regions are listed below:
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \\neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
+                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_{1-\\alpha}$','$Z_{\\alpha}$'),
+                      `Rejection Region` = c('$Z_{1-\\alpha/2}\\leq Z \\leq \\infty$','$Z_{1-\\alpha} \\leq Z \\leq \\infty$','$-\\infty \\leq Z \\leq Z_{\\alpha}$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+  
+  
+  3. **Compute the test statistic**
+  
+  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0 - (1 - p_0)}{n}}} \sim N(0,1) \]
+  
+  4. **Compute the $p$-value.** 
+  
+  * Under the assumption in [1.] the test statistic follows a standard normal distribution. The $p$-value corresponding to each alternative hypothesis is given below:
+  
+  
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
+                      `$p$-value` = c('$P(| Z | \\geq | Z_{obs} | | H_0 \ \\text{True})$','$P( Z \\geq Z_{obs} | H_0 \ \\text{True})$','$P( Z \\leq Z_{obs} | H_0 \ \\text{True})$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+  
+  5. **Draw a conclusion**: if $p$-value $< \alpha$ <i>reject</i> $H_0$. Else <i>fail to reject</i> $H_0$. 
+    
 
 
 
+**Practice:**
+
+1. A leading electric vehicle (EV) manufacturer claims that at least $20\%$ of all vehicles sold in a particular region are electric. To verify this claim, a consumer advocacy group randomly surveys $500$ recent vehicle purchases in the region and finds that $115$ of them are electric. Conduct a significance test at the $\alpha = 0.01$ significance level to determine if the proportion of vehicles sold is less than the manufacturers claim. 
 
 
+   
+### Significance tests concerning $\mu$
+
+The following are the steps for conducting a significance test for a population mean:
+
+  1. **Assumptions**
+    
+  * The population distribution is approximately normal. This can be checked by making a plot of the data. 
+    
+  2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
+  
+  \[H_0: \mu_0 = c \]
+  
+  * the alternative hypotheses, critical values, and rejection regions are listed below:
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
+                      `Critical Value` = c('$t_{n-1, 1-\\alpha/2}$','$t_{n-1, 1-\\alpha}$','$t_{n-1, \\alpha}$'),
+                      `Rejection Region` = c('$t_{n-1, 1-\\alpha/2}\\leq t \\leq \\infty$','$t_{n-1, 1-\\alpha} \\leq t \\leq \\infty$','$-\\infty \\leq t \\leq t_{n-1, \\alpha}$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
+```
+  
+  
+  3. **Compute the test statistic**
+  
+  \[ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} \sim t(n-1)\]
+  
+  4. **Compute the $p$-value.** 
+  
+  * Under the assumption in [1.] the test statistic follows a $t$ distribution with $n-1$ degrees of freedom. The $p$-value corresponding to each alternative hypothesis is given below:
+  
+  
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
+                      `$p$-value` = c('$P(| t | \\geq | t_{obs} | | H_0 \ \\text{True})$','$P( t \\geq t_{obs} | H_0 \ \\text{True})$','$P( t \\leq t_{obs} | H_0 \ \\text{True})$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
+```
+
+  
+  5. **Draw a conclusion**: if $p$-value $< \alpha$ <i>reject</i> $H_0$. Else <i>fail to reject</i> $H_0$. 
+    
+
+**Practice:**
+
+1. A government agency is interested in understanding the average annual income of households in a particular region to inform economic policies. The agency hypothesizes that the mean annual income of households in this region is $\$50,000$. To test this, they collect a random sample of $100$ households from the region and estimate the annual income to be $\$45,323$ with a standard deviation of $\$13,121$. Conduct a hypothesis test at the $\alpha = 0.05$ significance level to determine if the annual income is significantly different than the agencies hypothesis for this region.  
+
+### Relationship between two-sided tests and confidence intervals
+
+Recall the basic idea of a confidence interval. We construct an interval that includes the true value of the parameter $\mu$ or $p$ with specified frequency $(1-\alpha)\%$. Now consider a two-sided significance test for a population mean. A two-sided test constructs a confidence interval around the value of the parameter suggested in the null hypothesis (i.e $\mu_0$). At the $(1-\alpha)\%$ confidence level, this confidence interval is given by $[\mu_0-t_{1-\alpha/2} \times \frac{s}{\sqrt{n}}, \mu_0 + t_{1-\alpha/2}\times \frac{s}{\sqrt{n}}]$. Values of $\mu$ that are not in this interval seem to be incompatible with the data. Thus when $\bar{x}$ is not in this interval, it is statistically significant and the null hypothesis is rejected. This produces a significance test at $\alpha = 0.05$ significance level.
 
 
+**Example**
 
 
+### Types of Errors
+
+Conducting a hypothesis test is a simple-enough procedure in the modern age as many software programs effortlessly give out a $p$-value for a chosen test and dataset. However, Using tests wisely is another matter entirely. A single significant result is not irrefutable evidence of a statistical relationship. This is because all tests come with a probability of making an error. Moreover, other factors can influence the outcome of a test such as the presence of outliers in the data. In addition, when sample sizes are very large, even tiny deviations from the null hypothesis can be deemed significant - this is related to the **power** of a test. 
+
+Statistical **power** is the ability to reject the null hypothesis when it is, in fact, false. For example, the power of a right-tailed (or upper tail) test of a population mean is given by
+\[ Power = P(t > t_{1-\alpha} | H_0 \ \text{Not True}) = \beta \]
+
+There are several factors that influence the power of a statistical test. Some of the ways to increase power are:
+
+  1. Increase the sample size
+  
+  2. Increase the significance level $\alpha$
+  
+  3. Choose a more powerful test
+
+The significance level of a test, like the confidence level, tells us how reliable the test is in repeated use. Thus a test at $\alpha = 0.05$ significance level will return the correct result $95/100$ times when $H_0$ is in fact true and when the test is conducted on data arising from the same conditions. The $5/100$ times that the test gives the incorrect result is called the **type I error** rate
+
+A **type I error** is the probability that we reject the null when the null is in fact true (denoted $\alpha$). 
+
+For example, the probability of committing a type I error for a right-tailed (or upper tail) test of a population mean is 
+\[ P( t > t_{1-\alpha} | H_0 \ \text{True}) \]
+
+Another type error that can occur is called a **type II error**. This type of error occurs when we fail to reject the null hypothesis when the alternative hypothesis is true.
 
 
+The probability of committing a type II error for a right-tailed (or upper tail) test of a population mean is 
+\[ P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]
 
 
+Looking at the previous example it is easy to see that power is the complement of type II error rate.
 
-
-
-
-
-
-
-
-
-
-
+\[ Power = P(t \geq t_{1-\alpha} | H_0 \ \text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]
+\[ = 1-\beta \]

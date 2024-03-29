@@ -14,7 +14,7 @@
 
 <title>Week 12 Notes</title>
 
-<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -144,11 +144,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +181,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +190,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -539,7 +536,7 @@ receiving only water.</p>
 taller, the alternative hypothesis is</p>
 <p><span class="math display">\[ H_A: \mu_d &gt; 0 \]</span></p>
 <p>The data from the gardeners experiment are shown below:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -997,7 +994,7 @@ Difference In Height (Inches)
 </tbody>
 </table>
 <p>The summary statistics from the gardeners data are listed below</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1318,6 +1315,390 @@ hypotheses <span class="math inline">\(H_A: p &gt; p_0\)</span> and
 significant. This is because when we suspected direction of the effect
 we have more information about the parameter which improves our ability
 to detect a significant result.</p>
+</div>
+</div>
+<div id="lecture-22-friday-march-29th-2024" class="section level1">
+<h1>Lecture 22 Friday, March 29th 2024</h1>
+<div id="significance-tests-concerning-p" class="section level3">
+<h3>Significance tests concerning <span
+class="math inline">\(p\)</span></h3>
+<p>The following are the steps for conducting a significance tests for a
+population proportion:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions</strong></li>
+</ol>
+<ul>
+<li>The sample size is sufficiently large. The sample size is
+sufficiently large whenever <span class="math inline">\(np_0 \geq
+15\)</span> and <span class="math inline">\(n(1-p_0) \geq 15\)</span>
+where <span class="math inline">\(p_0\)</span> is the value of <span
+class="math inline">\(p\)</span> specified under the null hypothesis. If
+these conditions are not met the inference may not be correct.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>State the null and alternative hypotheses</strong>. For a
+constant <span class="math inline">\(c\)</span> the null hypothesis
+is</li>
+</ol>
+<p><span class="math display">\[H_0: p_0 = c \]</span></p>
+<ul>
+<li>the alternative hypotheses, critical values, and rejection regions
+are listed below:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+Critical Value
+</th>
+<th style="text-align:left;">
+Rejection Region
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p \neq p_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_{1-\alpha/2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_{1-\alpha/2}\leq Z \leq \infty\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &gt; p_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_{1-\alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_{1-\alpha} \leq Z \leq \infty\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &lt; p_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_{\alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\infty \leq Z \leq Z_{\alpha}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Compute the test statistic</strong></li>
+</ol>
+<p><span class="math display">\[ Z_{obs} = \frac{\hat{p} -
+p_0}{\sqrt{\frac{p_0 - (1 - p_0)}{n}}} \sim N(0,1) \]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Compute the <span
+class="math inline">\(p\)</span>-value.</strong></li>
+</ol>
+<ul>
+<li>Under the assumption in [1.] the test statistic follows a standard
+normal distribution. The <span class="math inline">\(p\)</span>-value
+corresponding to each alternative hypothesis is given below:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(p\)</span>-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p eq p_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(| Z | \geq | Z_{obs} | | H_0
+\text{True})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &gt; p_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P( Z \geq Z_{obs} | H_0
+\text{True})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &lt; p_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P( Z \leq Z_{obs} | H_0
+\text{True})\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ol start="5" style="list-style-type: decimal">
+<li><strong>Draw a conclusion</strong>: if <span
+class="math inline">\(p\)</span>-value <span class="math inline">\(&lt;
+\alpha\)</span> <i>reject</i> <span class="math inline">\(H_0\)</span>.
+Else <i>fail to reject</i> <span
+class="math inline">\(H_0\)</span>.</li>
+</ol>
+<p><strong>Practice:</strong></p>
+<ol style="list-style-type: decimal">
+<li>A leading electric vehicle (EV) manufacturer claims that at least
+<span class="math inline">\(20\%\)</span> of all vehicles sold in a
+particular region are electric. To verify this claim, a consumer
+advocacy group randomly surveys <span class="math inline">\(500\)</span>
+recent vehicle purchases in the region and finds that <span
+class="math inline">\(115\)</span> of them are electric. Conduct a
+significance test at the <span class="math inline">\(\alpha =
+0.01\)</span> significance level to determine if the proportion of
+vehicles sold is less than the manufacturers claim.</li>
+</ol>
+</div>
+<div id="significance-tests-concerning-mu" class="section level3">
+<h3>Significance tests concerning <span
+class="math inline">\(\mu\)</span></h3>
+<p>The following are the steps for conducting a significance test for a
+population mean:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions</strong></li>
+</ol>
+<ul>
+<li>The population distribution is approximately normal. This can be
+checked by making a plot of the data.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>State the null and alternative hypotheses</strong>. For a
+constant <span class="math inline">\(c\)</span> the null hypothesis
+is</li>
+</ol>
+<p><span class="math display">\[H_0: \mu_0 = c \]</span></p>
+<ul>
+<li>the alternative hypotheses, critical values, and rejection regions
+are listed below:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+Critical Value
+</th>
+<th style="text-align:left;">
+Rejection Region
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu \neq \mu_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{n-1, 1-\alpha/2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{n-1, 1-\alpha/2}\leq t \leq
+\infty\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{n-1, 1-\alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{n-1, 1-\alpha} \leq t \leq
+\infty\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{n-1, \alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\infty \leq t \leq t_{n-1, \alpha}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Compute the test statistic</strong></li>
+</ol>
+<p><span class="math display">\[ t_{obs} = \frac{\bar{x} -
+\mu_0}{s/\sqrt{n}} \sim t(n-1)\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Compute the <span
+class="math inline">\(p\)</span>-value.</strong></li>
+</ol>
+<ul>
+<li>Under the assumption in [1.] the test statistic follows a <span
+class="math inline">\(t\)</span> distribution with <span
+class="math inline">\(n-1\)</span> degrees of freedom. The <span
+class="math inline">\(p\)</span>-value corresponding to each alternative
+hypothesis is given below:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(p\)</span>-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu \neq \mu_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(| t | \geq | t_{obs} | | H_0
+\text{True})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P( t \geq t_{obs} | H_0
+\text{True})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P( t \leq t_{obs} | H_0
+\text{True})\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ol start="5" style="list-style-type: decimal">
+<li><strong>Draw a conclusion</strong>: if <span
+class="math inline">\(p\)</span>-value <span class="math inline">\(&lt;
+\alpha\)</span> <i>reject</i> <span class="math inline">\(H_0\)</span>.
+Else <i>fail to reject</i> <span
+class="math inline">\(H_0\)</span>.</li>
+</ol>
+<p><strong>Practice:</strong></p>
+<ol style="list-style-type: decimal">
+<li>A government agency is interested in understanding the average
+annual income of households in a particular region to inform economic
+policies. The agency hypothesizes that the mean annual income of
+households in this region is <span
+class="math inline">\(\$50,000\)</span>. To test this, they collect a
+random sample of <span class="math inline">\(100\)</span> households
+from the region and estimate the annual income to be <span
+class="math inline">\(\$45,323\)</span> with a standard deviation of
+<span class="math inline">\(\$13,121\)</span>. Conduct a hypothesis test
+at the <span class="math inline">\(\alpha = 0.05\)</span> significance
+level to determine if the annual income is significantly different than
+the agencies hypothesis for this region.</li>
+</ol>
+</div>
+<div id="relationship-between-two-sided-tests-and-confidence-intervals"
+class="section level3">
+<h3>Relationship between two-sided tests and confidence intervals</h3>
+<p>Recall the basic idea of a confidence interval. We construct an
+interval that includes the true value of the parameter <span
+class="math inline">\(\mu\)</span> or <span
+class="math inline">\(p\)</span> with specified frequency <span
+class="math inline">\((1-\alpha)\%\)</span>. Now consider a two-sided
+significance test for a population mean. A two-sided test constructs a
+confidence interval around the value of the parameter suggested in the
+null hypothesis (i.e <span class="math inline">\(\mu_0\)</span>). At the
+<span class="math inline">\((1-\alpha)\%\)</span> confidence level, this
+confidence interval is given by <span
+class="math inline">\([\mu_0-t_{1-\alpha/2} \times \frac{s}{\sqrt{n}},
+\mu_0 + t_{1-\alpha/2}\times \frac{s}{\sqrt{n}}]\)</span>. Values of
+<span class="math inline">\(\mu\)</span> that are not in this interval
+seem to be incompatible with the data. Thus when <span
+class="math inline">\(\bar{x}\)</span> is not in this interval, it is
+statistically significant and the null hypothesis is rejected. This
+produces a significance test at <span class="math inline">\(\alpha =
+0.05\)</span> significance level.</p>
+<p><strong>Example</strong></p>
+</div>
+<div id="types-of-errors" class="section level3">
+<h3>Types of Errors</h3>
+<p>Conducting a hypothesis test is a simple-enough procedure in the
+modern age as many software programs effortlessly give out a <span
+class="math inline">\(p\)</span>-value for a chosen test and dataset.
+However, Using tests wisely is another matter entirely. A single
+significant result is not irrefutable evidence of a statistical
+relationship. This is because all tests come with a probability of
+making an error. Moreover, other factors can influence the outcome of a
+test such as the presence of outliers in the data. In addition, when
+sample sizes are very large, even tiny deviations from the null
+hypothesis can be deemed significant - this is related to the
+<strong>power</strong> of a test.</p>
+<p>Statistical <strong>power</strong> is the ability to reject the null
+hypothesis when it is, in fact, false. For example, the power of a
+right-tailed (or upper tail) test of a population mean is given by <span
+class="math display">\[ Power = P(t &gt; t_{1-\alpha} | H_0 \ \text{Not
+True}) = \beta \]</span></p>
+<p>There are several factors that influence the power of a statistical
+test. Some of the ways to increase power are:</p>
+<ol style="list-style-type: decimal">
+<li><p>Increase the sample size</p></li>
+<li><p>Increase the significance level <span
+class="math inline">\(\alpha\)</span></p></li>
+<li><p>Choose a more powerful test</p></li>
+</ol>
+<p>The significance level of a test, like the confidence level, tells us
+how reliable the test is in repeated use. Thus a test at <span
+class="math inline">\(\alpha = 0.05\)</span> significance level will
+return the correct result <span class="math inline">\(95/100\)</span>
+times when <span class="math inline">\(H_0\)</span> is in fact true and
+when the test is conducted on data arising from the same conditions. The
+<span class="math inline">\(5/100\)</span> times that the test gives the
+incorrect result is called the <strong>type I error</strong> rate</p>
+<p>A <strong>type I error</strong> is the probability that we reject the
+null when the null is in fact true (denoted <span
+class="math inline">\(\alpha\)</span>).</p>
+<p>For example, the probability of committing a type I error for a
+right-tailed (or upper tail) test of a population mean is <span
+class="math display">\[ P( t &gt; t_{1-\alpha} | H_0 \ \text{True})
+\]</span></p>
+<p>Another type error that can occur is called a <strong>type II
+error</strong>. This type of error occurs when we fail to reject the
+null hypothesis when the alternative hypothesis is true.</p>
+<p>The probability of committing a type II error for a right-tailed (or
+upper tail) test of a population mean is <span class="math display">\[
+P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]</span></p>
+<p>Looking at the previous example it is easy to see that power is the
+complement of type II error rate.</p>
+<p><span class="math display">\[ Power = P(t \geq t_{1-\alpha} | H_0 \
+\text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not
+True}) \]</span> <span class="math display">\[ = 1-\beta \]</span></p>
 </div>
 </div>
 
