@@ -453,7 +453,7 @@ Recall the basic idea of a confidence interval. We construct an interval that in
 Conducting a hypothesis test is a simple-enough procedure in the modern age as many software programs effortlessly give out a $p$-value for a chosen test and dataset. However, Using tests wisely is another matter entirely. A single significant result is not irrefutable evidence of a statistical relationship. This is because all tests come with a probability of making an error. Moreover, other factors can influence the outcome of a test such as the presence of outliers in the data. In addition, when sample sizes are very large, even tiny deviations from the null hypothesis can be deemed significant - this is related to the **power** of a test. 
 
 Statistical **power** is the ability to reject the null hypothesis when it is, in fact, false. For example, the power of a right-tailed (or upper tail) test of a population mean is given by
-\[ Power = P(t > t_{1-\alpha} | H_0 \ \text{Not True}) = \beta \]
+\[ Power = P(t > t_{1-\alpha} | H_0 \ \text{Not True}) \]
 
 There are several factors that influence the power of a statistical test. Some of the ways to increase power are:
 
@@ -470,7 +470,7 @@ A **type I error** is the probability that we reject the null when the null is i
 For example, the probability of committing a type I error for a right-tailed (or upper tail) test of a population mean is 
 \[ P( t > t_{1-\alpha} | H_0 \ \text{True}) \]
 
-Another type error that can occur is called a **type II error**. This type of error occurs when we fail to reject the null hypothesis when the alternative hypothesis is true.
+Another type error that can occur is called a **type II error** (denoted $\beta$). This type of error occurs when we fail to reject the null hypothesis but the alternative hypothesis is true.
 
 
 The probability of committing a type II error for a right-tailed (or upper tail) test of a population mean is 

@@ -397,7 +397,7 @@ server <- function(input, output) {
         distrib = 'z'
         estimate = input$obs.prop
         standard.score = qnorm(1-input$alpha/2)
-        SE = sqrt(input$obs.prop*(1-input$obs.prop)/sqrt(input$n))
+        SE = sqrt(input$p0*(1-input$p0)/input$n)
         test.stat = (input$obs.prop - input$p0)/SE
         LB = max(estimate - standard.score*SE, 0)
         LV = max(estimate - 4*SE, 0)
