@@ -14,7 +14,7 @@
 
 <title>Week 11 Notes</title>
 
-<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -144,11 +144,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +181,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +190,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -606,7 +603,7 @@ give identical results for <span class="math inline">\(n &lt;
 gives the mean annual temperate in central park over 10 years of
 recordings starting in 2009.</li>
 </ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -935,7 +932,7 @@ significant.</p>
 <p>Consider a coin that is flipped <span
 class="math inline">\(n\)</span> times. The population distribution for
 a single flip is given below:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1017,21 +1014,21 @@ significance test is a comparison between two such
 class="math inline">\(H_0\)</span>) is usually the hypothesis of “no
 effect” or that “nothing interesting is happening”. The null hypothesis
 is usually that the population parameter equals some value <span
-class="math inline">\(H_0: \theta = c\)</span> for some constant <span
-class="math inline">\(c\)</span></p>
+class="math inline">\(H_0: \theta = \theta_0\)</span> for some constant
+<span class="math inline">\(\theta_0\)</span></p>
 <p>The <strong>alternative hypothesis</strong> (denoted <span
 class="math inline">\(H_A\)</span>) is the hypothesis of “effect” or
 that “something interesting has happened”. The alternative hypothesis is
 usually that the population parameter falls in some range of values such
 as:</p>
 <p>The value of the parameter is greater than the value proposed in the
-null hypothesis <span class="math display">\[H_A: \theta &gt; c
-\]</span> The value of the parameter is less than the value proposed in
-the null hypothesis <span class="math display">\[H_A: \theta &lt; c
-\]</span> The value of the parameter is different than the value
-proposed in the null hypothesis (could be greater than or less than - we
-aren’t sure, we just suspect its different) <span
-class="math display">\[H_A: \theta \neq c \]</span></p>
+null hypothesis <span class="math display">\[H_A: \theta &gt;
+\theta_0  \]</span> The value of the parameter is less than the value
+proposed in the null hypothesis <span class="math display">\[H_A: \theta
+&lt; \theta_0 \]</span> The value of the parameter is different than the
+value proposed in the null hypothesis (could be greater than or less
+than - we aren’t sure, we just suspect its different) <span
+class="math display">\[H_A: \theta \neq \theta_0 \]</span></p>
 <ul>
 <li>the alternative hypothesis expresses our “suspicions” that we have
 about the data. For example, <i> we suspect the defect rate is higher

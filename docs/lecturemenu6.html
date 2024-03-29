@@ -14,7 +14,7 @@
 
 <title>Week 6 Notes</title>
 
-<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -144,11 +144,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +181,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +190,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -593,7 +590,7 @@ resulting in a smaller margin of error</p></li>
 </ul>
 <div class="float">
 <img
-src="misc/Sampling_designs.png"
+src="C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Sampling_designs.png"
 alt="Figure 1 - visual depiction of sampling designs" />
 <div class="figcaption"><strong>Figure 1</strong> - visual depiction of
 sampling designs</div>
@@ -610,7 +607,7 @@ elements to sample from each sampled cluster</p></li>
 </ul>
 <div class="float">
 <img
-src="misc/two_stage_cs.png"
+src="C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/two_stage_cs.png"
 alt="Figure 2 - visual depiction of two-state cluster sampling" />
 <div class="figcaption"><strong>Figure 2</strong> - visual depiction of
 two-state cluster sampling</div>
@@ -867,7 +864,7 @@ phone-related accidents. One study classified these types of accidents
 by the day of the week when they occurred . For this example, we will
 use the values from this study as our probability model. Here are the
 probabilities</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1045,7 +1042,7 @@ outcomes. The distribution of discrete random variable is called a <i>
 discrete probability distribution </i> and consists of the possible
 outcomes and their probabilities. Often a discrete probability
 distribution can be represented as a table</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1120,7 +1117,7 @@ class="math inline">\(C = 2\)</span>, <span class="math inline">\(B =
 3\)</span> and <span class="math inline">\(A =4\)</span> is a random
 variable.</li>
 </ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1243,7 +1240,7 @@ P(x)\]</span></p>
 distribution for the random variable <span
 class="math inline">\(X\)</span> which denotes the number of spelling
 errors committed per minute of typing by a professional typist</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1334,7 +1331,7 @@ starts with each player recieving two cards. Here is the population
 distribution for the number of aces delt in a two-card hand</p>
 <p><span class="math display">\[X = \text{Number of aces in a hand of
 poker} \]</span></p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1376,7 +1373,7 @@ Probability
 consecutive hands of texas hold’em. To derive the sampling distribution
 we must define the sample space for the proportion of aces in two hands.
 The possibilities are given below</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1457,7 +1454,7 @@ Probability
 <p>Therefore we can summarize the distribution of the proportion <span
 class="math inline">\(\hat{p}\)</span> of Aces in two hands of texas
 hold’em</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1516,7 +1513,7 @@ random variable <span class="math inline">\(X\)</span>. Let <span
 class="math inline">\(X\)</span> represent the number of Coho salmon
 caught in an afternoon by a fly fisherman fishing the Clearwater
 river.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1557,7 +1554,7 @@ Probability
 <p>Derive the sampling distribution for the mean number of fish caught
 from a random sample of <span class="math inline">\(n = 3\)</span>
 afternoons of fishing</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1664,7 +1661,7 @@ Probability
 <p>Therefore we can summarize the distribution of the proportion <span
 class="math inline">\(\bar{X}\)</span> of Aces in two hands of texas
 hold’em</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">

@@ -543,23 +543,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -645,7 +639,7 @@ degrees of freedom</p></li>
 with the corresponding <span class="math inline">\(\alpha\)</span> level
 and critical value for each confidence interval for a population
 proportion.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -720,7 +714,7 @@ critical value: <span class="math inline">\(z_{1-\alpha/2}\)</span>
 with the corresponding <span class="math inline">\(\alpha\)</span> level
 and critical value for each confidence interval for a population
 mean.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -733,7 +727,7 @@ Sample size
 <span class="math inline">\(\alpha\)</span>
 </th>
 <th style="text-align:left;">
-critical value: <span class="math inline">\(t_{n, 1-\alpha/2}\)</span>
+critical value: <span class="math inline">\(t_{n-1, 1-\alpha/2}\)</span>
 </th>
 </tr>
 </thead>
@@ -824,7 +818,7 @@ and Franklin 2007)</span>. One the questions in the survey asked
 students to report their political party affiliation. The table below
 summarizes the proportion of students who reported being Republican,
 Democrat, or Independent.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -884,7 +878,7 @@ members to complete an online survey <span class="citation">(de Vries
 2023)</span>. One of the survey questions asked customers to rate their
 satisfaction level on a likert scale. The results of this survey
 question are summarized below</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <caption>
 Customer responses for the survey question “How satisfied are you with
 your membership of the organisation overall?”
@@ -994,7 +988,7 @@ housing in California taken from the 1990 census. The full dataset is
 featured in Aurélien Géron’s book ‘Hands-On Machine learning with
 Scikit-Learn and TensorFlow’ <span class="citation">(Géron 2022)</span>.
 Use the table to answer parts (a) and (b)</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <caption>
 Summary statistics for housing data in California from the 1990 census.
 Estimates are derived from a random sample of 25 observations from
@@ -1029,7 +1023,7 @@ Median Age of House Owner
 </tr>
 <tr>
 <td style="text-align:left;">
-Total Rooms
+Total Rooms (per block)
 </td>
 <td style="text-align:right;">
 3263.72
@@ -1040,7 +1034,7 @@ Total Rooms
 </tr>
 <tr>
 <td style="text-align:left;">
-Total Bedrooms
+Total Bedrooms (per block)
 </td>
 <td style="text-align:right;">
 640.52
@@ -1062,7 +1056,7 @@ Population of District
 </tr>
 <tr>
 <td style="text-align:left;">
-Number of Households
+Number of Households (per block)
 </td>
 <td style="text-align:right;">
 584.24
@@ -1073,7 +1067,7 @@ Number of Households
 </tr>
 <tr>
 <td style="text-align:left;">
-Median Family Income
+Median Family Income (in tens of thousands of USD)
 </td>
 <td style="text-align:right;">
 3.74
@@ -1084,7 +1078,7 @@ Median Family Income
 </tr>
 <tr>
 <td style="text-align:left;">
-Median House value
+Median House value (USD)
 </td>
 <td style="text-align:right;">
 179320.04
@@ -1099,7 +1093,7 @@ Median House value
 <li><p>a.) Construct and interpret a <span class="math inline">\(95\%\)</span> confidence interval for the average
 median family income for households in California in 1990</p></li>
 <li><p>b.) Construct and interpret a <span class="math inline">\(99\%\)</span> confidence interval for the average
-number of bedrooms for houses in California in 1990</p></li>
+number of bedrooms per block in California in 1990</p></li>
 </ul>
 <p><br></p>
 </div>
@@ -1107,11 +1101,13 @@ number of bedrooms for houses in California in 1990</p></li>
 <h3>Choosing a minimum sample size</h3>
 <p><span class="math inline">\(\bf (7)\)</span> According to a 2023
 study published by the Saudi Heart Association, a survey of college
-students from Taibah University in Medina, Saudi Arabia, found that 24%
-of students reported using e-cigarettes <span class="citation">(Alzahrani et al. 2023)</span>. Assuming a comparable
-rate of e-cigarette use in the U.S., what sample size is required to
-estimate the proportion of college students who use e-cigarettes within
-a margin of error of <span class="math inline">\(1.5\%\)</span>?</p>
+students from Taibah University in Medina, Saudi Arabia, found that
+<span class="math inline">\(24\%\)</span> of students reported using
+e-cigarettes <span class="citation">(Alzahrani et al. 2023)</span>.
+Assuming a comparable rate of e-cigarette use in the U.S., what sample
+size is required to estimate the proportion of college students who use
+e-cigarettes at the <span class="math inline">\(95\%\)</span> confidence
+level and within a margin of error of <span class="math inline">\(1.5\%\)</span>?</p>
 <p><br></p>
 <p><span class="math inline">\(\bf (8)\)</span> Recent concerns over the
 rise in global infertility has drawn significant attention to the
@@ -1119,8 +1115,8 @@ harmful effects of microplastics, PFAS, and highly processed foods <span class="
 study from 2002 published in found that approximately <span class="math inline">\(15\%\)</span> of couples worldwide experienced
 infertility <span class="citation">(Sharlip et al. 2002)</span>.
 Assuming a similar rate of infertility in the U.S, compute the sample
-size needed to estimate infertility of U.S couples within a margin of
-error of <span class="math inline">\(4\%\)</span>.</p>
+size needed to estimate infertility of U.S couples at the <span class="math inline">\(99\%\)</span> confidence level and within a margin
+of error of <span class="math inline">\(4\%\)</span>.</p>
 <p><br></p>
 </div>
 <div id="assumptions-of-estimators" class="section level3">
@@ -1204,9 +1200,10 @@ the manufacturer claims. To investigate, the inspector randomly selects
 batch and examines them for defects. After the inspection, the inspector
 finds that <span class="math inline">\(40\)</span> out of the <span class="math inline">\(100\)</span> toy robots are defect-free. To test
 their suspicion, they set up a two-tailed hypothesis test with a
-significance level <span class="math inline">\(\alpha = 0.1\)</span>
-<span class="math inline">\(H_0: p_0 = 0.5\)</span> (manufacturer’s
-claim) <span class="math inline">\(H_A: p \neq p_0\)</span>.</p>
+significance level <span class="math inline">\(\alpha = 0.1\)</span> and
+hypotheses <span class="math inline">\(H_0: p_0 = 0.5\)</span>
+(manufacturer’s claim) <span class="math inline">\(H_A: p \neq
+p_0\)</span>.</p>
 <ul>
 <li>a.) Using the significance level above, is there enough evidence to
 conclude that the proportion of defect-free toy robots is different from
@@ -1239,13 +1236,12 @@ company?</p></li>
 <h3>Hypothesis tests for a population mean <span class="math inline">\(\mu\)</span></h3>
 <p><span class="math inline">\(\bf (18)\)</span> A soft drink company
 claims that their new “Zero Sugar” soda contains zero grams of added
-sugar per 12-ounce can. To test this claim, a random sample of 25 cans
-of this soda is selected. The sample mean is found to be 1.3 grams of
-added sugar per can, with a standard deviation of 0.5 grams. To
-determine if there is enough evidence to reject the company’s claim and
-conclude that the soda does not contain zero grams of added sugar per
-can, a group of researchers are interested in testing the following
-hypotheses: <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> at the <span class="math inline">\(\alpha = 0.01\)</span> significance level.</p>
+sugar per 12-ounce can. To test this claim, a random sample of <span class="math inline">\(25\)</span> cans of this soda is selected. The
+sample mean is found to be <span class="math inline">\(1.3\)</span>
+grams of added sugar per can, with a standard deviation of <span class="math inline">\(0.5\)</span> grams. To determine if there is
+enough evidence to reject the company’s claim and conclude that the soda
+does not contain zero grams of added sugar per can, a group of
+researchers are interested in testing the following hypotheses: <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> at the <span class="math inline">\(\alpha = 0.01\)</span> significance level.</p>
 <ul>
 <li>a.) Using the significance level above, is there evidence that the
 soda produced by the soft drink company contains added sugars?</li>
@@ -1257,17 +1253,17 @@ environment. Based on historical data, the typical growth rate of Venus
 fly traps is believed to be <span class="math inline">\(100\)</span>
 millimeters per year. The botanists suspect that the current growth rate
 in their greenhouse is higher than this historical value. To
-investigate, they take a random sample of 40 Venus fly traps and measure
-their growth rates over a year. After the study, they find that the
-sample mean growth rate for the 40 Venus fly traps is 105 millimeters
-with a standard deviation of <span class="math inline">\(12mm\)</span>.
-To test their suspicion, they set up a hypothesis test with a
-significance level of <span class="math inline">\(\alpha =
-0.05\)</span></p>
+investigate, they take a random sample of <span class="math inline">\(40\)</span> Venus fly traps and measure their
+growth rates over a year. After the study, they find that the sample
+mean growth rate for the <span class="math inline">\(40\)</span> Venus
+fly traps is <span class="math inline">\(105\)</span> millimeters with a
+standard deviation of <span class="math inline">\(12\)</span>mm. To test
+their suspicion, they set up a hypothesis test with a significance level
+of <span class="math inline">\(\alpha = 0.05\)</span></p>
 <ul>
 <li><p>a.) State the null and alternative hypotheses</p></li>
 <li><p>b.) Compute the critical value for this test</p></li>
-<li><p>c.) Compute the test statistic <span class="math inline">\(Z_{obs}\)</span></p></li>
+<li><p>c.) Compute the test statistic <span class="math inline">\(t_{obs}\)</span></p></li>
 <li><p>d.) Compute the <span class="math inline">\(p\)</span>-value</p></li>
 <li><p>e.) Is there enough evidence to conclude that the current growth
 rate of Venus fly traps in the greenhouse is higher than the historical

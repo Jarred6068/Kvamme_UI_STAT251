@@ -37,59 +37,49 @@ source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat
 ### Definitions
 Define the following terms/concepts
 
-* a.) Describe the central limit theorem and its significance to the sampling distribution for a sample proportion or mean
+* a.) Describe the central limit theorem and its significance to the sampling distribution for a sample proportion or mean - <span style="color: red;">The Central Limit Theorem (CLT) is a fundamental concept in statistics that states that the sampling distribution of the sample mean or sample proportion approaches a normal distribution as the sample size increases, regardless of the shape of the population distribution, as long as the sample size is sufficiently large.</span>
 
-<span style="color: red;"></span>
+* b.) Margin of error - <span style="color: red;">The margin of error is a measure of the uncertainty or precision associated with estimating a population parameter (such as a population mean or proportion). It quantifies the amount by which a sample estimate might deviate from the true population parameter.</span>
 
-The Central Limit Theorem (CLT) is a fundamental concept in statistics that states that the sampling distribution of the sample mean or sample proportion approaches a normal distribution as the sample size increases, regardless of the shape of the population distribution, as long as the sample size is sufficiently large.
+* c.) Describe the "basic form" of a confidence interval - <span style="color: red;">Point estimate $\pm$ Standard score $\times$ Standard error</span> which can also be written as <span style="color: red;">Point estimate $\pm$ Margin of error</span>
 
-* b.) Margin of error
+* d.) Confidence level - <span style="color: red;">the probability that the interval will contain the true parameter value before the data are gathered</span>
 
-<span style="color: red;"></span>
+* e.) Critical value - <span style="color: red;">The point on the distribution of the test statistic that defines a set of values that call for rejecting the null hypothesis - i.e the value which defines the rejection region of a test</span>
 
-* c.) Describe the "basic form" of a confidence interval
+* f.) When are $t$-distribution and standard normal distribution approximately the same shape? - <span style="color: red;">The $t$-distribution and the standard normal distribution are approximately the same shape when the sample size is large, typically considered to be greater than 30. </span>
 
-<span style="color: red;"></span>
+* g.) How are the degrees of freedom of a $t$-distribution related to its shape? - <span style="color: red;">As the degrees of freedom increase, the $t$-distribution becomes more similar to the standard normal distribution, with lighter tails.</span>
 
-* d.) Confidence level
+* h.) Significance level - <span style="color: red;">The significance level is a predetermined threshold used in statistical hypothesis testing to determine the level of evidence required to reject the null hypothesis</span>
 
-<span style="color: red;"></span>
+* i.) Rejection region - <span style="color: red;"> The area in the tail (or tails) of the distribution of the test statistic for which a result is deemed statistically significant</span>
 
-* e.) Critical value
 
-<span style="color: red;"></span>
 
-* f.) When are $t$-distribution and standard normal distribution approximately the same shape?
 
-<span style="color: red;"></span>
 
-* g.) How are the degrees of freedom of a $t$-distribution related to its shape?
 
-<span style="color: red;"></span>
 
-* h.) Significance level
 
-<span style="color: red;"></span>
-
-* i.) Rejection region
-
-<span style="color: red;"></span>
 
 ### Finding probabilities from the $t$ and $z$ distributions 
 
 $\bf (1)$ Use the appropriate table to find the probability of each $z$ or $t$ score.
 
-  * a.) $P(Z > 1.3)$
+  * a.) $P(Z > 1.3)$ <span style="color: red;"> $=1-P(Z\leq 1.3) = 0.097$ </span>
   
-  * b.) $P(Z \leq 0.33)$
+  * b.) $P(Z \leq 0.33)$ <span style="color: red;"> $=0.629$ </span>
   
-  * c.) $P(Z \leq -2.1)$
+  * c.) $P(Z \leq -2.1)$ <span style="color: red;"> $=0.018$ </span>
   
-  * d.) $P(t > 1.97)$ with 5 degrees of freedom
+  * d.) $P(t > 1.97)$ with 5 degrees of freedom <span style="color: red;"> $= 1 - P(t \leq 1.97) = 0.053$ </span>
   
-  * e.) $P(t \leq 2.9)$ with 2 degrees of freedom 
+  * e.) $P(t \leq 2.9)$ with 2 degrees of freedom <span style="color: red;"> $= 0.949$ </span>
   
-  * f.) $P(t \geq -0.98)$ with 8 degrees of freedom
+  * f.) $P(t \geq -0.98)$ with 8 degrees of freedom <span style="color: red;"> $= 1 - P(t < -0.98) = 0.822$ </span>
+  
+  
 
 ### Finding standard scores and $\alpha$
 
@@ -99,13 +89,12 @@ $\bf (2)$ Fill in the table below with the corresponding $\alpha$ level and crit
 ```{r, echo=F, message=F, warning=F}
 set.seed(555)
 alpha = c(0.1, 0.12, 0.03, 0.04, 0.22, 0.01)
-emptyvec = rep('', length(alpha))
 df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
-                      `$\\alpha$` = emptyvec,
-                      `critical value: $z_{1-\\alpha/2}$` = emptyvec)
+                      `$\\alpha$` = paste0('$\\color{red}{', alpha, '}$'),
+                      `critical value: $z_{1-\\alpha/2}$` = paste0('$\\color{red}{', round(qnorm(1-alpha/2), 3), '}$'))
                       
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F, align=rep('c', 3))%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
@@ -121,11 +110,11 @@ n = c(5, 8, 11, 14, 40, 13)
 emptyvec = rep('', length(alpha))
 df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
                       `Sample size` = paste0('$n = ', n, '$'),
-                      `$\\alpha$` = emptyvec,
-                      `critical value: $t_{n, 1-\\alpha/2}$` = emptyvec)
+                      `$\\alpha$` = paste0('$\\color{red}{', alpha, '}$'),
+                      `critical value: $t_{n-1, 1-\\alpha/2}$` = paste0('$\\color{red}{', round(qt(1-alpha/2, n-1), 3), '}$'))
                       
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F, align=rep('c', 3))%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
@@ -152,6 +141,19 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 
 Using the table above, construct a $90\%$ confidence interval for the proportion of Independent college student voters in the state of Georgia. 
 
+
+```{r, echo=T, message=F, warning=F}
+sample.size = (8+36+15)
+estimate = 15/sample.size
+confidence.lvl = 0.9
+
+CI = one.sample.prop.CI(phat = estimate, 
+                        n = sample.size, 
+                        alpha = 1-confidence.lvl, 
+                        verbose = T)
+
+```
+
 <br>
 
 
@@ -176,6 +178,21 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F,
 Using the table above, construct a $95\%$ confidence interval for the proportion of customers that are "very satisfied" or more.
 
 
+```{r, echo=T, message=F, warning=F}
+sample.size = (3+20+64+109+19)
+very.satisfied = 109
+completely.satisfied = 19
+estimate = (very.satisfied+completely.satisfied)/sample.size
+confidence.lvl = 0.95
+
+CI = one.sample.prop.CI(phat = estimate, 
+                        n = sample.size, 
+                        alpha = 1-confidence.lvl, 
+                        verbose = T)
+
+```
+
+
 <br>
 
 ### Confidence intervals for a population mean $\mu$
@@ -188,7 +205,7 @@ hs = read.csv(file = paste0(mainpath, 'housing.csv'))
 
 hss = hs[sample(1:dim(hs)[1], 25), ]
 
-df = cbind.data.frame(`Variable`= c('Median Age of House Owner', 'Total Rooms', 'Total Bedrooms', 'Population of District', 'Number of Households', 'Median Family Income', 'Median House value'),
+df = cbind.data.frame(`Variable`=  c('Median Age of House Owner', 'Total Rooms (per block)', 'Total Bedrooms (per block)', 'Population of District', 'Number of Households (per block)', 'Median Family Income (in tens of thousands of USD)', 'Median House value (USD)'),
                       `Sample Mean` = c(mean(hss$housing_median_age), mean(hss$total_rooms),
                                         mean(hss$total_bedrooms), mean(hss$population),
                                         mean(hss$households), mean(hss$median_income),
@@ -206,18 +223,88 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F,
 
   * a.) Construct and interpret a $95\%$ confidence interval for the average median family income for households in California in 1990
   
-  * b.) Construct and interpret a $99\%$ confidence interval for the average number of bedrooms for houses in California in 1990
+```{r, echo=T, message=F, warning=F}
+sample.size = 25
+sample.mean = 3.74*10000 #converting estimate to USD
+sample.sd =  1.54*10000 #converting standard deviation to USD
+confidence.lvl = 0.95
+
+CI = one.sample.t.CI(xbar = sample.mean, 
+                     s = sample.sd,
+                     n = sample.size,
+                     alpha = 1 - confidence.lvl,
+                     verbose = T)
+
+# At the 95% confidence level, we estimate the average median family income in California in 1990 to be no less than $31,043 USD and no more than $43,756 USD. 
+
+```
+  
+  * b.) Construct and interpret a $99\%$ confidence interval for the average number of bedrooms per block in California in 1990
+  
+```{r, echo=T, message=F, warning=F}
+sample.size = 25
+sample.mean = 640.52
+sample.sd =  380.55 
+confidence.lvl = 0.99
+
+CI = one.sample.t.CI(xbar = sample.mean, 
+                     s = sample.sd,
+                     n = sample.size,
+                     alpha = 1 - confidence.lvl,
+                     verbose = T)
+
+# At the 99% confidence level, we estimate the average number of bedrooms per block in California in 1990 to be no less than 427.6 and no more than 853.4
+
+```
 
 <br>
 
 
 ### Choosing a minimum sample size
 
-$\bf (7)$ According to a 2023 study published by the Saudi Heart Association, a survey of college students from Taibah University in Medina, Saudi Arabia, found that 24% of students reported using e-cigarettes [@alzahrani2023prevalence]. Assuming a comparable rate of e-cigarette use in the U.S., what sample size is required to estimate the proportion of college students who use e-cigarettes within a margin of error of $1.5\%$? 
+$\bf (7)$ According to a 2023 study published by the Saudi Heart Association, a survey of college students from Taibah University in Medina, Saudi Arabia, found that $24\%$ of students reported using e-cigarettes [@alzahrani2023prevalence]. Assuming a comparable rate of e-cigarette use in the U.S., what sample size is required to estimate the proportion of college students who use e-cigarettes at the $95\%$ confidence level and within a margin of error of $1.5\%$? 
+
+```{r, echo=T, message=F, warning=F}
+
+m = 0.015 #desired margin of error
+p = 0.24 #expected proportion of e-cigarette use based on Saudi Study
+confidence.lvl = 0.95
+alpha = 1 - confidence.lvl
+
+z = qnorm(1 - alpha/2) #standard score for confidence level of 95%
+
+n = round((z^2*p*(1-p))/m^2) # compute sample size - round to nearest whole number
+
+# a sample size of approximately
+print(paste0('n = ', n, ' observations'))
+#are needed to achieve the desire confidence level and margin of error
+
+
+
+```
+
 
 <br>
 
-$\bf (8)$ Recent concerns over the rise in global infertility has drawn significant attention to the harmful effects of microplastics, PFAS, and highly processed foods [@zhang2022microplastics; @agarwal2015unique]. A study from 2002 published in found that approximately $15\%$ of couples worldwide experienced infertility [@sharlip2002best]. Assuming a similar rate of infertility in the U.S, compute the sample size needed to estimate infertility of U.S couples within a margin of error of $4\%$.
+$\bf (8)$ Recent concerns over the rise in global infertility has drawn significant attention to the harmful effects of microplastics, PFAS, and highly processed foods [@zhang2022microplastics; @agarwal2015unique]. A study from 2002 published in found that approximately $15\%$ of couples worldwide experienced infertility [@sharlip2002best]. Assuming a similar rate of infertility in the U.S, compute the sample size needed to estimate infertility of U.S couples at the $99\%$ confidence level and within a margin of error of $4\%$.
+
+```{r, echo=T, message=F, warning=F}
+
+m = 0.04 #desired margin of error
+p = 0.15 #expected proportion of infertile couples based on previous studies
+confidence.lvl = 0.99
+alpha = 1 - confidence.lvl
+
+z = qnorm(1 - alpha/2) #standard score for confidence level of 99%
+
+n = round((z^2*p*(1-p))/m^2) # compute sample size - round to nearest whole number
+
+# a sample size of approximately
+print(paste0('n = ', n, ' observations'))
+#are needed to achieve the desire confidence level and margin of error
+
+```
+
 
 <br>
 
@@ -225,9 +312,21 @@ $\bf (8)$ Recent concerns over the rise in global infertility has drawn signific
 
 $\bf (9)$ Describe the assumptions associated with estimating $p$ with $\hat{p}$
 
+1. <span style="color: red;"> **Random Sampling:** The sample must be selected randomly from the population of interest. Random sampling ensures that each member of the population has an equal chance of being included in the sample, allowing for unbiased estimation of the population proportion.</span>
+
+2. <span style="color: red;"> **Independence:** The observations in the sample must be independent of each other. Independence means that the occurrence or value of one observation does not influence the occurrence or value of another observation in the sample.</span>
+
+3. <span style="color: red;"> **Large Sample Size (for Asymptotic Normality):** For certain statistical methods, such as constructing confidence intervals or conducting hypothesis tests, the sample size should be sufficiently large. While there is no fixed threshold for what constitutes "large enough," a common rule of thumb is that $np\geq 15$ and $n(1-p)\geq 15$ to ensure the validity of results. </span>
+
 <br>
 
 $\bf (10)$ Describe the assumptions associated with estimating $\mu$ with $\bar{x}$
+
+1. <span style="color: red;"> **Random Sampling:** The sample must be selected randomly from the population of interest. Random sampling ensures that each member of the population has an equal chance of being included in the sample, allowing for unbiased estimation of the population proportion. </span>
+
+2. <span style="color: red;"> **Independence:** The observations in the sample must be independent of each other. Independence means that the occurrence or value of one observation does not influence the occurrence or value of another observation in the sample. </span>
+
+3. <span style="color: red;"> **Normality of Population Distribution (for Small Sample Sizes):** For small sample sizes (typically less than 30), it is assumed that the population from which the sample is drawn follows a normal distribution. This assumption is necessary for the validity of certain statistical inference methods, such as constructing confidence intervals or conducting hypothesis tests. However, the Central Limit Theorem suggests that for larger sample sizes, the distribution of the sample mean approaches normality regardless of the shape of the population distribution. </span>
 
 <br>
 
@@ -237,13 +336,31 @@ $\bf (10)$ Describe the assumptions associated with estimating $\mu$ with $\bar{
 
 $\bf (11)$ A pharmaceutical company produces a generic version of the pain reliever ibuprofen, marketing a tablet with a 200 milligram dose. Concerned about the accuracy of the dosing process, the manufacturer suspects that the machine filling the tablets may be malfunctioning leading to a smaller dose in each tablet. The manufacturer wishes to conduct a significance test to determine if the dose is significantly lower than 200 milligrams. State the null and alternative hypotheses for this test 
 
+<span style="color: red;"> The null hypothesis is that the mean dose of a tablet is 200 mg
+\[ H_0: \mu_0 = 200\]
+The alternative hypothesis is that the mean dose of a tablet is less than 200 mg
+\[ H_A: \mu < \mu_0 \]
+</span>
+
 <br>
 
 $\bf (12)$ A financial institution invests in a pharmaceutical company, which produces a widely prescribed antidepressant medication with a market value of $100 per share. Worried about potential discrepancies in the market valuation, the institution suspects that recent market trends may have led to an underestimation of the stock's value. The institution plans to conduct a significance test to determine if the stock's value has significantly increased. State the null and alternative hypotheses for this test.
 
+<span style="color: red;"> The null hypothesis is that the mean share value is $\$100$
+\[ H_0: \mu_0 = 100\]
+The alternative hypothesis is that the mean share value is greater than $\$100$
+\[ H_A: \mu > \mu_0 \]
+</span>
+
 <br>
 
 $\bf (13)$ A semiconductor manufacturing company produces microchips with a target defect rate of 0.1% per batch. Concerned about the quality control process, the company suspects that recent changes in manufacturing procedures may have resulted in a change in the defect rate. The company intends to conduct a significance test to determine if the defect rate is significantly different than the target rate of 0.1%. State the null and alternative hypotheses for this test.
+
+<span style="color: red;"> The null hypothesis is that the proportion of defective semi-conductors is $0.001$
+\[ H_0: p_0 = 0.001\]
+The alternative hypothesis is that that the proportion of defective semi-conductors is not equal to $0.001$
+\[ H_A: p \neq p_0 \]
+</span>
 
 <br>
 
@@ -251,66 +368,184 @@ $\bf (13)$ A semiconductor manufacturing company produces microchips with a targ
 
 $\bf (14)$ For each set of hypotheses, significance level, and $p$-value. State whether the test <i>rejects</i> or <i>fails to reject</i> the null hypothesis.
 
-  * a.) $H_0: \mu = 0$; $H_A: \mu \neq 0$; $\alpha = 0.01$; $p$-value $= 0.0098$ 
+  * a.) $H_0: \mu = 0$; $H_A: \mu \neq 0$; $\alpha = 0.01$; $p$-value $= 0.0098$ <span style="color: red;">Decision: reject $H_0$ because $p$-value $<\alpha$ </span>
   
-  * b.) $H_0: p = 0.5$; $H_A: p > 0.5$; $\alpha = 0.05$; $p$-value $= 0.086$ 
+  * b.) $H_0: p = 0.5$; $H_A: p > 0.5$; $\alpha = 0.05$; $p$-value $= 0.086$ <span style="color: red;">Decision: fail to reject $H_0$ because $p$-value $>\alpha$ </span>
   
-  * c.) $H_0: \mu = 100$; $H_A: \mu < 100$; $\alpha = 0.001$; $p$-value $= 0.0015$
+  * c.) $H_0: \mu = 100$; $H_A: \mu < 100$; $\alpha = 0.001$; $p$-value $= 0.0015$ <span style="color: red;">Decision: fail to reject $H_0$ because $p$-value $>\alpha$ </span>
   
-  * d.) $H_0: p = 0.9$; $H_A: p \neq 0.9$; $\alpha = 0.1$; $p$-value $= 0.053$
+  * d.) $H_0: p = 0.9$; $H_A: p \neq 0.9$; $\alpha = 0.1$; $p$-value $= 0.053$ <span style="color: red;">Decision: reject $H_0$ because $p$-value $<\alpha$ </span>
   
 $\bf (15)$ For each set of hypotheses, significance level, sample size, and test statistic. Give the critical value and state whether the test <i>rejects</i> or <i>fails to reject</i> the null hypothesis.
 
-  * a.) $H_0: \mu = 15$; $H_A: \mu > 15$; $n = 33$; $\alpha = 0.05$; $t_{obs} = 2.13$ 
+  * a.) $H_0: \mu = 15$; $H_A: \mu > 15$; $n = 33$; $\alpha = 0.05$; $t_{obs} = 2.13$ <span style="color: red;"> **critical value:** $t_{32, 0.95 } = 1.69$; **Decision:** reject $H_0$ because $t_{obs}>1.69$ </span>
   
-  * b.) $H_0: \mu = 0$; $H_A: \mu \neq 0$; $n = 14$; $\alpha = 0.01$ ; $t_{obs} = -4.1$ 
+  * b.) $H_0: \mu = 0$; $H_A: \mu \neq 0$; $n = 14$; $\alpha = 0.01$ ; $t_{obs} = -4.1$ <span style="color: red;"> **critical value:** $t_{13, 0.995} = 3.01$; **Decision:** reject $H_0$ because $| t_{obs}| > 3.01$</span>
   
-  * c.) $H_0: p = 0.5$; $H_A: p < 0.5$; $n = 120$; $\alpha = 0.1$; $Z_{obs} = -1.5$
+  * c.) $H_0: p = 0.5$; $H_A: p < 0.5$; $n = 120$; $\alpha = 0.1$; $Z_{obs} = -1.5$ <span style="color: red;"> **critical value:** $Z_{0.1} = -1.28$; **Decision:** reject $H_0$ because $Z_{obs} < -1.28$</span>
   
-  * d.) $H_0: p = 0.05$; $H_A: p \neq 0.05$; $n = 60$; $\alpha = 0.03$; $Z_{obs} = 1.95$
+  * d.) $H_0: p = 0.05$; $H_A: p \neq 0.05$; $n = 60$; $\alpha = 0.03$; $Z_{obs} = 1.95$ <span style="color: red;"> **critical value:** $Z_{0.985}= 2.17$; **Decision:** fail to reject $H_0$ because $|Z_{obs}|$ is not greater than $2.17$</span>
 
 <br>
 
 
 ### Hypothesis tests for a population proportion $p$ 
 
-$\bf (16)$ A toy manufacturer claims that $50\%$ of their toy robots are defect-free. However, a quality control inspector suspects that the actual proportion of defect-free robots is different from what the manufacturer claims. To investigate, the inspector randomly selects $100$ toy robots from a production batch and examines them for defects. After the inspection, the inspector finds that $40$ out of the $100$ toy robots are defect-free. To test their suspicion, they set up a two-tailed hypothesis test with a significance level $\alpha = 0.1$ $H_0: p_0 = 0.5$ (manufacturer's claim) $H_A: p \neq p_0$.
+$\bf (16)$ A toy manufacturer claims that $50\%$ of their toy robots are defect-free. However, a quality control inspector suspects that the actual proportion of defect-free robots is different from what the manufacturer claims. To investigate, the inspector randomly selects $100$ toy robots from a production batch and examines them for defects. After the inspection, the inspector finds that $40$ out of the $100$ toy robots are defect-free. To test their suspicion, they set up a two-tailed hypothesis test with a significance level $\alpha = 0.1$ and hypotheses $H_0: p_0 = 0.5$ (manufacturer's claim) $H_A: p \neq p_0$.
 
-  * a.) Using the significance level above, is there enough evidence to conclude that the proportion of defect-free toy robots is different from the manufacturer's claim? 
+  * a.) Using the significance level above, is there enough evidence to conclude that the proportion of defect-free toy robots is different from the manufacturer's claim?
+  
+```{r, echo=T, message=F, warning=F}
+
+test.type = 'two.tailed'
+null.value = 0.5
+sample.size = 100
+estimated.proportion = 40/100
+significance.lvl = 0.1
+
+one.sample.prop.test(p0 = null.value,
+                     phat = estimated.proportion,
+                     n = sample.size,
+                     alpha = significance.lvl,
+                     test = test.type,
+                     verbose = T)
+
+
+```
+<span style="color: red;">At the $10\%$ significance level we fail to reject the null hypothesis and conclude that the proportion of defective toy robots is not significantly different than $0.5$ </span>
 
 <br>
 
 $\bf (17)$ A pharmaceutical company has developed a new drug designed to cure a specific bacterial infection. They claim that their drug is effective, with a cure rate of $20\%$. However, a group of independent researchers believes that the cure rate less than what the pharmaceutical company claims. To investigate, the researchers conduct a clinical trial on $300$ patients suffering from the bacterial infection. After the trial, they find that $70$ out of the $300$ patients were cured using the new drug. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$ with $H_0: p_0 = 0.2$, $H_A: p < p_0$
 
-  * a.) Compute the critical value for this test
+```{r, echo=T, message=F, warning=F}
+
+test.type = 'lower.tail'
+null.value = 0.2
+sample.size = 300
+estimated.proportion = 70/300
+significance.lvl = 0.05
+
+one.sample.prop.test(p0 = null.value,
+                     phat = estimated.proportion,
+                     n = sample.size,
+                     alpha = significance.lvl,
+                     test = test.type,
+                     verbose = T)
+
+
+```
+
+  * a.) Compute the critical value for this test 
+    
+    <span style="color: red;">the critical value is $Z_{\alpha} = -1.64$</span>
 
   * b.) Compute the test statistic $Z_{obs}$
+  
+    <span style="color: red;">the critical value is 
+    \[Z_{obs} = \frac{0.233 - 0.2}{\sqrt{\frac{0.2(1-0.2)}{300}}} = 1.44 \]
+    </span>
 
   * c.) Compute the $p$-value
+  
+  <span style="color: red;">the $p$-value is 
+    \[P(Z < Z_{obs} | H_0 \ \text{True}) = 0.9255 \]
+    </span>
 
   * d.) Is there enough evidence to conclude that the cure rate of the new drug is less than rate claimed by the pharmaceutical company? 
+  
+  <span style="color: red;">At the $5\%$ significance level, we fail to reject the null hypothesis and conclude that the proportion of patients cured by the drug is not significantly different than $0.2$ </span>
+  
 
 <br>
 
 ### Hypothesis tests for a population mean $\mu$
 
-$\bf (18)$ A soft drink company claims that their new "Zero Sugar" soda contains zero grams of added sugar per 12-ounce can. To test this claim, a random sample of 25 cans of this soda is selected. The sample mean is found to be 1.3 grams of added sugar per can, with a standard deviation of 0.5 grams. To determine if there is enough evidence to reject the company's claim and conclude that the soda does not contain zero grams of added sugar per can, a group of researchers are interested in testing the following hypotheses: $H_0: \mu_0 = 0$, $H_A: \mu \neq \mu_0$ at the $\alpha = 0.01$ significance level.
+$\bf (18)$ A soft drink company claims that their new "Zero Sugar" soda contains zero grams of added sugar per 12-ounce can. To test this claim, a random sample of $25$ cans of this soda is selected. The sample mean is found to be $1.3$ grams of added sugar per can, with a standard deviation of $0.5$ grams. To determine if there is enough evidence to reject the company's claim and conclude that the soda does not contain zero grams of added sugar per can, a group of researchers are interested in testing the following hypotheses: $H_0: \mu_0 = 0$, $H_A: \mu \neq \mu_0$ at the $\alpha = 0.01$ significance level.
 
   * a.) Using the significance level above, is there evidence that the soda produced by the soft drink company contains added sugars?
+  
+  
+```{r, echo=T, message=F, warning=F}
+
+#The null hypothesis is H_0: m0 = 0 (no added sugar)
+
+#The alternative hypothesis is H_A: m > m0 - this is the best option since it does not 
+#make since check for less than 0 added sugar. 
+
+test.type = 'upper.tail'
+null.value = 0
+sample.mean = 1.3
+sample.sd = 0.5
+sample.size = 25
+significance.lvl = 0.01
+
+one.sample.t.test(m0 = null.value,
+                  xbar = sample.mean,
+                  s = sample.sd,
+                  n = sample.size, 
+                  alpha = significance.lvl,
+                  test = test.type,
+                  verbose = T)
+
+
+```
+
+<span style="color: red;">At the $1\%$ significance level, we reject the null hypothesis and conclude that the soda produced by the company contains significant amounts of added sugars </span>
+
 
 <br>
 
-$\bf (19)$ A group of botanists is studying the growth rate of Venus fly traps in a controlled greenhouse environment. Based on historical data, the typical growth rate of Venus fly traps is believed to be $100$ millimeters per year. The botanists suspect that the current growth rate in their greenhouse is higher than this historical value. To investigate, they take a random sample of 40 Venus fly traps and measure their growth rates over a year. After the study, they find that the sample mean growth rate for the 40 Venus fly traps is 105 millimeters with a standard deviation of $12mm$. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$
+$\bf (19)$ A group of botanists is studying the growth rate of Venus fly traps in a controlled greenhouse environment. Based on historical data, the typical growth rate of Venus fly traps is believed to be $100$ millimeters per year. The botanists suspect that the current growth rate in their greenhouse is higher than this historical value. To investigate, they take a random sample of $40$ Venus fly traps and measure their growth rates over a year. After the study, they find that the sample mean growth rate for the $40$ Venus fly traps is $105$ millimeters with a standard deviation of $12$mm. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$
+
+```{r, echo=T, message=F, warning=F}
+
+test.type = 'upper.tail'
+null.value = 100
+sample.mean = 105
+sample.sd = 12
+sample.size = 40
+significance.lvl = 0.05
+
+one.sample.t.test(m0 = null.value,
+                  xbar = sample.mean,
+                  s = sample.sd,
+                  n = sample.size, 
+                  alpha = significance.lvl,
+                  test = test.type,
+                  verbose = T)
+
+
+```
+
 
   * a.) State the null and alternative hypotheses
+  
+  <span style="color: red;">The null hypothesis is that the mean growth rate of venus fly traps is $100$mm per year.
+  \[H_0: \mu_0 = 100 \]
+  The alternative hypothesis is that the growth rate is higher than $100$mm per year
+  \[H_0: \mu > \mu_0\]
+  </span>
 
   * b.) Compute the critical value for this test
-
-  * c.) Compute the test statistic $Z_{obs}$
-
+  
+  <span style="color: red;">The critical value is $t_{39, 0.95} = 1.68$</span>
+  
+  * c.) Compute the test statistic $t_{obs}$
+  
+  <span style="color: red;">
+  \[t_{obs} = \frac{105 - 100}{12/\sqrt{40}} \approx 2.64 \]
+  </span>
+  
   * d.) Compute the $p$-value
-
+  
+  <span style="color: red;">The $p$-value is given by
+  \[P(t > t_{obs}| H_0 \ \text{true}) = 1 - P(t \leq t_{obs}| H_0 \ \text{true}) = 1 - 0.994 = 0.006\]
+  </span>
+  
   * e.) Is there enough evidence to conclude that the current growth rate of Venus fly traps in the greenhouse is higher than the historical value of $100$ millimeters per year?
+  
+  <span style="color: red;">At the $5\%$ significance level, we reject the null hypothesis and conclude that the current growth rate is significantly higher than 100 mm per year.</span>
 
 <br>
 

@@ -198,7 +198,7 @@ one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
 one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                                 verbose = TRUE){
   
-  estimate.SE = one.sample.prop.SE(phat, n)
+  estimate.SE = one.sample.prop.SE(p0, n)
   Zobs = (phat - p0)/estimate.SE
   if(test == 'two.tail'){
     critical.value = qnorm((1-(alpha/2)))
@@ -315,6 +315,8 @@ one.sample.t.test = function(m0, xbar, s, n, alpha = 0.05, test = c('lower.tail'
     print(noquote(paste0(rep("=", 54), collapse = '')))
   }
 } 
+
+
 
 
 

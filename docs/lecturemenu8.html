@@ -14,7 +14,7 @@
 
 <title>Week 8 Notes</title>
 
-<script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -144,11 +144,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +181,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +190,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -542,7 +539,7 @@ distribtion</strong>. In addition, because the normal distribution is
 symmetric, we usually only need to compute the probabilities for either
 the positive or negative half of the distribution. Here is an example of
 a <span class="math inline">\(Z\)</span>-table</p>
-<table class="table" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<table class="table" style="font-size: 12px; color: black; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 STANDARD NORMAL DISTRIBUTION: Table Values Represent AREA to the LEFT of
 the Z score.
@@ -2323,7 +2320,7 @@ parts:</p>
 interval</li>
 <li>the standard error (standard deviation) of the point estimate</li>
 </ol>
-<p><img src="misc/Screenshot%202024-02-29%20230856.png" width="486" /></p>
+<p><img src="misc/Screenshot%202024-02-29%20230856.png" /><!-- --></p>
 <p>Applying this basic formula gives the following formula for a
 confidence interval for a population mean:</p>
 <p><span class="math display">\[ \bar{x}\pm z\frac{s}{\sqrt{n}}
@@ -2349,7 +2346,7 @@ therefore how confident we wish to be in our estimation. We can look up
 <span class="math inline">\(z\)</span> in a <span
 class="math inline">\(Z\)</span>-table for any desired confidence
 level:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
