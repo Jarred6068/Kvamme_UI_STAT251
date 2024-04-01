@@ -8,7 +8,7 @@ always_allow_html: true
 header-includes:
   \usepackage{float}
   \usepackage{tikz}
-
+bibliographty: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/
 ---
 
 ```{r setup, include=FALSE}
@@ -32,15 +32,188 @@ source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat
 
 **Warm Up:** 
 
-  1. 
+  1. A car company claims that their Hybrid Sedan averages 35 mpg. You randomly select 8 of these vehicles from a local dealership and test their gas mileage under similar conditions.
+
+You get the following MPG scores:
+
+MPG:	$30,28,32,26,33,25,28,30$
+
+Consider the following $95\%$ confidence interval for the null hypothesis $\mu = 35$, $[32.67, 37.32]$. Does the actual gas mileage for these cars deviate significantly from $35$? Why or why not?
   
-  2. 
+  2. A concern was raised in Australia that the percentage of deaths of Aboriginal prisoners was higher than the percent of deaths of non-Aboriginal prisoners, which is $0.27\%$. A sample of six years (1990-1995) of data was collected, and it was found that out of $14,495$ Aboriginal prisoners, $51$ died ("Indigenous deaths in," 1996). Do the data provide enough evidence to show that the proportion of deaths of Aboriginal prisoners is more than $0.27\%$?
   
+### Parametric vs Non-parametric tests
+
+The hypothesis tests that we have learned up to this point are called **parametric** tests. Parametric tests make assumptions about the population distribution from which the data are sampled. For example:
+
+  * The test for a proportion assumes that either the sample size is large enough and that the “success” and “failures” are well balanced so that the population distribution of $X$ is approximately normal
+  
+  * The test for a population mean explicitly assumes that the population distribution of $X$ is normal 
+  
+Another group of hypothesis tests are said to be **non-parametric**. Non-parametric tests make few or no assumptions about the underlying distribution of the data. Still, both types of analyses assume the data are generated from a randomization procedure and that the observations in the data are independent and come from the same distribution. However, in non-parametric statistics, the distribution can be any distribution. 
+
+* **Advantages of Non-parametric tests**
+
+  1. They may be the only alternative when sample sizes are very small (unless the population distribution is known exactly, but this is almost never the case)
+
+  2. They make few assumptions about the population distribution of the data
+
+  3. They are advantages when the data represent crude measurements such as subjective ratings/rankings (e.g, Likert responses)
+
+  4. They often have simpler computations and interpretations than parametric tests
+
+* **Disadvantages of Non-parametric tests**
+
+  1. They are generally less powerful than their parametric analogues
+
 
 ### The sign test
 
+The sign test is a non-parametric significance test that is typically used for paired observations such as data gathered from a matched-pairs designs. For example, consider an experiment where individuals are weighed before and after a treatment with a weight loss drug and the difference in weight is recorded. Such data is appropriate for the sign test. 
+
+The sign test is relatively under-powered compared to the other parametric tests we have learned about. However, it is very flexible and makes almost no assumptions about the data or it’s population distribution. The sign test is especially useful when data arise from crude measurements or when observations have a ranked order such as movie ratings or taste scores, to name a few examples. 
+
+To demonstrate the use of the sign test, consider the following data from a study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision. The ratings were given as a number between $1-7$ with $1$ indicating wife-dominated decision making and $7$ indicating husband-dominated decision making.
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+Couple = c(1:17)
+Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
+Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
+Difference = Husband - Wife
+Sign = Difference
+Sign[which(Difference > 0)] = '$+$'
+Sign[which(Difference < 0)] = '$-$'
+Sign[which(Difference == 0)] = ''
+
+df = cbind.data.frame(Couple, Husband, Wife, Difference, Sign)
+
+kable(df, format = 'html', digits = 2, 
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
+```
+
+
+The second to last column "Difference" gives the difference in rating between the husbands rating and wifes rating for each couple. The last column denoted "Sign" indicates whether each difference was positive or negative. Positive differences indicate that husband perceives themselves are more dominating in decision making while negative signs indicated that the wife perceives themselves as more dominating. In this example, ignoring differences of zero, there are a total of $14$ signs and $11$ of them are positive. Let $p$ be the probability that a given sign is positive and consider the following pair of hypotheses:
+
+\[H_0: p = 0.5; \ \ H_A: p \neq 0.5 \]
+
+The null hypothesis indicates that the presence of a positive or negative sign is essentially random while the alternative indicates that positive signs are reflective of either a positive or negative difference in opinion between the husband and wife in each couple. Under the null hypothesis, the number of positive signs is a binomial random variable with probability $p = 0.5$. 
+
+\[P(s) = \frac{n!}{s!(n-s)!}p^s(1-p)^{n-s} \]
+
+where $n$ is the total number of signs and $s$ is the number of positive signs. Thus the sampling distribution of the number of positive signs is a binomial distribution
+
+```{r, echo=FALSE, warning=F, message=F}
+
+probtype = 'P(X >= k)'
+k = 11
+df = data.frame(success = 0:14, 
+                prob = dbinom(x = 0:14, size = 14, prob = 0.5))
+        if(probtype == 'P(X = k)'){
+          df=df %>% mutate(condition = ifelse(success == k, as.character(k), "failure")) 
+          lbl = paste0('$P(X = ', k, ') = ')
+        }else if (probtype == 'P(X <= k)'){
+           df=df %>% mutate(condition = ifelse(success <= k, as.character(k), "failure")) 
+           lbl = paste0('$P(X \\leq ', k, ') = ')
+        }else{
+          df=df %>% mutate(condition = ifelse(success >= k, as.character(k), "failure"))
+          lbl = paste0('$P(X \\geq ', k, ') = ')
+        }
+        
+        px = round(sum(df$prob[which(df$condition == k)]),4)
+        ggplot(data = df, aes(x = success, y = prob, fill = condition)) +
+          geom_bar(stat = 'identity', color = 'black') +
+          geom_col() +
+          geom_text(aes(label = round(prob,4), y = prob + 0.01),
+                    position = position_dodge(0.9),
+                    size = 3,
+                    vjust = 0)+
+          geom_text(aes(x = mean(success),
+                        y = max(prob) + 0.08),
+                    label = TeX(paste0(lbl, px, '$')),
+                    size = 5,
+                    vjust = 0)+
+          scale_y_continuous(limits = c(0, min(max(df$prob+0.14), 1)))+
+          labs(title = paste0("Probability of X =", k, " or more positive signs."),
+               subtitle = TeX(paste0("$X \\sim binom(n = ", 14, ", p = ", 0.5, ')$')),
+               x = "Number of Positive Signs",
+               y = "Probability")+
+          theme_classic2()+
+          theme(legend.position = 'none')
+
+
+```
+
+Recall that the $p$-value of a significance test is the probability of observing a value as or more extreme than the test statistic. In the case of the sign test, the test statistic is the number of positive signs and the $p$-value is the probability of observing more or fewer signs, depending the nature of the alternative hypothesis. For a test of the hypotheses given above, the $p$-value is the probability of getting $11$ or more positive signs multiplied by $2$ because it is a two-tailed test. This gives
+
+\[p\text{-value} = 2\times P(S \geq 11 | H_0 True) = \sum_{k = 11}^n \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} \]
+\[ = 2(0.0222+0.0056+0.0009+0.0001) = 2(0.0287) = 0.0574 \]
+
+Assuming a significance level of $5\%$, we would fail reject the null hypothesis, and we would conclude that the probability of a positive sign is not significantly different than $p = 0.5$. In the original context of the test, this indicates that husbands and wives do not differ significantly in their perceived relative influence in major financial decision making. 
+
+The five steps of the sign test are given below:
+
+1. Assumptions: data are matched pairs
+
+2. State the null and alternative hypotheses. Note that the hypothesis are defined in terms of the probability of a positive sign. Usually the null is that $p = 0.5$ i.e positive and negative signs are equally likely/ random. 
+
+3. Compute the differences and sign of each difference for all pairs of observations. The test statistic is the number of positive signs.
+
+4. Compute the $p$-value from a binomial distribution
+
+5. Make a decision 
+
+
+Like we have seen before with tests for $p$ and $\mu$ the sign test can be right, left or two-tailed tests. 
+
+```{r, echo=FALSE, warning=F, message=F}
+
+
+df = cbind.data.frame(`Alternative Hypothesis $H_A$` = c('$H_A: p > 0.5$','$H_A: p < 0.5$','$H_A: p \\neq 0.5$'),
+                      `$p$-value` = c('$P(S \\geq s | H_0 True)$', '$P(S \\leq s | H_0 True)$', '$2\\times P(S \\geq s | H_0 True)$'))
+
+
+kable(df, format = 'html', digits = 2, 
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+We can also tabulate the probabilities for different outcomes of the sign test to produce a table like the $Z$ or $t$ table we have used previously. The table below gives the cumulative probabilities for different combinations of positive and total signs. The columns represent the total number of signs and the rows represent the number of positive signs. 
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+n = 5:15
+s = 0:15
+
+mat = matrix(0, nrow = length(s), ncol = length(n))
+
+for(i in 1:length(n)){
+  mat[,i] = round(pbinom(s, n[i], 0.5), 4)
+}
+
+mat[which(mat == 1)] = ''
+final = cbind.data.frame(s, mat)
+colnames(final) = c('Number of positive signs', n)
+
+kable(final, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+### Independent vs Dependent Samples
+
+
+### Introduction to two-sample tests
 
 
 

@@ -33,6 +33,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -509,11 +511,1107 @@ $(document).ready(function () {
 <h1>Lecture 24 Monday, April 1st 2024</h1>
 <p><strong>Warm Up:</strong></p>
 <ol style="list-style-type: decimal">
-<li></li>
-<li></li>
+<li>A car company claims that their Hybrid Sedan averages 35 mpg. You
+randomly select 8 of these vehicles from a local dealership and test
+their gas mileage under similar conditions.</li>
 </ol>
+<p>You get the following MPG scores:</p>
+<p>MPG: <span class="math inline">\(30,28,32,26,33,25,28,30\)</span></p>
+<p>Consider the following <span class="math inline">\(95\%\)</span>
+confidence interval for the null hypothesis <span
+class="math inline">\(\mu = 35\)</span>, <span
+class="math inline">\([32.67, 37.32]\)</span>. Does the actual gas
+mileage for these cars deviate significantly from <span
+class="math inline">\(35\)</span>? Why or why not?</p>
+<ol start="2" style="list-style-type: decimal">
+<li>A concern was raised in Australia that the percentage of deaths of
+Aboriginal prisoners was higher than the percent of deaths of
+non-Aboriginal prisoners, which is <span
+class="math inline">\(0.27\%\)</span>. A sample of six years (1990-1995)
+of data was collected, and it was found that out of <span
+class="math inline">\(14,495\)</span> Aboriginal prisoners, <span
+class="math inline">\(51\)</span> died (“Indigenous deaths in,” 1996).
+Do the data provide enough evidence to show that the proportion of
+deaths of Aboriginal prisoners is more than <span
+class="math inline">\(0.27\%\)</span>?</li>
+</ol>
+<div id="parametric-vs-non-parametric-tests" class="section level3">
+<h3>Parametric vs Non-parametric tests</h3>
+<p>The hypothesis tests that we have learned up to this point are called
+<strong>parametric</strong> tests. Parametric tests make assumptions
+about the population distribution from which the data are sampled. For
+example:</p>
+<ul>
+<li><p>The test for a proportion assumes that either the sample size is
+large enough and that the “success” and “failures” are well balanced so
+that the population distribution of <span
+class="math inline">\(X\)</span> is approximately normal</p></li>
+<li><p>The test for a population mean explicitly assumes that the
+population distribution of <span class="math inline">\(X\)</span> is
+normal</p></li>
+</ul>
+<p>Another group of hypothesis tests are said to be
+<strong>non-parametric</strong>. Non-parametric tests make few or no
+assumptions about the underlying distribution of the data. Still, both
+types of analyses assume the data are generated from a randomization
+procedure and that the observations in the data are independent and come
+from the same distribution. However, in non-parametric statistics, the
+distribution can be any distribution.</p>
+<ul>
+<li><p><strong>Advantages of Non-parametric tests</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>They may be the only alternative when sample sizes are very small
+(unless the population distribution is known exactly, but this is almost
+never the case)</p></li>
+<li><p>They make few assumptions about the population distribution of
+the data</p></li>
+<li><p>They are advantages when the data represent crude measurements
+such as subjective ratings/rankings (e.g, Likert responses)</p></li>
+<li><p>They often have simpler computations and interpretations than
+parametric tests</p></li>
+</ol></li>
+<li><p><strong>Disadvantages of Non-parametric tests</strong></p>
+<ol style="list-style-type: decimal">
+<li>They are generally less powerful than their parametric
+analogues</li>
+</ol></li>
+</ul>
+</div>
 <div id="the-sign-test" class="section level3">
 <h3>The sign test</h3>
+<p>The sign test is a non-parametric significance test that is typically
+used for paired observations such as data gathered from a matched-pairs
+designs. For example, consider an experiment where individuals are
+weighed before and after a treatment with a weight loss drug and the
+difference in weight is recorded. Such data is appropriate for the sign
+test.</p>
+<p>The sign test is relatively under-powered compared to the other
+parametric tests we have learned about. However, it is very flexible and
+makes almost no assumptions about the data or it’s population
+distribution. The sign test is especially useful when data arise from
+crude measurements or when observations have a ranked order such as
+movie ratings or taste scores, to name a few examples.</p>
+<p>To demonstrate the use of the sign test, consider the following data
+from a study comparing the ratings of husbands and wives on the
+perceived relative influence of each member of the couple on a major
+financial decision. The ratings were given as a number between <span
+class="math inline">\(1-7\)</span> with <span
+class="math inline">\(1\)</span> indicating wife-dominated decision
+making and <span class="math inline">\(7\)</span> indicating
+husband-dominated decision making.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Couple
+</th>
+<th style="text-align:right;">
+Husband
+</th>
+<th style="text-align:right;">
+Wife
+</th>
+<th style="text-align:right;">
+Difference
+</th>
+<th style="text-align:left;">
+Sign
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The second to last column “Difference” gives the difference in rating
+between the husbands rating and wifes rating for each couple. The last
+column denoted “Sign” indicates whether each difference was positive or
+negative. Positive differences indicate that husband perceives
+themselves are more dominating in decision making while negative signs
+indicated that the wife perceives themselves as more dominating. In this
+example, ignoring differences of zero, there are a total of <span
+class="math inline">\(14\)</span> signs and <span
+class="math inline">\(11\)</span> of them are positive. Let <span
+class="math inline">\(p\)</span> be the probability that a given sign is
+positive and consider the following pair of hypotheses:</p>
+<p><span class="math display">\[H_0: p = 0.5; \ \ H_A: p \neq 0.5
+\]</span></p>
+<p>The null hypothesis indicates that the presence of a positive or
+negative sign is essentially random while the alternative indicates that
+positive signs are reflective of either a positive or negative
+difference in opinion between the husband and wife in each couple. Under
+the null hypothesis, the number of positive signs is a binomial random
+variable with probability <span class="math inline">\(p =
+0.5\)</span>.</p>
+<p><span class="math display">\[P(s) = \frac{n!}{s!(n-s)!}p^s(1-p)^{n-s}
+\]</span></p>
+<p>where <span class="math inline">\(n\)</span> is the total number of
+signs and <span class="math inline">\(s\)</span> is the number of
+positive signs. Thus the sampling distribution of the number of positive
+signs is a binomial distribution</p>
+<p><img src="lecturemenu13_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Recall that the <span class="math inline">\(p\)</span>-value of a
+significance test is the probability of observing a value as or more
+extreme than the test statistic. In the case of the sign test, the test
+statistic is the number of positive signs and the <span
+class="math inline">\(p\)</span>-value is the probability of observing
+more or fewer signs, depending the nature of the alternative hypothesis.
+For a test of the hypotheses given above, the <span
+class="math inline">\(p\)</span>-value is the probability of getting
+<span class="math inline">\(11\)</span> or more positive signs
+multiplied by <span class="math inline">\(2\)</span> because it is a
+two-tailed test. This gives</p>
+<p><span class="math display">\[p\text{-value} = 2\times P(S \geq 11 |
+H_0 True) = \sum_{k = 11}^n \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} \]</span>
+<span class="math display">\[ = 2(0.0222+0.0056+0.0009+0.0001) =
+2(0.0287) = 0.0574 \]</span></p>
+<p>Assuming a significance level of <span
+class="math inline">\(5\%\)</span>, we would fail reject the null
+hypothesis, and we would conclude that the probability of a positive
+sign is not significantly different than <span class="math inline">\(p =
+0.5\)</span>. In the original context of the test, this indicates that
+husbands and wives do not differ significantly in their perceived
+relative influence in major financial decision making.</p>
+<p>The five steps of the sign test are given below:</p>
+<ol style="list-style-type: decimal">
+<li><p>Assumptions: data are matched pairs</p></li>
+<li><p>State the null and alternative hypotheses. Note that the
+hypothesis are defined in terms of the probability of a positive sign.
+Usually the null is that <span class="math inline">\(p = 0.5\)</span>
+i.e positive and negative signs are equally likely/ random.</p></li>
+<li><p>Compute the differences and sign of each difference for all pairs
+of observations. The test statistic is the number of positive
+signs.</p></li>
+<li><p>Compute the <span class="math inline">\(p\)</span>-value from a
+binomial distribution</p></li>
+<li><p>Make a decision</p></li>
+</ol>
+<p>Like we have seen before with tests for <span
+class="math inline">\(p\)</span> and <span
+class="math inline">\(\mu\)</span> the sign test can be right, left or
+two-tailed tests.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis <span class="math inline">\(H_A\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(p\)</span>-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &gt; 0.5\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(S \geq s | H_0 True)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &lt; 0.5\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(S \leq s | H_0 True)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p \neq 0.5\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2\times P(S \geq s | H_0 True)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can also tabulate the probabilities for different outcomes of the
+sign test to produce a table like the <span
+class="math inline">\(Z\)</span> or <span
+class="math inline">\(t\)</span> table we have used previously. The
+table below gives the cumulative probabilities for different
+combinations of positive and total signs. The columns represent the
+total number of signs and the rows represent the number of positive
+signs.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Number of positive signs
+</th>
+<th style="text-align:left;">
+5
+</th>
+<th style="text-align:left;">
+6
+</th>
+<th style="text-align:left;">
+7
+</th>
+<th style="text-align:left;">
+8
+</th>
+<th style="text-align:left;">
+9
+</th>
+<th style="text-align:left;">
+10
+</th>
+<th style="text-align:left;">
+11
+</th>
+<th style="text-align:left;">
+12
+</th>
+<th style="text-align:left;">
+13
+</th>
+<th style="text-align:left;">
+14
+</th>
+<th style="text-align:left;">
+15
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+0.0312
+</td>
+<td style="text-align:left;">
+0.0156
+</td>
+<td style="text-align:left;">
+0.0078
+</td>
+<td style="text-align:left;">
+0.0039
+</td>
+<td style="text-align:left;">
+0.002
+</td>
+<td style="text-align:left;">
+0.001
+</td>
+<td style="text-align:left;">
+5e-04
+</td>
+<td style="text-align:left;">
+2e-04
+</td>
+<td style="text-align:left;">
+1e-04
+</td>
+<td style="text-align:left;">
+1e-04
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+0.1875
+</td>
+<td style="text-align:left;">
+0.1094
+</td>
+<td style="text-align:left;">
+0.0625
+</td>
+<td style="text-align:left;">
+0.0352
+</td>
+<td style="text-align:left;">
+0.0195
+</td>
+<td style="text-align:left;">
+0.0107
+</td>
+<td style="text-align:left;">
+0.0059
+</td>
+<td style="text-align:left;">
+0.0032
+</td>
+<td style="text-align:left;">
+0.0017
+</td>
+<td style="text-align:left;">
+9e-04
+</td>
+<td style="text-align:left;">
+5e-04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.3437
+</td>
+<td style="text-align:left;">
+0.2266
+</td>
+<td style="text-align:left;">
+0.1445
+</td>
+<td style="text-align:left;">
+0.0898
+</td>
+<td style="text-align:left;">
+0.0547
+</td>
+<td style="text-align:left;">
+0.0327
+</td>
+<td style="text-align:left;">
+0.0193
+</td>
+<td style="text-align:left;">
+0.0112
+</td>
+<td style="text-align:left;">
+0.0065
+</td>
+<td style="text-align:left;">
+0.0037
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+0.8125
+</td>
+<td style="text-align:left;">
+0.6562
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.3633
+</td>
+<td style="text-align:left;">
+0.2539
+</td>
+<td style="text-align:left;">
+0.1719
+</td>
+<td style="text-align:left;">
+0.1133
+</td>
+<td style="text-align:left;">
+0.073
+</td>
+<td style="text-align:left;">
+0.0461
+</td>
+<td style="text-align:left;">
+0.0287
+</td>
+<td style="text-align:left;">
+0.0176
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+0.9688
+</td>
+<td style="text-align:left;">
+0.8906
+</td>
+<td style="text-align:left;">
+0.7734
+</td>
+<td style="text-align:left;">
+0.6367
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.377
+</td>
+<td style="text-align:left;">
+0.2744
+</td>
+<td style="text-align:left;">
+0.1938
+</td>
+<td style="text-align:left;">
+0.1334
+</td>
+<td style="text-align:left;">
+0.0898
+</td>
+<td style="text-align:left;">
+0.0592
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.9844
+</td>
+<td style="text-align:left;">
+0.9375
+</td>
+<td style="text-align:left;">
+0.8555
+</td>
+<td style="text-align:left;">
+0.7461
+</td>
+<td style="text-align:left;">
+0.623
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.3872
+</td>
+<td style="text-align:left;">
+0.2905
+</td>
+<td style="text-align:left;">
+0.212
+</td>
+<td style="text-align:left;">
+0.1509
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.9922
+</td>
+<td style="text-align:left;">
+0.9648
+</td>
+<td style="text-align:left;">
+0.9102
+</td>
+<td style="text-align:left;">
+0.8281
+</td>
+<td style="text-align:left;">
+0.7256
+</td>
+<td style="text-align:left;">
+0.6128
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.3953
+</td>
+<td style="text-align:left;">
+0.3036
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.9961
+</td>
+<td style="text-align:left;">
+0.9805
+</td>
+<td style="text-align:left;">
+0.9453
+</td>
+<td style="text-align:left;">
+0.8867
+</td>
+<td style="text-align:left;">
+0.8062
+</td>
+<td style="text-align:left;">
+0.7095
+</td>
+<td style="text-align:left;">
+0.6047
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.998
+</td>
+<td style="text-align:left;">
+0.9893
+</td>
+<td style="text-align:left;">
+0.9673
+</td>
+<td style="text-align:left;">
+0.927
+</td>
+<td style="text-align:left;">
+0.8666
+</td>
+<td style="text-align:left;">
+0.788
+</td>
+<td style="text-align:left;">
+0.6964
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.999
+</td>
+<td style="text-align:left;">
+0.9941
+</td>
+<td style="text-align:left;">
+0.9807
+</td>
+<td style="text-align:left;">
+0.9539
+</td>
+<td style="text-align:left;">
+0.9102
+</td>
+<td style="text-align:left;">
+0.8491
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.9995
+</td>
+<td style="text-align:left;">
+0.9968
+</td>
+<td style="text-align:left;">
+0.9888
+</td>
+<td style="text-align:left;">
+0.9713
+</td>
+<td style="text-align:left;">
+0.9408
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.9998
+</td>
+<td style="text-align:left;">
+0.9983
+</td>
+<td style="text-align:left;">
+0.9935
+</td>
+<td style="text-align:left;">
+0.9824
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.9999
+</td>
+<td style="text-align:left;">
+0.9991
+</td>
+<td style="text-align:left;">
+0.9963
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.9999
+</td>
+<td style="text-align:left;">
+0.9995
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="independent-vs-dependent-samples" class="section level3">
+<h3>Independent vs Dependent Samples</h3>
+</div>
+<div id="introduction-to-two-sample-tests" class="section level3">
+<h3>Introduction to two-sample tests</h3>
 </div>
 </div>
 

@@ -465,19 +465,19 @@ There are several factors that influence the power of a statistical test. Some o
 
 The significance level of a test, like the confidence level, tells us how reliable the test is in repeated use. Thus a test at $\alpha = 0.05$ significance level will return the correct result $95/100$ times when $H_0$ is in fact true and when the test is conducted on data arising from the same conditions. The $5/100$ times that the test gives the incorrect result is called the **type I error** rate
 
-A **type I error** is the probability that we reject the null when the null is in fact true (denoted $\alpha$). 
+The **type I error** rate is the probability that we reject the null when the null is in fact true (denoted $\alpha$). 
 
 For example, the probability of committing a type I error for a right-tailed (or upper tail) test of a population mean is 
 \[ P( t > t_{1-\alpha} | H_0 \ \text{True}) =\alpha \]
 
-Another type error that can occur is called a **type II error** (denoted $\beta$). This type of error occurs when we fail to reject the null hypothesis but the alternative hypothesis is true.
+Another type of error that can occur is called a **type II error** (denoted $\beta$). This type of error occurs when we fail to reject the null hypothesis but the alternative hypothesis is true.
 
 
 The probability of committing a type II error for a right-tailed (or upper tail) test of a population mean is 
 \[ P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) =\beta \]
 
 
-Looking at the previous example it is easy to see that power is the complement of type II error rate.
+Looking at the previous example it is easy to see that power is the complement of the type II error rate.
 
 \[ Power = P(t \geq t_{1-\alpha} | H_0 \ \text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]
 \[ = 1-\beta \]
@@ -586,3 +586,39 @@ ggplot(data = data, aes(x = x, fill = 'grey'))+theme_bw()+
 
 ```
 * in the plot above, the green region represents the probability of committing a type II error, the orange region the probability of committing a type I error and the pink/red region is the power of the test. 
+
+
+**Below** the three panels show the relationship between power, the probability of a type I error and the probability of a type II error.
+```{r, echo=F, message=F, warning=F, fig.height=6, fig.width=10}
+significance.level = seq(0.001, 0.5, 0.001)
+t = qnorm(1-significance.level)
+beta = pnorm(t, mean = 1)
+power = 1-beta
+df = cbind.data.frame(significance.level, t , beta, power)
+
+A=ggplot(data = df, aes(x = significance.level, y = power))+geom_line(size = 1)+
+  theme_hc()+
+  xlab(TeX("Significance level $\\alpha$"))+
+  ylab("Power")+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
+
+B=ggplot(data = df, aes(x = beta, y = power))+geom_line(size = 1)+
+  theme_hc()+
+  xlab(TeX("Type II Error $\\beta$"))+
+  ylab("Power")+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
+
+C=ggplot(data = df, aes(x = beta, y = significance.level))+geom_line(size = 1)+
+  theme_hc()+
+  xlab(TeX("Type II Error $\\beta$"))+
+  ylab(TeX("Significance level $\\alpha$"))+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
+
+
+
+ggarrange(ggarrange(A, B, ncol = 2), C, nrow = 2)
+
+```

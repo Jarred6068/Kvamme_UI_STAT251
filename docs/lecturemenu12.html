@@ -1684,14 +1684,14 @@ times when <span class="math inline">\(H_0\)</span> is in fact true and
 when the test is conducted on data arising from the same conditions. The
 <span class="math inline">\(5/100\)</span> times that the test gives the
 incorrect result is called the <strong>type I error</strong> rate</p>
-<p>A <strong>type I error</strong> is the probability that we reject the
-null when the null is in fact true (denoted <span
+<p>The <strong>type I error</strong> rate is the probability that we
+reject the null when the null is in fact true (denoted <span
 class="math inline">\(\alpha\)</span>).</p>
 <p>For example, the probability of committing a type I error for a
 right-tailed (or upper tail) test of a population mean is <span
 class="math display">\[ P( t &gt; t_{1-\alpha} | H_0 \ \text{True})
 =\alpha \]</span></p>
-<p>Another type error that can occur is called a <strong>type II
+<p>Another type of error that can occur is called a <strong>type II
 error</strong> (denoted <span class="math inline">\(\beta\)</span>).
 This type of error occurs when we fail to reject the null hypothesis but
 the alternative hypothesis is true.</p>
@@ -1699,7 +1699,7 @@ the alternative hypothesis is true.</p>
 upper tail) test of a population mean is <span class="math display">\[
 P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) =\beta \]</span></p>
 <p>Looking at the previous example it is easy to see that power is the
-complement of type II error rate.</p>
+complement of the type II error rate.</p>
 <p><span class="math display">\[ Power = P(t \geq t_{1-\alpha} | H_0 \
 \text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not
 True}) \]</span> <span class="math display">\[ = 1-\beta \]</span></p>
@@ -1753,6 +1753,10 @@ class="math inline">\(\alpha\)</span> significance level.</p>
 committing a type II error, the orange region the probability of
 committing a type I error and the pink/red region is the power of the
 test.</p>
+<p><strong>Below</strong> the three panels show the relationship between
+power, the probability of a type I error and the probability of a type
+II error.
+<img src="lecturemenu12_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
 </div>
 </div>
 
