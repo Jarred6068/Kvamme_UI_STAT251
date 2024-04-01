@@ -195,7 +195,7 @@ s = 0:15
 mat = matrix(0, nrow = length(s), ncol = length(n))
 
 for(i in 1:length(n)){
-  mat[,i] = round(pbinom(s, n[i], 0.5), 4)
+  mat[,i] = round(dbinom(s, n[i], 0.5), 5)
 }
 
 mat[which(mat == 1)] = ''
