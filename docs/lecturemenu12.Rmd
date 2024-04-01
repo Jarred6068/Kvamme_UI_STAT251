@@ -361,7 +361,7 @@ kable(df, format = 'html', digits = 2,
 ```{r, echo=FALSE, warning=F, message=F}
 
 df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
-                      `$p$-value` = c('$P(| Z | \\geq | Z_{obs} | | H_0 \ \\text{True})$','$P( Z \\geq Z_{obs} | H_0 \ \\text{True})$','$P( Z \\leq Z_{obs} | H_0 \ \\text{True})$'))
+                      `$p$-value` = c('$P( Z  \\geq | Z_{obs} | | H_0 \ \\text{True})$','$P( Z \\geq Z_{obs} | H_0 \ \\text{True})$','$P( Z \\leq Z_{obs} | H_0 \ \\text{True})$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -423,7 +423,7 @@ kable(df, format = 'html', digits = 2,
 ```{r, echo=FALSE, warning=F, message=F}
 
 df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
-                      `$p$-value` = c('$P(| t | \\geq | t_{obs} | | H_0 \ \\text{True})$','$P( t \\geq t_{obs} | H_0 \ \\text{True})$','$P( t \\leq t_{obs} | H_0 \ \\text{True})$'))
+                      `$p$-value` = c('$P( t  \\geq | t_{obs} | | H_0 \ \\text{True})$','$P( t \\geq t_{obs} | H_0 \ \\text{True})$','$P( t \\leq t_{obs} | H_0 \ \\text{True})$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%

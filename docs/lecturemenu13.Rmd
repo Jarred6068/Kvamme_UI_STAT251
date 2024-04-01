@@ -1,0 +1,99 @@
+---
+title: "Week 13 Notes"
+author: "STAT 251 Section 03"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+library(gganimate)
+
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+
+##stat pack
+source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+
+```
+
+# Lecture 24 Monday, April 1st 2024
+
+**Warm Up:** 
+
+  1. 
+  
+  2. 
+  
+
+### The sign test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

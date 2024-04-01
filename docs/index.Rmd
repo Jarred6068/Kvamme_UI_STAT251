@@ -17,8 +17,10 @@ This site contains material for Jarred Kvamme's Statistical Methods course (STAT
 
 
 
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/images/it_was_i.png')
+```
 
+<!-- ![](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/images/it_was_i.png) -->
 
-![](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/images/it_was_i.png)
-
-**https://xkcd.com/1772**
+[**https://xkcd.com/1772**](https://xkcd.com/1772)
