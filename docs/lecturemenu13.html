@@ -1674,11 +1674,443 @@ Number of positive signs
 </tbody>
 </table>
 </div>
+</div>
+<div id="lecture-25-wednesday-april-3rd-2024" class="section level1">
+<h1>Lecture 25 Wednesday, April 3rd 2024</h1>
+<p><strong>Practice: The Sign Test</strong> - A group of <span
+class="math inline">\(12\)</span> fly fisherman are testing two types of
+flies to determine which one is more effective at catching trout in the
+Selway River. Each fly fisherman makes <span
+class="math inline">\(10\)</span> casts with each fly lure and records
+the number of trout that are caught. Use the table below to conduct a
+two-sided sign test at the <span class="math inline">\(\alpha =
+0.05\)</span> significance level:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Fisherman
+</th>
+<th style="text-align:right;">
+Fly1
+</th>
+<th style="text-align:right;">
+Fly2
+</th>
+<th style="text-align:right;">
+Difference
+</th>
+<th style="text-align:left;">
+Sign
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The null hypothesis is <span class="math inline">\(H_0: p_0 =
+0.5\)</span> the probability of positive sign is <span
+class="math inline">\(50\%\)</span>. The alternative hypothesis is that
+one of the flies catches more fish <span class="math inline">\(H_A:
+p\neq p_0\)</span>. There are <span class="math inline">\(s = 7\)</span>
+positive signs out of a total of 9 total signs. The <span
+class="math inline">\(p\)</span>-value for the two sided test is given
+by</p>
+<p><span class="math display">\[\text{$p$-value} = 2\times P(S\geq s|
+H_0 \ \text{True}) = 2\left[\sum_{k = 7}^9
+\frac{9!}{k!(9-k)!}0.5^k(1-0.5)^{9-k}\right]\]</span></p>
+<p><span class="math display">\[ = 2\times[0.0703+0.0175+0.0019] =
+2(0.0898) \approx 0.179 \]</span></p>
+<p>Our <span class="math inline">\(p\)</span>-value is greater than
+<span class="math inline">\(\alpha\)</span> and thus we fail to reject
+the null hypothesis and conclude the the number of fish caught with each
+fly lure is not significantly different (i.e the probability of a
+positive sign is not significantly different than <span
+class="math inline">\(p = 0.5\)</span>)</p>
+<div id="comparing-two-groups" class="section level3">
+<h3>Comparing Two Groups</h3>
+<p>Up to this point in the course we have learned how to conduct
+inference on a single sample. Analyzing a single variable is referred to
+as <strong>univariate</strong> analysis. However, in statistics we are
+often interested in comparing two different groups across some
+measurement. This involves exploring the relationship between two
+variables: An <strong>explanatory variable</strong> which defines the
+groups of interests and a <strong>response variable</strong> which
+measures the outcome of interest from each group. Examples include
+exploring the relationship between gender and height or between
+treatment group (i.e placebo group and treatment group) and patient
+outcome.</p>
+<p>Statistical analyses that explore the relationship between two
+variables are called <strong>bivariate</strong> analyses. Just as we had
+univariate significance tests for a population mean and population
+proportion, we also have well defined significance tests for the
+inference of two variables - these are often called <strong>two-sample
+tests</strong> because we treat the observations in each group as a
+sample from a distinct population. Thus two-sample tests are used to
+compare the population parameters of <u>two different
+populations</u>.</p>
+</div>
 <div id="independent-vs-dependent-samples" class="section level3">
 <h3>Independent vs Dependent Samples</h3>
+<p>In bivariate analyses, we have to be considerate of whether the
+samples blonging to the two groups are dependent or independent.</p>
+<ul>
+<li><p><strong>independent samples</strong> - occur when the
+observations in one sample are independent (have no statistical
+association) of the observations in the other sample. This most always
+the case in experiements that use randomization to allocate subjects to
+treatment groups</p></li>
+<li><p><strong>dependent samples</strong> - occur when the observations
+in one sample are associated with the observations in another sample –
+this can happen when the same subjects are used for each sample such as
+matched pair designs</p></li>
+</ul>
+<p>Dependent samples cause some difficulties for bivariate analyses of
+two groups. This is because computing the standard error under dependent
+samples can be a very complex computation (more on this later).</p>
 </div>
 <div id="introduction-to-two-sample-tests" class="section level3">
 <h3>Introduction to two-sample tests</h3>
+</div>
+<div id="comparing-two-proportions" class="section level3">
+<h3>Comparing two proportions</h3>
+<p>Comparative studies, such as comparing two related but distinct
+groups, are by far the most common type of statistical analysis. We
+often want to compare the proportions of individuals from two groups
+that share some characteristic. Examples include:</p>
+<ul>
+<li><p>Proportion of college students who binge drink among high and low
+GPA students</p></li>
+<li><p>Proportion of religious voters among Republicans and
+Democrats.</p></li>
+</ul>
+<p>These problems concern the comparison of two populations (high and
+low GPA students; Republicans and Democrats). The two groups being
+compared are called <i>population 1</i> and <i>population 2</i>, and the
+two population proportions are called <span
+class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span>. For two population proportions we
+will consider only the case of two independent samples. The data consist
+of two independent simple random samples of sizes <span
+class="math inline">\(n_1\)</span> and <span
+class="math inline">\(n_2\)</span> from populations 1 and 2,
+respectively. The proportion of observations having the characteristic
+of interest in each sample estimates the corresponding population
+proportion. The notation is outlined in the table below:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Population
+</th>
+<th style="text-align:left;">
+Population Proportion
+</th>
+<th style="text-align:left;">
+Sample Size
+</th>
+<th style="text-align:left;">
+Count of Successes
+</th>
+<th style="text-align:left;">
+Sample Proportion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(X_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p}_1 = X_1/n_1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(X_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p}_2 = X_2/n_2\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>We compare two population proportions by looking at the difference
+between them.</p>
+<p><span class="math display">\[D = \hat{p}_1 - \hat{p}_2 \]</span></p>
+<p>When the samples from both groups are sufficiently large, the
+sampling distribution of the difference in proportion <span
+class="math inline">\(D\)</span> is approximately normal. Like we saw
+before with the univariate case, inference procedures for comparing
+proportions are based on <span class="math inline">\(z\)</span>, the
+normal approximation, and on standardizing the difference <span
+class="math inline">\(D\)</span>. The difference <span
+class="math inline">\(D\)</span> is an unbiased estimator of the
+population difference <span class="math inline">\(p_1 - p_2\)</span>.
+Moreover, by the linearity of variance, the variance of the difference
+is the sum of the population variances:</p>
+<p><span class="math display">\[\sigma^2_D =
+\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2} \]</span></p>
+<p>Thus when the sample sizes are sufficiently large <span
+class="math inline">\(D\)</span> follows a normal distribution</p>
+<p><span class="math display">\[D \sim  N\left(p_1 - p_2,
+\sqrt{\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2}}\right)\]</span></p>
+<p>As we did before we will start by constructing a confidence interval
+for the population difference <span
+class="math inline">\(D\)</span>.</p>
+<p>the point estimate is <span class="math display">\[D = \hat{p}_1 -
+\hat{p}_2 \]</span> with standard error</p>
+<p><span class="math display">\[ SE_D =
+\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_2}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\]</span></p>
+<p>this gives the margin of error</p>
+<p><span class="math display">\[m = z\times SE_D \]</span></p>
+<p>putting all together the <span
+class="math inline">\((1-\alpha)\%\)</span> confidence interval for the
+population difference in proportion is</p>
+<p><span class="math display">\[ (\hat{p}_1 - \hat{p}_2) \pm
+Z_{1-\alpha/2} \times SE_D\]</span></p>
+<p>The critical value <span
+class="math inline">\(Z_{1-\alpha/2}\)</span> is the same critical value
+that we used in the one-sample case</p>
+<p><strong>Try it out:</strong> A manufacturing company is interested in
+assessing the effectiveness of two different production methods, <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>, in terms of the proportion of
+defective products produced. A random sample of <span
+class="math inline">\(200\)</span> products produced using method <span
+class="math inline">\(A\)</span> yielded <span
+class="math inline">\(30\)</span> defective products, while a sample of
+<span class="math inline">\(250\)</span> products produced using method
+<span class="math inline">\(B\)</span> yielded <span
+class="math inline">\(20\)</span> defective products.</p>
+<p>Construct a <span class="math inline">\(95\%\)</span> confidence
+interval for the difference in proportions of defective products between
+method <span class="math inline">\(A\)</span> and method <span
+class="math inline">\(B\)</span>.</p>
+</div>
+<div id="significance-tests-for-comparing-two-proportions"
+class="section level3">
+<h3>Significance tests for comparing two proportions</h3>
 </div>
 </div>
 

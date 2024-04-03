@@ -505,7 +505,7 @@ sign.test = function(p0, x1, x2, alpha = 0.05, test = c('lower.tail','upper.tail
     upper.bound = qbinom(1-(alpha/2), total.signs, phat)
     lower.bound = qbinom(alpha/2, total.signs, phat)
     alt.hyp = 'p != '
-    pvalue = 2*(1-pbinom(positive.signs, total.signs, p0))
+    pvalue = 2*(1-pbinom(positive.signs-1, total.signs, p0))
     if(pvalue > 1){
       pvalue = 1
     }
@@ -518,7 +518,7 @@ sign.test = function(p0, x1, x2, alpha = 0.05, test = c('lower.tail','upper.tail
     upper.bound = qbinom(1-(alpha/2), total.signs, phat)
     lower.bound = qbinom(alpha/2, total.signs, phat)
     alt.hyp = 'p > '
-    pvalue = 1-pbinom(positive.signs, total.signs, p0)
+    pvalue = 1-pbinom(positive.signs-1, total.signs, p0)
   }
   
   CI = c(lower.bound/total.signs, upper.bound/total.signs)

@@ -210,19 +210,123 @@ kable(final, format = 'html', digits = 2,
 
 ```
 
-### Independent vs Dependent Samples
+# Lecture 25 Wednesday, April 3rd 2024
 
+**Practice: The Sign Test** - A group of $12$ fly fisherman are testing two types of flies to determine which one is more effective at catching trout in the Selway River. Each fly fisherman makes $10$ casts with each fly lure and records the number of trout that are caught. Use the table below to conduct a two-sided sign test at the $\alpha = 0.05$ significance level:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+Fisherman = c(1:12)
+Fly2 = sample(0:4, 12, replace = T, prob = c(0.1, 0.2, 0.4, 0.2, 0.1))
+Fly1 = sample(1:5, 12, replace = T, prob = c(0.2, 0.5, 0.1, 0.1, 0.1))
+Difference = Fly1 - Fly2
+Sign = rep(0, 12)
+Sign[Difference> 0] = '$+$'
+Sign[Difference == 0] = ''
+Sign[Difference<0] = '$-$'
+
+df = cbind.data.frame(Fisherman, Fly1, Fly2, Difference, Sign)
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+
+The null hypothesis is $H_0: p_0 = 0.5$ the probability of positive sign is $50\%$. The alternative hypothesis is that one of the flies catches more fish $H_A: p\neq p_0$. There are $s = 7$ positive signs out of a total of 9 total signs. The $p$-value for the two sided test is given by
+
+
+\[\text{$p$-value} = 2\times P(S\geq s| H_0 \ \text{True}) = 2\left[\sum_{k = 7}^9 \frac{9!}{k!(9-k)!}0.5^k(1-0.5)^{9-k}\right]\]
+
+\[ = 2\times[0.0703+0.0175+0.0019] = 2(0.0898) \approx 0.179 \]
+
+Our $p$-value is greater than $\alpha$ and thus we fail to reject the null hypothesis and conclude the the number of fish caught with each fly lure is not significantly different (i.e the probability of a positive sign is not significantly different than $p = 0.5$)
+
+### Comparing Two Groups
+
+Up to this point in the course we have learned how to conduct inference on a single sample. Analyzing a single variable is referred to as **univariate** analysis. However, in statistics we are often interested in comparing two different groups across some measurement. This involves exploring the relationship between two variables: An **explanatory variable** which defines the groups of interests and a **response variable** which measures the outcome of interest from each group. Examples include exploring the relationship between gender and height or between treatment group (i.e placebo group and treatment group) and patient outcome. 
+
+Statistical analyses that explore the relationship between two variables are called **bivariate** analyses. Just as we had univariate significance tests for a population mean and population proportion, we also have well defined significance tests for the inference of two variables - these are often called **two-sample tests** because we treat the observations in each group as a sample from a distinct population. Thus two-sample tests are used to compare the population parameters of <u>two different populations</u>. 
+
+### Independent vs Dependent Samples
+In bivariate analyses, we have to be considerate of whether the samples blonging to the two groups are dependent or independent. 
+  
+  * **independent samples** - occur when the observations in one sample are independent (have no statistical association) of the observations in the other sample. This most always the case in experiements that use randomization to allocate subjects to treatment groups
+  
+  * **dependent samples** - occur when the observations in one sample are associated with the observations in another sample – this can happen when the same subjects are used for each sample such as matched pair designs
+
+Dependent samples cause some difficulties for bivariate analyses of two groups. This is because computing the standard error under dependent samples can be a very complex computation (more on this later).
 
 ### Introduction to two-sample tests
 
+### Comparing two proportions
+
+Comparative studies, such as comparing two related but distinct groups, are by far the most common type of statistical analysis. We often want to compare the proportions of individuals from two groups that share some characteristic. Examples include:
+
+  * Proportion of college students who binge drink among high and low GPA students
+  
+  * Proportion of religious voters among Republicans and Democrats.
+  
+These problems concern the comparison of two populations (high and low GPA students; Republicans and Democrats). The two groups being compared are called <i>population 1</i> and <i>population 2</i>, and the two population proportions are called $p_1$ and $p_2$. For two population proportions we will consider only the case of two independent samples. The data consist of two independent simple random samples of sizes $n_1$ and $n_2$ from populations 1 and 2, respectively. The proportion of observations having the characteristic of interest in each sample estimates the corresponding population proportion. The notation is outlined in the table below:
 
 
 
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(Population = c(1, 2),
+                      `Population Proportion` = c('$p_1$', '$p_2$'),
+                      `Sample Size` = c('$n_1$', '$n_2$'),
+                      `Count of Successes` = c('$X_1$', '$X_2$'),
+                      `Sample Proportion` = c('$\\hat{p}_1 = X_1/n_1$', '$\\hat{p}_2 = X_2/n_2$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
 
+```
 
+We compare two population proportions by looking at the difference between them. 
 
+\[D = \hat{p}_1 - \hat{p}_2 \]
+
+When the samples from both groups are sufficiently large, the sampling distribution of the difference in proportion $D$ is approximately normal. Like we saw before with the univariate case, inference procedures for comparing proportions are based on $z$, the normal approximation, and on standardizing the difference $D$. The difference $D$ is an unbiased estimator of the population difference $p_1 - p_2$. Moreover, by the linearity of variance, the variance of the difference is the sum of the population variances:
+
+\[\sigma^2_D = \frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2} \]
+
+Thus when the sample sizes are sufficiently large $D$ follows a normal distribution 
+
+\[D \sim  N\left(p_1 - p_2, \sqrt{\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2}}\right)\]
+
+As we did before we will start by constructing a confidence interval for the population difference $D$.
+
+the point estimate is 
+\[D = \hat{p}_1 - \hat{p}_2 \]
+with standard error 
+
+\[ SE_D = \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_2}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\]
+
+this gives the margin of error
+
+\[m = z\times SE_D \]
+
+putting all together the $(1-\alpha)\%$ confidence interval for the population difference in proportion is 
+
+\[ (\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2} \times SE_D\]
+
+The critical value $Z_{1-\alpha/2}$ is the same critical value that we used in the one-sample case
+
+**Try it out:** A manufacturing company is interested in assessing the effectiveness of two different production methods, $A$ and $B$, in terms of the proportion of defective products produced. A random sample of $200$ products produced using method $A$ yielded $30$ defective products, while a sample of $250$ products produced using method $B$ yielded $20$ defective products.
+
+Construct a $95\%$ confidence interval for the difference in proportions of defective products between method $A$ and method $B$.
+
+### Significance tests for comparing two proportions
 
 
 
