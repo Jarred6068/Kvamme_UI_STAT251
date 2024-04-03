@@ -21,6 +21,8 @@ d_limit <- function(x, input){
     y = dunif(x, min = input$min, max = input$max)
   }else if(input$rv == 'Normal'){
     y = dnorm(x, input$mean, input$sd)
+  }else if(input$rv == 'Students t'){
+    y = dt(x, input$df)
   }
   
   
@@ -51,12 +53,11 @@ ui <- fluidPage(
                  
                  numericInput(inputId = 'k',
                               label = "k",
-                              min = 0,
                               value = 1),
                  
                  selectInput(inputId = "rv",
                              label = "Select Random Variable",
-                             choices = c("Binomial", "Poisson", "Uniform", "Exponential", "Normal"),
+                             choices = c("Binomial", "Poisson", "Uniform", "Exponential", "Normal", "Students t"),
                              selected = "Binomial"),
                  #Binomial dist
                  conditionalPanel(condition = "input.rv == 'Binomial'",
@@ -71,6 +72,14 @@ ui <- fluidPage(
                                               max = 1,
                                               value = 0.5,
                                               step = 0.05)),
+                 #Students t distribution
+                 conditionalPanel(condition = "input.rv == 'Students t'",
+                                  h5("Binomial Parameters"),
+                                  numericInput(inputId = "df",
+                                               label = "Degrees of Freedom:",
+                                               min = 1,
+                                               value = 1)),
+                 
                  #Poisson dist
                  conditionalPanel(condition = "input.rv == 'Poisson'",
                                   h5("Poisson Parameters"),
@@ -268,6 +277,42 @@ server <- function(input, output) {
              subtitle = TeX(paste0("$X\\sim N(\\mu = ", input$mean, ', \\sigma = ',input$sd, ')$')),
              x = "X",
             y = "Probability(X)")+
+        theme_classic2()+
+        theme(legend.position = 'none')
+      
+    
+      
+    #t distribution
+    }else if(input$rv == 'Students t'){
+      if(input$probtype == 'P(X = k)'){
+        px = round(dt(input$k, input$df),2)
+        lbl = paste0('$P(t = ', input$k, ') = ')
+      }else if (input$probtype == 'P(X <= k)'){
+        px = round(pt(input$k, input$df),2)
+        lbl = paste0('$P(t \\leq ', input$k, ') = ')
+      }else{
+        px = 1-round(pt(input$k, input$df),2)
+        lbl = paste0('$P(t \\geq ', input$k, ') = ')
+      }
+      
+      ggplot(data.frame(x = c(-4, 4)), aes(x = x))+
+        stat_function(fun = d_limit,
+                      args = list(input = input), 
+                      geom = "area", 
+                      fill = "cyan3", 
+                      alpha = 0.4)+
+        geom_text(aes(x = 0,
+                      y = dt(0, input$df)/2),
+                  label = TeX(paste0(lbl, px, '$')),
+                  size = 5,
+                  vjust = 0)+
+        stat_function(fun = dt,
+                      args = list(df = input$df),
+                      size = 1)+
+        labs(title = paste0("Probability of t"),
+             subtitle = TeX(paste0("$t\\sim t(df = ", input$df, ')$')),
+             x = "t",
+             y = "Probability(t)")+
         theme_classic2()+
         theme(legend.position = 'none')
     }
