@@ -397,7 +397,7 @@ $\bf (16)$ A toy manufacturer claims that $50\%$ of their toy robots are defect-
   
 ```{r, echo=T, message=F, warning=F}
 
-test.type = 'two.tailed'
+test.type = 'two.tail'
 null.value = 0.5
 sample.size = 100
 estimated.proportion = 40/100

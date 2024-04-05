@@ -475,28 +475,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-
-div.csl-bib-body { }
-div.csl-entry {
-clear: both;
-}
-.hanging div.csl-entry {
-margin-left:2em;
-text-indent:-2em;
-}
-div.csl-left-margin {
-min-width:2em;
-float:left;
-}
-div.csl-right-inline {
-margin-left:2em;
-padding-left:1em;
-}
-div.csl-indent {
-margin-left: 2em;
-}
-</style>
 
 
 
@@ -865,11 +843,10 @@ critical value: <span class="math inline">\(t_{n-1, 1-\alpha/2}\)</span>
 <h3>Confidence intervals for a population proportion <span class="math inline">\(p\)</span></h3>
 <p><span class="math inline">\(\bf (4)\)</span> A survey conducted by
 the state of Georgia surveyed colleges students as part of a larger
-effort to characterized student behavior <span class="citation">(Agresti
-and Franklin 2007)</span>. One the questions in the survey asked
-students to report their political party affiliation. The table below
-summarizes the proportion of students who reported being Republican,
-Democrat, or Independent.</p>
+effort to characterized student behavior <span class="citation">(<strong>agresti2007art?</strong>)</span>. One the
+questions in the survey asked students to report their political party
+affiliation. The table below summarizes the proportion of students who
+reported being Republican, Democrat, or Independent.</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -941,10 +918,10 @@ CI = one.sample.prop.CI(phat = estimate,
 <p><br></p>
 <p><span class="math inline">\(\bf (5)\)</span> As part of an effort to
 improve health services, a health club in the United Kingdom asked club
-members to complete an online survey <span class="citation">(de Vries
-2023)</span>. One of the survey questions asked customers to rate their
-satisfaction level on a likert scale. The results of this survey
-question are summarized below</p>
+members to complete an online survey <span class="citation">(<strong>andriesurvey?</strong>)</span>. One of the
+survey questions asked customers to rate their satisfaction level on a
+likert scale. The results of this survey question are summarized
+below</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <caption>
 Customer responses for the survey question “How satisfied are you with
@@ -1070,8 +1047,8 @@ CI = one.sample.prop.CI(phat = estimate,
 summarizes variables from a random sample of <span class="math inline">\(25\)</span> observations from a dataset concerning
 housing in California taken from the 1990 census. The full dataset is
 featured in Aurélien Géron’s book ‘Hands-On Machine learning with
-Scikit-Learn and TensorFlow’ <span class="citation">(Géron 2022)</span>.
-Use the table to answer parts (a) and (b)</p>
+Scikit-Learn and TensorFlow’ <span class="citation">(<strong>geron2022hands?</strong>)</span>. Use the
+table to answer parts (a) and (b)</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <caption>
 Summary statistics for housing data in California from the 1990 census.
@@ -1225,7 +1202,7 @@ CI = one.sample.t.CI(xbar = sample.mean,
 study published by the Saudi Heart Association, a survey of college
 students from Taibah University in Medina, Saudi Arabia, found that
 <span class="math inline">\(24\%\)</span> of students reported using
-e-cigarettes <span class="citation">(Alzahrani et al. 2023)</span>.
+e-cigarettes <span class="citation">(<strong>alzahrani2023prevalence?</strong>)</span>.
 Assuming a comparable rate of e-cigarette use in the U.S., what sample
 size is required to estimate the proportion of college students who use
 e-cigarettes at the <span class="math inline">\(95\%\)</span> confidence
@@ -1246,11 +1223,12 @@ print(paste0(&#39;n = &#39;, n, &#39; observations&#39;))</code></pre>
 <p><br></p>
 <p><span class="math inline">\(\bf (8)\)</span> Recent concerns over the
 rise in global infertility has drawn significant attention to the
-harmful effects of microplastics, PFAS, and highly processed foods <span class="citation">(Zhang et al. 2022; Agarwal et al. 2015)</span>. A
-study from 2002 published in found that approximately <span class="math inline">\(15\%\)</span> of couples worldwide experienced
-infertility <span class="citation">(Sharlip et al. 2002)</span>.
-Assuming a similar rate of infertility in the U.S, compute the sample
-size needed to estimate infertility of U.S couples at the <span class="math inline">\(99\%\)</span> confidence level and within a margin
+harmful effects of microplastics, PFAS, and highly processed foods <span class="citation">(<strong>zhang2022microplastics?</strong>;
+<strong>agarwal2015unique?</strong>)</span>. A study from 2002 published
+in found that approximately <span class="math inline">\(15\%\)</span> of
+couples worldwide experienced infertility <span class="citation">(<strong>sharlip2002best?</strong>)</span>. Assuming a
+similar rate of infertility in the U.S, compute the sample size needed
+to estimate infertility of U.S couples at the <span class="math inline">\(99\%\)</span> confidence level and within a margin
 of error of <span class="math inline">\(4\%\)</span>.</p>
 <pre class="r"><code>m = 0.04 #desired margin of error
 p = 0.15 #expected proportion of infertile couples based on previous studies
@@ -1420,7 +1398,7 @@ p_0\)</span>.</p>
 conclude that the proportion of defect-free toy robots is different from
 the manufacturer’s claim?</li>
 </ul>
-<pre class="r"><code>test.type = &#39;two.tailed&#39;
+<pre class="r"><code>test.type = &#39;two.tail&#39;
 null.value = 0.5
 sample.size = 100
 estimated.proportion = 40/100
@@ -1433,16 +1411,16 @@ one.sample.prop.test(p0 = null.value,
                      test = test.type,
                      verbose = T)</code></pre>
 <pre><code>## [1] ==================== test results ====================
-## [1] test type = two.tailed
+## [1] test type = two.tail
 ## [1] H0: p0 = 0.5
-## [1] HA: p &gt; 0.5
+## [1] HA: p != 0.5
 ## [1] estimate = 0.4
 ## [1] Estimated Standard Error = 0.05
-## [1] Critical Value = 1.2816
+## [1] Critical Value = 1.6449
 ## [1] 90% CI = [0.3194,0.4806]
 ## [1] Test statistic = -2
-## [1] Pvalue = 0.9772
-## [1] Decision: fail to reject H0
+## [1] Pvalue = 0.0455
+## [1] Decision: reject H0
 ## [1] ======================================================</code></pre>
 <p><span style="color: red;">At the <span class="math inline">\(10\%\)</span> significance level we fail to reject
 the null hypothesis and conclude that the proportion of defective toy
@@ -1628,47 +1606,8 @@ significantly higher than 100 mm per year.</span></p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-agarwal2015unique" class="csl-entry">
-Agarwal, Ashok, Aditi Mulgund, Alaa Hamada, and Michelle Renee Chyatte.
-2015. <span>“A Unique View on Male Infertility Around the Globe.”</span>
-<em>Reproductive Biology and Endocrinology</em> 13: 1–9.
-</div>
-<div id="ref-agresti2007art" class="csl-entry">
-Agresti, Alan, and Christine Franklin. 2007. <span>“The Art and Science
-of Learning from Data.”</span> <em>Upper Saddle River, New Jersey</em>
-88.
-</div>
-<div id="ref-alzahrani2023prevalence" class="csl-entry">
-Alzahrani, Talal, Marwan F Alhazmi, Ahmed N Alharbi, Feras T AlAhmadi,
-Amer N Alhubayshi, and Bader A Alzahrani. 2023. <span>“The Prevalence of
-Electronic Cigarette Use Among College Students of Taibah University and
-Symptoms of Cardiovascular Disease.”</span> <em>Journal of the Saudi
-Heart Association</em> 35 (2): 163.
-</div>
-<div id="ref-andriesurvey" class="csl-entry">
-de Vries, Andrie. 2023. <em>Surveydata: Tools to Work with Survey
-Data</em>. <a href="https://CRAN.R-project.org/package=surveydata">https://CRAN.R-project.org/package=surveydata</a>.
-</div>
-<div id="ref-geron2022hands" class="csl-entry">
-Géron, Aurélien. 2022. <em>Hands-on Machine Learning with Scikit-Learn,
-Keras, and TensorFlow</em>. &quot; O’Reilly Media, Inc.&quot;.
-</div>
-<div id="ref-sharlip2002best" class="csl-entry">
-Sharlip, Ira D, Jonathan P Jarow, Arnold M Belker, Larry I Lipshultz,
-Mark Sigman, Anthony J Thomas, Peter N Schlegel, et al. 2002.
-<span>“Best Practice Policies for Male Infertility.”</span>
-<em>Fertility and Sterility</em> 77 (5): 873–82.
-</div>
-<div id="ref-zhang2022microplastics" class="csl-entry">
-Zhang, Chenming, Jianshe Chen, Sicheng Ma, Zixue Sun, and Zulong Wang.
-2022. <span>“Microplastics May Be a Significant Cause of Male
-Infertility.”</span> <em>American Journal of Men’s Health</em> 16 (3):
-15579883221096549.
-</div>
-</div>
+<div id="references" class="section level1">
+<h1>References</h1>
 </div>
 
 
