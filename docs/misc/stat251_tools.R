@@ -347,14 +347,17 @@ two.sample.prop.CI = function(p1,p2,n1,n2,tail = 'two.tail',alpha = 0.05, verbos
 
 
 #two sample proportion test
-two.sample.prop.test = function(p0,p1,p2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+two.sample.prop.test = function(p0,x1,x2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                                 pooled = TRUE, verbose = TRUE){
   
+  
+  p1 = x1/n1
+  p2 = x2/n2
   estimate = p1 - p2
   estimate.SE = two.sample.prop.SE(p1, p2, n1, n2)
   if(isTRUE(pooled)){
     calc = 'pooled'
-    p.pooled = (p1+p2)/2
+    p.pooled = (x1+x2)/(n1+n2)
     test.SE = sqrt( (p.pooled*(1-p.pooled))*(1/n1 + 1/n2) )
   }else{
     calc = 'unpooled'

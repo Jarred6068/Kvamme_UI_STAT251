@@ -8,7 +8,7 @@ always_allow_html: true
 header-includes:
   \usepackage{float}
   \usepackage{tikz}
-bibliographty: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/
+bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Week_13_bibs.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -322,15 +322,261 @@ putting all together the $(1-\alpha)\%$ confidence interval for the population d
 
 The critical value $Z_{1-\alpha/2}$ is the same critical value that we used in the one-sample case
 
+**Example: Aspirin and Heart Attacks** - A large-scale randomized experiment investigated the effect of regular aspirin use on myocardial infarctions (i.e., heart attacks)[@steering1989final]. The results are summarized below:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(Group = c("Aspirin", "Placebo"),
+                      `Population Proportion` = c('$p_1$', '$p_2$'),
+                      `Sample Size` = c('$11037$', '$11034$'),
+                      `Patients Who Experienced Heart Attacks` = c('$104$', '$189$'),
+                      `Patients Who did Not Experience A Heart Attack` = c('$10933$','$10845$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+Construct a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between those taking aspirin and those taking the placebo
+
+**Understand the Problem:**
+
+  * We have two groups: <u>Aspirin</u> and <u>Placebo</u>.
+
+  * We want to estimate the difference in proportions of patients experiencing heart attacks between these two groups.
+
+  * We have sample data for each group, including the sample proportions and sample sizes.
+
+**Calculate Sample Proportions:**
+  
+  * Sample proportion for Aspirin group: $\hat{p}_1 = \frac{104}{11037} = 0.0094$
+
+  * Sample proportion for Placebo group: $\hat{p}_2 = \frac{189}{11034} = 0.0171$
+
+**Calculate the Standard Error:**
+
+  * The standard error for the difference in proportions is given by: 
+  
+  \[ SE = \sqrt{\frac{0.0094 (1-0.0094)}{11037} + \frac{0.0171(1-0.0171)}{11034}} = 0.0015 \] 
+
+**Determine the Z-Critical Value:**
+
+  * For a $95\%$ confidence interval, the critical value $Z_{1-\alpha/2}$ is approximately $1.96$ (from the standard normal distribution).
+
+**Calculate the Margin of Error:**
+
+  * The margin of error is given by: 
+  
+  \[ m = 1.96 \times 0.0015 = 0.0029\]
+
+**Construct the Confidence Interval:**
+
+  * The confidence interval is: 
+  
+  \[ \text{Confidence Interval} = (\hat{p}_1 - \hat{p}_2) \pm \text{Margin of Error} \]
+
+  Confidence Interval $= (0.0094 - 0.0171) \pm 0.0029 = [-0.0107, -0.0047]$
+
+**Interpretation:** 
+  
+  * We are $95\%$ confident that the true difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups is no less than $-0.0107$ and no greater than $-0.0047$. Since the interval includes negative values, we can conclude that the proportion of heart attacks is likely lower in the Aspirin group compared to the Placebo group. 
+
+
 **Try it out:** A manufacturing company is interested in assessing the effectiveness of two different production methods, $A$ and $B$, in terms of the proportion of defective products produced. A random sample of $200$ products produced using method $A$ yielded $30$ defective products, while a sample of $250$ products produced using method $B$ yielded $20$ defective products.
 
 Construct a $95\%$ confidence interval for the difference in proportions of defective products between method $A$ and method $B$.
 
+<br>
+<br>
+
+# Lecture 25 Monday, April 4th 2024
+
+Recall the Aspirin and Heart Attacks example from **Lecture 24**. In that example, we constructed a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups. The interval was approximately $[-0.0077, -0.0007]$. If the confidence interval we computed had included the value zero, it would suggest that the difference in proportions could be statistically insignificant. In other words, we would be very suspicious that there is a real difference between the two groups. Conversely, if the confidence interval does not include zero, we have stronger evidence that there is a significant difference between the proportions.
+
+Just as we did for population proportions in the univariate case, we can easily construct a hypothesis  test which will allow us to formally evaluate whether an observed difference between two groups is statistically significant or merely due to random variation. 
+
 ### Significance tests for comparing two proportions
 
+A hypothesis test used to compare the population proportions from two different but independent groups is based on the standardized difference in proportion $D$. Recall that, if the samples obtained from each group are sufficiently large, then the sampling distribution of $D$ is approximately distributed as standard normal. Here’s how we set up a two-sample hypothesis test for proportions:
+
+**1. Assumptions**
+
+  * Data constitute a simple random sample 
+  
+  * The two groups are independent
+  
+  * $n\hat{p}$ and $n(1-\hat{p})$ are both greater than 15. Note that $\hat{p}$ here is pooled sample proportion (see below)
+
+**2. Null and Alternative Hypotheses**
+
+  * The **null** hypothesis is generally that the two population proportions are equal (i.e no difference)
+  
+  \[H_0: p_1 = p_2 \ \ \  \text{which is the same as} \ \ \ H_0: p_1 - p_2 = 0\]
+  
+  * The alternative hypothesis can be either lower, upper, or two tailed just as it was with our univariate tests. The table below gives the possible alternative hypotheses and their critical values:
+  
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
+                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_\\alpha$','$Z_{1-\\alpha}$'),
+                      `Rejection Region` = c('$|Z| \\geq Z_{1-\\alpha/2}$',
+                                             '$Z\\leq Z_{\\alpha}$',
+                                             '$Z\\geq Z_{1-\\alpha}$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
 
+```
+
+**3. Test statistic**
+
+  * The null hypothesis is that the two populations are equal (i.e they have the same proportion). If the null is true then we can view all of the data as coming from from the same distribution. Thus the test statistic under the null hypothesis is based on the <i>pooled estimate</i> of the population proportion denoted $\hat{p}$:
+  
+  \[ \hat{p} = \frac{\text{number of successes in both samples}}{\text{total number of observations from both samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]
+  The pooled estimate combines all of the information from both samples
+  
+  * Recall that the population standard deviation of the difference in proportions is 
+  
+  \[\sigma_D = \sqrt{\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2}}  \]
+  
+  However, under the null hypothesis the two proportions are equal giving
+  
+  \[ = \sqrt{\frac{p(1-p)}{n_2}+\frac{p(1-p)}{n_2}} \]
+  
+  \[= \sqrt{p(1-p)\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]
+  
+  We estimate $\sigma_D$ by substituting in the <i>pooled estimate</i> of the population proportion:
+  
+  \[ SE_{D_\text{pooled}} = \sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]
+  
+  Combining these elements, the test statistic under a null hypothesis of no difference $H_0: p_1 - p_2 = 0$ is given by 
+  
+  \[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}} \sim N(0,1) \]
+  
+
+**4. $p$-value**
+
+  * The $p$-values corresponding to each alternative hypothesis are listed in the table below
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
+                      `$p$-value` = c('$P(|Z| \\geq |Z_{obs}||H_0)$',
+                                             '$P(Z \\leq Z_{obs}|H_0)$',
+                                             '$P(Z\\geq Z_{obs}|H_0)$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+**5. Decision rule**
+
+  \[\text{Reject} \ \ H_0 \ \ \text{if} \ \ \text{$p$-value} < \alpha \]
+
+
+
+**Example - The impact of Covid on scholarly activity?** - During the COVID-19 pandemic, as faculty members shifted to working from home, women in academic medicine reported decreased manuscript submissions and shouldered a disproportionate share of childcare responsibilities. A study published in the <i>Journal of the American College of Radiology</i> examined the scholarly activity among male and female contributors during the COVID-19 Pandemic of 2019 and 2020. Specifically, they evaluated the proportion of female contributors submitting manuscripts and accepting peer review invitations before (April - October, 2019) and after the start of the coronavirus pandemic (April - October, 2020) [@mogensen2021impact]. A summary of the data in this study are given below:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Year` = c('April - Octobor 2019', 'April - October 2020'),
+                      `Number of Manuscripts with Female First Author` = c('$140$', '$172$'), 
+                      `Number of Manuscripts with Male First Author` = c('$171$', '$269$'),
+                      `All First Authors` = c('$311$', '$441$'),
+                      `Relative Percentage of Manuscripts with Female First Author` = c('$140/311 = 0.450$', '171/441 = 0.387$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+Conduct a hypothesis test at the $5\%$ significance level to determine if the relative percentage of scholarly activity among female scholars was <i>significantly reduced</i> after the start of the coronavirus pandemic 
+
+
+**Step 1** To check the sample size assumptions of this test we must first calculate the pooled relative proportion:
+
+\[\hat{p} = \frac{140+171}{311+441} = 0.414 \]
+
+Since the pooled estimate is nearly 0.5 and the sample size is quite large at $752$ both $n\hat{p}$ and $n(1-\hat{p})$ are greater than the required $15$. 
+
+
+**Step 2** We want to test the null hypothesis that there is no significant difference in the relative percentage of scholarly activity among female scholars before and after the pandemic:
+
+\[ H_0: p_1 - p_2 = 0\]
+\[ H_A: p_1 - p_2 < 0\]
+
+where $p_1$ is the relative proportion of manuscripts with female first authors after the start of the pandemic and $p_2$ is the relative proportion of manuscripts with female first authors before the start of the pandemic. The critical value is $Z_{\alpha} = -1.645$.
+
+**Step 3**
+
+Using the pooled estimate from **Step 1**, the pooled standard error of the population difference $D$ is 
+
+\[ SE_{D_\text{pooled}} = \sqrt{0.414(1-0.414)\left(\frac{1}{311}+\frac{1}{441}\right)} = 0.0365\]
+
+The test statistic is 
+
+\[Z_{obs} = \frac{(0.387 - 0.450) - 0}{SE_{D_\text{pooled}}} = -1.711 \]
+
+**Step 4**
+
+The $p$-value is 
+
+\[P(Z \leq -1.711 | H_0 \ \ \text{True})  = 0.0435\]
+
+**Decision**
+
+Since the $p$-value is less than the significance level of $5\%$, we reject the null hypothesis of no difference and conclude that the relative proportion of manuscripts with female first authors significantly decreased after the start of the COVID-19 pandemic. 
+
+<br>
+<br>
+
+### $D$ as a measure of association 
+
+Consider again the difference in proportion $D$. In statistical analysis, we often study the relationship between two categorical variables. We are regularly interested in whether one variable (the explanatory variable) influences or explains the outcomes of another variable (the response variable). The statistic $D$ is a measure of the strength of statistical association between some grouping variable and some response that is measured across those groups. Consider two populations (groups) based on some characteristic (e.g., treatment vs. control, male vs. female, etc). For each population the response variable records the fraction of the population that relates to some category or specific outcome (e.g. patient outcome, preference, occurrence of an event). The value of $D$ ranges between $-1$ and $1$ and has the following interpretation:
+
+**Interpretation:**
+
+Given $D = p_1 - p_2$ which compares the difference in proportion across groups/populations 1 and 2
+
+  * values of $-1$ or $1$ indicate the strongest possible association between the categories of the grouping variable and the categories of the response variable
+  
+  * values near or at $0$ indicates that the explanatory and response variables are independent of each other
+  
+### Comparing two means
+
+
+### Significance tests for comparing two means 
+
+
+### Comparing two independent groups
+
+
+### Comparing dependent groups
+
+
+<br>
+<br>
+<br>
+<br>
+
+### References
 
 
 

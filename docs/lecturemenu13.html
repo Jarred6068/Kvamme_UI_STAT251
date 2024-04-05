@@ -60,6 +60,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 
 
@@ -2092,6 +2114,128 @@ Z_{1-\alpha/2} \times SE_D\]</span></p>
 <p>The critical value <span
 class="math inline">\(Z_{1-\alpha/2}\)</span> is the same critical value
 that we used in the one-sample case</p>
+<p><strong>Example: Aspirin and Heart Attacks</strong> - A large-scale
+randomized experiment investigated the effect of regular aspirin use on
+myocardial infarctions (i.e., heart attacks)<span
+class="citation">(Physicians’ Health Study Research Group* 1989)</span>.
+The results are summarized below:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Group
+</th>
+<th style="text-align:left;">
+Population Proportion
+</th>
+<th style="text-align:left;">
+Sample Size
+</th>
+<th style="text-align:left;">
+Patients Who Experienced Heart Attacks
+</th>
+<th style="text-align:left;">
+Patients Who did Not Experience A Heart Attack
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Aspirin
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(11037\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(104\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(10933\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Placebo
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(11034\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(189\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(10845\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Construct a <span class="math inline">\(95\%\)</span> confidence
+interval for the difference in proportions of patients experiencing
+heart attacks between those taking aspirin and those taking the
+placebo</p>
+<p><strong>Understand the Problem:</strong></p>
+<ul>
+<li><p>We have two groups: <u>Aspirin</u> and <u>Placebo</u>.</p></li>
+<li><p>We want to estimate the difference in proportions of patients
+experiencing heart attacks between these two groups.</p></li>
+<li><p>We have sample data for each group, including the sample
+proportions and sample sizes.</p></li>
+</ul>
+<p><strong>Calculate Sample Proportions:</strong></p>
+<ul>
+<li><p>Sample proportion for Aspirin group: <span
+class="math inline">\(\hat{p}_1 = \frac{104}{11037} =
+0.0094\)</span></p></li>
+<li><p>Sample proportion for Placebo group: <span
+class="math inline">\(\hat{p}_2 = \frac{189}{11034} =
+0.0171\)</span></p></li>
+</ul>
+<p><strong>Calculate the Standard Error:</strong></p>
+<ul>
+<li>The standard error for the difference in proportions is given
+by:</li>
+</ul>
+<p><span class="math display">\[ SE = \sqrt{\frac{0.0094
+(1-0.0094)}{11037} + \frac{0.0171(1-0.0171)}{11034}} = 0.0015
+\]</span></p>
+<p><strong>Determine the Z-Critical Value:</strong></p>
+<ul>
+<li>For a <span class="math inline">\(95\%\)</span> confidence interval,
+the critical value <span class="math inline">\(Z_{1-\alpha/2}\)</span>
+is approximately <span class="math inline">\(1.96\)</span> (from the
+standard normal distribution).</li>
+</ul>
+<p><strong>Calculate the Margin of Error:</strong></p>
+<ul>
+<li>The margin of error is given by:</li>
+</ul>
+<p><span class="math display">\[ m = 1.96 \times 0.0015 =
+0.0029\]</span></p>
+<p><strong>Construct the Confidence Interval:</strong></p>
+<ul>
+<li>The confidence interval is:</li>
+</ul>
+<p><span class="math display">\[ \text{Confidence Interval} = (\hat{p}_1
+- \hat{p}_2) \pm \text{Margin of Error} \]</span></p>
+<p>Confidence Interval <span class="math inline">\(= (0.0094 - 0.0171)
+\pm 0.0029 = [-0.0107, -0.0047]\)</span></p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>We are <span class="math inline">\(95\%\)</span> confident that the
+true difference in proportions of patients experiencing heart attacks
+between the Aspirin and Placebo groups is no less than <span
+class="math inline">\(-0.0107\)</span> and no greater than <span
+class="math inline">\(-0.0047\)</span>. Since the interval includes
+negative values, we can conclude that the proportion of heart attacks is
+likely lower in the Aspirin group compared to the Placebo group.</li>
+</ul>
 <p><strong>Try it out:</strong> A manufacturing company is interested in
 assessing the effectiveness of two different production methods, <span
 class="math inline">\(A\)</span> and <span
@@ -2107,10 +2251,366 @@ class="math inline">\(20\)</span> defective products.</p>
 interval for the difference in proportions of defective products between
 method <span class="math inline">\(A\)</span> and method <span
 class="math inline">\(B\)</span>.</p>
+<p><br> <br></p>
 </div>
+</div>
+<div id="lecture-25-monday-april-4th-2024" class="section level1">
+<h1>Lecture 25 Monday, April 4th 2024</h1>
+<p>Recall the Aspirin and Heart Attacks example from <strong>Lecture
+24</strong>. In that example, we constructed a <span
+class="math inline">\(95\%\)</span> confidence interval for the
+difference in proportions of patients experiencing heart attacks between
+the Aspirin and Placebo groups. The interval was approximately <span
+class="math inline">\([-0.0077, -0.0007]\)</span>. If the confidence
+interval we computed had included the value zero, it would suggest that
+the difference in proportions could be statistically insignificant. In
+other words, we would be very suspicious that there is a real difference
+between the two groups. Conversely, if the confidence interval does not
+include zero, we have stronger evidence that there is a significant
+difference between the proportions.</p>
+<p>Just as we did for population proportions in the univariate case, we
+can easily construct a hypothesis test which will allow us to formally
+evaluate whether an observed difference between two groups is
+statistically significant or merely due to random variation.</p>
 <div id="significance-tests-for-comparing-two-proportions"
 class="section level3">
 <h3>Significance tests for comparing two proportions</h3>
+<p>A hypothesis test used to compare the population proportions from two
+different but independent groups is based on the standardized difference
+in proportion <span class="math inline">\(D\)</span>. Recall that, if
+the samples obtained from each group are sufficiently large, then the
+sampling distribution of <span class="math inline">\(D\)</span> is
+approximately distributed as standard normal. Here’s how we set up a
+two-sample hypothesis test for proportions:</p>
+<p><strong>1. Assumptions</strong></p>
+<ul>
+<li><p>Data constitute a simple random sample</p></li>
+<li><p>The two groups are independent</p></li>
+<li><p><span class="math inline">\(n\hat{p}\)</span> and <span
+class="math inline">\(n(1-\hat{p})\)</span> are both greater than 15.
+Note that <span class="math inline">\(\hat{p}\)</span> here is pooled
+sample proportion (see below)</p></li>
+</ul>
+<p><strong>2. Null and Alternative Hypotheses</strong></p>
+<ul>
+<li>The <strong>null</strong> hypothesis is generally that the two
+population proportions are equal (i.e no difference)</li>
+</ul>
+<p><span class="math display">\[H_0: p_1 = p_2 \ \ \  \text{which is the
+same as} \ \ \ H_0: p_1 - p_2 = 0\]</span></p>
+<ul>
+<li>The alternative hypothesis can be either lower, upper, or two tailed
+just as it was with our univariate tests. The table below gives the
+possible alternative hypotheses and their critical values:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+Critical Value
+</th>
+<th style="text-align:left;">
+Rejection Region
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_{1-\alpha/2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(|Z| \geq Z_{1-\alpha/2}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_\alpha\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z\leq Z_{\alpha}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z_{1-\alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Z\geq Z_{1-\alpha}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. Test statistic</strong></p>
+<ul>
+<li>The null hypothesis is that the two populations are equal (i.e they
+have the same proportion). If the null is true then we can view all of
+the data as coming from from the same distribution. Thus the test
+statistic under the null hypothesis is based on the <i>pooled
+estimate</i> of the population proportion denoted <span
+class="math inline">\(\hat{p}\)</span>:</li>
+</ul>
+<p><span class="math display">\[ \hat{p} = \frac{\text{number of
+successes in both samples}}{\text{total number of observations from both
+samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]</span> The pooled estimate
+combines all of the information from both samples</p>
+<ul>
+<li>Recall that the population standard deviation of the difference in
+proportions is</li>
+</ul>
+<p><span class="math display">\[\sigma_D =
+\sqrt{\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2}}  \]</span></p>
+<p>However, under the null hypothesis the two proportions are equal
+giving</p>
+<p><span class="math display">\[ =
+\sqrt{\frac{p(1-p)}{n_2}+\frac{p(1-p)}{n_2}} \]</span></p>
+<p><span class="math display">\[=
+\sqrt{p(1-p)\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]</span></p>
+<p>We estimate <span class="math inline">\(\sigma_D\)</span> by
+substituting in the <i>pooled estimate</i> of the population
+proportion:</p>
+<p><span class="math display">\[ SE_{D_\text{pooled}} =
+\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]</span></p>
+<p>Combining these elements, the test statistic under a null hypothesis
+of no difference <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span>
+is given by</p>
+<p><span class="math display">\[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2)
+- 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}}
+\sim N(0,1) \]</span></p>
+<p><strong>4. <span class="math inline">\(p\)</span>-value</strong></p>
+<ul>
+<li>The <span class="math inline">\(p\)</span>-values corresponding to
+each alternative hypothesis are listed in the table below</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(p\)</span>-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(|Z| \geq |Z_{obs}||H_0)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \leq Z_{obs}|H_0)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z\geq Z_{obs}|H_0)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>5. Decision rule</strong></p>
+<p><span class="math display">\[\text{Reject} \ \ H_0 \ \ \text{if} \ \
+\text{$p$-value} &lt; \alpha \]</span></p>
+<p><strong>Example - The impact of Covid on scholarly activity?</strong>
+- During the COVID-19 pandemic, as faculty members shifted to working
+from home, women in academic medicine reported decreased manuscript
+submissions and shouldered a disproportionate share of childcare
+responsibilities. A study published in the <i>Journal of the American
+College of Radiology</i> examined the scholarly activity among male and
+female contributors during the COVID-19 Pandemic of 2019 and 2020.
+Specifically, they evaluated the proportion of female contributors
+submitting manuscripts and accepting peer review invitations before
+(April - October, 2019) and after the start of the coronavirus pandemic
+(April - October, 2020) <span
+class="citation">(<strong>mogensen2021impact?</strong>)</span>. A
+summary of the data in this study are given below:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Year
+</th>
+<th style="text-align:left;">
+Number of Manuscripts with Female First Author
+</th>
+<th style="text-align:left;">
+Number of Manuscripts with Male First Author
+</th>
+<th style="text-align:left;">
+All First Authors
+</th>
+<th style="text-align:left;">
+Relative Percentage of Manuscripts with Female First Author
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+April - Octobor 2019
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(140\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(171\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(311\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(140/311 = 0.450\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+April - October 2020
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(172\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(269\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(441\)</span>
+</td>
+<td style="text-align:left;">
+171/441 = 0.387$
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a hypothesis test at the <span
+class="math inline">\(5\%\)</span> significance level to determine if
+the relative percentage of scholarly activity among female scholars was
+<i>significantly reduced</i> after the start of the coronavirus
+pandemic</p>
+<p><strong>Step 1</strong> To check the sample size assumptions of this
+test we must first calculate the pooled relative proportion:</p>
+<p><span class="math display">\[\hat{p} = \frac{140+171}{311+441} =
+0.414 \]</span></p>
+<p>Since the pooled estimate is nearly 0.5 and the sample size is quite
+large at <span class="math inline">\(752\)</span> both <span
+class="math inline">\(n\hat{p}\)</span> and <span
+class="math inline">\(n(1-\hat{p})\)</span> are greater than the
+required <span class="math inline">\(15\)</span>.</p>
+<p><strong>Step 2</strong> We want to test the null hypothesis that
+there is no significant difference in the relative percentage of
+scholarly activity among female scholars before and after the
+pandemic:</p>
+<p><span class="math display">\[ H_0: p_1 - p_2 = 0\]</span> <span
+class="math display">\[ H_A: p_1 - p_2 &lt; 0\]</span></p>
+<p>where <span class="math inline">\(p_1\)</span> is the relative
+proportion of manuscripts with female first authors after the start of
+the pandemic and <span class="math inline">\(p_2\)</span> is the
+relative proportion of manuscripts with female first authors before the
+start of the pandemic. The critical value is <span
+class="math inline">\(Z_{\alpha} = -1.645\)</span>.</p>
+<p><strong>Step 3</strong></p>
+<p>Using the pooled estimate from <strong>Step 1</strong>, the pooled
+standard error of the population difference <span
+class="math inline">\(D\)</span> is</p>
+<p><span class="math display">\[ SE_{D_\text{pooled}} =
+\sqrt{0.414(1-0.414)\left(\frac{1}{311}+\frac{1}{441}\right)} =
+0.0365\]</span></p>
+<p>The test statistic is</p>
+<p><span class="math display">\[Z_{obs} = \frac{(0.387 - 0.450) -
+0}{SE_{D_\text{pooled}}} = -1.711 \]</span></p>
+<p><strong>Step 4</strong></p>
+<p>The <span class="math inline">\(p\)</span>-value is</p>
+<p><span class="math display">\[P(Z \leq -1.711 | H_0 \ \
+\text{True})  = 0.0435\]</span></p>
+<p><strong>Decision</strong></p>
+<p>Since the <span class="math inline">\(p\)</span>-value is less than
+the significance level of <span class="math inline">\(5\%\)</span>, we
+reject the null hypothesis of no difference and conclude that the
+relative proportion of manuscripts with female first authors
+significantly decreased after the start of the COVID-19 pandemic.</p>
+<p><br> <br></p>
+</div>
+<div id="d-as-a-measure-of-association" class="section level3">
+<h3><span class="math inline">\(D\)</span> as a measure of
+association</h3>
+<p>Consider again the difference in proportion <span
+class="math inline">\(D\)</span>. In statistical analysis, we often
+study the relationship between two categorical variables. We are
+regularly interested in whether one variable (the explanatory variable)
+influences or explains the outcomes of another variable (the response
+variable). The statistic <span class="math inline">\(D\)</span> is a
+measure of the strength of statistical association between some grouping
+variable and some response that is measured across those groups.
+Consider two populations (groups) based on some characteristic (e.g.,
+treatment vs. control, male vs. female, etc). For each population the
+response variable records the fraction of the population that relates to
+some category or specific outcome (e.g. patient outcome, preference,
+occurrence of an event). The value of <span
+class="math inline">\(D\)</span> ranges between <span
+class="math inline">\(-1\)</span> and <span
+class="math inline">\(1\)</span> and has the following
+interpretation:</p>
+<p><strong>Interpretation:</strong></p>
+<p>Given <span class="math inline">\(D = p_1 - p_2\)</span> which
+compares the difference in proportion across groups/populations 1 and
+2</p>
+<ul>
+<li><p>values of <span class="math inline">\(-1\)</span> or <span
+class="math inline">\(1\)</span> indicate the strongest possible
+association between the categories of the grouping variable and the
+categories of the response variable</p></li>
+<li><p>values near or at <span class="math inline">\(0\)</span>
+indicates that the explanatory and response variables are independent of
+each other</p></li>
+</ul>
+</div>
+<div id="comparing-two-means" class="section level3">
+<h3>Comparing two means</h3>
+</div>
+<div id="significance-tests-for-comparing-two-means"
+class="section level3">
+<h3>Significance tests for comparing two means</h3>
+</div>
+<div id="comparing-two-independent-groups" class="section level3">
+<h3>Comparing two independent groups</h3>
+</div>
+<div id="comparing-dependent-groups" class="section level3">
+<h3>Comparing dependent groups</h3>
+<p><br> <br> <br> <br></p>
+</div>
+<div id="references" class="section level3 unnumbered">
+<h3 class="unnumbered">References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-steering1989final" class="csl-entry">
+Physicians’ Health Study Research Group*, Steering Committee of the.
+1989. <span>“Final Report on the Aspirin Component of the Ongoing
+Physicians’ Health Study.”</span> <em>New England Journal of
+Medicine</em> 321 (3): 129–35.
+</div>
+</div>
 </div>
 </div>
 
