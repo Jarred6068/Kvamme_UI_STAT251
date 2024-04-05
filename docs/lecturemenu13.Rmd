@@ -561,14 +561,77 @@ Given $D = p_1 - p_2$ which compares the difference in proportion across groups/
   
 ### Comparing two means
 
+Just as we have compared population proportions, we may also be interested in comparing two population means. For example, a teacher may be interested in comparing the average test scores of students in two different classes (Class A and Class B). A social scientist may be interest in whether there is a difference in average salaries between men and women within a company. In any case, we are again dealing with two samples of sizes $n_1$ and $n_2$ which come from populations <i>population 1</i> and <i>population 2</i> and with means as $\mu_1$ and $\mu_2$. 
 
-### Significance tests for comparing two means 
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(Population = c(1, 2),
+                      `Population Proportion` = c('$\\mu_1$', '$\\mu_2$'),
+                      `Sample Size` = c('$n_1$', '$n_2$'),
+                      `Mean` = c('$\\mu_1$', '$\\mu_2$'),
+                      `Stdev` = c('$\\sigma_1$','$\\sigma_2$'),
+                      `Sample Mean` = c('$\\bar{x}_1$', '$\\bar{x}_2$'),
+                      `Sample Stdev` = c('$s_1$','$s_2$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
-### Comparing two independent groups
+
+```
 
 
-### Comparing dependent groups
+Let $\mu_d = \mu_1 - \mu_2$ be the mean difference between the two populations. We can construct confidence intervals to estimate the average difference as well as conduct hypothesis tests to determine if two populations are significantly different.
+
+### A confidence interval for the mean difference $\mu_d$
+
+We will begin by assuming that we are dealing with two independent samples from two distinct populations. The natural estimator of $\mu_d$ is the difference between the sample means 
+
+\[\hat{\mu}_d = \bar{x}_1 - \bar{x}_2\]
+
+To base our inference on the above estimator, we must know its sampling distribution. If we assume that both samples come from populations that normally distributed and under independence, then the distribution of the difference will also be normally distributed and the variances will add:
+
+\[Var[\mu_1 - \mu_2] = \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]
+
+In practice this quantitiy can be estimated by substituting in the sample variances. This gives the following standard deviation for the estimator $\hat{\mu}_d$
+
+\[SE(\hat{\mu}_d) = \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}  \]
+
+Just as it was for a single mean, the sampling distribution for the difference in two means is $t$-distributed, althought the degrees of freedom are calculated differently. Under the assumption of independence, the mean difference follows a $t$ distribution with degrees of freedom equal to the smaller of $n_1 - 1$ and $n_2 - 1$
+
+\[\hat{m}_d \sim t(\min(n_1 - 1, n_2 - 1)) \]
+
+The margin of error for estimating the mean difference at the $(1-\alpha)\%$ level is given by
+
+\[m = t_{1-\alpha/2} \times SE(\hat{\mu}_d) \]
+
+which gives the following confidence interval for the mean difference
+
+\[(\bar{x}_1 - \bar{x}_2) \pm  t_{1-\alpha/2} \times SE(\hat{\mu}_d)\]
+
+**Example: Comparing Customer Satisfaction Levels** - Suppose we want to compare the customer satisfaction levels of two competing cable television companies, Company 1 and Company 2. We randomly select customers from each company and ask them to rate their cable companies on a five-point scale (with 1 being least satisfied and 5 most satisfied). The data are summarized in the table below:
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Group` = c('Company 1', 'Company 2'),
+                      `Number of customers` = c(174, 355),
+                      `Sample Mean Rating` = c(4.2, 3.8),
+                      `Sample Stdev` = c(0.8, 1.1))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+
+Estimate the difference in mean satisfaction levels between the two companies at the $95\%$ confidence level.
 
 
 <br>
