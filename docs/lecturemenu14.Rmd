@@ -108,6 +108,19 @@ kable(df, format = 'html', digits = 2,
 
 Estimate the difference in mean satisfaction levels between the two companies at the $95\%$ confidence level.
 
+Let $\mu_1$ represent the mean satisfaction score for company 1 and $\mu_2$ represent the mean satisfaction score for company 2. The estimated mean difference in customer satisfaction is 
+\[\hat{\mu_d} = 4.2 - 3.8 = 0.4 \]
+
+Since the confidence level is $95\%$ the standard score will be approximately the $t_{1-0.05/2} = t_{0.975}$ or the $97.5th$ percentile of a $t$-distribution with $173$ degrees of freedom. Since the $t$ and $z$ distributions are approximately for sample sizes $\geq 30$ we will use the standard score $1.96$. The standard error of the difference is given by 
+
+\[SE(\hat{\mu}_d) = \sqrt{\frac{0.8^2}{174}+\frac{1.1^2}{355}} =0.0842  \]
+
+Which yields the follow margin of error
+
+\[ m = 1.96 (0.0842) = 0.165\]
+
+The $95\%$ confidence interval is $[0.24, 0.56]$. Thus, at the $95\%$ confidence level we estimate the mean difference in customer satisfaction score to be no less than $0.24$ and no more than $0.56$. Notice that the above confidence interval does not span zero and thus likely constitutes a real, but small, difference between the companies
+
 ### A significance test for comparing two means: independent samples
 
 We can also test for a difference between two groups on a quantitative response. variable by comparing their means. The set up for a significance test for a difference in two means is more or less the same as we saw previously for two proportions, however, the calculations now involve $\bar{x}_1$, $\bar{x}_2$, $s_1$ and $s_2$. Recall that, under the assumption of normality for both populations and when using the sample standard deviations to estimate $\sigma_1$ and $\sigma_2$ the difference in means is $t$-distributed. We will see that test statistic $t_{obs}$ is the standardized difference and has approximately the same distribution. Here’s how we set up a two-sample hypothesis test for means:

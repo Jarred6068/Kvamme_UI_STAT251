@@ -708,6 +708,35 @@ Company 2
 <p>Estimate the difference in mean satisfaction levels between the two
 companies at the <span class="math inline">\(95\%\)</span> confidence
 level.</p>
+<p>Let <span class="math inline">\(\mu_1\)</span> represent the mean
+satisfaction score for company 1 and <span
+class="math inline">\(\mu_2\)</span> represent the mean satisfaction
+score for company 2. The estimated mean difference in customer
+satisfaction is <span class="math display">\[\hat{\mu_d} = 4.2 - 3.8 =
+0.4 \]</span></p>
+<p>Since the confidence level is <span
+class="math inline">\(95\%\)</span> the standard score will be
+approximately the <span class="math inline">\(t_{1-0.05/2} =
+t_{0.975}\)</span> or the <span class="math inline">\(97.5th\)</span>
+percentile of a <span class="math inline">\(t\)</span>-distribution with
+<span class="math inline">\(173\)</span> degrees of freedom. Since the
+<span class="math inline">\(t\)</span> and <span
+class="math inline">\(z\)</span> distributions are approximately for
+sample sizes <span class="math inline">\(\geq 30\)</span> we will use
+the standard score <span class="math inline">\(1.96\)</span>. The
+standard error of the difference is given by</p>
+<p><span class="math display">\[SE(\hat{\mu}_d) =
+\sqrt{\frac{0.8^2}{174}+\frac{1.1^2}{355}} =0.0842  \]</span></p>
+<p>Which yields the follow margin of error</p>
+<p><span class="math display">\[ m = 1.96 (0.0842) = 0.165\]</span></p>
+<p>The <span class="math inline">\(95\%\)</span> confidence interval is
+<span class="math inline">\([0.24, 0.56]\)</span>. Thus, at the <span
+class="math inline">\(95\%\)</span> confidence level we estimate the
+mean difference in customer satisfaction score to be no less than <span
+class="math inline">\(0.24\)</span> and no more than <span
+class="math inline">\(0.56\)</span>. Notice that the above confidence
+interval does not span zero and thus likely constitutes a real, but
+small, difference between the companies</p>
 </div>
 <div
 id="a-significance-test-for-comparing-two-means-independent-samples"
