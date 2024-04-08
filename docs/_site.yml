@@ -44,6 +44,8 @@ navbar:
             href: lecturemenu12.html
           - text: 'Week 13'
             href: lecturemenu13.html
+          - text: 'Week 14'
+            href: lecturemenu14.html
         - text: 'Lecture Slides'
           href: lecslidesindex.html
     - text: 'Homeworks'

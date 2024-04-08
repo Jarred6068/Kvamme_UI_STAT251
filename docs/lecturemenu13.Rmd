@@ -445,7 +445,7 @@ kable(df, format = 'html', digits = 2,
   
   * Recall that the population standard deviation of the difference in proportions is 
   
-  \[\sigma_D = \sqrt{\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2}}  \]
+  \[\sigma_D = \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}  \]
   
   However, under the null hypothesis the two proportions are equal giving
   

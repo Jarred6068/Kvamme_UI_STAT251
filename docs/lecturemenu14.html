@@ -318,6 +318,9 @@ $(document).ready(function () {
         <li>
           <a href="lecturemenu13.html">Week 13</a>
         </li>
+        <li>
+          <a href="lecturemenu14.html">Week 14</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -533,16 +536,13 @@ class="math inline">\(\mu_2\)</span>.</p>
 Population
 </th>
 <th style="text-align:left;">
-Population Proportion
+Population Mean
+</th>
+<th style="text-align:left;">
+Population Stdev
 </th>
 <th style="text-align:left;">
 Sample Size
-</th>
-<th style="text-align:left;">
-Mean
-</th>
-<th style="text-align:left;">
-Stdev
 </th>
 <th style="text-align:left;">
 Sample Mean
@@ -561,13 +561,10 @@ Sample Stdev
 <span class="math inline">\(\mu_1\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(n_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_1\)</span>
-</td>
-<td style="text-align:left;">
 <span class="math inline">\(\sigma_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1\)</span>
 </td>
 <td style="text-align:left;">
 <span class="math inline">\(\bar{x}_1\)</span>
@@ -584,13 +581,10 @@ Sample Stdev
 <span class="math inline">\(\mu_2\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(n_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_2\)</span>
-</td>
-<td style="text-align:left;">
 <span class="math inline">\(\sigma_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_2\)</span>
 </td>
 <td style="text-align:left;">
 <span class="math inline">\(\bar{x}_2\)</span>
@@ -624,9 +618,10 @@ difference will also be normally distributed and the variances will
 add:</p>
 <p><span class="math display">\[Var[\mu_1 - \mu_2] =
 \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]</span></p>
-<p>In practice, <span class="math inline">\(\sigma_i^2\)</span> is an
-unknown population parameter but can be estimated by substituting in the
-sample variances <span class="math inline">\(s_1^2\)</span> and <span
+<p>In practice, <span class="math inline">\(\sigma_1^2\)</span> and
+<span class="math inline">\(\sigma_2^2\)</span> are unknown population
+parameters but can be estimated by substituting in the sample variances
+<span class="math inline">\(s_1^2\)</span> and <span
 class="math inline">\(s_2^2\)</span>. This gives the following standard
 deviation for the estimator <span
 class="math inline">\(\hat{\mu}_d\)</span></p>
@@ -643,8 +638,8 @@ of freedom is quite messy and difficult to compute:</p>
 - 1}\left(\frac{s_1^2}{n_1}\right)^2 +
 \frac{1}{n_2-1}\left(\frac{s_2^2}{n_2}\right)^2} \]</span></p>
 <p>We will instead compute the degrees of freedom by taking the smaller
-the smaller of <span class="math inline">\(n_1-1\)</span> and <span
-class="math inline">\(n_2 - 1\)</span> which is a lower bound of the
+of <span class="math inline">\(n_1-1\)</span> and <span
+class="math inline">\(n_2 - 1\)</span> which is a lower bound on the
 formula above</p>
 <p><span class="math display">\[\hat{\mu}_d \sim t(\min(n_1 - 1, n_2 -
 1)) \]</span></p>
@@ -719,31 +714,34 @@ id="a-significance-test-for-comparing-two-means-independent-samples"
 class="section level3">
 <h3>A significance test for comparing two means: independent
 samples</h3>
-<p>We can compare two groups on a quantitative response variable by
-comparing their means A hypothesis test used to compare the population
-proportions from two different but independent groups is based on the
-standardized difference in proportion <span
-class="math inline">\(D\)</span>. Recall that, if the samples obtained
-from each group are sufficiently large, then the sampling distribution
-of <span class="math inline">\(D\)</span> is approximately distributed
-as standard normal. Here’s how we set up a two-sample hypothesis test
-for proportions:</p>
+<p>We can also test for a difference between two groups on a
+quantitative response. variable by comparing their means. The set up for
+a significance test for a difference in two means is more or less the
+same as we saw previously for two proportions, however, the calculations
+now involve <span class="math inline">\(\bar{x}_1\)</span>, <span
+class="math inline">\(\bar{x}_2\)</span>, <span
+class="math inline">\(s_1\)</span> and <span
+class="math inline">\(s_2\)</span>. Recall that, under the assumption of
+normality for both populations and when using the sample standard
+deviations to estimate <span class="math inline">\(\sigma_1\)</span> and
+<span class="math inline">\(\sigma_2\)</span> the difference in means is
+<span class="math inline">\(t\)</span>-distributed. We will see that
+test statistic <span class="math inline">\(t_{obs}\)</span> is the
+standardized difference and has approximately the same distribution.
+Here’s how we set up a two-sample hypothesis test for means:</p>
 <p><strong>1. Assumptions</strong></p>
 <ul>
 <li><p>Data constitute a simple random sample</p></li>
 <li><p>The two groups are independent</p></li>
-<li><p><span class="math inline">\(n\hat{p}\)</span> and <span
-class="math inline">\(n(1-\hat{p})\)</span> are both greater than 15.
-Note that <span class="math inline">\(\hat{p}\)</span> here is pooled
-sample proportion (see below)</p></li>
+<li><p>Both populations are normally distributed</p></li>
 </ul>
 <p><strong>2. Null and Alternative Hypotheses</strong></p>
 <ul>
 <li>The <strong>null</strong> hypothesis is generally that the two
-population proportions are equal (i.e no difference)</li>
+population means are equal (i.e no difference)</li>
 </ul>
-<p><span class="math display">\[H_0: p_1 = p_2 \ \ \  \text{which is the
-same as} \ \ \ H_0: p_1 - p_2 = 0\]</span></p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 \ \ \  \text{which is
+the same as} \ \ \ H_0: \mu_1 - \mu_2 = 0\]</span></p>
 <ul>
 <li>The alternative hypothesis can be either lower, upper, or two tailed
 just as it was with our univariate tests. The table below gives the
@@ -766,75 +764,52 @@ Rejection Region
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z_{1-\alpha/2}\)</span>
+<span class="math inline">\(t_{1-\alpha/2}\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(|Z| \geq Z_{1-\alpha/2}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(Z_\alpha\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(Z\leq Z_{\alpha}\)</span>
+<span class="math inline">\(|t| \geq t_{1-\alpha/2}\)</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z_{1-\alpha}\)</span>
+<span class="math inline">\(t_\alpha\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z\geq Z_{1-\alpha}\)</span>
+<span class="math inline">\(t\leq t_{\alpha}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{1-\alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t\geq t_{1-\alpha}\)</span>
 </td>
 </tr>
 </tbody>
 </table>
 <p><strong>3. Test statistic</strong></p>
 <ul>
-<li>The null hypothesis is that the two populations are equal (i.e they
-have the same proportion). If the null is true then we can view all of
-the data as coming from from the same distribution. Thus the test
-statistic under the null hypothesis is based on the <i>pooled
-estimate</i> of the population proportion denoted <span
-class="math inline">\(\hat{p}\)</span>:</li>
+<li>Under the null hypotheses the test statistic is the standardized
+difference</li>
 </ul>
-<p><span class="math display">\[ \hat{p} = \frac{\text{number of
-successes in both samples}}{\text{total number of observations from both
-samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]</span> The pooled estimate
-combines all of the information from both samples</p>
-<ul>
-<li>Recall that the population standard deviation of the difference in
-proportions is</li>
-</ul>
-<p><span class="math display">\[\sigma_D =
-\sqrt{\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2}}  \]</span></p>
-<p>However, under the null hypothesis the two proportions are equal
-giving</p>
-<p><span class="math display">\[ =
-\sqrt{\frac{p(1-p)}{n_2}+\frac{p(1-p)}{n_2}} \]</span></p>
-<p><span class="math display">\[=
-\sqrt{p(1-p)\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]</span></p>
-<p>We estimate <span class="math inline">\(\sigma_D\)</span> by
-substituting in the <i>pooled estimate</i> of the population
-proportion:</p>
-<p><span class="math display">\[ SE_{D_\text{pooled}} =
-\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]</span></p>
-<p>Combining these elements, the test statistic under a null hypothesis
-of no difference <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span>
-is given by</p>
-<p><span class="math display">\[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2)
-- 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}}
-\sim N(0,1) \]</span></p>
+<p><span class="math display">\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2)
+- (\mu_1 -
+\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}  \]</span></p>
+<p>The above test statistic is only approximately <span
+class="math inline">\(t\)</span>-distributed. However, the lower bound
+for the degrees of freedom given by <span class="math inline">\(\min(n_1
+- 1, n_2 - 1)\)</span> generally leads to conservative estimates and
+tests and is thus favorable.</p>
 <p><strong>4. <span class="math inline">\(p\)</span>-value</strong></p>
 <ul>
 <li>The <span class="math inline">\(p\)</span>-values corresponding to
@@ -854,26 +829,26 @@ Alternative Hypothesis
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(P(|Z| \geq |Z_{obs}||H_0)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(Z \leq Z_{obs}|H_0)\)</span>
+<span class="math inline">\(P(|t| \geq |t_{obs}||H_0)\)</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(P(Z\geq Z_{obs}|H_0)\)</span>
+<span class="math inline">\(P(t \leq t_{obs}|H_0)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(t\geq t_{obs}|H_0)\)</span>
 </td>
 </tr>
 </tbody>
@@ -881,6 +856,367 @@ Alternative Hypothesis
 <p><strong>5. Decision rule</strong></p>
 <p><span class="math display">\[\text{Reject} \ \ H_0 \ \ \text{if} \ \
 \text{$p$-value} &lt; \alpha \]</span></p>
+<div id="the-pooled-t-test" class="section level4">
+<h4>The pooled <span class="math inline">\(t\)</span> test</h4>
+<p>There is one situation where the above test statistic has exactly a
+<span class="math inline">\(t\)</span>-distribution and that occurs when
+we can assume that both populations have the same standard deviation. In
+this case, we need only substitute a single sample standard deviation
+for <span class="math inline">\(\sigma_1\)</span> and <span
+class="math inline">\(\sigma_2\)</span>. We call this the pooled
+estimate of the standard deviation:</p>
+<p><span class="math display">\[ s_{pooled}^2 \frac{(n_1 - 1)s_1^2 +
+(n_2 -1)s_2^2}{n_1+n_2 - 2}\]</span></p>
+<p><span class="math inline">\(s_{pooled}^2\)</span> is called the
+<strong>pooled estimator</strong> of <span
+class="math inline">\(\sigma_2\)</span> because it combines the
+information from both samples.</p>
+<p>The test statistic under the assumption of equal variances
+becomes</p>
+<p><span class="math display">\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2)
+- (\mu_1 -
+\mu_2)}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}  \]</span></p>
+<p>which is exactly distributed as a <span
+class="math inline">\(t\)</span> distribution with <span
+class="math inline">\(n_1+n_2 - 2\)</span> degrees of freedom. In
+practice, a significance test for determining equality of variances can
+be run prior to the <span class="math inline">\(t\)</span>-test to
+determine if the pooled or unpooled test statistic should be used. More
+information about this test can be found <a href="">here</a></p>
+<p><strong>Example: NCAA Womens Basketball</strong> - Sunday April 7th
+South Carolina and Iowa contended for the NCAA womens basketball
+championship. Consider the following table which gives the opponent and
+number of points scored for both teams in their last <span
+class="math inline">\(15\)</span> games leading up to the
+championship.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+South Carolina
+</th>
+<th style="text-align:left;">
+Matchup
+</th>
+<th style="text-align:left;">
+<ul>
+<li></th>
+<th style="text-align:right;">
+Iowa
+</th>
+<th style="text-align:left;">
+Matchup
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+NC State
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+UConn
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Oregon State
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+LSU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Indiana
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:left;">
+Colorado
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+UNC
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+West Virginia
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+Presbyterian
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+Holy Cross
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+LSU
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+Nebraska
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Tenessee
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+Michigan
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Texas A&amp;M
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+Penn State
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Tenessee
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:left;">
+Ohio State
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:left;">
+Arkansas
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:left;">
+Minnesota
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:left;">
+Kentucky
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:left;">
+Illinois
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+Alabama
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Indiana
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+106
+</td>
+<td style="text-align:left;">
+Michigan
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Tenessee
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Nebraska
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:left;">
+UConn
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+111
+</td>
+<td style="text-align:left;">
+Penn State
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<p>The summary of the last <span class="math inline">\(15\)</span> games
+is given below:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Population
+</th>
+<th style="text-align:left;">
+Population Mean
+</th>
+<th style="text-align:left;">
+Sample Size
+</th>
+<th style="text-align:right;">
+Sample Mean
+</th>
+<th style="text-align:right;">
+Sample Stdev
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Iowa
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1 = 15\)</span>
+</td>
+<td style="text-align:right;">
+90.67
+</td>
+<td style="text-align:right;">
+14.21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+South Carolina
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_2 = 15\)</span>
+</td>
+<td style="text-align:right;">
+80.40
+</td>
+<td style="text-align:right;">
+10.57
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a two sample <span class="math inline">\(t\)</span>-test at
+the <span class="math inline">\(\alpha = 0.05\)</span> significance
+level to determine if there is a significant difference between the
+championship teams in the mean number of points scored per game.</p>
+</div>
 </div>
 <div id="a-significance-test-for-comparing-two-means-dependent-samples"
 class="section level3">
