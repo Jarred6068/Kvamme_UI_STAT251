@@ -6,7 +6,7 @@ output:
 always_allow_html: true
 header-includes:
   \usepackage{float}
-bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home4bibs.bib
+bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home5bibs.bib
 ---
 
 
@@ -40,14 +40,108 @@ Define the following terms/concepts
 
 * b.) **Parametric statistics**
 
-* c.) Describe the advantages and disadvantages of $Non-parametric$ significance tests
+* c.) Describe the advantages and disadvantages of **Non-parametric** significance tests
 
 * d.) **Explanatory Variable**
 
 * e.) **Response Variable**
 
+
+### Confidence intervals and two-tailed tests:
+
+$\bf (2.)$ For parts (a) - (d) given the confidence interval for the parameter under the null hypothesis, use the point estimate to determine whether the null hypothesis $H_0$ should be **Rejected** or **Not Rejected** and denote significance level $\alpha$
+
+a.) $H_0: \mu_0 = -2$ <br> 
+  $H_A: \mu \neq \mu_0$ <br> 
+  $95\%$ CI for $\mu_0 \in [-3.0, -2.4]$ <br> 
+  $\bar{x} = -2.7$
+  \[ \text{Decision} = \_\_\_\_\_\_\_ \\
+  \alpha = \_\_\_\_\_\_ \] 
+
+b.) $H_0: p_0 = 0.9$ <br> 
+$H_A: p \neq p_0$ <br>
+$99\%$ CI for $p_0 \in [0.972, 0.968]$ <br>
+$\hat{p} = 0.97$ 
+
+\[ \text{Decision} = \_\_\_\_\_\_\_ \\
+  \alpha = \_\_\_\_\_\_ \]
+
+c.) $H_0: \mu_0 = 0$ <br> 
+$H_A: \mu \neq \mu_0$ <br>
+$90\%$ CI for $\mu_0 \in [-3.63, 7.49]$ <br> 
+$\bar{x} = 1.93$
+
+\[ \text{Decision} = \_\_\_\_\_\_\_ \\
+  \alpha = \_\_\_\_\_\_ \]
+
+d.) $H_0: \mu_0 = 50$<br> 
+$H_A: \mu \neq \mu_0$<br>
+$85\%$ CI for $\mu_0 \in [93.6, 139]$<br> 
+$\bar{x} = 116.3$
+
+\[ \text{Decision} = \_\_\_\_\_\_\_ \\
+  \alpha = \_\_\_\_\_\_ \]
+
 ### The sign test
 
+
+$\bf (1.)$ A dermatologist is conducting an experiment to test whether a new topical skin care cream reduces the appearance facial of acne. From a sample of $20$ patients with acne the researcher gives each patient a score from $1-5$ where (5) representing the severity of their acne before the topical cream is applied. Patients are then asked to use the topical cream for $10$ days. Following the $10$ day treatment, patients are given a new acne score between $1-5$. The data for this experiment is given in the table below:
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(555)
+x = sample(c(1:5), 20, prob = c(0.1, 0.2, 0.2, 0.2, 0.3), replace = T)
+tab = cbind.data.frame(`Patient Number` = c(1:20), 
+                       `Score Before Treatment` = x,
+                       `Score After Treatment` = sample(c(1:5), 20, prob = c(0.3, 0.3, 0.2, 0.1, 0.1), replace = T),
+                       Difference = rep("", 20),
+                       Sign = rep("", 20))
+
+kable(tab, format = 'html', digits = 3,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+The dermatologist is particularly interested in whether the new product can improve the scars' appearance. They plan to test the null hypothesis $H_0: p_0 = 0.5$ using a right-tailed test with alternative hypothesis $H_A: p>0.5$ using a sign test to determine if there is enough evidence to conclude that the topical cream a positive effect on reducing facial acne at the $\alpha = 0.05$ level.
+
+  a.) Fill in the table above by computing the difference between in acne scores before and after applying the skin care cream. Record the sign of each difference and report the total number of positive signs $s$
+
+  b.) What does a "positive" sign indicate in this experiment? 
+
+  c.) Compute the $p$-value for the sign test
+
+  d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that the topical cream product has a positive effect on reducing the appearance of acne. Interpret your decision in context. 
+
+
+$\br (3)$ In a boreal forest, researchers conducted an experiment to study how herbivores respond to variations in food plant quality and quantity at the stand level. They fertilized young forest stands and observed herbivore use over the subsequent year. The data collected included the number of animal tracks in in the fertilized and control plots [@ball2000response]
+
+```{r, echo=F, warning=F, message=F}
+herbivore_data <- cbind.data.frame(
+  Observation = 1:12,
+  `Number of Tracks In Fertilized plots` = c(15, 12, 18, 14, 16, 13, 17, 14, 19, 15, 11, 16),
+  `Number of Tracks In Control Plots` = c(10, 9, 11, 8, 12, 10, 11, 9, 13, 10, 8, 12),
+  `Difference` = rep('',12),
+  `Sign` = rep('',12)
+)
+
+kable(herbivore_data, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+The researchers are interested in whether or not fertilizing stands increased herbaceous activity. Conduct a sign test at the $\alpha = 0.05$ signifcance level to determine if fertilized plots have significantly more herbivore tracks than control plots
+
+
+
+a.) Fill in the table above by computing the difference in animal tracks between the fertilized and control plots. Record the sign of each difference and report the total number of positive signs $s$
+
+  b.) What does a "positive" sign indicate in this experiment? 
+
+  c.) Compute the $p$-value for the sign test
+
+  d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that fertilized stands have more herbivore activity.
 
 ### Comparing two population proportions $p_1$ and $p_2$
 

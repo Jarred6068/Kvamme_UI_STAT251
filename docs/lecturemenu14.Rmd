@@ -1,5 +1,5 @@
 ---
-title: "Week 13 Notes"
+title: "Week 14 Notes"
 author: "STAT 251 Section 03"
 output:
   html_document: default
@@ -32,7 +32,7 @@ source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat
   
 ### Comparing two means
 
-Just as we have compared population proportions, we may also be interested in comparing two population means. For example, a teacher may be interested in comparing the average test scores of students in two different classes (Class A and Class B). A social scientist may be interest in whether there is a difference in average salaries between men and women within a company. In any case, we are again dealing with two samples of sizes $n_1$ and $n_2$ which come from populations <i>population 1</i> and <i>population 2</i> and with means as $\mu_1$ and $\mu_2$. 
+Last week we learned how to compare two populations across a qualitative response variable by comparing their relative proportions. Now we will learn how we can compare two groups on a quantitative response variable by comparing their means. There are many cases where researchers might be interesting comparing groups across a quantitative variable. For example, a teacher may be interested in comparing the average test scores of students in two different classes (Class A and Class B). A social scientist may be interest in whether there is a difference in salaries between men and women within a company. In any case, we are again dealing with two samples of sizes $n_1$ and $n_2$ which come from populations <i>population 1</i> and <i>population 2</i> and with means as $\mu_1$ and $\mu_2$. 
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
@@ -62,17 +62,21 @@ We will begin by assuming that we are dealing with two independent samples from 
 
 \[\hat{\mu}_d = \bar{x}_1 - \bar{x}_2\]
 
-To base our inference on the above estimator, we must know its sampling distribution. If we assume that both samples come from populations that normally distributed and under independence, then the distribution of the difference will also be normally distributed and the variances will add:
+To base our inference on the above estimator, we must know its sampling distribution. If we assume that both samples come from populations that are normally distributed, then the distribution of the difference will also be normally distributed and the variances will add:
 
 \[Var[\mu_1 - \mu_2] = \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]
 
-In practice this quantitiy can be estimated by substituting in the sample variances. This gives the following standard deviation for the estimator $\hat{\mu}_d$
+In practice, $\sigma_i^2$ is an unknown population parameter but can be estimated by substituting in the sample variances $s_1^2$ and $s_2^2$. This gives the following standard deviation for the estimator $\hat{\mu}_d$
 
 \[SE(\hat{\mu}_d) = \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}  \]
 
-Just as it was for a single mean, the sampling distribution for the difference in two means is $t$-distributed, althought the degrees of freedom are calculated differently. Under the assumption of independence, the mean difference follows a $t$ distribution with degrees of freedom equal to the smaller of $n_1 - 1$ and $n_2 - 1$
+Just as it was for a single mean, estimating the population variances with the sample variances adds additional uncertainty. Thus, the the sampling distribution for the difference in two means is $t$-distributed, although the degrees of freedom are calculated differently. The actual formula for the degrees of freedom is quite messy and difficult to compute:
 
-\[\hat{m}_d \sim t(\min(n_1 - 1, n_2 - 1)) \]
+\[df = \frac{\left(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}\right)^2}{ \frac{1}{n_1 - 1}\left(\frac{s_1^2}{n_1}\right)^2 + \frac{1}{n_2-1}\left(\frac{s_2^2}{n_2}\right)^2} \]
+
+We will instead compute the degrees of freedom by taking the smaller the smaller of $n_1-1$ and $n_2 - 1$ which is a lower bound of the formula above 
+
+\[\hat{\mu}_d \sim t(\min(n_1 - 1, n_2 - 1)) \]
 
 The margin of error for estimating the mean difference at the $(1-\alpha)\%$ level is given by
 
@@ -104,6 +108,95 @@ kable(df, format = 'html', digits = 2,
 
 Estimate the difference in mean satisfaction levels between the two companies at the $95\%$ confidence level.
 
+### A significance test for comparing two means: independent samples
+
+We can compare two groups on a quantitative response variable by comparing their means A hypothesis test used to compare the population proportions from two different but independent groups is based on the standardized difference in proportion $D$. Recall that, if the samples obtained from each group are sufficiently large, then the sampling distribution of $D$ is approximately distributed as standard normal. Here’s how we set up a two-sample hypothesis test for proportions:
+
+**1. Assumptions**
+
+  * Data constitute a simple random sample 
+  
+  * The two groups are independent
+  
+  * $n\hat{p}$ and $n(1-\hat{p})$ are both greater than 15. Note that $\hat{p}$ here is pooled sample proportion (see below)
+
+**2. Null and Alternative Hypotheses**
+
+  * The **null** hypothesis is generally that the two population proportions are equal (i.e no difference)
+  
+  \[H_0: p_1 = p_2 \ \ \  \text{which is the same as} \ \ \ H_0: p_1 - p_2 = 0\]
+  
+  * The alternative hypothesis can be either lower, upper, or two tailed just as it was with our univariate tests. The table below gives the possible alternative hypotheses and their critical values:
+  
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
+                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_\\alpha$','$Z_{1-\\alpha}$'),
+                      `Rejection Region` = c('$|Z| \\geq Z_{1-\\alpha/2}$',
+                                             '$Z\\leq Z_{\\alpha}$',
+                                             '$Z\\geq Z_{1-\\alpha}$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+**3. Test statistic**
+
+  * The null hypothesis is that the two populations are equal (i.e they have the same proportion). If the null is true then we can view all of the data as coming from from the same distribution. Thus the test statistic under the null hypothesis is based on the <i>pooled estimate</i> of the population proportion denoted $\hat{p}$:
+  
+  \[ \hat{p} = \frac{\text{number of successes in both samples}}{\text{total number of observations from both samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]
+  The pooled estimate combines all of the information from both samples
+  
+  * Recall that the population standard deviation of the difference in proportions is 
+  
+  \[\sigma_D = \sqrt{\frac{p_1(1-p_1)}{n_2}+\frac{p_2(1-p_2)}{n_2}}  \]
+  
+  However, under the null hypothesis the two proportions are equal giving
+  
+  \[ = \sqrt{\frac{p(1-p)}{n_2}+\frac{p(1-p)}{n_2}} \]
+  
+  \[= \sqrt{p(1-p)\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]
+  
+  We estimate $\sigma_D$ by substituting in the <i>pooled estimate</i> of the population proportion:
+  
+  \[ SE_{D_\text{pooled}} = \sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}\]
+  
+  Combining these elements, the test statistic under a null hypothesis of no difference $H_0: p_1 - p_2 = 0$ is given by 
+  
+  \[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_2}+\frac{1}{n_2}\right)}} \sim N(0,1) \]
+  
+
+**4. $p$-value**
+
+  * The $p$-values corresponding to each alternative hypothesis are listed in the table below
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
+                      `$p$-value` = c('$P(|Z| \\geq |Z_{obs}||H_0)$',
+                                             '$P(Z \\leq Z_{obs}|H_0)$',
+                                             '$P(Z\\geq Z_{obs}|H_0)$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+**5. Decision rule**
+
+  \[\text{Reject} \ \ H_0 \ \ \text{if} \ \ \text{$p$-value} < \alpha \]
+
+
+### A significance test for comparing two means: dependent samples
 
 <br>
 <br>
