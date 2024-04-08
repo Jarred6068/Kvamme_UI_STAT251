@@ -6,7 +6,7 @@ output:
 always_allow_html: true
 header-includes:
   \usepackage{float}
-bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home4bibs.bib
+bibliography: 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home4bibs.bib'
 ---
 
 

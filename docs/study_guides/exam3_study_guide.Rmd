@@ -1,0 +1,311 @@
+---
+title: "Exam 3 Study Guide"
+author: "STAT 251 Section 03"
+date: "2024-04-08"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
+library(kableExtra)
+library(knitr)
+library(latex2exp)
+library(gridExtra)
+library(ggpubr)
+library(ggthemes)
+library(plyr)
+```
+
+# Exam Logistics:
+
+  * The exam will is scheduled for Wednesday April 17th and it will be available to take online in Canvas through the following Sunday April 21st
+  
+  * You will have 2 hours to complete the exam once your start it
+  
+  * I will host an open zoom session for students to ask questions and reach out in case they have problems during the exam - the link will be provided [here](link here)
+  
+  * The exam will be about 20 - 25 questions long and will be open book/note
+
+# Content To Study
+
+This exam will cover material from Lectures 15 - 26 (Week 8 to beginning of Week 14)
+
+### Concepts and terminiology
+
+Know/be able to define the following terms and concepts:
+
+  * know the conditions which make the $t$ distribution equal to the $z$ distribution
+  
+  * **The Central Limit Theorem (CLT)** a fundamental concept in statistics that states that the sampling distribution of the sample mean or sample proportion approaches a normal distribution as the sample size increases, regardless of the shape of the population distribution, as long as the sample size is sufficiently large.
+
+  * **Margin of error** - is the largest distance between an estimate and a value that is not an outlier. It measures the uncertainty or precision associated with estimating a population parameter (such as a population mean or proportion) by quantifying the amount by which a sample estimate might deviate from the true population parameter.
+  
+  * **Confidence level** - the probability that the interval will contain the true parameter value before the data are gathered</span>
+  
+  * **Critical value** - The point on the distribution of the test statistic that defines a set of values that call for rejecting the null hypothesis - i.e the value which defines the rejection region of a test.
+  
+  * **Statistical significance** - A statistical result that is decidedly not due to “ordinary variation” in the data (i.e., not due to chance or not a coincidence)
+  
+  * **Statistical test** - a type of statistical inference used to decide whether an observed result is statistically significant
+  
+  * **$p$-value** - the probability of observing a value as extreme or more extreme than the test statistic under the assumption that the null hypothesis is true
+  
+  * **Null hypothesis** - The hypothesis of "no effect". It usually states that the population parameter is equal to some value
+  
+  * **Alternative hypothesis** - The hypothesis of "effect". It usually states that the population parameter is in some range of value
+  
+  * **Test statistic** A statistic which measures the distance between the point estimate of the parameter and the hypothesized value of the parameter under the null hypothesis
+  
+  * **Rejection region** the interval, measured in the sampling distribution of the statistic under study, that leads to rejection of the null hypothesis $H_0$ in a significance test.
+  
+  * **Type I Error** - a false positive test result: rejecting the null hypothesis when the null hypothesis is true.  
+  
+  * **Type II Error** - a false negative test result: failing to reject the null hypothesis when the alternative hypothesis is true.
+  
+  * **Statistical Power** - the probability of rejecting the null hypothesis when the alternative is true.
+  
+  * Know what factors influence the power of a significance test and what can be done to increase the power of a significance test
+  
+  * Know the definitions and differences between **Parametric** vs **Non-parametric** significance tests
+		
+	* Know the advantages and disadvantages of **Parametric** vs **Non-parametric** significance tests
+	
+	* Know how a confidence interval relates to a two-tailed statistical test and how to use a confidence interval to make a decision about a significance test.
+
+## Confidence intervals
+
+  * Understand the “anatomy” of a confidence interval (i.e., point estimate, standard score, standard error, and margin of error). Be able to identify each part of a confidence interval.
+		
+  \[\text{point estimate}\pm \text{standard score} \times \text{standard error} \]
+  
+  or 
+  
+\[\text{point estimate}\pm \text{margin of error} \]
+	
+  * What effect does increasing the confidence level have on the margin of error and the confidence interval?
+  
+  * What effect does increasing the sample size have on the margin of error and the confidence interval?
+  
+  * Know the correct way(s) to report a confidence interval
+  
+    * **E.g For a $95\%$ Confidence Level:** “At the $95\%$ confidence level, we estimate that the population proportion (or mean) is no less than $[$*insert lower bound*$]$ but no greater than $[$*insert upper bound*$]$”
+
+  * Understand why it is incorrect to talk about a confidence interval in a probabilistic way
+  
+  * understand that the confidence level of a confidence interval relates to the long-run frequency of CI’s that will cover the true value of the parameter
+
+<br>
+<br>
+
+#### Computing a confidence interval for estimating $p$ with $\hat{p}$**
+  
+\[ \hat{p} \pm z\times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
+  
+  * **Assumptions**: sampling with replacement, requires large $n$, only valid when
+  
+\[ n\hat{p} \geq 15 \ \ \text{and} \ \ n(1-\hat{p}) \geq 15 \]
+
+<br>
+<br>
+
+#### Computing a confidence interval for estimate $\mu$ with $\bar{x}$ 
+
+\[ \bar{x} \pm t\times \frac{s}{\sqrt{n}} \]
+
+  * $t$ is the standard score from a $t$-distribution with $n-1$ degrees of freedom\\
+
+  * **Assumptions**: sampling with replacement, works for any $n$, assumes population distribution of $x$ is normal
+	
+## Computing Sample Size 
+
+  * Know how to compute the sample size when estimating $p$ with $\hat{p}$
+		
+	\[ n = \frac{p(1-p)z^2}{m^2} \]
+		
+  * Know how to compute the sample size when estimating $\mu$ with $\bar{x}$
+		
+	\[ n = \frac{\sigma^2z^2}{m^2} \]
+	  
+	  * $z$ is the standard score from a standard normal distribution corresponding to the desired confidence level
+	  
+	  * $m$ is the desired margin of error
+	  
+	  * $p$ and $\sigma$ must determined from prior information or studies 
+	  
+## Significance Tests
+
+  * know the five steps to conduct a significance test:
+     
+    1. Assumptions 
+    
+    2. State null and alternative hypotheses
+    
+    3. Compute test statistic
+    
+    4. Compute $p$-value
+    
+    5. Make a decision 
+    
+  * Be sure you understand and know how to apply the decision rule in hypothesis testing
+  
+    \[\text{Decision Rule:}\begin{cases} \text{if} \ p\text{-value} \leq \alpha & \text{Reject} \ H_0 \\
+					         \text{else} & \text{do  not reject} \ H_0 
+				\end{cases}\]
+<br>
+<br>
+
+#### Significance for a single population proportion
+
+  1. **Assumptions:** $n$ is large; $n\hat{p}$ and $n(1-\hat{p}) \geq 15$
+
+  2. State the null and alternative hypotheses
+  
+  * **Right-tailed test:** $H_0: p_0 = 0.5 \ \ H_A: p > p_0$
+  
+  * **Left-tailed test:** $H_0: p_0 = 0.5 \ \ H_A: p < p_0$
+  
+  * **Two-tailed test:** $H_0: p_0 = 0.5 \ \ H_A: p \neq p_0$
+    
+  3. Compute the test statistic
+  
+  \[ z_{\text{obs}} = \frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \]
+  
+  4. Compute the $p$-value
+  
+  * **Right-tailed test:** $p$-value = $P(z \geq z_{\text{obs}} | \ H_0 \text{true})$
+  
+  * **Left-tailed test:** $p$-value = $P(z \leq z_{\text{obs}} | \ H_0 \text{true})$
+  
+  * **Two-tailed test:** $p$-value = $P(|z| \geq |z_{\text{obs}} || \ H_0 \text{true})$
+  
+  5. Compare the $p$-value to $\alpha$ and make a decision
+
+<br>
+<br>
+
+#### Significance test for a single population mean
+
+  1. **Assumptions:** The population distribution of the random variable $x$ is approximately normal (this is especially important if $n$ is small and the significance test is one sided)
+  
+  2. State the null and alternative hypotheses 
+  
+  * **Right-tailed test:** $H_0: \mu_0 = 0$, $H_A: \mu > \mu_0$
+  
+  * **Left-tailed test:** $H_0: \mu_0 = 0$, $H_A: \mu < \mu_0$
+  
+  * **Two-tailed test:** $H_0: \mu_0 = 0$, $H_A: \mu \neq \mu_0$
+  
+  3. Compute the test statistic
+  
+  \[ t_{\text{obs}} = \frac{\bar{x}-\mu_0}{s/\sqrt{n}} \sim t(n-1) \]
+  
+  4. Compute the $p$-value
+  
+  * **Right-tailed test:** $p$-value = $P(t \geq t_{\text{obs}} | \ H_0 \text{true})$
+  
+  * **Left-tailed test:** $p$-value = $P(t \leq t_{\text{obs}} | \ H_0 \text{true})$
+  
+  * **Two-tailed test:** $p$-value = $P(|t| \geq |t_{\text{obs}} || \ H_0 \text{true})$
+
+  5. Compare the $p$-value to $\alpha$ and make a decision
+
+<br>
+<br>
+
+#### The sign test
+
+  * Understand how to form and interpret the null and alternative hypotheses for a sign test
+  
+  * be able to interpret the meaning of a positive sign (in context) and the probability of a positive sign $P(+ \ \text{sign})$
+  
+  * Know how to compute the test statistic for a sign test (i.e number of positive signs)
+  
+  * Know how to compute the $p$-value for a sign test
+  
+  * Know that the sign test is used for data with **matched - pair designs** 
+  
+  * Know how this test relates to the binomial distribution
+  
+  * Know why we don't count zeros in the total number of signs for a sign test
+	
+**Steps of a sign test:**
+
+  1. Assumptions: data are collected from a randomization scheme. Observations are independent
+  
+  2. State the null and alternative hypotheses:
+  
+  * **Two-tailed test:** $H_0: p_0 = 0.5$ $H_A: p_0 \neq p_0$ 
+  
+  * **Right-tailed test:** $H_0: p_0 = 0.5$ $H_A: p_0 > p_0$ 
+  
+  * **Left-tailed test:** $H_0: p_0 = 0.5$ $H_A: p_0 < p_0$ 
+  
+  * where $p_0 $ is the probability of a positive sign
+  
+  3. The test statistic $X$ is the total number of positive signs which follows a binomial distribution $X \sim \text{binom}(n, p_0)$ where $n$ is the total number of signs
+  
+  4. The $p$-value is computed from a binomial distribution under the null:
+  
+  * for a two-tailed test $H_A: p_0 \neq p_0$: 
+  
+\[2\times P(S\geq s| H_0) = 2\times \left[ 1 - P(S<s| H_0)\right]\]
+  
+\[ = 2 \times \left[ 1 - \sum_{k = 0}^{s - 1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k}\right] \] 
+  
+  
+  * for a right-tailed test $H_A: p_0 > p_0$: 
+  
+  \[P(x\geq X| H_0) = 1 - P(x<X| H_0)\]
+	
+  \[ = 1 - \sum_{k = 0}^{s - 1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \]
+
+  * for a left-tailed test $H_A: p_0 < p_0$:
+  
+  \[P(x\leq X| H_0) = \sum_{k = 0}^{s}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \] 
+  
+  5. Compare the $p$-value to $\alpha$ and make a decision
+
+<br>
+<br>
+
+### Comparing two groups:
+
+#### Comparing two proportions
+
+<br>
+<br>
+
+#### Comparing two means
+
+
+<br>
+<br>
+
+<!-- ### Assumptions of Estimators -->
+
+<!-- 1. **Random Sampling:** The sample must be selected randomly from the population of interest. Random sampling ensures that each member of the population has an equal chance of being included in the sample, allowing for unbiased estimation of the population proportion.</span> -->
+
+<!-- 2. **Independence:** The observations in the sample must be independent of each other. Independence means that the occurrence or value of one observation does not influence the occurrence or value of another observation in the sample.  -->
+
+<!-- 3. **Large Sample Size (for symptotic normality - $p$ only):** For certain statistical methods, such as constructing confidence intervals or conducting hypothesis tests, the sample size should be sufficiently large. While there is no fixed threshold for what constitutes "large enough," a common rule of thumb is that $np\geq 15$ and $n(1-p)\geq 15$ to ensure the validity of results. -->
+
+<!-- 4. **Normality of Population Distribution (for $\mu$ with small sample sizes):** For small sample sizes (typically less than 30), it is assumed that the population from which the sample is drawn follows a normal distribution. This assumption is necessary for the validity of certain statistical inference methods, such as constructing confidence intervals or conducting hypothesis tests. However, the Central Limit Theorem suggests that for larger sample sizes, the distribution of the sample mean approaches normality regardless of the shape of the population distribution. -->
+
+<!-- 5. **independent groups: (Two sample tests only)** The observations in one sample are independent from the observations in another sample.  -->
+
+
+<!-- <br> -->
+<!-- <br> -->
+<!-- <br> -->
+<!-- <br> -->
+
+
+
+

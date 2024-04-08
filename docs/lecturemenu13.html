@@ -2445,9 +2445,9 @@ female contributors during the COVID-19 Pandemic of 2019 and 2020.
 Specifically, they evaluated the proportion of female contributors
 submitting manuscripts and accepting peer review invitations before
 (April - October, 2019) and after the start of the coronavirus pandemic
-(April - October, 2020) <span
-class="citation">(<strong>mogensen2021impact?</strong>)</span>. A
-summary of the data in this study are given below:</p>
+(April - October, 2020) <span class="citation">(Mogensen, Lee, and
+Carlos 2021)</span>. A summary of the data in this study are given
+below:</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2586,203 +2586,17 @@ categories of the response variable</p></li>
 indicates that the explanatory and response variables are independent of
 each other</p></li>
 </ul>
-</div>
-<div id="comparing-two-means" class="section level3">
-<h3>Comparing two means</h3>
-<p>Just as we have compared population proportions, we may also be
-interested in comparing two population means. For example, a teacher may
-be interested in comparing the average test scores of students in two
-different classes (Class A and Class B). A social scientist may be
-interest in whether there is a difference in average salaries between
-men and women within a company. In any case, we are again dealing with
-two samples of sizes <span class="math inline">\(n_1\)</span> and <span
-class="math inline">\(n_2\)</span> which come from populations
-<i>population 1</i> and <i>population 2</i> and with means as <span
-class="math inline">\(\mu_1\)</span> and <span
-class="math inline">\(\mu_2\)</span>.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Population
-</th>
-<th style="text-align:left;">
-Population Proportion
-</th>
-<th style="text-align:left;">
-Sample Size
-</th>
-<th style="text-align:left;">
-Mean
-</th>
-<th style="text-align:left;">
-Stdev
-</th>
-<th style="text-align:left;">
-Sample Mean
-</th>
-<th style="text-align:left;">
-Sample Stdev
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(n_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sigma_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(s_1\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(n_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sigma_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(s_2\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Let <span class="math inline">\(\mu_d = \mu_1 - \mu_2\)</span> be the
-mean difference between the two populations. We can construct confidence
-intervals to estimate the average difference as well as conduct
-hypothesis tests to determine if two populations are significantly
-different.</p>
-</div>
-<div id="a-confidence-interval-for-the-mean-difference-mu_d"
-class="section level3">
-<h3>A confidence interval for the mean difference <span
-class="math inline">\(\mu_d\)</span></h3>
-<p>We will begin by assuming that we are dealing with two independent
-samples from two distinct populations. The natural estimator of <span
-class="math inline">\(\mu_d\)</span> is the difference between the
-sample means</p>
-<p><span class="math display">\[\hat{\mu}_d = \bar{x}_1 -
-\bar{x}_2\]</span></p>
-<p>To base our inference on the above estimator, we must know its
-sampling distribution. If we assume that both samples come from
-populations that normally distributed and under independence, then the
-distribution of the difference will also be normally distributed and the
-variances will add:</p>
-<p><span class="math display">\[Var[\mu_1 - \mu_2] =
-\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]</span></p>
-<p>In practice this quantitiy can be estimated by substituting in the
-sample variances. This gives the following standard deviation for the
-estimator <span class="math inline">\(\hat{\mu}_d\)</span></p>
-<p><span class="math display">\[SE(\hat{\mu}_d) =
-\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}  \]</span></p>
-<p>Just as it was for a single mean, the sampling distribution for the
-difference in two means is <span
-class="math inline">\(t\)</span>-distributed, althought the degrees of
-freedom are calculated differently. Under the assumption of
-independence, the mean difference follows a <span
-class="math inline">\(t\)</span> distribution with degrees of freedom
-equal to the smaller of <span class="math inline">\(n_1 - 1\)</span> and
-<span class="math inline">\(n_2 - 1\)</span></p>
-<p><span class="math display">\[\hat{m}_d \sim t(\min(n_1 - 1, n_2 - 1))
-\]</span></p>
-<p>The margin of error for estimating the mean difference at the <span
-class="math inline">\((1-\alpha)\%\)</span> level is given by</p>
-<p><span class="math display">\[m = t_{1-\alpha/2} \times
-SE(\hat{\mu}_d) \]</span></p>
-<p>which gives the following confidence interval for the mean
-difference</p>
-<p><span class="math display">\[(\bar{x}_1 - \bar{x}_2)
-\pm  t_{1-\alpha/2} \times SE(\hat{\mu}_d)\]</span></p>
-<p><strong>Example: Comparing Customer Satisfaction Levels</strong> -
-Suppose we want to compare the customer satisfaction levels of two
-competing cable television companies, Company 1 and Company 2. We
-randomly select customers from each company and ask them to rate their
-cable companies on a five-point scale (with 1 being least satisfied and
-5 most satisfied). The data are summarized in the table below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Group
-</th>
-<th style="text-align:right;">
-Number of customers
-</th>
-<th style="text-align:right;">
-Sample Mean Rating
-</th>
-<th style="text-align:right;">
-Sample Stdev
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Company 1
-</td>
-<td style="text-align:right;">
-174
-</td>
-<td style="text-align:right;">
-4.2
-</td>
-<td style="text-align:right;">
-0.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Company 2
-</td>
-<td style="text-align:right;">
-355
-</td>
-<td style="text-align:right;">
-3.8
-</td>
-<td style="text-align:right;">
-1.1
-</td>
-</tr>
-</tbody>
-</table>
-<p>Estimate the difference in mean satisfaction levels between the two
-companies at the <span class="math inline">\(95\%\)</span> confidence
-level.</p>
 <p><br> <br> <br> <br></p>
 </div>
 <div id="references" class="section level3 unnumbered">
 <h3 class="unnumbered">References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-mogensen2021impact" class="csl-entry">
+Mogensen, Monique A, Christoph I Lee, and Ruth C Carlos. 2021.
+<span>“The Impact of the COVID-19 Pandemic on Journal Scholarly Activity
+Among Female Contributors.”</span> <em>Journal of the American College
+of Radiology</em> 18 (7): 1044–47.
+</div>
 <div id="ref-steering1989final" class="csl-entry">
 Physicians’ Health Study Research Group*, Steering Committee of the.
 1989. <span>“Final Report on the Aspirin Component of the Ongoing
