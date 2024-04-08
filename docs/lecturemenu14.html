@@ -865,11 +865,11 @@ this case, we need only substitute a single sample standard deviation
 for <span class="math inline">\(\sigma_1\)</span> and <span
 class="math inline">\(\sigma_2\)</span>. We call this the pooled
 estimate of the standard deviation:</p>
-<p><span class="math display">\[ s_{pooled}^2 \frac{(n_1 - 1)s_1^2 +
-(n_2 -1)s_2^2}{n_1+n_2 - 2}\]</span></p>
-<p><span class="math inline">\(s_{pooled}^2\)</span> is called the
+<p><span class="math display">\[ s_{pooled} = \sqrt{ \frac{(n_1 -
+1)s_1^2 + (n_2 -1)s_2^2}{n_1+n_2 - 2}}\]</span></p>
+<p><span class="math inline">\(s_{pooled}\)</span> is called the
 <strong>pooled estimator</strong> of <span
-class="math inline">\(\sigma_2\)</span> because it combines the
+class="math inline">\(\sigma_d\)</span> because it combines the
 information from both samples.</p>
 <p>The test statistic under the assumption of equal variances
 becomes</p>
@@ -878,11 +878,19 @@ becomes</p>
 \mu_2)}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}  \]</span></p>
 <p>which is exactly distributed as a <span
 class="math inline">\(t\)</span> distribution with <span
-class="math inline">\(n_1+n_2 - 2\)</span> degrees of freedom. In
-practice, a significance test for determining equality of variances can
-be run prior to the <span class="math inline">\(t\)</span>-test to
-determine if the pooled or unpooled test statistic should be used. More
-information about this test can be found <a href="">here</a></p>
+class="math inline">\(n_1+n_2 - 2\)</span> degrees of freedom. The test
+based on the pooled estimate of the standard deviation is more powerful
+because the sampling distribution is exact and not an approximation as
+it is in the unpooled case.</p>
+<p>Which test should you use?</p>
+<ul>
+<li>In practice, a significance test for determining equality of
+variances can be run prior to the <span
+class="math inline">\(t\)</span>-test to determine if the pooled or
+unpooled test statistic should be used. More information about this test
+can be found
+<a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda359.htm#:~:text=An%20F%2Dtest%20(Snedecor%20and,the%20variances%20are%20not%20equal.">here</a></li>
+</ul>
 <p><strong>Example: NCAA Womens Basketball</strong> - Sunday April 7th
 South Carolina and Iowa contended for the NCAA womens basketball
 championship. Consider the following table which gives the opponent and
@@ -1212,10 +1220,45 @@ South Carolina
 </tr>
 </tbody>
 </table>
-<p>Conduct a two sample <span class="math inline">\(t\)</span>-test at
-the <span class="math inline">\(\alpha = 0.05\)</span> significance
-level to determine if there is a significant difference between the
-championship teams in the mean number of points scored per game.</p>
+<p>Conduct a unpooled two sample <span
+class="math inline">\(t\)</span>-test at the <span
+class="math inline">\(\alpha = 0.05\)</span> significance level to
+determine if there is a significant difference between the championship
+teams in the mean number of points scored per game.</p>
+<ol style="list-style-type: decimal">
+<li>Let <span class="math inline">\(\mu_1\)</span> be the mean number of
+points scored per game for Iowa and <span
+class="math inline">\(\mu_2\)</span> be the mean number of points score
+per game for South Carolina. The null hypothesis is that there is no
+difference in the mean number of points between the two teams</li>
+</ol>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 \]</span></p>
+<p>The alternative hypothesis is that the two teams are different</p>
+<p><span class="math display">\[H_A: \mu_1 \neq \mu_2\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>The estimated difference is given by <span
+class="math inline">\(\hat{\mu}_d = \bar{x}_1 - \bar{x}_2 =
+10.27\)</span>. The test statistic for the unpooled test is</li>
+</ol>
+<p><span class="math display">\[ t_{obs} = \frac{90.67 -
+80.40}{\sqrt{\frac{14.21^2}{15}+\frac{10.57^2}{15}}} \approx
+2.246\]</span></p>
+<p>which is approximately distributed as</p>
+<p><span class="math display">\[ t_{obs}\sim t(df = 14) \]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>The pvalue is</li>
+</ol>
+<p><span class="math display">\[\text{$p$-value} = 2\left[P(|t| \geq
+|t_{obs}||H_0)\right] = 2(0.0207) = 0.0414 \]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Based ont the <span class="math inline">\(p\)</span>-value above we
+would narrowly reject the null hypothesis and conclude that Iowa scores
+significantly more points per game than South Carolina on average. The
+outcome of the championship was a 75 - 87 victory for South Carolina.
+Given the conclusion of our test, this is a testament to South
+Carolina’s defensive prowess in being able to shut down a high scoring
+team like Iowa.</li>
+</ol>
 </div>
 </div>
 <div id="a-significance-test-for-comparing-two-means-dependent-samples"
