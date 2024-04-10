@@ -1,0 +1,254 @@
+---
+title: "Non Parametric Tests For Two Samples"
+author: "STAT 251 Section 03"
+output:
+  html_document:
+    df_print: paged
+  pdf_document:
+    keep_tex: true
+    number_sections: true
+header-includes: \usepackage{float}
+---
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=5, fig.height=3, fig.pos = "H")
+library(kableExtra)
+library(knitr)
+library(latex2exp)
+library(gridExtra)
+library(ggpubr)
+library(ggthemes)
+library(plyr)
+library(VennDiagram)
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+
+```
+
+# Non-parametric Tests For Two Samples
+
+Recall that we introduced the idea of non-parametric and parametric tests when we introduced the one-sample Sign Test. We discussed several differences between parametric and non-parametric tests and some of the advantages of each:
+	
+  * **Parametric tests** (and statistics) usually make hard assumptions about the population distribution of the variable of interest or rely on asymptotic (large sample) theory to exploit properties like the Central Limit Theorem. 
+
+  * **Non-parametric** tests (and statistics) do not make assumptions about the population distribution of the variable of interest. (However, both types of tests assume that the observations are independent and identically distributed)
+
+  * This leads to the following advantages of non-parametric statistics:
+
+    *  Non-parametric statistics/tests are a good option for small sample sizes (and may be the only alternative) whereas parametric tests (like the $Z$ or $t$ test) might not be applicable
+    * Non-parametric statistics/tests are often a better option when the data represent crude measurements such as subjective ratings/rankings (e.g, Likert responses)
+    * Non-parametric statistics/tests are usually easier to compute and interpret
+
+		
+		
+  * However, these advantages come with the caveat that non-parametric hypothesis tests are typically less powerful than their parametric counterparts. This is the price of not making specific assumptions about the population distribution. 
+
+
+Non-parametric testing took a major leap forward in the 1940's when the idea of testing based on "ranks"
+emerged. These ideas developed from a need for analogue to the $t$-tests that had been developed for two independent and two dependent samples. In general, and like the $t$-tests, these non-parametric "rank" tests are concerned with inferential questions regarding whether two populations (represented by two samples) are the same or different.
+	
+	
+	
+\subsection*{The Wilcoxon Rank Sum Test}
+Let $X_1, X_2, ... X_{n_1} \overset{iid}{\sim} f_x$ be a sample of $n_1$ observations from population $X$ with population distribution $f_x$. Similarly, let $Y_1, Y_2, ... Y_{n_2} \overset{iid}{\sim} f_y$ be a sample of $n_2$ observations from population $Y$ with population distribution $f_y$. Then a "rank test" concerning the properties of $f_x$ and $f_y$ are based on the ranks associated with one of the samples (say $X$) among the combined sample of all the $X$s and $Y$s. In general, ranking refers to sorting the data from least to greatest and denoting the position (or rank) of each observation of $X$ relative to the total sample $X\cup Y$. 
+	
+In 1954 Frank Wilcoxon proposed the rank-sum statistic $S$ 
+	
+\[ S = \sum_{i = 1}^n R(X_i)\]
+	
+Where $R(X_i)$ represents the rank of the $i^{th}$ observation $X$ among the combined sample. For example, suppose we have two samples $\{X\}_{i=1}^5$ and $\{Y_i\}_{j=1}^3$ and we ranked them (sorted them form least to greatest) so that $X_1, X_2, Y_1, X_3, Y_2, Y_3, X_4 X_5, Y_6$. Then the ranks of the observations in $X$ are $1,2,4,7,8$ and Wilcoxon's statistic computed for the observations in $X$ (denoted $S_X$) is computed as 
+	 
+\[ S_X = \sum_{i = 1}^{n_1} R(X_i) = 1+2+4+7+8 = 22 \]
+	
+Wilcoxon proposed that a hypothesis test of $H_0: f_x = f_y$ vs $H_A: f_x \neq f_y$ could be constructed using $S$. Specifically, he argued that unusually small or large values of $S$ provided strong evidence that the distributions of $X$ and $Y$ were different. \\
+	
+The sampling distribution of $S$ is called the Wilcoxon distribution where $S\sim W(n_1, n_2)$ has two parameters: $n_1$ the number of observations in the first sample and $n_2$ the number of observations in the second sample. the sampling distribution of $S$ has a mean ($E[X]$) of variance $(V[S])$ given by
+	
+\[E[S] = \frac{n_1 (n_1+n_2+1)}{2}, \ \ V[S] = \frac{n_1n_2(n_1+n_2+1)}{12} \]
+	
+Unfortunately, the closed-form of the Wilcoxon distribution is not know, however, it is a discrete, bell-shaped distribution and fortunately many statistical programs have pre-computed tables of cutoff values for a large number of possible values of $S$. Moreover, assuming a large enough sample size we can convert $S$ to an approximately standard normal distribution where 
+	 
+\[\frac{S -\mu_s}{\sqrt{V[S]}} \sim N(0,1) \ (\text{approximately})\]
+	
+Where $\mu_s = E[S]$.\\
+	
+The Rank-Sum test is a non-parametric analogue of the \underline{two independent} samples $t$-test, and, like the $t$-test, it is a location test comparing the median of two distributions. Think back on the assumptions of the two independent samples $t$-test:
+\begin{itemize}
+\item[1.] The samples are independent
+\item[2.] The variances of the two populations are (approximately) equal
+\item[3.] The two populations are normally distributed
+\end{itemize}
+There are many cases where assumption $[3.]$ cannot be satisfied. As a result, the Wilcoxon Rank-Sum test is a preferred alternative as it only requires assumptions $[1 - 2]$. The test is applicable to the usual two-tail, righ-tail and left tail hypothesis tests and are formulated as 
+	
+\begin{itemize}
+\item \textbf{two-tail test}: $H_0: f_x = f_y$ versus $H_A: f_x \neq f_y$ with $pvalue = 2\times P(s > S_{obs} | H_0)$ 
+\item \textbf{lower (left) tail test}: $H_0: f_x = f_y$ versus $H_A: f_x < f_y$ with $pvalue = P(s < S_{obs} | H_0)$ 
+\item \textbf{upper (right) tail test}: $H_0: f_x = f_y$ versus $H_A: f_x \neq f_y$ with $pvalue = P(s > S | H_0)$ 
+\end{itemize}
+	
+\textbf{NOTE:} Later Mann and Whitney (1947) proposed their now famous (and equivalent) $U$-statistic. This has lead to this test being referred to as the Mann, Whitney, Wilcoxon test (or Mann-Whitney $U$ test). It can be shown that the relation of the Mann-Whitney $U$-statistic to the Wilcoxon $S$-statistic is 
+	
+\[ U = S - \frac{n_1 (n_1 + 1)}{2}\]
+\subsubsection*{Example:}
+A clinical psychologist wants to choose between two therapies for testing severe mental depression. She selects six patients who are similar in their depressive symptoms and overall quality of health. She randomly selects three patients to receive "Therapy 1" and the remaining patients to receive "Therapy 2". After one month of treatment, the improvement in each patient is measured by the change in a score for measuring severity of mental depression - the higher the change score, the better. The improvement scores are given in the table below
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+Therapy1.Scores = c(12, 40, 45)
+Therapy2.Scores = c(10, 20, 30)
+patient = c(1,2,3)
+df = cbind.data.frame(patient, Therapy1.Scores, Therapy2.Scores)
+      
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+	
+Now consider a hypothsis test with null hypothesis $H_0: f_{\text{therapy} 1} = f_{\text{therapy} 2}$ versus
+$H_A: f_{\text{therapy} 1} \neq f_{\text{therapy} 2}$ (the two score distributions are different). 
+
+To start, we need to sort the collection of all six patient scores from least to greatest. Let $X=\{12, 40, 45\}$ be the scores for patients taking Therapy 1 and $Y = \{10,20,30\}$ be the scores for patients taking Therapy 2. The sorted scores are:
+
+\[\{Y_1, X_1, Y_2, Y_3, X_2, X_3\} = \{10, 12, 20, 30, 40, 45\}\]
+
+The rankings for the Therapy 1 scores are 
+
+\[ R(X) =  \{ 2, 5, 6\} \]
+
+And the $S$-statistic is
+
+\[S = 2+5+6 = 13 \sim Wilcox(n_1 = 3, n_2 = 3)\]
+
+We will next compute the mean and variance of $S$
+
+\[ E[S] = \frac{3(3+3+1)}{2} = 10.5  \]
+\[SE(S) = \sqrt{\frac{3(3)(3+3+1) }{12}} \approx 2.291\]
+
+We can convert $S$ to a standard normal random variable using
+
+\[Z_{obs} = \frac{13 - 10.5}{2.291} = 1.091\]
+
+However, it is imporant to note that the above conversion is based on large sample sizes. With only three samples for each group, using the Z-statistic to approximate the pvalue is not appropriate. Nonetheless we will find the pvalue using $Z_{obs}$ to demonstrate this approach. The pvalue can be computed as:
+
+\[2\times P(s> S| H_0) \approx 2[1-P(z<Z_{obs})] =  0.275\]
+
+We therefore fail to reject the null hypothesis and conclude that the two therapies produce similar scores.
+
+
+	
+	
+	
+	
+	
+	
+\subsection*{The Wilcoxon Signed-Rank Test}
+The Wilcoxon Signed-Rank test is a non-parametric analogue of the \underline{two dependent} samples $t$-test (i.e the paired $t$-test). Like the $t$-test, it a location (median) test for two dependent or paired samples. In general, the null hypothesis is 
+
+\[ H_0: \textbf{The population median of differences is 0} \]
+
+Conducting this test is very similar to the \textbf{sign test} that we learned about in class. The primary difference between the signed-rank test and the sign test is that the absoluted differences are ranked similar to the rank-sum test above. Given the matched pairs of observations $\{(X_i, Y_i)\}_{i=1}^n$ and consider their differences $D_i = X_i - Y_i$, the test statistic $T$ for the signed-rank test is defined as follows:
+
+\[ T = \sum_{i=1}^{N} \text{sign}(D_i)R_i \]
+
+where $\text{sign}()$ is a function which is $-1$ when $X_i < 0$ and $1$ when $X_1 > 0$ (like the sign test observation pairs with a difference of $0$ are ignored). $R_i$ is the ranking of $|X_i|$. For large $n$ the distribution of $T$ can be approximated by a normal distribution such that 
+\[E[T] = 0, \ \ \ V[T] = \frac{n(n+1)(2n+1)}{6} \]
+\[ T\sim N\left(0, \sqrt{V[T]}\right) \]
+
+The steps of this test are completed as follows:
+
+\begin{enumerate}
+\item[1.] Compute the differences between all match pairs $D_i = X_i- Y_i$ 
+\item[2.] Compute the absolute values of the differences $|D| = \{ |D_1|, |D_2|, \cdots |D_N| \}$
+\item[3.] Rank the absolute differences $|D|$ in increasing order
+\item[4.] Compute $T$ and its Pvalue
+\end{enumerate}
+
+
+\subsection{Example}
+
+A study is run to evaluate the effectiveness of an exercise program in reducing systolic blood pressure in patients with pre-hypertension (defined as a systolic blood pressure between 120-139 mmHg or a diastolic blood pressure between 80-89 mmHg). A total of 15 patients with pre-hypertension enroll in the study, and their systolic blood pressures are measured. Each patient then participates in an exercise training program where they learn proper techniques and execution of a series of exercises. Patients are instructed to do the exercise program 3 times per week for 6 weeks. After 6 weeks, systolic blood pressures are again measured. The data are shown below. 
+
+```{r, echo = F, message=F, warning=F}
+
+ex2 = read.csv(paste0(path, 'systol_table.csv'), header = T)
+#cn = ex2[1,]
+#ex = ex2[-1,]
+#colnames(ex) = cn
+
+kable(ex2, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+
+
+Consider the hypothesis test with null hypothesis 
+\[ H_0: \textbf{The population median of differences is 0} \]
+versus 
+\[ H_A: \textbf{The population median of differences is not 0} \]
+used to compare the systolic blood pressure before and after exercise. The following tables demonstrate how to conduct steps [1-3] of a signed rank test. We begin by computing the differences before and after the exercise program and their absolute values
+```{r, echo = F, message=F, warning=F}
+
+# Differences = ex2$Systolic.Blood.Pressure.Before.Exercise.Program - ex2$Systolic.Blood.Pressure.After.Exercise.Program
+# 
+# Absolute.Differences = abs(Differences)
+# ix = sort(Absolute.Differences, index.return = TRUE)
+# Sorted.Absolute.Differences = Absolute.Differences[ix$ix]
+# indicators = rep(1, length(Differences))
+# indicators[Differences<0] = -1
+# 
+# Ranks = rank(Sorted.Absolute.Differences)
+#   
+# Signed.Ranks = indicators * Ranks  
+
+out = sign.rank.stat(ex2$Systolic.Blood.Pressure.Before.Exercise.Program, ex2$Systolic.Blood.Pressure.After.Exercise.Program)
+  
+  
+kable(cbind.data.frame(Differences = out$differences, 
+                       Absolute.Differences = out$absolute.diff), caption = 'For steps [1 - 2] we compute the differences and absolute differences')%>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+
+
+Next we must sort the absolute differences and compute their ranks and signs:
+```{r, echo = F, message=F, warning=F}
+
+sorted = sort(out$absolute.diff, index.return = T)
+
+
+kable(cbind.data.frame(Sorted.Absolute.Differences = out$absolute.diff[sorted$ix], 
+                       Ranks = out$ranks[sorted$ix], 
+                       Signed.Ranks = out$signed.ranks[sorted$ix]), 
+      caption = "The ranking method here uses the \'Average\' ranking method to rank ties. For example the 2nd and 3rd differences in the sorted differences are both -2 with ranks 2 and 3. However, since the differences are both -2 it is unfair to rank the 3rd entry lower than the second entry. Therefore, their average rank is (2+3)/2 = 2.5 - The sample is applied to all ties")%>%
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+Once we have the signed ranks we can compute the signed rank statistic $T$ as 
+
+\[ T = 1-2.5-2.5-4-6-6+6+8+10.0+10-10+12.5+12.5+14+15 = 58 \]
+
+\[ E[T] = 0\]   
+\[V[T] = \frac{15(15+1)(2(15)+1)}{6} = 35.21\]
+
+\[Z_{obs} \approx \frac{T - E[T]}{\sqrt{V[T]}} \approx 1.647 \]
+\[ P(|z| > |Z_{obs}| |H_0) = 2[1-P(z<Z_{obs}| H_0)] \approx 0.1 \]
+
+
+```{r, echo = T, message=F, warning=F}
+
+Wilcoxon.sign.rank.test(m0 = 0, 
+                        X=ex2$Systolic.Blood.Pressure.Before.Exercise.Program, 
+                        Y=ex2$Systolic.Blood.Pressure.After.Exercise.Program, 
+                        alpha = 0.05, 
+                        test = 'two.tail', 
+                        ties.method = 'average')
+
+```

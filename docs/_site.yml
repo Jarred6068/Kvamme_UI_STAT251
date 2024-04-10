@@ -144,7 +144,10 @@ navbar:
             href: misc/rcode_examples.html
           - text: 'Functions'          
             href: misc/hp_r_code.html
-            
+        - Extras:
+          menu:
+            - text: 'Non-parametric Tests'
+              href: ./misc/Non-Parametric-Tests-For-Two-Samples.html
         - text: 'Downloading R/Rstudio'
           href: misc/R_download_instructions.html
 
