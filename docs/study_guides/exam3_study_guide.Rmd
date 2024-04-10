@@ -37,7 +37,7 @@ library(plyr)
 
 This exam will cover material from Lectures 15 - 26 (Week 8 to beginning of Week 14)
 
-### Concepts and terminiology
+### **Concepts and terminiology**
 
 Know/be able to define the following terms and concepts:
 
@@ -79,7 +79,7 @@ Know/be able to define the following terms and concepts:
 	
 	* Know how a confidence interval relates to a two-tailed statistical test and how to use a confidence interval to make a decision about a significance test.
 
-## Confidence intervals
+## **Confidence intervals**
 
   * Understand the “anatomy” of a confidence interval (i.e., point estimate, standard score, standard error, and margin of error). Be able to identify each part of a confidence interval.
 		
@@ -104,26 +104,26 @@ Know/be able to define the following terms and concepts:
 <br>
 <br>
 
-#### Computing a confidence interval for estimating $p$ with $\hat{p}$**
+### **Computing a confidence interval for estimating $p$ with $\hat{p}$**
   
 \[ \hat{p} \pm z\times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
   
-  * **Assumptions**: sampling with replacement, requires large $n$, only valid when
+  * **Assumptions**: random sampling, requires large $n$, only valid when
   
 \[ n\hat{p} \geq 15 \ \ \text{and} \ \ n(1-\hat{p}) \geq 15 \]
 
 <br>
 <br>
 
-#### Computing a confidence interval for estimate $\mu$ with $\bar{x}$ 
+### **Computing a confidence interval for estimate $\mu$ with $\bar{x}$** 
 
 \[ \bar{x} \pm t\times \frac{s}{\sqrt{n}} \]
 
   * $t$ is the standard score from a $t$-distribution with $n-1$ degrees of freedom\\
 
-  * **Assumptions**: sampling with replacement, works for any $n$, assumes population distribution of $x$ is normal
+  * **Assumptions**: data are randomized, assumes population distribution of $x$ is normal
 	
-## Computing Sample Size 
+## **Computing Sample Size** 
 
   * Know how to compute the sample size when estimating $p$ with $\hat{p}$
 		
@@ -139,7 +139,7 @@ Know/be able to define the following terms and concepts:
 	  
 	  * $p$ and $\sigma$ must determined from prior information or studies 
 	  
-## Significance Tests
+## **Significance Tests**
 
   * know the five steps to conduct a significance test:
      
@@ -161,7 +161,7 @@ Know/be able to define the following terms and concepts:
 <br>
 <br>
 
-#### Significance for a single population proportion
+### **Significance for a single population proportion**
 
   1. **Assumptions:** $n$ is large; $n\hat{p}$ and $n(1-\hat{p}) \geq 15$
 
@@ -190,7 +190,7 @@ Know/be able to define the following terms and concepts:
 <br>
 <br>
 
-#### Significance test for a single population mean
+### **Significance test for a single population mean**
 
   1. **Assumptions:** The population distribution of the random variable $x$ is approximately normal (this is especially important if $n$ is small and the significance test is one sided)
   
@@ -219,7 +219,7 @@ Know/be able to define the following terms and concepts:
 <br>
 <br>
 
-#### The sign test
+### **The sign test**
 
   * Understand how to form and interpret the null and alternative hypotheses for a sign test
   
@@ -247,9 +247,9 @@ Know/be able to define the following terms and concepts:
   
   * **Left-tailed test:** $H_0: p_0 = 0.5$ $H_A: p_0 < p_0$ 
   
-  * where $p_0 $ is the probability of a positive sign
+  * where $p_0$ is the probability of a positive sign
   
-  3. The test statistic $X$ is the total number of positive signs which follows a binomial distribution $X \sim \text{binom}(n, p_0)$ where $n$ is the total number of signs
+  3. The test statistic $S$ is the total number of positive signs which follows a binomial distribution $X \sim \text{binom}(n, p_0)$ where $n$ is the total number of signs
   
   4. The $p$-value is computed from a binomial distribution under the null:
   
@@ -262,27 +262,109 @@ Know/be able to define the following terms and concepts:
   
   * for a right-tailed test $H_A: p_0 > p_0$: 
   
-  \[P(x\geq X| H_0) = 1 - P(x<X| H_0)\]
+  \[P(S\geq S| H_0) = 1 - P(S<s| H_0)\]
 	
   \[ = 1 - \sum_{k = 0}^{s - 1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \]
 
   * for a left-tailed test $H_A: p_0 < p_0$:
   
-  \[P(x\leq X| H_0) = \sum_{k = 0}^{s}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \] 
+  \[P(S\leq s| H_0) = \sum_{k = 0}^{s}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \] 
   
   5. Compare the $p$-value to $\alpha$ and make a decision
 
 <br>
 <br>
 
-### Comparing two groups:
+### **Comparing two proportions**
 
-#### Comparing two proportions
+  * Know how to conduct a statistical test concerning $p_1 - p_2$
+	
+	* Know how to compute a confidence interval to estimate $p_1 - p_2$
+	
+	* Understand that the formulas below are two independent samples only!
+	
+#### **Inference for two proportions**
+
+**$(1-\alpha)\%$ Confidence interval:**
+			
+\[ (\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2} \times \sqrt{\frac{\hat{p}_1(1-\hat{p})}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
+
+**Hypothesis Testing:**
+
+  1. Assumptions: Two populations are independent; random sampling, requires large $n$, only valid when
+  
+\[ n\hat{p} \geq 15 \ \ \text{and} \ \ n(1-\hat{p}) \geq 15 \]
+
+  where $\hat{p}$ is the pooled estimate of the population proportion
+  
+  2. Hypotheses:
+  
+  * **Two-tailed test:** $H_0: p_1-p_2 = 0$ $H_A: p_1 - p_2 \neq 0$ 
+  
+  * **Right-tailed test:** $H_0: p_1 - p_2 = 0$ $H_A: p_1 - p_2 > 0$ 
+  
+  * **Left-tailed test:** $H_0: p_1 - p_2 = 0$ $H_A: p_1 - p_2 < 0$ 
+
+
+  3. Test statistic: 
+			
+	  \[ Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim N(0,1) \]
+			
+		$\hat{p}$ is called the pooled estimate of the common proportion: 
+			
+		\[\hat{p} = \frac{x_1+x_2}{n_1+n_2}\] 
+			
+		where $x_1$ and $x_2$ are the number of observations in the ``success" categories for sample 1 and sample 2. 
+		
+  4. $p$-value:
+  
+  * Two-tailed test $H_A: p_1 - p_2 \neq 0$: $p$-value $= P(|z|\geq |Z_{obs}||H_0) = 2\times\left[1 - P(z<Z_{obs}| H_0)\right]$
+  
+  * Right-tailed test $H_A: p_1 - p_2 > 0$: $p$-value $= P(z\geq Z_{obs}| H_0) = 1 - P(z<Z_{obs}| H_0)$
+  
+  * Left-tailed test $H_A: p_1 - p_2 < 0$: $p$-value $= P(z\leq Z_{obs}| H_0)$
 
 <br>
 <br>
 
-#### Comparing two means
+### **Comparing two means**
+
+  * Know how to conduct and interpret a statistical test concerning $\mu_1 - \mu_2$
+  
+  * Know how to compute a confidence interval to estimate $\mu_1 - \mu_2$
+  
+  * Understand the formulas below are for two independent samples only!
+
+**$(1-\alpha)\%$ Confidence interval:**
+
+\[ (\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}} \]
+			
+  * where $t_{1-\alpha}$ has $\min(n_1 - 1, n_2 - 1)$ degrees of freedom
+
+**Hypothesis Testing:**
+
+  1. Assumptions: The two populations are independent, the population distribution of both samples is approximately normal (this is especially important if $n$ is small and the significance test is one sided)
+  
+  
+  2. Hypotheses: 
+  
+  * **Two-tailed test:** $H_0: \mu_1-\mu_2 = 0$ $H_A: \mu_1 - \mu_2 \neq 0$ 
+  
+  * **Right-tailed test:** $H_0: \mu_1 - \mu_2 = 0$ $H_A: \mu_1 - \mu_2 > 0$ 
+  
+  * **Left-tailed test:** $H_0: \mu_1 - \mu_2 = 0$ $H_A: \mu_1 - \mu_2 < 0$ 
+
+  3. Test statistic: 
+  
+  \[ t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\sim t(\min(n_1 - 1, n_2 - 1)) \]
+  
+  4. $p$-value:
+  
+  * Two-tailed test $H_A: \mu_1 - \mu_2 \neq 0$: $p$-value $= P(|t|\geq |t_{obs}||H_0) = 2\times\left[1 - P(t<t_{obs}| H_0)\right]$
+  
+  * Right-tailed test $H_A: \mu_1 - \mu_2 > 0$: $p$-value $= P(t\geq t_{obs}| H_0) = 1 - P(t<t_{obs}| H_0)$
+  
+  * Left-tailed test $H_A: \mu_1 - \mu_2 < 0$: $p$-value $= P(t\leq t_{obs}| H_0)$
 
 
 <br>
