@@ -196,3 +196,12 @@ as .pdf
 
 <a href="./lecture_slides/Week 13/Week13_Lecture25_Slides_4_3_2024.pptx">Download File</a>
 as powerpoint
+
+# Week 14
+### Lecture 26
+
+<a href="./lecture_slides/Week 13/Week13_Lecture25_Slides_4_3_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 13/Week13_Lecture25_Slides_4_3_2024.pptx">Download File</a>
+as powerpoint
