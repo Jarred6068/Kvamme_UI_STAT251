@@ -95,7 +95,7 @@ navbar:
             - text: 'Solutions'
               href: Review_problems/exam2_review_problems_solns.html
         - text: 'Exam 3 Study Guide'
-          href: study_guides/exam3_study_guide_temp.html
+          href: study_guides/exam3_study_guide.html
         - text: 'Exam 3 Review'
           menu: 
             - text: 'Problems' 
@@ -144,7 +144,7 @@ navbar:
             href: misc/rcode_examples.html
           - text: 'Functions'          
             href: misc/hp_r_code.html
-        - Extras:
+        - text: 'Extras'
           menu:
             - text: 'Non-parametric Tests'
               href: ./misc/Non-Parametric-Tests-For-Two-Samples.html
