@@ -60,6 +60,8 @@ navbar:
             href: homeworks/week7homework.html
           - text: 'Homework 4'
             href: homeworks/week12homework.html
+          - text: 'Homework 5'
+            href: homeworks/week14homework.html
         - text: 'Solutions'
           menu: 
           - text: 'Hmwk 1 Solutions'
@@ -70,6 +72,8 @@ navbar:
             href: homeworks/week7homework_solns.html
           - text: 'Hmwk 4 Solutions'
             href: homeworks/week12homework_solns.html
+          - text: 'Homework 5'
+            href: homeworks/week14homework_solns_temp.html
         - text: 'Reading & Extra Problems'
           href: homeworks/reading_and_book_problems.html
     - text: 'Exam Study Guides'
@@ -90,6 +94,14 @@ navbar:
               href: Review_problems/exam2_review_problems.html
             - text: 'Solutions'
               href: Review_problems/exam2_review_problems_solns.html
+        - text: 'Exam 3 Study Guide'
+          href: study_guides/exam3_study_guide_temp.html
+        - text: 'Exam 3 Review'
+          menu: 
+            - text: 'Problems' 
+              href: Review_problems/exam3_review_problems.html
+            - text: 'Solutions'
+              href: Review_problems/exam3_review_problems_solns.html
     - text: "Course Project"
       menu:
       - text: "Project Description"

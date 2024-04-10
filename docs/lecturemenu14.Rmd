@@ -289,8 +289,15 @@ Conduct a unpooled two sample $t$-test at the $\alpha = 0.05$ significance level
   4. Based ont the $p$-value above we would narrowly reject the null hypothesis and conclude that Iowa scores significantly more points per game than South Carolina on average. The outcome of the championship was a 75 - 87 victory for South Carolina. Given the conclusion of our test, this is a testament to South Carolina's defensive prowess in being able to shut down a high scoring team like Iowa. 
 
 
+# Lecture 27 Monday, April 10th 2024
 
-### A significance test for comparing two means: dependent samples
+### Comparing two dependent samples
+
+### Inference for qualitative data
+
+### The Chi-square distribution
+
+### The Chi-square goodness of fit test
 
 <br>
 <br>
