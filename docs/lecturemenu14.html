@@ -1321,17 +1321,2107 @@ team like Iowa.</li>
 </div>
 <div id="lecture-27-monday-april-10th-2024" class="section level1">
 <h1>Lecture 27 Monday, April 10th 2024</h1>
-<div id="comparing-two-dependent-samples" class="section level3">
-<h3>Comparing two dependent samples</h3>
+<div id="paired-t-test" class="section level3">
+<h3>Paired <span class="math inline">\(t\)</span> test</h3>
+<p>We know that comparative methods (i.e methods that compare two
+groups/samples across a quantitative variable) are more common and often
+preferred over one sample procedures. One common comparative design that
+makes use of single-sample procedures for a population mean is called
+the paired <span class="math inline">\(t\)</span>-test. This test is
+used to draw inferences about a population mean in matched pairs designs
+and can be thought of as the parametric analogue of the <i>sign test</i>
+we learned previously. Recall that in matched pairs studies subjects are
+matched in pairs and the quantitative outcome is compared within each
+pair.</p>
+<ul>
+<li><p>matched pair designs are most common when randomization is not
+possible</p></li>
+<li><p>used when observations are taken on the same subject (before and
+after treatment)</p></li>
+</ul>
+<p>In a paired <span class="math inline">\(t\)</span>-test we convert a
+comparative study into a one-sample procedure by making the response
+variable the difference between the two observations in each pair <span
+class="math inline">\(d_i = x_i - y_i\)</span>. The parameter under
+study is the population mean difference <span
+class="math inline">\(\mu_d\)</span> which can be estimated by the
+sample mean difference <span class="math inline">\(\bar{x}_d = \bar{x} -
+\bar{y}\)</span> computed over all pairwise differences. The standard
+deviation of the difference <span
+class="math inline">\(\sigma_d\)</span> is then estimated with the
+sample standard deviation difference. Inference is then treated in the
+same way as the confidence interval and significance test procedures for
+a single sample</p>
+<ul>
+<li>the <span class="math inline">\((1 - \alpha)\%\)</span> confidence
+interval for the mean pairwise difference is</li>
+</ul>
+<p><span class="math display">\[ \bar{x}_d \pm t_{1-\alpha/2}
+\frac{s_d}{\sqrt{n}}\]</span></p>
+<ul>
+<li>the test statistic for a signifcance test regargin the pairwise
+difference is given by</li>
+</ul>
+<p><span class="math display">\[t_{obs} = \frac{\bar{x}_d -
+\mu_d}{s_d/\sqrt{n}} \sim t(n - 1) \]</span></p>
+<ul>
+<li>by treating the above procedure as a one-sample <span
+class="math inline">\(t\)</span> test we make the assumption that the
+population distribution of differences is approximately normal.</li>
+</ul>
+<p><strong>Example: Revisting the Spousal Dominance Problem</strong> -
+Recall the study comparing the ratings of husbands and wives on the
+perceived relative influence of each member of the couple on a major
+financial decision.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Couple
+</th>
+<th style="text-align:right;">
+Husband
+</th>
+<th style="text-align:right;">
+Wife
+</th>
+<th style="text-align:right;">
+Difference
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>A summary of the difference in rating between husbands and wives is
+given below:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Stdev
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_d\)</span>
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+1.77
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a paired <span class="math inline">\(t\)</span>-test at the
+<span class="math inline">\(\alpha = 0.05\)</span> significance level to
+determine if husbands and wives differ in their percieved influence on
+financial decision making</p>
 </div>
-<div id="inference-for-qualitative-data" class="section level3">
-<h3>Inference for qualitative data</h3>
-</div>
-<div id="the-chi-square-distribution" class="section level3">
-<h3>The Chi-square distribution</h3>
+<div id="statistical-inference-for-qualitative-data"
+class="section level3">
+<h3>Statistical Inference for qualitative data</h3>
+<p>The table below summarizes the procedures we have learned so far in
+the course</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Response Variable
+</th>
+<th style="text-align:left;">
+<span class="math inline">\((1 - \alpha)\%\)</span> CI
+</th>
+<th style="text-align:left;">
+Test statistic
+</th>
+<th style="text-align:left;">
+Distribution
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(p\)</span>
+</td>
+<td style="text-align:left;">
+one-sample
+</td>
+<td style="text-align:left;">
+Categorical
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p}\pm
+Z_{1-\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\hat{p} -
+p_0}{\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(p_1 - p_2\)</span>
+</td>
+<td style="text-align:left;">
+two-sample
+</td>
+<td style="text-align:left;">
+Categorical
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\hat{p}_1 - \hat{p}_2)\pm Z_{1-\alpha/2}
+\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\hat{p}_1 - \hat{p}_2}{
+\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu\)</span>
+</td>
+<td style="text-align:left;">
+one-sample
+</td>
+<td style="text-align:left;">
+Quantatitive
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x} \pm t_{1-\alpha/2,
+n-1}\frac{s}{\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x} - \mu_0}{s/\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n-1)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1 - \mu_2\)</span>
+</td>
+<td style="text-align:left;">
+two-sample
+</td>
+<td style="text-align:left;">
+Quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2,
+\min(n_1 -1, n_2-1)} \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x}_1 -
+\bar{x}_2}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(\min(n_1 - 1, n_2 - 1))\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1 - \mu_2\)</span>
+</td>
+<td style="text-align:left;">
+pooled two-sample
+</td>
+<td style="text-align:left;">
+Quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2,
+\min(n_1 -1, n_2-1)}
+s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x}_1 -
+\bar{x}_2}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n_1+n_2 - 2)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_d\)</span>
+</td>
+<td style="text-align:left;">
+matched pairs
+</td>
+<td style="text-align:left;">
+Quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}_d \pm t_{1-\alpha/2,
+n-1}\frac{s_d}{\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x}_d -
+\mu_d}{s_d/\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n-1)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Despite significantly expanding the our statistical tools for
+inference we are still quite limited in our ability to analyze
+qualitative responses. Our tests for a proportion are useful for
+comparing a single category of a qualitative variable across one or two
+samples, but what if we are interested in comparing multiple categories
+across more than population? We will now explore some of the common
+tools for analyzing qualitative data. The inference techniques for
+qualitative variables are generally concerned with comparing a response
+variable with two or more categories across an explanatory variable with
+two or more groupings by exploring how the conditional distribution of
+the response varies across the groups in the explanatory variable. In
+other words, these inference procedures are designed to analyze the
+statistical association between two multi-category qualitative
+variables.</p>
+<p>Such problems are typically represented as a table where the rows
+represent the groupings of the explanatory variable and columns
+represent the categories of the response variable - often referred to as
+“two-way tables”.</p>
 </div>
 <div id="the-chi-square-goodness-of-fit-test" class="section level3">
 <h3>The Chi-square goodness of fit test</h3>
+<p><strong>Example: Gregor Mendels Peas</strong> - Gregor Mendel
+conducted a study in which he crossed pea plants. The plants he crossed
+had the alleles (i.e., a form or version of a gene) for both yellow
+<span class="math inline">\(Y\)</span> and green peas <span
+class="math inline">\(y\)</span> — a trait controlled by a single locus.
+He believed two of his laws applied here: the Law of Segregation and the
+Law of Dominance. These laws would determine the probabilities of
+certain genotypes. This can be summarized by a Punnett square</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Yellow
+</th>
+<th style="text-align:left;">
+Green
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(YY = 0.25\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Yy = 0.25\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(Yy = 0.25\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(yy = 0.25\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>If Mendel’s Laws are true, what do they imply about the probability
+distribution for these four outcomes (i.e., <span
+class="math inline">\(YY\)</span>, <span
+class="math inline">\(Yy\)</span>, <span
+class="math inline">\(yY\)</span>, or <span
+class="math inline">\(yy\)</span>)? And what does this imply about the
+probability distribution of color (i.e., yellow or green) ?</li>
+</ul>
+<p>Mendel bred <span class="math inline">\(8023\)</span> offspring. Of
+these, <span class="math inline">\(6022\)</span> were yellow, and <span
+class="math inline">\(2001\)</span> were green. Do his laws “fit” the
+data? That is, does the trait of color in pea plants exhibit what we
+would call Mendelian inheritance?</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Color
+</th>
+<th style="text-align:right;">
+Expected Frequency
+</th>
+<th style="text-align:right;">
+Observed Count
+</th>
+<th style="text-align:right;">
+Observed Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Yellow
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+<td style="text-align:right;">
+6022
+</td>
+<td style="text-align:right;">
+0.7506
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Green
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+2001
+</td>
+<td style="text-align:right;">
+0.2494
+</td>
+</tr>
+</tbody>
+</table>
+<p>The above problem amounts to comparing the observed frequencies of
+each color to the frequencies that we would expect under the Mendelian
+model of inheritance. In other words, we are comparing our “observed”
+distribution to a distribution we would expect. This type of comparison
+can be accomplished using a <span class="math inline">\(\chi^2\)</span>
+“goodness of fit” test.</p>
+<p>In this case the null hypothesis is that the offspring of the pea
+plants follows Mendelian inheritance or</p>
+<p><span class="math display">\[H_0: p_{yellow} = 0.75; p_{green} = 0.25
+\]</span></p>
+<p>The alternative is that frequency of each color do not follow the
+frequencies defined in the null. To generalize for a categorical
+variable with <span class="math inline">\(k\)</span> possible outcomes
+the null becomes <span class="math inline">\(H_0: p_i = c_i; \forall
+i\in[1:k]\)</span> and <span class="math inline">\(H_A:\)</span> at
+least one <span class="math inline">\(p_i \neq c_i\)</span>.</p>
+<p>The above hypothesis test uses <span
+class="math inline">\(\chi^2\)</span> test statistic defined as</p>
+<p><span class="math display">\[X^2 = \sum_{i =1}^k
+\frac{(\text{observed count}_i - \text{expected
+count}_i)^2}{\text{expected count}_i} \]</span></p>
+<ul>
+<li><p><span class="math inline">\(k\)</span> is the number of possible
+outcomes</p></li>
+<li><p>the observed count is the number of observations we observed with
+outcome <span class="math inline">\(i\)</span></p></li>
+<li><p>the expected count is the number of observations we expect to
+have outcome <span class="math inline">\(i\)</span> which is calculated
+under the null hypothesis as <span
+class="math inline">\(np_i\)</span></p></li>
+<li><p>We can think of this calculated as measuring the average distance
+from the observed model to the model we expect under the null.</p></li>
+</ul>
+<p><span class="math inline">\(X^2\)</span> can take on values between
+<span class="math inline">\(0\)</span> and positive <span
+class="math inline">\(\infty\)</span>. A value of zero means the
+observed model exactly follows the expected model. Values greater than
+zero indicate a deviation from the expected model. Large values of <span
+class="math inline">\(X^2\)</span> indicate evidence against the null
+hypothesis</p>
+<p>Referring back to Mendel’s pea plants we compute the expected number
+of yellow pea plants as <span class="math inline">\(8023\times 0.75 =
+6017.25\)</span> and the expected number of green pea plants to be <span
+class="math inline">\(8023\times 0.25 = 2005.75\)</span>. The test
+statistic is</p>
+<p><span class="math display">\[X^2 = \frac{(6022 - 6017.25)^2}{6017.25}
++\frac{(2001 - 2005.75)}{2005.75} \]</span></p>
+<p><span class="math display">\[ = 0.0037 + 0.0112  \]</span></p>
+<p><span class="math display">\[ \approx 0.015\]</span></p>
+<p>To conver the above statistic into a <span
+class="math inline">\(p\)</span>-value we need to know its sampling
+distribution. The statistic <span class="math inline">\(X^2\)</span> is
+called a <span class="math inline">\(\chi^2\)</span> test statistic
+because its sampling distribution follows a special type of probability
+distribution called the <span class="math inline">\(\chi^2\)</span>
+distribution</p>
+<p><img src="lecturemenu14_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<p>like the <span class="math inline">\(t\)</span> distributio the <span
+class="math inline">\(\chi^2\)</span> distributions form a family of
+distributions controlled by a single parameter: the degrees of freedom.
+We will use <span class="math inline">\(\chi^2(df)\)</span> to depict a
+specific member of this family. For the goodness of fit test the the
+test statistic <span class="math inline">\(X^2\)</span> follows a <span
+class="math inline">\(\chi^2\)</span> distribution with <span
+class="math inline">\(k-1\)</span> degrees of freedom: As we did the
+<span class="math inline">\(t\)</span> distribution we can look up
+probabilities from a <span class="math inline">\(chi^2\)</span>
+table:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Upper tail
+</th>
+<th style="text-align:left;">
+0.25
+</th>
+<th style="text-align:left;">
+0.2
+</th>
+<th style="text-align:left;">
+0.15
+</th>
+<th style="text-align:left;">
+0.125
+</th>
+<th style="text-align:left;">
+0.1
+</th>
+<th style="text-align:left;">
+0.075
+</th>
+<th style="text-align:left;">
+0.05
+</th>
+<th style="text-align:left;">
+0.025
+</th>
+<th style="text-align:left;">
+0.005
+</th>
+<th style="text-align:left;">
+0.0025
+</th>
+<th style="text-align:left;">
+5e-04
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(DF\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+1.323
+</td>
+<td style="text-align:left;">
+1.642
+</td>
+<td style="text-align:left;">
+2.072
+</td>
+<td style="text-align:left;">
+2.354
+</td>
+<td style="text-align:left;">
+2.706
+</td>
+<td style="text-align:left;">
+3.17
+</td>
+<td style="text-align:left;">
+3.841
+</td>
+<td style="text-align:left;">
+5.024
+</td>
+<td style="text-align:left;">
+7.879
+</td>
+<td style="text-align:left;">
+9.141
+</td>
+<td style="text-align:left;">
+12.116
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+2.773
+</td>
+<td style="text-align:left;">
+3.219
+</td>
+<td style="text-align:left;">
+3.794
+</td>
+<td style="text-align:left;">
+4.159
+</td>
+<td style="text-align:left;">
+4.605
+</td>
+<td style="text-align:left;">
+5.181
+</td>
+<td style="text-align:left;">
+5.991
+</td>
+<td style="text-align:left;">
+7.378
+</td>
+<td style="text-align:left;">
+10.597
+</td>
+<td style="text-align:left;">
+11.983
+</td>
+<td style="text-align:left;">
+15.202
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+4.108
+</td>
+<td style="text-align:left;">
+4.642
+</td>
+<td style="text-align:left;">
+5.317
+</td>
+<td style="text-align:left;">
+5.739
+</td>
+<td style="text-align:left;">
+6.251
+</td>
+<td style="text-align:left;">
+6.905
+</td>
+<td style="text-align:left;">
+7.815
+</td>
+<td style="text-align:left;">
+9.348
+</td>
+<td style="text-align:left;">
+12.838
+</td>
+<td style="text-align:left;">
+14.32
+</td>
+<td style="text-align:left;">
+17.73
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+5.385
+</td>
+<td style="text-align:left;">
+5.989
+</td>
+<td style="text-align:left;">
+6.745
+</td>
+<td style="text-align:left;">
+7.214
+</td>
+<td style="text-align:left;">
+7.779
+</td>
+<td style="text-align:left;">
+8.496
+</td>
+<td style="text-align:left;">
+9.488
+</td>
+<td style="text-align:left;">
+11.143
+</td>
+<td style="text-align:left;">
+14.86
+</td>
+<td style="text-align:left;">
+16.424
+</td>
+<td style="text-align:left;">
+19.997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+6.626
+</td>
+<td style="text-align:left;">
+7.289
+</td>
+<td style="text-align:left;">
+8.115
+</td>
+<td style="text-align:left;">
+8.625
+</td>
+<td style="text-align:left;">
+9.236
+</td>
+<td style="text-align:left;">
+10.008
+</td>
+<td style="text-align:left;">
+11.07
+</td>
+<td style="text-align:left;">
+12.833
+</td>
+<td style="text-align:left;">
+16.75
+</td>
+<td style="text-align:left;">
+18.386
+</td>
+<td style="text-align:left;">
+22.105
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+7.841
+</td>
+<td style="text-align:left;">
+8.558
+</td>
+<td style="text-align:left;">
+9.446
+</td>
+<td style="text-align:left;">
+9.992
+</td>
+<td style="text-align:left;">
+10.645
+</td>
+<td style="text-align:left;">
+11.466
+</td>
+<td style="text-align:left;">
+12.592
+</td>
+<td style="text-align:left;">
+14.449
+</td>
+<td style="text-align:left;">
+18.548
+</td>
+<td style="text-align:left;">
+20.249
+</td>
+<td style="text-align:left;">
+24.103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+9.037
+</td>
+<td style="text-align:left;">
+9.803
+</td>
+<td style="text-align:left;">
+10.748
+</td>
+<td style="text-align:left;">
+11.326
+</td>
+<td style="text-align:left;">
+12.017
+</td>
+<td style="text-align:left;">
+12.883
+</td>
+<td style="text-align:left;">
+14.067
+</td>
+<td style="text-align:left;">
+16.013
+</td>
+<td style="text-align:left;">
+20.278
+</td>
+<td style="text-align:left;">
+22.04
+</td>
+<td style="text-align:left;">
+26.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+10.219
+</td>
+<td style="text-align:left;">
+11.03
+</td>
+<td style="text-align:left;">
+12.027
+</td>
+<td style="text-align:left;">
+12.636
+</td>
+<td style="text-align:left;">
+13.362
+</td>
+<td style="text-align:left;">
+14.27
+</td>
+<td style="text-align:left;">
+15.507
+</td>
+<td style="text-align:left;">
+17.535
+</td>
+<td style="text-align:left;">
+21.955
+</td>
+<td style="text-align:left;">
+23.774
+</td>
+<td style="text-align:left;">
+27.868
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+11.389
+</td>
+<td style="text-align:left;">
+12.242
+</td>
+<td style="text-align:left;">
+13.288
+</td>
+<td style="text-align:left;">
+13.926
+</td>
+<td style="text-align:left;">
+14.684
+</td>
+<td style="text-align:left;">
+15.631
+</td>
+<td style="text-align:left;">
+16.919
+</td>
+<td style="text-align:left;">
+19.023
+</td>
+<td style="text-align:left;">
+23.589
+</td>
+<td style="text-align:left;">
+25.462
+</td>
+<td style="text-align:left;">
+29.666
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+12.549
+</td>
+<td style="text-align:left;">
+13.442
+</td>
+<td style="text-align:left;">
+14.534
+</td>
+<td style="text-align:left;">
+15.198
+</td>
+<td style="text-align:left;">
+15.987
+</td>
+<td style="text-align:left;">
+16.971
+</td>
+<td style="text-align:left;">
+18.307
+</td>
+<td style="text-align:left;">
+20.483
+</td>
+<td style="text-align:left;">
+25.188
+</td>
+<td style="text-align:left;">
+27.112
+</td>
+<td style="text-align:left;">
+31.42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+13.701
+</td>
+<td style="text-align:left;">
+14.631
+</td>
+<td style="text-align:left;">
+15.767
+</td>
+<td style="text-align:left;">
+16.457
+</td>
+<td style="text-align:left;">
+17.275
+</td>
+<td style="text-align:left;">
+18.294
+</td>
+<td style="text-align:left;">
+19.675
+</td>
+<td style="text-align:left;">
+21.92
+</td>
+<td style="text-align:left;">
+26.757
+</td>
+<td style="text-align:left;">
+28.729
+</td>
+<td style="text-align:left;">
+33.137
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+14.845
+</td>
+<td style="text-align:left;">
+15.812
+</td>
+<td style="text-align:left;">
+16.989
+</td>
+<td style="text-align:left;">
+17.703
+</td>
+<td style="text-align:left;">
+18.549
+</td>
+<td style="text-align:left;">
+19.602
+</td>
+<td style="text-align:left;">
+21.026
+</td>
+<td style="text-align:left;">
+23.337
+</td>
+<td style="text-align:left;">
+28.3
+</td>
+<td style="text-align:left;">
+30.318
+</td>
+<td style="text-align:left;">
+34.821
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+15.984
+</td>
+<td style="text-align:left;">
+16.985
+</td>
+<td style="text-align:left;">
+18.202
+</td>
+<td style="text-align:left;">
+18.939
+</td>
+<td style="text-align:left;">
+19.812
+</td>
+<td style="text-align:left;">
+20.897
+</td>
+<td style="text-align:left;">
+22.362
+</td>
+<td style="text-align:left;">
+24.736
+</td>
+<td style="text-align:left;">
+29.819
+</td>
+<td style="text-align:left;">
+31.883
+</td>
+<td style="text-align:left;">
+36.478
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+17.117
+</td>
+<td style="text-align:left;">
+18.151
+</td>
+<td style="text-align:left;">
+19.406
+</td>
+<td style="text-align:left;">
+20.166
+</td>
+<td style="text-align:left;">
+21.064
+</td>
+<td style="text-align:left;">
+22.18
+</td>
+<td style="text-align:left;">
+23.685
+</td>
+<td style="text-align:left;">
+26.119
+</td>
+<td style="text-align:left;">
+31.319
+</td>
+<td style="text-align:left;">
+33.426
+</td>
+<td style="text-align:left;">
+38.109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+18.245
+</td>
+<td style="text-align:left;">
+19.311
+</td>
+<td style="text-align:left;">
+20.603
+</td>
+<td style="text-align:left;">
+21.384
+</td>
+<td style="text-align:left;">
+22.307
+</td>
+<td style="text-align:left;">
+23.452
+</td>
+<td style="text-align:left;">
+24.996
+</td>
+<td style="text-align:left;">
+27.488
+</td>
+<td style="text-align:left;">
+32.801
+</td>
+<td style="text-align:left;">
+34.95
+</td>
+<td style="text-align:left;">
+39.719
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+19.369
+</td>
+<td style="text-align:left;">
+20.465
+</td>
+<td style="text-align:left;">
+21.793
+</td>
+<td style="text-align:left;">
+22.595
+</td>
+<td style="text-align:left;">
+23.542
+</td>
+<td style="text-align:left;">
+24.716
+</td>
+<td style="text-align:left;">
+26.296
+</td>
+<td style="text-align:left;">
+28.845
+</td>
+<td style="text-align:left;">
+34.267
+</td>
+<td style="text-align:left;">
+36.456
+</td>
+<td style="text-align:left;">
+41.308
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+20.489
+</td>
+<td style="text-align:left;">
+21.615
+</td>
+<td style="text-align:left;">
+22.977
+</td>
+<td style="text-align:left;">
+23.799
+</td>
+<td style="text-align:left;">
+24.769
+</td>
+<td style="text-align:left;">
+25.97
+</td>
+<td style="text-align:left;">
+27.587
+</td>
+<td style="text-align:left;">
+30.191
+</td>
+<td style="text-align:left;">
+35.718
+</td>
+<td style="text-align:left;">
+37.946
+</td>
+<td style="text-align:left;">
+42.879
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+21.605
+</td>
+<td style="text-align:left;">
+22.76
+</td>
+<td style="text-align:left;">
+24.155
+</td>
+<td style="text-align:left;">
+24.997
+</td>
+<td style="text-align:left;">
+25.989
+</td>
+<td style="text-align:left;">
+27.218
+</td>
+<td style="text-align:left;">
+28.869
+</td>
+<td style="text-align:left;">
+31.526
+</td>
+<td style="text-align:left;">
+37.156
+</td>
+<td style="text-align:left;">
+39.422
+</td>
+<td style="text-align:left;">
+44.434
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+22.718
+</td>
+<td style="text-align:left;">
+23.9
+</td>
+<td style="text-align:left;">
+25.329
+</td>
+<td style="text-align:left;">
+26.189
+</td>
+<td style="text-align:left;">
+27.204
+</td>
+<td style="text-align:left;">
+28.458
+</td>
+<td style="text-align:left;">
+30.144
+</td>
+<td style="text-align:left;">
+32.852
+</td>
+<td style="text-align:left;">
+38.582
+</td>
+<td style="text-align:left;">
+40.885
+</td>
+<td style="text-align:left;">
+45.973
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+23.828
+</td>
+<td style="text-align:left;">
+25.038
+</td>
+<td style="text-align:left;">
+26.498
+</td>
+<td style="text-align:left;">
+27.376
+</td>
+<td style="text-align:left;">
+28.412
+</td>
+<td style="text-align:left;">
+29.692
+</td>
+<td style="text-align:left;">
+31.41
+</td>
+<td style="text-align:left;">
+34.17
+</td>
+<td style="text-align:left;">
+39.997
+</td>
+<td style="text-align:left;">
+42.336
+</td>
+<td style="text-align:left;">
+47.498
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+24.935
+</td>
+<td style="text-align:left;">
+26.171
+</td>
+<td style="text-align:left;">
+27.662
+</td>
+<td style="text-align:left;">
+28.559
+</td>
+<td style="text-align:left;">
+29.615
+</td>
+<td style="text-align:left;">
+30.92
+</td>
+<td style="text-align:left;">
+32.671
+</td>
+<td style="text-align:left;">
+35.479
+</td>
+<td style="text-align:left;">
+41.401
+</td>
+<td style="text-align:left;">
+43.775
+</td>
+<td style="text-align:left;">
+49.011
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;">
+26.039
+</td>
+<td style="text-align:left;">
+27.301
+</td>
+<td style="text-align:left;">
+28.822
+</td>
+<td style="text-align:left;">
+29.737
+</td>
+<td style="text-align:left;">
+30.813
+</td>
+<td style="text-align:left;">
+32.142
+</td>
+<td style="text-align:left;">
+33.924
+</td>
+<td style="text-align:left;">
+36.781
+</td>
+<td style="text-align:left;">
+42.796
+</td>
+<td style="text-align:left;">
+45.204
+</td>
+<td style="text-align:left;">
+50.511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+27.141
+</td>
+<td style="text-align:left;">
+28.429
+</td>
+<td style="text-align:left;">
+29.979
+</td>
+<td style="text-align:left;">
+30.911
+</td>
+<td style="text-align:left;">
+32.007
+</td>
+<td style="text-align:left;">
+33.36
+</td>
+<td style="text-align:left;">
+35.172
+</td>
+<td style="text-align:left;">
+38.076
+</td>
+<td style="text-align:left;">
+44.181
+</td>
+<td style="text-align:left;">
+46.623
+</td>
+<td style="text-align:left;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+28.241
+</td>
+<td style="text-align:left;">
+29.553
+</td>
+<td style="text-align:left;">
+31.132
+</td>
+<td style="text-align:left;">
+32.081
+</td>
+<td style="text-align:left;">
+33.196
+</td>
+<td style="text-align:left;">
+34.572
+</td>
+<td style="text-align:left;">
+36.415
+</td>
+<td style="text-align:left;">
+39.364
+</td>
+<td style="text-align:left;">
+45.559
+</td>
+<td style="text-align:left;">
+48.034
+</td>
+<td style="text-align:left;">
+53.479
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+29.339
+</td>
+<td style="text-align:left;">
+30.675
+</td>
+<td style="text-align:left;">
+32.282
+</td>
+<td style="text-align:left;">
+33.247
+</td>
+<td style="text-align:left;">
+34.382
+</td>
+<td style="text-align:left;">
+35.78
+</td>
+<td style="text-align:left;">
+37.652
+</td>
+<td style="text-align:left;">
+40.646
+</td>
+<td style="text-align:left;">
+46.928
+</td>
+<td style="text-align:left;">
+49.435
+</td>
+<td style="text-align:left;">
+54.947
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+30.435
+</td>
+<td style="text-align:left;">
+31.795
+</td>
+<td style="text-align:left;">
+33.429
+</td>
+<td style="text-align:left;">
+34.41
+</td>
+<td style="text-align:left;">
+35.563
+</td>
+<td style="text-align:left;">
+36.984
+</td>
+<td style="text-align:left;">
+38.885
+</td>
+<td style="text-align:left;">
+41.923
+</td>
+<td style="text-align:left;">
+48.29
+</td>
+<td style="text-align:left;">
+50.829
+</td>
+<td style="text-align:left;">
+56.407
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+31.528
+</td>
+<td style="text-align:left;">
+32.912
+</td>
+<td style="text-align:left;">
+34.574
+</td>
+<td style="text-align:left;">
+35.57
+</td>
+<td style="text-align:left;">
+36.741
+</td>
+<td style="text-align:left;">
+38.184
+</td>
+<td style="text-align:left;">
+40.113
+</td>
+<td style="text-align:left;">
+43.195
+</td>
+<td style="text-align:left;">
+49.645
+</td>
+<td style="text-align:left;">
+52.215
+</td>
+<td style="text-align:left;">
+57.858
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+32.62
+</td>
+<td style="text-align:left;">
+34.027
+</td>
+<td style="text-align:left;">
+35.715
+</td>
+<td style="text-align:left;">
+36.727
+</td>
+<td style="text-align:left;">
+37.916
+</td>
+<td style="text-align:left;">
+39.38
+</td>
+<td style="text-align:left;">
+41.337
+</td>
+<td style="text-align:left;">
+44.461
+</td>
+<td style="text-align:left;">
+50.993
+</td>
+<td style="text-align:left;">
+53.594
+</td>
+<td style="text-align:left;">
+59.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+33.711
+</td>
+<td style="text-align:left;">
+35.139
+</td>
+<td style="text-align:left;">
+36.854
+</td>
+<td style="text-align:left;">
+37.881
+</td>
+<td style="text-align:left;">
+39.087
+</td>
+<td style="text-align:left;">
+40.573
+</td>
+<td style="text-align:left;">
+42.557
+</td>
+<td style="text-align:left;">
+45.722
+</td>
+<td style="text-align:left;">
+52.336
+</td>
+<td style="text-align:left;">
+54.967
+</td>
+<td style="text-align:left;">
+60.735
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+34.8
+</td>
+<td style="text-align:left;">
+36.25
+</td>
+<td style="text-align:left;">
+37.99
+</td>
+<td style="text-align:left;">
+39.033
+</td>
+<td style="text-align:left;">
+40.256
+</td>
+<td style="text-align:left;">
+41.762
+</td>
+<td style="text-align:left;">
+43.773
+</td>
+<td style="text-align:left;">
+46.979
+</td>
+<td style="text-align:left;">
+53.672
+</td>
+<td style="text-align:left;">
+56.332
+</td>
+<td style="text-align:left;">
+62.162
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+40
+</td>
+<td style="text-align:left;">
+45.616
+</td>
+<td style="text-align:left;">
+47.269
+</td>
+<td style="text-align:left;">
+49.244
+</td>
+<td style="text-align:left;">
+50.424
+</td>
+<td style="text-align:left;">
+51.805
+</td>
+<td style="text-align:left;">
+53.501
+</td>
+<td style="text-align:left;">
+55.758
+</td>
+<td style="text-align:left;">
+59.342
+</td>
+<td style="text-align:left;">
+66.766
+</td>
+<td style="text-align:left;">
+69.699
+</td>
+<td style="text-align:left;">
+76.095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+56.334
+</td>
+<td style="text-align:left;">
+58.164
+</td>
+<td style="text-align:left;">
+60.346
+</td>
+<td style="text-align:left;">
+61.647
+</td>
+<td style="text-align:left;">
+63.167
+</td>
+<td style="text-align:left;">
+65.03
+</td>
+<td style="text-align:left;">
+67.505
+</td>
+<td style="text-align:left;">
+71.42
+</td>
+<td style="text-align:left;">
+79.49
+</td>
+<td style="text-align:left;">
+82.664
+</td>
+<td style="text-align:left;">
+89.561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:left;">
+109.141
+</td>
+<td style="text-align:left;">
+111.667
+</td>
+<td style="text-align:left;">
+114.659
+</td>
+<td style="text-align:left;">
+116.433
+</td>
+<td style="text-align:left;">
+118.498
+</td>
+<td style="text-align:left;">
+121.017
+</td>
+<td style="text-align:left;">
+124.342
+</td>
+<td style="text-align:left;">
+129.561
+</td>
+<td style="text-align:left;">
+140.169
+</td>
+<td style="text-align:left;">
+144.293
+</td>
+<td style="text-align:left;">
+153.167
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Z-score
+</td>
+<td style="text-align:left;">
+0.674
+</td>
+<td style="text-align:left;">
+0.842
+</td>
+<td style="text-align:left;">
+1.036
+</td>
+<td style="text-align:left;">
+1.15
+</td>
+<td style="text-align:left;">
+1.282
+</td>
+<td style="text-align:left;">
+1.44
+</td>
+<td style="text-align:left;">
+1.645
+</td>
+<td style="text-align:left;">
+1.96
+</td>
+<td style="text-align:left;">
+2.576
+</td>
+<td style="text-align:left;">
+2.807
+</td>
+<td style="text-align:left;">
+3.291
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Confidence Level:
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(50\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(60\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(70\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(75\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(80\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(85\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(90\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(95\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99.5\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99.9\%\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="the-chi-square-distribution" class="section level3">
+<h3>The Chi-square distribution</h3>
 <p><br> <br> <br> <br></p>
 </div>
 <div id="references" class="section level3">

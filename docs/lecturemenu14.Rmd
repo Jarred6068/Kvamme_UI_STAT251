@@ -291,13 +291,234 @@ Conduct a unpooled two sample $t$-test at the $\alpha = 0.05$ significance level
 
 # Lecture 27 Monday, April 10th 2024
 
-### Comparing two dependent samples
+### Paired $t$ test
+We know that comparative methods (i.e methods that compare two groups/samples across a quantitative variable) are more common and often preferred over one sample procedures. One common comparative design that makes use of single-sample procedures for a population mean is called the paired $t$-test. This test is used to draw inferences about a population mean in matched pairs designs and can be thought of as the parametric analogue of the <i>sign test</i> we learned previously. Recall that in matched pairs studies subjects are matched in pairs and the quantitative outcome is compared within each pair. 
 
-### Inference for qualitative data
+  * matched pair designs are most common when randomization is not possible
+  
+  * used when observations are taken on the same subject (before and after treatment)
+  
+In a paired $t$-test we convert a comparative study into a one-sample procedure by making the response variable the difference between the two observations in each pair $d_i = x_i - y_i$. The parameter under study is the population mean difference $\mu_d$ which can be estimated by the sample mean difference $\bar{x}_d = \bar{x} - \bar{y}$ computed over all pairwise differences. The standard deviation of the difference $\sigma_d$ is then estimated with the sample standard deviation difference. Inference is then treated in the same way as the confidence interval and significance test procedures for a single sample
+
+  * the $(1 - \alpha)\%$ confidence interval for the mean pairwise difference is 
+  
+  \[ \bar{x}_d \pm t_{1-\alpha/2} \frac{s_d}{\sqrt{n}}\]
+  
+  * the test statistic for a signifcance test regargin the pairwise difference is given by
+  
+  \[t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}} \sim t(n - 1) \]
+  
+  * by treating the above procedure as a one-sample $t$ test we make the assumption that the population distribution of differences is approximately normal. 
+  
+**Example: Revisting the Spousal Dominance Problem** - Recall the study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision.
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+Couple = c(1:17)
+Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
+Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
+Difference = Husband - Wife
+
+df = cbind.data.frame(Couple, Husband, Wife, Difference)
+
+kable(df, format = 'html', digits = 2, 
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+A summary of the difference in rating between husbands and wives is given below:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+Couple = c(1:17)
+Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
+Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
+Difference = Husband - Wife
+
+df = cbind.data.frame(`Parameter` = c('$\\mu_d$'),
+                      `Estimate` = c(round(mean(Difference),2)),
+                      `Stdev` = c(round(sd(Difference), 2)))
+
+kable(df, format = 'html', digits = 2, 
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+Conduct a paired $t$-test at the $\alpha = 0.05$ significance level to determine if husbands and wives differ in their percieved influence on financial decision making
+
+### Statistical Inference for qualitative data
+
+The table below summarizes the procedures we have learned so far in the course
+
+```{r, echo=F, message=F, warning=F}
+
+df = cbind.data.frame(`Parameter` = c('$p$','$p_1 - p_2$', '$\\mu$', '$\\mu_1 - \\mu_2$','$\\mu_1 - \\mu_2$', '$\\mu_d$'),
+                      `Type` = c('one-sample', 'two-sample', 'one-sample', 'two-sample', 'pooled two-sample', 'matched pairs'),
+                      `Response Variable` = c('Categorical','Categorical', 'Quantatitive', 'Quantitative', 'Quantitative','Quantitative'),
+                      
+                      `$(1 - \\alpha)\\%$ CI` = c('$\\hat{p}\\pm Z_{1-\\alpha/2}\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}$',
+                                                  
+                                                  '$(\\hat{p}_1 - \\hat{p}_2)\\pm Z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1}+\\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$',
+                                                  
+                                                  '$\\bar{x} \\pm t_{1-\\alpha/2, n-1}\\frac{s}{\\sqrt{n}}$',
+                                                  
+                                                  '$(\\bar{x}_1 - \\bar{x}_2) \\pm  t_{1-\\alpha/2, \\min(n_1 -1, n_2-1)} \\sqrt{\\frac{s_1^2}{n_1}+\\frac{s_2^2}{n_2}}$',
+                                                  
+                                                  '$(\\bar{x}_1 - \\bar{x}_2) \\pm  t_{1-\\alpha/2, \\min(n_1 -1, n_2-1)} s_{pooled}\\sqrt{\\frac{1}{n_1}+\\frac{1}{n_2}}$',
+                                                  
+                                                  '$\\bar{x}_d \\pm t_{1-\\alpha/2, n-1}\\frac{s_d}{\\sqrt{n}}$'),
+                      
+                      
+                      `Test statistic` = c('$\\frac{\\hat{p} - p_0}{\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}}$',
+                                           
+                                           '$\\frac{\\hat{p}_1 - \\hat{p}_2}{ \\sqrt{\\hat{p}(1-\\hat{p})\\left(\\frac{1}{n_1}+\\frac{1}{n_2}\\right)}}$',
+                                           
+                                           '$\\frac{\\bar{x} - \\mu_0}{s/\\sqrt{n}}$',
+                                           
+                                           '$\\frac{\\bar{x}_1 - \\bar{x}_2}{\\sqrt{\\frac{s_1^2}{n_1}+\\frac{s_2^2}{n_2}}}$',
+                                           
+                                           '$\\frac{\\bar{x}_1 - \\bar{x}_2}{s_{pooled}\\sqrt{\\frac{1}{n_1}+\\frac{1}{n_2}}}$',
+                                           '$\\frac{\\bar{x}_d - \\mu_d}{s_d/\\sqrt{n}}$'),
+                      `Distribution` = c('$z$','$z$', '$t(n-1)$','$t(\\min(n_1 - 1, n_2 - 1))$','$t(n_1+n_2 - 2)$','$t(n-1)$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Despite significantly expanding the our statistical tools for inference we are still quite limited in our ability to analyze qualitative responses. Our tests for a proportion are useful for comparing a single category of a qualitative variable across one or two samples, but what if we are interested in comparing multiple categories across more than population? We will now explore some of the common tools for analyzing qualitative data. The inference techniques for qualitative variables are generally concerned with comparing a response variable with two or more categories across an explanatory variable with two or more groupings by exploring how the conditional distribution of the response varies across the groups in the explanatory variable. In other words, these inference procedures are designed to analyze the statistical association between two multi-category qualitative variables. 
+
+Such problems are typically represented as a table where the rows represent the groupings of the explanatory variable and columns represent the categories of the response variable - often referred to as "two-way tables". 
+
+
+### The Chi-square goodness of fit test
+
+**Example: Gregor Mendels Peas** - Gregor Mendel conducted a study in which he crossed pea plants. The plants he crossed had the alleles (i.e., a form or version of a gene) for both yellow $Y$ and green peas $y$ — a trait controlled by a single locus. He believed two of his laws applied here: the Law of Segregation and the Law of Dominance. These laws would determine the probabilities of certain genotypes. This can be summarized by a Punnett square
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(c('$YY = 0.25$', '$Yy = 0.25$'),
+                      c('$Yy = 0.25$', '$yy = 0.25$'))
+row.names(df) = c('Yellow','Green')
+
+kable(df, format = 'html', digits = 2, col.names = c('Yellow', 'Green'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+  * If Mendel’s Laws are true, what do they imply about the probability distribution for these four outcomes (i.e., $YY$, $Yy$, $yY$, or $yy$)? And what does this imply about the probability distribution of color (i.e., yellow or green) ?
+
+
+Mendel bred $8023$ offspring. Of these, $6022$ were yellow, and $2001$ were green. Do his laws “fit” the data? That is, does the trait of color in pea plants exhibit what we would call Mendelian inheritance?
+
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Color` = c('Yellow', 'Green'),
+                      `Expected Frequency` = c(0.75, 0.25),
+                      `Observed Count` = c(6022, 2001),
+                      `Observed Frequency` = c(6022/8023, 2001/8023))
+
+kable(df, format = 'html', digits = 4,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+The above problem amounts to comparing the observed frequencies of each color to the frequencies that we would expect under the Mendelian model of inheritance. In other words, we are comparing our "observed" distribution to a distribution we would expect. This type of comparison can be accomplished using a $\chi^2$ "goodness of fit" test.
+
+In this case the null hypothesis is that the offspring of the pea plants follows Mendelian inheritance or 
+
+\[H_0: p_{yellow} = 0.75; p_{green} = 0.25 \]
+
+The alternative is that frequency of each color do not follow the frequencies defined in the null. To generalize for a categorical variable with $k$ possible outcomes the null becomes $H_0: p_i = c_i; \forall i\in[1:k]$ and $H_A:$ at least one $p_i \neq c_i$. 
+
+The above hypothesis test uses $\chi^2$ test statistic defined as
+
+\[X^2 = \sum_{i =1}^k \frac{(\text{observed count}_i - \text{expected count}_i)^2}{\text{expected count}_i} \]
+
+  * $k$ is the number of possible outcomes
+  
+  * the observed count is the number of observations we observed with outcome $i$
+  
+  * the expected count is the number of observations we expect to have outcome $i$ which is calculated under the null hypothesis as $np_i$
+  
+  * We can think of this calculated as measuring the average distance from the observed model to the model we expect under the null.
+  
+$X^2$ can take on values between $0$ and positive $\infty$. A value of zero means the observed model exactly follows the expected model. Values greater than zero indicate a deviation from the expected model. Large values of $X^2$ indicate evidence against the null hypothesis 
+  
+Referring back to Mendel's pea plants we compute the expected number of yellow pea plants as $8023\times 0.75 = 6017.25$ and the expected number of green pea plants to be $8023\times 0.25 = 2005.75$. The test statistic is 
+
+\[X^2 = \frac{(6022 - 6017.25)^2}{6017.25} +\frac{(2001 - 2005.75)}{2005.75} \]
+
+\[ = 0.0037 + 0.0112  \]
+
+\[ \approx 0.015\]
+
+To conver the above statistic into a $p$-value we need to know its sampling distribution. The statistic $X^2$ is called a $\chi^2$ test statistic because its sampling distribution follows a special type of probability distribution called the $\chi^2$ distribution
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.width=10, fig.height=6, results = 'hide'}
+
+
+x = seq(0, 20, length=1000)
+hx = dnorm(x, 1)
+
+degf = c(2, 4, 6, 10)
+colors = c("red", "blue", "darkgreen", "darkgoldenrod1", "black")
+labels = c("df = 1","df = 2", "df = 4", "df = 6", "df = 10")
+plot(x, hx, type="l", lty=1, xlab="x value", lwd = 3,
+     ylab="Density", main="Comparison of t Distributions")
+
+#The relevant modification
+mapply(function(DoF, W, C) lines(x, dchisq(x, DoF), lwd=W, col=C), DoF = degf, W = c(3,3,3,3), C = colors[-5])
+
+legend("topright", inset=.05, title="Chi-square Distributions",
+       labels, lwd=2, lty=c(1, 1, 1, 1, 1), col=colors)
+
+```
+
+like the $t$ distributio the $\chi^2$ distributions form a family of distributions controlled by a single parameter: the degrees of freedom. We will use $\chi^2(df)$ to depict a specific member of this family. For the goodness of fit test the the test statistic $X^2$ follows a $\chi^2$ distribution with $k-1$ degrees of freedom: As we did the $t$ distribution we can look up probabilities from a $chi^2$ table:
+
+```{r, echo=F, message=F, warning=F}
+DF = c(1:30, 40, 50, 100)
+probs = rbind.data.frame(cbind.data.frame(c('$DF$', DF), 
+                         c('',round(qchisq(1-0.5/2, DF), 3)), c('',round(qchisq(1-0.4/2, DF),3)),
+                         c('',round(qchisq(1-0.3/2, DF),3)), c('',round(qchisq(1-0.25/2, DF),3)), 
+                         c('',round(qchisq(1-0.2/2, DF), 3)), c('',round(qchisq(1-0.15/2, DF),3)), 
+                         c('',round(qchisq(1-0.1/2, DF),3)), c('',round(qchisq(1-0.05/2, DF),3)),
+                         c('',round(qchisq(1-0.01/2, DF),3)), c('',round(qchisq(1 - 0.005/2, DF),3)),
+                         c('',round(qchisq(1 - 0.001/2, DF),3))),
+                         c('Z-score', round(qnorm(1-c(0.5, 0.4, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.01, 0.005, 0.001)/2),3)),
+                         c('Confidence Level:', 
+                           paste0('$',100*(1-c(0.5, 0.4, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.01, 0.005, 0.001)), '\\%$')))
+                        
+
+df = rbind.data.frame(probs)
+
+kable(df, format = 'html', digits = 2, col.names = c('Upper tail', 0.25, 0.2, 0.15, 0.125, 0.1, 0.075, 0.05, 0.025, 0.005, 0.0025, 0.0005),
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
 
 ### The Chi-square distribution
 
-### The Chi-square goodness of fit test
+
 
 <br>
 <br>
