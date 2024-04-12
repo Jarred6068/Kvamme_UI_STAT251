@@ -603,12 +603,41 @@ display: none;
 <h3>Definitions</h3>
 <p>Define the following terms/concepts</p>
 <ul>
-<li><p>a.) <strong>Non-parametric statistics</strong></p></li>
-<li><p>b.) <strong>Parametric statistics</strong></p></li>
+<li><p>a.) <strong>Non-parametric statistics</strong> <span style="color: red;">- A branch of statistics which does not assume that
+the sample data comes from a specific probability distribution.
+</span></p></li>
+<li><p>b.) <strong>Parametric statistics</strong> <span style="color: red;">- A branch of statistics which assumes the sample
+data comes from a specific probability distribution that depends on a
+set of fixed parameters.</span></p></li>
 <li><p>c.) Describe the advantages and disadvantages of
-<strong>Non-parametric</strong> significance tests</p></li>
-<li><p>d.) <strong>Explanatory Variable</strong></p></li>
-<li><p>e.) <strong>Response Variable</strong></p></li>
+<strong>Non-parametric</strong> significance tests</p>
+<p><u>Advantages</u></p>
+<ol style="list-style-type: decimal">
+<li><p><span style="color: red;">They may be the only alternative when
+sample sizes are very small (unless the population distribution is known
+exactly, but this is almost never the case)</span></p></li>
+<li><p><span style="color: red;">They make few assumptions about the
+population distribution of the data</span></p></li>
+<li><p><span style="color: red;">They are advantages when the data
+represent crude measurements such as subjective ratings/rankings (e.g,
+Likert responses)</span></p></li>
+<li><p><span style="color: red;">They often have simpler computations
+and interpretations than parametric tests</span></p></li>
+</ol>
+<p><u>Disadvantages</u></p>
+<ol style="list-style-type: decimal">
+<li><span style="color: red;">They are generally less powerful than
+their parametric analogues</span></li>
+</ol></li>
+</ul>
+<p><br></p>
+<ul>
+<li><p>d.) <strong>Explanatory Variable</strong> <span style="color: red;">-In bivariate statistical procedures, the
+explanatory variable is the independent variable that usually defines
+the groups that will be compared across the response
+variable</span></p></li>
+<li><p>e.) <strong>Response Variable</strong> <span style="color: red;">-The dependent variable that measures the outcome of
+interest from each group</span></p></li>
 </ul>
 </div>
 <div id="confidence-intervals-and-two-tailed-tests" class="section level3">
@@ -619,17 +648,21 @@ hypothesis, use the point estimate to determine whether the null
 hypothesis <span class="math inline">\(H_0\)</span> should be
 <strong>Rejected</strong> or <strong>Not Rejected</strong> and denote
 significance level <span class="math inline">\(\alpha\)</span></p>
-<p>a.) <span class="math inline">\(H_0: \mu_0 = -2\)</span> <br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> <br> <span class="math inline">\(95\%\)</span> CI for <span class="math inline">\(\mu_0 \in [-3.0, -2.4]\)</span> <br> <span class="math inline">\(\bar{x} = -2.7\)</span> <span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \]</span></p>
+<p>a.) <span class="math inline">\(H_0: \mu_0 = -2\)</span> <br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> <br> <span class="math inline">\(95\%\)</span> CI for <span class="math inline">\(\mu_0 \in [-3.0, -2.4]\)</span> <br> <span class="math inline">\(\bar{x} = -2.7\)</span> <span class="math display">\[ \text{Decision} = \color{red}{\text{reject} \
+H_0} \\
+  \alpha = \color{red}{0.05} \]</span></p>
 <p>b.) <span class="math inline">\(H_0: p_0 = 0.9\)</span> <br> <span class="math inline">\(H_A: p \neq p_0\)</span> <br> <span class="math inline">\(99\%\)</span> CI for <span class="math inline">\(p_0 \in [0.972, 0.968]\)</span> <br> <span class="math inline">\(\hat{p} = 0.97\)</span></p>
-<p><span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \]</span></p>
+<p><span class="math display">\[ \text{Decision} =
+\color{red}{\text{fail to reject} \ H_0} \\
+  \alpha = \color{red}{0.01} \]</span></p>
 <p>c.) <span class="math inline">\(H_0: \mu_0 = 0\)</span> <br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> <br> <span class="math inline">\(90\%\)</span> CI for <span class="math inline">\(\mu_0 \in [-3.63, 7.49]\)</span> <br> <span class="math inline">\(\bar{x} = 1.93\)</span></p>
-<p><span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \]</span></p>
+<p><span class="math display">\[ \text{Decision} =
+\color{red}{\text{fail to reject} \ H_0} \\
+  \alpha = \color{red}{0.1} \]</span></p>
 <p>d.) <span class="math inline">\(H_0: \mu_0 = 50\)</span><br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span><br> <span class="math inline">\(85\%\)</span> CI for <span class="math inline">\(\mu_0 \in [93.6, 139]\)</span><br> <span class="math inline">\(\bar{x} = 116.3\)</span></p>
-<p><span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \]</span></p>
+<p><span class="math display">\[ \text{Decision} =
+\color{red}{\text{fail to reject} \ H_0} \\
+  \alpha = \color{red}{0.15} \]</span></p>
 </div>
 <div id="the-sign-test" class="section level3">
 <h3>The sign test</h3>
@@ -675,8 +708,10 @@ Sign
 2
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(1\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -690,8 +725,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(1\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -705,8 +742,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -720,8 +759,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -735,8 +776,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -750,8 +793,10 @@ Sign
 2
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -765,6 +810,7 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(0\)</span></span>
 </td>
 <td style="text-align:left;">
 </td>
@@ -780,8 +826,10 @@ Sign
 4
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(1\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -795,8 +843,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(4\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -810,8 +860,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(1\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -825,6 +877,7 @@ Sign
 2
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(0\)</span></span>
 </td>
 <td style="text-align:left;">
 </td>
@@ -840,8 +893,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(4\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -855,6 +910,7 @@ Sign
 3
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(0\)</span></span>
 </td>
 <td style="text-align:left;">
 </td>
@@ -870,8 +926,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(2\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -885,6 +943,7 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(0\)</span></span>
 </td>
 <td style="text-align:left;">
 </td>
@@ -900,8 +959,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(1\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -915,8 +976,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -930,8 +993,10 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(4\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -945,8 +1010,10 @@ Sign
 3
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(-1\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(-\)</span></span>
 </td>
 </tr>
 <tr>
@@ -960,6 +1027,7 @@ Sign
 1
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(0\)</span></span>
 </td>
 <td style="text-align:left;">
 </td>
@@ -976,13 +1044,22 @@ a positive effect on reducing facial acne at the <span class="math inline">\(\al
 acne scores before and after applying the skin care cream. Record the
 sign of each difference and report the total number of positive signs
 <span class="math inline">\(s\)</span></p>
-<p>b.) What does a “positive” sign indicate in this experiment?</p>
+<p>b.) What does a “positive” sign indicate in this experiment? <span style="color: red;">A positive sign indicates that the skin cream
+reduced the appearance of dry skin</span></p>
 <p>c.) Compute the <span class="math inline">\(p\)</span>-value for the
-sign test</p>
+sign test <span style="color: red;">The number of positive signs is
+<span class="math inline">\(s = 14\)</span>. The <span class="math inline">\(p\)</span>value is probability of observing <span class="math inline">\(14\)</span> or more positive signs in <span class="math inline">\(20\)</span> observations given by <span class="math display">\[p\text{-value} = P(S\geq s | H_0) = \sum_{k =
+14}^{20}\frac{20!}{k!(20 - k)!} \cdot 0.5^k \cdot (1-0.5)^{20-k}
+\]</span> <span class="math display">\[ \approx 0.058  \]</span>
+</span></p>
 <p>d.) Use the <span class="math inline">\(p\)</span>-value from part
 (c) to determine if there is enough evidence to conclude that the
 topical cream product has a positive effect on reducing the appearance
 of acne. Interpret your decision in context.</p>
+<p><span style="color: red;">At the <span class="math inline">\(\alpha =
+0.05\)</span> significance level, we fail to reject the null hypothesis
+and determine that there is insufficient evidence that skin cream
+reduces dry skin</span></p>
 <p><br> <br></p>
 <p><span class="math inline">\(\bf (3.)\)</span> In a boreal forest,
 researchers conducted an experiment to study how herbivores respond to
@@ -1023,8 +1100,10 @@ Sign
 10
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(5\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1038,8 +1117,10 @@ Sign
 9
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1053,8 +1134,10 @@ Sign
 11
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(7\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1068,8 +1151,10 @@ Sign
 8
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(6\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1083,8 +1168,10 @@ Sign
 12
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(4\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1098,8 +1185,10 @@ Sign
 10
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1113,8 +1202,10 @@ Sign
 11
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(6\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1128,8 +1219,10 @@ Sign
 9
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(5\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1143,8 +1236,10 @@ Sign
 13
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(6\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1158,8 +1253,10 @@ Sign
 10
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(5\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1173,8 +1270,10 @@ Sign
 8
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(3\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1188,25 +1287,34 @@ Sign
 12
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(4\)</span></span>
 </td>
 <td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(+\)</span></span>
 </td>
 </tr>
 </tbody>
 </table>
 <p>The researchers are interested in whether or not fertilizing stands
-increased herbaceous activity. Conduct a sign test at the <span class="math inline">\(\alpha = 0.05\)</span> signifcance level to
+increased herbaceous activity. Conduct a sign test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
 determine if fertilized plots have significantly more herbivore tracks
 than control plots</p>
 <p>a.) Fill in the table above by computing the difference in animal
 tracks between the fertilized and control plots. Record the sign of each
 difference and report the total number of positive signs <span class="math inline">\(s\)</span></p>
-<p>b.) What does a “positive” sign indicate in this experiment?</p>
+<p>b.) What does a “positive” sign indicate in this experiment? <span style="color: red;">A positive sign indicates that the fertilized stands
+have more animal tracks</span></p>
 <p>c.) Compute the <span class="math inline">\(p\)</span>-value for the
-sign test</p>
+sign test <span style="color: red;">The number of positive signs is
+<span class="math inline">\(s = 12\)</span>. The <span class="math inline">\(p\)</span>value is probability of observing <span class="math inline">\(12\)</span> or more positive signs in <span class="math inline">\(12\)</span> observations given by <span class="math display">\[p\text{-value} = P(S\geq s | H_0) =
+\frac{12!}{12!(12 - 12)!} \cdot 0.5^{12}\cdot(1-0.5)^{12-12} \]</span>
+<span class="math display">\[ 0.5^{12} \]</span> <span class="math display">\[ \approx 0  \]</span></span></p>
 <p>d.) Use the <span class="math inline">\(p\)</span>-value from part
 (c) to determine if there is enough evidence to conclude that fertilized
-stands have more herbivore activity.</p>
+stands have more herbivore activity. <span style="color: red;">At the
+<span class="math inline">\(\alpha = 0.05\)</span> significance level we
+reject the null hypothesis and conclude that fertilized stands have
+significantly more animal activity than non-fertilized stands</span></p>
 <p><br> <br></p>
 </div>
 <div id="comparing-two-population-proportions-p_1-and-p_2" class="section level3">
@@ -1280,6 +1388,44 @@ Past Approval (Gallup: 2001 - 2022)
 0.05\)</span> significance level to determine whether the current
 approval rating is significantly lower than the historical average - be
 sure to address all five steps of the hypothesis test.</p>
+<ol style="list-style-type: decimal">
+<li><span style="color: red;">the pooled estimate of the common
+proportion is</li>
+</ol>
+<p><span class="math display">\[\hat{p} =
+\frac{0.4116(192)+0.5087(39)}{192+39} = 0.428\]</span></p>
+<p><span class="math inline">\(n\hat{p} = 0.428(231) = 99\)</span> and
+<span class="math inline">\(n(1-\hat{p}) = 0.572(231) = 132\)</span> are
+both greater than the required <span class="math inline">\(15\)</span>
+and thus the sample size is sufficient to meet the asymptotic
+requirement of the test </span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span> and the alternative
+hypothesis is <span class="math inline">\(H_A: p_1 - p_2 &lt;
+0\)</span></span></p></li>
+<li><p><span style="color: red;">The pooled standard error is</p></li>
+</ol>
+<p><span class="math display">\[SE_{D_{pooled}}
+=  \sqrt{0.428(1-0.428)\left(\frac{1}{192}+\frac{1}{39}\right)} =
+0.0869\]</span></p>
+<p>the test statistic is</p>
+<p><span class="math display">\[ Z_{obs} = \frac{(0.4116 -
+0.5087)-0}{0.0869} = -1.11\]</span></p>
+<p></span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><span style="color: red;">The <span class="math inline">\(p\)</span>-value is given by</li>
+</ol>
+<p><span class="math display">\[p\text{-value} = P(Z \leq -1.11| H_0) =
+0.132\]</span> Note that your <span class="math inline">\(p\)</span>-value may be slightly different
+depending on how you rounded </span></p>
+<ol start="5" style="list-style-type: decimal">
+<li><span style="color: red;">At the <span class="math inline">\(\alpha
+= 0.05\)</span> significance level, we fail to reject the null
+hypothesis of no difference and conclude that the current SCOTUS
+approval rating is not significantly different than the historical
+average of about <span class="math inline">\(50.1\%\)</span> approving
+</span></li>
+</ol>
 <p><br> <br></p>
 <p><span class="math inline">\(\bf (5.)\)</span> A study published in
 the <i>Journal of Paediatrics and Child Health</i> was interested in the
@@ -1350,6 +1496,45 @@ After COVID-19 (2020)
 reported child abuse for children under the age of <span class="math inline">\(12\)</span> was significantly different after the
 start of the COVID-19 pandemic - be sure to address all five steps of
 the hypothesis test</p>
+<ol style="list-style-type: decimal">
+<li><span style="color: red;">the pooled estimate of the common
+proportion is</li>
+</ol>
+<p><span class="math display">\[\hat{p} = \frac{18+16}{70+53} =
+0.276\]</span></p>
+<p><span class="math inline">\(n\hat{p} = 0.276(123) = 34\)</span> and
+<span class="math inline">\(n(1-\hat{p}) = 0.723(123) = 89\)</span> are
+both greater than the required <span class="math inline">\(15\)</span>
+and thus the sample size is sufficient to meet the asymptotic
+requirement of the test </span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span> and the alternative
+hypothesis is <span class="math inline">\(H_A: p_1 - p_2 \neq
+0\)</span></span></p></li>
+<li><p><span style="color: red;">The pooled standard error is</p></li>
+</ol>
+<p><span class="math display">\[SE_{D_{pooled}}
+=  \sqrt{0.276(1-0.276)\left(\frac{1}{70}+\frac{1}{53}\right)} =
+0.0819\]</span></p>
+<p>the test statistic is</p>
+<p><span class="math display">\[ Z_{obs} = \frac{(0.26 -
+0.30)-0}{0.0819} = -0.488\]</span></p>
+<p></span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><span style="color: red;">The <span class="math inline">\(p\)</span>-value is given by</li>
+</ol>
+<p><span class="math display">\[ p\text{-value} =
+P(|Z|\geq|-0.488||H_0)\]</span> <span class="math display">\[ = 2\times
+\left[1 - P(Z &lt; 0.488|H_0)\right] = 0.625\]</span></p>
+<p>Note that your <span class="math inline">\(p\)</span>-value may be
+slightly different depending on how you rounded</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li><span style="color: red;">At the <span class="math inline">\(\alpha
+= 0.01\)</span> significance level we fail to reject the null hypothesis
+and conclude that the proportion of reported child abuse cases for
+children under 12 years of before and after the start of the COVID-19
+pandemic are not significantly different</span></li>
+</ol>
 <p><br></p>
 </div>
 <div id="comparing-two-population-proportions-mu_1-and-mu_2" class="section level3">
@@ -1368,339 +1553,6 @@ evaluated based on a survey that quantified sentiment in each field
 using three-level likert scale responses (very important=3, somewhat
 important=2, and not important=1). The results of the study are
 summarized in the table below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Motivational Factor
-</th>
-<th style="text-align:left;">
-Sport Type
-</th>
-<th style="text-align:right;">
-Sample Mean
-</th>
-<th style="text-align:right;">
-Sample Stdev.
-</th>
-<th style="text-align:right;">
-Degrees of Freedom
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Participation (total)
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-75.67
-</td>
-<td style="text-align:right;">
-9.38
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-80.50
-</td>
-<td style="text-align:right;">
-8.40
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Achievement
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-15.03
-</td>
-<td style="text-align:right;">
-2.71
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-15.72
-</td>
-<td style="text-align:right;">
-3.03
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Teamwork
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-8.11
-</td>
-<td style="text-align:right;">
-1.21
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-7.68
-</td>
-<td style="text-align:right;">
-1.23
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Energy Release
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-11.88
-</td>
-<td style="text-align:right;">
-2.05
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-12.85
-</td>
-<td style="text-align:right;">
-2.07
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Fitness
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.79
-</td>
-<td style="text-align:right;">
-1.27
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.40
-</td>
-<td style="text-align:right;">
-0.94
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Situational Factors
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.48
-</td>
-<td style="text-align:right;">
-1.44
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.33
-</td>
-<td style="text-align:right;">
-0.98
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Skill Development
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.94
-</td>
-<td style="text-align:right;">
-1.28
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.42
-</td>
-<td style="text-align:right;">
-1.07
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Friendship
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-9.57
-</td>
-<td style="text-align:right;">
-1.78
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-10.50
-</td>
-<td style="text-align:right;">
-1.51
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Fun
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.74
-</td>
-<td style="text-align:right;">
-1.20
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.18
-</td>
-<td style="text-align:right;">
-1.04
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-</tbody>
-</table>
-<p>Conduct a two independent samples <span class="math inline">\(t\)</span>-test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
-determine whether fitness as a motivating factor is significantly
-different between team and individual sports. Assume the populations
-have the SAME variance.</p>
-<p><br> <br></p>
-<p><span class="math inline">\(\bf (7.)\)</span> A 1993 study published
-in the <i>Canadian Journal of Zoology</i> investigated the
-characteristics of maturation and growth in two lowland populations
-(Servotte and Thevenon) of European Common Frogs <i>Rana temporaria</i>
-<span class="citation">(Augert and Joly 1993)</span> in Southeast France
-from 1986 - 1989. A summary of the body lengths for male and female
-frogs from 1 - 4 years in age in both populations are summarized
-below.</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2021,11 +1873,325 @@ Individual
 </tr>
 </tbody>
 </table>
+<p>Conduct a pooled (assume the sample vairances are equal) two
+independent samples <span class="math inline">\(t\)</span>-test at the
+<span class="math inline">\(\alpha = 0.05\)</span> significance level to
+determine whether fitness as a motivating factor is significantly
+different between team and individual sports.</p>
+<ol style="list-style-type: decimal">
+<li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> where <span class="math inline">\(\mu_1\)</span> is the mean score for fitness for
+team sports and <span class="math inline">\(\mu_2\)</span> is the mean
+score for fitness for individual sports. The alternative hypothesis is
+<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq
+0\)</span></span></p></li>
+<li><p><span style="color: red;">The pooled estimate of the sample
+variance is</p></li>
+</ol>
+<p><span class="math display">\[s_{pooled} = \sqrt{\frac{(203 - 1)1.27^2
++ (62-1)0.94^2}{203+62 - 2}} = 1.201 \]</span></p>
+<p>the estiamted standard error assuming the samples are independent
+have the same variance is given by</p>
+<p><span class="math display">\[ SE(\hat{\mu}_d) =
+1.201\cdot\sqrt{\frac{1}{203}+\frac{1}{62}} = 0.174\]</span></p>
+<p>The test statistic is</p>
+<p><span class="math display">\[ t_{obs} = \frac{(7.79 - 8.40) -
+0}{0.174} = -3.505\]</span></p>
+<p>where <span class="math inline">\(t_{obs}\)</span> is approximately
+<span class="math inline">\(t\)</span>-distributed with <span class="math inline">\(203+62 - 2 = 263\)</span> degrees of freedom</p>
+<p></span></p>
+<ol start="3" style="list-style-type: decimal">
+<li><span style="color: red;">The <span class="math inline">\(p\)</span>-value is</li>
+</ol>
+<p><span class="math display">\[ p\text{-value} = P(|t|\geq
+|t_{obs}||H_0) \]</span> <span class="math display">\[= 2\left[P(t \geq
+3.505 | H_0)\right] = 0.00054\]</span> </span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><span style="color: red;">At the <span class="math inline">\(\alpha
+= 0.05\)</span> significance level, we reject the null hypothesis and
+conclude that fitness as motivator is significantly different for
+athletes in team sports vs individual sports.</span></li>
+</ol>
+<p><br> <br></p>
+<p><span class="math inline">\(\bf (7.)\)</span> A 1993 study published
+in the <i>Canadian Journal of Zoology</i> investigated the
+characteristics of maturation and growth in two lowland populations
+(Servotte and Thevenon) of European Common Frogs <i>Rana temporaria</i>
+<span class="citation">(Augert and Joly 1993)</span> in Southeast France
+from 1986 - 1989. A summary of the body lengths for male and female
+frogs from 1 - 4 years in age in both populations are summarized
+below.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Age (Years)
+</th>
+<th style="text-align:left;">
+Population Location
+</th>
+<th style="text-align:right;">
+Male Body Length (mm)
+</th>
+<th style="text-align:right;">
+Stdev
+</th>
+<th style="text-align:right;">
+Sample size
+</th>
+<th style="text-align:right;">
+Female Body Length (mm)
+</th>
+<th style="text-align:right;">
+Stdev
+</th>
+<th style="text-align:right;">
+Sample Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+5.3
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+33.4
+</td>
+<td style="text-align:right;">
+5.4
+</td>
+<td style="text-align:right;">
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+55.8
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+59.7
+</td>
+<td style="text-align:right;">
+6.2
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+61.2
+</td>
+<td style="text-align:right;">
+5.3
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+65.6
+</td>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:right;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+64.7
+</td>
+<td style="text-align:right;">
+7.3
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+69.6
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+32.9
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+32.8
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+51.8
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+53.3
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+29
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+59.9
+</td>
+<td style="text-align:right;">
+5.4
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+59.9
+</td>
+<td style="text-align:right;">
+6.4
+</td>
+<td style="text-align:right;">
+21
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+61.0
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+63.0
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+</tbody>
+</table>
 <p>Conduct a two independent samples <span class="math inline">\(t\)</span>-test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
 evaluate whether there is a statistically significant difference in the
 mean body lengths of four-year-old male frogs between the Servotte and
-Thévenon populations. Assume the populations have DIFFERENT
-variances.</p>
+Thévenon populations. Assume the sample variances are NOT equal.</p>
+<ol style="list-style-type: decimal">
+<li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> where <span class="math inline">\(\mu_1\)</span> is the mean male body length for
+frogs in the Servotte popultion and <span class="math inline">\(\mu_2\)</span> is the mean male body length for
+frogs in the Thevenon population. The alternative hypothesis is <span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span></span></p></li>
+<li><p><span style="color: red;">The estimated standard error assuming
+the samples are independent and <u>do not have</u> the same variance is
+given by</p></li>
+</ol>
+<p><span class="math display">\[ SE(\hat{\mu}_d) =
+\sqrt{\frac{7.3^2}{12}+\frac{4.1^2}{12}} = 2.417\]</span></p>
+<p>The test statistic is</p>
+<p><span class="math display">\[ t_{obs} = \frac{(64.7 - 61.0)}{2.417} =
+1.531\]</span></p>
+<p>where <span class="math inline">\(t_{obs}\)</span> is approximately
+<span class="math inline">\(t\)</span>-distributed with <span class="math inline">\(11\)</span> degrees of freedom</p>
+<p></span></p>
+<ol start="3" style="list-style-type: decimal">
+<li><span style="color: red;">The <span class="math inline">\(p\)</span>-value is</li>
+</ol>
+<p><span class="math display">\[ p\text{-value} = P(|t|\geq
+|t_{obs}||H_0) \]</span> <span class="math display">\[= 2\left[P(t \geq
+1.531 | H_0)\right] = 0.077\]</span> </span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><span style="color: red;">At the <span class="math inline">\(\alpha
+= 0.05\)</span> significance level, we fail to reject the null
+hypothesis and conclude that body lengths of four year old male frogs is
+not significantly different between the two populations.</span></li>
+</ol>
 <div style="page-break-after: always;"></div>
 </div>
 <div id="references" class="section level1 unnumbered">

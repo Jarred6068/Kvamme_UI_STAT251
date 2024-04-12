@@ -4104,11 +4104,19 @@ Below Average
 </table>
 <p>The <span class="math inline">\(\chi^2\)</span> test statistic can be
 computed as the sum of the elements in the table above</p>
-<p><span class="math display">\[ X^2 = 4.36 + 5.16 + \cdots +0.23 + 12.6
-= 54.04 \]</span></p>
+<p><span class="math display">\[ X_{obs}^2 = 4.36 + 5.16 + \cdots +0.23
++ 12.6 = 54.04 \]</span></p>
 <p>which follows a <span class="math inline">\(\chi^2\)</span>
 distribution with <span class="math inline">\((3-1)\times (3 - 1) =
-4\)</span> degrees of freedom</p>
+4\)</span> degrees of freedom. The <span
+class="math inline">\(p\)</span>-value is the probability of observing a
+value more extreme than <span class="math inline">\(X_{obs}^2 =
+54.05\)</span> which is</p>
+<p><span class="math display">\[P(\chi^2_4 \geq 54.04|H_0 \ \text{True})
+\approx 0 \]</span></p>
+<p>Thus, at <span class="math inline">\(\alpha = 0.05\)</span> level we
+would conclude that there is significant evidence that income and
+happiness are related.</p>
 <p><br> <br> <br> <br></p>
 </div>
 <div id="references" class="section level3">

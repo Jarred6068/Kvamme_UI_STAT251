@@ -29,6 +29,7 @@ wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/water
 whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
 
 datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
 #<span style="color: red;"></span>
 ```
 
@@ -36,15 +37,29 @@ datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/
 ### Definitions
 Define the following terms/concepts
 
-* a.) **Non-parametric statistics**
+* a.) **Non-parametric statistics** <span style="color: red;">- A branch of statistics which does not assume that the sample data comes from a specific probability distribution. </span>
 
-* b.) **Parametric statistics**
+* b.) **Parametric statistics** <span style="color: red;">- A branch of statistics which assumes the sample data comes from a specific probability distribution that depends on a set of fixed parameters.</span>
 
 * c.) Describe the advantages and disadvantages of **Non-parametric** significance tests
+  
+  <u>Advantages</u>
+  1. <span style="color: red;">They may be the only alternative when sample sizes are very small (unless the population distribution is known exactly, but this is almost never the case)</span>
 
-* d.) **Explanatory Variable**
+  2. <span style="color: red;">They make few assumptions about the population distribution of the data</span>
 
-* e.) **Response Variable**
+  3. <span style="color: red;">They are advantages when the data represent crude measurements such as subjective ratings/rankings (e.g, Likert responses)</span>
+
+  4. <span style="color: red;">They often have simpler computations and interpretations than parametric tests</span>
+  
+  <u>Disadvantages</u>
+  1. <span style="color: red;">They are generally less powerful than their parametric analogues</span>
+
+<br>
+
+* d.) **Explanatory Variable** <span style="color: red;">-In bivariate statistical procedures, the explanatory variable is the independent variable that usually defines the groups that will be compared across the response variable</span>
+
+* e.) **Response Variable** <span style="color: red;">-The dependent variable that measures the outcome of interest from each group</span>
 
 
 ### Confidence intervals and two-tailed tests:
@@ -55,32 +70,32 @@ a.) $H_0: \mu_0 = -2$ <br>
   $H_A: \mu \neq \mu_0$ <br> 
   $95\%$ CI for $\mu_0 \in [-3.0, -2.4]$ <br> 
   $\bar{x} = -2.7$
-  \[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \] 
+  \[ \text{Decision} = \color{red}{\text{reject} \ H_0} \\
+  \alpha = \color{red}{0.05} \] 
 
 b.) $H_0: p_0 = 0.9$ <br> 
 $H_A: p \neq p_0$ <br>
 $99\%$ CI for $p_0 \in [0.972, 0.968]$ <br>
 $\hat{p} = 0.97$ 
 
-\[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \]
+  \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
+  \alpha = \color{red}{0.01} \] 
 
 c.) $H_0: \mu_0 = 0$ <br> 
 $H_A: \mu \neq \mu_0$ <br>
 $90\%$ CI for $\mu_0 \in [-3.63, 7.49]$ <br> 
 $\bar{x} = 1.93$
 
-\[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \]
+  \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
+  \alpha = \color{red}{0.1} \] 
 
 d.) $H_0: \mu_0 = 50$<br> 
 $H_A: \mu \neq \mu_0$<br>
 $85\%$ CI for $\mu_0 \in [93.6, 139]$<br> 
 $\bar{x} = 116.3$
 
-\[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \]
+  \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
+  \alpha = \color{red}{0.15} \] 
 
 ### The sign test
 
@@ -96,9 +111,17 @@ set.seed(555)
 x = sample(c(1:5), 20, prob = c(0.1, 0.2, 0.2, 0.2, 0.3), replace = T)
 tab = cbind.data.frame(`Patient Number` = c(1:20), 
                        `Score Before Treatment` = x,
-                       `Score After Treatment` = sample(c(1:5), 20, prob = c(0.3, 0.3, 0.2, 0.1, 0.1), replace = T),
-                       Difference = rep("", 20),
-                       Sign = rep("", 20))
+                       `Score After Treatment` = sample(c(1:5), 20, 
+                                                        prob = c(0.3, 0.3, 0.2, 0.1, 0.1), 
+                                                        replace = T))
+
+Diff = tab$`Score Before Treatment` - tab$`Score After Treatment`
+tab$Difference = paste0('<span style="color: red;">$',Diff, '$</span>')
+sign = rep(0, 20)
+sign[Diff > 0] = '<span style="color: red;">$+$</span>'
+sign[Diff < 0] = '<span style="color: red;">$-$</span>'
+sign[Diff == 0] = ''
+tab$Sign = sign
 
 kable(tab, format = 'html', digits = 3,
       row.names = F, booktabs = T, escape = F)%>%
@@ -110,10 +133,16 @@ The dermatologist is particularly interested in whether the new product can impr
   a.) Fill in the table above by computing the difference between in acne scores before and after applying the skin care cream. Record the sign of each difference and report the total number of positive signs $s$
 
   b.) What does a "positive" sign indicate in this experiment? 
+  <span style="color: red;">A positive sign indicates that the skin cream reduced the appearance of dry skin</span>
 
-  c.) Compute the $p$-value for the sign test
+  c.) Compute the $p$-value for the sign test <span style="color: red;">The number of positive signs is $s = 14$. The $p$value is probability of observing $14$ or more positive signs in $20$ observations given by 
+  \[p\text{-value} = P(S\geq s | H_0) = \sum_{k = 14}^{20}\frac{20!}{k!(20 - k)!} \cdot 0.5^k \cdot (1-0.5)^{20-k} \]
+  \[ \approx 0.058  \]
+  </span>
 
-  d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that the topical cream product has a positive effect on reducing the appearance of acne. Interpret your decision in context. 
+  d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that the topical cream product has a positive effect on reducing the appearance of acne. Interpret your decision in context.
+  
+  <span style="color: red;">At the $\alpha = 0.05$ significance level, we fail to reject the null hypothesis and determine that there is insufficient evidence that skin cream reduces dry skin</span>
 
 <br>
 <br>
@@ -124,10 +153,16 @@ $\bf (3.)$ In a boreal forest, researchers conducted an experiment to study how 
 herbivore_data <- cbind.data.frame(
   Observation = 1:12,
   `Number of Tracks In Fertilized plots` = c(15, 12, 18, 14, 16, 13, 17, 14, 19, 15, 11, 16),
-  `Number of Tracks In Control Plots` = c(10, 9, 11, 8, 12, 10, 11, 9, 13, 10, 8, 12),
-  `Difference` = rep('',12),
-  `Sign` = rep('',12)
+  `Number of Tracks In Control Plots` = c(10, 9, 11, 8, 12, 10, 11, 9, 13, 10, 8, 12)
 )
+
+Diff = herbivore_data$`Number of Tracks In Fertilized plots` - herbivore_data$`Number of Tracks In Control Plots`
+herbivore_data$Difference = paste0('<span style="color: red;">$',Diff, '$</span>')
+sign = rep(0, 12)
+sign[Diff > 0] = '<span style="color: red;">$+$</span>'
+sign[Diff < 0] = '<span style="color: red;">$-$</span>'
+sign[Diff == 0] = ''
+herbivore_data$Sign = sign
 
 kable(herbivore_data, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -135,17 +170,19 @@ kable(herbivore_data, format = 'html', digits = 2,
 
 ```
 
-The researchers are interested in whether or not fertilizing stands increased herbaceous activity. Conduct a sign test at the $\alpha = 0.05$ signifcance level to determine if fertilized plots have significantly more herbivore tracks than control plots
+The researchers are interested in whether or not fertilizing stands increased herbaceous activity. Conduct a sign test at the $\alpha = 0.05$ significance level to determine if fertilized plots have significantly more herbivore tracks than control plots
 
 
 
 a.) Fill in the table above by computing the difference in animal tracks between the fertilized and control plots. Record the sign of each difference and report the total number of positive signs $s$
 
-  b.) What does a "positive" sign indicate in this experiment? 
+  b.) What does a "positive" sign indicate in this experiment? <span style="color: red;">A positive sign indicates that the fertilized stands have more animal tracks</span>
 
-  c.) Compute the $p$-value for the sign test
+  c.) Compute the $p$-value for the sign test <span style="color: red;">The number of positive signs is $s = 12$. The $p$value is probability of observing $12$ or more positive signs in $12$ observations given by  \[p\text{-value} = P(S\geq s | H_0) = \frac{12!}{12!(12 - 12)!} \cdot 0.5^{12}\cdot(1-0.5)^{12-12} \]
+  \[ 0.5^{12} \]
+  \[ \approx 0  \]</span>
 
-  d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that fertilized stands have more herbivore activity.
+  d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that fertilized stands have more herbivore activity. <span style="color: red;">At the $\alpha = 0.05$ significance level we reject the null hypothesis and conclude that fertilized stands have significantly more animal activity than non-fertilized stands</span>
   
 <br>
 <br>
@@ -173,6 +210,33 @@ kable(sumtab, format = 'html', digits = 2,
 
 Conduct a two-sample test at the $\alpha = 0.05$ significance level to determine whether the current approval rating is significantly lower than the historical average - be sure to address all five steps of the hypothesis test.
 
+  1. <span style="color: red;">the pooled estimate of the common proportion is 
+  
+  \[\hat{p} = \frac{0.4116(192)+0.5087(39)}{192+39} = 0.428\]
+  
+  $n\hat{p} = 0.428(231) = 99$ and $n(1-\hat{p}) = 0.572(231) = 132$ are both greater than the required $15$ and thus the sample size is sufficient to meet the asymptotic requirement of the test 
+  </span>
+  
+  2. <span style="color: red;">The null hypothesis is $H_0: p_1 - p_2 = 0$ and the alternative hypothesis is $H_A: p_1 - p_2 < 0$</span>
+  
+  3. <span style="color: red;">The pooled standard error is 
+  
+  \[SE_{D_{pooled}} =  \sqrt{0.428(1-0.428)\left(\frac{1}{192}+\frac{1}{39}\right)} = 0.0869\]
+  
+  the test statistic is
+  
+  \[ Z_{obs} = \frac{(0.4116 - 0.5087)-0}{0.0869} = -1.11\]
+  
+  </span>
+  
+  4. <span style="color: red;">The $p$-value is given by
+  
+  \[p\text{-value} = P(Z \leq -1.11| H_0) = 0.132\]
+  Note that your $p$-value may be slightly different depending on how you rounded
+  </span>
+  
+  5. <span style="color: red;">At the $\alpha = 0.05$ significance level, we fail to reject the null hypothesis of no difference and conclude that the current SCOTUS approval rating is not significantly different than the historical average of about $50.1\%$ approving </span>
+
 <br>
 <br>
 
@@ -194,6 +258,36 @@ kable(df, format = 'html', digits = 2,
 
 Conduct a two-sample test at the $\alpha = 0.01$ significance level to determine whether the rate of reported child abuse for children under the age of $12$ was significantly different after the start of the COVID-19 pandemic - be sure to address all five steps of the hypothesis test
 
+
+1. <span style="color: red;">the pooled estimate of the common proportion is 
+  
+  \[\hat{p} = \frac{18+16}{70+53} = 0.276\]
+  
+  $n\hat{p} = 0.276(123) = 34$ and $n(1-\hat{p}) = 0.723(123) = 89$ are both greater than the required $15$ and thus the sample size is sufficient to meet the asymptotic requirement of the test 
+  </span>
+  
+  2. <span style="color: red;">The null hypothesis is $H_0: p_1 - p_2 = 0$ and the alternative hypothesis is $H_A: p_1 - p_2 \neq 0$</span>
+  
+  3. <span style="color: red;">The pooled standard error is 
+  
+  \[SE_{D_{pooled}} =  \sqrt{0.276(1-0.276)\left(\frac{1}{70}+\frac{1}{53}\right)} = 0.0819\]
+  
+  the test statistic is
+  
+  \[ Z_{obs} = \frac{(0.26 - 0.30)-0}{0.0819} = -0.488\]
+  
+  
+  </span>
+  
+  4. <span style="color: red;">The $p$-value is given by
+  
+  \[ p\text{-value} = P(|Z|\geq|-0.488||H_0)\] 
+  \[ = 2\times \left[1 - P(Z < 0.488|H_0)\right] = 0.625\]
+  
+  Note that your $p$-value may be slightly different depending on how you rounded</span>
+  
+  5. <span style="color: red;">At the $\alpha = 0.01$ significance level we fail to reject the null hypothesis and conclude that the proportion of reported child abuse cases for children under 12 years of before and after the start of the COVID-19 pandemic are not significantly different</span>
+
 <br>
 
 ### Comparing two population proportions $\mu_1$ and $\mu_2$
@@ -203,15 +297,43 @@ $\bf (6.)$ A study published in the journal <i>Physical Culture and Sport. Studi
 ```{r, echo=F, warning=F, message=F}
 tab = read.csv(file = paste0(datapath, 'sports_motivation_summary.csv'))
 tab$Variables[tab$Variables == '\''] = ''
+tab$DF = rep(c(203, 62), 9)
 
-kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Degrees of Freedom'),
+kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Sample Size'),
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
 ```
 
-Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports 
+Conduct a pooled (assume the sample vairances are equal) two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports.
+
+
+  1. <span style="color: red;">The null hypothesis is $H_0: \mu_1 - \mu_2 = 0$ where $\mu_1$ is the mean score for fitness for team sports and $\mu_2$ is the mean score for fitness for individual sports. The alternative hypothesis is $H_A: \mu_1 - \mu_2 \neq 0$</span>
+  
+  2. <span style="color: red;">The pooled estimate of the sample variance is
+  
+  \[s_{pooled} = \sqrt{\frac{(203 - 1)1.27^2 + (62-1)0.94^2}{203+62 - 2}} = 1.201 \]
+  
+  the estiamted standard error assuming the samples are independent have the same variance is given by 
+  
+  \[ SE(\hat{\mu}_d) = 1.201\cdot\sqrt{\frac{1}{203}+\frac{1}{62}} = 0.174\]
+  
+  The test statistic is
+  
+  \[ t_{obs} = \frac{(7.79 - 8.40) - 0}{0.174} = -3.505\]
+  
+  where $t_{obs}$ is approximately $t$-distributed with $203+62 - 2 = 263$ degrees of freedom
+  
+  </span>
+  
+  3. <span style="color: red;">The $p$-value is 
+  
+  \[ p\text{-value} = P(|t|\geq |t_{obs}||H_0) \]
+  \[= 2\left[P(t \geq 3.505 | H_0)\right] = 0.00054\]
+  </span>
+  
+  4. <span style="color: red;">At the $\alpha = 0.05$ significance level, we reject the null hypothesis and conclude that fitness as motivator is significantly different for athletes in team sports vs individual sports.</span>
 
 <br>
 <br>
@@ -231,7 +353,30 @@ kable(tab, format = 'html', digits = 2, col.names = c('Age (Years)', 'Population
 ```
 
 
-Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to evaluate whether there is a statistically significant difference in the mean body lengths of four-year-old male frogs between the Servotte and Thévenon populations. 
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to evaluate whether there is a statistically significant difference in the mean body lengths of four-year-old male frogs between the Servotte and Thévenon populations. Assume the sample variances are NOT equal.
 
+
+1. <span style="color: red;">The null hypothesis is $H_0: \mu_1 - \mu_2 = 0$ where $\mu_1$ is the mean male body length for frogs in the Servotte popultion and $\mu_2$ is the mean male body length for frogs in the Thevenon population. The alternative hypothesis is $H_A: \mu_1 - \mu_2 \neq 0$</span>
+  
+  2. <span style="color: red;">The estimated standard error assuming the samples are independent and <u>do not have</u> the same variance is given by 
+  
+  \[ SE(\hat{\mu}_d) = \sqrt{\frac{7.3^2}{12}+\frac{4.1^2}{12}} = 2.417\]
+  
+  The test statistic is
+  
+  \[ t_{obs} = \frac{(64.7 - 61.0)}{2.417} = 1.531\]
+  
+  where $t_{obs}$ is approximately $t$-distributed with $11$ degrees of freedom
+  
+  </span>
+  
+  3. <span style="color: red;">The $p$-value is 
+  
+  \[ p\text{-value} = P(|t|\geq |t_{obs}||H_0) \]
+  \[= 2\left[P(t \geq 1.531 | H_0)\right] = 0.077\]
+  </span>
+  
+  4. <span style="color: red;">At the $\alpha = 0.05$ significance level, we fail to reject the null hypothesis and conclude that body lengths of four year old male frogs is not significantly different between the two populations.</span>
+  
 \newpage
 # References

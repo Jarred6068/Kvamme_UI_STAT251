@@ -139,7 +139,7 @@ navbar:
           - text: 't-table'
             href: misc/t_table.html
           - text: 'Chi-square table'
-            href: misc/t_table.html
+            href: misc/chisq_table.html
         - text: 'R code'
           menu:
           - text: 'plotting in R'

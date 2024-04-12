@@ -762,9 +762,13 @@ kable(differences_df, format = 'html', digits = 2, caption = 'The $r \\times c$ 
 
 The $\chi^2$ test statistic can be computed as the sum of the elements in the table above 
 
-\[ X^2 = 4.36 + 5.16 + \cdots +0.23 + 12.6 = 54.04 \]
+\[ X_{obs}^2 = 4.36 + 5.16 + \cdots +0.23 + 12.6 = 54.04 \]
 
-which follows a $\chi^2$ distribution with $(3-1)\times (3 - 1) = 4$ degrees of freedom
+which follows a $\chi^2$ distribution with $(3-1)\times (3 - 1) = 4$ degrees of freedom. The $p$-value is the probability of observing a value more extreme than $X_{obs}^2 = 54.05$ which is
+
+\[P(\chi^2_4 \geq 54.04|H_0 \ \text{True}) \approx 0 \]
+
+Thus, at $\alpha = 0.05$ level we would conclude that there is significant evidence that income and happiness are related. 
 
 <br>
 <br>

@@ -211,7 +211,7 @@ kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sp
 
 ```
 
-Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports 
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports. Assume the populations have the SAME variance. 
 
 <br>
 <br>
@@ -220,10 +220,11 @@ $\bf (7.)$ A 1993 study published in the <i>Canadian Journal of Zoology</i> inve
 
 
 ```{r, echo=F, warning=F, message=F}
-tab = read.csv(file = paste0(datapath, 'frog_body_sizes.csv'))
+tab = read.csv(file = paste0(datapath, 'sports_motivation_summary.csv'))
+tab$Variables[tab$Variables == '\''] = ''
+tab$DF = rep(c(203, 62), 9)
 
-
-kable(tab, format = 'html', digits = 2, col.names = c('Age (Years)', 'Population Location', 'Male Body Length (mm)','Stdev', 'Sample size', 'Female Body Length (mm)', 'Stdev', 'Sample Size'),
+kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Sample Size'),
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
@@ -231,7 +232,7 @@ kable(tab, format = 'html', digits = 2, col.names = c('Age (Years)', 'Population
 ```
 
 
-Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to evaluate whether there is a statistically significant difference in the mean body lengths of four-year-old male frogs between the Servotte and Thévenon populations. 
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to evaluate whether there is a statistically significant difference in the mean body lengths of four-year-old male frogs between the Servotte and Thévenon populations. Assume the populations have DIFFERENT variances.
 
 \newpage
 # References
