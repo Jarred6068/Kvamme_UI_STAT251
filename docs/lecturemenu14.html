@@ -1322,8 +1322,8 @@ team like Iowa.</li>
 </div>
 </div>
 </div>
-<div id="lecture-27-monday-april-10th-2024" class="section level1">
-<h1>Lecture 27 Monday, April 10th 2024</h1>
+<div id="lecture-27-wednesday-april-10th-2024" class="section level1">
+<h1>Lecture 27 Wednesday, April 10th 2024</h1>
 <div id="paired-t-test" class="section level3">
 <h3>Paired <span class="math inline">\(t\)</span> test</h3>
 <p>We know that comparative methods (i.e methods that compare two
@@ -1853,6 +1853,13 @@ represent the categories of the response variable - often referred to as
 </div>
 <div id="the-chi-square-goodness-of-fit-test" class="section level3">
 <h3>The Chi-square goodness of fit test</h3>
+<p>Like we have done with means and proportions, we will begin with a
+one-sample procedure for comparing the distribution of a categorical
+variable to some hypothesized model. This procedure is called the <span
+class="math inline">\(\chi^2\)</span> goodness of fit test because it
+used to determine how well the observed distribution fits some proposed
+model of the data. We will illustrate this idea by starting with an
+example:</p>
 <p><strong>Example: Gregor Mendels Peas</strong> - Gregor Mendel
 conducted a study in which he crossed pea plants. The plants he crossed
 had the alleles (i.e., a form or version of a gene) for both yellow
@@ -2019,7 +2026,23 @@ this family. For the goodness of fit test the the test statistic <span
 class="math inline">\(X^2\)</span> follows a <span
 class="math inline">\(\chi^2\)</span> distribution with <span
 class="math inline">\(k-1\)</span> degrees of freedom:</p>
-<p><img src="lecturemenu14_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<p><img src="lecturemenu14_files/figure-html/unnamed-chunk-12-1.png" width="960" />
+* Note from the graph above that as the degrees of freedom increase the
+<span class="math inline">\(\chi^2\)</span> distribution converges in
+shape to a normal distribution.</p>
+<ul>
+<li><p>Under the special case of a <span
+class="math inline">\(\chi^2(1)\)</span> the <span
+class="math inline">\(\chi^2\)</span> statistic is equal to the square
+of a standard normal distribution <span
+class="math inline">\(Z^2\)</span>.</p></li>
+<li><p>In general, a <span class="math inline">\(\chi^2\)</span> random
+variable with <span class="math inline">\(k\)</span> degrees of freedom
+can be represented as a sum of <span class="math inline">\(k\)</span>
+squared normal random variables</p></li>
+</ul>
+<p><span class="math display">\[\chi^2_k = \sum_{i = 1}^k Z_i^2 = Z_1^2
++ Z_2^2 + \cdots Z_k^2 \]</span></p>
 <ul>
 <li>As we did the <span class="math inline">\(t\)</span> distribution we
 can look up probabilities from a <span
@@ -3426,8 +3449,667 @@ Confidence Level:
 </tr>
 </tbody>
 </table>
-<p><br> <br> <br> <br></p>
+<p><br> <br></p>
 </div>
+</div>
+</div>
+<div id="lecture-28-friday-april-12th-2024" class="section level1">
+<h1>Lecture 28 Friday, April 12th 2024</h1>
+<p><strong>Warm Up: <span class="math inline">\(\chi^2\)</span> Goodness
+of Fit Test</strong> - Suppose you’re hired by a dog food company to
+help them test three new dog food flavors. You recruit a random sample
+of <span class="math inline">\(75\)</span> dogs and offer each dog a
+choice between the three flavors by placing bowls in front of them.
+Assuming that the dogs have no preference, you expect that the flavors
+will be equally popular among the dogs, with about <span
+class="math inline">\(25\)</span> dogs choosing each flavor. After weeks
+of hard work, your dog food experiment is complete and you compile your
+data in a table:</p>
+<table class=" lightable-classic table table-striped" style="font-size: 12px; color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Flavor
+</th>
+<th style="text-align:right;">
+Observed Count
+</th>
+<th style="text-align:left;">
+Expected Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Garlic Blast
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bacon Delight
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chicken Crunch
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a <span class="math inline">\(\chi^2\)</span> goodness of fit
+test to determine if the dogs show any preference for the three flavors
+being tested</p>
+<p>Note that the GOF test doesn’t tell us anything about the range of
+plausible valuables for the frequency parameters.</p>
+<div
+id="measureing-statistical-association-in-two-categorical-variables"
+class="section level3">
+<h3>Measureing statistical association in two categorical variables</h3>
+<p>As stated previously, the goodness of fit test is a one-sample
+procedure for comparing the observed distribution of a single
+categorical variable to a specific model that we hypothesize under the
+null. We will now explore another type of inference which is also based
+on the <span class="math inline">\(\chi\)</span>-square distribution.
+This procedure is used to determine if two categorical variables share
+an association by looking how the distribution of counts of one variable
+changes as we condition on the categories of another variable.</p>
+</div>
+<div id="chi2-test-of-independence" class="section level3">
+<h3><span class="math inline">\(\chi^2\)</span> test of
+independence</h3>
+<p>The <span class="math inline">\(\chi^2\)</span> test of independence
+is used to examine the relationship between two categorical variables in
+a two-way table (also called a <strong>contigency table</strong>.
+Consider the following hypothetical table which compares the categorical
+variable <span class="math inline">\(A\)</span>, which has two
+categories, with the categorical variable <span
+class="math inline">\(B\)</span> which has three categories.</p>
+<table class=" lightable-classic table table-striped" style="font-size: 12px; color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Variable A
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Category 1
+</td>
+<td style="text-align:left;">
+Category 2
+</td>
+<td style="text-align:left;">
+Marginal Distribution B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Category 1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
+1B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
+1B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_j P(\text{Category} \ jA |
+\text{Category} \ 1B)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Variable B
+</td>
+<td style="text-align:left;">
+Category 2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
+2B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
+2B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_j P(\text{Category} \ jA |
+\text{Category} \ 2B)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Category 3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
+3B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
+3B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_j P(\text{Category} \ jA |
+\text{Category} \ 3B)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Marginal Distribution A
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_i P(\text{Category} \ 1A |
+\text{Category} \ iB)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_i P(\text{Category} \ 2A |
+\text{Category} \ iB)\)</span>
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>The two-way table above helps us to break down the relationship
+between the outcomes of <i>Variable A</i> and the outcomes of
+<i>Variable B</i>. As we can see from the table, the cells gives the
+conditional probabilities (or more often counts) of each category of
+<span class="math inline">\(A\)</span> across each category of <span
+class="math inline">\(B\)</span>. There are also usually row and column
+totals displayed in a two-way table which summarize the marginal
+distributions of each variable.</p>
+<p>A <strong><span class="math inline">\(\chi\)</span>-square test of
+independence</strong> takes advantage of the two-way table above to
+determine if the conditional distribution of the response variable (the
+rows) changes across the categories of the explanatory variable (the
+columns). In the example above, we can see that each row gives the
+marginal distribution of the response variable. If <em>variable A</em>
+and <em>variable B</em> are independent then the rows of the table
+should be more or less the same. If the outcomes of <em>variable B</em>
+depend on the outcomes of variable <span
+class="math inline">\(A\)</span>, then the rows of the table will change
+as we move across the outcomes of <em>variable B</em>.</p>
+<p>The null an alternative hypothesis of a <span
+class="math inline">\(\chi\)</span>-square test of independence are
+simple. The null hypothesis is that the two variables being tested are
+independent and the alternative is that they not independent</p>
+<p><span class="math display">\[ H_0: \text{Variable A and Variable B
+are independent} \]</span> <span class="math display">\[ H_A:
+\text{Variable A and Variable B are NOT independent}\]</span></p>
+<p>Like the goodness of fit test, the alternative hypothesis does not
+specify any particular direction. Because the two-way table can contain
+all sorts of possible associations the alternative hypothesis cannot be
+described as one or two sided.</p>
+<p>To test the null hypothesis of no dependence between two variables in
+a table with <span class="math inline">\(r\)</span> rows and <span
+class="math inline">\(c\)</span> columns we take a similar approach to
+the goodness of fit test and compare the observed cell counts in all
+cells of the table to their expected cell counts under the null
+hypothesis.</p>
+<p>In essence we are comparing two tables which represent two
+distributions: the table of <strong>observed cell counts</strong> which
+represents the observed distribution of the response and explanatory
+variables and the table of <strong>expected cell counts</strong> which
+represents the null distribution.</p>
+<p>The test statistic summarizes the differences (i.e distance) between
+the counts in the observed table with the counts in the expected
+table.</p>
+<p><span class="math display">\[ X_{obs}^2 = \sum_{j=1}^r\sum_{j=1}^c
+\frac{(o_{ij} - e_{ij})^2}{e_{ij}}  \]</span></p>
+<p>Where <span class="math inline">\(o_{ij}\)</span> represents the
+observed count for the <span class="math inline">\(i^{th}\)</span> row
+and <span class="math inline">\(j^{th}\)</span> column of the
+contingency table:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of observed
+counts
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+X.
+</th>
+<th style="text-align:left;">
+Category.1
+</th>
+<th style="text-align:left;">
+Category.2
+</th>
+<th style="text-align:left;">
+X..1
+</th>
+<th style="text-align:left;">
+Category.c
+</th>
+<th style="text-align:left;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Category 1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{11}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{12}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{1c}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{j=1}^c o_{1j}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Category 2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{21}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{22}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{2c}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{j=1}^c o_{2j}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+⋮
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Category r
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{r1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{r2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{rc}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{j=1}^c o_{rj}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{i=1}^r o_{i1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{i=1}^r o_{i2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{i=1}^r o_{ic}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n = \sum_{i=1}^r\sum_{j=1}^c o_{ij}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The expected counts for <span class="math inline">\(i,j^{th}\)</span>
+cell of the table are computed from the observed counts such that</p>
+<p><span class="math display">\[ e_{ij} = \frac{ \big[ \sum_{i = 1}^r
+o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r
+\sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column
+total}}{n}  \]</span></p>
+<p>The test statistic follows a <span
+class="math inline">\(\chi\)</span>-square distribution with <span
+class="math inline">\((r-1)\times (c-1)\)</span> degrees of freedom,
+where <span class="math inline">\(r\)</span> is the total number of row
+categories and <span class="math inline">\(c\)</span> is the total
+column categories.</p>
+<p><strong>Example: Happiness and Income</strong> - As part of their
+annual survey, the General Social Survey explored the relationship
+between income and happiness. Happiness was recorded as “Not too happy”,
+“Pretty happy”, or “Very happy”, and incomes were bracketed into three
+categories: “Below average”, “Average”, and “Above average”. The counts
+are summarized in the table below:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of observed
+counts
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Income
+</th>
+<th style="text-align:right;">
+Not Too Happy
+</th>
+<th style="text-align:right;">
+Pretty Happy
+</th>
+<th style="text-align:right;">
+Very Happy
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Above Average
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+342
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:right;">
+494
+</td>
+<td style="text-align:right;">
+277
+</td>
+<td style="text-align:right;">
+854
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Below Average
+</td>
+<td style="text-align:right;">
+104
+</td>
+<td style="text-align:right;">
+314
+</td>
+<td style="text-align:right;">
+119
+</td>
+<td style="text-align:right;">
+537
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+216
+</td>
+<td style="text-align:right;">
+986
+</td>
+<td style="text-align:right;">
+531
+</td>
+<td style="text-align:right;">
+1733
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a <span class="math inline">\(\chi^2\)</span> test of
+independence to determine if there is evidence to support that income is
+related to happiness</p>
+<ul>
+<li>The table of expected counts is given below</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of expected
+counts
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Not Too Happy
+</th>
+<th style="text-align:left;">
+Pretty Happy
+</th>
+<th style="text-align:left;">
+Very Happy
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Above Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{342\times 216}{1733} = 42.63\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{342\times 986}{1733} = 194.58\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{342\times 531}{1733} = 104.79\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{854\times 216}{1733} = 106.44\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{854\times 986}{1733} = 485.89\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{854\times 531}{1733} = 261.67\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Below Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{537\times 216}{1733} = 66.93\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{537\times 986}{1733} = 305.53\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{537\times 531}{1733} = 164.54\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>the table below gives the squared deviations across all cell
+counts</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of differences
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Not Too Happy
+</th>
+<th style="text-align:left;">
+Pretty Happy
+</th>
+<th style="text-align:left;">
+Very Happy
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Above Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(42.63 - 29)^2}{42.63} = 4.36\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(194.58 - 178)^2}{194.58} =
+1.41\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(104.79 - 135)^2}{104.79} =
+8.71\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(106.44 - 83)^2}{106.44} =
+5.16\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(485.89 - 494)^2}{485.89} =
+0.14\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(261.67 - 277)^2}{261.67} =
+0.9\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Below Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(66.93 - 104)^2}{66.93} =
+20.53\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(305.53 - 314)^2}{305.53} =
+0.23\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(164.54 - 119)^2}{164.54} =
+12.6\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The <span class="math inline">\(\chi^2\)</span> test statistic can be
+computed as the sum of the elements in the table above</p>
+<p><span class="math display">\[ X^2 = 4.36 + 5.16 + \cdots +0.23 + 12.6
+= 54.04 \]</span></p>
+<p>which follows a <span class="math inline">\(\chi^2\)</span>
+distribution with <span class="math inline">\((3-1)\times (3 - 1) =
+4\)</span> degrees of freedom</p>
+<p><br> <br> <br> <br></p>
 </div>
 <div id="references" class="section level3">
 <h3>References</h3>

@@ -289,7 +289,7 @@ Conduct a unpooled two sample $t$-test at the $\alpha = 0.05$ significance level
   4. Based ont the $p$-value above we would narrowly reject the null hypothesis and conclude that Iowa scores significantly more points per game than South Carolina on average. The outcome of the championship was a 75 - 87 victory for South Carolina. Given the conclusion of our test, this is a testament to South Carolina's defensive prowess in being able to shut down a high scoring team like Iowa. 
 
 
-# Lecture 27 Monday, April 10th 2024
+# Lecture 27 Wednesday, April 10th 2024
 
 ### Paired $t$ test
 We know that comparative methods (i.e methods that compare two groups/samples across a quantitative variable) are more common and often preferred over one sample procedures. One common comparative design that makes use of single-sample procedures for a population mean is called the paired $t$-test. This test is used to draw inferences about a population mean in matched pairs designs and can be thought of as the parametric analogue of the <i>sign test</i> we learned previously. Recall that in matched pairs studies subjects are matched in pairs and the quantitative outcome is compared within each pair. 
@@ -400,6 +400,8 @@ Such problems are typically represented as a table where the rows represent the 
 
 ### The Chi-square goodness of fit test
 
+Like we have done with means and proportions, we will begin with a one-sample procedure for comparing the distribution of a categorical variable to some hypothesized model. This procedure is called the $\chi^2$ goodness of fit test because it used to determine how well the observed distribution fits some proposed model of the data. We will illustrate this idea by starting with an example:
+
 **Example: Gregor Mendels Peas** - Gregor Mendel conducted a study in which he crossed pea plants. The plants he crossed had the alleles (i.e., a form or version of a gene) for both yellow $Y$ and green peas $y$ — a trait controlled by a single locus. He believed two of his laws applied here: the Law of Segregation and the Law of Dominance. These laws would determine the probabilities of certain genotypes. This can be summarized by a Punnett square
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -502,8 +504,15 @@ ggplot(data = df, aes(x = `$\\chi^2$`, y = Density, color = `Degrees of freedom`
   ggtitle(TeX('The $\\chi^2$ Distribution'))
 
 ```
+  * Note from the graph above that as the degrees of freedom increase the $\chi^2$ distribution converges in shape to a normal distribution. 
+  
+  * Under the special case of a $\chi^2(1)$ the $\chi^2$ statistic is equal to the square of a standard normal distribution $Z^2$.
+  
+  * In general, a $\chi^2$ random variable with $k$ degrees of freedom can be represented as a sum of $k$ squared normal random variables
+  
+  \[\chi^2_k = \sum_{i = 1}^k Z_i^2 = Z_1^2 + Z_2^2 + \cdots Z_k^2 \]
 
- * As we did the $t$ distribution we can look up probabilities from a $chi^2$ table:
+  * As we did the $t$ distribution we can look up probabilities from a $chi^2$ table:
 
 ```{r, echo=F, message=F, warning=F}
 DF = c(1:30, 40, 50, 100)
@@ -527,10 +536,235 @@ kable(df, format = 'html', digits = 2, col.names = c('Upper tail', 0.25, 0.2, 0.
 
 ```
 
+<br>
+<br>
+
+# Lecture 28 Friday, April 12th 2024
+
+**Warm Up: $\chi^2$ Goodness of Fit Test** - Suppose you’re hired by a dog food company to help them test three new dog food flavors. You recruit a random sample of $75$ dogs and offer each dog a choice between the three flavors by placing bowls in front of them. Assuming that the dogs have no preference, you expect that the flavors will be equally popular among the dogs, with about $25$ dogs choosing each flavor. After weeks of hard work, your dog food experiment is complete and you compile your data in a table:
+
+
+```{r, echo=F, message=F, warning=F}
+
+df = cbind.data.frame(Flavor = c('Garlic Blast','Bacon Delight','Chicken Crunch'),
+                      `Observed Count` = c(22, 30, 23),
+                      `Expected Count` = c('','',''))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria", font_size = 12)%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Conduct a $\chi^2$ goodness of fit test to determine if the dogs show any preference for the three flavors being tested
+
+
+Note that the GOF test doesn't tell us anything about the range of plausible valuables for the frequency parameters. 
+
+### Measureing statistical association in two categorical variables
+
+As stated previously, the goodness of fit test is a one-sample procedure for comparing the observed distribution of a single categorical variable to a specific model that we hypothesize under the null. We will now explore another type of inference which is also based on the $\chi$-square distribution. This procedure is used to determine if two categorical variables share an association by looking how the distribution of counts of one variable changes as we condition on the categories of another variable. 
+
+### $\chi^2$ test of independence
+
+The $\chi^2$ test of independence is used to examine the relationship between two categorical variables in a two-way table (also called a **contigency table**. Consider the following hypothetical table which compares the categorical variable $A$, which has two categories, with the categorical variable $B$ which has three categories.
+
+```{r, echo=F, message=F, warning=F}
+
+df = rbind.data.frame(c('','', '', 'Variable A', ''),
+                      c('','','Category 1', 'Category 2', 'Marginal Distribution B'),
+                      cbind.data.frame(` ` = c('','Variable B','',''), 
+                                       ` ` = c('Category 1','Category 2','Category 3','Marginal Distribution A'), 
+                      `Category 1` = c('$P(\\text{Category} \\ 1A | \\text{Category} \\ 1B)$',
+                                       '$P(\\text{Category} \\ 1A | \\text{Category} \\ 2B)$',
+                                       '$P(\\text{Category} \\ 1A | \\text{Category} \\ 3B)$',
+                                       '$\\sum_i P(\\text{Category} \\ 1A | \\text{Category} \\ iB)$'),
+                      
+                      `Category 2` = c('$P(\\text{Category} \\ 2A | \\text{Category} \\ 1B)$',
+                                       '$P(\\text{Category} \\ 2A | \\text{Category} \\ 2B)$',
+                                       '$P(\\text{Category} \\ 2A | \\text{Category} \\ 3B)$',
+                                       '$\\sum_i P(\\text{Category} \\ 2A | \\text{Category} \\ iB)$'),
+                      
+                      `Marginal B` = c('$\\sum_j P(\\text{Category} \\ jA | \\text{Category} \\ 1B)$',
+                                       '$\\sum_j P(\\text{Category} \\ jA | \\text{Category} \\ 2B)$',
+                                       '$\\sum_j P(\\text{Category} \\ jA | \\text{Category} \\ 3B)$',
+                                       '1')))
+
+kable(df, format = 'html', digits = 2, col.names = c('','','','',''),
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria", font_size = 12)%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+The two-way table above helps us to break down the relationship between the outcomes of <i>Variable A</i> and the outcomes of <i>Variable B</i>. As we can see from the table, the cells gives the conditional probabilities (or more often counts) of each category of $A$ across each category of $B$. There are also usually row and column totals displayed in a two-way table which summarize the marginal distributions of each variable. 
+
+A **$\chi$-square test of independence** takes advantage of the two-way table above to determine if the conditional distribution of the response variable (the rows) changes across the categories of the explanatory variable (the columns). In the example above, we can see that each row gives the marginal distribution of the response variable. If *variable A* and *variable B* are independent then the rows of the table should be more or less the same. If the outcomes of *variable B* depend on the outcomes of variable $A$, then the rows of the table will change as we move across the outcomes of *variable B*. 
+
+The null an alternative hypothesis of a $\chi$-square test of independence are simple. The null hypothesis is that the two variables being tested are independent and the alternative is that they not independent
+
+\[ H_0: \text{Variable A and Variable B are independent} \]
+\[ H_A: \text{Variable A and Variable B are NOT independent}\]
+
+Like the goodness of fit test, the alternative hypothesis does not specify any particular direction. Because the two-way table can contain all sorts of possible associations the alternative hypothesis cannot be described as one or two sided.
+
+To test the null hypothesis of no dependence between two variables in a table with $r$ rows and $c$ columns we take a similar approach to the goodness of fit test and compare the observed cell counts in all cells of the table to their expected cell counts under the null hypothesis. 
 
 
 
+In essence we are comparing two tables which represent two distributions: the table of **observed cell counts** which represents the observed distribution of the response and explanatory variables and the table of **expected cell counts** which represents the null distribution. 
 
+
+The test statistic summarizes the differences (i.e distance) between the counts in the observed table with the counts in the expected table.  
+
+\[ X_{obs}^2 = \sum_{j=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}}  \]
+
+
+Where $o_{ij}$ represents the observed count for the $i^{th}$ row and $j^{th}$ column of the contingency table: 
+
+```{r, echo=F, message=F, warning=F}
+
+df <- data.frame(
+  ` ` = c("Category 1", "Category 2", "⋮", "Category r", "Total"),
+  `Category 1` = c("$o_{11}$", "$o_{21}$", "$\\vdots$", "$o_{r1}$", "$\\sum_{i=1}^r o_{i1}$"),
+  `Category 2` = c("$o_{12}$", "$o_{22}$", "$\\vdots$", "$o_{r2}$", "$\\sum_{i=1}^r o_{i2}$"),
+  `⋯` = c("$\\cdots$", "$\\cdots$", "$\\vdots$", "$\\cdots$", "$\\cdots$"),
+  `Category c` = c("$o_{1c}$", "$o_{2c}$", "$\\vdots$", "$o_{rc}$", "$\\sum_{i=1}^r o_{ic}$"),
+  `Total` = c("$\\sum_{j=1}^c o_{1j}$", "$\\sum_{j=1}^c o_{2j}$", "$\\vdots$", "$\\sum_{j=1}^c o_{rj}$", "$n = \\sum_{i=1}^r\\sum_{j=1}^c o_{ij}$")
+)
+
+kable(df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of observed counts',
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+The expected counts for $i,j^{th}$ cell of the table are computed from the observed counts such that
+			
+\[ e_{ij} = \frac{ \big[ \sum_{i = 1}^r o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r \sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column total}}{n}  \]
+
+
+The test statistic follows a $\chi$-square distribution with $(r-1)\times (c-1)$ degrees of freedom, where $r$ is the total number of row categories and $c$ is the total column categories.
+
+**Example: Happiness and Income** - As part of their annual survey, the General Social Survey explored the relationship between income and happiness. Happiness was recorded as "Not too happy", "Pretty happy", or "Very happy", and incomes were bracketed into three categories: "Below average", "Average", and "Above average". The counts are summarized in the table below:
+
+```{r, echo=F, message=F, warning=F}
+
+df = cbind.data.frame(
+  Income = c("Above Average", "Average", "Below Average", "Total"),
+  `Not Too Happy` = c(29, 83, 104, 216),
+  `Pretty Happy` = c(178, 494, 314, 986),
+  `Very Happy` = c(135, 277, 119, 531),
+  Total = c(342, 854, 537, 1733)
+)
+
+kable(df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of observed counts',
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Conduct a $\chi^2$ test of independence to determine if there is evidence to support that income is related to happiness 
+
+* The table of expected counts is given below 
+
+```{r, echo=F, message=F, warning=F}
+
+observed = cbind.data.frame(
+  Income = c("Above Average", "Average", "Below Average", "Total"),
+  `Not Too Happy` = c(29, 83, 104, 216),
+  `Pretty Happy` = c(178, 494, 314, 986),
+  `Very Happy` = c(135, 277, 119, 531),
+  Total = c(342, 854, 537, 1733)
+)
+
+
+# Calculate row and column totals
+row_totals <- observed$Total[1:3]
+col_totals <- c(sum(observed$`Not Too Happy`[1:3]), sum(observed$`Pretty Happy`[1:3]), sum(observed$`Very Happy`[1:3]))
+grand_total <- sum(row_totals)
+
+# Calculate expected counts
+expected <- matrix(nrow = 3, ncol = 3)
+for (i in 1:3) {
+  for (j in 1:3) {
+    expected[i, j] <- paste0('$\\frac{', row_totals[i], '\\times ', col_totals[j],'}','{',grand_total, '} = ',round((row_totals[i] * col_totals[j]) / grand_total, 2), '$')
+  }
+}
+
+# Convert matrix to data frame for kable
+expected_df <- as.data.frame(expected)
+colnames(expected_df) <- c("Not Too Happy", "Pretty Happy", "Very Happy")
+
+# Add row names
+rownames(expected_df) <- c("Above Average", "Average", "Below Average")
+
+
+kable(expected_df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of expected counts',
+      row.names = T, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+* the table below gives the squared deviations across all cell counts 
+
+
+```{r, echo=F, message=F, warning=F}
+
+observed = cbind.data.frame(
+  Income = c("Above Average", "Average", "Below Average", "Total"),
+  `Not Too Happy` = c(29, 83, 104, 216),
+  `Pretty Happy` = c(178, 494, 314, 986),
+  `Very Happy` = c(135, 277, 119, 531),
+  Total = c(342, 854, 537, 1733)
+)
+
+
+# Calculate row and column totals
+row_totals <- observed$Total[1:3]
+col_totals <- c(sum(observed$`Not Too Happy`[1:3]), sum(observed$`Pretty Happy`[1:3]), sum(observed$`Very Happy`[1:3]))
+grand_total <- sum(row_totals)
+
+# Calculate expected counts
+expected <- matrix(nrow = 3, ncol = 3)
+for (i in 1:3) {
+  for (j in 1:3) {
+    expected[i, j] <- (row_totals[i] * col_totals[j]) / grand_total
+  }
+}
+
+# Convert matrix to data frame for kable
+expected_df <- as.data.frame(expected)
+colnames(expected_df) <- c("Not Too Happy", "Pretty Happy", "Very Happy")
+
+# Add row names
+rownames(expected_df) <- c("Above Average", "Average", "Below Average")
+
+differences <- matrix(nrow = 3, ncol = 3)
+for (i in 1:3) {
+  for (j in 1:3) {
+    differences[i,j] = paste0('$\\frac{(', round(expected_df[i,j],2), ' - ', round(observed[1:3, 2:4][i,j],2), ')^2}{', round(expected_df[i,j],2), '} = ', round((expected_df[i,j] - observed[1:3, 2:4][i,j])^2/expected_df[i,j], 2), '$')
+  }
+}
+
+differences_df = as.data.frame(differences)
+colnames(differences_df) <- c("Not Too Happy", "Pretty Happy", "Very Happy")
+
+# Add row names
+rownames(differences_df) <- c("Above Average", "Average", "Below Average")
+
+
+kable(differences_df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of differences',
+      row.names = T, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+
+The $\chi^2$ test statistic can be computed as the sum of the elements in the table above 
+
+\[ X^2 = 4.36 + 5.16 + \cdots +0.23 + 12.6 = 54.04 \]
+
+which follows a $\chi^2$ distribution with $(3-1)\times (3 - 1) = 4$ degrees of freedom
 
 <br>
 <br>
