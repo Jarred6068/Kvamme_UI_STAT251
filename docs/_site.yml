@@ -72,8 +72,8 @@ navbar:
             href: homeworks/week7homework_solns.html
           - text: 'Hmwk 4 Solutions'
             href: homeworks/week12homework_solns.html
-          - text: 'Homework 5'
-            href: homeworks/week14homework_solns_temp.html
+          - text: 'Hmwk 5 Solutions'
+            href: homeworks/week14homework_solns.html
         - text: 'Reading & Extra Problems'
           href: homeworks/reading_and_book_problems.html
     - text: 'Exam Study Guides'
@@ -114,7 +114,7 @@ navbar:
           menu:
           - text: 'App Descriptions'
             href: shiny_apps/app_descriptions.html
-          - text: 'Convert files to csv text'
+          - text: 'Convert files text'
             href: shiny_apps/Convert_file_to_text/webfiles/index.html
           - text: 'Random Variables'
             href: shiny_apps/HistoPlot/histogram_viewer/index.html
