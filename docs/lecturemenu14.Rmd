@@ -468,30 +468,42 @@ Referring back to Mendel's pea plants we compute the expected number of yellow p
 
 \[ \approx 0.015\]
 
-To conver the above statistic into a $p$-value we need to know its sampling distribution. The statistic $X^2$ is called a $\chi^2$ test statistic because its sampling distribution follows a special type of probability distribution called the $\chi^2$ distribution
+#### The Chi-square distribution
+
+To convert the above statistic into a $p$-value we need to know its sampling distribution. The statistic $X^2$ is called a $\chi^2$ test statistic because its sampling distribution follows a special type of probability distribution called the $\chi^2$ distribution. Kike the $t$ distribution, the $\chi^2$ distributions form a family of distributions controlled by a single parameter - the degrees of freedom. We will use the notation $\chi^2(df)$ to depict a specific member of this family. For the goodness of fit test the the test statistic $X^2$ follows a $\chi^2$ distribution with $k-1$ degrees of freedom: 
 
 
 ```{r, echo=FALSE, warning=F, message=F, fig.width=10, fig.height=6, results = 'hide'}
 
+x = seq(0, 20, 0.01)
+df1 = dchisq(x, 1)
+df2 = dchisq(x, 2)
+df4 = dchisq(x, 4)
+df6 = dchisq(x, 6)
+df8 = dchisq(x, 8)
+#df12 = dchisq(x, 12)
+df = cbind.data.frame(`$\\chi^2$` = rep(x, 5),
+                      `Density` = c(df1, df2, df4, df6, df8),# df12),
+                      `Degrees of freedom` = c(rep('df = 1', length(x)),
+                                               rep('df = 2', length(x)),
+                                               rep('df = 4', length(x)),
+                                               rep('df = 6', length(x)),
+                                               rep('df = 8', length(x))
+                                               #rep('df = 12', length(x))
+                                               ))
 
-x = seq(0, 20, length=1000)
-hx = dnorm(x, 1)
-
-degf = c(2, 4, 6, 10)
-colors = c("red", "blue", "darkgreen", "darkgoldenrod1", "black")
-labels = c("df = 1","df = 2", "df = 4", "df = 6", "df = 10")
-plot(x, hx, type="l", lty=1, xlab="x value", lwd = 3,
-     ylab="Density", main="Comparison of t Distributions")
-
-#The relevant modification
-mapply(function(DoF, W, C) lines(x, dchisq(x, DoF), lwd=W, col=C), DoF = degf, W = c(3,3,3,3), C = colors[-5])
-
-legend("topright", inset=.05, title="Chi-square Distributions",
-       labels, lwd=2, lty=c(1, 1, 1, 1, 1), col=colors)
+ggplot(data = df, aes(x = `$\\chi^2$`, y = Density, color = `Degrees of freedom`))+
+  geom_line(size = 1.5)+
+  scale_y_continuous(limits = c(0, 0.5))+
+  theme_bw()+
+  theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 12))+
+  xlab(TeX('$\\chi^2$'))+
+  ggtitle(TeX('The $\\chi^2$ Distribution'))
 
 ```
 
-like the $t$ distributio the $\chi^2$ distributions form a family of distributions controlled by a single parameter: the degrees of freedom. We will use $\chi^2(df)$ to depict a specific member of this family. For the goodness of fit test the the test statistic $X^2$ follows a $\chi^2$ distribution with $k-1$ degrees of freedom: As we did the $t$ distribution we can look up probabilities from a $chi^2$ table:
+ * As we did the $t$ distribution we can look up probabilities from a $chi^2$ table:
 
 ```{r, echo=F, message=F, warning=F}
 DF = c(1:30, 40, 50, 100)
@@ -516,7 +528,7 @@ kable(df, format = 'html', digits = 2, col.names = c('Upper tail', 0.25, 0.2, 0.
 ```
 
 
-### The Chi-square distribution
+
 
 
 

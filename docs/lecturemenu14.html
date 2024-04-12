@@ -497,6 +497,9 @@ $(document).ready(function () {
         <li>
           <a href="misc/t_table.html">t-table</a>
         </li>
+        <li>
+          <a href="misc/t_table.html">Chi-square table</a>
+        </li>
       </ul>
     </li>
     <li class="dropdown-submenu">
@@ -1999,25 +2002,29 @@ statistic is</p>
 +\frac{(2001 - 2005.75)}{2005.75} \]</span></p>
 <p><span class="math display">\[ = 0.0037 + 0.0112  \]</span></p>
 <p><span class="math display">\[ \approx 0.015\]</span></p>
-<p>To conver the above statistic into a <span
+<div id="the-chi-square-distribution" class="section level4">
+<h4>The Chi-square distribution</h4>
+<p>To convert the above statistic into a <span
 class="math inline">\(p\)</span>-value we need to know its sampling
 distribution. The statistic <span class="math inline">\(X^2\)</span> is
 called a <span class="math inline">\(\chi^2\)</span> test statistic
 because its sampling distribution follows a special type of probability
 distribution called the <span class="math inline">\(\chi^2\)</span>
-distribution</p>
-<p><img src="lecturemenu14_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
-<p>like the <span class="math inline">\(t\)</span> distributio the <span
-class="math inline">\(\chi^2\)</span> distributions form a family of
-distributions controlled by a single parameter: the degrees of freedom.
-We will use <span class="math inline">\(\chi^2(df)\)</span> to depict a
-specific member of this family. For the goodness of fit test the the
-test statistic <span class="math inline">\(X^2\)</span> follows a <span
+distribution. Kike the <span class="math inline">\(t\)</span>
+distribution, the <span class="math inline">\(\chi^2\)</span>
+distributions form a family of distributions controlled by a single
+parameter - the degrees of freedom. We will use the notation <span
+class="math inline">\(\chi^2(df)\)</span> to depict a specific member of
+this family. For the goodness of fit test the the test statistic <span
+class="math inline">\(X^2\)</span> follows a <span
 class="math inline">\(\chi^2\)</span> distribution with <span
-class="math inline">\(k-1\)</span> degrees of freedom: As we did the
-<span class="math inline">\(t\)</span> distribution we can look up
-probabilities from a <span class="math inline">\(chi^2\)</span>
-table:</p>
+class="math inline">\(k-1\)</span> degrees of freedom:</p>
+<p><img src="lecturemenu14_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<ul>
+<li>As we did the <span class="math inline">\(t\)</span> distribution we
+can look up probabilities from a <span
+class="math inline">\(chi^2\)</span> table:</li>
+</ul>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -3419,10 +3426,8 @@ Confidence Level:
 </tr>
 </tbody>
 </table>
-</div>
-<div id="the-chi-square-distribution" class="section level3">
-<h3>The Chi-square distribution</h3>
 <p><br> <br> <br> <br></p>
+</div>
 </div>
 <div id="references" class="section level3">
 <h3>References</h3>

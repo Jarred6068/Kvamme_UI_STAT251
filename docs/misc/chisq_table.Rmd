@@ -1,5 +1,5 @@
 ---
-title: "Students t-Distribution: t-table"
+title: "Chi Square Distribution"
 author: "STAT 251 Section 03"
 output:
   html_document: default
@@ -25,20 +25,21 @@ path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
 DF = c(1:30, 40, 50, 100)
 probs = rbind.data.frame(cbind.data.frame(c('$DF$', DF), 
-                         c('',round(qt(1-0.5/2, DF), 3)), c('',round(qt(1-0.4/2, DF),3)),
-                         c('',round(qt(1-0.3/2, DF),3)), c('',round(qt(1-0.25/2, DF),3)), 
-                         c('',round(qt(1-0.2/2, DF), 3)), c('',round(qt(1-0.15/2, DF),3)), 
-                         c('',round(qt(1-0.1/2, DF),3)), c('',round(qt(1-0.05/2, DF),3)),
-                         c('',round(qt(1-0.01/2, DF),3)), c('',round(qt(1 - 0.005/2, DF),3)),
-                         c('',round(qt(1 - 0.001/2, DF),3))),
+                         c('',round(qchisq(1-0.5/2, DF), 3)), c('',round(qchisq(1-0.4/2, DF),3)),
+                         c('',round(qchisq(1-0.3/2, DF),3)), c('',round(qchisq(1-0.25/2, DF),3)), 
+                         c('',round(qchisq(1-0.2/2, DF), 3)), c('',round(qchisq(1-0.15/2, DF),3)), 
+                         c('',round(qchisq(1-0.1/2, DF),3)), c('',round(qchisq(1-0.05/2, DF),3)),
+                         c('',round(qchisq(1-0.01/2, DF),3)), c('',round(qchisq(1 - 0.005/2, DF),3)),
+                         c('',round(qchisq(1 - 0.001/2, DF),3))),
                          c('Z-score', round(qnorm(1-c(0.5, 0.4, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.01, 0.005, 0.001)/2),3)),
                          c('Confidence Level:', 
                            paste0('$',100*(1-c(0.5, 0.4, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.01, 0.005, 0.001)), '\\%$')))
                         
 
-df = rbind.data.frame(c('Two tail', 0.5, 0.4, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.01, 0.005, 0.001), probs)
+df = rbind.data.frame(probs)
 
 kable(df, format = 'html', digits = 2, col.names = c('Upper tail', 0.25, 0.2, 0.15, 0.125, 0.1, 0.075, 0.05, 0.025, 0.005, 0.0025, 0.0005),
       row.names = F, booktabs = F, escape = F)%>%
