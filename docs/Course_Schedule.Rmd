@@ -710,7 +710,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>May 1, 2024</td>
-        <td>Final exam informal review, course project due at midnight</td>
+        <td>Final exam informal review</td>
         <td></td>
     </tr>
     <tr>
@@ -758,5 +758,6 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>May 10, 2024</td>
+        <td>Course project due at midnight</td>
     </tr>
 </table>
