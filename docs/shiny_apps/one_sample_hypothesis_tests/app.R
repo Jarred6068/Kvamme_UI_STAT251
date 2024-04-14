@@ -195,12 +195,12 @@ one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
 
 
 # test for a population proportion 
-one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tailed'),
                                 verbose = TRUE){
   
   estimate.SE = one.sample.prop.SE(p0, n)
   Zobs = (phat - p0)/estimate.SE
-  if(test == 'two.tail'){
+  if(test == 'two.tailed'){
     critical.value = qnorm((1-(alpha/2)))
     alt.hyp = 'p != '
     pvalue = 2*(1-pnorm(abs(Zobs)))
@@ -275,13 +275,13 @@ one.sample.t.CI = function(xbar, s, n, alpha = 0.05, verbose = FALSE){
 
 
 # one sample t test 
-one.sample.t.test = function(m0, xbar, s, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+one.sample.t.test = function(m0, xbar, s, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tailed'),
                              verbose = TRUE){
   
   df = n - 1
   estimate.SE = one.sample.t.SE(s, n)
   tobs = (xbar - m0)/estimate.SE
-  if(test == 'two.tail'){
+  if(test == 'two.tailed'){
     critical.value = qt((1-(alpha/2)), df = df)
     alt.hyp = 'm != '
     pvalue = 2*(1-pt(abs(tobs), df = df))

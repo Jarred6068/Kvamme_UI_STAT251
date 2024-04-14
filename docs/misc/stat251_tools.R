@@ -36,7 +36,7 @@ d_limit <- function(x, alpha, test, dist, n) {
 # this function plots a density curve for the z and t distributions and allows for shading the 
 # the rejection regions on the plot
 gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c('z','t'), alpha = 0.05, obs = 0.5,
-                          test = c('two.tailed','lower.tail', 'upper.tail'), shade = TRUE,
+                          test = c('two.tail','lower.tail', 'upper.tail'), shade = TRUE,
                           txt.sz = 5){
   
   p = ggplot(data.frame(x = bbox), aes(x = x))+
