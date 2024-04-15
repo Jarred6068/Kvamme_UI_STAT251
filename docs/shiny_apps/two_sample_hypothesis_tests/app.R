@@ -10,6 +10,7 @@
 library(shiny)
 library(ggplot2)
 library(ggthemes)
+library(latex2exp)
 library(gridExtra)
 library(ggpubr)
 
@@ -152,7 +153,7 @@ two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.
     test.SE = s.pooled * sqrt((1/n1)+(1/n2))
   }else if (pooling == 'unpooled'){
     calc = 'exact.unpooled'
-    df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n-1)) + ((s2^2/n2)^2/(n2-2)))
+    df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n1-1)) + ((s2^2/n2)^2/(n2-1)))
     test.SE = two.sample.t.SE(s1,s2,n1,n2) 
   }else{
     calc = 'approx.unpooled'
@@ -229,7 +230,7 @@ ui <- fluidPage(
                  
                  numericInput(inputId = "n1",
                               label = "Sample Size Pop1: n1 ",
-                              value = 10),
+                              value = 12),
                  
                  numericInput(inputId = "n2",
                               label = "Sample Size Pop2: n2 ",
@@ -241,7 +242,7 @@ ui <- fluidPage(
                                                value = 0),
                                   numericInput(inputId = "xbar1",
                                                label = "Sample Mean Pop1: xbar1",
-                                               value = 5),
+                                               value = 4),
                                   numericInput(inputId = "xbar2",
                                                label = "Sample Mean Pop2: xbar2",
                                                value = 5),
@@ -266,11 +267,11 @@ ui <- fluidPage(
                                   numericInput(inputId = "x1",
                                                label = "Observed count for population 1: x1",
                                                min = 0,
-                                               value = 5),
+                                               value = 10),
                                   numericInput(inputId = "x2",
                                                label = "Observed count for population 2: x2",
                                                min = 0,
-                                               value = 5)),
+                                               value = 8)),
                  actionButton("run","Run Inference"),
     ),
     mainPanel(plotOutput("plotresult"), 
@@ -283,36 +284,50 @@ server <- function(input, output) {
   
   observeEvent(input$run,  output$plotresult <- renderPlot({
     if(input$param == 'two.means'){
+      lbl.height = 0.1
       distrib = 't'
-      estimate = input$xbar1 - xbar2
+      estimate = input$xbar1 - input$xbar2
       if(input$pooling == 'pooled'){
-        df = n1 + n2 - 2
-        s.pooled = sqrt( ((n1-1)*s1^2 + (n2-1)*s2^2)/(n1+n2-2))
-        test.SE = s.pooled * sqrt((1/n1)+(1/n2))
+        df = input$n1 + input$n2 - 2
+        s.pooled = sqrt( ((input$n1-1)*input$s1^2 + (input$n2-1)*input$s2^2)/(input$n1+input$n2-2))
+        SE = s.pooled * sqrt((1/input$n1)+(1/input$n2))
       }else if (input$pooling == 'unpooled'){
-        df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n-1)) + ((s2^2/n2)^2/(n2-2)))
-        test.SE = two.sample.t.SE(s1,s2,n1,n2) 
+        df = ( ( (input$s1^2/input$n1)+(input$s2^2/input$n2) )^2)/(((input$s1^2/input$n1)^2/(input$n1-1)) + ((input$s2^2/input$n2)^2/(input$n2-1)))
+        SE = two.sample.t.SE(input$s1,input$s2,input$n1,input$n2)
       }else if(input$pooling == 'approx.unpooled'){
-        df = min(n1-1, n2-1)
-        test.SE = two.sample.t.SE(s1,s2,n1,n2) 
+        df = min(input$n1-1, input$n2-1)
+        SE = two.sample.t.SE(input$s1,input$s2,input$n1,input$n2)
       }
-      standard.score = qt(1-input$alpha/2, input$n - 1)
-      SE = (input$obs.s/sqrt(input$n))
-      test.stat = (input$obs.mean - input$m0)/SE
+      standard.score = qt(1-input$alpha/2, df)
       LV = estimate - 4*SE
       UV = estimate + 4*SE
       LB = estimate - standard.score*SE
       UB = estimate + standard.score*SE
+      calc = '\\bar{x}_1 - \\bar{x}_2 = '
+      est1 = '$\\bar{x}_1$'
+      est2 = '$\\bar{x}_2$'
+      est.val1 = input$xbar1
+      est.val2 = input$xbar2
+      est.sd1 = input$s1/sqrt(input$n1)
+      est.sd2 = input$s2/sqrt(input$n2)
     }else{
+      lbl.height = 0.2
       distrib = 'z'
-      estimate = input$obs.prop
+      estimate = (input$x1/input$n1) - (input$x2/input$n2)
+      p.pooled = (input$x1+input$x2)/(input$n1+input$n2)
+      SE = sqrt( (p.pooled*(1-p.pooled))*(1/input$n1 + 1/input$n2))
       standard.score = qnorm(1-input$alpha/2)
-      SE = sqrt(input$p0*(1-input$p0)/input$n)
-      test.stat = (input$obs.prop - input$p0)/SE
-      LB = max(estimate - standard.score*SE, 0)
-      LV = max(estimate - 4*SE, 0)
-      UB = min(estimate + standard.score*SE, 1)
-      UV = min(estimate + 4*SE, 1)
+      LB = estimate - standard.score*SE
+      LV = estimate - 4*SE
+      UB = estimate + standard.score*SE
+      UV = estimate + 4*SE
+      calc = '\\hat{p}_1 - \\hat{p}_2 = '
+      est1 = '$\\hat{p}_1$'
+      est2 = '$\\hat{p}_2$'
+      est.val1 = input$x1/input$n1
+      est.val2 = input$x2/input$n2
+      est.sd1 = sqrt(est.val1*(1-est.val1)/input$n1)
+      est.sd2 = sqrt(est.val2*(1-est.val2)/input$n2)
     }
 
     if(input$test == 'confidence.interval'){
@@ -329,19 +344,80 @@ server <- function(input, output) {
         geom_vline(xintercept = UB, linetype = 'dotted', size = 2)+
         geom_text(aes(x = estimate, y = dnorm(estimate, mean = estimate, sd = SE)/2),
                   label = paste0(100*(1-input$alpha), '%', ' CI'), size = 8)+
+        
+        geom_label(aes(x = estimate, y = 0), 
+                   label = TeX(paste0('$', calc, round(estimate, 2), '$')), size = 6)+
         xlab('Estimate')+
         ylab('Probability Density')+
         theme(axis.text = element_text(size = 12),
               axis.title = element_text(size = 14))
 
     }else{
-      out = gen.density.plot(n = input$n,
-                             dist = distrib,
-                             obs = test.stat,
-                             alpha = input$alpha,
-                             test = input$test)
+      #browser()
+      idx = which(c(est.val1, est.val2) == min(est.val1, est.val2))
+      if(idx == 1){
+        LB = est.val1 - 4*est.sd1
+        UP = est.val2 + 4*est.sd2
+        added = est.val1+abs(est.val1 - est.val2)/2
+      }else{
+        LB = est.val2 - 4*est.sd2
+        UP = est.val1 + 4*est.sd1
+        added = est.val2+(est.val1 - est.val2)/2
+      }
+      arr.height = min(dnorm(est.val1, est.val1, est.sd1)/2,
+                       dnorm(est.val2, est.val2, est.sd2)/2)
+      out = ggplot()+xlim(LB, UP)+theme_pander()+
+        stat_function(fun = dnorm,
+                      args = list(mean = est.val1, sd = est.sd1),
+                      size = 1.5)+
+        stat_function(fun = dnorm,
+                      args = list(mean = est.val1, sd = est.sd1),
+                      geom = 'area',
+                      fill = 'red',
+                      alpha = 0.5)+
+        stat_function(fun = dnorm,
+                      args = list(mean = est.val2, sd = est.sd2),
+                      size = 1.5)+
+        stat_function(fun = dnorm,
+                      args = list(mean = est.val2, sd = est.sd2),
+                      geom = 'area',
+                      fill = 'blue',
+                      alpha = 0.5)+
+        
+        geom_segment(aes(x = est.val1, y = arr.height, 
+                         xend = est.val2, yend = arr.height), #yend = dnorm(input$xbar2, input$xbar2, input$s2)/2), 
+                     size = 1, 
+                     arrow = arrow(length = unit(0.4, "cm"), ends = 'both'))+
+        
+        geom_segment(aes(x = est.val1, y = 0, 
+                         xend = est.val1, yend = dnorm(est.val1, est.val1, est.sd1)), 
+                     size = 1, linetype = 'dotted')+
+        
+        geom_segment(aes(x = est.val2, y = 0, 
+                       xend =est.val2, yend = dnorm(est.val2, est.val2, est.sd2)), 
+                   size = 1, linetype = 'dotted')+
+        
+        geom_label(aes(x = est.val1, y = dnorm(est.val1, est.val1, est.sd1)+0.01),
+                   label = 'Population 1', size = 6)+
+        
+        geom_label(aes(x = est.val2, y = dnorm(est.val2, est.val2, est.sd2)+0.01),
+                   label = 'Population 2', size = 6)+
+        
+        geom_label(aes(x = est.val1, y = 0),
+                   label = TeX(est1), size = 6)+
+        
+        geom_label(aes(x = est.val2, y = 0),
+                   label = TeX(est2), size = 6)+
+        
+        geom_label(aes(x = added, y = arr.height+lbl.height),
+                   label = TeX(paste0('$', calc, round(est.val1 - est.val2, 3), '$')),
+                   size = 5)+
+        xlab('')+
+        ylab('Density')+
+        theme(axis.text = element_text(size = 12),
+              axis.title = element_text(size = 14))
     }
-
+    
     plot(out)
 
   }))
@@ -349,9 +425,9 @@ server <- function(input, output) {
   observeEvent(input$run,  output$summary <- renderPrint({
     #browser()
     if(input$test == 'confidence.interval'){
-      if(input$comparison == 'two.means'){
+      if(input$param == 'two.means'){
 
-        two.sample.t.CI(x1 = input$xbar1,
+        ot = two.sample.t.CI(x1 = input$xbar1,
                         x2 = input$xbar2,
                         s1 = input$s1,
                         s2 = input$s2,
@@ -362,7 +438,7 @@ server <- function(input, output) {
                         verbose = T)
 
       }else{
-        two.sample.prop.CI(p1 = input$x1/input$n1,
+        ot = two.sample.prop.CI(p1 = input$x1/input$n1,
                            p2 = input$x2/input$n2,
                            n1 = input$n1,
                            n2 = input$n2,

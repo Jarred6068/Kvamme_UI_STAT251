@@ -298,23 +298,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -389,7 +383,7 @@ d_limit &lt;- function(x, alpha, test, dist, n) {
 # this function plots a density curve for the z and t distributions and allows for shading the 
 # the rejection regions on the plot
 gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c(&#39;z&#39;,&#39;t&#39;), alpha = 0.05, obs = 0.5,
-                          test = c(&#39;two.tailed&#39;,&#39;lower.tail&#39;, &#39;upper.tail&#39;), shade = TRUE,
+                          test = c(&#39;two.tail&#39;,&#39;lower.tail&#39;, &#39;upper.tail&#39;), shade = TRUE,
                           txt.sz = 5){
   
   p = ggplot(data.frame(x = bbox), aes(x = x))+
@@ -468,9 +462,9 @@ gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c(&#39;z&#39;,&#39;t&#3
                        yend=yendcoords[3]),
                    size = 0.9,
                    linetype = &#39;dashed&#39;)+
-      geom_point(aes(x = xcoords[1:2], y = ycoords[1:2]), size = 1.5)+
+      geom_point(aes(x = xcoords[1:2], y = ycoords[1:2]), size = 3)+
       geom_label(aes(x = xcoords[1:2], y = ycoords[1:2]-0.025), label = lbl1[1:2], size = txt.sz)+
-      geom_point(aes(x = xcoords[3], y = ycoords[3]), size = 1.5)+
+      geom_point(aes(x = xcoords[3], y = ycoords[3]), size = 3)+
       geom_label(aes(x = xcoords[3], y = ycoords[3]-0.025), label = lbl1[3], size = txt.sz)+
       geom_hline(yintercept = 0, size = 1)+
       xlab(xlabel)+
@@ -488,7 +482,7 @@ gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c(&#39;z&#39;,&#39;t&#3
                        yend=yendcoords), 
                    size = rep(0.9, length(xcoords)), 
                    linetype = rep(&#39;dashed&#39;,length(xcoords)))+
-      geom_point(aes(x = xcoords, y = ycoords), size = 1.5)+
+      geom_point(aes(x = xcoords, y = ycoords), size = 3)+
       geom_label(aes(x = xcoords, y = ycoords-0.025), label = lbl1, size = txt.sz)+
       geom_hline(yintercept = 0, size = 1)+
       xlab(xlabel)+
@@ -540,11 +534,10 @@ one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
 
 
 # test for a population proportion 
-one.sample.prop.test = function(p0, x, n, alpha = 0.05, test = c(&#39;lower.tail&#39;,&#39;upper.tail&#39;,&#39;two.tail&#39;),
+one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c(&#39;lower.tail&#39;,&#39;upper.tail&#39;,&#39;two.tail&#39;),
                                 verbose = TRUE){
   
-  phat = x/n
-  estimate.SE = one.sample.prop.SE(phat, n)
+  estimate.SE = one.sample.prop.SE(p0, n)
   Zobs = (phat - p0)/estimate.SE
   if(test == &#39;two.tail&#39;){
     critical.value = qnorm((1-(alpha/2)))
@@ -701,14 +694,17 @@ two.sample.prop.CI = function(p1,p2,n1,n2,tail = &#39;two.tail&#39;,alpha = 0.05
 
 
 #two sample proportion test
-two.sample.prop.test = function(p0,p1,p2,n1,n2,alpha = 0.05, test = c(&#39;lower.tail&#39;,&#39;upper.tail&#39;,&#39;two.tail&#39;),
+two.sample.prop.test = function(p0,x1,x2,n1,n2,alpha = 0.05, test = c(&#39;lower.tail&#39;,&#39;upper.tail&#39;,&#39;two.tail&#39;),
                                 pooled = TRUE, verbose = TRUE){
   
+  
+  p1 = x1/n1
+  p2 = x2/n2
   estimate = p1 - p2
   estimate.SE = two.sample.prop.SE(p1, p2, n1, n2)
   if(isTRUE(pooled)){
     calc = &#39;pooled&#39;
-    p.pooled = (p1+p2)/2
+    p.pooled = (x1+x2)/(n1+n2)
     test.SE = sqrt( (p.pooled*(1-p.pooled))*(1/n1 + 1/n2) )
   }else{
     calc = &#39;unpooled&#39;
@@ -799,7 +795,7 @@ two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c(&#39;lo
     test.SE = s.pooled * sqrt((1/n1)+(1/n2))
   }else if (pooling == &#39;unpooled&#39;){
     calc = &#39;unpooled&#39;
-    df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n-1)) + ((s2^2/n2)^2/(n2-2)))
+    df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n1-1)) + ((s2^2/n2)^2/(n2-1)))
     test.SE = two.sample.t.SE(s1,s2,n1,n2) 
   }else{
     calc = &#39;approx.unpooled&#39;
@@ -859,7 +855,7 @@ sign.test = function(p0, x1, x2, alpha = 0.05, test = c(&#39;lower.tail&#39;,&#3
     upper.bound = qbinom(1-(alpha/2), total.signs, phat)
     lower.bound = qbinom(alpha/2, total.signs, phat)
     alt.hyp = &#39;p != &#39;
-    pvalue = 2*(1-pbinom(positive.signs, total.signs, p0))
+    pvalue = 2*(1-pbinom(positive.signs-1, total.signs, p0))
     if(pvalue &gt; 1){
       pvalue = 1
     }
@@ -872,7 +868,7 @@ sign.test = function(p0, x1, x2, alpha = 0.05, test = c(&#39;lower.tail&#39;,&#3
     upper.bound = qbinom(1-(alpha/2), total.signs, phat)
     lower.bound = qbinom(alpha/2, total.signs, phat)
     alt.hyp = &#39;p &gt; &#39;
-    pvalue = 1-pbinom(positive.signs, total.signs, p0)
+    pvalue = 1-pbinom(positive.signs-1, total.signs, p0)
   }
   
   CI = c(lower.bound/total.signs, upper.bound/total.signs)

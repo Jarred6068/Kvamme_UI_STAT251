@@ -448,7 +448,7 @@ two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.
     test.SE = s.pooled * sqrt((1/n1)+(1/n2))
   }else if (pooling == 'unpooled'){
     calc = 'unpooled'
-    df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n-1)) + ((s2^2/n2)^2/(n2-2)))
+    df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n1-1)) + ((s2^2/n2)^2/(n2-1)))
     test.SE = two.sample.t.SE(s1,s2,n1,n2) 
   }else{
     calc = 'approx.unpooled'
