@@ -100,8 +100,6 @@ navbar:
           menu: 
             - text: 'Problems' 
               href: Review_problems/exam3_review_problems.html
-            - text: 'Solutions'
-              href: Review_problems/exam3_review_problems_solns.html
     - text: "Course Project"
       menu:
       - text: "Project Description"

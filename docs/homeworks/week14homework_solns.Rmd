@@ -70,7 +70,7 @@ a.) $H_0: \mu_0 = -2$ <br>
   $H_A: \mu \neq \mu_0$ <br> 
   $95\%$ CI for $\mu_0 \in [-3.0, -2.4]$ <br> 
   $\bar{x} = -2.7$
-  \[ \text{Decision} = \color{red}{\text{reject} \ H_0} \\
+  \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
   \alpha = \color{red}{0.05} \] 
 
 b.) $H_0: p_0 = 0.9$ <br> 
@@ -135,14 +135,14 @@ The dermatologist is particularly interested in whether the new product can impr
   b.) What does a "positive" sign indicate in this experiment? 
   <span style="color: red;">A positive sign indicates that the skin cream reduced the appearance of dry skin</span>
 
-  c.) Compute the $p$-value for the sign test <span style="color: red;">The number of positive signs is $s = 14$. The $p$value is probability of observing $14$ or more positive signs in $20$ observations given by 
-  \[p\text{-value} = P(S\geq s | H_0) = \sum_{k = 14}^{20}\frac{20!}{k!(20 - k)!} \cdot 0.5^k \cdot (1-0.5)^{20-k} \]
-  \[ \approx 0.058  \]
+  c.) Compute the $p$-value for the sign test <span style="color: red;">The number of positive signs is $s = 14$. The $p$value is probability of observing $14$ or more positive signs in $15$ observations given by 
+  \[p\text{-value} = P(S\geq s | H_0) = \sum_{k = 14}^{15}\frac{20!}{k!(20 - k)!} \cdot 0.5^k \cdot (1-0.5)^{20-k} \]
+  \[ \approx 0.0005  \]
   </span>
 
   d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that the topical cream product has a positive effect on reducing the appearance of acne. Interpret your decision in context.
   
-  <span style="color: red;">At the $\alpha = 0.05$ significance level, we fail to reject the null hypothesis and determine that there is insufficient evidence that skin cream reduces dry skin</span>
+  <span style="color: red;">At the $\alpha = 0.05$ significance level, we reject the null hypothesis and determine that there is sufficient evidence to support that the skin cream reduces dry skin</span>
 
 <br>
 <br>

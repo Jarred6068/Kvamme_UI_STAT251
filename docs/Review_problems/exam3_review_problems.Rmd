@@ -1,0 +1,49 @@
+---
+title: "Exam 3 Review Problems"
+author: "STAT 251 Section 03"
+date: "2024-04-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path2 = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+
+#<span style="color: red;"></span>
+```
+
+In your textbook complete the following review problems:
+
+  * **Chapter 8**
+    
+    * p. 483, problems: 105, 115, 119, 123
+    
+    * solutions: p. 494 
+  
+  * **Chapter 9**
+  
+    * p. 540, problems: 63, 65, 83, 75, 77
+    
+    * solutions: p. 556
+  
+  * **Chapter 10**
+  
+    * p. 600, problems: 79, 99, 103, 109
+    
+    * solutions: p. 612
+  
+  
+Additional preparation material:
+
+  * practice tests 3 and 4 in your textbook are also excellent resources to prepare for the exam.
+  
+    * practice test 3: *Appendix B.5* Solutions: *Appendix B.6* 
+    
+    * practice test 4: *Appendix B.7* Solutions: *Appendix B.8* 
