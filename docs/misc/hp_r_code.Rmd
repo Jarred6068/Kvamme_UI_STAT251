@@ -628,17 +628,18 @@ Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, 
 
 
 
+
 #A simple function to compute the signed-rank statistic
 sign.rank.stat = function(X,Y, ...){
   diffs = X-Y
-  negative = which(diffs < 0)
-  positive = which(diffs > 0)
   if(sum(diffs == 0)>0){
     omit = which(diffs == 0)
     abs.diffs = abs(diffs[-omit])
   }else{
     abs.diffs = abs(diffs)
   }
+  negative = which(diffs[-omit] < 0)
+  positive = which(diffs[-omit] > 0)
   ranks = rank(abs.diffs, ...)
   signed.ranks = ranks
   signed.ranks[negative] = -1*ranks[negative]
@@ -697,7 +698,7 @@ Wilcoxon.sign.rank.test = function(m0, X=NULL, Y=NULL, W=NULL, n=NULL,  alpha = 
     print(noquote(paste0((1-alpha)*100, '% CI for W = ', paste0('[',round(CI[1],2),',',
                                                         round(CI[2],2),']', 
                                                         collapse = ''))))
-    print(noquote(paste0('critical value', round(crit, 4))))
+    print(noquote(paste0('critical value = ', round(crit, 4))))
     print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
     print(noquote(paste0('Decision: ', decision)))
     print(noquote(paste0(rep("=", 54), collapse = '')))

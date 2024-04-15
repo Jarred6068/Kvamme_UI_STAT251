@@ -134,6 +134,8 @@ navbar:
             href: shiny_apps/two_sample_hypothesis_tests/webfiles/index.html
           - text: 'Categorical Tests'
             href: shiny_apps/categorical_tests/webfiles/index.html
+          - text: 'Non-Parametric Tests'
+            href: shiny_apps/non_parametric_tests/webfiles/index.html
         - text: 'SAC schedule'
           href: sac_schedule.html
         - text: 'Tables'

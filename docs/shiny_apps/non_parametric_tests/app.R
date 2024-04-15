@@ -1,0 +1,350 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    https://shiny.posit.co/
+#
+
+library(shiny)
+library(ggplot2)
+library(ggthemes)
+library(latex2exp)
+library(gridExtra)
+library(ggpubr)
+
+
+
+# the classic sign test
+sign.test = function(p0, x1, x2, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
+                     verbose = TRUE){
+  
+  diffs = x1 - x2
+  total.signs = sum(diffs>0)+sum(diffs<0)
+  positive.signs = sum(diffs>0)
+  
+  phat = positive.signs/total.signs
+  SE = sqrt(phat*(1-phat)/total.signs)
+  if(test == 'two.tail'){
+    upper.bound = qbinom(1-(alpha/2), total.signs, phat)
+    lower.bound = qbinom(alpha/2, total.signs, phat)
+    alt.hyp = 'p != '
+    pvalue = 2*(1-pbinom(positive.signs-1, total.signs, p0))
+    if(pvalue > 1){
+      pvalue = 1
+    }
+  }else if(test == 'lower.tail'){
+    upper.bound = qbinom(1-alpha/2, total.signs, phat)
+    lower.bound = qbinom(alpha/2, total.signs, phat)
+    alt.hyp = 'p < '
+    pvalue = pbinom(positive.signs, total.signs, p0)
+  }else{
+    upper.bound = qbinom(1-(alpha/2), total.signs, phat)
+    lower.bound = qbinom(alpha/2, total.signs, phat)
+    alt.hyp = 'p > '
+    pvalue = 1-pbinom(positive.signs-1, total.signs, p0)
+  }
+  
+  CI = c(lower.bound/total.signs, upper.bound/total.signs)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: p0 = ', p0)))
+    print(noquote(paste0('HA: ', alt.hyp, p0)))
+    print(noquote(paste0('# of positive signs = ', positive.signs)))
+    print(noquote(paste0('# of total signs = ', total.signs)))
+    print(noquote(paste0('Estimated P(+ sign) = ', round(phat, 4))))
+    print(noquote(paste0('Estimated Standard Error P(+ sign) = ', round(SE,4))))
+    print(noquote(paste0((1-alpha)*100, '% CI P(+ sign) = ', paste0('[', round(CI[1],4),',',
+                                                                    round(CI[2],4),']', 
+                                                                    collapse = ''))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+
+
+
+
+
+rank.sum.stat=function(X, Y){
+  D = sort(c(X, Y), decreasing = FALSE)
+  ranks = match(X,D)
+  S = sum(ranks)
+  return(S)
+}
+
+
+# the classic Wilcoxon sum-rank test for two indepdent samples
+Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, alpha = 0.05, 
+                                  test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE){
+  
+  if(is.null(S)){
+    S = rank.sum.stat(X,Y)
+    n1 = length(X)
+    n2 = length(Y)
+  }
+  
+  U = S - (n1*(n1+1))/2
+  if(test == 'two.tail'){
+    upper.bound = qwilcox(1-(alpha/2), n1, n2)
+    lower.bound = qwilcox(alpha/2, n1, n2)
+    alt.hyp = 'true location shift != '
+    pvalue = 2*pwilcox(U, n1, n2)
+    if(pvalue > 1){
+      pvalue = 1
+    }
+  }else if(test == 'lower.tail'){
+    upper.bound = qwilcox(1-(alpha/2), n1, n2)
+    lower.bound = qwilcox(alpha/2, n1, n2)
+    alt.hyp = 'true location shift is < '
+    pvalue = pwilcox(U, n1, n2)
+  }else{
+    upper.bound = qwilcox(1-(alpha/2), n1, n2)
+    lower.bound = qwilcox(alpha/2, n1, n2)
+    alt.hyp = 'true location shift is > '
+    pvalue = 1-pwilcox(U, n1, n2)
+  }
+  
+  CI = c(lower.bound, upper.bound)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: the true location shift = ', m0)))
+    print(noquote(paste0('HA: ', alt.hyp, m0)))
+    print(noquote(paste0('Sign rank statistic = ', S)))
+    print(noquote(paste0('Mann-Whitney U = ', round(U, 4))))
+    print(noquote(paste0('E[S] = ', round((n1*(n1+n2+1))/2, 4 ))))
+    print(noquote(paste0('SE(S) =', round(sqrt( (n1*n2*(n1+n2+1))/12 ), 4 ))))
+    print(noquote(paste0((1-alpha)*100, '% CI for S = ', paste0('[',max(round(CI[1],4),0),',',
+                                                                round(CI[2],4),']', 
+                                                                collapse = ''))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+
+#A simple function to compute the signed-rank statistic
+sign.rank.stat = function(X,Y, ...){
+  diffs = X-Y
+  if(sum(diffs == 0)>0){
+    omit = which(diffs == 0)
+    abs.diffs = abs(diffs[-omit])
+  }else{
+    abs.diffs = abs(diffs)
+  }
+  negative = which(diffs[-omit] < 0)
+  positive = which(diffs[-omit] > 0)
+  ranks = rank(abs.diffs, ...)
+  signed.ranks = ranks
+  signed.ranks[negative] = -1*ranks[negative]
+  W = sum(signed.ranks)
+  return(list(W = W, differences = diffs, absolute.diff = abs.diffs, ranks = ranks, signed.ranks = signed.ranks))
+}
+# the classic Wilcoxon sign-rank test for two dependent samples
+
+Wilcoxon.sign.rank.test = function(m0, X=NULL, Y=NULL, W=NULL, n=NULL,  alpha = 0.05, 
+                                   test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE,
+                                   ...){
+  
+  if(is.null(W)){
+    W = sign.rank.stat(X,Y,...)$W
+    if(length(X)==length(Y)){
+      n = length(X)
+      EW = m0
+      VW = (n*(n+1)*(2*n +1))/6
+      Z = (W-m0)/sqrt(VW)
+    }else{
+      stop('length(X) != length(Y)!...stopping')
+    }
+  }
+  
+  
+  if(test == 'two.tail'){
+    crit = qnorm(1-alpha/2, EW, sqrt(VW))
+    alt.hyp = 'true location shift != '
+    pvalue = 2*(1-pnorm(W, EW, sqrt(VW)))
+    if(pvalue > 1){
+      pvalue = 1
+    }
+  }else if(test == 'lower.tail'){
+    crit = qnorm(alpha, EW, sqrt(VW))
+    alt.hyp = 'true location shift < '
+    pvalue = pnorm(W, EW, sqrt(VW))
+  }else{
+    crit = qnorm(1-alpha, EW, sqrt(VW))
+    alt.hyp = 'true location shift > '
+    pvalue = 1-pnorm(W, EW, sqrt(VW))
+  }
+  
+  upper.bound = qnorm(1-alpha/2, EW, sqrt(VW))*sqrt(VW)+EW
+  lower.bound = qnorm(alpha/2, EW, sqrt(VW))*sqrt(VW)+EW
+  CI = c(lower.bound, upper.bound)
+  decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
+  if(isTRUE(verbose)){
+    print(noquote(paste0(paste0(rep('=', 20), collapse = ''), ' test results ', paste0(rep('=', 20), collapse = ''))))
+    print(noquote(paste0('test type = ', test)))
+    print(noquote(paste0('H0: true location shift = ', m0)))
+    print(noquote(paste0('HA: ', alt.hyp, m0)))
+    print(noquote(paste0('Rank-Sum statistic = ', W)))
+    print(noquote(paste0('E[W] = ', round( EW, 4 ))))
+    print(noquote(paste0('SE(W) =', round(sqrt( VW ), 4 ))))
+    print(noquote(paste0('Approximate Z-statistic = ', round(Z, 4))))
+    print(noquote(paste0((1-alpha)*100, '% CI for W = ', paste0('[',round(CI[1],2),',',
+                                                                round(CI[2],2),']', 
+                                                                collapse = ''))))
+    print(noquote(paste0('critical value = ', round(crit, 4))))
+    print(noquote(paste0('Pvalue = ', round(pvalue, 4))))
+    print(noquote(paste0('Decision: ', decision)))
+    print(noquote(paste0(rep("=", 54), collapse = '')))
+    
+  }
+}
+
+
+
+
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+  
+  titlePanel('Non-Parametric Hypothesis Tests'),
+  sidebarLayout(
+    sidebarPanel(width = 4, 
+                 #input select
+                 selectInput(inputId = "which",
+                             label = "Choose a test",
+                             choices = c("classic sign test", "rank sum test", "sign rank test"),
+                             selected = "classic sign test"),
+                 
+                 selectInput(inputId = "test",
+                             label = "Choose inference type:",
+                             choices = c("confidence.interval","upper.tail", 
+                                         "lower.tail", "two.tail"),
+                             selected = "two.tail"),
+                 
+                 sliderInput(inputId = "alpha",
+                             label = "Significance Level:",
+                             min = 0,
+                             max = 1,
+                             step = 0.01,
+                             value = 0.05),
+                 
+                 fileInput("myfileinput", 
+                           "Please choose a csv File", 
+                           multiple = FALSE, 
+                           accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
+                 
+                 selectInput('myselectinput1','Select variable 1', ""),
+                 
+                 selectInput('myselectinput2','Select variable 2', ""),
+                 
+                 conditionalPanel(condition = "input.which == 'rank sum test'",
+                                  numericInput(inputId = "rst.null",
+                                               label = "Set null H_0: true location shift = ",
+                                               value = 0)),
+                 conditionalPanel(condition = "input.which == 'sign rank test'",
+                                  numericInput(inputId = "srt.null",
+                                               label = "Set null H_0: true location shift = ",
+                                               value = 0)),
+                 conditionalPanel(condition = "input.which == 'classic sign test'",
+                                  numericInput(inputId = "p0",
+                                               label = "Set null H_0: P(+ Sign) = ",
+                                               value = 0.5,
+                                               min = 0,
+                                               max = 1,
+                                               step = 0.01)),
+                 
+                 
+                 actionButton("run","Run Inference"),
+    ),
+    mainPanel(tableOutput('mytable'), 
+              verbatimTextOutput("summary"))
+  )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output, session) {
+  
+  #Reactive to store loaded data
+  reactives <- reactiveValues(
+    
+    mydata = NULL
+    
+  )
+  
+  #Observe file being selected
+  observeEvent(input$myfileinput, {
+    
+    #Store loaded data in reactive
+    reactives$mydata <- read.csv(file = input$myfileinput$datapath)
+    #browser()
+    #Update select input
+    updateSelectInput(session, inputId = 'myselectinput1', label = 'Select the first var', choices  = colnames(reactives$mydata))
+    updateSelectInput(session, inputId = 'myselectinput2', label = 'Select the first var', choices  = colnames(reactives$mydata))
+    
+  })
+  
+  #Data table
+  output$mytable <- renderTable({ 
+    
+    head(reactives$mydata)
+    
+  })
+  
+  
+  observeEvent(input$run,  output$summary <- renderPrint({
+    
+    #browser()
+    idx1 = which(colnames(reactives$mydata) == input$myselectinput1)
+    idx2 = which(colnames(reactives$mydata) == input$myselectinput2)
+    X = reactives$mydata[,idx1]
+    Y = reactives$mydata[,idx2]
+    if(input$which == 'classic sign test'){
+      
+      sign.test(p0 = input$p0, 
+                x1 = X,
+                x2 = Y,
+                alpha = input$alpha,
+                test = input$test,
+                verbose = T)
+      
+    }else if(input$which == 'rank sum test'){
+      
+      Wilcoxon.rank.sum.test(m0 = input$rst.null, 
+                             X = X,
+                             Y = Y,
+                             alpha = input$alpha,
+                             test = input$test,
+                             verbose = T)
+      
+    }else if(input$which == 'sign rank test'){
+      #browser()
+      #debug(Wilcoxon.sign.rank.test)
+      Wilcoxon.sign.rank.test(m0 = input$srt.null,
+                              X = X,
+                              Y = Y,
+                              alpha = input$alpha, 
+                              test = input$test,
+                              verbose = T)
+      
+    }
+    
+  }))
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
