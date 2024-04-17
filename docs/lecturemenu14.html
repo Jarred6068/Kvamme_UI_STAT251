@@ -1332,21 +1332,21 @@ team like Iowa.</li>
 <h1>Lecture 27 Wednesday, April 10th 2024</h1>
 <div id="paired-t-test" class="section level3">
 <h3>Paired <span class="math inline">\(t\)</span> test</h3>
-<p>We know that comparative methods (i.e methods that compare two
-groups/samples across a quantitative variable) are more common and often
-preferred over one sample procedures. One common comparative design that
-makes use of single-sample procedures for a population mean is called
-the paired <span class="math inline">\(t\)</span>-test. This test is
-used to draw inferences about a population mean in matched pairs designs
-and can be thought of as the parametric analogue of the <i>sign test</i>
-we learned previously. Recall that in matched pairs studies subjects are
-matched in pairs and the quantitative outcome is compared within each
-pair.</p>
+<p>Comparative methods (i.e methods that compare two groups/samples
+across a quantitative variable) are more common and often preferred over
+one sample procedures. One common comparative design that makes use of
+single-sample procedures for a population mean is called the paired
+<span class="math inline">\(t\)</span>-test. This test is used to draw
+inferences about a population mean in matched-pairs designs and can be
+thought of as the parametric analogue of the <i>sign test</i> we learned
+previously. Recall that in matched-pairs studies subjects are matched
+based on common characteristics and the quantitative outcome is compared
+within each pair.</p>
 <ul>
-<li><p>matched pair designs are most common when randomization is not
+<li><p>matched-pairs designs are most common when randomization is not
 possible</p></li>
-<li><p>used when observations are taken on the same subject (before and
-after treatment)</p></li>
+<li><p>often used when observations are taken on the same subject
+(before and after treatment)</p></li>
 </ul>
 <p>In a paired <span class="math inline">\(t\)</span>-test we convert a
 comparative study into a one-sample procedure by making the response
@@ -1358,9 +1358,8 @@ sample mean difference <span class="math inline">\(\bar{x}_d = \bar{x} -
 \bar{y}\)</span> computed over all pairwise differences. The standard
 deviation of the difference <span
 class="math inline">\(\sigma_d\)</span> is then estimated with the
-sample standard deviation difference. Inference is then treated in the
-same way as the confidence interval and significance test procedures for
-a single sample</p>
+sample standard deviation of the difference. Inference is then treated
+in the same way as one-sample procedures for a population mean</p>
 <ul>
 <li>the <span class="math inline">\((1 - \alpha)\%\)</span> confidence
 interval for the mean pairwise difference is</li>
@@ -1672,7 +1671,7 @@ Stdev
 </table>
 <p>Conduct a paired <span class="math inline">\(t\)</span>-test at the
 <span class="math inline">\(\alpha = 0.05\)</span> significance level to
-determine if husbands and wives differ in their percieved influence on
+determine if husbands and wives differ in their perceived influence on
 financial decision making</p>
 </div>
 <div id="statistical-inference-for-qualitative-data"
@@ -1839,19 +1838,19 @@ n-1}\frac{s_d}{\sqrt{n}}\)</span>
 </tbody>
 </table>
 <p>Despite significantly expanding the our statistical tools for
-inference we are still quite limited in our ability to analyze
+inference, we are still quite limited in our ability to analyze
 qualitative responses. Our tests for a proportion are useful for
 comparing a single category of a qualitative variable across one or two
 samples, but what if we are interested in comparing multiple categories
-across more than population? We will now explore some of the common
+across more than one population? We will now explore some of the common
 tools for analyzing qualitative data. The inference techniques for
-qualitative variables are generally concerned with comparing a response
-variable with two or more categories across an explanatory variable with
-two or more groupings by exploring how the conditional distribution of
-the response varies across the groups in the explanatory variable. In
-other words, these inference procedures are designed to analyze the
-statistical association between two multi-category qualitative
-variables.</p>
+analyzing qualitative variables are generally concerned with comparing a
+response variable with two or more categories across an explanatory
+variable with two or more groupings by exploring how the conditional
+distribution of the response varies across the groups of the explanatory
+variable. In other words, these inference procedures are designed to
+analyze the statistical association between two multi-category
+qualitative variables.</p>
 <p>Such problems are typically represented as a table where the rows
 represent the groupings of the explanatory variable and columns
 represent the categories of the response variable - often referred to as
@@ -1862,10 +1861,10 @@ represent the categories of the response variable - often referred to as
 <p>Like we have done with means and proportions, we will begin with a
 one-sample procedure for comparing the distribution of a categorical
 variable to some hypothesized model. This procedure is called the <span
-class="math inline">\(\chi^2\)</span> goodness of fit test because it
-used to determine how well the observed distribution fits some proposed
-model of the data. We will illustrate this idea by starting with an
-example:</p>
+class="math inline">\(\chi^2\)</span> (“chi-squared”) goodness of fit
+test because it used to determine how well the observed distribution
+fits some proposed model of the data. We will illustrate this idea by
+starting with an example:</p>
 <p><strong>Example: Gregor Mendels Peas</strong> - Gregor Mendel
 conducted a study in which he crossed pea plants. The plants he crossed
 had the alleles (i.e., a form or version of a gene) for both yellow
@@ -1968,21 +1967,22 @@ Green
 </table>
 <p>The above problem amounts to comparing the observed frequencies of
 each color to the frequencies that we would expect under the Mendelian
-model of inheritance. In other words, we are comparing our “observed”
-distribution to a distribution we would expect. This type of comparison
-can be accomplished using a <span class="math inline">\(\chi^2\)</span>
-“goodness of fit” test.</p>
+model of inheritance. We can test whether the data fit Mendel’s model by
+comparing the observed frequencies of pea plant colors to the
+frequencies we would expect assuming Mendelian Inheritance and
+Dominance.</p>
 <p>In this case the null hypothesis is that the offspring of the pea
 plants follows Mendelian inheritance or</p>
 <p><span class="math display">\[H_0: p_{yellow} = 0.75; p_{green} = 0.25
 \]</span></p>
-<p>The alternative is that frequency of each color do not follow the
-frequencies defined in the null. To generalize for a categorical
-variable with <span class="math inline">\(k\)</span> possible outcomes
-the null becomes <span class="math inline">\(H_0: p_i = c_i; \forall
-i\in[1:k]\)</span> and <span class="math inline">\(H_A:\)</span> at
-least one <span class="math inline">\(p_i \neq c_i\)</span>.</p>
-<p>The above hypothesis test uses <span
+<p>The alternative is that one or more of the frequencies for each color
+do not follow the frequencies defined in the null hypothesis. To
+generalize for a categorical variable with <span
+class="math inline">\(k\)</span> possible outcomes the null becomes
+<span class="math inline">\(H_0: p_i = c_i; \forall i\in[1:k]\)</span>
+and <span class="math inline">\(H_A:\)</span> at least one <span
+class="math inline">\(p_i \neq c_i\)</span>.</p>
+<p>The above hypothesis test uses a <span
 class="math inline">\(\chi^2\)</span> test statistic defined as</p>
 <p><span class="math display">\[X^2 = \sum_{i =1}^k
 \frac{(\text{observed count}_i - \text{expected
@@ -1996,8 +1996,9 @@ outcome <span class="math inline">\(i\)</span></p></li>
 have outcome <span class="math inline">\(i\)</span> which is calculated
 under the null hypothesis as <span
 class="math inline">\(np_i\)</span></p></li>
-<li><p>We can think of this calculated as measuring the average distance
-from the observed model to the model we expect under the null.</p></li>
+<li><p>We can think of this calculation as measuring the average
+distance from the observed model to the model we defined under the null
+hypothesis.</p></li>
 </ul>
 <p><span class="math inline">\(X^2\)</span> can take on values between
 <span class="math inline">\(0\)</span> and positive <span
@@ -2005,7 +2006,7 @@ class="math inline">\(\infty\)</span>. A value of zero means the
 observed model exactly follows the expected model. Values greater than
 zero indicate a deviation from the expected model. Large values of <span
 class="math inline">\(X^2\)</span> indicate evidence against the null
-hypothesis</p>
+hypothesis.</p>
 <p>Referring back to Mendel’s pea plants we compute the expected number
 of yellow pea plants as <span class="math inline">\(8023\times 0.75 =
 6017.25\)</span> and the expected number of green pea plants to be <span
@@ -2020,18 +2021,20 @@ statistic is</p>
 <p>To convert the above statistic into a <span
 class="math inline">\(p\)</span>-value we need to know its sampling
 distribution. The statistic <span class="math inline">\(X^2\)</span> is
-called a <span class="math inline">\(\chi^2\)</span> test statistic
-because its sampling distribution follows a special type of probability
-distribution called the <span class="math inline">\(\chi^2\)</span>
-distribution. Kike the <span class="math inline">\(t\)</span>
-distribution, the <span class="math inline">\(\chi^2\)</span>
-distributions form a family of distributions controlled by a single
-parameter - the degrees of freedom. We will use the notation <span
-class="math inline">\(\chi^2(df)\)</span> to depict a specific member of
-this family. For the goodness of fit test the the test statistic <span
-class="math inline">\(X^2\)</span> follows a <span
-class="math inline">\(\chi^2\)</span> distribution with <span
-class="math inline">\(k-1\)</span> degrees of freedom:</p>
+called a <span class="math inline">\(\chi^2\)</span> (“chi-squared”)
+test statistic because its sampling distribution follows a special type
+of probability distribution called the <span
+class="math inline">\(\chi^2\)</span> distribution. Like the <span
+class="math inline">\(t\)</span> distribution, the <span
+class="math inline">\(\chi^2\)</span> distributions form a family of
+distributions controlled by a single parameter - the degrees of freedom.
+We will use the notation <span class="math inline">\(\chi^2(df)\)</span>
+to depict a specific member of this family. For the goodness of fit
+test, the test statistic <span class="math inline">\(X^2\)</span>
+follows a <span class="math inline">\(\chi^2\)</span> distribution with
+<span class="math inline">\(k-1\)</span> degrees of freedom where <span
+class="math inline">\(k\)</span> represents the number of categories of
+the qualitative variable</p>
 <p><img src="lecturemenu14_files/figure-html/unnamed-chunk-12-1.png" width="960" />
 * Note from the graph above that as the degrees of freedom increase the
 <span class="math inline">\(\chi^2\)</span> distribution converges in
@@ -2050,9 +2053,9 @@ squared normal random variables</p></li>
 <p><span class="math display">\[\chi^2_k = \sum_{i = 1}^k Z_i^2 = Z_1^2
 + Z_2^2 + \cdots Z_k^2 \]</span></p>
 <ul>
-<li>As we did the <span class="math inline">\(t\)</span> distribution we
-can look up probabilities from a <span
-class="math inline">\(chi^2\)</span> table:</li>
+<li>Like the <span class="math inline">\(t\)</span> distribution, we can
+look up the probability of different chi-squared random variables using
+the degrees of freedom and a table of pre-computed probabilities:</li>
 </ul>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
@@ -3531,17 +3534,18 @@ class="section level3">
 procedure for comparing the observed distribution of a single
 categorical variable to a specific model that we hypothesize under the
 null. We will now explore another type of inference which is also based
-on the <span class="math inline">\(\chi\)</span>-square distribution.
-This procedure is used to determine if two categorical variables share
-an association by looking how the distribution of counts of one variable
-changes as we condition on the categories of another variable.</p>
+on the <span class="math inline">\(\chi^2\)</span> (“chi-square”)
+distribution. This procedure is used to determine if two categorical
+variables share an association by exploring how the distribution of
+counts of one variable changes as we condition on the categories of
+another variable.</p>
 </div>
 <div id="chi2-test-of-independence" class="section level3">
 <h3><span class="math inline">\(\chi^2\)</span> test of
 independence</h3>
 <p>The <span class="math inline">\(\chi^2\)</span> test of independence
 is used to examine the relationship between two categorical variables in
-a two-way table (also called a <strong>contigency table</strong>.
+a two-way table (also called a <strong>contigency table</strong>).
 Consider the following hypothetical table which compares the categorical
 variable <span class="math inline">\(A\)</span>, which has two
 categories, with the categorical variable <span
@@ -3670,24 +3674,25 @@ Marginal Distribution A
 </table>
 <p>The two-way table above helps us to break down the relationship
 between the outcomes of <i>Variable A</i> and the outcomes of
-<i>Variable B</i>. As we can see from the table, the cells gives the
-conditional probabilities (or more often counts) of each category of
-<span class="math inline">\(A\)</span> across each category of <span
-class="math inline">\(B\)</span>. There are also usually row and column
-totals displayed in a two-way table which summarize the marginal
-distributions of each variable.</p>
+<i>Variable B</i>. As we can see from the table, the cells give the
+conditional probabilities (or more often frequencies/counts) of each
+category of <span class="math inline">\(A\)</span> across each category
+of <span class="math inline">\(B\)</span>. There are also usually row
+and column totals displayed in a two-way table which summarize the
+marginal distributions of each variable.</p>
 <p>A <strong><span class="math inline">\(\chi\)</span>-square test of
 independence</strong> takes advantage of the two-way table above to
 determine if the conditional distribution of the response variable (the
 rows) changes across the categories of the explanatory variable (the
 columns). In the example above, we can see that each row gives the
-marginal distribution of the response variable. If <em>variable A</em>
-and <em>variable B</em> are independent then the rows of the table
-should be more or less the same. If the outcomes of <em>variable B</em>
+marginal distribution of a given category of the response variable. If
+<em>variable A</em> and <em>variable B</em> are independent then the
+rows of the table should be more or less the same across all categories
+of the explanatory variable. If the outcomes of <em>variable B</em>
 depend on the outcomes of variable <span
 class="math inline">\(A\)</span>, then the rows of the table will change
 as we move across the outcomes of <em>variable B</em>.</p>
-<p>The null an alternative hypothesis of a <span
+<p>The null and alternative hypothesis of a <span
 class="math inline">\(\chi\)</span>-square test of independence are
 simple. The null hypothesis is that the two variables being tested are
 independent and the alternative is that they not independent</p>
@@ -3696,19 +3701,20 @@ are independent} \]</span> <span class="math display">\[ H_A:
 \text{Variable A and Variable B are NOT independent}\]</span></p>
 <p>Like the goodness of fit test, the alternative hypothesis does not
 specify any particular direction. Because the two-way table can contain
-all sorts of possible associations the alternative hypothesis cannot be
+all sorts of possible associations, the alternative hypothesis cannot be
 described as one or two sided.</p>
-<p>To test the null hypothesis of no dependence between two variables in
-a table with <span class="math inline">\(r\)</span> rows and <span
-class="math inline">\(c\)</span> columns we take a similar approach to
+<p>To test the null hypothesis of “no dependence” between two variables
+in a table with <span class="math inline">\(r\)</span> rows and <span
+class="math inline">\(c\)</span> columns, we take a similar approach to
 the goodness of fit test and compare the observed cell counts in all
 cells of the table to their expected cell counts under the null
 hypothesis.</p>
 <p>In essence we are comparing two tables which represent two
 distributions: the table of <strong>observed cell counts</strong> which
-represents the observed distribution of the response and explanatory
-variables and the table of <strong>expected cell counts</strong> which
-represents the null distribution.</p>
+represents the observed joint distribution of the response and
+explanatory variables and the table of <strong>expected cell
+counts</strong> which represents expected joint distribution of the two
+variables the null hypothesis of no association.</p>
 <p>The test statistic summarizes the differences (i.e distance) between
 the counts in the observed table with the counts in the expected
 table.</p>
@@ -3855,11 +3861,11 @@ o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r
 \sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column
 total}}{n}  \]</span></p>
 <p>The test statistic follows a <span
-class="math inline">\(\chi\)</span>-square distribution with <span
+class="math inline">\(\chi^2\)</span> distribution with <span
 class="math inline">\((r-1)\times (c-1)\)</span> degrees of freedom,
 where <span class="math inline">\(r\)</span> is the total number of row
 categories and <span class="math inline">\(c\)</span> is the total
-column categories.</p>
+column categories. Lets try it out an example:</p>
 <p><strong>Example: Happiness and Income</strong> - As part of their
 annual survey, the General Social Survey explored the relationship
 between income and happiness. Happiness was recorded as “Not too happy”,

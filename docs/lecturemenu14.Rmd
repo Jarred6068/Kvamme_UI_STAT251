@@ -292,13 +292,13 @@ Conduct a unpooled two sample $t$-test at the $\alpha = 0.05$ significance level
 # Lecture 27 Wednesday, April 10th 2024
 
 ### Paired $t$ test
-We know that comparative methods (i.e methods that compare two groups/samples across a quantitative variable) are more common and often preferred over one sample procedures. One common comparative design that makes use of single-sample procedures for a population mean is called the paired $t$-test. This test is used to draw inferences about a population mean in matched pairs designs and can be thought of as the parametric analogue of the <i>sign test</i> we learned previously. Recall that in matched pairs studies subjects are matched in pairs and the quantitative outcome is compared within each pair. 
+Comparative methods (i.e methods that compare two groups/samples across a quantitative variable) are more common and often preferred over one sample procedures. One common comparative design that makes use of single-sample procedures for a population mean is called the paired $t$-test. This test is used to draw inferences about a population mean in matched-pairs designs and can be thought of as the parametric analogue of the <i>sign test</i> we learned previously. Recall that in matched-pairs studies subjects are matched based on common characteristics and the quantitative outcome is compared within each pair. 
 
-  * matched pair designs are most common when randomization is not possible
+  * matched-pairs designs are most common when randomization is not possible
   
-  * used when observations are taken on the same subject (before and after treatment)
+  * often used when observations are taken on the same subject (before and after treatment)
   
-In a paired $t$-test we convert a comparative study into a one-sample procedure by making the response variable the difference between the two observations in each pair $d_i = x_i - y_i$. The parameter under study is the population mean difference $\mu_d$ which can be estimated by the sample mean difference $\bar{x}_d = \bar{x} - \bar{y}$ computed over all pairwise differences. The standard deviation of the difference $\sigma_d$ is then estimated with the sample standard deviation difference. Inference is then treated in the same way as the confidence interval and significance test procedures for a single sample
+In a paired $t$-test we convert a comparative study into a one-sample procedure by making the response variable the difference between the two observations in each pair $d_i = x_i - y_i$. The parameter under study is the population mean difference $\mu_d$ which can be estimated by the sample mean difference $\bar{x}_d = \bar{x} - \bar{y}$ computed over all pairwise differences. The standard deviation of the difference $\sigma_d$ is then estimated with the sample standard deviation of the difference. Inference is then treated in the same way as one-sample procedures for a population mean
 
   * the $(1 - \alpha)\%$ confidence interval for the mean pairwise difference is 
   
@@ -350,7 +350,7 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-Conduct a paired $t$-test at the $\alpha = 0.05$ significance level to determine if husbands and wives differ in their percieved influence on financial decision making
+Conduct a paired $t$-test at the $\alpha = 0.05$ significance level to determine if husbands and wives differ in their perceived influence on financial decision making
 
 ### Statistical Inference for qualitative data
 
@@ -393,14 +393,14 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-Despite significantly expanding the our statistical tools for inference we are still quite limited in our ability to analyze qualitative responses. Our tests for a proportion are useful for comparing a single category of a qualitative variable across one or two samples, but what if we are interested in comparing multiple categories across more than population? We will now explore some of the common tools for analyzing qualitative data. The inference techniques for qualitative variables are generally concerned with comparing a response variable with two or more categories across an explanatory variable with two or more groupings by exploring how the conditional distribution of the response varies across the groups in the explanatory variable. In other words, these inference procedures are designed to analyze the statistical association between two multi-category qualitative variables. 
+Despite significantly expanding the our statistical tools for inference, we are still quite limited in our ability to analyze qualitative responses. Our tests for a proportion are useful for comparing a single category of a qualitative variable across one or two samples, but what if we are interested in comparing multiple categories across more than one population? We will now explore some of the common tools for analyzing qualitative data. The inference techniques for analyzing qualitative variables are generally concerned with comparing a response variable with two or more categories across an explanatory variable with two or more groupings by exploring how the conditional distribution of the response varies across the groups of the explanatory variable. In other words, these inference procedures are designed to analyze the statistical association between two multi-category qualitative variables. 
 
 Such problems are typically represented as a table where the rows represent the groupings of the explanatory variable and columns represent the categories of the response variable - often referred to as "two-way tables". 
 
 
 ### The Chi-square goodness of fit test
 
-Like we have done with means and proportions, we will begin with a one-sample procedure for comparing the distribution of a categorical variable to some hypothesized model. This procedure is called the $\chi^2$ goodness of fit test because it used to determine how well the observed distribution fits some proposed model of the data. We will illustrate this idea by starting with an example:
+Like we have done with means and proportions, we will begin with a one-sample procedure for comparing the distribution of a categorical variable to some hypothesized model. This procedure is called the $\chi^2$ ("chi-squared") goodness of fit test because it used to determine how well the observed distribution fits some proposed model of the data. We will illustrate this idea by starting with an example:
 
 **Example: Gregor Mendels Peas** - Gregor Mendel conducted a study in which he crossed pea plants. The plants he crossed had the alleles (i.e., a form or version of a gene) for both yellow $Y$ and green peas $y$ — a trait controlled by a single locus. He believed two of his laws applied here: the Law of Segregation and the Law of Dominance. These laws would determine the probabilities of certain genotypes. This can be summarized by a Punnett square
 
@@ -440,15 +440,15 @@ kable(df, format = 'html', digits = 4,
 
 ```
 
-The above problem amounts to comparing the observed frequencies of each color to the frequencies that we would expect under the Mendelian model of inheritance. In other words, we are comparing our "observed" distribution to a distribution we would expect. This type of comparison can be accomplished using a $\chi^2$ "goodness of fit" test.
+The above problem amounts to comparing the observed frequencies of each color to the frequencies that we would expect under the Mendelian model of inheritance. We can test whether the data fit Mendel's model by comparing the observed frequencies of pea plant colors to the frequencies we would expect assuming Mendelian Inheritance and Dominance. 
 
 In this case the null hypothesis is that the offspring of the pea plants follows Mendelian inheritance or 
 
 \[H_0: p_{yellow} = 0.75; p_{green} = 0.25 \]
 
-The alternative is that frequency of each color do not follow the frequencies defined in the null. To generalize for a categorical variable with $k$ possible outcomes the null becomes $H_0: p_i = c_i; \forall i\in[1:k]$ and $H_A:$ at least one $p_i \neq c_i$. 
+The alternative is that one or more of the frequencies for each color do not follow the frequencies defined in the null hypothesis. To generalize for a categorical variable with $k$ possible outcomes the null becomes $H_0: p_i = c_i; \forall i\in[1:k]$ and $H_A:$ at least one $p_i \neq c_i$. 
 
-The above hypothesis test uses $\chi^2$ test statistic defined as
+The above hypothesis test uses a $\chi^2$ test statistic defined as
 
 \[X^2 = \sum_{i =1}^k \frac{(\text{observed count}_i - \text{expected count}_i)^2}{\text{expected count}_i} \]
 
@@ -458,9 +458,9 @@ The above hypothesis test uses $\chi^2$ test statistic defined as
   
   * the expected count is the number of observations we expect to have outcome $i$ which is calculated under the null hypothesis as $np_i$
   
-  * We can think of this calculated as measuring the average distance from the observed model to the model we expect under the null.
+  * We can think of this calculation as measuring the average distance from the observed model to the model we defined under the null hypothesis.
   
-$X^2$ can take on values between $0$ and positive $\infty$. A value of zero means the observed model exactly follows the expected model. Values greater than zero indicate a deviation from the expected model. Large values of $X^2$ indicate evidence against the null hypothesis 
+$X^2$ can take on values between $0$ and positive $\infty$. A value of zero means the observed model exactly follows the expected model. Values greater than zero indicate a deviation from the expected model. Large values of $X^2$ indicate evidence against the null hypothesis.
   
 Referring back to Mendel's pea plants we compute the expected number of yellow pea plants as $8023\times 0.75 = 6017.25$ and the expected number of green pea plants to be $8023\times 0.25 = 2005.75$. The test statistic is 
 
@@ -472,7 +472,7 @@ Referring back to Mendel's pea plants we compute the expected number of yellow p
 
 #### The Chi-square distribution
 
-To convert the above statistic into a $p$-value we need to know its sampling distribution. The statistic $X^2$ is called a $\chi^2$ test statistic because its sampling distribution follows a special type of probability distribution called the $\chi^2$ distribution. Kike the $t$ distribution, the $\chi^2$ distributions form a family of distributions controlled by a single parameter - the degrees of freedom. We will use the notation $\chi^2(df)$ to depict a specific member of this family. For the goodness of fit test the the test statistic $X^2$ follows a $\chi^2$ distribution with $k-1$ degrees of freedom: 
+To convert the above statistic into a $p$-value we need to know its sampling distribution. The statistic $X^2$ is called a $\chi^2$ ("chi-squared") test statistic because its sampling distribution follows a special type of probability distribution called the $\chi^2$ distribution. Like the $t$ distribution, the $\chi^2$ distributions form a family of distributions controlled by a single parameter - the degrees of freedom. We will use the notation $\chi^2(df)$ to depict a specific member of this family. For the goodness of fit test, the test statistic $X^2$ follows a $\chi^2$ distribution with $k-1$ degrees of freedom where $k$ represents the number of categories of the qualitative variable
 
 
 ```{r, echo=FALSE, warning=F, message=F, fig.width=10, fig.height=6, results = 'hide'}
@@ -512,7 +512,7 @@ ggplot(data = df, aes(x = `$\\chi^2$`, y = Density, color = `Degrees of freedom`
   
   \[\chi^2_k = \sum_{i = 1}^k Z_i^2 = Z_1^2 + Z_2^2 + \cdots Z_k^2 \]
 
-  * As we did the $t$ distribution we can look up probabilities from a $chi^2$ table:
+  * Like the $t$ distribution, we can look up the probability of different chi-squared random variables using the degrees of freedom and a table of pre-computed probabilities:
 
 ```{r, echo=F, message=F, warning=F}
 DF = c(1:30, 40, 50, 100)
@@ -563,11 +563,11 @@ Note that the GOF test doesn't tell us anything about the range of plausible val
 
 ### Measureing statistical association in two categorical variables
 
-As stated previously, the goodness of fit test is a one-sample procedure for comparing the observed distribution of a single categorical variable to a specific model that we hypothesize under the null. We will now explore another type of inference which is also based on the $\chi$-square distribution. This procedure is used to determine if two categorical variables share an association by looking how the distribution of counts of one variable changes as we condition on the categories of another variable. 
+As stated previously, the goodness of fit test is a one-sample procedure for comparing the observed distribution of a single categorical variable to a specific model that we hypothesize under the null. We will now explore another type of inference which is also based on the $\chi^2$ ("chi-square") distribution. This procedure is used to determine if two categorical variables share an association by exploring how the distribution of counts of one variable changes as we condition on the categories of another variable. 
 
 ### $\chi^2$ test of independence
 
-The $\chi^2$ test of independence is used to examine the relationship between two categorical variables in a two-way table (also called a **contigency table**. Consider the following hypothetical table which compares the categorical variable $A$, which has two categories, with the categorical variable $B$ which has three categories.
+The $\chi^2$ test of independence is used to examine the relationship between two categorical variables in a two-way table (also called a **contigency table**). Consider the following hypothetical table which compares the categorical variable $A$, which has two categories, with the categorical variable $B$ which has three categories.
 
 ```{r, echo=F, message=F, warning=F}
 
@@ -596,22 +596,22 @@ kable(df, format = 'html', digits = 2, col.names = c('','','','',''),
 
 ```
 
-The two-way table above helps us to break down the relationship between the outcomes of <i>Variable A</i> and the outcomes of <i>Variable B</i>. As we can see from the table, the cells gives the conditional probabilities (or more often counts) of each category of $A$ across each category of $B$. There are also usually row and column totals displayed in a two-way table which summarize the marginal distributions of each variable. 
+The two-way table above helps us to break down the relationship between the outcomes of <i>Variable A</i> and the outcomes of <i>Variable B</i>. As we can see from the table, the cells give the conditional probabilities (or more often frequencies/counts) of each category of $A$ across each category of $B$. There are also usually row and column totals displayed in a two-way table which summarize the marginal distributions of each variable. 
 
-A **$\chi$-square test of independence** takes advantage of the two-way table above to determine if the conditional distribution of the response variable (the rows) changes across the categories of the explanatory variable (the columns). In the example above, we can see that each row gives the marginal distribution of the response variable. If *variable A* and *variable B* are independent then the rows of the table should be more or less the same. If the outcomes of *variable B* depend on the outcomes of variable $A$, then the rows of the table will change as we move across the outcomes of *variable B*. 
+A **$\chi$-square test of independence** takes advantage of the two-way table above to determine if the conditional distribution of the response variable (the rows) changes across the categories of the explanatory variable (the columns). In the example above, we can see that each row gives the marginal distribution of a given category of the response variable. If *variable A* and *variable B* are independent then the rows of the table should be more or less the same across all categories of the explanatory variable. If the outcomes of *variable B* depend on the outcomes of variable $A$, then the rows of the table will change as we move across the outcomes of *variable B*. 
 
-The null an alternative hypothesis of a $\chi$-square test of independence are simple. The null hypothesis is that the two variables being tested are independent and the alternative is that they not independent
+The null and alternative hypothesis of a $\chi$-square test of independence are simple. The null hypothesis is that the two variables being tested are independent and the alternative is that they not independent
 
 \[ H_0: \text{Variable A and Variable B are independent} \]
 \[ H_A: \text{Variable A and Variable B are NOT independent}\]
 
-Like the goodness of fit test, the alternative hypothesis does not specify any particular direction. Because the two-way table can contain all sorts of possible associations the alternative hypothesis cannot be described as one or two sided.
+Like the goodness of fit test, the alternative hypothesis does not specify any particular direction. Because the two-way table can contain all sorts of possible associations, the alternative hypothesis cannot be described as one or two sided.
 
-To test the null hypothesis of no dependence between two variables in a table with $r$ rows and $c$ columns we take a similar approach to the goodness of fit test and compare the observed cell counts in all cells of the table to their expected cell counts under the null hypothesis. 
+To test the null hypothesis of "no dependence" between two variables in a table with $r$ rows and $c$ columns, we take a similar approach to the goodness of fit test and compare the observed cell counts in all cells of the table to their expected cell counts under the null hypothesis. 
 
 
 
-In essence we are comparing two tables which represent two distributions: the table of **observed cell counts** which represents the observed distribution of the response and explanatory variables and the table of **expected cell counts** which represents the null distribution. 
+In essence we are comparing two tables which represent two distributions: the table of **observed cell counts** which represents the observed joint distribution of the response and explanatory variables and the table of **expected cell counts** which represents expected joint distribution of the two variables the null hypothesis of no association. 
 
 
 The test statistic summarizes the differences (i.e distance) between the counts in the observed table with the counts in the expected table.  
@@ -643,7 +643,7 @@ The expected counts for $i,j^{th}$ cell of the table are computed from the obser
 \[ e_{ij} = \frac{ \big[ \sum_{i = 1}^r o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r \sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column total}}{n}  \]
 
 
-The test statistic follows a $\chi$-square distribution with $(r-1)\times (c-1)$ degrees of freedom, where $r$ is the total number of row categories and $c$ is the total column categories.
+The test statistic follows a $\chi^2$ distribution with $(r-1)\times (c-1)$ degrees of freedom, where $r$ is the total number of row categories and $c$ is the total column categories. Lets try it out an example:
 
 **Example: Happiness and Income** - As part of their annual survey, the General Social Survey explored the relationship between income and happiness. Happiness was recorded as "Not too happy", "Pretty happy", or "Very happy", and incomes were bracketed into three categories: "Below average", "Average", and "Above average". The counts are summarized in the table below:
 
