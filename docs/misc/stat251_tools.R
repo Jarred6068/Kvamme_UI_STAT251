@@ -747,8 +747,8 @@ chi.squared.GOF.test = function(observed.ct=NULL, expected.freq=NULL, expected.c
 
 
 # chi square test of independence and homogeneity
-chi.squared.test = function(cont.table,  alpha = 0.05, test = c('homogeneity','independence'), 
-                            verbose = TRUE,...){
+chi.squared.test = function(cont.table, var1.name = NULL, var2.name = NULL, alpha = 0.05, 
+                            test = c('homogeneity','independence'), verbose = TRUE,...){
   
   r.t = rowSums(cont.table)
   c.t = colSums(cont.table)
@@ -759,14 +759,25 @@ chi.squared.test = function(cont.table,  alpha = 0.05, test = c('homogeneity','i
   df = prod(dim(cont.table)-1)
   
   final.observed = cbind(rbind(cont.table, c.t), c(r.t, n))
-  colnames(final.observed) = c(paste0('Var A: category ', 1:dim(cont.table)[2]),'Row Total')
-  row.names(final.observed) = c(paste0('Var B: category ', 1:dim(cont.table)[1]),'Column Total')
+  if(is.null(var1.name)){
+    colnames(ct.dists) = paste0('Var A: category ', colcats)
+    colnames(exp.cts) = paste0('Var A: category ', colcats)
+    colnames(final.observed) = c(paste0('Var A: category ', colcats),'Row Total')
+  }else{
+    colnames(ct.dists) = paste0(var1.name, ': category ', colcats)
+    colnames(exp.cts) = paste0(var1.name, ': category ', colcats)
+    colnames(final.observed) = c(paste0(var1.name, ': category ', colcats),'Row Total')
+  }
   
-  colnames(exp.cts) = paste0('Var B: category ', 1:dim(cont.table)[2])
-  row.names(exp.cts) = paste0('Var A: category ', 1:dim(cont.table)[1])
-  
-  colnames(ct.dists) = paste0('Var A: category ', 1:dim(cont.table)[2])
-  row.names(ct.dists) = paste0('Var B: category ', 1:dim(cont.table)[1])
+  if(is.null(var2.name)){
+    row.names(exp.cts) = paste0('Var B: category ', rowcats)
+    row.names(ct.dists) = paste0('Var B: category ', rowcats)
+    row.names(final.observed) = c(paste0('Var B: category ', rowcats),'Column Total')
+  }else{
+    row.names(exp.cts) = paste0(var2.name, ': category ', rowcats)
+    row.names(ct.dists) = paste0(var2.name, ': category ', rowcats)
+    row.names(final.observed) = c(paste0(var2.name, ': category ', rowcats),'Column Total')
+  }
   
 
   crit = qchisq(1-alpha, df)

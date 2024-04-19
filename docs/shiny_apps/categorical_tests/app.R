@@ -13,6 +13,7 @@ library(kableExtra)
 library(ggplot2)
 library(ggthemes)
 library(ggpubr)
+library(grid)
 library(latex2exp)
 
 
@@ -88,9 +89,12 @@ chi.squared.GOF.test = function(observed.ct=NULL, expected.freq=NULL, expected.c
 
 
 # chi square test of independence and homogeneity
-chi.squared.test = function(cont.table,  alpha = 0.05, test = c('homogeneity','independence'), 
-                            verbose = TRUE,...){
+chi.squared.test = function(cont.table, var1.name = NULL, var2.name = NULL,  alpha = 0.05, 
+                            test = c('homogeneity','independence'), verbose = TRUE,
+                            return.stats = FALSE, ...){
   
+  rowcats = row.names(cont.table)
+  colcats = colnames(cont.table)
   r.t = rowSums(cont.table)
   c.t = colSums(cont.table)
   n = sum(cont.table)
@@ -100,14 +104,27 @@ chi.squared.test = function(cont.table,  alpha = 0.05, test = c('homogeneity','i
   df = prod(dim(cont.table)-1)
   
   final.observed = cbind(rbind(cont.table, c.t), c(r.t, n))
-  colnames(final.observed) = c(paste0('Var A: category ', 1:dim(cont.table)[2]),'Row Total')
-  row.names(final.observed) = c(paste0('Var B: category ', 1:dim(cont.table)[1]),'Column Total')
+  if(is.null(var1.name)){
+    colnames(ct.dists) = paste0('Var A: category ', colcats)
+    colnames(exp.cts) = paste0('Var A: category ', colcats)
+    colnames(final.observed) = c(paste0('Var A: category ', colcats),'Row Total')
+  }else{
+    colnames(ct.dists) = paste0(var1.name, ': category ', colcats)
+    colnames(exp.cts) = paste0(var1.name, ': category ', colcats)
+    colnames(final.observed) = c(paste0(var1.name, ': category ', colcats),'Row Total')
+  }
   
-  colnames(exp.cts) = paste0('Var B: category ', 1:dim(cont.table)[2])
-  row.names(exp.cts) = paste0('Var A: category ', 1:dim(cont.table)[1])
+  if(is.null(var2.name)){
+    row.names(exp.cts) = paste0('Var B: category ', rowcats)
+    row.names(ct.dists) = paste0('Var B: category ', rowcats)
+    row.names(final.observed) = c(paste0('Var B: category ', rowcats),'Column Total')
+  }else{
+    row.names(exp.cts) = paste0(var2.name, ': category ', rowcats)
+    row.names(ct.dists) = paste0(var2.name, ': category ', rowcats)
+    row.names(final.observed) = c(paste0(var2.name, ': category ', rowcats),'Column Total')
+  }
   
-  colnames(ct.dists) = paste0('Var A: category ', 1:dim(cont.table)[2])
-  row.names(ct.dists) = paste0('Var B: category ', 1:dim(cont.table)[1])
+
   
   
   crit = qchisq(1-alpha, df)
@@ -145,6 +162,10 @@ chi.squared.test = function(cont.table,  alpha = 0.05, test = c('homogeneity','i
     print(noquote(paste0('Decision: ', decision)))
     print(noquote(paste0(rep("=", 54), collapse = '')))
     
+  }
+  
+  if(return.stats){
+    return(list(final.obs = final.observed, expected.cts = exp.cts, residuals = ct.dists))
   }
 }
 
@@ -316,36 +337,84 @@ server <- function(input, output, session) {
                                 Category = as.factor(rep(names(summary(Y)), 2)),
                                 Model = as.factor(c(rep('Observed',k), rep('Expected',k))))
       
-      out = ggplot(data = df.cts)+theme_pander()+
+      fp = ggplot(data = df.cts)+theme_pander()+
         geom_bar(aes(x = Category, y = Count, fill = Model), 
                  stat = 'identity', color = 'black', position = position_dodge(),
                  alpha = 0.5)+
         #scale_fill_manual('darkviolet','lavender')+
         scale_fill_brewer(palette="Paired")+
-        xlab('')+
+        xlab(input$myselectinput1)+
         ylab('Count')+
         theme(axis.text = element_text(size = 12),
               axis.title = element_text(size = 14))
       
     }else if(input$which == 'chi-square'){
+      #browser()
       idx1 = which(colnames(reactives$mydata) == input$myselectinput1)
       Y = as.factor(reactives$mydata[,idx1])
       idx2 = which(colnames(reactives$mydata) == input$myselectinput2)
       X = as.factor(reactives$mydata[,idx2])
       cts = as.numeric(table(X,Y))
+      xcats = names(summary(X))
+      ycats = names(summary(Y))
+      r = length(xcats)
+      c = length(ycats)
       
       df = as.data.frame(matrix(cts, nrow = length(summary(X)), ncol = length(summary(Y)),
                                 byrow = F))
-      row.names(df) = names(summary(X))
+      row.names(df) = xcats
+      colnames(df) = ycats
       
-      chi.squared.test(cont.table = df,
+      labs = expand.grid(Category1 = xcats, Category2 = ycats)
+      
+      #debug(chi.squared.test)
+      output = chi.squared.test(cont.table = df,
+                       var1.name = input$myselectinput1,
+                       var2.name = input$myselectinput2,
                        alpha = input$alpha,
                        test = input$test,
-                       verbose = T)
+                       verbose = T,
+                       return.stats = T)
+      
+      plotdata.lf = cbind.data.frame(labs,
+                                     Model = as.factor(c(rep('Observed', r*c),rep('Expected', r*c))),
+                                     Frequency = c(as.numeric(cts), 
+                                                   as.numeric(output$expected.cts)))
+      
+      plotdata.lf$Category1 = as.factor(plotdata.lf$Category1)
+      plotdata.lf$Category2 = as.factor(plotdata.lf$Category2)
+      plist = list()
+      pals = rep(c('Reds','Greens','Blues','Purples','Oranges','Greys'), r)
+      for(i in 1:r){
+        currentcat = levels(plotdata.lf$Category1)[i]
+        subdata = subset(plotdata.lf, Category1 == currentcat)
+        plist[[i]] = ggplot(data = subdata)+theme_pander()+
+          geom_bar(aes(x = Category2, y = Frequency, fill = Model), 
+                   stat = 'identity', color = 'black', position = position_dodge2(),
+                   alpha = 0.8)+
+          #scale_fill_manual('darkviolet','lavender')+
+          scale_fill_brewer(palette=pals[i])+
+          xlab('')+
+          ylab('')+
+          ggtitle(paste0(input$myselectinput2, ":", currentcat))+
+          theme(axis.text = element_text(size = 12),
+                axis.title = element_text(size = 14))
+        
+      }
+      
+      if((r-1) > 1){
+        xp = ggarrange(plotlist = plist, nrow = r-1, ncol = 2)
+      }else{
+        xp = ggarrange(plotlist = plist, nrow = 1, ncol = r)
+      }
+      
+      fp = annotate_figure(xp, 
+                           left = textGrob('Count', rot = 90, vjust = 1, gp = gpar(cex = 1)),
+                           bottom = textGrob(input$myselectinput1, gp = gpar(cex = 1)))
     }
     
     
-    plot(out)
+    plot(fp)
     
     
   }))
@@ -416,9 +485,12 @@ server <- function(input, output, session) {
       
       df = as.data.frame(matrix(cts, nrow = length(summary(X)), ncol = length(summary(Y)),
                                 byrow = F))
-      row.names(df) = names(summary(X))
+      row.names(df) = paste0(input$myselectinput2, names(summary(X)))
+      colnames(df) = paste0(input$myselectinput1, names(summary(Y)))
       
       chi.squared.test(cont.table = df,
+                       var1.name = input$myselectinput1,
+                       var2.name = input$myselectinput2,
                        alpha = input$alpha,
                        test = input$test,
                        verbose = T)
