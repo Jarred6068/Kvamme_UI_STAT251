@@ -29,8 +29,7 @@ library(plyr)
   
   * You will have 2 hours to complete the exam once your start it
   
-  * I will host an open zoom session for students to ask questions and reach out in case they have problems during the exam - click the link to join [https://uidaho.zoom.us/j/8044021476?omn=83567994942](https://uidaho.zoom.us/j/8044021476?omn=83567994942)
-  The passcode is: Kvam6999
+  * I will host an open zoom session for students to ask questions and reach out in case they have problems during the exam - click the link to join [link](link)
   
   * The exam will be about 20 - 25 questions long and will be open book/note
 

@@ -497,7 +497,7 @@ df = cbind.data.frame(`Year` = c('April - Octobor 2019', 'April - October 2020')
                       `Number of Manuscripts with Female First Author` = c('$140$', '$172$'), 
                       `Number of Manuscripts with Male First Author` = c('$171$', '$269$'),
                       `All First Authors` = c('$311$', '$441$'),
-                      `Relative Percentage of Manuscripts with Female First Author` = c('$140/311 = 0.450$', '171/441 = 0.387$'))
+                      `Relative Percentage of Manuscripts with Female First Author` = c('$140/311 = 0.450$', '$171/441 = 0.387$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
