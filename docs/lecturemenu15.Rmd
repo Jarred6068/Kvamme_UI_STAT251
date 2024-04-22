@@ -29,7 +29,7 @@ source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat
 
 ```
 
-# Lecture 27 Monday, April 22nd 2024
+# Lecture 29 Monday, April 22nd 2024
 
 In many studies, the goal is to show that changes in one or more explanatory variables actually cause changes in a response variable. The statistical techniques we will describe this week will require us to distinguish between explanatory and response variables. You will often see explanatory variables called the **independent variable** and response variables called the **dependent variable**. The idea behind this language is that the response variable depends on the outcomes of the explanatory variable (if they share a statistical relationship).  
 
