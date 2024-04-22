@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="STAT 251 Section 03" />
+
+
+<title>Week 14 Notes</title>
+
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-03</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lecture Notes</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="lecturemenu1.html">Week 1</a>
+        </li>
+        <li>
+          <a href="lecturemenu2.html">Week 2</a>
+        </li>
+        <li>
+          <a href="lecturemenu3.html">Week 3</a>
+        </li>
+        <li>
+          <a href="lecturemenu4.html">Week 4</a>
+        </li>
+        <li>
+          <a href="lecturemenu5.html">Week 5</a>
+        </li>
+        <li>
+          <a href="lecturemenu6.html">Week 6</a>
+        </li>
+        <li>
+          <a href="lecturemenu7.html">Week 7</a>
+        </li>
+        <li>
+          <a href="lecturemenu8.html">Week 8</a>
+        </li>
+        <li>
+          <a href="lecturemenu9.html">Week 9</a>
+        </li>
+        <li>
+          <a href="lecturemenu10.html">Week 10</a>
+        </li>
+        <li>
+          <a href="lecturemenu11.html">Week 11</a>
+        </li>
+        <li>
+          <a href="lecturemenu12.html">Week 12</a>
+        </li>
+        <li>
+          <a href="lecturemenu13.html">Week 13</a>
+        </li>
+        <li>
+          <a href="lecturemenu14.html">Week 14</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="lecslidesindex.html">Lecture Slides</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assignments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework.html">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework.html">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/week7homework.html">Homework 3</a>
+        </li>
+        <li>
+          <a href="homeworks/week12homework.html">Homework 4</a>
+        </li>
+        <li>
+          <a href="homeworks/week14homework.html">Homework 5</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/week1homework_solns.html">Hmwk 1 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week5homework_solns.html">Hmwk 2 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week7homework_solns.html">Hmwk 3 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week12homework_solns.html">Hmwk 4 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/week14homework_solns.html">Hmwk 5 Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="homeworks/reading_and_book_problems.html">Reading &amp; Extra Problems</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="study_guides/exam1_study_guide.html">Exam 1 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 1 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam1_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam1_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="study_guides/exam2_study_guide.html">Exam 2 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 2 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam2_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam2_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="study_guides/exam3_study_guide.html">Exam 3 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 3 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam3_review_problems.html">Problems</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Convert_file_to_text/webfiles/index.html">Convert files text</a>
+        </li>
+        <li>
+          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
+        </li>
+        <li>
+          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
+        </li>
+        <li>
+          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
+        </li>
+        <li>
+          <a href="shiny_apps/one_sample_hypothesis_tests/webfiles/index.html">One Sample Tests</a>
+        </li>
+        <li>
+          <a href="shiny_apps/two_sample_hypothesis_tests/webfiles/index.html">Two Sample Tests</a>
+        </li>
+        <li>
+          <a href="shiny_apps/categorical_tests/webfiles/index.html">Categorical Tests</a>
+        </li>
+        <li>
+          <a href="shiny_apps/non_parametric_tests/webfiles/index.html">Non-Parametric Tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="sac_schedule.html">SAC schedule</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tables</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/Z_table.html">Z-table</a>
+        </li>
+        <li>
+          <a href="misc/t_table.html">t-table</a>
+        </li>
+        <li>
+          <a href="misc/chisq_table.html">Chi-square table</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">R code</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/rcode_examples.html">plotting in R</a>
+        </li>
+        <li>
+          <a href="misc/hp_r_code.html">Functions</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Extras</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric Tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="misc/R_download_instructions.html">Downloading R/Rstudio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week 14 Notes</h1>
+<h4 class="author">STAT 251 Section 03</h4>
+
+</div>
+
+
+<div id="lecture-26-monday-april-8th-2024" class="section level1">
+<h1>Lecture 26 Monday, April 8th 2024</h1>
+<p>In many studies, the goal is to show that changes in one or more
+explanatory variables actually cause changes in a response variable. The
+statistical techniques we will describe this week will require us to
+distinguish between explanatory and response variables. You will often
+see explanatory variables called the <strong>independent
+variable</strong> and response variables called the <strong>dependent
+variable</strong>. The idea behind this language is that the response
+variable depends on the outcomes of the explanatory variable (if they
+share a statistical relationship).</p>
+<div id="scatterplots-and-statistical-associations"
+class="section level3">
+<h3>Scatterplots and statistical associations</h3>
+<p>A <strong>scatterplot</strong> is a type of descriptive plot that
+shows the relationship between two quantitative variables (denoted <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>) measured on the same individual
+usually. The horizontal axis is called the <span
+class="math inline">\(x\)</span>-axis and the vertical axis is called
+the <span class="math inline">\(y\)</span>-axis. Typically the
+independent or explanatory variable is represented on the <span
+class="math inline">\(x\)</span>-axis and the response variable is
+represented on the <span class="math inline">\(y\)</span>-axis. Consider
+the four scatterplots below which plot the relationship between the
+independent variable <span class="math inline">\(X\)</span> and the
+dependent variable <span class="math inline">\(Y\)</span>:</p>
+<div class="figure">
+<img src="lecturemenu15_files/figure-html/unnamed-chunk-1-1.png" alt="Six plots depicting scatterplots between two variables $X$ and $Y$" width="960" />
+<p class="caption">
+Six plots depicting scatterplots between two variables <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>
+</p>
+</div>
+<ul>
+<li>Which of these plots indicate a statistical association between the
+two variables and which do not?</li>
+</ul>
+<p>How do you interpret a scatterplot?</p>
+<ul>
+<li><p>look for an overall patterns of the points in each plot</p></li>
+<li><p>You can describe the overall pattern in three terms:
+<strong>form</strong>, <strong>direction</strong> and
+<strong>strength</strong></p>
+<ul>
+<li><p><strong>form</strong>: do the points form a line, a curve, or a
+cloud? if the points follow roughly a straight line we say that they are
+<strong>linear</strong> in form, and if the points follow a curve we
+would say that they are <strong>non-linear</strong> in form.</p></li>
+<li><p><strong>direction</strong>: which direction do the points trend
+as you move left to right across the values of the explanatory
+variable</p></li>
+<li><p><strong>strength</strong>: if there is a pattern, are the points
+loose and spread out? or are they tightly packed together?</p></li>
+</ul></li>
+</ul>
+<p>In general, we say that two variables are <strong>positively
+associated</strong> when larger values of the explanatory variable are
+paired with larger values of the response variable. Conversely, we say
+that two variables are <strong>negatively associated</strong> if larger
+values of the explanatory variable are paired with smaller values of the
+response.</p>
+<p>It may also be important to note of the points form specific clusters
+as this may indicate a hidden grouping in the data that is not accounted
+for by the independent variable. When a scatterplot shows distinct
+clusters it often most useful to describe the pattern in each
+cluster.</p>
+</div>
+<div id="measures-of-association" class="section level3">
+<h3>Measures of association</h3>
+<p>As we just saw, scatterplots display the form, direction, and
+strength of the relationship between two quantitative variables. Linear
+(straight-line) relationships are often of interest because they occur
+most often. If the points in a scatterplot lie close to a straight line
+we say that they have a strong linear relationship. However,
+scatterplots can be misleading when trying to judge the strength of a
+linear relationship. Consider the two plots below which show the
+relationship between highway fuel efficiency (in miles per gallon) and
+weight of cars from the classic 1993 New Car dataset <span
+class="citation">(Lock 1993; Venables and Ripley 2002)</span>.</p>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<ul>
+<li>Which plot shows a stronger linear relationship?</li>
+</ul>
+<p>This was a rhetorical question since both plots depict the same data.
+However, the plot on the right spans a larger range on both the <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> axes. This example demonstrates that
+the way data is plotted can mislead our perception of the strength of a
+linear relationship, showing that humans are not always reliable judges
+in this regard. Therefore, we need to follow our general strategy of
+following up any graphical display with a numerical measure to help us
+interpret what we see.</p>
+<p>In general when employing numerical measures of association our data
+generally constitute measurements on two quantitative variables <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> measured on <span
+class="math inline">\(n\)</span> individuals</p>
+<p><span class="math display">\[ X = \{x_1, x_2, x_3, \cdots x_n\}
+\]</span></p>
+<p><span class="math display">\[ Y = \{y_1, y_2, y_3, \cdots y_n\}
+\]</span></p>
+<p>Each pair of <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> values <span
+class="math inline">\((x_i, y_i)\)</span> constitutes a point in a
+scatterplot of these two variables so that there are <span
+class="math inline">\(n\)</span> total points in the plot. One measure
+of association between two variables is called
+<strong>covariance</strong>. Recall that the sample variance is a
+numerical measure of the spread of a variable and gives the average size
+of the squared deviation from the mean. Covariance is the joint
+variability between two variables <span class="math inline">\(X\)</span>
+and <span class="math inline">\(Y\)</span> defined as</p>
+<p><span class="math display">\[Cov(X,Y) = \sum_i
+\frac{(x_i-\bar{x})(y_i - \bar{y})}{n-1}\]</span></p>
+<p>In general, if two variables share a strong positive or strong
+negative relationship, they will have a large positive or large negative
+covariance, and if two variables are independent their covariance should
+be close to zero. Consider the first three scatterplots and the
+covariances between <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> from <em>figure 1</em> seen earlier</p>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<p>As we can see from above the plots that show a stronger linear
+relationship are paired with larger covariances for <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>. However, you may have noticed that
+covariance depends on the units of <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>. This makes covariance hard to
+interpret because one or both of the variables exists on a large scale
+the covariance will naturally take on large values. Consider the
+scatterplot below which shows the relationship and covariance between
+median house value and population for 30 districts in California from
+1990 <span class="citation">(Géron 2022)</span></p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Population of District
+</th>
+<th style="text-align:right;">
+Median Home Value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+870
+</td>
+<td style="text-align:right;">
+416700
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+648
+</td>
+<td style="text-align:right;">
+155500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1660
+</td>
+<td style="text-align:right;">
+127100
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+715
+</td>
+<td style="text-align:right;">
+71500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1161
+</td>
+<td style="text-align:right;">
+161500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2461
+</td>
+<td style="text-align:right;">
+160800
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1124
+</td>
+<td style="text-align:right;">
+98600
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1182
+</td>
+<td style="text-align:right;">
+172300
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1289
+</td>
+<td style="text-align:right;">
+229500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+112500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+742
+</td>
+<td style="text-align:right;">
+88200
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1498
+</td>
+<td style="text-align:right;">
+125700
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2156
+</td>
+<td style="text-align:right;">
+353800
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6652
+</td>
+<td style="text-align:right;">
+278300
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+848
+</td>
+<td style="text-align:right;">
+158200
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1488
+</td>
+<td style="text-align:right;">
+313600
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+423
+</td>
+<td style="text-align:right;">
+136300
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1047
+</td>
+<td style="text-align:right;">
+271300
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1312
+</td>
+<td style="text-align:right;">
+218000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1250
+</td>
+<td style="text-align:right;">
+206200
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+162500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+520
+</td>
+<td style="text-align:right;">
+95000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+676
+</td>
+<td style="text-align:right;">
+135500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1217
+</td>
+<td style="text-align:right;">
+156300
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1039
+</td>
+<td style="text-align:right;">
+151600
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1001
+</td>
+<td style="text-align:right;">
+134400
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+232
+</td>
+<td style="text-align:right;">
+500001
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+776
+</td>
+<td style="text-align:right;">
+173500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1468
+</td>
+<td style="text-align:right;">
+434000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+742
+</td>
+<td style="text-align:right;">
+43000
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+<p>Even though the plot doesn’t really show a strong relationship
+between these two variables the covariance we compute is a whopping
+26,390,423. Moreover, because our two variables have different units,
+the units of the covariance we computed are nonsensical. Since
+covariance is not straight-forward to interpret, it is not typically
+used to measure the strength of a linear relationship. Instead, a
+similar measure called <strong>correlation</strong> is the statistical
+the measure that is most often used to determine the strength of two
+quantitative variables. We can think of correlation as a type of
+standardized, unitless covariance. Essentially, correlation is a scaled
+form of covariance that allows for clearer interpretation of the
+relationship between two quantitative variables. Correlation is defined
+as</p>
+<p>For each individual there is a height <span
+class="math inline">\(x_i\)</span> and a weight <span
+class="math inline">\(y_i\)</span>. Correlation is defined as</p>
+<p><span class="math display">\[r_{x,y} = \frac{1}{n-1}\sum_i
+\left(\frac{x_i - \bar{x}}{s_x}\right) \left(\frac{y_i -
+\bar{y}}{s_y}\right)  = \frac{Cov(X,Y)}{\sqrt{s_x^2s_y^2}}\]</span></p>
+<p>The symbol <span class="math inline">\(r_{x,y}\)</span> is used to
+denote the sample correlation between variables <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>. From the formula above, we can see
+that the correlation coefficient <span
+class="math inline">\(r_{x,y}\)</span> is the covariance of <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> standardized by the individual standard
+deviations for each variable. The result is that the <span
+class="math inline">\(r\)</span> has no units and represents the average
+of the products of the standardized <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> values across all <span
+class="math inline">\(n\)</span> observations. This gives the
+correlation coefficient several nice proporties:</p>
+<ul>
+<li><p>it ranges in value from <span class="math inline">\(-1\)</span>
+to <span class="math inline">\(+1\)</span>. Values close to <span
+class="math inline">\(-1\)</span> indicate strong negative associations
+and values close to <span class="math inline">\(+1\)</span> indicate
+strong positive associations.</p></li>
+<li><p>A correlation coefficient of exactly positive or negative one
+indicate a perfect linear relationship</p></li>
+<li><p>values at or close to zero indicate little or no association
+between the variables.</p></li>
+<li><p>Unlike covariance, the value of the sample correlation will NOT
+change when the units of one or more of the variables are changed. This
+is because we standardize the deviations to have no units.</p></li>
+</ul>
+<p>Its important to note that correlation can only be used to measure
+the strength of <strong>linear</strong> relationships between two
+variables. It cannot accurately described <strong>non-linear</strong>
+(curved) relationships. It is also not a resistant measure. Outliers
+will have a signficant affect on the value of the correaltion
+coefficient</p>
+<p>In the earlier example comparing population to median home value, the
+correlation coefficient between these two variables is <span
+class="math inline">\(r \approx 0.2\)</span>. Now consider the first
+three plots from <em>figure 1</em> but this time with correlations
+plotted for each scatterplot</p>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<p>Computing the covariance or correlation is not an easy task. The
+formulas are quite involved and infeasible for any large number of
+observations. Thus it is best to rely on software to easily compute
+correlations. However, we can get a feel of the mechanics of correlation
+by computing it for a small number of observations. Try the example
+below</p>
+<p><strong>Try it out</strong>: Consider the following dataset which is
+the height and weight for six adults</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Index
+</th>
+<th style="text-align:left;">
+Height (inches)
+</th>
+<th style="text-align:left;">
+Weight (pounds)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+individual 1
+</td>
+<td style="text-align:left;">
+69.8
+</td>
+<td style="text-align:left;">
+140.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+individual 2
+</td>
+<td style="text-align:left;">
+69.8
+</td>
+<td style="text-align:left;">
+129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+individual 3
+</td>
+<td style="text-align:left;">
+65.4
+</td>
+<td style="text-align:left;">
+123.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sample Mean
+</td>
+<td style="text-align:left;">
+68.3
+</td>
+<td style="text-align:left;">
+131
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sample SD
+</td>
+<td style="text-align:left;">
+2.54
+</td>
+<td style="text-align:left;">
+9.02
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let us start by computing the sample covariance for height and
+weight</p>
+<p><span class="math display">\[Cov(\text{Height},\text{Weight}) =
+\frac{(69.8 - 68.3)(140.9 - 131)}{3-1}+\frac{(69.8 - 68.3)(129 -
+131)}{3-1}+\frac{(65.4 - 68.3)(123.2 - 131)}{3-1} \]</span> <span
+class="math display">\[ \approx 16.86\]</span></p>
+<p>The correlation is given by</p>
+<p><span class="math display">\[ r = \frac{16.86}{\sqrt{2.54^2\cdot
+9.02^2}} \approx 0.74\]</span></p>
+</div>
+<div id="introduction-to-simple-linear-regression"
+class="section level3">
+<h3>Introduction to simple linear regression</h3>
+<p>Correlation measures the strength of a linear relationship between
+two variables, but what if you want to go a step further and find the
+best-fit line that connects those dots? That’s where linear regression
+comes in. It’s a statistical technique that finds the straight line that
+best describes the relationship between two quantitative variables,
+often visualized on a scatterplot. The most basic version of this
+technique, where you fit a line to two quantitative variables, is called
+<em>simple linear regression</em>.</p>
+<p>When a scatterplot shows a linear patter we can describe the overall
+linear relationship by drawing a line through the points. Of course any
+line that we draw will not touch all of the points. But we would like
+any line that we draw to come as close to all of the points as possible.
+A regression line of this sort gives a compact description of how a
+response variable <span class="math inline">\(y\)</span> changes as an
+explanatory variable <span class="math inline">\(x\)</span> changes.</p>
+<p>It turns out that the line that comes as close as possible to all of
+the points is the line that minimizes the squared deviations of the
+<strong>residuals</strong>.</p>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Residuals are the vertical distances (red lines in the plot above)
+between each point and the regression line. If you think of the
+regression line as our best guess at the relationship between <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>, then the residuals represent the error
+in that guess for each point. The line that “best” fits the data is the
+one with the smallest average residual—essentially, the one with the
+least error across all the points in the plot. This line gives us the
+best model to describe the relationship between the <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> variables. You can take a look at <a
+href="https://www.geogebra.org/m/xC6zq7Zv">https://www.geogebra.org/m/xC6zq7Zv</a>
+to pratice fitting the “best” line.</p>
+<!-- Suppose that $Y$ is a response variable and $X$ is an explanatory variable. The **slope** of a regression line relating $X$ and $Y$ tells us exactly how much $Y$ changes per unit change in $X$ (sometimes called *rise over run*). Consider the plot below  -->
+<!-- The residuals are defined mathematically as the squared deviations between the observed values $y_i$ and the predicted values $\hat{y}_i$ which are given by the regression line. -->
+<!-- \[SS_E = \sum_i (y_i - \hat{y})^2\] -->
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p><br> <br> <br> <br></p>
+</div>
+<div id="references" class="section level3 unnumbered">
+<h3 class="unnumbered">References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-geron2022hands" class="csl-entry">
+Géron, Aurélien. 2022. <em>Hands-on Machine Learning with Scikit-Learn,
+Keras, and TensorFlow</em>. " O’Reilly Media, Inc.".
+</div>
+<div id="ref-lock1993" class="csl-entry">
+Lock, Robin H. 1993. <span>“1993 New Car Data.”</span> <em>Journal of
+Statistics Education</em> 1 (1).
+</div>
+<div id="ref-MASS" class="csl-entry">
+Venables, W. N., and B. D. Ripley. 2002. <em>Modern Applied Statistics
+with s</em>. Fourth. New York: Springer. <a
+href="https://www.stats.ox.ac.uk/pub/MASS4/">https://www.stats.ox.ac.uk/pub/MASS4/</a>.
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

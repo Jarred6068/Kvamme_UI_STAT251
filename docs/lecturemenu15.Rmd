@@ -1,0 +1,491 @@
+---
+title: "Week 14 Notes"
+author: "STAT 251 Section 03"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Week_15_bibs.bib
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+library(gganimate)
+
+path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+
+##stat pack
+source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+
+```
+
+# Lecture 26 Monday, April 8th 2024
+
+In many studies, the goal is to show that changes in one or more explanatory variables actually cause changes in a response variable. The statistical techniques we will describe this week will require us to distinguish between explanatory and response variables. You will often see explanatory variables called the **independent variable** and response variables called the **dependent variable**. The idea behind this language is that the response variable depends on the outcomes of the explanatory variable (if they share a statistical relationship).  
+
+### Scatterplots and statistical associations
+
+A **scatterplot** is a type of descriptive plot that shows the relationship between two quantitative variables (denoted $X$ and $Y$) measured on the same individual usually. The horizontal axis is called the $x$-axis and the vertical axis is called the $y$-axis. Typically the independent or explanatory variable is represented on the $x$-axis and the response variable is represented on the $y$-axis. Consider the four scatterplots below which plot the relationship between the independent variable $X$ and the dependent variable $Y$:
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=8, fig.width=10, fig.cap = 'Six plots depicting scatterplots between two variables $X$ and $Y$'}
+set.seed(123)
+x1 = rnorm(50, 5, 2)
+x2 = rnorm(50, 10, 5)
+x3 = c(rnorm(25, 5, 0.5), rnorm(25, 10, 1))
+y1 = rnorm(50)
+y2 = -0.6*x1+rnorm(50)
+y3 = 0.9*x2+rnorm(50)
+y4 = rep(1, 50)
+y5 = 0.1*x1^2+rnorm(50, 0, 0.1)
+y6 = -1*log(x3)+rnorm(50, 0, 0.1)
+df = cbind.data.frame(x1, x2, x3, y1, y2, y3, y4, y5, y6)
+
+p1 = ggplot(data =df, aes(x = x1, y = y1))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p2 = ggplot(data =df, aes(x = x1, y = y2))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p3 = ggplot(data =df, aes(x = x2, y = y3))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p4 = ggplot(data =df, aes(x = x2, y = y4))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+
+p5 = ggplot(data =df, aes(x = x1, y = y5))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p6 = ggplot(data =df, aes(x = x3, y = y6))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+
+
+ggarrange(p1, p2, p3, p4, p5, p6, labels = c("A","B","C","D","E","F"), nrow = 2, ncol = 3)
+
+
+
+```
+
+* Which of these plots indicate a statistical association between the two variables and which do not?
+
+How do you interpret a scatterplot?
+
+  * look for an overall patterns of the points in each plot
+  
+  * You can describe the overall pattern in three terms: **form**, **direction** and **strength**
+  
+    * **form**: do the points form a line, a curve, or a cloud? if the points follow roughly a straight line we say that they are **linear** in form, and if the points follow a curve we would say that they are **non-linear** in form. 
+    
+    * **direction**: which direction do the points trend as you move left to right across the values of the explanatory variable
+    
+    * **strength**: if there is a pattern, are the points loose and spread out? or are they tightly packed together?
+
+In general, we say that two variables are **positively associated** when larger values of the explanatory variable are paired with larger values of the response variable. Conversely, we say that two variables are **negatively associated** if larger values of the explanatory variable are paired with smaller values of the response. 
+
+It may also be important to note of the points form specific clusters as this may indicate a hidden grouping in the data that is not accounted for by the independent variable. When a scatterplot shows distinct clusters it often most useful to describe the pattern in each cluster. 
+
+
+### Measures of association
+
+As we just saw, scatterplots display the form, direction, and strength of the relationship between two quantitative variables. Linear (straight-line) relationships are often of interest because they occur most often. If the points in a scatterplot lie close to a straight line we say that they have a strong linear relationship. However, scatterplots can be misleading when trying to judge the strength of a linear relationship. Consider the two plots below which show the relationship between highway fuel efficiency (in miles per gallon) and weight of cars from the classic 1993 New Car dataset [@lock1993; @MASS].
+
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=6, fig.width=10}
+set.seed(123)
+
+
+p1 = ggplot(data =MASS::Cars93, aes(x = MPG.highway, y = Weight))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('MPG Highway')+
+  ylab('Price')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p2 = ggplot(data =MASS::Cars93, aes(x = MPG.highway, y = Weight))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  scale_x_continuous(limits = c(0, 70))+
+  scale_y_continuous(limits = c(1000, 5000))+
+  xlab('MPG Highway')+
+  ylab('Price')+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+
+
+
+
+ggarrange(p1, p2, nrow = 1, ncol = 2)
+
+
+
+```
+
+
+* Which plot shows a stronger linear relationship?
+
+This was a rhetorical question since both plots depict the same data. However, the plot on the right spans a larger range on both the $x$ and $y$ axes. This example demonstrates that the way data is plotted can mislead our perception of the strength of a linear relationship, showing that humans are not always reliable judges in this regard. Therefore, we need to follow our general strategy of following up any graphical display with a numerical measure to help us interpret what we see. 
+
+In general when employing numerical measures of association our data generally constitute measurements on two quantitative variables $X$ and $Y$ measured on $n$ individuals
+
+\[ X = \{x_1, x_2, x_3, \cdots x_n\} \]
+
+\[ Y = \{y_1, y_2, y_3, \cdots y_n\} \]
+
+Each pair of $x$ and $y$ values $(x_i, y_i)$ constitutes a point in a scatterplot of these two variables so that there are $n$ total points in the plot. One measure of association between two variables is called **covariance**. Recall that the sample variance is a numerical measure of the spread of a variable and gives the average size of the squared deviation from the mean. Covariance is the joint variability between two variables $X$ and $Y$ defined as 
+
+\[Cov(X,Y) = \sum_i \frac{(x_i-\bar{x})(y_i - \bar{y})}{n-1}\]
+
+In general, if two variables share a strong positive or strong negative relationship, they will have a large positive or large negative covariance, and if two variables are independent their covariance should be close to zero. Consider the first three scatterplots and the covariances between $X$ and $Y$ from *figure 1* seen earlier
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=6, fig.width=10}
+set.seed(123)
+x1 = rnorm(50, 5, 2)
+x2 = rnorm(50, 10, 5)
+x3 = c(rnorm(25, 5, 0.5), rnorm(25, 10, 1))
+y1 = rnorm(50)
+y2 = -0.6*x1+rnorm(50)
+y3 = 0.9*x2+rnorm(50)
+
+df = cbind.data.frame(x1, x2, y1, y2, y3)
+
+p1 = ggplot(data =df, aes(x = x1, y = y1))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  ggtitle(TeX(paste0('$Cov(X,Y) = ', round(cov(x1, y1),1), '$')))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p2 = ggplot(data =df, aes(x = x1, y = y2))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  ggtitle(TeX(paste0('$Cov(X,Y) = ', round(cov(x1, y2),1), '$')))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p3 = ggplot(data =df, aes(x = x2, y = y3))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  ggtitle(TeX(paste0('$Cov(X,Y) = ', round(cov(x2, y3),1), '$')))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+
+
+
+
+ggarrange(p1, p2, p3, nrow = 1, ncol = 3)
+
+
+
+```
+
+As we can see from above the plots that show a stronger linear relationship are paired with larger covariances for $X$ and $Y$. However, you may have noticed that covariance depends on the units of $X$ and $Y$. This makes covariance hard to interpret because one or both of the variables exists on a large scale the covariance will naturally take on large values. Consider the scatterplot below which shows the relationship and covariance between median house value and population for 30 districts in California from 1990 [@geron2022hands]
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=6, fig.width=8}
+set.seed(222)
+
+hs = read.csv(file = paste0(path, 'housing.csv'))
+samp = hs[sample(1:dim(hs)[1], 30),]
+
+
+
+kable(samp[, c(6,9)], format = 'html', digits = 2, col.names = c('Population of District', 'Median Home Value'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+ggplot(data =samp, aes(x = population, y = median_house_value))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('Population')+
+  ylab('Median House Value')+
+  ggtitle(TeX(paste0('$Cov(X,Y) = ', round(cov(samp$population, samp$median_house_value),1), '$')))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+
+```
+
+Even though the plot doesn't really show a strong relationship between these two variables the covariance we compute is a whopping 26,390,423. Moreover, because our two variables have different units, the units of the covariance we computed are nonsensical. Since covariance is not straight-forward to interpret, it is not typically used to measure the strength of a linear relationship. Instead, a similar measure called **correlation** is the statistical the measure that is most often used to determine the strength of two quantitative variables. We can think of correlation as a type of standardized, unitless covariance. Essentially, correlation is a scaled form of covariance that allows for clearer interpretation of the relationship between two quantitative variables. Correlation is defined as
+
+For each individual there is a height $x_i$ and a weight $y_i$. Correlation is defined as
+
+\[r_{x,y} = \frac{1}{n-1}\sum_i \left(\frac{x_i - \bar{x}}{s_x}\right) \left(\frac{y_i - \bar{y}}{s_y}\right)  = \frac{Cov(X,Y)}{\sqrt{s_x^2s_y^2}}\]
+
+The symbol $r_{x,y}$ is used to denote the sample correlation between variables $X$ and $Y$. From the formula above, we can see that the correlation coefficient $r_{x,y}$ is the covariance of $X$ and $Y$ standardized by the individual standard deviations for each variable. The result is that the $r$ has no units and represents the average of the products of the standardized $X$ and $Y$ values across all $n$ observations. This gives the correlation coefficient several nice proporties:
+
+  * it ranges in value from $-1$ to $+1$. Values close to $-1$ indicate strong negative associations and values close to $+1$ indicate strong positive associations. 
+  
+  * A correlation coefficient of exactly positive or negative one indicate a perfect linear relationship
+  
+  * values at or close to zero indicate little or no association between the variables. 
+  
+  * Unlike covariance, the value of the sample correlation will NOT change when the units of one or more of the variables are changed. This is because we standardize the deviations to have no units. 
+  
+
+Its important to note that correlation can only be used to measure the strength of **linear** relationships between two variables. It cannot accurately described **non-linear** (curved) relationships. It is also not a resistant measure. Outliers will have a signficant affect on the value of the correaltion coefficient
+  
+  
+In the earlier example comparing population to median home value, the correlation coefficient between these two variables is $r \approx 0.2$. Now consider the first three plots from *figure 1* but this time with correlations plotted for each scatterplot
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=6, fig.width=10}
+set.seed(123)
+x1 = rnorm(50, 5, 2)
+x2 = rnorm(50, 10, 5)
+x3 = c(rnorm(25, 5, 0.5), rnorm(25, 10, 1))
+y1 = rnorm(50)
+y2 = -0.6*x1+rnorm(50)
+y3 = 0.9*x2+rnorm(50)
+
+df = cbind.data.frame(x1, x2, y1, y2, y3)
+
+p1 = ggplot(data =df, aes(x = x1, y = y1))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  ggtitle(TeX(paste0('$r_{x,y} = ', round(cor(x1, y1),1), '$')))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p2 = ggplot(data =df, aes(x = x1, y = y2))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  ggtitle(TeX(paste0('$r_{x,y} = ', round(cor(x1, y2),1), '$')))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+p3 = ggplot(data =df, aes(x = x2, y = y3))+
+  geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
+  theme_bw()+
+  xlab('X')+
+  ylab('Y')+
+  ggtitle(TeX(paste0('$r_{x,y} = ', round(cor(x2, y3),1), '$')))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+
+
+
+
+ggarrange(p1, p2, p3, nrow = 1, ncol = 3)
+
+
+
+```
+  
+
+Computing the covariance or correlation is not an easy task. The formulas are quite involved and infeasible for any large number of observations. Thus it is best to rely on software to easily compute correlations. However, we can get a feel of the mechanics of correlation by computing it for a small number of observations. Try the example below 
+
+
+
+
+**Try it out**: Consider the following dataset which is the height and weight for six adults
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+hw = read.csv(paste0(path, 'SOCR-HeightWeight.csv'))
+samphw = hw[sample(1:dim(hw)[1], 3),2:3]
+df = rbind.data.frame(cbind.data.frame(Index = paste0('individual ', c(1:3)), 
+                      round(samphw$Height.Inches., 1), round(samphw$Weight.Pounds.,1)),
+                      `Sample Mean` = c('Sample Mean', round(c(mean(samphw$Height.Inches.), mean(samphw$Weight.Pounds.)), 1)),
+                      `Sample SD` = c('Sample SD', round(c(sd(samphw$Height.Inches.), sd(samphw$Weight.Pounds.)), 2)))
+
+kable(df, format = 'html', digits = 2, col.names = c('Index', 'Height (inches)', 'Weight (pounds)'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+Let us start by computing the sample covariance for height and weight
+
+\[Cov(\text{Height},\text{Weight}) = \frac{(69.8 - 68.3)(140.9 - 131)}{3-1}+\frac{(69.8 - 68.3)(129 - 131)}{3-1}+\frac{(65.4 - 68.3)(123.2 - 131)}{3-1} \]
+\[ \approx 16.86\]
+
+The correlation is given by
+
+\[ r = \frac{16.86}{\sqrt{2.54^2\cdot 9.02^2}} \approx 0.74\]
+
+
+
+
+### Introduction to simple linear regression
+
+Correlation measures the strength of a linear relationship between two variables, but what if you want to go a step further and find the best-fit line that connects those dots? That's where linear regression comes in. It's a statistical technique that finds the straight line that best describes the relationship between two quantitative variables, often visualized on a scatterplot. The most basic version of this technique, where you fit a line to two quantitative variables, is called *simple linear regression*. 
+
+When a scatterplot shows a linear patter we can describe the overall linear relationship by drawing a line through the points. Of course any line that we draw will not touch all of the points. But we would like any line that we draw to come as close to all of the points as possible. A regression line of this sort gives a compact description of how a response variable $y$ changes as an explanatory variable $x$ changes. 
+
+
+It turns out that the line that comes as close as possible to all of the points is the line that minimizes the squared deviations of the **residuals**. 
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(222)
+X = runif(5)
+Y = 0.5*X+rnorm(5)
+
+mod = lm(Y~X)
+
+ggplot()+
+  theme_bw()+
+  geom_abline(slope = mod$coefficients[2], 
+              intercept = mod$coefficients[1],
+              linetype = 'dotted', 
+              size = 1)+
+  geom_segment(aes(x = X, y = Y, xend = X, yend = mod$fitted.values),
+               size = 1.2, color ='red')+
+  geom_point(aes(x = X, y = Y), 
+                    shape = 21, size = 4.5, 
+                    color = 'black', fill = 'grey')+
+  geom_text(aes(x = 0.5, y =2), label = TeX(paste0('$SS_E = ', round(sum(mod$residuals^2),2), '$')),
+            color= 'red')
+  
+
+
+
+```
+
+
+Residuals are the vertical distances (red lines in the plot above) between each point and the regression line. If you think of the regression line as our best guess at the relationship between $X$ and $Y$, then the residuals represent the error in that guess for each point. The line that "best" fits the data is the one with the smallest average residual—essentially, the one with the least error across all the points in the plot. This line gives us the best model to describe the relationship between the $X$ and $Y$ variables. You can take a look at [https://www.geogebra.org/m/xC6zq7Zv](https://www.geogebra.org/m/xC6zq7Zv) to pratice fitting the "best" line. 
+
+
+
+<!-- Suppose that $Y$ is a response variable and $X$ is an explanatory variable. The **slope** of a regression line relating $X$ and $Y$ tells us exactly how much $Y$ changes per unit change in $X$ (sometimes called *rise over run*). Consider the plot below  -->
+
+
+
+<!-- The residuals are defined mathematically as the squared deviations between the observed values $y_i$ and the predicted values $\hat{y}_i$ which are given by the regression line. -->
+
+<!-- \[SS_E = \sum_i (y_i - \hat{y})^2\] -->
+
+
+
+
+
+
+
+
+
+
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame()
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+### References
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
