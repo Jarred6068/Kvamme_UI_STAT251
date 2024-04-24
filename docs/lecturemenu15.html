@@ -1147,9 +1147,448 @@ class="math inline">\(X\)</span> and <span
 class="math inline">\(Y\)</span> variables. You can take a look at <a
 href="https://www.geogebra.org/m/xC6zq7Zv">https://www.geogebra.org/m/xC6zq7Zv</a>
 to pratice fitting the “best” line.</p>
-<!-- Suppose that $Y$ is a response variable and $X$ is an explanatory variable. The **slope** of a regression line relating $X$ and $Y$ tells us exactly how much $Y$ changes per unit change in $X$ (sometimes called *rise over run*). Consider the plot below  -->
-<!-- The residuals are defined mathematically as the squared deviations between the observed values $y_i$ and the predicted values $\hat{y}_i$ which are given by the regression line. -->
-<!-- \[SS_E = \sum_i (y_i - \hat{y})^2\] -->
+</div>
+</div>
+<div id="lecture-30-wednesday-april-24nd-2024" class="section level1">
+<h1>Lecture 30 Wednesday, April 24nd 2024</h1>
+<div id="the-simple-linear-model" class="section level3">
+<h3>The simple linear model</h3>
+<p>We learned on Monday that a scatterplot can be used to visualize and
+check for a <strong>linear</strong> relationship between two
+quantitative variables. We also learned that straight line fitted
+through the data points can be used to describe that trend. We will use
+the notation</p>
+<p><span class="math display">\[ \hat{y}_i = \alpha + \beta x_i
+\]</span></p>
+<p>to display this line mathematically, called the <strong>regression
+line</strong>. The equation above is often referred to as the
+<em>prediction equation</em>. The symbol <span
+class="math inline">\(\hat{y_i}\)</span> represents the <em>predicted
+value</em> for the <span class="math inline">\(i^{th}\)</span>
+observation of the dependent variable <span
+class="math inline">\(Y\)</span> given the <span
+class="math inline">\(i^{th}\)</span> value of the independent variable
+<span class="math inline">\(x_i\)</span>. The symbol <span
+class="math inline">\(\alpha\)</span> is called the <span
+class="math inline">\(y\)</span>-axis intercept and <span
+class="math inline">\(\beta\)</span> is called the slope. The
+<strong>slope</strong> of a regression line relating <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> describes how much <span
+class="math inline">\(\hat{y}\)</span> changes per unit change in <span
+class="math inline">\(X\)</span> (sometimes called <em>rise over
+run</em>). This is visualized in the plot below.</p>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<ul>
+<li><p>When the slope is negative the predicted values decrease as
+independent variable <span class="math inline">\(X\)</span>
+increases</p></li>
+<li><p>When the slope is positive the predicted values increase as the
+independent variable <span class="math inline">\(X\)</span>
+increases</p></li>
+<li><p>When the slope is zero (or near zero) the regression line is
+approximately horizontal.</p></li>
+<li><p>The absolute value of the slope gives the magnitude change in
+<span class="math inline">\(Y\)</span> per unit change of <span
+class="math inline">\(X\)</span>.</p></li>
+<li><p>The slope is dependent on the units of <span
+class="math inline">\(X\)</span>. A 1-unit increase in <span
+class="math inline">\(X\)</span> could be a trivial amount or it could
+be huge.</p></li>
+</ul>
+</div>
+<div id="finding-a-regression-line-and-the-least-squares-estimator"
+class="section level3">
+<h3>Finding a regression line and the least-squares estimator</h3>
+<p>On Monday, we also briefly introduced the idea of a
+<strong>residual</strong> - the disparity (error) between the values
+predicted by the regression line <span
+class="math inline">\(\hat{y}_i\)</span> and the actual values of the
+response variable <span class="math inline">\(y_i\)</span>. We will use
+the symbol <span class="math inline">\(\epsilon_i\)</span> (called
+epsilon) to represent the residual for the <span
+class="math inline">\(i^{th}\)</span> observation of the response
+variable. We can write the observations of the response variable in
+terms of the predicted values and the residuals:</p>
+<p><span class="math display">\[ y = \alpha + \beta x_i +
+\epsilon_i\]</span></p>
+<p>where</p>
+<p><span class="math display">\[ \epsilon_i = \hat{y}_i -
+y_i\]</span></p>
+<p>Thus each observation of the response variable has a residual. Some
+of the residuals will be positive and some will be negative.</p>
+<ul>
+<li><p>A positive residual indicates that the actual <span
+class="math inline">\(y_i\)</span> is greater than predicted value <span
+class="math inline">\(\hat{y}_i\)</span></p></li>
+<li><p>A negative residual indicates that the actual <span
+class="math inline">\(y_i\)</span> is less than predicted value <span
+class="math inline">\(\hat{y}_i\)</span></p></li>
+<li><p>The smaller the absolute value of the residual the closer the
+predicted value is to the actual value of the response variable</p></li>
+</ul>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>The length of the red line in the plot above represents the absolute
+value of the residual for observation <span
+class="math inline">\(y_i\)</span>. The residuals are all vertical
+distances because the regression equation predicts values of the
+response variable.</p>
+<p>Recall that the line of “best” fit is the one that is simultaneously
+as close as possible to all data points. Such a line will have the
+smallest possible residuals. This process involves compromise as any
+line we draw can perfectly predict any one point but may gravely
+over/under predict other points resulting in larger residuals. The
+acutal summary measure used to evalute and fit a regression line is
+called the residuals sum of squares (denoted <span
+class="math inline">\(SS_E\)</span>)</p>
+<p><span class="math display">\[ SS_E = \sum_i (\hat{y}_i - y)^2
+\]</span></p>
+<p>The measure above describes the variation in the residuals. The line
+which minimizes the residual sum of squares will have the smallest
+average residuals. Thus the better the line fits the data, the smaller
+the residuals will be and the the smaller the <span
+class="math inline">\(SS_E\)</span> will be.</p>
+<ul>
+<li><p>The regression line which minimizes the <span
+class="math inline">\(SS_E\)</span> will have some positive and some
+negative residuals the mean of the residuals will be <span
+class="math inline">\(0\)</span>.</p></li>
+<li><p>It will pass through the point <span
+class="math inline">\((\bar{x}, \bar{y})\)</span>. This means the line
+passes through the center of the data</p></li>
+</ul>
+<p>Even though we will typically rely on software to compute a
+regression line, the least squares line gives explict formulas for the
+slope and intercept:</p>
+<p><span class="math display">\[\hat{\beta} = r_{x,y}
+\left(\frac{s_y}{s_x}\right) \]</span></p>
+<p><span class="math display">\[\hat{\alpha} = \bar{y} -
+\beta\bar{x}\]</span></p>
+<p>Notice that the slope <span class="math inline">\(\beta\)</span> is
+directly related to the correlation coefficient <span
+class="math inline">\(r\)</span></p>
+</div>
+<div id="predicting-values-of-the-dependent-variable-batting-averages"
+class="section level3">
+<h3>Predicting values of the dependent variable: Batting averages</h3>
+<p>A regression line allows us to further describe the relationship
+between two variables that goes beyond just stating the strength of the
+relationship using the correlation coefficient <span
+class="math inline">\(r_{X,Y}\)</span>. Consider the following data
+which gives observations of team batting average and average score for
+teams in the American League of baseball.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:right;">
+Team Batting Average
+</th>
+<th style="text-align:right;">
+Average Runs Scored
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NY Yankees
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+5.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Boston
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+5.05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tampa Bay
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+4.95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Texas
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+4.86
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Minnesota
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+4.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Toronto
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+4.66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chicago Sox
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+4.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Detroit
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+4.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LA Angels
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+4.20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Kansas City
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+4.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oakland
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+4.09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cleveland
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+3.99
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Baltimore
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+3.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Seattle
+</td>
+<td style="text-align:right;">
+0.24
+</td>
+<td style="text-align:right;">
+3.17
+</td>
+</tr>
+</tbody>
+</table>
+<p>The table below provides summarizes the data.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Team Batting Average
+</th>
+<th style="text-align:right;">
+Average Runs Scored
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Sample Standard Deviation
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+0.577
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sample Mean
+</td>
+<td style="text-align:right;">
+0.260
+</td>
+<td style="text-align:right;">
+4.451
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now consider fitting a line to estimate the relationship between team
+batting average (indepdent variable) and average runs scored per game
+(dependent variable). The plot below gives the least-squares regression
+line relating these two variables. Based on the plot, is team batting
+average a good predictor of the average number of runs a team will score
+?</p>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<ul>
+<li><p>Use the plot and the summary information to compute the estimates
+for the slope and intercept</p></li>
+<li><p>Using the prediction equation, how many runs would expect a team
+with a batting average of <span class="math inline">\(0.25\)</span> to
+score?</p></li>
+<li><p>Is there a significant association between batting average and
+runs score? how can you tell?</p></li>
+</ul>
+<p><strong>Important Note on Regression Predictions:</strong> When
+applying a regression line to make predictions, it is crucial to avoid
+extrapolating beyond the range of values in the explanatory variable
+used to create the model. Extrapolation involves estimating outcomes for
+values of the predictor variable (<span
+class="math inline">\(X\)</span>) that fall outside the range observed
+in the data. This practice is discouraged because the linear
+relationship between <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> established by the model might not hold
+true beyond the observed data.</p>
+<p>In other words, regression models are built to represent trends
+within the scope of the available data. Once you go beyond the minimum
+or maximum observed values of the explanatory variable, you enter a zone
+where the relationship between <span class="math inline">\(X\)</span>
+and <span class="math inline">\(Y\)</span> could be different. This
+uncertainty can lead to inaccurate or misleading predictions. Therefore,
+always ensure that predictions are made within the range of data used to
+fit the model to maintain reliability and accuracy.</p>
+</div>
+<div id="coefficient-of-determination-r2" class="section level3">
+<h3>Coefficient of determination <span
+class="math inline">\(r^2\)</span></h3>
+<p>When we predict a value of <span class="math inline">\(Y\)</span>,
+why should we use the regression line? We could instead use the center
+of <span class="math inline">\(Y\)</span>’s distribution as our
+prediction for <span class="math inline">\(Y\)</span> such as the sample
+mean <span class="math inline">\(\bar{y}\)</span>. One reason is that if
+the explanatory variable <span class="math inline">\(X\)</span> and
+response <span class="math inline">\(Y\)</span> have an approximate
+linear relationship then the prediction equation <span
+class="math inline">\(\hat{y}_i = \alpha + \beta x_i\)</span> will give
+more accurate predictions than simply using the sample mean <span
+class="math inline">\(\bar{y}\)</span>. Consider again the example of
+teams in the American League for Major League Baseball</p>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>The red line gives the predictions using the sample mean and the blue
+line is the using the least squares regression line. In general, the
+stronger the stronger the linear relationship between the independent
+and dependent variables, the better the predictions with the regression
+line will become.</p>
+<p>To judge how much better the predictions are for the regression model
+we can compare the residuals of the model fitting the regression line
+(blue line above) to the model fitting the sample mean (red line
+above).</p>
+<p>The residuals for the model using the sample mean is given by</p>
+<p><span class="math display">\[SS_T = \sum_i (y_i - \bar{y})^2
+\]</span></p>
+<p>called the <em>total sum of squares</em> or <span
+class="math inline">\(SS_T\)</span> because it represents the total
+variation in the response variable. The residuals for the regression
+model are given by</p>
+<p><span class="math display">\[ SS_E = \sum_i (\hat{y}_i -
+y_i)^2\]</span></p>
+<p>The difference between the two is called the <em>regression sum of
+squares</em> or <span class="math inline">\(SS_R\)</span></p>
+<p><span class="math display">\[ SS_R = SS_T - SS_E = \sum_i (\hat{y} -
+\bar{y})^2 \]</span></p>
+<p>Notice that by rearrange the equation above, we can see that the
+total variation in the response can be partitioned in to two parts: the
+variation explained by the predictor (i.e <span
+class="math inline">\(SS_R\)</span>) and the variation not explained by
+the predictor (i.e <span class="math inline">\(SS_E\)</span>).</p>
+<p><span class="math display">\[SS_{T} = SS_E+SS_R \]</span></p>
+<p>By comparing the <span class="math inline">\(SS_T\)</span> and <span
+class="math inline">\(SS_R\)</span>, we can determine how much the
+regression model improves our predictions over the model fitting the
+sample mean. This measure is called the <strong>coefficient of
+determination</strong> denoted <span class="math inline">\(r^2\)</span>
+because it is the square of the correlation coefficient <span
+class="math inline">\(r\)</span>.</p>
+<p><span class="math display">\[ r^2 = \frac{SS_R}{SS_T} = \frac{\sum_i
+(\hat{y} - \bar{y})^2}{\sum_i (y_i - \bar{y})^2} \]</span></p>
+<p>The <span class="math inline">\(r\)</span>-squared value is expressed
+as a percentage and tells us how much the overall variation in the
+response can be explained by the linear regression model. For the
+batting Americal League example we have a total sum of squares of</p>
+<p><span class="math display">\[SS_T =  4.323\]</span></p>
+<p>and a regression sum of squares of</p>
+<p><span class="math display">\[ SS_R = 1.396 \]</span></p>
+<p>which gives a coefficient of determination of</p>
+<p><span class="math display">\[r^2 = \frac{1.396}{4.323} = 0.323 \ \
+\text{or} \ \ 32.3\% \]</span></p>
+<p>Thus team batting average explains roughly <span
+class="math inline">\(32\%\)</span> of the variation in the average
+number of runs scored by teams in the American League of Major League
+Baseball.</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>

@@ -392,9 +392,9 @@ ggplot()+
                size = 1.2, color ='red')+
   geom_point(aes(x = X, y = Y), 
                     shape = 21, size = 4.5, 
-                    color = 'black', fill = 'grey')+
-  geom_text(aes(x = 0.5, y =2), label = TeX(paste0('$SS_E = ', round(sum(mod$residuals^2),2), '$')),
-            color= 'red')
+                    color = 'black', fill = 'grey')#+
+  #geom_text(aes(x = 0.5, y =2), label = TeX(paste0('$SS_E = ', round(sum(mod$residuals^2),2), '$')),
+  #          color= 'red')
   
 
 
@@ -404,17 +404,279 @@ ggplot()+
 
 Residuals are the vertical distances (red lines in the plot above) between each point and the regression line. If you think of the regression line as our best guess at the relationship between $X$ and $Y$, then the residuals represent the error in that guess for each point. The line that "best" fits the data is the one with the smallest average residual—essentially, the one with the least error across all the points in the plot. This line gives us the best model to describe the relationship between the $X$ and $Y$ variables. You can take a look at [https://www.geogebra.org/m/xC6zq7Zv](https://www.geogebra.org/m/xC6zq7Zv) to pratice fitting the "best" line. 
 
+# Lecture 30 Wednesday, April 24nd 2024
+
+### The simple linear model
+
+We learned on Monday that a scatterplot can be used to visualize and check for a **linear** relationship between two quantitative variables. We also learned that straight line fitted through the data points can be used to describe that trend. We will use the notation 
+
+\[ \hat{y}_i = \alpha + \beta x_i \]
+
+to display this line mathematically, called the **regression line**. The equation above is often referred to as the *prediction equation*. The symbol $\hat{y_i}$ represents the *predicted value* for the $i^{th}$ observation of the dependent variable $Y$ given the $i^{th}$ value of the independent variable $x_i$. The symbol $\alpha$ is called the $y$-axis intercept and $\beta$ is called the slope. The **slope** of a regression line relating $X$ and $Y$ describes how much $\hat{y}$ changes per unit change in $X$ (sometimes called *rise over run*). This is visualized in the plot below. 
 
 
-<!-- Suppose that $Y$ is a response variable and $X$ is an explanatory variable. The **slope** of a regression line relating $X$ and $Y$ tells us exactly how much $Y$ changes per unit change in $X$ (sometimes called *rise over run*). Consider the plot below  -->
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(222)
+X = 0:10
+Y = 0.5*X+rnorm(11)
+wp = 6
+mod = lm(Y~X)
+xx = (mod$fitted.values[wp] - mod$coefficients[1])/mod$coefficients[2]
+xx2 = (Y[wp] - mod$coefficients[1])/mod$coefficients[2]
+ggplot()+
+  theme_bw()+
+  geom_abline(slope = mod$coefficients[2], 
+              intercept = mod$coefficients[1],
+              linetype = 'dotted', 
+              size = 1.5)+
+  #geom_segment(aes(x = X, y = Y, xend = X, yend = mod$fitted.values),
+  #             size = 1.2, color ='red')+
+  geom_segment(aes(x = xx, y = mod$fitted.values[wp], xend = xx, yend = Y[wp]), 
+               linetype = 'solid', color = 'green', size = 1.3)+
+  geom_segment(aes(x = xx2, y = Y[wp], xend = X[wp], yend = Y[wp]), 
+               linetype = 'solid', color = 'blue', size = 1.3)+
+  geom_text(aes(x = X[wp]+0.3, y = mod$fitted.values[wp] - (mod$fitted.values[wp]-Y[wp])/2),
+            label = 'Change in Y', color = 'green')+
+  geom_text(aes(x = xx2 +(X[wp] - xx2)/2, y = Y[wp]-0.2),
+            label = 'Change in X', color = 'blue')+
+  geom_point(aes(x = X[wp], y = Y[wp]), 
+                    shape = 21, size = 4.5, 
+                    color = 'black', fill = 'red')+
+   scale_x_continuous(limits = c(3, 7), breaks = seq(0, 10, 1))+
+  scale_y_continuous(limits = c(min(Y),max(Y)))+
+  geom_point(aes(x = X[c(4:5, 7)], y = Y[c(4:5,7)]+1),
+             shape = 21, size = 4.5, 
+             color = 'black', fill = 'grey')+
+  xlab('X')+
+  ylab('Y')
+  
 
 
 
-<!-- The residuals are defined mathematically as the squared deviations between the observed values $y_i$ and the predicted values $\hat{y}_i$ which are given by the regression line. -->
-
-<!-- \[SS_E = \sum_i (y_i - \hat{y})^2\] -->
+```
 
 
+* When the slope is negative the predicted values decrease as independent variable $X$ increases
+
+* When the slope is positive the predicted values increase as the independent variable $X$ increases
+
+* When the slope is zero (or near zero) the regression line is approximately horizontal. 
+
+* The absolute value of the slope gives the magnitude change in $Y$ per unit change of $X$. 
+
+* The slope is dependent on the units of $X$. A 1-unit increase in $X$ could be a trivial amount or it could be huge. 
+
+
+### Finding a regression line and the least-squares estimator
+
+On Monday, we also briefly introduced the idea of a **residual** - the disparity (error) between the values predicted by the regression line $\hat{y}_i$ and the actual values of the response variable $y_i$. We will use the symbol $\epsilon_i$ (called epsilon) to represent the residual for the $i^{th}$ observation of the response variable. We can write the observations of the response variable in terms of the predicted values and the residuals:
+
+\[ y = \alpha + \beta x_i + \epsilon_i\]
+
+where 
+
+\[ \epsilon_i = \hat{y}_i - y_i\]
+
+Thus each observation of the response variable has a residual. Some of the residuals will be positive and some will be negative. 
+
+  * A positive residual indicates that the actual $y_i$ is greater than predicted value $\hat{y}_i$
+  
+  * A negative residual indicates that the actual $y_i$ is less than predicted value $\hat{y}_i$
+  
+  * The smaller the absolute value of the residual the closer the predicted value is to the actual value of the response variable
+  
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(222)
+X = runif(5)
+Y = 0.5*X+rnorm(5)
+
+wp = 3
+mod = lm(Y~X)
+
+ggplot()+
+  theme_bw()+
+  geom_abline(slope = mod$coefficients[2], 
+              intercept = mod$coefficients[1],
+              linetype = 'dotted', 
+              size = 1.5)+
+  geom_segment(aes(x = X[wp], y = Y[wp], xend = X[wp], yend = mod$fitted.values[wp]),
+               size = 1.2, color ='red')+
+  geom_point(aes(x = X[-wp], y = Y[-wp]), 
+                    shape = 21, size = 4.5, 
+                    color = 'black', fill = 'grey')+
+  geom_point(aes(x = X[wp], y = Y[wp]), 
+                    shape = 21, size = 4.5, 
+                    color = 'black', fill = 'red')+
+  geom_text(aes(x = X[wp]+0.05, y = mod$fitted.values[wp] - (mod$fitted.values[wp] - Y[wp])/2), 
+            label = TeX('$|\\epsilon_i|$'), color = 'red', size = 8)+
+  xlab('X')+
+  ylab('Y')
+  
+
+
+
+```
+
+The length of the red line in the plot above represents the absolute value of the residual for observation $y_i$. The residuals are all vertical distances because the regression equation predicts values of the response variable. 
+
+Recall that the line of "best" fit is the one that is simultaneously as close as possible to all data points. Such a line will have the smallest possible residuals. This process involves compromise as any line we draw can perfectly predict any one point but may gravely over/under predict other points resulting in larger residuals. The acutal summary measure used to evalute and fit a regression line is called the residuals sum of squares (denoted $SS_E$)
+
+\[ SS_E = \sum_i (\hat{y}_i - y)^2 \]
+
+The measure above describes the variation in the residuals. The line which minimizes the residual sum of squares will have the smallest average residuals. Thus the better the line fits the data, the smaller the residuals will be and the the smaller the $SS_E$ will be. 
+
+* The regression line which minimizes the $SS_E$ will have some positive and some negative residuals the mean of the residuals will be $0$.
+
+* It will pass through the point $(\bar{x}, \bar{y})$. This means the line passes through the center of the data
+
+Even though we will typically rely on software to compute a regression line, the least squares line gives explict formulas for the slope and intercept:
+
+\[\hat{\beta} = r_{x,y} \left(\frac{s_y}{s_x}\right) \]
+
+\[\hat{\alpha} = \bar{y} - \beta\bar{x}\]
+
+Notice that the slope $\beta$ is directly related to the correlation coefficient $r$
+
+
+### Predicting values of the dependent variable: Batting averages
+
+A regression line allows us to further describe the relationship between two variables that goes beyond just stating the strength of the relationship using the correlation coefficient $r_{X,Y}$. Consider the following data which gives observations of team batting average and average score for teams in the American League of baseball.  
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+AL = read.csv(paste0(path, 'AL_team_statistics.csv'))
+
+kable(AL, format = 'html', digits = 2, col.names = c('Team','Team Batting Average', 'Average Runs Scored'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+The table below provides summarizes the data.
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+AL = read.csv(paste0(path, 'AL_team_statistics.csv'))
+
+df = cbind.data.frame(`Sample Standard Deviation` = c(sd(AL$batting), sd(AL$scoring)),
+                      `Sample Mean` = c(mean(AL$batting), mean(AL$scoring)))
+
+kable(t(df), format = 'html', digits = 3, col.names = c('Team Batting Average', 'Average Runs Scored'),
+      row.names = T, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+Now consider fitting a line to estimate the relationship between team batting average (indepdent variable) and average runs scored per game (dependent variable). The plot below gives the least-squares regression line relating these two variables. Based on the plot, is team batting average a good predictor of the average number of runs a team will score ?
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(222)
+AL = read.csv(paste0(path, 'AL_team_statistics.csv'))
+mod = lm(scoring ~ batting, data = AL)
+ggplot(aes(x = batting, y = scoring), data = AL)+
+  theme_bw()+
+  geom_abline(slope = mod$coefficients[2], 
+              intercept = mod$coefficients[1],
+              linetype = 'dotted', 
+              size = 1.5)+
+  geom_point(shape = 21, size = 4.5, 
+             color = 'black', fill = 'grey')+
+  geom_text(aes(x = mean(AL$batting), y = max(AL$scoring)),
+            label = TeX(paste0('$ r = ', round(cor(AL$batting, AL$scoring),3), '$')))+
+  geom_text(aes(x = AL$batting, 
+                y = AL$scoring-0.1 - c(0,0,0,0,0,0,0,0.1,0,0,0,0,0,0)), label = AL$team,
+            color = 'navy')+
+  xlab('Team Batting Average')+
+  ylab('Average Runs Scored')+
+  ggtitle('American League Baseball')
+  
+
+```
+
+
+* Use the plot and the summary information to compute the estimates for the slope and intercept
+
+* Using the prediction equation, how many runs would expect a team with a batting average of $0.25$ to score?
+
+* Is there a significant association between batting average and runs score? how can you tell?
+
+**Important Note on Regression Predictions:** When applying a regression line to make predictions, it is crucial to avoid extrapolating beyond the range of values in the explanatory variable used to create the model. Extrapolation involves estimating outcomes for values of the predictor variable ($X$) that fall outside the range observed in the data. This practice is discouraged because the linear relationship between $X$ and $Y$ established by the model might not hold true beyond the observed data.
+
+In other words, regression models are built to represent trends within the scope of the available data. Once you go beyond the minimum or maximum observed values of the explanatory variable, you enter a zone where the relationship between $X$ and $Y$ could be different. This uncertainty can lead to inaccurate or misleading predictions. Therefore, always ensure that predictions are made within the range of data used to fit the model to maintain reliability and accuracy.
+
+### Coefficient of determination $r^2$
+
+When we predict a value of $Y$, why should we use the regression line? We could instead use the center of $Y$'s distribution as our prediction for $Y$ such as the sample mean $\bar{y}$. One reason is that if the explanatory variable $X$ and response $Y$ have an approximate linear relationship then the prediction equation $\hat{y}_i = \alpha + \beta x_i$ will give more accurate predictions than simply using the sample mean $\bar{y}$. Consider again the example of teams in the American League for Major League Baseball
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(222)
+AL = read.csv(paste0(path, 'AL_team_statistics.csv'))
+mod = lm(scoring ~ batting, data = AL)
+ggplot(aes(x = batting, y = scoring), data = AL)+
+  theme_bw()+
+  geom_abline(slope = mod$coefficients[2], 
+              intercept = mod$coefficients[1],
+              linetype = 'dotted', 
+              size = 1.2, color = 'blue')+
+    #geom_segment(aes(x = AL$batting, y = AL$scoring, xend = AL$batting, yend = mod$fitted.values),
+    #           linetype = 'solid', color = 'green', size = 1)+
+  geom_hline(yintercept = mean(AL$scoring), linetype = 'dashed', color = 'red', size = 1.2)+
+  geom_point(shape = 21, size = 4.5, 
+             color = 'black', fill = 'grey')+
+  geom_text(aes(x = AL$batting, 
+                y = AL$scoring-0.1 - c(0,0,0,0,0,0,0,0.1,0,0,0,0,0,0)), label = AL$team,
+            color = 'navy')+
+  xlab('Team Batting Average')+
+  ylab('Average Runs Scored')+
+  ggtitle('American League Baseball')
+  
+
+```
+
+The red line gives the predictions using the sample mean and the blue line is the using the least squares regression line. In general, the stronger the stronger the linear relationship between the independent and dependent variables, the better the predictions with the regression line will become.
+
+To judge how much better the predictions are for the regression model we can compare the residuals of the model fitting the regression line (blue line above) to the model fitting the sample mean (red line above).
+
+The residuals for the model using the sample mean is given by
+
+\[SS_T = \sum_i (y_i - \bar{y})^2 \]
+
+called the *total sum of squares* or $SS_T$ because it represents the total variation in the response variable. The residuals for the regression model are given by
+
+\[ SS_E = \sum_i (\hat{y}_i - y_i)^2\]
+
+The difference between the two is called the *regression sum of squares* or $SS_R$
+
+\[ SS_R = SS_T - SS_E = \sum_i (\hat{y} - \bar{y})^2 \]
+
+Notice that by rearrange the equation above, we can see that the total variation in the response can be partitioned in to two parts: the variation explained by the predictor (i.e $SS_R$) and the variation not explained by the predictor (i.e $SS_E$). 
+
+\[SS_{T} = SS_E+SS_R \]
+
+By comparing the $SS_T$ and $SS_R$, we can determine how much the regression model improves our predictions over the model fitting the sample mean. This measure is called the **coefficient of determination** denoted $r^2$ because it is the square of the correlation coefficient $r$. 
+
+\[ r^2 = \frac{SS_R}{SS_T} = \frac{\sum_i (\hat{y} - \bar{y})^2}{\sum_i (y_i - \bar{y})^2} \]
+
+The $r$-squared value is expressed as a percentage and tells us how much the overall variation in the response can be explained by the linear regression model. For the batting Americal League example we have a total sum of squares of 
+
+\[SS_T =  4.323\]
+
+and a regression sum of squares of 
+
+\[ SS_R = 1.396 \]
+
+which gives a coefficient of determination of 
+
+\[r^2 = \frac{1.396}{4.323} = 0.323 \ \ \text{or} \ \ 32.3\% \]
+
+Thus team batting average explains roughly $32\%$ of the variation in the average number of runs scored by teams in the American League of Major League Baseball.  
 
 
 
