@@ -1595,6 +1595,424 @@ Baseball.</p>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div id="lecture-31-friday-april-26th-2024" class="section level1">
+<h1>Lecture 31 Friday, April 26th 2024</h1>
+<div id="regression-relate-the-mean-of-y-to-x" class="section level3">
+<h3>Regression relate the mean of <span class="math inline">\(Y\)</span>
+to <span class="math inline">\(X\)</span></h3>
+<p>At a specific value of <span class="math inline">\(x\)</span> the
+prediction equation <span class="math inline">\(\hat{y}_i = \alpha +
+\beta x_i\)</span> gives our prediction for a single value of <span
+class="math inline">\(Y\)</span>. However, we don’t expect all
+observations of <span class="math inline">\(y\)</span> that depend on a
+given <span class="math inline">\(x\)</span> to have the same value
+because naturally there is variation among individuals in the
+population. For example, consider the linear regression below which
+relates the age of <span class="math inline">\(189\)</span> mothers in
+the U.S to the birth weight of their infants <span
+class="citation">(Venables and Ripley 2002)</span>.</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Individual
+</th>
+<th style="text-align:left;">
+Age of Mother
+</th>
+<th style="text-align:left;">
+Infant Birth Weight (g)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+individual 1
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+2523
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+individual 2
+</td>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:left;">
+2551
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+individual 3
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+2557
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+individual 4
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+2594
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+individual 5
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+2600
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+individual 189
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+2495
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+<p>The prediction equation for the regression model fit to the
+birthweight data is given by</p>
+<p><span class="math display">\[\hat{y} = 2655.7 + 12.43x_i\]</span></p>
+<p>Now consider the predicted birth weight of an infant born to a mother
+of 21 years of age: <span class="math inline">\(\hat{y} =
+2916.7\)</span> grams. However, we do not expect all mothers of <span
+class="math inline">\(21\)</span> years of age have an infant birth
+weight. One mother may have an infant born at <span
+class="math inline">\(3200\)</span> grams and another at <span
+class="math inline">\(2500\)</span> grams and so on. As we can see from
+panel <span class="math inline">\(\bf B\)</span> in the plot above, for
+each possible age of the mother, there is a distribution of infant birth
+weights corresponding to a specific population of mothers. Thus we can
+think of the predicted value <span class="math inline">\(\hat{y} =
+2916.7\)</span> as estimating the mean birth weight of all mothers aged
+<span class="math inline">\(x = 21\)</span> years.</p>
+<p>The <strong>population regression equation</strong> relates the
+predictor <span class="math inline">\(x\)</span> to the means of <span
+class="math inline">\(Y\)</span> in the population.</p>
+<p><span class="math display">\[\mu_y = \alpha +\beta x \]</span></p>
+<p>where <span class="math inline">\(\alpha\)</span>, and <span
+class="math inline">\(\beta\)</span> are population parameters that are
+unknown. The quantity <span class="math inline">\(\mu_y\)</span> is the
+population mean of <span class="math inline">\(y\)</span> for a given
+value of <span class="math inline">\(x\)</span>.</p>
+</div>
+<div id="statistical-inference-for-linear-regression"
+class="section level3">
+<h3>Statistical inference for linear regression</h3>
+<p>A linear regression model:</p>
+<ul>
+<li><p>specifies the linear relationship between two quantitative
+variables</p></li>
+<li><p>uses a straight line to relate the means of <span
+class="math inline">\(Y\)</span> across specific values of the predictor
+variable <span class="math inline">\(x\)</span></p></li>
+</ul>
+<p>The <strong>population regression equation</strong> contains two
+population parameters <span class="math inline">\(\alpha\)</span> the
+intercept and <span class="math inline">\(\beta\)</span> the slope which
+are important for understanding the linear relationship between the
+predictor and outcome variables. We can conduct statistic inference on
+these two population parameters to place bounds on their values using
+confidence intervals or conduct hypothesis tests about specific values.
+However, as always, statistical inference comes with certain assumptions
+about the model which we will list below:</p>
+<p>Statistical inference for the least-squares simple linear regression
+is based on the model</p>
+<p><span class="math display">\[ y_i = \alpha +\beta x_i
++\epsilon_i\]</span></p>
+<p>the key assumptions of this model mostly concern the behavior of the
+residuals <span class="math inline">\(\epsilon_i\)</span>:</p>
+<ul>
+<li><p><strong>Linearity</strong> - the expected value (i.e average
+value) of the residuals is <span class="math inline">\(0\)</span> for
+all values of <span class="math inline">\(x\)</span>: <span
+class="math inline">\(E[\epsilon_i|x] = 0\)</span></p></li>
+<li><p><strong>Constant Variance</strong> - the variance of the
+residuals is the same regardless of the value of the predictor <span
+class="math inline">\(x\)</span>: <span
+class="math inline">\(V[\epsilon_i | x_i] =
+\sigma_\epsilon^2\)</span></p></li>
+<li><p><strong>Normality</strong> - residuals are normally distributed:
+<span class="math inline">\(\epsilon_i \sim N(0,
+\sigma_\epsilon^2)\)</span></p></li>
+<li><p><strong>Independence</strong> - the observations are sampled
+independently: any pair of errors <span
+class="math inline">\((\epsilon_i, \epsilon_j)\)</span> are
+independent</p></li>
+<li><p><strong>Fixed <span class="math inline">\(X\)</span></strong> the
+values of the predictor <span class="math inline">\(X\)</span> are fix
+values or measured without error and independent of the
+residuals</p></li>
+<li><p><strong><span class="math inline">\(X\)</span> is not
+invariant</strong> - If the explanatory variable is fixed, then its
+values cannot all be the same. (i.e <span
+class="math inline">\(x\)</span> cannot be constant)</p></li>
+</ul>
+<p>Under these assumptions the population parameters <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> are normally distributed. We are
+generally more concerned with the slope than the intercept. Therefore,
+the <span class="math inline">\((1 -a)\%\)</span> confidence interval
+for the slope is given by</p>
+<p><span class="math display">\[ \beta = \hat{\beta} \pm t_{1- a/2}
+SE(\hat{\beta})\]</span></p>
+<p>In the equation above the critical value <span
+class="math inline">\(t_{1-a/2}\)</span> follows a <span
+class="math inline">\(t\)</span>-distribution with <span
+class="math inline">\(n-2\)</span> degrees of freedom and the standard
+error of the sample slope is given by</p>
+<p><span class="math display">\[SE(\hat{\beta}) =
+\sqrt{\frac{s_\epsilon^2}{(n-1)s_x^2}} \]</span></p>
+<p><span class="math display">\[= \sqrt{\frac{\frac{1}{n-2}\sum_i
+\hat{\epsilon_i}}{\sum_i (x_i - \bar{x})^2}} \]</span></p>
+<p>A hypothesis test on the population slope <span
+class="math inline">\(\beta\)</span> is usually conducted under the null
+hypothesis <span class="math inline">\(H_0: \beta = 0\)</span> or “no
+linear relationship between <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span>”. The test is generally two-sided
+with alternative hypothesis <span class="math inline">\(H_A: \beta \neq
+0\)</span>. The test statistic is the standardized estimate</p>
+<p><span class="math display">\[t_0 = \frac{\beta -
+\hat{\beta}}{SE(\hat{\beta})} \sim t(n-2) \]</span></p>
+<p>The calculations at this point are quite involved and it is best to
+rely on software to conduct inference on regression coefficients.
+Consider, again, the example of a regression model relating the age of
+mothers to the birth weight of their infants. The programming software
+<span class="math inline">\(R\)</span> makes fitting linear models quite
+easy:</p>
+<pre class="r"><code>set.seed(123)
+
+# The data come from the R-package MASS
+data = MASS::birthwt
+
+#fit a linear model using the &quot;lm()&quot; function: model = lm(y ~ x, data = dataframe)
+model = lm(bwt ~ age, data = data)
+print(model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = bwt ~ age, data = data)
+## 
+## Coefficients:
+## (Intercept)          age  
+##     2655.74        12.43</code></pre>
+<pre class="r"><code>#R has a function called summary which nicely displays all of the information:
+summary(model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = bwt ~ age, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2294.78  -517.63    10.51   530.80  1774.92 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2655.74     238.86   11.12   &lt;2e-16 ***
+## age            12.43      10.02    1.24    0.216    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 728.2 on 187 degrees of freedom
+## Multiple R-squared:  0.008157,   Adjusted R-squared:  0.002853 
+## F-statistic: 1.538 on 1 and 187 DF,  p-value: 0.2165</code></pre>
+<p>In the output from <span class="math inline">\(R\)</span> above, we
+see that the estimate of the slope is <span
+class="math inline">\(\hat{\beta} = 12.43\)</span> with a standard error
+of <span class="math inline">\(SE(\hat{\beta} = 10.02)\)</span>. Recall
+from earlier that the data consist of 189 mothers and their infant birth
+weights. Using the estimate and standard error, we can easily construct
+a <span class="math inline">\(95\%\)</span> confidence interval for the
+slope</p>
+<p><span class="math display">\[ 12.43 \pm 1.97 (10.02) \approx \big[
+-7.31, 32.17 \big]\]</span></p>
+<p>Our confidence interval for the slope overlaps zero which indicates
+that age of the mother is not a good predictor of infant birth weight.
+The output from above also gives the test statistic and <span
+class="math inline">\(p\)</span>-value for the hypothesis tests on each
+coefficient under the null that their values are zero i.e <span
+class="math inline">\(H_0: \beta = 0\)</span>. The test statistic for
+the slope in our example is given by</p>
+<p><span class="math display">\[ t_0 = \frac{12.43}{10.02} =
+1.24\]</span></p>
+<p>You can confirm that <span class="math inline">\(p\)</span>-value
+corresponding the test statistic using the <span
+class="math inline">\(t\)</span>-table on the resources tab of the
+course website. As we can see from the output, the hypothesis test also
+confirms that age of mother and infant birth weight are not
+significantly associated.</p>
+</div>
+<div id="an-alternative-way-to-test-association" class="section level3">
+<h3>An alternative way to test association</h3>
+<p>Notice that the last line of the output in the previous example
+reported something called an <span
+class="math inline">\(F\)</span>-statistic. This statistic comes from an
+alternative test of the association between age of mothers and infant
+birth weights that is based on the relative variation explained by the
+predictor, similar to the <span class="math inline">\(r^2\)</span>
+coefficient, called an <strong>Analysis of Variance</strong> or
+<strong>ANOVA</strong>. The <span
+class="math inline">\(F\)</span>-statistic computed as the ratio of the
+average square in the regression to average residual deviation. Recall
+the relationship between the total variation in the response, the
+regression and the residuals</p>
+<p><span class="math display">\[ SS_T = SS_E + SS_R \]</span></p>
+<p><span class="math display">\[ \sum_i (y_i - \bar{y})^2 = \sum_i (y_i
+- \hat{y}_i)^2 + \sum_i (\hat{y}_i - \bar{y})^2 \]</span></p>
+<p>The <span class="math inline">\(F\)</span>-statistic compares the
+relative size of the <em>mean square</em> of the regression</p>
+<p><span class="math display">\[MS_R = \frac{SS_R}{k} \]</span></p>
+<p>to the mean square of the residuals</p>
+<p><span class="math display">\[ MS_E = \frac{SS_E}{n-k-1} \]</span></p>
+<p>where <span class="math inline">\(k\)</span> and <span
+class="math inline">\(n - k - 1\)</span> are the respective degrees of
+freedom for each estimated sum of squares. In simple linear regression
+between two <em>quantitative</em> variables <span
+class="math inline">\(k\)</span> is always <span
+class="math inline">\(1\)</span>. This gives the <span
+class="math inline">\(F\)</span>-statistic as</p>
+<p><span class="math display">\[F_0 = \frac{\text{Mean square for
+regression}}{\text{Mean square of error}} \]</span></p>
+<p><span class="math display">\[ = \frac{SS_R/k}{SS_E/(n-k-1)} \sim F(k,
+n-k-1)\]</span></p>
+<p>The above statistic is a ratio of two variances, which follows a
+special type of distribution called an <span
+class="math inline">\(F\)</span>-distribution so named after Sir Ronald
+Fisher - the father of statistics who proposed its use in 1918. The
+<span class="math inline">\(F\)</span> distribution has two degrees of
+freedom parameters, one for the variance in the numerator and one for
+the variance in the denominator. In essence, an ANOVA tells us how much
+information in the response can be explained by the predictor variable.
+If the predictor variable and the response variable have a linear
+relationship, then the predictor should explain a fair proportion of the
+variation in the the response <span
+class="math inline">\(Y\)</span>.</p>
+<p>For simple linear regression between two quantitative variables, the
+<span class="math inline">\(F\)</span>-test is always</p>
+<p><span class="math display">\[ = \frac{SS_R}{SS_E/(n-2)} \sim F(1,
+n-2) \]</span></p>
+<p>which is exactly the squared value of the <span
+class="math inline">\(t\)</span> statistic from the <span
+class="math inline">\(t\)</span>-test on the slope. The results of an
+ANOVA are usually displayed in an ANOVA table:</p>
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:left;">
+Sum of Squares
+</th>
+<th style="text-align:left;">
+Degrees of Fredom
+</th>
+<th style="text-align:left;">
+Mean Square
+</th>
+<th style="text-align:left;">
+F-statistic
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(p\)</span>-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Predictor
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SS_R = \sum (\hat{y} = \bar{y})^2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(k\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SS_R/k\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(F_0 = \frac{(SS_R/k)}{SS_E/(n-k-1)}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(F &gt; F_0|H_0)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Error
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SS_E = \sum (y - \hat{y})^2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n-k-1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SS_E/(n-k-1)\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SS_T = \sum (y - \bar{y})^2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n-1\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
 <p><br> <br> <br> <br></p>
 </div>
 <div id="references" class="section level3 unnumbered">

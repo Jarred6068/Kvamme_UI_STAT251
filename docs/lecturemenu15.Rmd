@@ -701,6 +701,191 @@ kable(df, format = 'html', digits = 2,
 ```
 
 
+# Lecture 31 Friday, April 26th 2024
+
+### Regression relate the mean of $Y$ to $X$
+
+At a specific value of $x$ the prediction equation $\hat{y}_i = \alpha + \beta x_i$ gives our prediction for a single value of $Y$. However, we don't expect all observations of $y$ that depend on a given $x$ to have the same value because naturally there is variation among individuals in the population. For example, consider the linear regression below which relates the age of $189$ mothers in the U.S to the birth weight of their infants [@MASS].
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=8, fig.width=10}
+set.seed(123)
+
+data = MASS::birthwt
+
+df = rbind.data.frame(cbind.data.frame(`Individual`=paste0('individual ', 1:5),
+                                       `Age of Mother` = data$age[1:5], 
+                                       `Infant Birth Weight (g)` = data$bwt[1:5]),
+                      rep('$\\vdots$',3),
+                      cbind.data.frame(`Individual`=paste0('individual ', 189),
+                                       `Age of Mother` = data$age[189], 
+                                       `Infant Birth Weight (g)` = data$bwt[189]))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+model = lm(bwt ~ age, data = MASS::birthwt)
+data$Smoker = as.factor(data$smoke)
+A = ggplot(data = data, aes(x = age, y = bwt, fill = Smoker))+
+  geom_point(shape = 21, color = 'black', size = 2)+
+  geom_abline(intercept = model$coefficients[1], slope = model$coefficients[2],
+              color = 'red', size = 1.3, linetype = 'dotted')+
+  theme_bw()+
+  geom_text(aes(x=40,y=4000), label = TeX(paste0('$ r^2 = 0.008157$')))+
+  xlab('Age of Mother (Years)')+
+  ylab('Birth Weight of Infant (grams)')+
+  theme(axis.text = element_text(size =12),
+        axis.title = element_text(size = 14),
+        legend.position = 'top')
+
+
+B = ggplot(data = data, aes(x = as.factor(age), y = bwt))+
+  geom_boxplot(color = 'black')+
+  theme_bw()+
+  xlab('Age of Mother (Years)')+
+  ylab('Birth Weight of Infant (grams)')+
+  theme(axis.text = element_text(size =12),
+        axis.title = element_text(size = 14),
+        legend.position = 'top')
+
+ggarrange(A, B, labels = c('A','B'), nrow = 2)
+  
+
+```
+
+The prediction equation for the regression model fit to the birthweight data is given by
+
+\[\hat{y} = 2655.7 + 12.43x_i\]
+
+Now consider the predicted birth weight of an infant born to a mother of 21 years of age: $\hat{y} = 2916.7$ grams. However, we do not expect all mothers of $21$ years of age have an infant birth weight. One mother may have an infant born at $3200$ grams and another at $2500$ grams and so on. As we can see from panel $\bf B$ in the plot above, for each possible age of the mother, there is a distribution of infant birth weights corresponding to a specific population of mothers. Thus we can think of the predicted value $\hat{y} = 2916.7$ as estimating the mean birth weight of all mothers aged $x = 21$ years. 
+
+The **population regression equation** relates the predictor $x$ to the means of $Y$ in the population.
+
+\[\mu_y = \alpha +\beta x \]
+
+where $\alpha$, and $\beta$ are population parameters that are unknown. The quantity $\mu_y$ is the population mean of $y$ for a given value of $x$. 
+
+### Statistical inference for linear regression
+
+A linear regression model: 
+
+  * specifies the linear relationship between two quantitative variables
+  
+  * uses a straight line to relate the means of $Y$ across specific values of the predictor variable $x$ 
+  
+The **population regression equation** contains two population parameters $\alpha$ the intercept and $\beta$ the slope which are important for understanding the linear relationship between the predictor and outcome variables. We can conduct statistic inference on these two population parameters to place bounds on their values using confidence intervals or conduct hypothesis tests about specific values. However, as always, statistical inference comes with certain assumptions about the model which we will list below:
+
+Statistical inference for the least-squares simple linear regression is based on the model
+
+\[ y_i = \alpha +\beta x_i +\epsilon_i\]
+
+the key assumptions of this model mostly concern the behavior of the residuals $\epsilon_i$: 
+
+  * **Linearity** - the expected value (i.e average value) of the residuals is $0$ for all values of $x$: $E[\epsilon_i|x] = 0$
+  
+  * **Constant Variance** - the variance of the residuals is the same regardless of the value of the predictor $x$: $V[\epsilon_i | x_i] = \sigma_\epsilon^2$
+  
+  * **Normality** - residuals are normally distributed: $\epsilon_i \sim N(0, \sigma_\epsilon^2)$
+  
+  * **Independence** - the observations are sampled independently: any pair of errors $(\epsilon_i, \epsilon_j)$ are independent 
+  
+  * **Fixed $X$** the values of the predictor $X$ are fix values or measured without error and independent of the residuals
+  
+  * **$X$ is not invariant** - If the explanatory variable is fixed, then its values cannot all be the same. (i.e $x$ cannot be constant)
+  
+Under these assumptions the population parameters $\alpha$ and $\beta$ are normally distributed. We are generally more concerned with the slope than the intercept. Therefore, the $(1 -a)\%$ confidence interval for the slope is given by 
+
+\[ \beta = \hat{\beta} \pm t_{1- a/2} SE(\hat{\beta})\]
+
+In the equation above the critical value $t_{1-a/2}$ follows a $t$-distribution with $n-2$ degrees of freedom and the standard error of the sample slope is given by
+
+\[SE(\hat{\beta}) = \sqrt{\frac{s_\epsilon^2}{(n-1)s_x^2}} \]
+
+\[= \sqrt{\frac{\frac{1}{n-2}\sum_i \hat{\epsilon_i}}{\sum_i (x_i - \bar{x})^2}} \]
+
+A hypothesis test on the population slope $\beta$ is usually conducted under the null hypothesis $H_0: \beta = 0$ or "no linear relationship between $X$ and $Y$". The test is generally two-sided with alternative hypothesis $H_A: \beta \neq 0$. The test statistic is the standardized estimate 
+
+\[t_0 = \frac{\beta - \hat{\beta}}{SE(\hat{\beta})} \sim t(n-2) \]
+
+The calculations at this point are quite involved and it is best to rely on software to conduct inference on regression coefficients. Consider, again, the example of a regression model relating the age of mothers to the birth weight of their infants. The programming software $R$ makes fitting linear models quite easy:
+
+
+```{r, echo=T, warning=F, message=F, fig.height=8, fig.width=10}
+set.seed(123)
+
+# The data come from the R-package MASS
+data = MASS::birthwt
+
+#fit a linear model using the "lm()" function: model = lm(y ~ x, data = dataframe)
+model = lm(bwt ~ age, data = data)
+print(model)
+
+#R has a function called summary which nicely displays all of the information:
+summary(model)
+
+  
+
+```
+
+In the output from $R$ above, we see that the estimate of the slope is $\hat{\beta} = 12.43$ with a standard error of $SE(\hat{\beta} = 10.02)$. Recall from earlier that the data consist of 189 mothers and their infant birth weights. Using the estimate and standard error, we can easily construct a $95\%$ confidence interval for the slope 
+
+\[ 12.43 \pm 1.97 (10.02) \approx \big[ -7.31, 32.17 \big]\]
+
+Our confidence interval for the slope overlaps zero which indicates that age of the mother is not a good predictor of infant birth weight. The output from above also gives the test statistic and $p$-value for the hypothesis tests on each coefficient under the null that their values are zero i.e $H_0: \beta = 0$. The test statistic for the slope in our example is given by
+
+\[ t_0 = \frac{12.43}{10.02} = 1.24\]
+
+You can confirm that $p$-value corresponding the test statistic using the $t$-table on the resources tab of the course website. As we can see from the output, the hypothesis test also confirms that age of mother and infant birth weight are not significantly associated. 
+
+### An alternative way to test association
+
+Notice that the last line of the output in the previous example reported something called an $F$-statistic. This statistic comes from an alternative test of the association between age of mothers and infant birth weights that is based on the relative variation explained by the predictor, similar to the $r^2$ coefficient, called an **Analysis of Variance** or **ANOVA**. The $F$-statistic computed as the ratio of the average square in the regression to average residual deviation. Recall the relationship between the total variation in the response, the regression and the residuals
+
+\[ SS_T = SS_E + SS_R \]
+
+\[ \sum_i (y_i - \bar{y})^2 = \sum_i (y_i - \hat{y}_i)^2 + \sum_i (\hat{y}_i - \bar{y})^2 \]
+
+The $F$-statistic compares the relative size of the *mean square* of the regression 
+
+\[MS_R = \frac{SS_R}{k} \]
+
+to the mean square of the residuals 
+
+\[ MS_E = \frac{SS_E}{n-k-1} \]
+
+where $k$ and $n - k - 1$ are the respective degrees of freedom for each estimated sum of squares. In simple linear regression between two *quantitative* variables $k$ is always $1$. This gives the $F$-statistic as
+
+\[F_0 = \frac{\text{Mean square for regression}}{\text{Mean square of error}} \]
+
+\[ = \frac{SS_R/k}{SS_E/(n-k-1)} \sim F(k, n-k-1)\]
+
+The above statistic is a ratio of two variances, which follows a special type of distribution called an $F$-distribution so named after Sir Ronald Fisher - the father of statistics who proposed its use in 1918. The $F$ distribution has two degrees of freedom parameters, one for the variance in the numerator and one for the variance in the denominator. In essence, an ANOVA tells us how much information in the response can be explained by the predictor variable. If the predictor variable and the response variable have a linear relationship, then the predictor should explain a fair proportion of the variation in the the response $Y$. 
+
+
+For simple linear regression between two quantitative variables, the $F$-test is always
+
+\[ = \frac{SS_R}{SS_E/(n-2)} \sim F(1, n-2) \]
+
+which is exactly the squared value of the $t$ statistic from the $t$-test on the slope. The results of an ANOVA are usually displayed in an ANOVA table:
+
+```{r, echo=F, warning=F, message=F, fig.height=8, fig.width=10}
+set.seed(123)
+
+df = cbind.data.frame(Term = c('Predictor', 'Error', 'Total'),
+                 `Sum of Squares` = c('$SS_R = \\sum (\\hat{y} = \\bar{y})^2$', 
+                                      '$SS_E = \\sum (y - \\hat{y})^2$', 
+                                      '$SS_T = \\sum (y - \\bar{y})^2$'),
+                 `Degrees of Fredom` = c('$k$', '$n-k-1$', '$n-1$'),
+                 `Mean Square` = c('$SS_R/k$', '$SS_E/(n-k-1)$', ''),
+                 `F-statistic` = c('$F_0 = \\frac{(SS_R/k)}{SS_E/(n-k-1)}$','',''),
+                 `$p$-value` = c('$P(F > F_0|H_0)$', '', ''))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
 
 <br>
 <br>
