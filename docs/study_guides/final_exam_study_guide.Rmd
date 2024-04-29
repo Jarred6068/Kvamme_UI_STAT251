@@ -1,0 +1,177 @@
+---
+title: "Final Exam Study Guide"
+author: "STAT 251 Section 03"
+date: "2024-04-29"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
+library(kableExtra)
+library(knitr)
+library(latex2exp)
+library(gridExtra)
+library(ggpubr)
+library(ggthemes)
+library(plyr)
+```
+
+
+---
+title: "Final Exam Information and Study Guide"
+output: html_document
+---
+
+# Final Exam Information
+
+The final examination is on Monday, May. 6th, from 8:00 AM to 10:00 AM. It will be in the same room as lecture.
+
+It is university policy that if you have more than two final examinations scheduled on the same day based on the official final examination schedule, then you may have the extra final examination(s) rescheduled. If you need to have your final examination rescheduled, you must make arrangements with me before the final examination.
+
+The format for the final examination is similar to the other examinations, except that it will be longer (about 25-30 questions), and all questions will be multiple choice. The final examination focuses more on concepts and definitions and less on computations. However, you should be familiar with some calculations (see the study guide below). The final will have some multiple-choice questions where you need to identify either the correct formula or expression to compute, for example, a certain test statistic or confidence interval.
+
+You may need a calculator for the final examination. You may also use up to five pages of notes ($8.5$ by $11$ inches maximum, writing on both sides is fine). All formulas listed on the final exam study guide will provided. 
+
+As stated on the syllabus, the final examination is worth $25\%$ of your course grade. The final examination cannot be dropped. Also, please note the grading scheme listed on the course syllabus when determining what grade you might get in the course after taking the final.
+
+While the final examination is comprehensive, it is also limited to the topics mentioned in the study guide below. I will not ask any questions about topics not mentioned below. If you want to know if a particular topic might be on the examination, just ask.
+
+I will be available during my normal office hours on Friday, May 3rd, and will be around for most of the day. Feel free to drop by, but if you want to be sure I will be there before you come to my office, please email me.
+
+# Final Exam Study Guide
+
+I have organized the study guide according to the material covered on each exam.
+
+## Exam 1 Concepts
+
+- Understand the distinction between a sample and a population of observations.
+- Understand the distinction between a statistic and a parameter.
+- Understand what is meant by descriptive versus inferential statistics.
+- Understand what is meant by a distribution.
+- Understand how to construct and interpret a frequency table.
+- Understand the distinction between quantitative and qualitative variables
+- Understand the distinction between nominal and ordinal variables
+- Understand the distinction between discrete and continuous variables
+- Know the various measures of spread (range, IQR, variance, standard deviation) and how they computed
+- Know the various measures of location/center (mean, median, mode) and how they are computed.
+- Know the five-number summary and how it relates to a boxplot.
+- Know how to apply the $1.5 \times IQR$ and $2s$ rules for identifying outliers.
+- Understand what it means to say that a summary measure is resistant to outliers, and which summary measures we have discussed that are resistant and which are not
+
+### Exam 1 equations
+
+\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(X)\]
+	
+\[s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \ \ s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}\]
+
+\[ \text{range}(x) = \text{min}(x) - \text{max}(x), \ \ IQR = Q3 - Q1 \]
+	
+\[x < Q1 - 1.5 \times (Q3 - Q1), \ \  x > Q3 - 1.5\times(Q3-Q1)\]
+
+
+# Exam 2 Concepts
+- Understand the empirical rule and how it applies to bell-shaped distributions.
+- Know how to compute and interpret a $z$-score and how it relates to the standard normal distribution
+- Know the difference between Sampling Error and Margin of Error.
+- Know the defining characteristics of the varous sampling designs we've discussed i.e Convenience Sampling, Systematic Sampling, Simple Random Sampling, Cluster Sampling, Stratified Random Sampling
+- Know the defining characteristics of the various experimental designs we've discussed i.e Completely Randomized Design, Randomized Block Design, Matched Pairs Design
+- Know the difference between a population distribution and a sampling distribution 
+- Be comfortable with the language of probability theory: e.g know how to define Probability, Sample Space, Event, Random Trial
+- Know what is implied by the Law of Large Numbers (e.g the relative frequency of an event will approach the true probability of an event as the number of observations of the event increases)
+- Know the definition of a random variable, and the difference between discrete random variables versus continuous random variables.
+- Understand what is meant by the probability distribution of a discrete random variable
+- Know how to compute the mean, variance, and standard deviation of a discrete random variable from its probability distribution (when given as a table of values and probabilities).
+- Understand the key features that define the Bernoulli, Poisson, and Binomial random variables.
+- Understand what is stated by the central limit theory and how it relates to the shape of the sampling distributions of $\bar{x}$ and $\hat{p}$
+
+### Exam 2 Equations
+\[ z = \frac{x - \mu}{\sigma} \]
+
+\[\mu = \sum_x x\cdot P(x) \]
+
+\[ \sigma^2 = \sum_x (x-\mu)^2\cdot P(x) \]
+
+\[\sigma = \sqrt{\sum_x (x-\mu)^2\cdot P(x)} \]
+
+
+# Exam 3 Concepts
+
+- Understand the “anatomy” of a confidence interval (i.e., point estimate, standard score, standard error, and margin of error). 
+- Know what is meant by the term *confidence level* and how it relates to width of confidence interval.
+  - What effect does increasing the confidence level have on the margin of error and the width of a confidence interval?
+  - What effect does increasing the sample size have on the margin of error and the width of a confidence interval?
+  
+- Know how to compute the sample size required to estimating $p$ with $\hat{p}$ for a desired margin of error $m$
+\[n = \frac{p(1-p)z^2}{m^2} \]
+- Understand when and how you would use each of the following formulas for confidence intervals:
+\[ \hat{p} \pm z_{1-\alpha/2}\times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
+\[ \bar{x} \pm t_{1-\alpha/2}\times \frac{s}{\sqrt{n}} \]
+- Understand when and how you would use each of the following formulas for confidence intervals:
+\[ (\hat{p}_1 - \hat{p}_2) \pm z_{1-\alpha/2} \times \sqrt{\frac{\hat{p}_1(1-\hat{p})}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
+\[ (\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}} \]
+
+- Understand what is mean by the term statistical significance.
+- Know what is meant by the term $p$-value
+- Know the meaning of *critical value*, *significance level* and *rejection* region and how they related to a significance test.
+- Understand the roles of the null and alternative hypothesis in a statistical test.
+- Know how to decide if we reject or do not reject a null hypothesis (i.e., the decision rule that we use to decide whether or not we reject the null hypothesis).
+- Know the means and standard deviations of sampling distributions of $\bar{x}$ and $\hat{p}$.
+- Understand how a confidence interval relates to a significance test.
+- Understand what is meant by the power of a significance test and what affects the power of a significance test.
+- Know the two types of errors in statistical testing: type I and type II.
+- Understand when and how you would use each of the following formulas for test statistics:
+\[ z_{\text{obs}} = \frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \]
+\[ t_{\text{obs}} = \frac{\bar{x}-\mu_0}{s/\sqrt{n}} \sim t(n-1) \]
+- Understand when and how you would use each of the following formulas for test statistics:
+\[ Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim N(0,1) \]
+\[ t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\sim t\big(\min(n_1 - 1, n_2 - 1)\big) \]
+
+
+# New Material (Lectures 28 - 32)
+
+### Categorical Data Analysis
+- Know how to define the null and alternative hypotheses for the $\chi^2$ goodness-of-fit and test of independence 
+
+- Understand when and how you would use each of the following formulas for the $\chi^2$ goodness-of-fit and independence test statistics:
+\[ \chi_{obs}^2 = \sum_{i=1}^c \frac{(\text{observed count}_i - \text{expected count}_i)^2}{\text{expected count}_i} \sim \chi^2(c-1)\]
+\[ \chi_{obs}^2 = \sum_{j=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}} \sim \chi^2(r-1\times c-1) \]
+
+- Understand how compute the expected counts for a goodness-of-fit test and a test of independence
+\[ E_i = np_i \ \ \text{and} \ \  E_i = \frac{\text{Row}_i \text{ Total} \times \text{Column}_i \text{ Total}}{\text{n}}\]
+
+
+### Correlation and Linear Regression 
+- Understand how the correlation coefficient $r$ corresponds to patterns in a scatterplot.
+
+- Know how the value of the correlation coefficient $r$ relates to linear relationship between two variables.
+
+- Know why covariance is a poor measure of association and how it relates to the correlation coefficient $r$.
+
+- Know the difference between the *prediction equation* and the *population regression equation*
+
+- Understand what is meant by the term residual and how it relates to a linear regression model
+
+- Know how to compute and interpret the least squares estimates of the intercept $\alpha$ and slope $\beta$ from summary statistics.
+
+- Understand the terms Error Sum of Squares ($SS_E$), Regression Sum of Squares ($SS_R$), and Total Sum of Squares ($SS_T$), how they relate to a linear regression model and the variation of the response variable.
+
+- Know how to compute and interpret the coefficient of determination $r^2$.
+
+- Know how to specify the null and alternative hypotheses for a signifcance test on the slope coefficient $\beta$ and they relate to linear dependence between the response and explanatory variables.
+
+### Formulas for Correlation and Linear Regression
+
+\[y_i = \alpha + \beta x_i +\epsilon_i\]
+\[\hat{\beta} = r\left(\frac{s_y}{s_x}\right) \]
+\[\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}\]
+\[SS_T = \sum (y-\bar{y})^2 = RegSS+ESS \]
+\[SS_R = \sum (\hat{y}-\bar{y})^2\]
+\[SS_E = \sum (y-\hat{y})^2\]
+\[r^2 = \frac{SS_R}{SS_T}\]

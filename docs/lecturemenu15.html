@@ -451,6 +451,12 @@ $(document).ready(function () {
         </li>
       </ul>
     </li>
+    <li>
+      <a href="study_guides/final_exam_study_guide.html">Final Exam Study Guide</a>
+    </li>
+    <li>
+      <a href="study_guides/final_exam_jeopardy_review.html">Final Exam Review</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -1882,8 +1888,8 @@ confirms that age of mother and infant birth weight are not
 significantly associated.</p>
 </div>
 </div>
-<div id="monday-april-29th-2024" class="section level1">
-<h1>Monday April 29th 2024</h1>
+<div id="lecture-32-monday-april-29th-2024" class="section level1">
+<h1>Lecture 32 Monday April 29th 2024</h1>
 <div id="an-alternative-way-to-test-association" class="section level3">
 <h3>An alternative way to test association</h3>
 <p>Consider the following dataset containing information about 1,143
@@ -5883,16 +5889,113 @@ customer rating and the amount of added sugars?</p></li>
 <li><p>What does the fitted linear model indicate about the relationship
 between customer rating and added sugar?</p></li>
 </ul>
-<p>Some summary statistics regarding each variable is given in the table
-below</p>
+Some summary statistics regarding each variable is given in the table
+below
+<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;">
+Statistic
+</td>
+<td style="text-align:left;">
+Avg. Customer Rating
+</td>
+<td style="text-align:left;">
+Avg. Added Sugars (g)
+</td>
+<td style="text-align:left;">
+StDev Customer Rating
+</td>
+<td style="text-align:left;">
+StDev. Added Sugars (g)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(r_{x,y}\)</span>
+</td>
+<td style="text-align:left;">
+Total SS
+</td>
+<td style="text-align:left;">
+Regression SS
+</td>
+<td style="text-align:left;">
+Error SS
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SE(\hat{\beta})\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SE(\hat{\alpha})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Value
+</td>
+<td style="text-align:left;">
+42.56
+</td>
+<td style="text-align:left;">
+7.03
+</td>
+<td style="text-align:left;">
+14.11
+</td>
+<td style="text-align:left;">
+4.38
+</td>
+<td style="text-align:left;">
+-0.76
+</td>
+<td style="text-align:left;">
+14929.29
+</td>
+<td style="text-align:left;">
+8711.93
+</td>
+<td style="text-align:left;">
+6217.36
+</td>
+<td style="text-align:left;">
+0.24
+</td>
+<td style="text-align:left;">
+2.00
+</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><p>Using the table above, compute the <em>slope</em>, and <span
-class="math inline">\(r^2\)</span> for the regression model treating
-customer rating as the response and interpret them</p></li>
-<li><p>Test the hypothesis that the slope is significantly different
-than zero and interpret your results</p></li>
-<li><p>Compute the ANOVA table for the linear model above</p></li>
+<li>Using the table above, compute the <em>intercept</em>,
+<em>slope</em>, and <span class="math inline">\(r^2\)</span> for the
+regression model treating customer rating as the response and interpret
+them</li>
 </ul>
+<p><span class="math display">\[\hat{\beta} =
+-0.76\left(\frac{14.11}{4.38}\right) = -2.46\]</span></p>
+<p><span class="math display">\[\hat{\alpha} = 42.56 - (-2.46)\cdot 7.03
+= 59.85\]</span></p>
+<p><span class="math display">\[r^2 = \frac{8711.93}{14929.29} =
+(-0.76)^2 = 0.58 \ \ \text{or} \ \ 58\%\]</span></p>
+<ul>
+<li>Test the hypothesis that the slope is significantly different than
+zero and interpret your results</li>
+</ul>
+<p>The null and alternative hypotheses are</p>
+<p><span class="math display">\[H_0: \beta = 0, \ \ H_A: \beta \neq 0
+\]</span></p>
+<p>The test statistic is</p>
+<p><span class="math display">\[ t_0 = \frac{-2.46}{0.24} = -10.25 \sim
+t(76-2)\]</span></p>
+<p>The <span class="math inline">\(p\)</span>-value is</p>
+<p><span class="math display">\[ P(|t| \geq |t_0| |H_0 \ \text{True}) =
+P(t \geq 10.25|H_0 \ \text{True}) \approx 0 \]</span></p>
+<ul>
+<li>Compute the <span class="math inline">\(F\)</span>-statistic for the
+ANOVA test using the table above:</li>
+</ul>
+<p><span class="math display">\[F_0 = \frac{8711.93/1}{6217.36/(76-2)} =
+103.69 \sim F(1, 74)\]</span></p>
 </div>
 <div id="checking-assumptions" class="section level3">
 <h3>Checking Assumptions</h3>

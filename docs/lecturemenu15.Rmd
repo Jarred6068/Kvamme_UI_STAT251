@@ -841,7 +841,7 @@ You can confirm the $p$-value is $0.26$ using the $t$-table on the resources tab
 
 
 
-# Monday April 29th 2024
+# Lecture 32 Monday April 29th 2024
 
 
 ### An alternative way to test association
@@ -1068,14 +1068,53 @@ model = lm(rating ~ sugars, data = data)
 
 #print out summary
 output = summary(model)
+n = dim(data)[1]
+df = cbind.data.frame(c('Avg. Customer Rating', 'Avg. Added Sugars (g)',
+                        'StDev Customer Rating', 'StDev. Added Sugars (g)',
+                        '$r_{x,y}$','Total SS', 'Regression SS','Error SS',
+                        '$SE(\\hat{\\beta})$', '$SE(\\hat{\\alpha})$'),
+     c(round(mean(data$rating),2),
+       round(mean(data$sugars),2),
+       round(sd(data$rating),2),
+       round(sd(data$sugars),2),
+       round(cor(data$rating, data$sugars),2),
+       round(var(data$rating)*(n-1),2),
+       round(sum((model$fitted.values - mean(data$rating))^2),2),
+       round(sum(model$residuals^2), 2),
+       round(output$coefficients[2,2],2),
+       round(output$coefficients[1,2],2)))
+colnames(df) = c('Statistic', 'Value')
 
+kable(t(df), format = 'html', digits = 2, 
+      row.names = T, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-* Using the table above, compute the *slope*, and $r^2$ for the regression model treating customer rating as the response and interpret them
+* Using the table above, compute the *intercept*, *slope*, and $r^2$ for the regression model treating customer rating as the response and interpret them
+
+\[\hat{\beta} = -0.76\left(\frac{14.11}{4.38}\right) = -2.46\]
+
+\[\hat{\alpha} = 42.56 - (-2.46)\cdot 7.03 = 59.85\]
+
+\[r^2 = \frac{8711.93}{14929.29} = (-0.76)^2 = 0.58 \ \ \text{or} \ \ 58\%\]
 
 * Test the hypothesis that the slope is significantly different than zero and interpret your results
 
-* Compute the ANOVA table for the linear model above
+The null and alternative hypotheses are 
+
+\[H_0: \beta = 0, \ \ H_A: \beta \neq 0 \]
+
+The test statistic is 
+
+\[ t_0 = \frac{-2.46}{0.24} = -10.25 \sim t(76-2)\]
+
+The $p$-value is
+
+\[ P(|t| \geq |t_0| |H_0 \ \text{True}) = P(t \geq 10.25|H_0 \ \text{True}) \approx 0 \]
+
+* Compute the $F$-statistic for the ANOVA test using the table above:
+
+\[F_0 = \frac{8711.93/1}{6217.36/(76-2)} = 103.69 \sim F(1, 74)\]
 
 ### Checking Assumptions 
 
