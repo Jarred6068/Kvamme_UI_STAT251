@@ -45,6 +45,6 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>**PMF/PDF Calculator**</td>
-        <td>This tool allows you calculate probabilities from several different probability distributions inlcuding: Binomial, Poisson, Normal, Uniform, and Exponential distributions</td>
+        <td>This tool allows you calculate probabilities from several different probability distributions inlcuding: Binomial, Poisson, Normal, Uniform, $\chi^2$, Fisher, and Exponential distributions</td>
     </tr>
 </table>

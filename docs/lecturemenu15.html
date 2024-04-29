@@ -582,7 +582,7 @@ explanatory variables actually cause changes in a response variable. The
 statistical techniques we will describe this week will require us to
 distinguish between explanatory and response variables. You will often
 see explanatory variables called the <strong>independent
-variable</strong> and response variables called the <strong>dependent
+variable</strong> and response variable called the <strong>dependent
 variable</strong>. The idea behind this language is that the response
 variable depends on the outcomes of the explanatory variable (if they
 share a statistical relationship).</p>
@@ -602,14 +602,7 @@ represented on the <span class="math inline">\(y\)</span>-axis. Consider
 the four scatterplots below which plot the relationship between the
 independent variable <span class="math inline">\(X\)</span> and the
 dependent variable <span class="math inline">\(Y\)</span>:</p>
-<div class="figure">
-<img src="lecturemenu15_files/figure-html/unnamed-chunk-1-1.png" alt="Six plots depicting scatterplots between two variables $X$ and $Y$" width="960" />
-<p class="caption">
-Six plots depicting scatterplots between two variables <span
-class="math inline">\(X\)</span> and <span
-class="math inline">\(Y\)</span>
-</p>
-</div>
+<p><img src="lecturemenu15_files/figure-html/unnamed-chunk-1-1.png" width="960" /></p>
 <ul>
 <li>Which of these plots indicate a statistical association between the
 two variables and which do not?</li>
@@ -638,7 +631,7 @@ paired with larger values of the response variable. Conversely, we say
 that two variables are <strong>negatively associated</strong> if larger
 values of the explanatory variable are paired with smaller values of the
 response.</p>
-<p>It may also be important to note of the points form specific clusters
+<p>It may also be important to note if the points form specific clusters
 as this may indicate a hidden grouping in the data that is not accounted
 for by the independent variable. When a scatterplot shows distinct
 clusters it often most useful to describe the pattern in each
@@ -5913,7 +5906,7 @@ can lead to biased estimates of the slope and intercept, incorrect
 inferences, or unreliable predictions. Our estimates for the slope and
 intercept can also be biased by influential points such as outliers in
 the data. Thus, when fitting the least-squares model, it best to pair
-results with a thorough investigation the residuals any potential
+results with a thorough investigation the residuals and any potential
 outliers.</p>
 <p>A common plot used to check the assumptions of residuals in linear
 regression is the quantile-quantile, or “Q-Q,” plot. This plot compares
@@ -5929,6 +5922,12 @@ if the residuals deviate from this diagonal, especially at the ends, it
 may indicate skewness or other departures from normality. Outliers and
 extreme values in the residuals will appear as points that are
 significantly distant from the diagonal line.</p>
+<ul>
+<li>If residuals are non-normal, often rescaling the response <span
+class="math inline">\(y\)</span> with an <em>affine</em> transformation
+such as taking the <span class="math inline">\(\log\)</span> or
+square-root can help</li>
+</ul>
 <p>Another common plot is called a “residual-leverage” plot.
 <em>Leverage</em> is a measure that can help assess the influence a data
 point has on the regression line. A high leverage value indicates that
@@ -5937,7 +5936,7 @@ regression model. Often the residuals are given as the <em>standardized
 residuals</em> (denoted <span
 class="math inline">\(\epsilon_i^*\)</span>) - the raw residuals divided
 by the estimated residual standard deviation <span
-class="math inline">\(\sigma^2_\epsilon\)</span>.</p>
+class="math inline">\(\hat{\sigma}_\epsilon\)</span>.</p>
 <p><span class="math display">\[ \hat{\epsilon_i}^* =
 \frac{\hat{\epsilon}_i}{\hat{\sigma_\epsilon}} \]</span></p>
 <p>Residuals are typically standardized to help improve the ability to
@@ -5947,6 +5946,45 @@ easy to quickly produce several diagnoistic plots to assess assumptions
 and outliers. The residual-leverage plot for the cereal exmaple is shown
 below:</p>
 <p><img src="lecturemenu15_files/figure-html/unnamed-chunk-28-1.png" width="960" /></p>
+<p>In the four plots above, the residuals vs leverage plot is given in
+the bottom-right panel. The <span class="math inline">\(x\)</span>-axis
+is <em>leverage</em> or influence that each data point has on the
+regression line. This plot also features something called <strong>Cooks
+Distance</strong> given by the dashed lines on the plot. Cooks distance
+is another metric to assess the influence of individual points.
+Generally speaking, points that fall above or below the dashed lines
+(i.e the Cooks distance) are potential outliers. As we can see from the
+residual vs leverage plot above, the data point labeled “4” is close but
+not above the dashed line indicating there are no outliers. Another
+example of a residual vs leverage plot and how to address potential
+outliers can be found here <a
+href="https://www.statology.org/residuals-vs-leverage-plot/">https://www.statology.org/residuals-vs-leverage-plot/</a></p>
+<p>The last two plots we will discuss are the <em>Scale-Location
+plot</em> (bottom left panel in the figure above) and the <em>Residuals
+vs Fitted plot</em> (top left panel in the figure above). These two
+plots are crucial for assessing the constant variance assumption of the
+residuals in a linear model.</p>
+<p>In both plots, the x-axis represents the predicted values <span
+class="math inline">\(\hat{y}_i\)</span>, while the y-axis represents
+either the residuals (for the Residuals vs Fitted plot) or the scaled
+residuals (for the Scale-Location plot). The objective of these plots is
+to check whether the residuals maintain a constant variance as the
+predicted values change.</p>
+<p>In the Residuals vs Fitted plot, the residuals should form a
+cloud-like shape around the horizontal line representing zero. If the
+red line, which represents a smooth trend through the residuals, is
+roughly horizontal, this suggests that the variance is constant across
+the predicted values. However, if the red line exhibits a discernible
+pattern, such as a curve or slope, this could indicate non-constant
+variance.</p>
+<p>Similarly, in the Scale-Location plot, the y-axis represents the
+square root of the absolute standardized residuals, and the red line
+shows the trend of these scaled residuals. The interpretation is the
+same as it is for the Residuals vs Fitted plot, however ccaling the
+residuals in this way can make it easier to visually identify patterns
+that might suggest non-constant variance. You can see another example of
+these two plot types here <a
+href="https://www.statology.org/scale-location-plot/">https://www.statology.org/scale-location-plot/</a></p>
 <p><br> <br> <br> <br></p>
 </div>
 <div id="references" class="section level3 unnumbered">
