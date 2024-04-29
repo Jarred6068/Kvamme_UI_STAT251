@@ -31,7 +31,7 @@ output: html_document
 
 # Final Exam Information
 
-The final examination is on Monday, May. 6th, from 8:00 AM to 10:00 AM. It will be in the same room as lecture.
+The final examination is on Monday, May. 6th, from 8:00 AM to 10:00 AM. It will be in the same room as lecture (Teaching and Learning Center, Room 22).
 
 It is university policy that if you have more than two final examinations scheduled on the same day based on the official final examination schedule, then you may have the extra final examination(s) rescheduled. If you need to have your final examination rescheduled, you must make arrangements with me before the final examination.
 
@@ -51,19 +51,19 @@ I have organized the study guide according to the material covered on each exam.
 
 ## Exam 1 Concepts
 
-- Understand the distinction between a sample and a population of observations.
-- Understand the distinction between a statistic and a parameter.
-- Understand what is meant by descriptive versus inferential statistics.
-- Understand what is meant by a distribution.
-- Understand how to construct and interpret a frequency table.
-- Understand the distinction between quantitative and qualitative variables
-- Understand the distinction between nominal and ordinal variables
-- Understand the distinction between discrete and continuous variables
+- Understand the distinction between a **sample** and a **population** of observations.
+- Understand the distinction between a **statistic** and a **parameter**.
+- Understand what is meant by *descriptive* versus *inferential statistics*.
+- Understand what is meant by a **distribution**.
+- Understand how to construct and interpret a *frequency table*.
+- Understand the distinction between **quantitative** and **qualitative variables**
+- Understand the distinction between **nominal** and **ordinal** variables
+- Understand the distinction between **discrete** vs **continuous** variables
 - Know the various measures of spread (range, IQR, variance, standard deviation) and how they computed
 - Know the various measures of location/center (mean, median, mode) and how they are computed.
-- Know the five-number summary and how it relates to a boxplot.
+- Know the *five-number summary* and how it relates to a **boxplot**.
 - Know how to apply the $1.5 \times IQR$ and $2s$ rules for identifying outliers.
-- Understand what it means to say that a summary measure is resistant to outliers, and which summary measures we have discussed that are resistant and which are not
+- Understand what it means to say that a summary measure is *resistant* to outliers, and which summary measures we have discussed that are resistant and which are not
 
 ### Exam 1 equations
 
@@ -77,19 +77,21 @@ I have organized the study guide according to the material covered on each exam.
 
 
 # Exam 2 Concepts
-- Understand the empirical rule and how it applies to bell-shaped distributions.
-- Know how to compute and interpret a $z$-score and how it relates to the standard normal distribution
-- Know the difference between Sampling Error and Margin of Error.
-- Know the defining characteristics of the varous sampling designs we've discussed i.e Convenience Sampling, Systematic Sampling, Simple Random Sampling, Cluster Sampling, Stratified Random Sampling
+- Understand the **empirical rule** and how it applies to bell-shaped distributions.
+- Know how to compute and interpret a **$z$-score** and how it relates to the *standard normal distribution*
+- Know the difference between **sampling error** and **margin of error**.
+- Know the defining characteristics of the various sampling designs we've discussed i.e Convenience Sampling, Systematic Sampling, Simple Random Sampling, Cluster Sampling, Stratified Random Sampling
 - Know the defining characteristics of the various experimental designs we've discussed i.e Completely Randomized Design, Randomized Block Design, Matched Pairs Design
-- Know the difference between a population distribution and a sampling distribution 
+- Know the difference between a **population distribution** and a **sampling distribution** 
 - Be comfortable with the language of probability theory: e.g know how to define Probability, Sample Space, Event, Random Trial
-- Know what is implied by the Law of Large Numbers (e.g the relative frequency of an event will approach the true probability of an event as the number of observations of the event increases)
-- Know the definition of a random variable, and the difference between discrete random variables versus continuous random variables.
+- Know what is implied by the **Law of Large Numbers** (e.g the relative frequency of an event will approach the true probability of an event as the number of observations of the event increases)
+- Know the definition of a **random variable**, and the difference between *discrete random variables* versus *continuous random variables*.
 - Understand what is meant by the probability distribution of a discrete random variable
 - Know how to compute the mean, variance, and standard deviation of a discrete random variable from its probability distribution (when given as a table of values and probabilities).
-- Understand the key features that define the Bernoulli, Poisson, and Binomial random variables.
-- Understand what is stated by the central limit theory and how it relates to the shape of the sampling distributions of $\bar{x}$ and $\hat{p}$
+- Know how to compute a probability concerning a continuous random variable based on a plot of the probability density function (i.e., using the area under the curve).
+- Understand the key features that define Bernoulli, Poisson, and Binomial random variables.
+- Understand what is stated by the **central limit theory** and how it relates to the *shape* of the sampling distributions of $\bar{x}$ and $\hat{p}$
+- Know the means and standard deviations of sampling distributions of $\bar{x}$ and $\hat{p}$.
 
 ### Exam 2 Equations
 \[ z = \frac{x - \mu}{\sigma} \]
@@ -104,11 +106,14 @@ I have organized the study guide according to the material covered on each exam.
 # Exam 3 Concepts
 
 - Understand the “anatomy” of a confidence interval (i.e., point estimate, standard score, standard error, and margin of error). 
-- Know what is meant by the term *confidence level* and how it relates to width of confidence interval.
+\[ \text{point estimate} \pm \text{standard score} \times \text{standard error} \]
+or
+\[ \text{point estimate} \pm \text{margin of error}\]
+- Know what is meant by the term **confidence level** and how it relates to the *width* of a confidence interval.
   - What effect does increasing the confidence level have on the margin of error and the width of a confidence interval?
   - What effect does increasing the sample size have on the margin of error and the width of a confidence interval?
   
-- Know how to compute the sample size required to estimating $p$ with $\hat{p}$ for a desired margin of error $m$
+- Know how to compute the sample size required for estimating $p$ with $\hat{p}$ for a desired margin of error $m$
 \[n = \frac{p(1-p)z^2}{m^2} \]
 - Understand when and how you would use each of the following formulas for confidence intervals:
 \[ \hat{p} \pm z_{1-\alpha/2}\times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
@@ -117,15 +122,14 @@ I have organized the study guide according to the material covered on each exam.
 \[ (\hat{p}_1 - \hat{p}_2) \pm z_{1-\alpha/2} \times \sqrt{\frac{\hat{p}_1(1-\hat{p})}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
 \[ (\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}} \]
 
-- Understand what is mean by the term statistical significance.
+- Understand what is mean by the term **statistical significance**.
 - Know what is meant by the term $p$-value
-- Know the meaning of *critical value*, *significance level* and *rejection* region and how they related to a significance test.
-- Understand the roles of the null and alternative hypothesis in a statistical test.
-- Know how to decide if we reject or do not reject a null hypothesis (i.e., the decision rule that we use to decide whether or not we reject the null hypothesis).
-- Know the means and standard deviations of sampling distributions of $\bar{x}$ and $\hat{p}$.
+- Know the meaning of *critical value*, *significance level* and *rejection region* and how they relate to a significance test.
+- Understand the roles of the *null* and *alternative* hypothesis in a statistical test.
+- Know how to decide if we reject or do not reject a null hypothesis (i.e., the *decision rule* that we use to decide whether or not we reject the null hypothesis).
 - Understand how a confidence interval relates to a significance test.
-- Understand what is meant by the power of a significance test and what affects the power of a significance test.
-- Know the two types of errors in statistical testing: type I and type II.
+- Understand what is meant by the **power** of a significance test and what affects the power of a significance test.
+- Know the two types of errors in statistical testing: **type I** and **type II**.
 - Understand when and how you would use each of the following formulas for test statistics:
 \[ z_{\text{obs}} = \frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \]
 \[ t_{\text{obs}} = \frac{\bar{x}-\mu_0}{s/\sqrt{n}} \sim t(n-1) \]
@@ -137,34 +141,36 @@ I have organized the study guide according to the material covered on each exam.
 # New Material (Lectures 28 - 32)
 
 ### Categorical Data Analysis
-- Know how to define the null and alternative hypotheses for the $\chi^2$ goodness-of-fit and test of independence 
+- Know how to define the null and alternative hypotheses for the $\chi^2$ *goodness-of-fit* and *test of independence*
 
 - Understand when and how you would use each of the following formulas for the $\chi^2$ goodness-of-fit and independence test statistics:
 \[ \chi_{obs}^2 = \sum_{i=1}^c \frac{(\text{observed count}_i - \text{expected count}_i)^2}{\text{expected count}_i} \sim \chi^2(c-1)\]
 \[ \chi_{obs}^2 = \sum_{j=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}} \sim \chi^2(r-1\times c-1) \]
 
-- Understand how compute the expected counts for a goodness-of-fit test and a test of independence
+- Understand how compute the *expected counts* for a goodness-of-fit test and a test of independence
 \[ E_i = np_i \ \ \text{and} \ \  E_i = \frac{\text{Row}_i \text{ Total} \times \text{Column}_i \text{ Total}}{\text{n}}\]
 
 
 ### Correlation and Linear Regression 
-- Understand how the correlation coefficient $r$ corresponds to patterns in a scatterplot.
+- Understand how the *correlation coefficient* $r$ corresponds to patterns in a **scatterplot**.
 
-- Know how the value of the correlation coefficient $r$ relates to linear relationship between two variables.
+- Know how the value of the correlation coefficient $r$ relates to *linear* relationship between two variables.
 
-- Know why covariance is a poor measure of association and how it relates to the correlation coefficient $r$.
+- Know why **covariance** is a poor measure of association and how it relates to the correlation coefficient $r$.
 
 - Know the difference between the *prediction equation* and the *population regression equation*
 
-- Understand what is meant by the term residual and how it relates to a linear regression model
+- Understand what is meant by the term **residual** and how it relates to a linear regression model
 
-- Know how to compute and interpret the least squares estimates of the intercept $\alpha$ and slope $\beta$ from summary statistics.
+- Know how to compute and interpret the *least-squares* estimates of the intercept $\alpha$ and slope $\beta$ from summary statistics.
 
-- Understand the terms Error Sum of Squares ($SS_E$), Regression Sum of Squares ($SS_R$), and Total Sum of Squares ($SS_T$), how they relate to a linear regression model and the variation of the response variable.
+- Understand the terms **Error Sum of Squares** ($SS_E$), **Regression Sum of Squares** ($SS_R$), and **Total Sum of Squares** ($SS_T$), how they relate to a linear regression model and the variation of the response variable.
 
-- Know how to compute and interpret the coefficient of determination $r^2$.
+- Know how to compute and interpret the **coefficient of determination** $r^2$.
 
-- Know how to specify the null and alternative hypotheses for a signifcance test on the slope coefficient $\beta$ and they relate to linear dependence between the response and explanatory variables.
+- Know how to interpret the *slope* of a regression line.
+
+- Know how to specify the null and alternative hypotheses for a significance test on the slope coefficient $\beta$ and how it relates to linear dependence between the response and explanatory variables.
 
 ### Formulas for Correlation and Linear Regression
 

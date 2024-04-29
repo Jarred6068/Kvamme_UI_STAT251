@@ -710,7 +710,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Wednesday</td>
         <td>May 1, 2024</td>
-        <td>Final exam informal review</td>
+        <td>Final exam Jeopardy review</td>
         <td></td>
     </tr>
     <tr>
@@ -722,7 +722,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Friday</td>
         <td>May 3, 2024</td>
-        <td>No Class</td>
+        <td>Optional Q & A Session</td>
         <td></td>
     </tr>
     <tr>
@@ -734,7 +734,7 @@ knitr::opts_chunk$set(echo = TRUE)
     <tr>
         <td>Monday</td>
         <td>May 6, 2024</td>
-        <td>Final Exam Day, Time: 8:00 am - 10:00 am</td>
+        <td>Final Exam Day, Time: 8:00 am - 10:00 am TLC 022</td>
         <td></td>
     </tr>
     <tr>

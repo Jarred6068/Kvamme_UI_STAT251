@@ -917,7 +917,7 @@ where $k$ and $n - k - 1$ are the respective degrees of freedom for each estimat
 
 \[ = \frac{SS_R/k}{SS_E/(n-k-1)} \sim F(k, n-k-1)\]
 
-The above statistic is a ratio of two variances, which follows a special type of distribution called an $F$-distribution so named after Sir Ronald Fisher - the father of statistics who proposed its use in 1918. The $F$ distribution has two degrees of freedom parameters, one for the variance in the numerator and one for the variance in the denominator. In essence, an ANOVA tells us how much information in the response can be explained by the predictor variable. If the predictor variable and the response variable have a linear relationship, then the predictor should explain a fair proportion of the variation in the the response $Y$. 
+The above statistic is a ratio of two variances, which follows a special type of distribution called an $F$-distribution so named after Sir Ronald Fisher - the father of statistics who proposed its use in 1918. The $F$ distribution has two degrees of freedom parameters, one for the variance in the numerator and one for the variance in the denominator. Similar to the coefficient of determination, ANOVA evaluates how much of the total variation in the response variable is attributed to the regression model. If there is a linear relationship between the predictor and the response variable, it implies that the predictor accounts for a significant portion of the response's variance, leading to a large $F$-test statistic.
 
 
 For simple linear regression between two quantitative variables, the $F$-test is always
@@ -945,7 +945,7 @@ kable(df, format = 'html', digits = 2,
 ```
 
 
-Below is the ANOVA table the advertising example:
+**Example**: Consider again the advertising data from earlier. Below is the ANOVA table for the regression relating the number of customers who purchases a product and the number of times each ad was shown. 
 
 ```{r, echo=F, warning=F, message=F, fig.height=8, fig.width=10}
 set.seed(123)
