@@ -656,7 +656,7 @@ The difference between the two is called the *regression sum of squares* or $SS_
 
 \[ SS_R = SS_T - SS_E = \sum_i (\hat{y} - \bar{y})^2 \]
 
-Notice that by rearrange the equation above, we can see that the total variation in the response can be partitioned in to two parts: the variation explained by the predictor (i.e $SS_R$) and the variation not explained by the predictor (i.e $SS_E$). 
+Notice that by rearranging the equation above, the total variation in the response can be partitioned in to two parts: the variation explained by the predictor (i.e $SS_R$) and the variation not explained by the predictor (i.e $SS_E$). 
 
 \[SS_{T} = SS_E+SS_R \]
 
@@ -664,7 +664,7 @@ By comparing the $SS_T$ and $SS_R$, we can determine how much the regression mod
 
 \[ r^2 = \frac{SS_R}{SS_T} = \frac{\sum_i (\hat{y} - \bar{y})^2}{\sum_i (y_i - \bar{y})^2} \]
 
-The $r$-squared value is expressed as a percentage and tells us how much the overall variation in the response can be explained by the linear regression model. For the batting Americal League example we have a total sum of squares of 
+The $r$-squared value is expressed as a percentage and tells us how much the overall variation in the response can be explained by the linear regression model. For the American League example we have a total sum of squares of 
 
 \[SS_T =  4.323\]
 
@@ -703,9 +703,9 @@ kable(df, format = 'html', digits = 2,
 
 # Lecture 31 Friday, April 26th 2024
 
-### Regression relate the mean of $Y$ to $X$
+### Regression relates the mean of $Y$ to $X$
 
-At a specific value of $x$ the prediction equation $\hat{y}_i = \alpha + \beta x_i$ gives our prediction for a single value of $Y$. However, we don't expect all observations of $y$ that depend on a given $x$ to have the same value because naturally there is variation among individuals in the population. For example, consider the linear regression below which relates the age of $189$ mothers in the U.S to the birth weight of their infants [@MASS].
+The prediction equation $\hat{y}_i = \alpha + \beta x_i$ yields the predicted value the response $Y$ for a given value of the independent variable $X$. However, we don't expect all observations of $Y$ that depend on a given value of $X$ to have the same value because naturally there is variation among individuals in the population. For example, consider the linear regression below which relates the age of $189$ mothers in the U.S to the birth weight of their infants [@MASS].
 
 ```{r, echo=FALSE, warning=F, message=F, fig.height=8, fig.width=10}
 set.seed(123)
@@ -713,12 +713,12 @@ set.seed(123)
 data = MASS::birthwt
 
 df = rbind.data.frame(cbind.data.frame(`Individual`=paste0('individual ', 1:5),
-                                       `Age of Mother` = data$age[1:5], 
-                                       `Infant Birth Weight (g)` = data$bwt[1:5]),
+                                       `Age of Mother (Years)` = data$age[1:5], 
+                                       `Infant Birth Weight (grams)` = data$bwt[1:5]),
                       rep('$\\vdots$',3),
                       cbind.data.frame(`Individual`=paste0('individual ', 189),
-                                       `Age of Mother` = data$age[189], 
-                                       `Infant Birth Weight (g)` = data$bwt[189]))
+                                       `Age of Mother (Years)` = data$age[189], 
+                                       `Infant Birth Weight (grams)` = data$bwt[189]))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -726,7 +726,7 @@ kable(df, format = 'html', digits = 2,
 
 model = lm(bwt ~ age, data = MASS::birthwt)
 data$Smoker = as.factor(data$smoke)
-A = ggplot(data = data, aes(x = age, y = bwt, fill = Smoker))+
+A = ggplot(data = data, aes(x = age, y = bwt, fill = 'lightgrey'))+#, fill = Smoker))+
   geom_point(shape = 21, color = 'black', size = 2)+
   geom_abline(intercept = model$coefficients[1], slope = model$coefficients[2],
               color = 'red', size = 1.3, linetype = 'dotted')+
@@ -736,7 +736,7 @@ A = ggplot(data = data, aes(x = age, y = bwt, fill = Smoker))+
   ylab('Birth Weight of Infant (grams)')+
   theme(axis.text = element_text(size =12),
         axis.title = element_text(size = 14),
-        legend.position = 'top')
+        legend.position = 'none')
 
 
 B = ggplot(data = data, aes(x = as.factor(age), y = bwt))+
@@ -757,7 +757,7 @@ The prediction equation for the regression model fit to the birthweight data is 
 
 \[\hat{y} = 2655.7 + 12.43x_i\]
 
-Now consider the predicted birth weight of an infant born to a mother of 21 years of age: $\hat{y} = 2916.7$ grams. However, we do not expect all mothers of $21$ years of age have an infant birth weight. One mother may have an infant born at $3200$ grams and another at $2500$ grams and so on. As we can see from panel $\bf B$ in the plot above, for each possible age of the mother, there is a distribution of infant birth weights corresponding to a specific population of mothers. Thus we can think of the predicted value $\hat{y} = 2916.7$ as estimating the mean birth weight of all mothers aged $x = 21$ years. 
+Now consider the predicted birth weight of an infant born to a mother of 21 years of age: $\hat{y} = 2916.7$ grams. We do not expect all infants born to mothers of $21$ years of age have the same weight of $2916.7$ gams. One mother may have an infant born at $3200$ grams and another at $2500$ grams and so on. As we can see from panel $\bf B$ in the plot above, for each possible age of the mother, there is a distribution of infant birth weights corresponding to all mothers of that age. Thus we can think of the predicted value $\hat{y} = 2916.7$ as estimating the mean birth weight of all mothers aged $x = 21$ years. 
 
 The **population regression equation** relates the predictor $x$ to the means of $Y$ in the population.
 
@@ -789,15 +789,17 @@ the key assumptions of this model mostly concern the behavior of the residuals $
   
   * **Independence** - the observations are sampled independently: any pair of errors $(\epsilon_i, \epsilon_j)$ are independent 
   
-  * **Fixed $X$** the values of the predictor $X$ are fix values or measured without error and independent of the residuals
+  * **Fixed $X$** - the values of the predictor $X$ are fixed values or are measured without error and are independent of the residuals
   
   * **$X$ is not invariant** - If the explanatory variable is fixed, then its values cannot all be the same. (i.e $x$ cannot be constant)
   
-Under these assumptions the population parameters $\alpha$ and $\beta$ are normally distributed. We are generally more concerned with the slope than the intercept. Therefore, the $(1 -a)\%$ confidence interval for the slope is given by 
+Under these assumptions the population parameters $\alpha$ and $\beta$ are normally distributed. We are generally more concerned with the slope than the intercept. Therefore, the $(1 -a)\%$ confidence interval ($a$ represents the confidence level) for the slope is given by 
 
 \[ \beta = \hat{\beta} \pm t_{1- a/2} SE(\hat{\beta})\]
 
-In the equation above the critical value $t_{1-a/2}$ follows a $t$-distribution with $n-2$ degrees of freedom and the standard error of the sample slope is given by
+In the equation above the critical value $t_{1-a/2}$ follows a $t$-distribution with $n-2$ degrees of freedom. 
+
+the standard error of the sample slope is given by
 
 \[SE(\hat{\beta}) = \sqrt{\frac{s_\epsilon^2}{(n-1)s_x^2}} \]
 
@@ -827,19 +829,75 @@ summary(model)
 
 ```
 
-In the output from $R$ above, we see that the estimate of the slope is $\hat{\beta} = 12.43$ with a standard error of $SE(\hat{\beta} = 10.02)$. Recall from earlier that the data consist of 189 mothers and their infant birth weights. Using the estimate and standard error, we can easily construct a $95\%$ confidence interval for the slope 
+In the output from $R$ above, we see that the estimate of the slope is $\hat{\beta} = 12.43$ with a standard error of $SE(\hat{\beta}) = 10.02$. Recall from earlier that the data consist of $189$ mothers and their infant birth weights. Using the estimate and standard error, we can easily construct a $95\%$ confidence interval for the slope 
 
 \[ 12.43 \pm 1.97 (10.02) \approx \big[ -7.31, 32.17 \big]\]
 
-Our confidence interval for the slope overlaps zero which indicates that age of the mother is not a good predictor of infant birth weight. The output from above also gives the test statistic and $p$-value for the hypothesis tests on each coefficient under the null that their values are zero i.e $H_0: \beta = 0$. The test statistic for the slope in our example is given by
+Our confidence interval for the slope overlaps zero which indicates that there is not a strong linear relationship between age of the mother and infant birth weight. The output from above also gives the test statistic and $p$-value for the hypothesis tests on each coefficient under the null that their values are zero i.e $H_0: \beta = 0$. The test statistic for the slope in our example is given by
 
 \[ t_0 = \frac{12.43}{10.02} = 1.24\]
 
-You can confirm that $p$-value corresponding the test statistic using the $t$-table on the resources tab of the course website. As we can see from the output, the hypothesis test also confirms that age of mother and infant birth weight are not significantly associated. 
+You can confirm the $p$-value is $0.26$ using the $t$-table on the resources tab of the course website. As we can see from the $R$ output, the hypothesis test also confirms that age of mother and infant birth weight are not significantly associated. 
+
+
+
+# Monday April 29th 2024
+
 
 ### An alternative way to test association
 
-Notice that the last line of the output in the previous example reported something called an $F$-statistic. This statistic comes from an alternative test of the association between age of mothers and infant birth weights that is based on the relative variation explained by the predictor, similar to the $r^2$ coefficient, called an **Analysis of Variance** or **ANOVA**. The $F$-statistic computed as the ratio of the average square in the regression to average residual deviation. Recall the relationship between the total variation in the response, the regression and the residuals
+Consider the following dataset containing information about 1,143 social media ads from an anonymous company, detailing the number of times each ad was viewed and the total number of customers who made a purchase after viewing each ad [@liver].
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+library(liver)
+data("advertising")
+dat = advertising
+end = dim(dat)[1]
+
+df = rbind.data.frame(cbind.data.frame(`Index`= c(1:10),
+                                       `Total Customers Purchasing Product` = dat$approved[1:10],
+                                       `Number of Times Ad Shown` = dat$impressions[1:10]),
+                      rep('$\\vdots$', 3),
+                      cbind.data.frame(`Index`= c((end-1):end),
+                                       `Total Customers Purchasing Product` = dat$approved[(end-1):end],
+                                       `Number of Times Ad Shown` = dat$impressions[(end-1):end]))
+
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+ 
+```
+
+
+Let's consider a linear regression model where the response variable is the number of customers who purchased the product after viewing an ad, and the predictor variable is the number of times each ad was viewed. The least-squares regression output for this model is presented below.
+
+```{r, echo=F, warning=F, message=F, fig.height=8, fig.width=10}
+set.seed(123)
+
+# The data come from the R-package Liver
+library(liver)
+data("advertising")
+data = advertising
+data$`Customers Purchasing Product` = data$approved
+data$`Number of Times Ad Shown` = data$impressions
+```
+
+```{r, echo=T, warning=F, message=F, fig.height=8, fig.width=10}
+
+#fit a linear model using the "lm()" function: model = lm(y ~ x, data = dataframe)
+model = lm(`Customers Purchasing Product` ~ `Number of Times Ad Shown`, data = data)
+
+#R has a function called summary which nicely displays all of the information:
+summary(model)
+
+  
+
+```
+
+The last line of the output in the example above reports something called an $F$-statistic. This statistic comes from an alternative test for the association between number the response and predictor variable. This alternative hypothesis test is based on the relative variation explained by the predictor, similar to the $r^2$ coefficient, called an **Analysis of Variance** or **ANOVA**. The $F$-statistic is a test statistic based on the ratio of the *average squared residual* for the regression to *average squared residual for the error*. Recall the relationship between the total variation in the response, the regression and the residuals
 
 \[ SS_T = SS_E + SS_R \]
 
@@ -885,6 +943,193 @@ kable(df, format = 'html', digits = 2,
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
+
+
+Below is the ANOVA table the advertising example:
+
+```{r, echo=F, warning=F, message=F, fig.height=8, fig.width=10}
+set.seed(123)
+
+
+# The data come from the R-package Liver
+library(liver)
+data("advertising")
+data = advertising
+data$`Customers Purchasing Product` = data$approved
+data$`Number of Times Ad Shown` = data$impressions
+
+
+
+```
+
+```{r, echo=T, warning=F, message=F, fig.height=8, fig.width=10}
+set.seed(123)
+
+
+#fit a linear model using the "lm()" function: model = lm(y ~ x, data = dataframe)
+model = lm(`Customers Purchasing Product` ~ `Number of Times Ad Shown`, data = data)
+
+#R has a function called "anova" which nicely displays all of the information:
+anova(model)
+
+  
+
+```
+
+### An Application Example 
+
+**Example:** Consider the following dataset which records the nutrition information for nearly 80 popular brands of cereal [@liver]. 
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=5, fig.width=10}
+set.seed(123)
+
+library(liver)
+data('cereal')
+data = cereal[-58, -14]
+
+# df = rbind.data.frame(cbind.data.frame(`Index`= c(1:10),
+#                                        `Total Customers Purchasing Product` = dat$approved[1:10],
+#                                        `Number of Times Ad Shown` = dat$impressions[1:10]),
+#                       rep('$\\vdots$', 2),
+#                       cbind.data.frame(`Index`= c((end-2):end),
+#                                        `Total Customers Purchasing Product` = data$approved[(end-2):end],
+#                                        `Number of Times Ad Shown` = dat$impressions[(end-2):end]))
+
+
+# df = rbind.data.frame(cbind.data.frame(`Brand`= data$name[1:10],
+#                                        `Customer Rating` = data$rating[1:10],
+#                                        `` = data$sugars[1:10]))
+
+kable(data, format = 'html', digits = 2, col.names = c('Brand', 'Manuf.', "Type","Calories","Protein (g)","Fat (g)","Sodium (mg)","Fiber (g)","Carbo. (g)","Added Sugars (g)","Potassium (g)","Vitamins","Shelf Number", "Cups Per Serv.","Customer Rating"),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+
+The final column, *Customer Rating*, represents the percentage of customers who gave a favorable rating to each cereal in consumer reports. Now consider the question, *"Do sugary cereals tend to receive higher ratings?"*. To answer this question, we will fit a linear model using the variable *Added Sugar* as a predictor of *Customer Rating*. The fitted linear model is displayed in the plot below. 
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=8, fig.width=10}
+library(liver)
+data('cereal')
+data = cereal[-58, -14]
+
+cereal.model = lm(rating ~ sugars, data = data)
+
+means = unlist(lapply(unique(data$sugars), function(x,y,z) mean(y[z == x]), y = data$rating, z=data$sugars))
+values = unique(data$sugars)
+
+A = ggplot()+
+  geom_point(aes(x = values, y = means),
+             color = 'red', shape = 21, fill = 'red', size = 5, alpha = 0.5)+
+  geom_point(aes(x = data$sugars, y = data$rating), shape = 21, color = 'black', size = 2, fill = 'grey')+
+  geom_abline(intercept = cereal.model$coefficients[1], slope = cereal.model$coefficients[2],
+              color = 'red', size = 1.3, linetype = 'dotted')+
+  #geom_text(aes(x = shelf+0.5, y = sugars), label = data$X)+
+  #scale_x_continuous(limits = c(1,3), breaks = c(1,2,3))+
+  theme_bw()+
+  #geom_text(aes(x=40,y=4000), label = TeX(paste0('$ r^2 = 0.008157$')))+
+  xlab('Added Sugars (g)')+
+  ylab('Customer Rating')+
+  theme(axis.text = element_text(size =12),
+        axis.title = element_text(size = 14),
+        legend.position = 'top')
+
+dat = data
+dat$sugars = as.factor(dat$sugars)
+B = ggplot(aes(x = sugars, y = rating), data = dat)+
+  geom_boxplot(color = 'black', fill = 'grey')+
+  xlab('Added Sugars (g)')+
+  ylab('Customer Rating')+
+  theme(axis.text = element_text(size =12),
+        axis.title = element_text(size = 14),
+        legend.position = 'top')
+  
+ggarrange(A,B, labels = c('A', 'B'), nrow = 2)
+```
+
+In panel $\bf A$ above, the red line indicates the least-squares regression line. The red dots give the mean of the distribution of customer ratings for each value of added sugars. As is illustrated in plot, the least squares model relates the mean of each conditional distribution $y | x$ across all values of the predictor. Panel $\bf B$ gives the boxplots for each conditional distribution. 
+
+* Do you believe there's a significant linear relationship between customer rating and the amount of added sugars? 
+
+* What does the fitted linear model indicate about the relationship between customer rating and added sugar?
+
+
+Some summary statistics regarding each variable is given in the table below
+```{r, echo=F, warning=F, message=F, fig.height=5, fig.width=10}
+# Read in the data
+library(liver)
+data('cereal')
+data = cereal[-58, -14]
+
+#fit the linear model
+model = lm(rating ~ sugars, data = data)
+
+#print out summary
+output = summary(model)
+
+```
+
+* Using the table above, compute the *slope*, and $r^2$ for the regression model treating customer rating as the response and interpret them
+
+* Test the hypothesis that the slope is significantly different than zero and interpret your results
+
+* Compute the ANOVA table for the linear model above
+
+### Checking Assumptions 
+
+Checking assumptions in simple linear regression is crucial because it ensures the validity and reliability of your model's predictions and conclusions. Recall that the least-squares estimator makes several strong assumptions about the structure of the data (*linearity*, *independence*, *constant variance*, and *normality* of residuals). If these assumptions are violated, it can lead to biased estimates of the slope and intercept, incorrect inferences, or unreliable predictions. Our estimates for the slope and intercept can also be biased by influential points such as outliers in the data. Thus, when fitting the least-squares model, it best to pair results with a thorough investigation the residuals any potential outliers.
+
+
+
+A common plot used to check the assumptions of residuals in linear regression is the quantile-quantile, or "Q-Q," plot. This plot compares the distribution of the computed residuals to the theoretical quantiles of a standard normal distribution. Below is the Q-Q plot and histogram for the residuals of the linear regression model fitting customer ratings as a response of added sugar content:
+
+
+```{r, echo=F, warning=F, message=F, fig.height=5, fig.width=10}
+library(liver)
+data('cereal')
+data = cereal[-58, -14]
+#fit the linear model
+model = lm(rating ~ sugars, data = data)
+```
+
+```{r, echo=F, warning=F, message=F, fig.height=5, fig.width=10}
+par(mfrow = c(1,2))
+# creates qq plot
+qqnorm(model$residuals)
+# add diagonal line
+qqline(model$residuals)
+#plot a histogram of the residuals
+hist(model$residuals)
+par(mfrow= c(1,1))
+```
+
+
+
+
+If the residuals are approximately normally distributed, the points on the Q-Q plot will align along a diagonal line, indicating a one-to-one correspondence with the standard normal quantiles. However, if the residuals deviate from this diagonal, especially at the ends, it may indicate skewness or other departures from normality. Outliers and extreme values in the residuals will appear as points that are significantly distant from the diagonal line. 
+
+Another common plot is called a "residual-leverage" plot. *Leverage* is a measure that can help assess the influence a data point has on the regression line. A high leverage value indicates that the data point has a greater potential to affect the fit of the regression model. Often the residuals are given as the *standardized residuals* (denoted $\epsilon_i^*$) - the raw residuals divided by the estimated residual standard deviation $\sigma^2_\epsilon$. 
+
+\[ \hat{\epsilon_i}^* = \frac{\hat{\epsilon}_i}{\hat{\sigma_\epsilon}} \]
+
+Residuals are typically standardized to help improve the ability to identify outliers - especially if the raw residuals have non-constant variance. Software like $R$ makes it easy to quickly produce several diagnoistic plots to assess assumptions and outliers. The residual-leverage plot for the cereal exmaple is shown below:
+
+
+
+```{r, echo=F, warning=F, message=F, fig.height=5, fig.width=10}
+library(liver)
+data('cereal')
+data = cereal[-58, -14]
+#fit the linear model
+model = lm(rating ~ sugars, data = data)
+# creates qq plot
+par(mfrow = c(2,2))
+plot(model)
+par(mfrow= c(1,1))
+```
+
 
 
 <br>
