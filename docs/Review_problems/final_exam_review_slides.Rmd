@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 Download Final Exam Jeopardy Review PPTx Slides
-<a href="./Final_Exam_Review.pptx">Download File</a>
+<a href="./Final_Exam_Review_with_answers.pptx">Download File</a>
 
 
 
