@@ -105,7 +105,7 @@ navbar:
         - text: 'Final Exam Study Guide'
           href: study_guides/final_exam_study_guide.html
         - text: 'Final Exam Review'
-          href: study_guides/final_exam_jeopardy_review.html
+          href: Review_problems/final_exam_review_slides.html
     - text: "Course Project"
       menu:
       - text: "Project Description"

@@ -1,0 +1,29 @@
+---
+title: "Final Exam Review"
+author: "STAT 251 Section 03"
+date: "2024-05-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#<span style="color: red;"></span>
+```
+
+
+
+
+
+Download Final Exam Jeopardy Review PPTx Slides
+<a href="./Final_Exam_Review.pptx">Download File</a>
+
+
+
+
+
+
+
+
+
+
