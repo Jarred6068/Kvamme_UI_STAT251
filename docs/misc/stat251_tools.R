@@ -757,6 +757,8 @@ chi.squared.test = function(cont.table, var1.name = NULL, var2.name = NULL, alph
   ct.dists = (cont.table - exp.cts)^2/exp.cts
   chi.obs = sum(ct.dists)
   df = prod(dim(cont.table)-1)
+  colcats = colnames(cont.table)
+  rowcats = row.names(cont.table)
   
   final.observed = cbind(rbind(cont.table, c.t), c(r.t, n))
   if(is.null(var1.name)){
