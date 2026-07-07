@@ -119,29 +119,29 @@ navbar:
           - text: 'App Descriptions'
             href: shiny_apps/app_descriptions.html
           - text: 'Convert files text'
-            href: shiny_apps/Convert_file_to_text/webfiles/index.html
+            href: shiny_apps/site/Convert_file_to_text/index.html
           - text: 'Random Variables'
-            href: shiny_apps/HistoPlot/histogram_viewer/index.html
+            href: shiny_apps/site/HistoPlot/index.html
           - text: 'Statistic Calculator'
-            href: shiny_apps/Stat_calculator/webfiles/index.html
+            href: shiny_apps/site/Stat_calculator/index.html
           - text: 'Frequency Tables'
-            href: shiny_apps/Freq_table/webfiles/index.html
+            href: shiny_apps/site/Freq_table/index.html
           - text: 'Graphing'
-            href: shiny_apps/Make_Graph/webfiles/index.html
+            href: shiny_apps/site/Make_Graph/index.html
           - text: 'LLN Example'
-            href: shiny_apps/LLN/webfiles/index.html
+            href: shiny_apps/site/LLN/index.html
           - text: 'PMF/PDF Calculator'
-            href: shiny_apps/Compute_probs/webfiles/index.html
+            href: shiny_apps/site/Compute_probs/index.html
           - text: 'One Sample Tests'
-            href: shiny_apps/one_sample_hypothesis_tests/webfiles/index.html
+            href: shiny_apps/site/one_sample_hypothesis_tests/index.html
           - text: 'Two Sample Tests'
-            href: shiny_apps/two_sample_hypothesis_tests/webfiles/index.html
+            href: shiny_apps/site/two_sample_hypothesis_tests/index.html
           - text: 'Categorical Tests'
-            href: shiny_apps/categorical_tests/webfiles/index.html
+            href: shiny_apps/site/categorical_tests/index.html
           - text: 'Non-Parametric Tests'
-            href: shiny_apps/non_parametric_tests/webfiles/index.html
+            href: shiny_apps/site/non_parametric_tests/index.html
           - text: 'Regression/ANOVA'
-            href: shiny_apps/Regression/webfiles/index.html
+            href: shiny_apps/site/Regression/index.html
         - text: 'SAC schedule'
           href: sac_schedule.html
         - text: 'Tables'

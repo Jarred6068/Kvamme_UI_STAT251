@@ -1,3 +1,9 @@
 /docs/Data
 /docs/Examinations
 CLAUDE.md
+
+# RStudio project per-user state (the .Rproj file itself is tracked)
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
