@@ -26,7 +26,7 @@ This project is worth 25 points, and it will be due in Canvas on **December 10th
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(MASS)
-#datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/'
+#datapath = ''
 dataset1 = MASS::UScereal
 #write.csv(dataset1, file = paste0(datapath,'Dataset_A_US_Cereal.csv'))
 dataset2 = MASS::birthwt

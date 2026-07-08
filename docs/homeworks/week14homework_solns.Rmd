@@ -6,7 +6,7 @@ output:
 always_allow_html: true
 header-includes:
   \usepackage{float}
-bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home5bibs.bib
+bibliography: ../misc/home5bibs.bib
 ---
 
 
@@ -24,12 +24,12 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-mainpath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+mainpath = '../Data/'
 wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
 whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
 
-datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
-source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+datapath = '../Data/'
+source('../misc/stat251_tools.R')
 #<span style="color: red;"></span>
 ```
 

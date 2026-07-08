@@ -21,7 +21,7 @@ library(ggpubr)
 library(latex2exp)
 library(gganimate)
 
-path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path = 'Data/'
 ```
 
 # Lecture 15 Monday, Feb.26th 2024
@@ -247,11 +247,11 @@ ggplot(data = data.final, aes(x = props))+geom_histogram(aes(y = ..density..),
   ggtitle('Sampling Distribution of the Proportion')+
   labs(subtitle = 'n =  {closest_state}')+
   transition_states(sample.size, state_length = 3, transition_length = 3)
-anim_save(paste0('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/CLT.gif'))
+anim_save(paste0('misc/CLT.gif'))
 ```
 
 ```{r, eval = T, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
-knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/CLT.gif")
+knitr::include_graphics("misc/CLT.gif")
 ```
 
 
@@ -301,7 +301,7 @@ Consider the sample mean $\bar{x}$ computed from a sample of $n$ observations of
 # # jpeg(paste0('C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/CLTpics/',"SS_",n[j],".jpg"))
 # # plot(A)
 # # dev.off()
-# anim_save('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/CLT_mean.gif')
+# anim_save('Data/CLT_mean.gif')
 
 # if (knitr:::is_latex_output()) {
 #   knitr::asis_output('\\url{....}')
@@ -314,7 +314,7 @@ Consider the sample mean $\bar{x}$ computed from a sample of $n$ observations of
 ```
 
 ```{r, eval = T, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
-knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/CLT_mean.gif")
+knitr::include_graphics("Data/CLT_mean.gif")
 
 
 ```
@@ -432,7 +432,7 @@ The general formula of a confidence interval consists of three parts:
   3. the standard error (standard deviation) of the point estimate
 
 ```{r, eval = T, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
-knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Screenshot 2024-02-29 230856.png")
+knitr::include_graphics("misc/Screenshot 2024-02-29 230856.png")
 ```
 
 Applying this basic formula gives the following formula for a confidence interval for a population mean:

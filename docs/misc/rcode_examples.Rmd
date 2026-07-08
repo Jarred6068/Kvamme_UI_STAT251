@@ -15,8 +15,8 @@ library(ggpubr)
 library(latex2exp)
 
 
-path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
-path2 = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path = '../Data/'
+path2 = '../Data/'
 ```
 
 
@@ -25,7 +25,7 @@ In this example R-script, I will demonstrate how you can use R to construct some
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(MASS)
-#datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/'
+#datapath = '../'
 
 gss = read.csv(paste0(path2, 'georgia_student_survey.csv'))
 kable(gss, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%

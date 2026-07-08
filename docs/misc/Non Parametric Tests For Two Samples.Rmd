@@ -24,8 +24,8 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 library(VennDiagram)
-path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
-source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+path = '../Data/'
+source('../misc/stat251_tools.R')
 
 ```
 

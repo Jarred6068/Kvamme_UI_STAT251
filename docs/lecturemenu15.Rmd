@@ -8,7 +8,7 @@ always_allow_html: true
 header-includes:
   \usepackage{float}
   \usepackage{tikz}
-bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Week_15_bibs.bib
+bibliography: misc/Week_15_bibs.bib
 urlcolor: blue
 ---
 
@@ -22,10 +22,10 @@ library(ggpubr)
 library(latex2exp)
 library(gganimate)
 
-path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path = 'Data/'
 
 ##stat pack
-source('C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/stat251_tools.R')
+source('misc/stat251_tools.R')
 
 ```
 

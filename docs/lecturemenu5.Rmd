@@ -20,7 +20,7 @@ library(ggthemes)
 library(ggpubr)
 library(latex2exp)
 
-path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path = 'Data/'
 ```
 
 # Lecture 7: Monday, Feb.5th 2024

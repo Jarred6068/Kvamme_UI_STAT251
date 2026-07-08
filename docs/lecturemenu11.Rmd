@@ -21,7 +21,7 @@ library(ggpubr)
 library(latex2exp)
 library(gganimate)
 
-path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path = 'Data/'
 ```
 
 # Lecture 19 Monday, March 18th 2024

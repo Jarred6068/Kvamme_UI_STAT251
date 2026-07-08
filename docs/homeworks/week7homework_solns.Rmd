@@ -6,7 +6,7 @@ output:
 always_allow_html: true
 header-includes:
   \usepackage{float}
-bibliography: C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/home2bibs.bib
+bibliography: ../misc/home2bibs.bib
 ---
 
 
@@ -23,11 +23,11 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-mainpath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+mainpath = '../Data/'
 wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
 whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
 
-datapath = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+datapath = '../Data/'
 #<span style="color: red;"></span>
 library(plyr)
 #library(VennDiagram)
@@ -86,7 +86,7 @@ The sample space consists of 8 possible outcomes and there is only one outcome w
 $\bf (2)$ Suppose that in a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Create a Venn diagram that models this situation. What is the probability that a student is in the band or plays a sport?
 
 ```{r, eval = T, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
-setwd("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/")
+setwd("../misc/")
 x1 = c(paste(rep('bs', 5), 1:5), paste(rep('b', 8), 1:8))
 x2 = c(paste(rep('bs', 5), 1:5), paste(rep('s', 15),1:15))
 
@@ -103,7 +103,7 @@ ggvenn(
   text_size = 6
   )
 
-#knitr::include_graphics("C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Venn_4set_pretty.png")
+#knitr::include_graphics("../misc/Venn_4set_pretty.png")
 ```
 
 

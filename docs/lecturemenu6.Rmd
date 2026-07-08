@@ -20,7 +20,7 @@ library(ggthemes)
 library(ggpubr)
 library(latex2exp)
 
-path = 'C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/Data/'
+path = 'Data/'
 ```
 
 # Lecture 10: Monday, Feb.12th 2024
@@ -76,7 +76,7 @@ Other sources of bias in surveys include:
 
 
 
-![**Figure 1** - visual depiction of sampling designs](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/Sampling_designs.png)
+![**Figure 1** - visual depiction of sampling designs](misc/Sampling_designs.png)
 
 <br>
 <br>
@@ -87,7 +87,7 @@ Other sources of bias in surveys include:
   * Usually has a smaller margin of error, because we can control two sample sizes: the number of clusters to sample, and the number of elements to sample from each sampled cluster
 
 
-![**Figure 2** - visual depiction of two-state cluster sampling](C:/Users/Bruin/Documents/GitHub/UI_STAT251-03_Spring_2024/docs/misc/two_stage_cs.png)
+![**Figure 2** - visual depiction of two-state cluster sampling](misc/two_stage_cs.png)
 
 
 <br>
