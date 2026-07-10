@@ -29,7 +29,7 @@ source('misc/stat251_tools.R')
 
 ```
 
-# Lecture 29 Monday, April 22nd 2024
+# Lecture 30 Monday, April 22nd 2024
 
 In many studies, the goal is to show that changes in one or more explanatory variables actually cause changes in a response variable. The statistical techniques we will describe this week will require us to distinguish between explanatory and response variables. You will often see explanatory variables called the **independent variable** and response variable called the **dependent variable**. The idea behind this language is that the response variable depends on the outcomes of the explanatory variable (if they share a statistical relationship).  
 
@@ -123,7 +123,7 @@ How do you interpret a scatterplot?
 
 In general, we say that two variables are **positively associated** when larger values of the explanatory variable are paired with larger values of the response variable. Conversely, we say that two variables are **negatively associated** if larger values of the explanatory variable are paired with smaller values of the response. 
 
-It may also be important to note if the points form specific clusters as this may indicate a hidden grouping in the data that is not accounted for by the independent variable. When a scatterplot shows distinct clusters it often most useful to describe the pattern in each cluster. 
+It may also be important to note if the points form specific clusters as this may indicate a hidden grouping in the data that is not accounted for by the independent variable. When a scatterplot shows distinct clusters it is often most useful to describe the pattern in each cluster.
 
 
 ### Measures of association
@@ -140,7 +140,7 @@ p1 = ggplot(data =MASS::Cars93, aes(x = MPG.highway, y = Weight))+
   geom_point(size = 3, shape = 21, color = 'black', fill = 'lightgrey')+
   theme_bw()+
   xlab('MPG Highway')+
-  ylab('Price')+
+  ylab('Weight')+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
@@ -150,7 +150,7 @@ p2 = ggplot(data =MASS::Cars93, aes(x = MPG.highway, y = Weight))+
   scale_x_continuous(limits = c(0, 70))+
   scale_y_continuous(limits = c(1000, 5000))+
   xlab('MPG Highway')+
-  ylab('Price')+
+  ylab('Weight')+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
@@ -258,24 +258,24 @@ ggplot(data =samp, aes(x = population, y = median_house_value))+
 
 ```
 
-Even though the plot doesn't really show a strong relationship between these two variables the covariance we compute is a whopping 26,390,423. Moreover, because our two variables have different units, the units of the covariance we computed are nonsensical. Since covariance is not straight-forward to interpret, it is not typically used to measure the strength of a linear relationship. Instead, a similar measure called **correlation** is the statistical the measure that is most often used to determine the strength of two quantitative variables. We can think of correlation as a type of standardized, unitless covariance. Essentially, correlation is a scaled form of covariance that allows for clearer interpretation of the relationship between two quantitative variables. Correlation is defined as
+Even though the plot doesn't really show a strong relationship between these two variables the covariance we compute is a whopping `r format(round(cov(samp$population, samp$median_house_value)), big.mark = ',', scientific = FALSE)`. Moreover, because our two variables have different units, the units of the covariance we computed are nonsensical. Since covariance is not straight-forward to interpret, it is not typically used to measure the strength of a linear relationship. Instead, a similar measure called **correlation** is the statistical measure that is most often used to determine the strength of the linear relationship between two quantitative variables. We can think of correlation as a type of standardized, unitless covariance. Essentially, correlation is a scaled form of covariance that allows for clearer interpretation of the relationship between two quantitative variables.
 
 For each individual there is a height $x_i$ and a weight $y_i$. Correlation is defined as
 
 \[r_{x,y} = \frac{1}{n-1}\sum_i \left(\frac{x_i - \bar{x}}{s_x}\right) \left(\frac{y_i - \bar{y}}{s_y}\right)  = \frac{Cov(X,Y)}{\sqrt{s_x^2s_y^2}}\]
 
-The symbol $r_{x,y}$ is used to denote the sample correlation between variables $X$ and $Y$. From the formula above, we can see that the correlation coefficient $r_{x,y}$ is the covariance of $X$ and $Y$ standardized by the individual standard deviations for each variable. The result is that the $r$ has no units and represents the average of the products of the standardized $X$ and $Y$ values across all $n$ observations. This gives the correlation coefficient several nice proporties:
+The symbol $r_{x,y}$ is used to denote the sample correlation between variables $X$ and $Y$. From the formula above, we can see that the correlation coefficient $r_{x,y}$ is the covariance of $X$ and $Y$ standardized by the individual standard deviations for each variable. The result is that the $r$ has no units and represents the average of the products of the standardized $X$ and $Y$ values across all $n$ observations. This gives the correlation coefficient several nice properties:
 
   * it ranges in value from $-1$ to $+1$. Values close to $-1$ indicate strong negative associations and values close to $+1$ indicate strong positive associations. 
   
-  * A correlation coefficient of exactly positive or negative one indicate a perfect linear relationship
+  * A correlation coefficient of exactly positive or negative one indicates a perfect linear relationship
   
   * values at or close to zero indicate little or no association between the variables. 
   
   * Unlike covariance, the value of the sample correlation will NOT change when the units of one or more of the variables are changed. This is because we standardize the deviations to have no units. 
   
 
-Its important to note that correlation can only be used to measure the strength of **linear** relationships between two variables. It cannot accurately described **non-linear** (curved) relationships. It is also not a resistant measure. Outliers will have a signficant affect on the value of the correaltion coefficient
+It's important to note that correlation can only be used to measure the strength of **linear** relationships between two variables. It cannot accurately describe **non-linear** (curved) relationships. It is also not a resistant measure. Outliers will have a significant effect on the value of the correlation coefficient
   
   
 In the earlier example comparing population to median home value, the correlation coefficient between these two variables is $r \approx 0.2$. Now consider the first three plots from *figure 1* but this time with correlations plotted for each scatterplot
@@ -335,7 +335,7 @@ Computing the covariance or correlation is not an easy task. The formulas are qu
 
 
 
-**Try it out**: Consider the following dataset which is the height and weight for six adults
+**Try it out**: Consider the following dataset which is the height and weight for three adults
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
@@ -357,11 +357,11 @@ kable(df, format = 'html', digits = 2, col.names = c('Index', 'Height (inches)',
 Let us start by computing the sample covariance for height and weight
 
 \[Cov(\text{Height},\text{Weight}) = \frac{(69.8 - 68.3)(140.9 - 131)}{3-1}+\frac{(69.8 - 68.3)(129 - 131)}{3-1}+\frac{(65.4 - 68.3)(123.2 - 131)}{3-1} \]
-\[ \approx 16.86\]
+\[ \approx 17.24\]
 
 The correlation is given by
 
-\[ r = \frac{16.86}{\sqrt{2.54^2\cdot 9.02^2}} \approx 0.74\]
+\[ r = \frac{17.24}{\sqrt{2.54^2\cdot 9.02^2}} \approx 0.75\]
 
 
 
@@ -370,7 +370,7 @@ The correlation is given by
 
 Correlation measures the strength of a linear relationship between two variables, but what if you want to go a step further and find the best-fit line that connects those dots? That's where linear regression comes in. It's a statistical technique that finds the straight line that best describes the relationship between two quantitative variables, often visualized on a scatterplot. The most basic version of this technique, where you fit a line to two quantitative variables, is called *simple linear regression*. 
 
-When a scatterplot shows a linear patter we can describe the overall linear relationship by drawing a line through the points. Of course any line that we draw will not touch all of the points. But we would like any line that we draw to come as close to all of the points as possible. A regression line of this sort gives a compact description of how a response variable $y$ changes as an explanatory variable $x$ changes. 
+When a scatterplot shows a linear pattern we can describe the overall linear relationship by drawing a line through the points. Of course any line that we draw will not touch all of the points. But we would like any line that we draw to come as close to all of the points as possible. A regression line of this sort gives a compact description of how a response variable $y$ changes as an explanatory variable $x$ changes. 
 
 
 It turns out that the line that comes as close as possible to all of the points is the line that minimizes the squared deviations of the **residuals**. 
@@ -402,9 +402,9 @@ ggplot()+
 ```
 
 
-Residuals are the vertical distances (red lines in the plot above) between each point and the regression line. If you think of the regression line as our best guess at the relationship between $X$ and $Y$, then the residuals represent the error in that guess for each point. The line that "best" fits the data is the one with the smallest average residual—essentially, the one with the least error across all the points in the plot. This line gives us the best model to describe the relationship between the $X$ and $Y$ variables. You can take a look at [https://www.geogebra.org/m/xC6zq7Zv](https://www.geogebra.org/m/xC6zq7Zv) to pratice fitting the "best" line. 
+Residuals are the vertical distances (red lines in the plot above) between each point and the regression line. If you think of the regression line as our best guess at the relationship between $X$ and $Y$, then the residuals represent the error in that guess for each point. The line that "best" fits the data is the one with the smallest average residual—essentially, the one with the least error across all the points in the plot. This line gives us the best model to describe the relationship between the $X$ and $Y$ variables. You can take a look at [https://www.geogebra.org/m/xC6zq7Zv](https://www.geogebra.org/m/xC6zq7Zv) to practice fitting the "best" line.
 
-# Lecture 30 Wednesday, April 24nd 2024
+# Lecture 31 Wednesday, April 24th 2024
 
 ### The simple linear model
 
@@ -412,7 +412,7 @@ We learned on Monday that a scatterplot can be used to visualize and check for a
 
 \[ \hat{y}_i = \alpha + \beta x_i \]
 
-to display this line mathematically, called the **regression line**. The equation above is often referred to as the *prediction equation*. The symbol $\hat{y_i}$ represents the *predicted value* for the $i^{th}$ observation of the dependent variable $Y$ given the $i^{th}$ value of the independent variable $x_i$. The symbol $\alpha$ is called the $y$-axis intercept and $\beta$ is called the slope. The **slope** of a regression line relating $X$ and $Y$ describes how much $\hat{y}$ changes per unit change in $X$ (sometimes called *rise over run*). This is visualized in the plot below. 
+to display this line mathematically, called the **regression line**. The equation above is often referred to as the *prediction equation*. The symbol $\hat{y}_i$ represents the *predicted value* for the $i^{th}$ observation of the dependent variable $Y$ given the $i^{th}$ value of the independent variable $x_i$. The symbol $\alpha$ is called the $y$-axis intercept and $\beta$ is called the slope. The **slope** of a regression line relating $X$ and $Y$ describes how much $\hat{y}$ changes per unit change in $X$ (sometimes called *rise over run*). This is visualized in the plot below. 
 
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -471,11 +471,11 @@ ggplot()+
 
 On Monday, we also briefly introduced the idea of a **residual** - the disparity (error) between the values predicted by the regression line $\hat{y}_i$ and the actual values of the response variable $y_i$. We will use the symbol $\epsilon_i$ (called epsilon) to represent the residual for the $i^{th}$ observation of the response variable. We can write the observations of the response variable in terms of the predicted values and the residuals:
 
-\[ y = \alpha + \beta x_i + \epsilon_i\]
+\[ y_i = \alpha + \beta x_i + \epsilon_i\]
 
-where 
+where
 
-\[ \epsilon_i = \hat{y}_i - y_i\]
+\[ \epsilon_i = y_i - \hat{y}_i\]
 
 Thus each observation of the response variable has a residual. Some of the residuals will be positive and some will be negative. 
 
@@ -520,13 +520,13 @@ ggplot()+
 
 The length of the red line in the plot above represents the absolute value of the residual for observation $y_i$. The residuals are all vertical distances because the regression equation predicts values of the response variable. 
 
-Recall that the line of "best" fit is the one that is simultaneously as close as possible to all data points. Such a line will have the smallest possible residuals. This process involves compromise as any line we draw can perfectly predict any one point but may gravely over/under predict other points resulting in larger residuals. The acutal summary measure used to evalute and fit a regression line is called the residuals sum of squares (denoted $SS_E$)
+Recall that the line of "best" fit is the one that is simultaneously as close as possible to all data points. Such a line will have the smallest possible residuals. This process involves compromise as any line we draw can perfectly predict any one point but may gravely over/under predict other points resulting in larger residuals. The actual summary measure used to evaluate and fit a regression line is called the residuals sum of squares (denoted $SS_E$)
 
-\[ SS_E = \sum_i (\hat{y}_i - y)^2 \]
+\[ SS_E = \sum_i (\hat{y}_i - y_i)^2 \]
 
 The measure above describes the variation in the residuals. The line which minimizes the residual sum of squares will have the smallest average residuals. Thus the better the line fits the data, the smaller the residuals will be and the the smaller the $SS_E$ will be. 
 
-* The regression line which minimizes the $SS_E$ will have some positive and some negative residuals the mean of the residuals will be $0$.
+* The regression line which minimizes the $SS_E$ will have some positive and some negative residuals, but the mean of the residuals will be $0$.
 
 * It will pass through the point $(\bar{x}, \bar{y})$. This means the line passes through the center of the data
 
@@ -534,9 +534,9 @@ Even though we will typically rely on software to compute a regression line, the
 
 \[\hat{\beta} = r_{x,y} \left(\frac{s_y}{s_x}\right) \]
 
-\[\hat{\alpha} = \bar{y} - \beta\bar{x}\]
+\[\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}\]
 
-Notice that the slope $\beta$ is directly related to the correlation coefficient $r$
+Notice that the slope $\hat{\beta}$ is directly related to the correlation coefficient $r$
 
 
 ### Predicting values of the dependent variable: Batting averages
@@ -555,7 +555,7 @@ kable(AL, format = 'html', digits = 2, col.names = c('Team','Team Batting Averag
 
 ```
 
-The table below provides summarizes the data.
+The table below summarizes the data.
 
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -573,7 +573,7 @@ kable(t(df), format = 'html', digits = 3, col.names = c('Team Batting Average', 
 
 ```
 
-Now consider fitting a line to estimate the relationship between team batting average (indepdent variable) and average runs scored per game (dependent variable). The plot below gives the least-squares regression line relating these two variables. Based on the plot, is team batting average a good predictor of the average number of runs a team will score ?
+Now consider fitting a line to estimate the relationship between team batting average (independent variable) and average runs scored per game (dependent variable). The plot below gives the least-squares regression line relating these two variables. Based on the plot, is team batting average a good predictor of the average number of runs a team will score ?
 
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -603,9 +603,19 @@ ggplot(aes(x = batting, y = scoring), data = AL)+
 
 * Use the plot and the summary information to compute the estimates for the slope and intercept
 
-* Using the prediction equation, how many runs would expect a team with a batting average of $0.25$ to score?
+Using the summary table ($\bar{x} = 0.260$, $s_x = 0.013$, $\bar{y} = 4.451$, $s_y = 0.577$) and the correlation $r = 0.568$ from the plot:
 
-* Is there a significant association between batting average and runs score? how can you tell?
+\[\hat{\beta} = r\left(\frac{s_y}{s_x}\right) = 0.568\left(\frac{0.577}{0.013}\right) \approx 25.2\]
+
+\[\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x} = 4.451 - 25.2(0.260) \approx -2.10\]
+
+* Using the prediction equation, how many runs would we expect a team with a batting average of $0.25$ to score?
+
+\[\hat{y} = -2.10 + 25.2(0.25) \approx 4.20 \ \text{runs}\]
+
+* Is there a significant association between batting average and runs scored? how can you tell?
+
+The scatterplot shows a moderate positive linear trend with $r \approx 0.568$, so $r^2 \approx 0.32$ - about $32\%$ of the variation in runs scored is explained by batting average. To confirm the association is statistically significant we would test $H_0: \beta = 0$ against $H_A: \beta \neq 0$; the clear upward trend and moderate correlation indicate the slope is significantly greater than zero.
 
 **Important Note on Regression Predictions:** When applying a regression line to make predictions, it is crucial to avoid extrapolating beyond the range of values in the explanatory variable used to create the model. Extrapolation involves estimating outcomes for values of the predictor variable ($X$) that fall outside the range observed in the data. This practice is discouraged because the linear relationship between $X$ and $Y$ established by the model might not hold true beyond the observed data.
 
@@ -640,7 +650,7 @@ ggplot(aes(x = batting, y = scoring), data = AL)+
 
 ```
 
-The red line gives the predictions using the sample mean and the blue line is the using the least squares regression line. In general, the stronger the stronger the linear relationship between the independent and dependent variables, the better the predictions with the regression line will become.
+The red line gives the predictions using the sample mean and the blue line is the using the least squares regression line. In general, the stronger the linear relationship between the independent and dependent variables, the better the predictions with the regression line will become.
 
 To judge how much better the predictions are for the regression model we can compare the residuals of the model fitting the regression line (blue line above) to the model fitting the sample mean (red line above).
 
@@ -687,21 +697,7 @@ Thus team batting average explains roughly $32\%$ of the variation in the averag
 
 
 
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-df = cbind.data.frame()
-
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
-```
-
-
-# Lecture 31 Friday, April 26th 2024
+# Lecture 32 Friday, April 26th 2024
 
 ### Regression relates the mean of $Y$ to $X$
 
@@ -757,7 +753,7 @@ The prediction equation for the regression model fit to the birthweight data is 
 
 \[\hat{y} = 2655.7 + 12.43x_i\]
 
-Now consider the predicted birth weight of an infant born to a mother of 21 years of age: $\hat{y} = 2916.7$ grams. We do not expect all infants born to mothers of $21$ years of age have the same weight of $2916.7$ gams. One mother may have an infant born at $3200$ grams and another at $2500$ grams and so on. As we can see from panel $\bf B$ in the plot above, for each possible age of the mother, there is a distribution of infant birth weights corresponding to all mothers of that age. Thus we can think of the predicted value $\hat{y} = 2916.7$ as estimating the mean birth weight of all mothers aged $x = 21$ years. 
+Now consider the predicted birth weight of an infant born to a mother of 21 years of age: $\hat{y} = 2916.7$ grams. We do not expect all infants born to mothers of $21$ years of age have the same weight of $2916.7$ grams. One mother may have an infant born at $3200$ grams and another at $2500$ grams and so on. As we can see from panel $\bf B$ in the plot above, for each possible age of the mother, there is a distribution of infant birth weights corresponding to all mothers of that age. Thus we can think of the predicted value $\hat{y} = 2916.7$ as estimating the mean birth weight of all mothers aged $x = 21$ years. 
 
 The **population regression equation** relates the predictor $x$ to the means of $Y$ in the population.
 
@@ -793,7 +789,7 @@ the key assumptions of this model mostly concern the behavior of the residuals $
   
   * **$X$ is not invariant** - If the explanatory variable is fixed, then its values cannot all be the same. (i.e $x$ cannot be constant)
   
-Under these assumptions the population parameters $\alpha$ and $\beta$ are normally distributed. We are generally more concerned with the slope than the intercept. Therefore, the $(1 -a)\%$ confidence interval ($a$ represents the confidence level) for the slope is given by 
+Under these assumptions the population parameters $\alpha$ and $\beta$ are normally distributed. We are generally more concerned with the slope than the intercept. Therefore, the $100(1 -a)\%$ confidence interval ($a$ represents the significance level) for the slope is given by
 
 \[ \beta = \hat{\beta} \pm t_{1- a/2} SE(\hat{\beta})\]
 
@@ -803,11 +799,11 @@ the standard error of the sample slope is given by
 
 \[SE(\hat{\beta}) = \sqrt{\frac{s_\epsilon^2}{(n-1)s_x^2}} \]
 
-\[= \sqrt{\frac{\frac{1}{n-2}\sum_i \hat{\epsilon_i}}{\sum_i (x_i - \bar{x})^2}} \]
+\[= \sqrt{\frac{\frac{1}{n-2}\sum_i \hat{\epsilon}_i^{\,2}}{\sum_i (x_i - \bar{x})^2}} \]
 
-A hypothesis test on the population slope $\beta$ is usually conducted under the null hypothesis $H_0: \beta = 0$ or "no linear relationship between $X$ and $Y$". The test is generally two-sided with alternative hypothesis $H_A: \beta \neq 0$. The test statistic is the standardized estimate 
+A hypothesis test on the population slope $\beta$ is usually conducted under the null hypothesis $H_0: \beta = 0$ or "no linear relationship between $X$ and $Y$". The test is generally two-sided with alternative hypothesis $H_A: \beta \neq 0$. The test statistic is the standardized estimate (with $\beta_0 = 0$ under the null)
 
-\[t_0 = \frac{\beta - \hat{\beta}}{SE(\hat{\beta})} \sim t(n-2) \]
+\[t_0 = \frac{\hat{\beta} - \beta_0}{SE(\hat{\beta})} \sim t(n-2) \]
 
 The calculations at this point are quite involved and it is best to rely on software to conduct inference on regression coefficients. Consider, again, the example of a regression model relating the age of mothers to the birth weight of their infants. The programming software $R$ makes fitting linear models quite easy:
 
@@ -837,11 +833,11 @@ Our confidence interval for the slope overlaps zero which indicates that there i
 
 \[ t_0 = \frac{12.43}{10.02} = 1.24\]
 
-You can confirm the $p$-value is $0.26$ using the $t$-table on the resources tab of the course website. As we can see from the $R$ output, the hypothesis test also confirms that age of mother and infant birth weight are not significantly associated. 
+You can confirm the $p$-value is $\approx 0.22$ using the $t$-table on the resources tab of the course website. As we can see from the $R$ output, the hypothesis test also confirms that age of mother and infant birth weight are not significantly associated. 
 
 
 
-# Lecture 32 Monday April 29th 2024
+# Lecture 33 Monday April 29th 2024
 
 
 ### An alternative way to test association
@@ -897,7 +893,7 @@ summary(model)
 
 ```
 
-The last line of the output in the example above reports something called an $F$-statistic. This statistic comes from an alternative test for the association between number the response and predictor variable. This alternative hypothesis test is based on the relative variation explained by the predictor, similar to the $r^2$ coefficient, called an **Analysis of Variance** or **ANOVA**. The $F$-statistic is a test statistic based on the ratio of the *average squared residual* for the regression to *average squared residual for the error*. Recall the relationship between the total variation in the response, the regression and the residuals
+The last line of the output in the example above reports something called an $F$-statistic. This statistic comes from an alternative test for the association between the response and predictor variable. This alternative hypothesis test is based on the relative variation explained by the predictor, similar to the $r^2$ coefficient, called an **Analysis of Variance** or **ANOVA**. The $F$-statistic is a test statistic based on the ratio of the *average squared residual* for the regression to *average squared residual for the error*. Recall the relationship between the total variation in the response, the regression and the residuals
 
 \[ SS_T = SS_E + SS_R \]
 
@@ -917,7 +913,7 @@ where $k$ and $n - k - 1$ are the respective degrees of freedom for each estimat
 
 \[ = \frac{SS_R/k}{SS_E/(n-k-1)} \sim F(k, n-k-1)\]
 
-The above statistic is a ratio of two variances, which follows a special type of distribution called an $F$-distribution so named after Sir Ronald Fisher - the father of statistics who proposed its use in 1918. The $F$ distribution has two degrees of freedom parameters, one for the variance in the numerator and one for the variance in the denominator. Similar to the coefficient of determination, ANOVA evaluates how much of the total variation in the response variable is attributed to the regression model. If there is a linear relationship between the predictor and the response variable, it implies that the predictor accounts for a significant portion of the response's variance, leading to a large $F$-test statistic.
+The above statistic is a ratio of two variances, which follows a special type of distribution called an $F$-distribution, named by George Snedecor in honor of Sir Ronald Fisher, one of the founders of modern statistics. The $F$ distribution has two degrees of freedom parameters, one for the variance in the numerator and one for the variance in the denominator. Similar to the coefficient of determination, ANOVA evaluates how much of the total variation in the response variable is attributed to the regression model. If there is a linear relationship between the predictor and the response variable, it implies that the predictor accounts for a significant portion of the response's variance, leading to a large $F$-test statistic.
 
 
 For simple linear regression between two quantitative variables, the $F$-test is always
@@ -930,7 +926,7 @@ which is exactly the squared value of the $t$ statistic from the $t$-test on the
 set.seed(123)
 
 df = cbind.data.frame(Term = c('Predictor', 'Error', 'Total'),
-                 `Sum of Squares` = c('$SS_R = \\sum (\\hat{y} = \\bar{y})^2$', 
+                 `Sum of Squares` = c('$SS_R = \\sum (\\hat{y} - \\bar{y})^2$',
                                       '$SS_E = \\sum (y - \\hat{y})^2$', 
                                       '$SS_T = \\sum (y - \\bar{y})^2$'),
                  `Degrees of Fredom` = c('$k$', '$n-k-1$', '$n-1$'),
@@ -1092,7 +1088,7 @@ kable(t(df), format = 'html', digits = 2,
 
 * Using the table above, compute the *intercept*, *slope*, and $r^2$ for the regression model treating customer rating as the response and interpret them
 
-\[\hat{\beta} = -0.76\left(\frac{14.11}{4.38}\right) = -2.46\]
+\[\hat{\beta} = -0.76\left(\frac{14.11}{4.38}\right) \approx -2.46\]
 
 \[\hat{\alpha} = 42.56 - (-2.46)\cdot 7.03 = 59.85\]
 
@@ -1110,7 +1106,7 @@ The test statistic is
 
 The $p$-value is
 
-\[ P(|t| \geq |t_0| |H_0 \ \text{True}) = P(t \geq 10.25|H_0 \ \text{True}) \approx 0 \]
+\[ P(|t| \geq |t_0| |H_0 \ \text{True}) = 2P(t \geq 10.25|H_0 \ \text{True}) \approx 0 \]
 
 * Compute the $F$-statistic for the ANOVA test using the table above:
 
@@ -1118,7 +1114,7 @@ The $p$-value is
 
 ### Checking Assumptions 
 
-Checking assumptions in simple linear regression is crucial because it ensures the validity and reliability of your model's predictions and conclusions. Recall that the least-squares estimator makes several strong assumptions about the structure of the data (*linearity*, *independence*, *constant variance*, and *normality* of residuals). If these assumptions are violated, it can lead to biased estimates of the slope and intercept, incorrect inferences, or unreliable predictions. Our estimates for the slope and intercept can also be biased by influential points such as outliers in the data. Thus, when fitting the least-squares model, it best to pair results with a thorough investigation the residuals and any potential outliers.
+Checking assumptions in simple linear regression is crucial because it ensures the validity and reliability of your model's predictions and conclusions. Recall that the least-squares estimator makes several strong assumptions about the structure of the data (*linearity*, *independence*, *constant variance*, and *normality* of residuals). If these assumptions are violated, it can lead to biased estimates of the slope and intercept, incorrect inferences, or unreliable predictions. Our estimates for the slope and intercept can also be biased by influential points such as outliers in the data. Thus, when fitting the least-squares model, it is best to pair results with a thorough investigation of the residuals and any potential outliers.
 
 
 
@@ -1149,13 +1145,13 @@ par(mfrow= c(1,1))
 
 If the residuals are approximately normally distributed, the points on the Q-Q plot will align along a diagonal line, indicating a one-to-one correspondence with the standard normal quantiles. However, if the residuals deviate from this diagonal, especially at the ends, it may indicate skewness or other departures from normality. Outliers and extreme values in the residuals will appear as points that are significantly distant from the diagonal line. 
 
-* If residuals are non-normal, often rescaling the response $y$ with an *affine* transformation such as taking the $\log$ or square-root can help
+* If residuals are non-normal, often rescaling the response $y$ with a *non-linear* transformation such as taking the $\log$ or square-root can help
 
 Another common plot is called a "residual-leverage" plot. *Leverage* is a measure that can help assess the influence a data point has on the regression line. A high leverage value indicates that the data point has a greater potential to affect the fit of the regression model. Often the residuals are given as the *standardized residuals* (denoted $\epsilon_i^*$) - the raw residuals divided by the estimated residual standard deviation $\hat{\sigma}_\epsilon$. 
 
 \[ \hat{\epsilon_i}^* = \frac{\hat{\epsilon}_i}{\hat{\sigma_\epsilon}} \]
 
-Residuals are typically standardized to help improve the ability to identify outliers - especially if the raw residuals have non-constant variance. Software like $R$ makes it easy to quickly produce several diagnoistic plots to assess assumptions and outliers. The residual-leverage plot for the cereal exmaple is shown below:
+Residuals are typically standardized to help improve the ability to identify outliers - especially if the raw residuals have non-constant variance. Software like $R$ makes it easy to quickly produce several diagnostic plots to assess assumptions and outliers. The residual-leverage plot for the cereal example is shown below:
 
 
 
@@ -1171,7 +1167,7 @@ plot(model)
 par(mfrow= c(1,1))
 ```
 
-In the four plots above, the residuals vs leverage plot is given in the bottom-right panel. The $x$-axis is *leverage* or influence that each data point has on the regression line. This plot also features something called **Cooks Distance** given by the dashed lines on the plot. Cooks distance is another metric to assess the influence of individual points. Generally speaking, points that fall above or below the dashed lines (i.e the Cooks distance) are potential outliers. As we can see from the residual vs leverage plot above, the data point labeled "4" is close but not above the dashed line indicating there are no outliers. Another example of a residual vs leverage plot and how to address potential outliers can be found here [https://www.statology.org/residuals-vs-leverage-plot/](https://www.statology.org/residuals-vs-leverage-plot/) 
+In the four plots above, the residuals vs leverage plot is given in the bottom-right panel. The $x$-axis is *leverage* or influence that each data point has on the regression line. This plot also features something called **Cook's Distance** given by the dashed lines on the plot. Cook's distance is another metric to assess the influence of individual points. Generally speaking, points that fall above or below the dashed lines (i.e the Cook's distance) are potential outliers. As we can see from the residual vs leverage plot above, the data point labeled "4" is close but not above the dashed line indicating there are no outliers. Another example of a residual vs leverage plot and how to address potential outliers can be found here [https://www.statology.org/residuals-vs-leverage-plot/](https://www.statology.org/residuals-vs-leverage-plot/) 
 
 The last two plots we will discuss are the *Scale-Location plot* (bottom left panel in the figure above) and the *Residuals vs Fitted plot* (top left panel in the figure above). These two plots are crucial for assessing the constant variance assumption of the residuals in a linear model.
 
@@ -1179,7 +1175,7 @@ In both plots, the x-axis represents the predicted values $\hat{y}_i$, while the
 
 In the Residuals vs Fitted plot, the residuals should form a cloud-like shape around the horizontal line representing zero. If the red line, which represents a smooth trend through the residuals, is roughly horizontal, this suggests that the variance is constant across the predicted values. However, if the red line exhibits a discernible pattern, such as a curve or slope, this could indicate non-constant variance.
 
-Similarly, in the Scale-Location plot, the y-axis represents the square root of the absolute standardized residuals, and the red line shows the trend of these scaled residuals. The interpretation is the same as it is for the Residuals vs Fitted plot, however ccaling the residuals in this way can make it easier to visually identify patterns that might suggest non-constant variance. You can see another example of these two plot types here [https://www.statology.org/scale-location-plot/](https://www.statology.org/scale-location-plot/)
+Similarly, in the Scale-Location plot, the y-axis represents the square root of the absolute standardized residuals, and the red line shows the trend of these scaled residuals. The interpretation is the same as it is for the Residuals vs Fitted plot, however scaling the residuals in this way can make it easier to visually identify patterns that might suggest non-constant variance. You can see another example of these two plot types here [https://www.statology.org/scale-location-plot/](https://www.statology.org/scale-location-plot/)
 
 <br>
 <br>

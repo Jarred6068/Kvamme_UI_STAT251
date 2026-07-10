@@ -26,17 +26,17 @@ path = 'Data/'
 
 # Lecture 15 Monday, Feb.26th 2024
 
-#### The normal distribution revisted 
+#### The normal distribution revisited
 
 We can also talk about the normal distribution as a family of probability distributions. As before, the normal distribution has two parameters $\mu$ - the location parameter, and $\sigma$ the "spread" parameter. The normal distribution has the following probability density function 
 
 \[ f(x) = \frac{1}{\sigma \sqrt{2\pi}} \cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}} \]
 
-Finding probability from the normal distribution is not as straight forward as the examples we did earlier. <u> we cannot easily extrapolate probabilities</u> from the graph of a normal distribution. While we may use the empirical rule to identify the approximate quantiles of normal distribution, finding exact probabilities would require us to use calculus as we have said before. For example, suppose $X$ is normally distributed with mean $\mu$ and standard deviation $\sigma$. To find the probability $P(a\leq X\leq b)$ we would need to compute:
+Finding probability from the normal distribution is not as straight forward as the examples we did earlier. <u> We cannot easily extrapolate probabilities</u> from the graph of a normal distribution. While we may use the empirical rule to identify the approximate quantiles of normal distribution, finding exact probabilities would require us to use calculus as we have said before. For example, suppose $X$ is normally distributed with mean $\mu$ and standard deviation $\sigma$. To find the probability $P(a\leq X\leq b)$ we would need to compute:
 
-\[ P(a\leq X\leq b) = \int_{a}^{b} \frac{1}{\sigma \sqrt{2\pi}} \cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}} \]
+\[ P(a\leq X\leq b) = \int_{a}^{b} \frac{1}{\sigma \sqrt{2\pi}} \cdot e^{\frac{-(x-\mu)^2}{2\sigma^2}} \, dx \]
 
-However, these skills are outside the purveiw of this course. Luckily, the normal distribution is used so frequently in statistics that precomputed tables of probabilities are usually available. These tables are often referred to as $Z$ tables because they are based on the **standard normal distribtion**. In addition, because the normal distribution is symmetric, we usually only need to compute the probabilities for either the positive or negative half of the distribution. Here is an example of a $Z$-table
+However, these skills are outside the purview of this course. Luckily, the normal distribution is used so frequently in statistics that precomputed tables of probabilities are usually available. These tables are often referred to as $Z$ tables because they are based on the **standard normal distribtion**. In addition, because the normal distribution is symmetric, we usually only need to compute the probabilities for either the positive or negative half of the distribution. Here is an example of a $Z$-table
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -52,17 +52,17 @@ kable(tab, caption = 'STANDARD NORMAL DISTRIBUTION: Table Values Represent AREA 
 
 ```
 
-The left-most column gives the $Z$-score and the columns to right of this column are for additional decimal places of the $Z$-score. The values in the table represent $P(Z\leq z)$ and denote the area to left of the $Z$-score. 
+The left-most column gives the $Z$-score and the columns to the right of this column are for additional decimal places of the $Z$-score. The values in the table represent $P(Z\leq z)$ and denote the area to the left of the $Z$-score.
 
-* We can compute the $Z$ for **any** normal random variable and use the table above to find it's probability. 
+* We can compute the $Z$ for **any** normal random variable and use the table above to find its probability.
 
 * Try it out: Suppose $X\sim N(5, 10)$. Compute the probability that $X\geq 25$
 
-The table above gives the area to left of the <u>positive</u> values of the standard normal distribution. Therefore to the find the probability $P(X\geq 25)$ we must do little bit of work. First we need to convert from the distribution of $X$ to the standard normal distribution $Z$. We can do so by computing the the $z$-score equivalent for $X = 25$
+The table above gives the area to left of the <u>positive</u> values of the standard normal distribution. Therefore to the find the probability $P(X\geq 25)$ we must do little bit of work. First we need to convert from the distribution of $X$ to the standard normal distribution $Z$. We can do so by computing the $z$-score equivalent for $X = 25$
 
 \[ z = \frac{25 - 5}{10} = 2\]
 
-Thus asking to find $P(X \geq 25)$ is the same as $P(Z \geq 2)$. But we are not quite ready to use the $Z$ table above. As stated previously the $Z$ table gives the probabilities corresponding to the left of each $z$-score i.e $P(Z\leq z)$. If we want to use the table above we need to flip the inequality in $P(Z\geq 2)$ so its facing in the same direction as $P(Z\leq z)$. Luckily, we can accomplish this by finding the complementary event:
+Thus asking to find $P(X \geq 25)$ is the same as $P(Z \geq 2)$. But we are not quite ready to use the $Z$ table above. As stated previously the $Z$ table gives the probabilities corresponding to the left of each $z$-score i.e $P(Z\leq z)$. If we want to use the table above we need to flip the inequality in $P(Z\geq 2)$ so it's facing in the same direction as $P(Z\leq z)$. Luckily, we can accomplish this by finding the complementary event:
 
 \[P(Z\geq 2) = 1 - P(Z < 2) \]
 
@@ -107,7 +107,7 @@ B = ggplot(data.frame(x = c(avg-4*std, avg+4*std)), aes(x)) +
 ggarrange(A, B, nrow = 1)
 ```
 
-We can easily find $P(Z < 2)$ using the table above which gives $P(Z < 2) = 0.977$. Therefore, the probability we were asked to find in the begining computed as 
+We can easily find $P(Z < 2)$ using the table above which gives $P(Z < 2) = 0.977$. Therefore, the probability we were asked to find in the beginning is computed as
 
 \[P(X\geq 25) = 1 - P(Z\leq 2) = 1 - 0.977 = 0.023 \]
 
@@ -193,7 +193,7 @@ Now that we have a strong understanding of the theory of mathematical probabilit
 
 ### The Central Limit Theorem
 
-A statistic computed from a random sample or randomized experiment is a random variable whose probability distribution is given by the sampling distribution. One of the most famous results from probability theory says that the distribution of a the mean $\bar{x}$ of a random variable computed from a sample of size $n$ will be approximately normally distributed if $n$ is large. This result is referred to as the **Central Limit Theorem (CLT)**. Formally, the CLT states that for a set of independent and identically distributed random variables $X_1, X_2, ... X_n$, 
+A statistic computed from a random sample or randomized experiment is a random variable whose probability distribution is given by the sampling distribution. One of the most famous results from probability theory says that the distribution of the mean $\bar{x}$ of a random variable computed from a sample of size $n$ will be approximately normally distributed if $n$ is large. This result is referred to as the **Central Limit Theorem (CLT)**. Formally, the CLT states that for a set of independent and identically distributed random variables $X_1, X_2, ... X_n$, 
 
 \[\frac{\sqrt{n}(\bar{X} - \mu)}{\sigma} \xrightarrow{d} N(0,1)\]
 
@@ -205,7 +205,7 @@ Where $\xrightarrow{d}$ means "converge in distribution" and $\bar{X} = \frac{1}
 
 Informally, this means that as the sample size increases the shape of a sampling distribution of $\bar{x}$ or $\hat{p}$ will “approach” that of a normal distribution - regardless of the distribution of data distribution of the sample. Therefore the sampling distributions of both $\bar{x}$ and $\hat{p}$ are approximately normal-shaped for moderate to large sample sizes $n$.
 
-To illustrate, consider the animated plot below which shows the sampling distribution of $\hat{p}$. The distribution of a sample proportion is binomial distributed such that $\hat{p}\sim Binom(n, p)$ and has mean $p$ and with standard deviation $\sqrt\frac{p(1-p)}{n}$. However, for moderate values of $p$ and large $n$, the CLT states that $\hat{p}$ will be approximately normally distributed. From the animation below we can see that as $n$ gets large the distribution for $\hat{p}$ looks more and more continuous and bell-shaped. 
+To illustrate, consider the animated plot below which shows the sampling distribution of $\hat{p}$. The sample count $X$ is binomial distributed such that $X\sim Binom(n, p)$, and the sample proportion $\hat{p} = X/n$ has mean $p$ and standard deviation $\sqrt\frac{p(1-p)}{n}$. However, for moderate values of $p$ and large $n$, the CLT states that $\hat{p}$ will be approximately normally distributed. From the animation below we can see that as $n$ gets large the distribution for $\hat{p}$ looks more and more continuous and bell-shaped. 
 
 ```{r, eval = F, echo=F, warning=F, message=F, fig.height=6, fig.width=10}
 
@@ -320,7 +320,7 @@ knitr::include_graphics("Data/CLT_mean.gif")
 ```
 
 
-Using the central limit theorem, the distributions for the the sample mean and sample proportion are both approximately normal for large samples
+Using the central limit theorem, the distributions for the sample mean and sample proportion are both approximately normal for large samples
 
 The sampling distribution of the sample proportion $\hat{p}$ has mean $p$ and variance $\frac{p(1-p)}{n}$.
 
@@ -330,11 +330,11 @@ The sampling distribution of the sample mean $\bar{x}$ has mean $\mu$ and varian
 
 \[\bar{x} \sim N\left(\mu, \frac{\sigma}{\sqrt{n}}\right) \]
 
-We can use the CLT to compute the probability of a given value of a statistic. Consider the following example: A scientist studying alligator morphology, plans to sample 50 female American alligators to estimate their mean length. Suppose that the population mean is 8.3 feet with a standard deviation of  1.1 feet. What is the probability she observes a sample mean less than $5.4 feet$? We can apply the CLT to find this probability by simple finding $P(X\leq 5.4)$ where $X\sim N(8.3, \frac{1.1}{\sqrt{50}})$. First, we must convert to a $z$-score:
+We can use the CLT to compute the probability of a given value of a statistic. Consider the following example: A scientist studying alligator morphology, plans to sample 50 female American alligators to estimate their mean length. Suppose that the population mean is 8.3 feet with a standard deviation of  1.1 feet. What is the probability she observes a sample mean less than $5.4 feet$? We can apply the CLT to find this probability by simply finding $P(\bar{X}\leq 5.4)$ where $\bar{X}\sim N(8.3, \frac{1.1}{\sqrt{50}})$. First, we must convert to a $z$-score:
 
-\[ Z = \frac{\bar{X} - \mu }{\sigma/\sqrt{n} } = \frac{5.4 - 8.3}{1.1/\sqrt{50}} = \frac{-2.9}{0.15} = -19.33\]
+\[ Z = \frac{\bar{X} - \mu }{\sigma/\sqrt{n} } = \frac{5.4 - 8.3}{1.1/\sqrt{50}} = \frac{-2.9}{0.1556} = -18.64\]
 
-\[ P( Z < -19.33) \approx 0\]
+\[ P( Z < -18.64) \approx 0\]
 
 Thus it is highly unlikely that the scientist would observe a mean length this short. 
 
@@ -377,7 +377,7 @@ For the sample mean we can say that
 
 Alternatively, this can be stated as 
 
-\[P\left(|\bar{x} - \mu|\leq \mu+2\frac{\sigma}{\sqrt{n}}\right) \approx 0.95 \]
+\[P\left(|\bar{x} - \mu|\leq 2\frac{\sigma}{\sqrt{n}}\right) \approx 0.95 \]
 
 
 Similarly, for the sample proportion we can say that
@@ -385,15 +385,15 @@ Similarly, for the sample proportion we can say that
 \[P\left(p-2\sqrt{\frac{p(1-p)}{n}} \leq \hat{p} \leq p+2\sqrt{\frac{p(1-p)}{n}} \right) \approx 0.95\]
 
 which can also be stated as 
-\[P\left(|\hat{p} - p|\leq p+2\sqrt{\frac{p(1-p)}{n}}\right) \approx 0.95\]
+\[P\left(|\hat{p} - p|\leq 2\sqrt{\frac{p(1-p)}{n}}\right) \approx 0.95\]
 
 
-In other words, the probability that the sample mean $\bar{x}$ or sample proportion $\hat{p}$ will be within two standard deviations of the population mean $\mu$ or population proportion $p$ is approximately $0.95$. This distance is the **margin of error** that we have defined previously. The **margin of error** characterizes how much an estimate can be expected to deviate from the parameter its estimating. In estimation, the standard deviation of a statistic is usually referred to as the **standard error** because it relates to the sampling error of a given observation of a statistic.
+In other words, the probability that the sample mean $\bar{x}$ or sample proportion $\hat{p}$ will be within two standard deviations of the population mean $\mu$ or population proportion $p$ is approximately $0.95$. This distance is the **margin of error** that we have defined previously. The **margin of error** characterizes how much an estimate can be expected to deviate from the parameter it's estimating. In estimation, the standard deviation of a statistic is usually referred to as the **standard error** because it relates to the sampling error of a given observation of a statistic.
 
 
-We have extended the definition of the margin of error to include a measure of probability that the sample statistic will be within a certain distance of the parameter its estimating. The choice of probability being $0.95$ is arbitrary. We have the ability to to define the margin of error however we wish. For example: 
+We have extended the definition of the margin of error to include a measure of probability that the sample statistic will be within a certain distance of the parameter it's estimating. The choice of probability being $0.95$ is arbitrary. We have the ability to define the margin of error however we wish. For example: 
 
-\[P\left(|\bar{x}-\mu|\leq \mu+2\frac{\sigma}{\sqrt{n}} \right) \approx 0.68\]
+\[P\left(|\bar{x}-\mu|\leq \frac{\sigma}{\sqrt{n}} \right) \approx 0.68\]
 
 In other words, the probability that the distance between $\bar{x}$ and $\mu$ does not exceed one standard error is approximately $0.68$.
 
@@ -404,7 +404,7 @@ Consider the following example:
 
 ### Inference and Estimation
 
-statistical inference is used to draw conclusions about a population or process based on sample data. Inference has two general types: <i>significance test</i> (also referred to as <i>hypothesis testing</i>) and **estimation**. Estimation consists of
+Statistical inference is used to draw conclusions about a population or process based on sample data. Inference has two general types: <i>significance test</i> (also referred to as <i>hypothesis testing</i>) and **estimation**. Estimation consists of
 
 * *point estimation* consists of estimating the value of a parameter with the value of a statistic such as using $\bar{x}$, $\hat{p}$, $s^2$, and $s$ to estimate $\mu$, $p$, $\sigma^2$, and $\sigma$ (respectively). 
 * *interval estimation* consists of estimating the value of a parameter with an interval of values. The typical device we use is called a **confidence interval**.
@@ -413,7 +413,7 @@ Regardless of the type of inference that is being done, the underlying reasoning
 
 ### Confidence Intervals
 
-A **interval estimate** aims to place bounds on the value of a population parameter. We saw previously that we can can talk about the probability with which an estimate falls within a particular interval. For example, we said that the interval which has a probability of 0.95 of containing $\bar{x}$ is given by 
+A **interval estimate** aims to place bounds on the value of a population parameter. We saw previously that we can talk about the probability with which an estimate falls within a particular interval. For example, we said that the interval which has a probability of 0.95 of containing $\bar{x}$ is given by 
 
 \[P\left(\mu-2\frac{\sigma}{\sqrt{n}} \leq \bar{x} \leq \mu+2\frac{\sigma}{\sqrt{n}} \right) \approx 0.95\]
 
@@ -423,7 +423,7 @@ However, to say that $\bar{x}$ lies within two standard errors of $\mu$ is the s
 
 Under repeated sampling, we can be confident that $95\%$ of all samples will capture the true value of $\mu$ in the interval $\left[\bar{x}-\frac{2\sigma}{\sqrt{n}}, \bar{x}+\frac{2\sigma}{\sqrt{n}}\right]$. 
 
-This is the rational behind the famous **confidence interval**. The language of statistics uses the long-run behavior of repeated sampling to describe our confidence in the results of any particular sample. In this case, we constructed the interval to have a long-run frequency $95\%$ of capturing the true parameter - called the confidence level of our interval. Therefore the **confidence level** of a confidence interval is the probability the estimated interval will contain the parameter <u>before the data are collected</u>. It is important to note that after the data are collected the <u>**interval either does or does not contain the parameter**</u>. 
+This is the rationale behind the famous **confidence interval**. The language of statistics uses the long-run behavior of repeated sampling to describe our confidence in the results of any particular sample. In this case, we constructed the interval to have a long-run frequency $95\%$ of capturing the true parameter - called the confidence level of our interval. Therefore the **confidence level** of a confidence interval is the probability the estimated interval will contain the parameter <u>before the data are collected</u>. It is important to note that after the data are collected the <u>**interval either does or does not contain the parameter**</u>. 
 
 The general formula of a confidence interval consists of three parts: 
 
@@ -441,10 +441,10 @@ Applying this basic formula gives the following formula for a confidence interva
 
 Notice in the equation above that we have substituted $\sigma$ with $s$ the sample standard deviation. This is because we typically do not know the true value of population standard deviation and must estimate it from the sample. 
 
-Similarly, the confidence interval for a population proportion is give by
-\[ \hat{p}\pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{\sqrt{n}}} \Leftrightarrow \left[\hat{p}- z\sqrt{\frac{\hat{p}(1-\hat{p})}{\sqrt{n}}}, \ \hat{p}+ z\sqrt{\frac{\hat{p}(1-\hat{p})}{\sqrt{n}}}  \right] \]
+Similarly, the confidence interval for a population proportion is given by
+\[ \hat{p}\pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \Leftrightarrow \left[\hat{p}- z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \ \hat{p}+ z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}  \right] \]
 
-Notice also that we have substitute $\hat{p}$ for $p$ in the standard error of $\hat{p}$. The quantity denoted by $z$ in the formulas above is the *standard score* mention previously. It controls how wide and therefore how confident we wish to be in our estimation. We can look up $z$ in a $Z$-table for any desired confidence level:
+Notice also that we have substituted $\hat{p}$ for $p$ in the standard error of $\hat{p}$. The quantity denoted by $z$ in the formulas above is the *standard score* mentioned previously. It controls how wide and therefore how confident we wish to be in our estimation. We can look up $z$ in a $Z$-table for any desired confidence level:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
 df = cbind.data.frame(`$z$` = c(qnorm(1-0.1/2), qnorm(1-0.05/2), qnorm(1-0.01/2)),
@@ -508,7 +508,7 @@ plot(Aconf)
 
 In practice, once we compute the confidence interval we don't know for sure whether our confidence interval captures the true population parameter we are trying to estimate. It may be in the interval, it may not. But the choice in confidence level gives us flexibility in how confident we wish to be. We can increase the confidence level of our interval to give a higher probability that the interval will cover the true parameter. For example, suppose the imperial officers wish to increase the confidence level from $95\%$ to $99\%$. Now only $1$ in every $100$ samples will fail to cover the true population mean blaster accuracy. The downside, however, is that a higher confidence level corresponds to a wider confidence interval:
 
-\[\mu \pm 2.6\frac{4.5}{\sqrt{100}} =  [77.3, 79.7]\]
+\[78.5 \pm 2.58\frac{4.5}{\sqrt{100}} =  [77.3, 79.7]\]
 
 As we can see in the plot below, the interval is now wider 
 
@@ -550,11 +550,11 @@ Bconf = ggplot(data.frame(x = c(mu - 4*sigma/sqrt(n), mu + 4*sigma/sqrt(n))), ae
 ggarrange(Aconf, Bconf, nrow = 1)
 ```
 
-In this fictional example, the standard error of $\bar{x}$ is quite small at $SE = 0.45$ so the confidence interval is only a little bit wider. In other cases, depending on the the sample size and sample standard deviation, increasing the confidence level may result in reduced precision in our estimate. 
+In this fictional example, the standard error of $\bar{x}$ is quite small at $SE = 0.45$ so the confidence interval is only a little bit wider. In other cases, depending on the sample size and sample standard deviation, increasing the confidence level may result in reduced precision in our estimate. 
 
 To further illustrate the concept of confidence and its correspondence to the long-run behavior of interval estimates, consider that each month for the next $100$ months, the Imperial army selects a sample of $100$ stormtroopers in the training program, records their blaster accuracy scores, and computes a $95\%$ confidence interval for the population mean blaster accuracy. 
 
-* What proportion of these confidence intervals are expected to contain to the true population mean accuracy. What proportion do not? The plot below gives the results of all $100$ confidence intervals 
+* What proportion of these confidence intervals are expected to contain the true population mean accuracy. What proportion do not? The plot below gives the results of all $100$ confidence intervals 
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10}
@@ -603,7 +603,7 @@ ggplot(data = df, aes(x = xpos, y = `$\\bar{x}$`, color = `Covers Parameter`))+
 
 ```
 
-As we can see from the plot, all but two of the confidence intervals (highlighted in orange) covers the true value of the parameter $\mu$ (denoted by the black dotted line).
+As we can see from the plot, all but two of the confidence intervals (highlighted in orange) cover the true value of the parameter $\mu$ (denoted by the black dotted line).
 
 
 

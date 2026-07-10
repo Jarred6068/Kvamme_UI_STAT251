@@ -18,7 +18,7 @@ library(latex2exp)
 
 ## Describing the shape of a distribution. 
 
-The purpose of a graph is to help us understand the data. Once the distribution of variable is plotted, you must ask yourself "what do I see?". This is when were look for the features of a distribtuion such as shape, center and spread. This helps us to identify interesting patterns or potential **outliers** - individual data points that lie outside the normal pattern of the distribution.
+The purpose of a graph is to help us understand the data. Once the distribution of variable is plotted, you must ask yourself "what do I see?". This is when we look for the features of a distribution such as shape, center and spread. This helps us to identify interesting patterns or potential **outliers** - individual data points that lie outside the normal pattern of the distribution.
 
 * One of the first things we can look for are peaks of the distribution. A peak indicates values that are more likely to occur called the **mode**. A distribution can have no peaks, one peak, or multiple peaks. A distribution with one peak is said to be **unimodal**, a distribution with two peaks is **bimodal** and a distribution with multiple peaks is **multimodal**.
 
@@ -52,9 +52,9 @@ B = ggplot(data = GaltonFamilies, aes(x = childHeight, fill = gender))+
 ggarrange(A, B, nrow = 1)
 ```
    
-   * We can see from the histogram on the left that there are two clearly visible peaks. By coloring and segregating the bars according to gender we produce the histogram on the left which shows that the two peaks correspond to the gender of the children with males being about 10 inches taller on average. 
+   * We can see from the histogram on the left that there are two clearly visible peaks. By coloring and segregating the bars according to gender we produce the histogram on the right which shows that the two peaks correspond to the gender of the children with males being about 5 inches taller on average.
 
-* Another question we may ask about the shape of a distribution is whether the distribution is symmetric or if it is skewed. A distribution is **symmetric** is the values that are smaller and larger than its midpoint are mirror images. A distribution is **skewed right** is the values larger than the midpoint form a long tail. Conversely, a distribution is **skewed left** if the values less than the midpoint form a long tail to the left
+* Another question we may ask about the shape of a distribution is whether the distribution is symmetric or if it is skewed. A distribution is **symmetric** if the values that are smaller and larger than its midpoint are mirror images. A distribution is **skewed right** if the values larger than the midpoint form a long tail. Conversely, a distribution is **skewed left** if the values less than the midpoint form a long tail to the left
 
 ```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=6}
 #distribution shapes
@@ -107,7 +107,7 @@ ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
 ```
 
 
-Many types of variables have distributions with predictable shapes. For example, variables that represent measurements of size from the same species and sex such as height, length, and age will have symmetric distributions. Variables related to money or finance on the other hand will often have skewed distributions. Skewness arises when there is a strict boundary on the values of a variable. For example, housing prices are always positive numbers and many houses will be a similar price while some houses many be really expensive. For example, consider the distribution of housing prices from the 1990 california housing census data downloaded from [Kaggle](https://www.kaggle.com/datasets/camnugent/california-housing-prices?resource=download)
+Many types of variables have distributions with predictable shapes. For example, variables that represent measurements of size from the same species and sex such as height, length, and age will have symmetric distributions. Variables related to money or finance on the other hand will often have skewed distributions. Skewness arises when there is a strict boundary on the values of a variable. For example, housing prices are always positive numbers and many houses will be a similar price while some houses may be really expensive. For example, consider the distribution of housing prices from the 1990 california housing census data downloaded from [Kaggle](https://www.kaggle.com/datasets/camnugent/california-housing-prices?resource=download)
 
 ```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=8}
 
@@ -139,7 +139,7 @@ ggplot(data = temp, aes(x = hwy, fill = is.outlier))+
 
   * How would you describe the shape of this distribution?
   
-  * From the histogram we can see there are two bars that fall far to the right of the rest of the distribution. The observations comprising these bars constitute potential outliers. In fact, these three observations belong to the 1990 volkswagen beetle and jetta which was extremely fuel efficient for its time 
+  * From the histogram we can see there are two bars that fall far to the right of the rest of the distribution. The observations comprising these bars constitute potential outliers. In fact, these three observations belong to the 1999 volkswagen beetle and jetta which was extremely fuel efficient for its time
   
 
 ## Describing distributions with numbers
@@ -151,7 +151,7 @@ Any description of the distribution of a variable is not complete without some n
 The arithmetic **mean** (denoted $\bar{x}$) is the average value of a set of observations and tells us the center of mass or balancing point of a distribution
 $$\bar{x} = \sum_{i = 1}^n \frac{x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}$$
 
-* the symbol $\Sigma$ means to "add up a set of values". Therefore, the mean is the sum of all observations in the sample (or popultion) and divide the sum by the number of observations
+* the symbol $\Sigma$ means to "add up a set of values". Therefore, the mean is the sum of all observations in the sample (or population) and divide the sum by the number of observations
 * the mean is usually not equal to any of the values observed in the sample
 * The mean is highly influenced by outliers. Outliers pull the value of the mean in their direction. 
   
@@ -167,19 +167,19 @@ $$\bar{x} = \frac{1+3+5+5+6+7+7+8}{8} = 5.25$$
 
 $$\text{median} = \frac{5+6}{2} = 5.5$$
 
-Now consider a the mean and median when we include the outlier observation $X = 22$ and note it's effect each statistic:
+Now consider a the mean and median when we include the outlier observation $X = 32$ and note it's effect each statistic:
 
 $$X = \{ 1, 3, 5, 5, 6, 7, 7, 8, 32\}$$
 
 The mean becomes
-$$\bar{x} = \frac{1+3+5+5+6+7+7+8+32}{8} = 8.22$$
+$$\bar{x} = \frac{1+3+5+5+6+7+7+8+32}{9} = 8.22$$
 
 The median becomes
 $$\text{median} = 6$$
 
 Notice that in the first set of calculations the mean was less than the median. Now, because of the presence of the outlier, the mean has surpassed the value of the median because the "weight" that the outlier carries in terms of its value. 
 
- * This example illustrates how the mean and median behave depending the shape of a distribution. Distributions with skew will pull the value of the mean in the direction of the tail while the median will always be close to the mode of the distribution
+ * This example illustrates how the mean and median behave depending the shape of a distribution. Distributions with skew will pull the value of the mean in the direction of the tail while the median will typically lie between the mode and the mean of the distribution
  
 ```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=8}
 #distribution shapes
@@ -267,15 +267,15 @@ We can compute the mean petal length using either of our formulas from above:
 
 * Using frequency
 
-$$\bar{x} = \frac{1(24)+2(26)+5(3)+4(34)+3(35)+6(24)+7(4)}{150}\approx 3.76 $$
+$$\bar{x} = \frac{1(24)+2(26)+3(3)+4(34)+5(35)+6(24)+7(4)}{150}\approx 3.79 $$
 
 * Using the relative frequency
 
-$$\bar{x} = 1(0.16)+2(0.17)+5(0.02)+4(0.23)+3(0.23)+6(0.16)+7(0.03)\approx 3.76$$
+$$\bar{x} = 1(0.16)+2(0.17)+3(0.02)+4(0.23)+5(0.23)+6(0.16)+7(0.03)\approx 3.79$$
 
 ### Measures of location
 
-We have several numerical quantatities that we can compute from a distribution that tell us where certain values fall in the distribution. We call these measures of location because they tell us things are in the distribution. One of the simplest measures of location that have heard before is the **mode**. 
+We have several numerical quantities that we can compute from a distribution that tell us where certain values fall in the distribution. We call these measures of location because they tell us where things are in the distribution. One of the simplest measures of location that have heard before is the **mode**. 
 
 * The **mode** is the most frequent value or category of a variable. It corresponds to peaks on the distribution. The mode tells us what the most likely values in the distribution are. The following are some key things to consider about the mode 
   * The mode may not be unique. For example, a bimodal distribution will have two different values for the mode
@@ -288,9 +288,10 @@ We have several numerical quantatities that we can compute from a distribution t
 Other useful measures of position are **percentiles**. The **$p^{th}$** percentile of a distribution is the value that has $p$ percent of the observations fall at or below it. Take the following simple example of 13 observations of the outcome of rolling a fair six-sided die
 $$X = \{1,2,2,2,2,2,3,4,4,5,5,6,6\}$$
 
-What is the $50^{th}$ percentile of $X$? Given the definition above the $50^{th}$ percentile of $X$ is $3$ because half of the observations in the sample are at or below 3. Consequently, the $50th$ percentile is also the median. By definition the median divides the data in equal halves with $50\%$ of observations at or below or the median and the remaining $50\%$ of observation having a value greater than or equal to the median.
+What is the $50^{th}$ percentile of $X$? Given the definition above the $50^{th}$ percentile of $X$ is $3$ because half of the observations in the sample are at or below 3. Consequently, the $50th$ percentile is also the median. By definition the median divides the data in equal halves with $50\%$ of observations at or below the median and the remaining $50\%$ of observation having a value greater than or equal to the median.
 
 Two other commonly useful percentiles are the $25^{th}$, and $75^{th}$ percentiles. Together with the median we call these percentiles the quartiles because they divide a distribution into quarters.
+
 * We denote the first quartile ($25^{th}$ percentile) as $Q1$. It is the median of the lower half of the data.
 * We denote the $50^{th}$ percentile or median as $Q2$ 
 * We denote the third quartile ($75^{th}$ percentile) as $Q3$. It is the median of the upper half of the data 
@@ -334,7 +335,7 @@ Find the Q1, Q2, and Q3 quartiles for these exam scores.
 
 $$\{61,61,65,65,66,68,69\}$$
 
-To find the first quartile we simply find the median of this subset of the observations which is $Q1 = 65$. Lastly we repeat this process for the upper half of the data to find the value of the third quantile. The upper half of the exam scores is the subset 
+To find the first quartile we simply find the median of this subset of the observations which is $Q1 = 65$. Lastly we repeat this process for the upper half of the data to find the value of the third quartile. The upper half of the exam scores is the subset 
 
 $$\{ 74,75,76,78,79,90,94\}$$
 
@@ -383,7 +384,7 @@ A better measure of spread that can be computed from the first and third quartil
 
 Combining several numerical descriptors together is the best way to get a good feel for the characteristics of a distribution. A common method for summarizing a set of data is to use the **five number summary** which combines the minimum, maximum, and quartiles together. 
 
-* The five number summary: $\text{Miniumum} \ \ Q1 \ \ \text{Median} \ \ Q3 \ \  \text{Maximum}$
+* The five number summary: $\text{Minimum} \ \ Q1 \ \ \text{Median} \ \ Q3 \ \  \text{Maximum}$
 
 Consider the five number summary of the statistics student exam scores:
 
@@ -394,7 +395,7 @@ The median tells us the center of the data, the quartiles show us the spread of 
 Often these five numbers are displayed graphically in a plot called a **box and whisker plot** (often called a boxplot). Together with the histogram, the boxplot is one of the most useful graphical summaries because it condenses a lot of information into an easy to create display.
 
 * Steps for constructing a boxplot:
-  * Mark the position of the first and second quartile and draw a box connecting them.
+  * Mark the position of the first and third quartile and draw a box connecting them.
   * Draw a line inside of the box showing the position of the median
   * From each end of the box, draw a line extending outward $1.5 \times IQR$. 
     * The lower whisker is drawn to either the minimum value or $Q1 - 1.5 \times IQR$ depending on which is greater.
@@ -410,9 +411,9 @@ $$\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}$$
 Q1 = 65
 med = 73
 Q3 = 78
-IQR = 73
+IQR = 13
 minv = 61
-maxv = 91
+maxv = 94
 estims = c(minv, Q1, med, Q3, maxv)
 rv = c(61,61,65,65,66,68,69,73,74,75,76,78,79,90,94)
 
@@ -440,9 +441,9 @@ estims = c(minv, Q1, med, Q3, maxv)
 
 
 boxplot(rv, horizontal = TRUE, axes = TRUE, staplewex = 1)
-text(x=estims+c(0.1,0,0,0,-0.5), labels =paste(c("Min", "Q1","Median", "Q3", "Max"), estims, sep = "="), 
+text(x=estims+c(0.1,0,0,0,-0.5), labels =paste(c("Min", "Q1","Median", "Q3", "Max"), estims, sep = "="),
      y=c(1.3,1.25,1.3,1.25,1.3), cex = 0.6)
-text(x=73, labels =paste("IQR", 13, sep = " = "), y=1.5, cex = 0.7)
+text(x=med, labels =paste("IQR", round(IQR,2), sep = " = "), y=1.5, cex = 0.7)
 ```
   
   

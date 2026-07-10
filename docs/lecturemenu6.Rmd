@@ -27,7 +27,7 @@ path = 'Data/'
 
 ### Sources of Bias In Surveys
 
-Last Friday, we introduced the idea of <i>randomization</i> as a means of selecting a sample from the population through a sampling design called **Simple random sampling**. Using random numbers to select individuals that are selected to be in the sample are representative of the true population. However, large surveys of the human population require more than just sampling design with randomization. 
+Last Friday, we introduced the idea of <i>randomization</i> as a means of selecting a sample from the population through a sampling design called **Simple random sampling**. Using random numbers to select individuals ensures that those selected to be in the sample are representative of the true population. However, large surveys of the human population require more than just sampling design with randomization. 
 
 A good survey needs an accurate sampling frame for the population, which is rarely the case in surveys of large human populations. As a result, most surveys suffer from **undercoverage** - bias that is introduced from having an inaccurate sampling frame. For example, consider a survey of American households. Such a survey will not include homeless individuals, college students, or incarcerated persons. Thus population surveys usually have some degree of bias introduced by the individuals not included by the sampling frame.
 
@@ -35,7 +35,7 @@ Other sources of bias in surveys include:
 
 **Nonresponse bias** - this is a more serious form of bias that occurs when individuals selected to be in the sample cannot be contacted or refuse to participate. 
   
-  * For many sample survey's nonresponse bias is a considerable issue reaching $50\%$ or more of selected individuals.
+  * For many sample surveys, nonresponse bias is a considerable issue reaching $50\%$ or more of selected individuals.
     
   * nonresponse bias is typically higher in urban areas
     
@@ -45,7 +45,7 @@ Other sources of bias in surveys include:
 
   * Poorly worded questions which may confuse respondents and influence how they select their answer. 
     
-  * Questions about sensitive topics, such as illict drug use, in which respondants may lie about their behavior.
+  * Questions about sensitive topics, such as illicit drug use, in which respondents may lie about their behavior.
     
   * The race or sex of the interviewer can influence responses related to questions about race relations or feminism. 
 
@@ -53,9 +53,9 @@ Other sources of bias in surveys include:
 
 **Systematic sampling** – A random sampling method in which the researcher selects every $k^{th}$ subject from an ordered sampling frame
  
-  * This method of sampling is useful when there is no sampling frame available.
-    
-  * Estimates obtained under this sampling design typically have a lower margin of error than simple random sampling and some cluster sampling designs.
+  * This method of sampling is useful when there is no complete list of the population available, but subjects can be encountered or ordered in some natural sequence.
+
+  * Estimates obtained under this sampling design often have a margin of error similar to simple random sampling, provided there is no periodic pattern in the ordering of the subjects.
 
  
 **Cluster sampling** – A type of sampling method in which the population is divided in a set of clusters and the researcher selects a simple random sample of the clusters. The sample then comprises all subjects in the selected clusters.
@@ -65,13 +65,13 @@ Other sources of bias in surveys include:
   * A disadvantage of cluster sampling is that the margin of error is often larger than what it would be for simple random sampling or stratified random sampling
 
 
-**Stratified random sampling** – A type of sampling method in which the population is separated into groups, call strata, based on some characteristic about the subjects. A simple random sample is then taken from each stratum. 
+**Stratified random sampling** – A type of sampling method in which the population is separated into groups, called strata, based on some characteristic about the subjects. A simple random sample is then taken from each stratum. 
 
   * Administrative convenience - It may be easier to conduct several smaller simple random sampling designs than coordinate one larger simple random sampling design.
 
   * Interest in individual strata - The design ensures samples from all strata. A simple random sampling design might sample few or no elements from a stratum of interest.
 
-  * Smaller margin of error - By assuring samples from each strata, the combined sample tends to be more representative of the population, resulting in a smaller margin of error
+  * Smaller margin of error - By assuring samples from each stratum, the combined sample tends to be more representative of the population, resulting in a smaller margin of error
 
 
 
@@ -87,7 +87,7 @@ Other sources of bias in surveys include:
   * Usually has a smaller margin of error, because we can control two sample sizes: the number of clusters to sample, and the number of elements to sample from each sampled cluster
 
 
-![**Figure 2** - visual depiction of two-state cluster sampling](misc/two_stage_cs.png)
+![**Figure 2** - visual depiction of two-stage cluster sampling](misc/two_stage_cs.png)
 
 
 <br>
@@ -95,15 +95,15 @@ Other sources of bias in surveys include:
 
 ### Ethical studies
 
-Producing and using data to answer statistical questions may not seem like a big deal, but, like all human endeavors, it raises ethical concerns. The most prominent ethical issues arise when we collect data about people. Ethical considerations must be closely contemplated when we conduct experiments using human subjects. While an experiment may have potentially life saving benefits, it can also come with considerable risks that are bore solely by the participating subjects. Some ethical considerations that apply to any study are:
+Producing and using data to answer statistical questions may not seem like a big deal, but, like all human endeavors, it raises ethical concerns. The most prominent ethical issues arise when we collect data about people. Ethical considerations must be closely contemplated when we conduct experiments using human subjects. While an experiment may have potentially life saving benefits, it can also come with considerable risks that are borne solely by the participating subjects. Some ethical considerations that apply to any study are:
 
 * Informed consent - subjects participating in a survey or experiment are usually required to provide legal consent before data can be collected
 
-* Confidentiality - many studies on human subjects require that the data gather be kept confidential with proper security infrastructure in place to protect it. 
+* Confidentiality - many studies on human subjects require that the data gathered be kept confidential with proper security infrastructure in place to protect it. 
 
     * Can you think of some examples of areas of study that may require confidentiality or informed consent?
 
-The University of Idaho, like all colleges and universities engaged in research, have a review board who is responsible for establishing ethics guidelines for conducting research and review studies which may require ethical considerations. The University of Idahos Office of Research Assurances website can be found [here](https://www.uidaho.edu/research/faculty/research-assurances)
+The University of Idaho, like all colleges and universities engaged in research, has a review board that is responsible for establishing ethics guidelines for conducting research and review studies which may require ethical considerations. The University of Idaho's Office of Research Assurances website can be found [here](https://www.uidaho.edu/research/faculty/research-assurances)
 
 
 The following [link](https://www.esri.com/arcgis-blog/products/survey123/constituent-engagement/ethics/) from the Environmental Systems Research Institute, inc website provides a great overview of the survey ethics, design and implementation. 
@@ -114,7 +114,7 @@ Similarly, this [link](https://www.nih.gov/health-information/nih-clinical-resea
 
 Now that we have learned some different ways to conduct experimental studies and surveys, how does this connect with our ultimate goal of inferring things about a population, or making informed decisions? Recall that a **sampling distribution** is the distribution of a statistic that arises from taking <u>all possible samples</u> of the same size $n$ from the same population. 
 
-If we think of the population parameter $\theta$ as the bullseye of a target, then, ideally we would like our estimator $\hat{\theta}$ to fall close to or on the value of $/theta$. However, how we sample or conduct an experiment can influence the shape, center, and spread of the sampling distribution of a statistic. 
+If we think of the population parameter $\theta$ as the bullseye of a target, then, ideally we would like our estimator $\hat{\theta}$ to fall close to or on the value of $\theta$. However, how we sample or conduct an experiment can influence the shape, center, and spread of the sampling distribution of a statistic. 
 
 * <i>Bias of a statistic</i> - concerns the center of a sampling distribution. A statistic is **unbiased** if the mean of its sampling distribution is equal to the true value of the population parameter.
 
@@ -184,9 +184,9 @@ ggarrange(A, B, C, D, nrow =2, ncol = 2)
 
 
 
-The variation between samples means that estimates or values of a statistic are doomed to depart somewhat from the true population parameter simply by chance. The chance difference is called **sampling error** – which is how close our estimate is from the true population parameter 
+The variation between samples means that estimates or values of a statistic are doomed to depart somewhat from the true population parameter simply by chance. The chance difference is called **sampling error** – which is the difference between our estimate and the true population parameter
     
-  * Sampling error should not to be confused with the <i>margin of error</i> which is the maximum error that we might observe
+  * Sampling error should not be confused with the <i>margin of error</i> which is the maximum error that we might observe
 
 ```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=8}
 
@@ -250,15 +250,15 @@ Tossing a coin, rolling a die, the weather, the change in stock market, or choos
 
 * The act of flipping a coin once is called a **random trial** - a process or experiment that has a set of well – defined possible outcomes. What distinguishes it as random is that there is more than one possible outcome e.g heads OR tails. What are the possible outcomes of rolling a single six-sided die? 
 
-* We call the set of all possible outcomes of random phenomena the **sample space**. It is common in probability theory to use capital $S = \{\}$ to denote the sample space mathematically. For example, the sample space of flipping a coin once is $S = \{\text{Heads}, \text{Tails} \}$. The sample space of a single roll of a fair six-side die is $S = \{1,2,3,4,5,6\}$.
+* We call the set of all possible outcomes of random phenomena the **sample space**. It is common in probability theory to use capital $S = \{\}$ to denote the sample space mathematically. For example, the sample space of flipping a coin once is $S = \{\text{Heads}, \text{Tails} \}$. The sample space of a single roll of a fair six-sided die is $S = \{1,2,3,4,5,6\}$.
 
 * as a general rule, the probability of an event $A$ denoted $P(A)$ is:
 
 \[ P(A) = \frac{\text{Number of ways $A$ can happen}}{\text{Total number of outcomes}} \]
 
-The denominator in the fraction above is the sample space and the numerator represents the fraction of the sample space that includes $A$
+The denominator in the fraction above is the size of the sample space and the numerator represents the number of outcomes in the sample space that make up $A$
 
-Consider rolling a fair single six-sided die. What is the probability that you would roll the number six? What is the probability that you would not roll a six?. Knowing that the die is fair tells us that each number has an equal probability of occurring. Thus rolling any particular number on the die has a probability of $1/6 = 0.167$ and the probability of rolling any number but a six has to be $1-(1/6) = 5/6 = 0.833$. This simple example demonstrates several of the rules of probability:
+Consider rolling a fair single six-sided die. What is the probability that you would roll the number six? What is the probability that you would not roll a six? Knowing that the die is fair tells us that each number has an equal probability of occurring. Thus rolling any particular number on the die has a probability of $1/6 = 0.167$ and the probability of rolling any number but a six has to be $1-(1/6) = 5/6 = 0.833$. This simple example demonstrates several of the rules of probability:
 
 * 1. $0\leq P(A)\leq 1$ - This rule states that a valid probability must be a value between zero and one.
 
@@ -276,21 +276,21 @@ Consider rolling a fair single six-sided die. What is the probability that you w
 
 Example: A standard deck of $52$ playing cards contains cards from four suits: hearts, diamonds, clubs, and spades. Each suit consists of 13 cards: an Ace, the cards with the numbers 2-10, a jack, a queen and a king card. Suppose you are playing a hand of poker and the dealer is about to deal everyone their first card. What is the probability that the card you are dealt is not a queen?
 
-* the probability that the card is a queen is $4/52$ because there are four suits and each has one queen. Thus using rule three above we can conclude that the probability of NOT being dealt a queen card is $1-\frac{4}{52} = \frac{48}{52}$. 
+* the probability that the card is a queen is $4/52$ because there are four suits and each has one queen. Thus using rule four above we can conclude that the probability of NOT being dealt a queen card is $1-\frac{4}{52} = \frac{48}{52}$. 
 
 ### Dealing with multiple events
 
-We are often interested in the probability of more than one event occurring simultaneously. The language of probability gives us tools to deal with outcomes of multiple events. A **union** of two or more events is that probability that one or both events occur. If the events are disjoint then we can use rule $3$ above. If the events have outcomes in common then we must be sure not to double count the probability of their overlap. For two non-disjoint events $A$ and $B$:
+We are often interested in the probability of more than one event occurring simultaneously. The language of probability gives us tools to deal with outcomes of multiple events. A **union** of two or more events is the probability that one or both events occur. If the events are disjoint then we can use rule $3$ above. If the events have outcomes in common then we must be sure not to double count the probability of their overlap. For two non-disjoint events $A$ and $B$:
 
 \[ P(A\cup B) = P(A)+P(B)-P(A\cap B) \]
 
-This is the **addition rule for non-disjoint event**. The quantity $P(A\cap B)$ is called the <i>intersection</i> of events $A$ and $B$ and represents the fraction of the sample space that $A$ and $B$ have in common. In general, the intersection of two <u>independent events</u> is the probability that both events occur:
+This is the **addition rule for non-disjoint events**. The quantity $P(A\cap B)$ is called the <i>intersection</i> of events $A$ and $B$ and represents the fraction of the sample space that $A$ and $B$ have in common. In general, the intersection of two <u>independent events</u> is the probability that both events occur:
 
 \[P(A\cap B) = P(A)\cdot P(B) \]
 
-This is called the **multiplication rule independent events**. If two events are disjoint then their intersection is the empty set $P(A\cap B) = \emptyset$ and they are said to be **mutually exclusive**.  
+This is called the **multiplication rule for independent events**. If two events are disjoint then their intersection is the empty set, $A\cap B = \emptyset$, so $P(A\cap B) = 0$ and they are said to be **mutually exclusive**.
 
-To illustrate this consider the following example: Some states are considering laws that will ban the use of cell phones while driving because they believe that the ban will reduce the number of phone-related accidents. One study classified these types of accidents by the day of the week when they occurred \cite{}. For this example, we will use the values from this study as our probability model. Here are the probabilities 
+To illustrate this consider the following example: Some states are considering laws that will ban the use of cell phones while driving because they believe that the ban will reduce the number of phone-related accidents. One study classified these types of accidents by the day of the week when they occurred. For this example, we will use the values from this study as our probability model. Here are the probabilities 
 
 ```{r, echo=FALSE, warning=F, message=FALSE}
 df = cbind.data.frame(Day = c('Sun.', 'Mon.', 'Tues.', 'Wed.','Thurs.', 'Fri.', 'Sat.'),
@@ -314,13 +314,13 @@ again it is important to note that the intersection above assumes that the accid
 
 Think back to flipping a fair coin a single time, what is the probability that we get “heads”? Our intuition tells us that it is going to be $1/2$ if we have an equal chance of getting heads or tails, but how can we be sure that this is the likelihood of getting heads? Suppose that we flip a fair coin and it comes up tails, does this mean our intuition was wrong? 
 
-Now imagine flipping a coin 4 times. We expect to see half of the flips be heads and half of the flips tails. However, we might see heads come up 3 times and tails once. The proportion of times we see heads is now $75\%$ which is much greater than our expectation of $50\%$.
+Now imagine flipping a coin 4 times. We expect half of the flips to be heads and half of the flips to be tails. However, we might see heads come up 3 times and tails once. The proportion of times we see heads is now $75\%$ which is much greater than our expectation of $50\%$.
 
 In both cases, the result defied our expectation but this is because the outcome of any small number of trials can vary quite different from our expectations. Imagine flipping a coin $10,000$ times. The result would be a proportion of heads very close to $0.5$. As we stated earlier, with random phenomena, the proportion of times that an event happens can be quite unpredictable in the short run, but very predictable in the long run. Thus probabilities quantify the "long-run" behavior or frequency of a particular event. 
 
 This long-run behavior is established by a property of mathematical probability called the **Law of Large Numbers** (LLN). The LLN states that the relative frequency of an event will tend to “approach” (in some sense) the probability of an event as the number of independent observations increases
 
-```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=10, fig.cap='Figure: A demonstration of the Law of Large Numbers. The plot above represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trails. The red line indicates the expected proportion of $P(Heads) = 0.5$'}
+```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=10, fig.cap='Figure: A demonstration of the Law of Large Numbers. The plot above represents the running proportion of fair coin flips that come up heads for a large number of repeated independent trials. The red line indicates the expected proportion of $P(Heads) = 0.5$'}
 
 set.seed(432)
 S = 5000
@@ -372,7 +372,7 @@ Lets illustrate with an example: Suppose we toss a coin four times. We can recor
 
 \[S = \{ \text{HHHH}, \ \text{HTHH}, \ \text{HHTH}, ... \} \]
 
-Let $X$ be the number of heads in four flips of coin. If the sequence we observe is $HHTH$, then $X = 3$. If the sequence is $HTTH$, the $X = 2$. The possible values of $X$ are $\{ 0, 1, 2, 3, 4 \}$. Thus flipping a coin four times will give $X$ one of these possible values. 
+Let $X$ be the number of heads in four flips of a coin. If the sequence we observe is $HHTH$, then $X = 3$. If the sequence is $HTTH$, then $X = 2$. The possible values of $X$ are $\{ 0, 1, 2, 3, 4 \}$. Thus flipping a coin four times will give $X$ one of these possible values. 
 
 * The mathematical definition of a random variable is a function that maps from the sample space of an event to the real number line $X: S \rightarrow \mathbb{R}$
 
@@ -443,7 +443,7 @@ B = ggplot()+geom_bar(aes(x = c(0,1,2,3,4), y = c(0.05, 0.10, 0.30, 0.25, 0.30))
 ggarrange(A, B, nrow = 1)  
 ```
 
-The bars of histogram for a discrete probability distribution should add to one. In the plot on the the right the blue bars represent the probability that a student gets higher than a $C$ on the exam i.e $P(X > 2)$
+The bars of histogram for a discrete probability distribution should add to one. In the plot on the right the blue bars represent the probability that a student gets higher than a $C$ on the exam i.e $P(X > 2)$
 
 We can generalize the probability that $X$ is greater than some set of outcomes by summing individual probabilties of the relevant events:
 
@@ -518,7 +518,7 @@ For a discrete random variable, the sampling distribution of a statistic can be 
  3. Assemble the probabilities for each sample statistic to create the sampling distribution. This distribution describes the probabilities of observing different values of the sample statistic across all possible samples of size $n$.
  
  
-**Example**: Texas hold'em is a gambling game which starts with each player recieving two cards. Here is the population distribution for the number of aces delt in a two-card hand
+**Example**: Texas hold'em is a gambling game which starts with each player receiving two cards. Here is the population distribution for the number of aces dealt in a two-card hand
 
 \[X = \text{Number of aces in a hand of poker} \]
 
@@ -530,11 +530,11 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-Derive the sampling distribution for the proportion of aces in two consecutive hands of texas hold'em. To derive the sampling distribution we must define the sample space for the proportion of aces in two hands. The possibilities are given below
+Derive the sampling distribution for the number of aces in two consecutive hands of texas hold'em. To derive the sampling distribution we must define the sample space for the number of aces in two hands. The possibilities are given below (here we assume the two hands are independent, so the joint probabilities are the products of the individual-hand probabilities).
 
 
 ```{r, echo=FALSE, warning=F, message=FALSE}
-df = cbind.data.frame(`Number of Acs in two hands` = c(0:4),
+df = cbind.data.frame(`Number of Aces in two hands` = c(0:4),
                       `Outcomes giving result` = c('$(0,0) = \\color{red}{1}$', 
                                                    '$(0,1), (1,0) = \\color{red}{2}$', 
                                                    '$(0, 2), (2,0), (1,1) = \\color{red}{3}$',
@@ -550,13 +550,13 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-Therefore we can summarize the distribution of the proportion $\hat{p}$ of Aces in two hands of texas hold'em 
+Therefore we can summarize the sampling distribution of the number $Y$ of Aces in two hands of texas hold'em
 
 ```{r, echo=FALSE, warning=F, message=FALSE}
-df = cbind.data.frame(`Number of Acs in two hands` = c(0:4),
-                      Probability = c(0.312, 0.427, 0.382, 0.045, 0.003))
+df = cbind.data.frame(`Number of Aces in two hands` = c(0:4),
+                      Probability = c(0.312, 0.427, 0.212, 0.045, 0.003))
 
-kable(df, format = 'html', col.names = c('$\\hat{p}$', '$P(\\hat{p})$'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+kable(df, format = 'html', col.names = c('$Y$', '$P(Y)$'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
@@ -597,10 +597,10 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 ```
 
 
-Therefore we can summarize the distribution of the proportion $\bar{X}$ of Aces in two hands of texas hold'em 
+Therefore we can summarize the sampling distribution of the mean number $\bar{X}$ of Coho salmon caught over a random sample of $n = 3$ afternoons of fishing
 
 ```{r, echo=FALSE, warning=F, message=FALSE}
-df = cbind.data.frame(`Number of Acs in two hands` = c(0.00, 0.33, 0.67, 1.00, 1.33, 1.67, 2.00),
+df = cbind.data.frame(`Mean Number of Salmon Caught` = c(0.00, 0.33, 0.67, 1.00, 1.33, 1.67, 2.00),
                       Probability = c(0.204, 0.241, 0.281, 0.159, 0.085, 0.022, 0.006))
 
 kable(df, format = 'html', col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), digits = 3, row.names = F, booktabs = T, escape = F)%>%

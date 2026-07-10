@@ -32,17 +32,17 @@ source('misc/stat251_tools.R')
 
 **Warm Up:** Consider the following example - a gardener is conducting an experiment to evaluate the effectiveness of a new fertilizer on the heights of tomato plants. They purchase 80 tomato plants from their local seedling outlet. The gardener randomly selects $40$ of plants to receive a fertilizer and water mixture and the remaining half to receive only water. After one month the mean height is recorded in both groups and the difference in height between the two experimental groups of tomato plants is measured. 
 
-The gardener suspects that the plants which received the new fertilizer will be tend to be taller than the plants that received only water. They set the null hypothesis to be "no difference in height" which can be thought of as "the fertilizer has no effect on tomato plant growth". 
+The gardener suspects that the plants which received the new fertilizer will tend to be taller than the plants that received only water. They set the null hypothesis to be "no difference in height" which can be thought of as "the fertilizer has no effect on tomato plant growth". 
 
 \[ H_0: \mu_d = 0 \]
 
 $\mu_d$ denotes the population mean difference in tomato plant height between the two experimental groups. We can use the sample mean difference $\bar{x}_d$ to estimate $\mu_d$ which is calculated as 
 
-\[\bar{x}_d = \frac{1}{n}\sum_i x_{i} - y_i \]
+\[\bar{x}_d = \frac{1}{n}\sum_i (x_{i} - y_i) \]
 
 where $x_i$ is the height of tomato plants receiving the fertilizer and $y_i$ is the height the tomato plants receiving only water.
 
-Since the suspicion is that the plants recieving fertilizer will be taller, the alternative hypothesis is
+Since the suspicion is that the plants receiving fertilizer will be taller, the alternative hypothesis is
 
 \[ H_A: \mu_d > 0 \]
 
@@ -84,7 +84,7 @@ md = mean(diff)
 sdmd = sd(diff)
 
 
-df = cbind.data.frame(c('Sample size', 'Mean Height (Fertilized)', 'SD (Fertilized)', 'Mean Height (Water Only)', 'SD (Water Only)', 'Mean Difference (Ferlized - Water Only)', 'SD Difference'), 
+df = cbind.data.frame(c('Sample size', 'Mean Height (Fertilized)', 'SD (Fertilized)', 'Mean Height (Water Only)', 'SD (Water Only)', 'Mean Difference (Fertilized - Water Only)', 'SD Difference'),
                       c('$n$','$\\bar{x}$','$s_x$','$\\bar{y}$','$s_y$','$\\bar{x}_d$','$s_d$'),
                       c(n, xbar, sdx, ybar, sdy, md, sdmd))
 
@@ -103,22 +103,22 @@ Recall from last week that a significance test is a test of the null hypothesis.
 
 To compute this probability, we need convert the difference we observed into a standardized score that we can look up in one of our tables. Since we are discussing a "mean" difference we can use the $t$-distribution as we did before with confidence intervals:
 
-\[ t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}}  = \frac{4.08 - 0}{4.43/\sqrt{40}} = 5.91 \sim t(n-1)\]
+\[ t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}}  = \frac{4.14 - 0}{4.43/\sqrt{40}} = 5.91 \sim t(n-1)\]
 
 Where $\bar{x}_d$ is the sample mean difference in height, $\mu_d$ is population mean difference under the null hypothesis, and $s_d$ is the sample standard deviation for the difference in height. The above formula converts the observed difference $\bar{x}_d$ to a $t$-score from a $t$-distribution with $n-1$ degrees of freedom under the assumption that the null hypothesis is true. $t_{obs}$ is called the **test statistic** - it measures the discrepancy (distance) between the point estimate of the parameter and the hypothesized value of the parameter under the null hypothesis. It tells us approximately how many standard deviations the observed mean difference is from the population mean difference under the null. 
 
-Using the above formula the Gardner calculates a $t$-score of $t_{obs} = 5.91$ with $39$ degrees of freedom. The probability from earlier can be re-framed in the context of the $t$-distribution
+Using the above formula the gardener calculates a $t$-score of $t_{obs} = 5.91$ with $39$ degrees of freedom. The probability from earlier can be re-framed in the context of the $t$-distribution
 
 \[P(t \geq t_{\text{obs}}| H_0 \ \text{true}) = 1-P(t< t_{\text{obs}}|H_0 \ \text{true}) \]
 
-i.e the probability of observing a $t$ value greater than the one we observed when the true difference is assumed to be $\mu_d = 0$. For the gardener's experiment, this probability is $3.45e^{-7} \approx 0$, which is very small. 
+i.e the probability of observing a $t$ value greater than the one we observed when the true difference is assumed to be $\mu_d = 0$. For the gardener's experiment, this probability is $3.39 \times 10^{-7} \approx 0$, which is very small.
 
 
-This probability is called the **p-value** and it measures the probability of observing an estimate as or more extreme than the the one we observed under the assumption that the null hypothesis is true. So what does this small probability mean? Just as we observed with the coin flip example from last week, it can mean one of two things:
+This probability is called the **p-value** and it measures the probability of observing an estimate as or more extreme than the one we observed under the assumption that the null hypothesis is true. So what does this small probability mean? Just as we observed with the coin flip example from last week, it can mean one of two things:
 
 1. We observed something very unusual
 
-2. The assumption underling the calculation (i.e $\mu_d = 0$ no difference in mean height) is not true.
+2. The assumption underlying the calculation (i.e $\mu_d = 0$ no difference in mean height) is not true.
 
 We prefer the second conclusion when the $p$-value is "sufficiently" small and take it as evidence against the null hypothesis. So how small is small enough? By convention, most tests use a probability cutoff of $5\%$ or less which is called the **significance level** of the test. The significance level of a test is denoted as $\alpha$. For the gardeners test $\alpha = 0.05$. $\alpha$ sets the boundary for how big (or small) the test statistic needs to be to conclude that the test statistic is <u>statistically significant</u>.
 
@@ -143,7 +143,7 @@ gen.density.plot(bbox = c(-5, 5), n = 40, dist = 't', test = 'upper.tail', obs =
 
 ```
 
-In the plot above, $t_{1-\alpha}$ denotes the boundary for significance in the gardners test. Any $t$-value greater than $t_{1-\alpha}$ will have a **p-value** less than $\alpha$ and be deemd <i>significant</i>
+In the plot above, $t_{1-\alpha}$ denotes the boundary for significance in the gardener's test. Any $t$-value greater than $t_{1-\alpha}$ will have a **p-value** less than $\alpha$ and be deemed <i>significant</i>
 
 What were the steps involved with this test?
 
@@ -153,20 +153,20 @@ What were the steps involved with this test?
   
   * **step 3** - Calculate the **test statistic** which measures the discrepancy (distance) between the the estimate of the parameter and the hypothesized value of the parameter under the null.
   
-  * **step 4** - Compute the **$p$-value** - the probability of observing a value of a value of the test statistic that is as extreme or more extreme than the observed value given that the null hypothesis is true
+  * **step 4** - Compute the **$p$-value** - the probability of observing a value of the test statistic that is as extreme or more extreme than the observed value given that the null hypothesis is true
   
-  * **step 5** - Make a conclusion about the null hypothesis - we either (i) fail to reject the null hypothesis and conclude that there is not sufficient evidence in favor of the alternative or (ii) reject the null hypothsis in favor of the alternative
+  * **step 5** - Make a conclusion about the null hypothesis - we either (i) fail to reject the null hypothesis and conclude that there is not sufficient evidence in favor of the alternative or (ii) reject the null hypothesis in favor of the alternative
 
 
-With the examples of significance tests we have discussed thus far we have learned two formal significance tests: a test(s) tests concerning a population proportion $p$ and tests concerning a population mean $\mu$. 
+With the examples of significance tests we have discussed thus far we have learned two formal significance tests: one concerning a population proportion $p$ and one concerning a population mean $\mu$.
 
 # Lecture 22 Wednesday, March 27th 2024
 
 ### Setting up the null and alternative hypothesis
 
-As we stated previously, the null hypothesis is a statement about the value of a population parameter. The alternative hypothesis is a statement about our suscpicions regarding the value of that parameter. The alternative hypothesis can be directional such as $H_A: p > p_0$ (called an upper tail test) or $H_A: p < p_0$ (called a lower tailed test). These types of alternative hypotheses are called *one-sided* because they direct our attention to either the lower or upper tail of the distribution of the test statistic. If our suspicion about the parameter is that it differs in either direction or if we are unsure, the alternative hypothesis is $H_A: p \neq p_0$ and the test is called *two-sided* because the suspicion includes both the lower and upper tails of the distribution of the test statistic. 
+As we stated previously, the null hypothesis is a statement about the value of a population parameter. The alternative hypothesis is a statement about our suspicions regarding the value of that parameter. The alternative hypothesis can be directional such as $H_A: p > p_0$ (called an upper tail test) or $H_A: p < p_0$ (called a lower tailed test). These types of alternative hypotheses are called *one-sided* because they direct our attention to either the lower or upper tail of the distribution of the test statistic. If our suspicion about the parameter is that it differs in either direction or if we are unsure, the alternative hypothesis is $H_A: p \neq p_0$ and the test is called *two-sided* because the suspicion includes both the lower and upper tails of the distribution of the test statistic. 
 
-Because the alternative hypothesis expresses some effect that we hope to find evidence for, we often begin by stating $H_A$ and then set up $H_0$ as the statement that the "hoped-for" effect is not present. It's important to note that the alternative hypothesis should express the hopes or suspicions we bring to the data. It is biased to first look at the data and then set up the alternative hypothesis based on what the data show. If you do not have a direction firmly in mind before gathering the data you must use a two.sided test. 
+Because the alternative hypothesis expresses some effect that we hope to find evidence for, we often begin by stating $H_A$ and then set up $H_0$ as the statement that the "hoped-for" effect is not present. It's important to note that the alternative hypothesis should express the hopes or suspicions we bring to the data. It is biased to first look at the data and then set up the alternative hypothesis based on what the data show. If you do not have a direction firmly in mind before gathering the data you must use a two-sided test.
 
 ### Significance level, critical value, and decision making
 
@@ -185,10 +185,10 @@ The significance level, critical value, and rejection region are all related to 
 
 So how does this relate the to critical value and rejection region? We can state the decision rule in terms of both of these quantities but to do so is more nuanced and depends on the direction (or lack there of) of the alternative hypothesis. For example, consider the null hypothesis and alternative hypotheses
 
-\[ H_0: \mu_0 = 0 \]
+\[ H_0: \mu = \mu_0 \]
 \[ H_A: \mu < \mu_0 \]
 
-The decision rule stated in terms 
+The decision rule stated in terms of the critical value and rejection region is:
 
   1. If $p$-value $< \alpha$ then $t_{obs} < t_\alpha$; *reject* $H_0$ (results are statistically significant) - this is the same as saying "if the test statistic falls within the rejection region then <u>reject $H_0$</u>"
   
@@ -215,7 +215,7 @@ A = ggplot()+xlim(-4, 4)+theme_bw()+
                           alpha = 0.7)+
   stat_function(fun = dnorm,
                 size = 1)+
-  geom_vline(xintercept = c(qnorm(0.1/2), qnorm(1-(0.1/2))), size = 2, linetype = 'dashed')+
+  geom_vline(xintercept = c(qnorm(0.05/2), qnorm(1-(0.05/2))), size = 2, linetype = 'dashed')+
   geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
   geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
   geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
@@ -242,7 +242,7 @@ B = ggplot()+xlim(-4, 4)+theme_bw()+
                           alpha = 0.7)+
   stat_function(fun = dnorm,
                 size = 1)+
-  geom_vline(xintercept = c(qnorm(1-(0.1/2))), size = 2, linetype = 'dashed')+
+  geom_vline(xintercept = c(qnorm(1-0.05)), size = 2, linetype = 'dashed')+
   geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
   #geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
   geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
@@ -267,7 +267,7 @@ C = ggplot()+xlim(-4, 4)+theme_bw()+
                           alpha = 0.7)+
   stat_function(fun = dnorm,
                 size = 1)+
-  geom_vline(xintercept = c(qnorm(0.1/2)), size = 2, linetype = 'dashed')+
+  geom_vline(xintercept = c(qnorm(0.05)), size = 2, linetype = 'dashed')+
   geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
   geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
   #geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
@@ -316,9 +316,9 @@ ggarrange(AAf, BBf, nrow = 1, ncol = 2)
 
 ```
 
-Notice from the plots above that the alternative hypothesis also impacts the how significant a result must be in order to reject the null. Specifically, a result need not be as extreme when the alternative hypotheses $H_A: p > p_0$ and $H_A: p < p_0$ to be statistically significant. This is because when we suspected direction of the effect we have more information about the parameter which improves our ability to detect a significant result. 
+Notice from the plots above that the alternative hypothesis also impacts how significant a result must be in order to reject the null. Specifically, a result need not be as extreme under the alternative hypotheses $H_A: p > p_0$ and $H_A: p < p_0$ to be statistically significant. This is because when we suspect the direction of the effect we have more information about the parameter which improves our ability to detect a significant result.
 
-# Lecture 22 Friday, March 29th 2024
+# Lecture 23 Friday, March 29th 2024
 
 ### Significance tests concerning $p$
 
@@ -330,7 +330,7 @@ The following are the steps for conducting a significance tests for a population
     
   2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
   
-  \[H_0: p_0 = c \]
+  \[H_0: p = c \]
   
   * the alternative hypotheses, critical values, and rejection regions are listed below:
   
@@ -338,7 +338,7 @@ The following are the steps for conducting a significance tests for a population
 
 df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \\neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
                       `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_{1-\\alpha}$','$Z_{\\alpha}$'),
-                      `Rejection Region` = c('$Z_{1-\\alpha/2}\\leq Z \\leq \\infty$','$Z_{1-\\alpha} \\leq Z \\leq \\infty$','$-\\infty \\leq Z \\leq Z_{\\alpha}$'))
+                      `Rejection Region` = c('$-\\infty \\leq Z \\leq Z_{\\alpha/2}$ or $Z_{1-\\alpha/2}\\leq Z \\leq \\infty$','$Z_{1-\\alpha} \\leq Z \\leq \\infty$','$-\\infty \\leq Z \\leq Z_{\\alpha}$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -350,7 +350,7 @@ kable(df, format = 'html', digits = 2,
   
   3. **Compute the test statistic**
   
-  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0 - (1 - p_0)}{n}}} \sim N(0,1) \]
+  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1 - p_0)}{n}}} \sim N(0,1) \]
   
   4. **Compute the $p$-value.** 
   
@@ -360,8 +360,8 @@ kable(df, format = 'html', digits = 2,
   
 ```{r, echo=FALSE, warning=F, message=F}
 
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
-                      `$p$-value` = c('$P( Z  \\geq | Z_{obs} | | H_0 \ \\text{True})$','$P( Z \\geq Z_{obs} | H_0 \ \\text{True})$','$P( Z \\leq Z_{obs} | H_0 \ \\text{True})$'))
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \\neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
+                      `$p$-value` = c('$P( Z  \\geq | Z_{obs} | | H_0 \\ \\text{True})$','$P( Z \\geq Z_{obs} | H_0 \\ \\text{True})$','$P( Z \\leq Z_{obs} | H_0 \\ \\text{True})$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -378,10 +378,21 @@ kable(df, format = 'html', digits = 2,
 
 **Practice:**
 
-1. A leading electric vehicle (EV) manufacturer claims that at least $20\%$ of all vehicles sold in a particular region are electric. To verify this claim, a consumer advocacy group randomly surveys $500$ recent vehicle purchases in the region and finds that $115$ of them are electric. Conduct a significance test at the $\alpha = 0.01$ significance level to determine if the proportion of vehicles sold is less than the manufacturers claim. 
+1. A leading electric vehicle (EV) manufacturer claims that at least $20\%$ of all vehicles sold in a particular region are electric. To verify this claim, a consumer advocacy group randomly surveys $500$ recent vehicle purchases in the region and finds that $115$ of them are electric. Conduct a significance test at the $\alpha = 0.01$ significance level to determine if the proportion of vehicles sold is less than the manufacturer's claim.
+
+*Solution.* Here $n = 500$, $p_0 = 0.20$, and the sample proportion is $\hat{p} = 115/500 = 0.23$. We test $H_0: p = 0.20$ against the lower-tail alternative $H_A: p < 0.20$ at $\alpha = 0.01$.
+
+  * **Check the assumption.** $np_0 = 500(0.20) = 100 \geq 15$ and $n(1-p_0) = 500(0.80) = 400 \geq 15$, so the sample is large enough for the normal approximation.
+
+  * **Test statistic.**
+  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} = \frac{0.23 - 0.20}{\sqrt{\frac{0.20(0.80)}{500}}} = \frac{0.03}{0.0179} = 1.68 \]
+
+  * **$p$-value.** For the lower-tail alternative, $p\text{-value} = P(Z \leq 1.68) \approx 0.95$.
+
+  * **Conclusion.** Since the $p$-value $\approx 0.95$ is far greater than $\alpha = 0.01$, we *fail to reject* $H_0$. The observed proportion ($0.23$) is actually above the claimed $0.20$, so there is no evidence that the true proportion of EVs is less than $20\%$.
 
 
-   
+
 ### Significance tests concerning $\mu$
 
 The following are the steps for conducting a significance test for a population mean:
@@ -392,7 +403,7 @@ The following are the steps for conducting a significance test for a population 
     
   2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
   
-  \[H_0: \mu_0 = c \]
+  \[H_0: \mu = c \]
   
   * the alternative hypotheses, critical values, and rejection regions are listed below:
   
@@ -423,7 +434,7 @@ kable(df, format = 'html', digits = 2,
 ```{r, echo=FALSE, warning=F, message=F}
 
 df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
-                      `$p$-value` = c('$P( t  \\geq | t_{obs} | | H_0 \ \\text{True})$','$P( t \\geq t_{obs} | H_0 \ \\text{True})$','$P( t \\leq t_{obs} | H_0 \ \\text{True})$'))
+                      `$p$-value` = c('$P( t  \\geq | t_{obs} | | H_0 \\ \\text{True})$','$P( t \\geq t_{obs} | H_0 \\ \\text{True})$','$P( t \\leq t_{obs} | H_0 \\ \\text{True})$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -438,19 +449,36 @@ kable(df, format = 'html', digits = 2,
 
 **Practice:**
 
-1. A government agency is interested in understanding the average annual income of households in a particular region to inform economic policies. The agency hypothesizes that the mean annual income of households in this region is $\$50,000$. To test this, they collect a random sample of $100$ households from the region and estimate the annual income to be $\$45,323$ with a standard deviation of $\$13,121$. Conduct a hypothesis test at the $\alpha = 0.05$ significance level to determine if the annual income is significantly different than the agencies hypothesis for this region.  
+1. A government agency is interested in understanding the average annual income of households in a particular region to inform economic policies. The agency hypothesizes that the mean annual income of households in this region is $\$50,000$. To test this, they collect a random sample of $100$ households from the region and estimate the annual income to be $\$45,323$ with a standard deviation of $\$13,121$. Conduct a hypothesis test at the $\alpha = 0.05$ significance level to determine if the annual income is significantly different than the agency's hypothesis for this region.
+
+*Solution.* Here $n = 100$, $\bar{x} = 45{,}323$, $s = 13{,}121$, and $\mu_0 = 50{,}000$. Because we are asked whether the mean is *different* (in either direction), we test $H_0: \mu = 50{,}000$ against the two-sided alternative $H_A: \mu \neq 50{,}000$ at $\alpha = 0.05$.
+
+  * **Check the assumption.** The sample size $n = 100$ is large, so by the Central Limit Theorem the sampling distribution of $\bar{x}$ is approximately normal.
+
+  * **Test statistic.**
+  \[ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{45{,}323 - 50{,}000}{13{,}121/\sqrt{100}} = \frac{-4677}{1312.1} = -3.57 \sim t(99) \]
+
+  * **$p$-value.** For the two-sided alternative, $p\text{-value} = 2 \times P(t \leq -3.57) \approx 0.0006$.
+
+  * **Conclusion.** Since the $p$-value $\approx 0.0006$ is less than $\alpha = 0.05$, we *reject* $H_0$. There is strong evidence that the mean annual household income differs from $\$50{,}000$ (specifically, the data suggest it is lower).
 
 ### Relationship between two-sided tests and confidence intervals
 
-Recall the basic idea of a confidence interval. We construct an interval that includes the true value of the parameter $\mu$ or $p$ with specified frequency $(1-\alpha)\%$. Now consider a two-sided significance test for a population mean. A two-sided test constructs a confidence interval around the value of the parameter suggested in the null hypothesis (i.e $\mu_0$). At the $(1-\alpha)\%$ confidence level, this confidence interval is given by $[\mu_0-t_{1-\alpha/2} \times \frac{s}{\sqrt{n}}, \mu_0 + t_{1-\alpha/2}\times \frac{s}{\sqrt{n}}]$. Values of $\mu$ that are not in this interval seem to be incompatible with the data. Thus when $\bar{x}$ is not in this interval, it is statistically significant and the null hypothesis is rejected. This produces a significance test at $\alpha = 0.05$ significance level.
+Recall the basic idea of a confidence interval. We construct an interval that includes the true value of the parameter $\mu$ or $p$ with specified frequency $100(1-\alpha)\%$. Now consider a two-sided significance test for a population mean. A two-sided test constructs an **acceptance region** around the value of the parameter suggested in the null hypothesis (i.e $\mu_0$). At the $100(1-\alpha)\%$ confidence level, this acceptance region is given by $[\mu_0-t_{1-\alpha/2} \times \frac{s}{\sqrt{n}}, \mu_0 + t_{1-\alpha/2}\times \frac{s}{\sqrt{n}}]$. Values of $\bar{x}$ that are not in this interval seem to be incompatible with the data. Thus when $\bar{x}$ is not in this interval, it is statistically significant and the null hypothesis is rejected. This produces a significance test at $\alpha = 0.05$ significance level.
 
 
 **Example**
 
+Return to the household income problem above ($\mu_0 = 50{,}000$, $n = 100$, $\bar{x} = 45{,}323$, $s = 13{,}121$, $\alpha = 0.05$). The standard error is $s/\sqrt{n} = 13{,}121/\sqrt{100} = 1312.1$, and with $n-1 = 99$ degrees of freedom the critical value is $t_{99,\ 0.975} \approx 1.984$. The $95\%$ acceptance region around $\mu_0$ is
+
+\[ \left[50{,}000 - 1.984 \times 1312.1,\ \ 50{,}000 + 1.984 \times 1312.1\right] = [47{,}397,\ 52{,}603] \]
+
+The observed sample mean $\bar{x} = 45{,}323$ falls **outside** this interval, so we reject $H_0$ at the $\alpha = 0.05$ level. This is exactly the same decision we reached with the test statistic ($t_{obs} = -3.57$, $p$-value $\approx 0.0006 < 0.05$): a two-sided test rejects $H_0$ precisely when the observed $\bar{x}$ lies outside the $100(1-\alpha)\%$ acceptance region centered at $\mu_0$.
+
 
 ### Types of Errors
 
-Conducting a hypothesis test is a simple-enough procedure in the modern age as many software programs effortlessly give out a $p$-value for a chosen test and dataset. However, Using tests wisely is another matter entirely. A single significant result is not irrefutable evidence of a statistical relationship. This is because all tests come with a probability of making an error. Moreover, other factors can influence the outcome of a test such as the presence of outliers in the data. In addition, when sample sizes are very large, even tiny deviations from the null hypothesis can be deemed significant - this is related to the **power** of a test. 
+Conducting a hypothesis test is a simple-enough procedure in the modern age as many software programs effortlessly give out a $p$-value for a chosen test and dataset. However, using tests wisely is another matter entirely. A single significant result is not irrefutable evidence of a statistical relationship. This is because all tests come with a probability of making an error. Moreover, other factors can influence the outcome of a test such as the presence of outliers in the data. In addition, when sample sizes are very large, even tiny deviations from the null hypothesis can be deemed significant - this is related to the **power** of a test. 
 
 Statistical **power** is the ability to reject the null hypothesis when it is, in fact, false. For example, the power of a right-tailed (or upper tail) test of a population mean is given by
 \[ Power = P(t > t_{1-\alpha} | H_0 \ \text{Not True}) \]

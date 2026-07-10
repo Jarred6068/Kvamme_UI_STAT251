@@ -24,11 +24,12 @@ library(gganimate)
 path = 'Data/'
 ```
 
+<!-- TODO: this Week 9 file contains only Lecture 18; confirm the second lecture is intentionally absent. -->
 # Lecture 18 Monday, March 4th 2024
 
 Last week we introduced the **confidence interval** which is used to estimate a parameter with an interval of values. We can choose how wide to make the confidence interval by selecting the **confidence level** - which is the probability that the interval will contain the true parameter value **<u>before</u>** the data are gathered. The confidence level is controlled via the standard score $z$. The standard score gives the number of standard errors to add and subtract from our estimate. Therefore, we must look up the appropriate standard score $z$ from the standard normal table.
 
-From last week we saw that for a $95\%$ confidence interval, we must add and subtract approximately $z=2$ standard errors from our estimate $\bar{x}$ or $\hat{p}$. $z$ is sometimes referred to as the **critical value**. The critical value denotes the upper and lower bounds of the confidence interval. In general, if we wish to compute the $(1-\alpha)\%$ confidence interval for the statistics $\bar{x}$ or $\hat{p}$, then we must add and subtract $z_{1-\alpha/2}$ standard errors. The quantity $\alpha/2$ denotes the area that is divided among the two tails of the standard normal distribution. For example, for a $95\%$ confidence interval $\alpha = 0.05$ and $\alpha/2 = 0.025$. 
+From last week we saw that for a $95\%$ confidence interval, we must add and subtract approximately $z=2$ standard errors from our estimate $\bar{x}$ or $\hat{p}$. $z$ is sometimes referred to as the **critical value**. The critical value denotes the upper and lower bounds of the confidence interval. In general, if we wish to compute the $100(1-\alpha)\%$ confidence interval for the statistics $\bar{x}$ or $\hat{p}$, then we must add and subtract $z_{1-\alpha/2}$ standard errors. The quantity $\alpha/2$ denotes the area that is divided among the two tails of the standard normal distribution. For example, for a $95\%$ confidence interval $\alpha = 0.05$ and $\alpha/2 = 0.025$. 
 
 For example, for a $90\%$ confidence $\alpha = 0.1$, and the corresponding critical value is $z_{1-0.1/2} = z_{0.95}$ which is the 95th percentile from the standard normal distribution. The table below gives several confidence levels, the corresponding values of $\alpha$ and critical values. 
 
@@ -44,7 +45,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 
 ```
 
-* Try it out: give the confidence level and critical value for the $(1-\alpha)\%$ confidence intervals with $\alpha = 0.25$, $\alpha = 0.08$, and $\alpha = 0.03$. 
+* Try it out: give the confidence level and critical value for the $100(1-\alpha)\%$ confidence intervals with $\alpha = 0.25$, $\alpha = 0.08$, and $\alpha = 0.03$.
 
 ### An alternative confidence interval for a population mean.
 
@@ -58,7 +59,7 @@ The confidence interval above is based on the assumption that the population sta
 
 Unfortunately, the confidence level of the confidence interval above will tend to be less than specified. As a result, more confidence intervals will fail to cover the true parameter value than expected. 
 
-* Consider the following example: A social scientist is conducting a study to investigate the average time spent daily on social media by college students. Each week the scientists surveys five college students and asks them to report their time spent on social media. For each sample, the scientist computes the $95\%$ confidence interval for the mean time the students spent on social media. They repeat this process 100 times. Suppose the population mean time spent on social media is $\mu = 120$ minutes with a standard deviation of $\sigma = 10$ minutes. The plot below shows 100 confidence intervals computed using $\bar{x} \pm z\frac{s}{\sqrt{n}}$ where each CI is computed from a sample of $5$ observations from $N(120, 10)$:
+* Consider the following example: A social scientist is conducting a study to investigate the average time spent daily on social media by college students. Each week the scientist surveys five college students and asks them to report their time spent on social media. For each sample, the scientist computes the $95\%$ confidence interval for the mean time the students spent on social media. They repeat this process 100 times. Suppose the population mean time spent on social media is $\mu = 120$ minutes with a standard deviation of $\sigma = 10$ minutes. The plot below shows 100 confidence intervals computed using $\bar{x} \pm z\frac{s}{\sqrt{n}}$ where each CI is computed from a sample of $5$ observations from $N(120, 10)$:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.cap="**Figure**: Each point represents the sample mean from a hypothetical sample of 5 college students. The whiskers extending from each point give the coverage of the confidence interval computed for each sample. The black dotted line gives the value of hypothetical population mean time spent on social media. The CI's highlighted in red represent those that fail to capture the population mean"}
 
@@ -66,7 +67,6 @@ set.seed(123)
 mu = 120
 sigma = 10
 n = 5
-z = 1.96
 repeats = 100
 samples = lapply(c(1:repeats), function(x) rnorm(n, mean = mu, sd = sigma))
 
@@ -90,7 +90,7 @@ df = cbind.data.frame(`$\\bar{x}$` = means.vec,
 ggplot(data = df, aes(x = xpos, y = `$\\bar{x}$`, color = `Covers Parameter`))+
   geom_hline(yintercept = mu, linetype = 'dashed', linewidth = 2, color = 'black')+
   geom_point(size = 3)+
-  geom_errorbar(aes(ymin = ymin, ymax = ymax), height = 0.01, linewidth = 1)+
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), width = 0.01, linewidth = 1)+
   geom_text(aes(x = -0.1, y = mu+0.1), label = TeX('$\\mu$'), size = 6, color = 'black')+
   theme_classic2()+
   scale_x_continuous(breaks = seq(1, 100, 5))+
@@ -104,7 +104,7 @@ ggplot(data = df, aes(x = xpos, y = `$\\bar{x}$`, color = `Covers Parameter`))+
 
 ```
 
-Based on the plot and example above, the actual proportion of confidence intervals that fail to capture the population mean is $12\%$, which is much higher than the expected frequency of only $5\%$. This occurs because the sampling distribution of $\bar{x}$ no longer follows a normal distribution. When we substitute $s/\sqrt{n}$ for $\sigma/\sqrt{n}$ the sampling distribution of $\bar{x}$ changes to a distribution called the **$t$-distribution**. 
+Based on the plot and example above, the actual proportion of confidence intervals that fail to capture the population mean is $12\%$, which is much higher than the expected frequency of only $5\%$. This occurs because when we substitute $s/\sqrt{n}$ for $\sigma/\sqrt{n}$ the standardized statistic $\frac{\bar{x}-\mu}{s/\sqrt{n}}$ no longer follows a standard normal distribution. Instead, it follows a distribution called the **$t$-distribution**.
 
 Like the normal distribution, the $t$ distribution is a bell curve but it has "heavier tails" - that is to say, it has more probability density in the tails of the distribution. 
 
@@ -155,7 +155,8 @@ kable(df, format = 'html', digits = 2, col.names = c('Upper tail', 0.25, 0.2, 0.
 
 ```
 
-The table for the $t$ distribution is organized a little bit differently than the one we've seen previously for the standard normal distribution. The right-most column gives the degrees of freedom, columns give the different upper tail and two tail probabilities, and the values in the middle of the table are the $t$ scores that correspond to those probabilities. 
+<!-- TODO: the corner header cell is currently labeled "Upper tail" (col.names in the chunk above); since the left-most column actually holds the degrees of freedom, consider relabeling it to "df". Left as-is because "Upper tail" also labels the upper-tail probabilities across the header row. -->
+The table for the $t$ distribution is organized a little bit differently than the one we've seen previously for the standard normal distribution. The left-most column gives the degrees of freedom, columns give the different upper tail and two tail probabilities, and the values in the middle of the table are the $t$ scores that correspond to those probabilities.
 
 Use the table above to verify that the following $t$-scores corresponding to each confidence level and sample size are correct.
 
@@ -165,7 +166,7 @@ n = c(3, 5, 10, 14, 22)
 df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
                       `Sample size` = paste0('$n = ', n, '$'),
                       `$\\alpha$` = alpha,
-                      `critical value: $t_{1-\\alpha/2}$` = round(qt(1-alpha/2, df = n), 3))
+                      `critical value: $t_{1-\\alpha/2}$` = round(qt(1-alpha/2, df = n - 1), 3))
                       
 
 kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
@@ -174,5 +175,5 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 ```
 
 
-One nice property of the $t$-distribution is that it converges to the standard normal distribution as $n$ goes to infinity. Stated another way, a $t$-distribution with $\infty$ degrees of freedom is exactly the standard normal distribution. This means that with large enough sample size, both the confidence interval based on the standard normal distribution and the one bases on the $t$ distribution should yield nearly identical results. In fact, for $n \geq 30$ the difference between the standard normal distribution and $t$-distribution is nearly indistinguishable.
+One nice property of the $t$-distribution is that it converges to the standard normal distribution as $n$ goes to infinity. Stated another way, a $t$-distribution with $\infty$ degrees of freedom is exactly the standard normal distribution. This means that with large enough sample size, both the confidence interval based on the standard normal distribution and the one based on the $t$ distribution should yield nearly identical results. In fact, for $n \geq 30$ the difference between the standard normal distribution and $t$-distribution is nearly indistinguishable.
 

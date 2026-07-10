@@ -29,11 +29,11 @@ source('misc/stat251_tools.R')
 
 ```
 
-# Lecture 26 Monday, April 8th 2024
+# Lecture 27 Monday, April 8th 2024
   
 ### Comparing two means
 
-Last week we learned how to compare two populations across a qualitative response variable by comparing their relative proportions. Now we will learn how we can compare two groups on a quantitative response variable by comparing their means. There are many cases where researchers might be interesting comparing groups across a quantitative variable. For example, a teacher may be interested in comparing the average test scores of students in two different classes (Class A and Class B). A social scientist may be interest in whether there is a difference in salaries between men and women within a company. In any case, we are again dealing with two samples of sizes $n_1$ and $n_2$ which come from populations <i>population 1</i> and <i>population 2</i> and with means as $\mu_1$ and $\mu_2$. 
+Last week we learned how to compare two populations across a qualitative response variable by comparing their relative proportions. Now we will learn how we can compare two groups on a quantitative response variable by comparing their means. There are many cases where researchers might be interested in comparing groups across a quantitative variable. For example, a teacher may be interested in comparing the average test scores of students in two different classes (Class A and Class B). A social scientist may be interested in whether there is a difference in salaries between men and women within a company. In any case, we are again dealing with two samples of sizes $n_1$ and $n_2$ which come from populations <i>population 1</i> and <i>population 2</i> and with means as $\mu_1$ and $\mu_2$. 
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
@@ -70,15 +70,15 @@ In practice, $\sigma_1^2$ and $\sigma_2^2$ are unknown population parameters but
 
 \[SE(\hat{\mu}_d) = \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}  \]
 
-Just as it was for a single mean, estimating the population variances with the sample variances adds additional uncertainty. Thus, the the sampling distribution for the difference in two means is $t$-distributed, although the degrees of freedom are calculated differently. The actual formula for the degrees of freedom is quite messy and difficult to compute:
+Just as it was for a single mean, estimating the population variances with the sample variances adds additional uncertainty. Thus, the sampling distribution for the difference in two means is $t$-distributed, although the degrees of freedom are calculated differently. The actual formula for the degrees of freedom is quite messy and difficult to compute:
 
 \[df = \frac{\left(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}\right)^2}{ \frac{1}{n_1 - 1}\left(\frac{s_1^2}{n_1}\right)^2 + \frac{1}{n_2-1}\left(\frac{s_2^2}{n_2}\right)^2} \]
 
 We will instead compute the degrees of freedom by taking the smaller of $n_1-1$ and $n_2 - 1$ which is a lower bound on the formula above 
 
-\[\hat{\mu}_d \sim t(\min(n_1 - 1, n_2 - 1)) \]
+\[\frac{\hat{\mu}_d - \mu_d}{SE(\hat{\mu}_d)} \sim t(\min(n_1 - 1, n_2 - 1)) \]
 
-The margin of error for estimating the mean difference at the $(1-\alpha)\%$ level is given by
+The margin of error for estimating the mean difference at the $100(1-\alpha)\%$ level is given by
 
 \[m = t_{1-\alpha/2} \times SE(\hat{\mu}_d) \]
 
@@ -109,9 +109,9 @@ kable(df, format = 'html', digits = 2,
 Estimate the difference in mean satisfaction levels between the two companies at the $95\%$ confidence level.
 
 Let $\mu_1$ represent the mean satisfaction score for company 1 and $\mu_2$ represent the mean satisfaction score for company 2. The estimated mean difference in customer satisfaction is 
-\[\hat{\mu_d} = 4.2 - 3.8 = 0.4 \]
+\[\hat{\mu}_d = 4.2 - 3.8 = 0.4 \]
 
-Since the confidence level is $95\%$ the standard score will be approximately the $t_{1-0.05/2} = t_{0.975}$ or the $97.5th$ percentile of a $t$-distribution with $173$ degrees of freedom. Since the $t$ and $z$ distributions are approximately for sample sizes $\geq 30$ we will use the standard score $1.96$. The standard error of the difference is given by 
+Since the confidence level is $95\%$ the standard score will be approximately the $t_{1-0.05/2} = t_{0.975}$ or the $97.5th$ percentile of a $t$-distribution with $173$ degrees of freedom. Since the $t$ and $z$ distributions are approximately equal for sample sizes $\geq 30$ we will use the standard score $1.96$. The standard error of the difference is given by 
 
 \[SE(\hat{\mu}_d) = \sqrt{\frac{0.8^2}{174}+\frac{1.1^2}{355}} =0.0842  \]
 
@@ -123,7 +123,7 @@ The $95\%$ confidence interval is $[0.24, 0.56]$. Thus, at the $95\%$ confidence
 
 ### A significance test for comparing two means: independent samples
 
-We can also test for a difference between two groups on a quantitative response. variable by comparing their means. The set up for a significance test for a difference in two means is more or less the same as we saw previously for two proportions, however, the calculations now involve $\bar{x}_1$, $\bar{x}_2$, $s_1$ and $s_2$. Recall that, under the assumption of normality for both populations and when using the sample standard deviations to estimate $\sigma_1$ and $\sigma_2$ the difference in means is $t$-distributed. We will see that test statistic $t_{obs}$ is the standardized difference and has approximately the same distribution. Here’s how we set up a two-sample hypothesis test for means:
+We can also test for a difference between two groups on a quantitative response variable by comparing their means. The set up for a significance test for a difference in two means is more or less the same as we saw previously for two proportions, however, the calculations now involve $\bar{x}_1$, $\bar{x}_2$, $s_1$ and $s_2$. Recall that, under the assumption of normality for both populations and when using the sample standard deviations to estimate $\sigma_1$ and $\sigma_2$ the difference in means is $t$-distributed. We will see that test statistic $t_{obs}$ is the standardized difference and has approximately the same distribution. Here’s how we set up a two-sample hypothesis test for means:
 
 **1. Assumptions**
 
@@ -199,7 +199,7 @@ There is one situation where the above test statistic has exactly a $t$-distribu
 
 \[ s_{pooled} = \sqrt{ \frac{(n_1 - 1)s_1^2 + (n_2 -1)s_2^2}{n_1+n_2 - 2}}\]
 
-$s_{pooled}$ is called the **pooled estimator** of $\sigma_d$ because it combines the information from both samples. 
+$s_{pooled}$ is called the **pooled estimator** of the common standard deviation $\sigma$ because it combines the information from both samples.
 
 The test statistic under the assumption of equal variances becomes 
 
@@ -212,12 +212,12 @@ Which test should you use?
   * In practice, a significance test for determining equality of variances can be run prior to the $t$-test to determine if the pooled or unpooled test statistic should be used. More information about this test can be found <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda359.htm#:~:text=An%20F%2Dtest%20(Snedecor%20and,the%20variances%20are%20not%20equal.">here</a>
 
 
-**Example: NCAA Womens Basketball** - Sunday April 7th South Carolina and Iowa contended for the NCAA womens basketball championship. Consider the following table which gives the opponent and number of points scored for both teams in their last $15$ games leading up to the championship.
+**Example: NCAA Women's Basketball** - Sunday April 7th South Carolina and Iowa contended for the NCAA women's basketball championship. Consider the following table which gives the opponent and number of points scored for both teams in their last $15$ games leading up to the championship.
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-sc.matchup = rev(c('UConn','Tenessee','Georgia','Alabama', 'Kentucky', 'Arkansas', 'Tenessee', 'Texas A&M','Tenessee', 'LSU','Presbyterian', 'UNC', 'Indiana', 'Oregon State','NC State'))
+sc.matchup = rev(c('UConn','Tennessee','Georgia','Alabama', 'Kentucky', 'Arkansas', 'Tennessee', 'Texas A&M','Tennessee', 'LSU','Presbyterian', 'UNC', 'Indiana', 'Oregon State','NC State'))
 sc = c(78, 70, 79, 88, 91, 79, 74, 79, 76, 98, 103, 72, 70, 66, 83)
 spacer = rep('', 15)
 io.matchup = rev(c('Penn State','Nebraska','Michigan','Indiana','Illinois','Minnesota', 'Ohio State', 'Penn State', 'Michigan', 'Nebraska', 'Holy Cross', 'West Virginia', 'Colorado', 'LSU', 'UConn'))
@@ -243,7 +243,7 @@ The summary of the last $15$ games is given below:
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-sc.matchup = rev(c('UConn','Tenessee','Georgia','Alabama', 'Kentucky', 'Arkansas', 'Tenessee', 'Texas A&M','Tenessee', 'LSU','Presbyterian', 'UNC', 'Indiana', 'Oregon State','NC State'))
+sc.matchup = rev(c('UConn','Tennessee','Georgia','Alabama', 'Kentucky', 'Arkansas', 'Tennessee', 'Texas A&M','Tennessee', 'LSU','Presbyterian', 'UNC', 'Indiana', 'Oregon State','NC State'))
 sc = c(78, 70, 79, 88, 91, 79, 74, 79, 76, 98, 103, 72, 70, 66, 83)
 spacer = rep('', 15)
 io.matchup = rev(c('Penn State','Nebraska','Michigan','Indiana','Illinois','Minnesota', 'Ohio State', 'Penn State', 'Michigan', 'Nebraska', 'Holy Cross', 'West Virginia', 'Colorado', 'LSU', 'UConn'))
@@ -264,9 +264,9 @@ kable(df, format = 'html', digits = 2,
 ```
 
 
-Conduct a unpooled two sample $t$-test at the $\alpha = 0.05$ significance level to determine if there is a significant difference between the championship teams in the mean number of points scored per game.
+Conduct an unpooled two sample $t$-test at the $\alpha = 0.05$ significance level to determine if there is a significant difference between the championship teams in the mean number of points scored per game.
 
-  1. Let $\mu_1$ be the mean number of points scored per game for Iowa and $\mu_2$ be the mean number of points score per game for South Carolina. The null hypothesis is that there is no difference in the mean number of points between the two teams 
+  1. Let $\mu_1$ be the mean number of points scored per game for Iowa and $\mu_2$ be the mean number of points scored per game for South Carolina. The null hypothesis is that there is no difference in the mean number of points between the two teams 
   
   \[H_0: \mu_1 = \mu_2 \]
   
@@ -282,14 +282,14 @@ Conduct a unpooled two sample $t$-test at the $\alpha = 0.05$ significance level
   
   \[ t_{obs}\sim t(df = 14) \]
   
-  3. The pvalue is 
+  3. The $p$-value is
   
   \[\text{$p$-value} = 2\left[P(|t| \geq |t_{obs}||H_0)\right] = 2(0.0207) = 0.0414 \]
   
-  4. Based ont the $p$-value above we would narrowly reject the null hypothesis and conclude that Iowa scores significantly more points per game than South Carolina on average. The outcome of the championship was a 75 - 87 victory for South Carolina. Given the conclusion of our test, this is a testament to South Carolina's defensive prowess in being able to shut down a high scoring team like Iowa. 
+  4. Based on the $p$-value above we would narrowly reject the null hypothesis and conclude that there is a significant difference in the mean number of points scored per game between Iowa and South Carolina. The outcome of the championship was an 87 - 75 victory for South Carolina. Given the conclusion of our test, this is a testament to South Carolina's defensive prowess in being able to shut down a high scoring team like Iowa. 
 
 
-# Lecture 27 Wednesday, April 10th 2024
+# Lecture 28 Wednesday, April 10th 2024
 
 ### Paired $t$ test
 Comparative methods (i.e methods that compare two groups/samples across a quantitative variable) are more common and often preferred over one sample procedures. One common comparative design that makes use of single-sample procedures for a population mean is called the paired $t$-test. This test is used to draw inferences about a population mean in matched-pairs designs and can be thought of as the parametric analogue of the <i>sign test</i> we learned previously. Recall that in matched-pairs studies subjects are matched based on common characteristics and the quantitative outcome is compared within each pair. 
@@ -300,17 +300,17 @@ Comparative methods (i.e methods that compare two groups/samples across a quanti
   
 In a paired $t$-test we convert a comparative study into a one-sample procedure by making the response variable the difference between the two observations in each pair $d_i = x_i - y_i$. The parameter under study is the population mean difference $\mu_d$ which can be estimated by the sample mean difference $\bar{x}_d = \bar{x} - \bar{y}$ computed over all pairwise differences. The standard deviation of the difference $\sigma_d$ is then estimated with the sample standard deviation of the difference. Inference is then treated in the same way as one-sample procedures for a population mean
 
-  * the $(1 - \alpha)\%$ confidence interval for the mean pairwise difference is 
+  * the $100(1 - \alpha)\%$ confidence interval for the mean pairwise difference is
   
   \[ \bar{x}_d \pm t_{1-\alpha/2} \frac{s_d}{\sqrt{n}}\]
   
-  * the test statistic for a signifcance test regargin the pairwise difference is given by
+  * the test statistic for a significance test regarding the pairwise difference is given by
   
   \[t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}} \sim t(n - 1) \]
   
   * by treating the above procedure as a one-sample $t$ test we make the assumption that the population distribution of differences is approximately normal. 
   
-**Example: Revisting the Spousal Dominance Problem** - Recall the study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision.
+**Example: Revisiting the Spousal Dominance Problem** - Recall the study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision.
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
@@ -352,7 +352,7 @@ kable(df, format = 'html', digits = 2,
 
 Conduct a paired $t$-test at the $\alpha = 0.05$ significance level to determine if husbands and wives differ in their perceived influence on financial decision making
 
-### Statistical Inference for qualitative data
+### Summary of inference procedures
 
 The table below summarizes the procedures we have learned so far in the course
 
@@ -360,9 +360,9 @@ The table below summarizes the procedures we have learned so far in the course
 
 df = cbind.data.frame(`Parameter` = c('$p$','$p_1 - p_2$', '$\\mu$', '$\\mu_1 - \\mu_2$','$\\mu_1 - \\mu_2$', '$\\mu_d$'),
                       `Type` = c('one-sample', 'two-sample', 'one-sample', 'two-sample', 'pooled two-sample', 'matched pairs'),
-                      `Response Variable` = c('Categorical','Categorical', 'Quantatitive', 'Quantitative', 'Quantitative','Quantitative'),
+                      `Response Variable` = c('Categorical','Categorical', 'Quantitative', 'Quantitative', 'Quantitative','Quantitative'),
                       
-                      `$(1 - \\alpha)\\%$ CI` = c('$\\hat{p}\\pm Z_{1-\\alpha/2}\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}$',
+                      `$100(1 - \\alpha)\\%$ CI` = c('$\\hat{p}\\pm Z_{1-\\alpha/2}\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}$',
                                                   
                                                   '$(\\hat{p}_1 - \\hat{p}_2)\\pm Z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1}+\\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$',
                                                   
@@ -370,7 +370,7 @@ df = cbind.data.frame(`Parameter` = c('$p$','$p_1 - p_2$', '$\\mu$', '$\\mu_1 - 
                                                   
                                                   '$(\\bar{x}_1 - \\bar{x}_2) \\pm  t_{1-\\alpha/2, \\min(n_1 -1, n_2-1)} \\sqrt{\\frac{s_1^2}{n_1}+\\frac{s_2^2}{n_2}}$',
                                                   
-                                                  '$(\\bar{x}_1 - \\bar{x}_2) \\pm  t_{1-\\alpha/2, \\min(n_1 -1, n_2-1)} s_{pooled}\\sqrt{\\frac{1}{n_1}+\\frac{1}{n_2}}$',
+                                                  '$(\\bar{x}_1 - \\bar{x}_2) \\pm  t_{1-\\alpha/2, n_1+n_2 - 2} s_{pooled}\\sqrt{\\frac{1}{n_1}+\\frac{1}{n_2}}$',
                                                   
                                                   '$\\bar{x}_d \\pm t_{1-\\alpha/2, n-1}\\frac{s_d}{\\sqrt{n}}$'),
                       
@@ -393,7 +393,9 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-Despite significantly expanding the our statistical tools for inference, we are still quite limited in our ability to analyze qualitative responses. Our tests for a proportion are useful for comparing a single category of a qualitative variable across one or two samples, but what if we are interested in comparing multiple categories across more than one population? We will now explore some of the common tools for analyzing qualitative data. The inference techniques for analyzing qualitative variables are generally concerned with comparing a response variable with two or more categories across an explanatory variable with two or more groupings by exploring how the conditional distribution of the response varies across the groups of the explanatory variable. In other words, these inference procedures are designed to analyze the statistical association between two multi-category qualitative variables. 
+### Statistical Inference for qualitative data
+
+Despite significantly expanding our statistical tools for inference, we are still quite limited in our ability to analyze qualitative responses. Our tests for a proportion are useful for comparing a single category of a qualitative variable across one or two samples, but what if we are interested in comparing multiple categories across more than one population? We will now explore some of the common tools for analyzing qualitative data. The inference techniques for analyzing qualitative variables are generally concerned with comparing a response variable with two or more categories across an explanatory variable with two or more groupings by exploring how the conditional distribution of the response varies across the groups of the explanatory variable. In other words, these inference procedures are designed to analyze the statistical association between two multi-category qualitative variables. 
 
 Such problems are typically represented as a table where the rows represent the groupings of the explanatory variable and columns represent the categories of the response variable - often referred to as "two-way tables". 
 
@@ -402,7 +404,7 @@ Such problems are typically represented as a table where the rows represent the 
 
 Like we have done with means and proportions, we will begin with a one-sample procedure for comparing the distribution of a categorical variable to some hypothesized model. This procedure is called the $\chi^2$ ("chi-squared") goodness of fit test because it used to determine how well the observed distribution fits some proposed model of the data. We will illustrate this idea by starting with an example:
 
-**Example: Gregor Mendels Peas** - Gregor Mendel conducted a study in which he crossed pea plants. The plants he crossed had the alleles (i.e., a form or version of a gene) for both yellow $Y$ and green peas $y$ — a trait controlled by a single locus. He believed two of his laws applied here: the Law of Segregation and the Law of Dominance. These laws would determine the probabilities of certain genotypes. This can be summarized by a Punnett square
+**Example: Gregor Mendel's Peas** - Gregor Mendel conducted a study in which he crossed pea plants. The plants he crossed had the alleles (i.e., a form or version of a gene) for both yellow $Y$ and green peas $y$ — a trait controlled by a single locus. He believed two of his laws applied here: the Law of Segregation and the Law of Dominance. These laws would determine the probabilities of certain genotypes. This can be summarized by a Punnett square
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
@@ -458,13 +460,13 @@ The above hypothesis test uses a $\chi^2$ test statistic defined as
   
   * the expected count is the number of observations we expect to have outcome $i$ which is calculated under the null hypothesis as $np_i$
   
-  * We can think of this calculation as measuring the average distance from the observed model to the model we defined under the null hypothesis.
+  * We can think of this calculation as measuring the total (relative) squared distance from the observed model to the model we defined under the null hypothesis.
   
 $X^2$ can take on values between $0$ and positive $\infty$. A value of zero means the observed model exactly follows the expected model. Values greater than zero indicate a deviation from the expected model. Large values of $X^2$ indicate evidence against the null hypothesis.
   
 Referring back to Mendel's pea plants we compute the expected number of yellow pea plants as $8023\times 0.75 = 6017.25$ and the expected number of green pea plants to be $8023\times 0.25 = 2005.75$. The test statistic is 
 
-\[X^2 = \frac{(6022 - 6017.25)^2}{6017.25} +\frac{(2001 - 2005.75)}{2005.75} \]
+\[X^2 = \frac{(6022 - 6017.25)^2}{6017.25} +\frac{(2001 - 2005.75)^2}{2005.75} \]
 
 \[ = 0.0037 + 0.0112  \]
 
@@ -539,7 +541,7 @@ kable(df, format = 'html', digits = 2, col.names = c('Upper tail', 0.25, 0.2, 0.
 <br>
 <br>
 
-# Lecture 28 Friday, April 12th 2024
+# Lecture 29 Friday, April 12th 2024
 
 **Warm Up: $\chi^2$ Goodness of Fit Test** - Suppose you’re hired by a dog food company to help them test three new dog food flavors. You recruit a random sample of $75$ dogs and offer each dog a choice between the three flavors by placing bowls in front of them. Assuming that the dogs have no preference, you expect that the flavors will be equally popular among the dogs, with about $25$ dogs choosing each flavor. After weeks of hard work, your dog food experiment is complete and you compile your data in a table:
 
@@ -559,15 +561,15 @@ kable(df, format = 'html', digits = 2,
 Conduct a $\chi^2$ goodness of fit test to determine if the dogs show any preference for the three flavors being tested
 
 
-Note that the GOF test doesn't tell us anything about the range of plausible valuables for the frequency parameters. 
+Note that the GOF test doesn't tell us anything about the range of plausible values for the frequency parameters.
 
-### Measureing statistical association in two categorical variables
+### Measuring statistical association in two categorical variables
 
 As stated previously, the goodness of fit test is a one-sample procedure for comparing the observed distribution of a single categorical variable to a specific model that we hypothesize under the null. We will now explore another type of inference which is also based on the $\chi^2$ ("chi-square") distribution. This procedure is used to determine if two categorical variables share an association by exploring how the distribution of counts of one variable changes as we condition on the categories of another variable. 
 
 ### $\chi^2$ test of independence
 
-The $\chi^2$ test of independence is used to examine the relationship between two categorical variables in a two-way table (also called a **contigency table**). Consider the following hypothetical table which compares the categorical variable $A$, which has two categories, with the categorical variable $B$ which has three categories.
+The $\chi^2$ test of independence is used to examine the relationship between two categorical variables in a two-way table (also called a **contingency table**). Consider the following hypothetical table which compares the categorical variable $A$, which has two categories, with the categorical variable $B$ which has three categories.
 
 ```{r, echo=F, message=F, warning=F}
 
@@ -598,7 +600,7 @@ kable(df, format = 'html', digits = 2, col.names = c('','','','',''),
 
 The two-way table above helps us to break down the relationship between the outcomes of <i>Variable A</i> and the outcomes of <i>Variable B</i>. As we can see from the table, the cells give the conditional probabilities (or more often frequencies/counts) of each category of $A$ across each category of $B$. There are also usually row and column totals displayed in a two-way table which summarize the marginal distributions of each variable. 
 
-A **$\chi$-square test of independence** takes advantage of the two-way table above to determine if the conditional distribution of the response variable (the rows) changes across the categories of the explanatory variable (the columns). In the example above, we can see that each row gives the marginal distribution of a given category of the response variable. If *variable A* and *variable B* are independent then the rows of the table should be more or less the same across all categories of the explanatory variable. If the outcomes of *variable B* depend on the outcomes of variable $A$, then the rows of the table will change as we move across the outcomes of *variable B*. 
+A **$\chi$-square test of independence** takes advantage of the two-way table above to determine if the conditional distribution of the response variable (the columns) changes across the categories of the explanatory variable (the rows). In the example above, we can see that each row gives the conditional distribution of the response variable for a given category of the explanatory variable. If *variable A* and *variable B* are independent then the rows of the table should be more or less the same across all categories of the explanatory variable. If the outcomes of *variable A* depend on the outcomes of variable $B$, then the rows of the table will change as we move across the categories of *variable B*.
 
 The null and alternative hypothesis of a $\chi$-square test of independence are simple. The null hypothesis is that the two variables being tested are independent and the alternative is that they not independent
 
@@ -616,7 +618,7 @@ In essence we are comparing two tables which represent two distributions: the ta
 
 The test statistic summarizes the differences (i.e distance) between the counts in the observed table with the counts in the expected table.  
 
-\[ X_{obs}^2 = \sum_{j=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}}  \]
+\[ X_{obs}^2 = \sum_{i=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}}  \]
 
 
 Where $o_{ij}$ represents the observed count for the $i^{th}$ row and $j^{th}$ column of the contingency table: 
@@ -643,7 +645,7 @@ The expected counts for $i,j^{th}$ cell of the table are computed from the obser
 \[ e_{ij} = \frac{ \big[ \sum_{i = 1}^r o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r \sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column total}}{n}  \]
 
 
-The test statistic follows a $\chi^2$ distribution with $(r-1)\times (c-1)$ degrees of freedom, where $r$ is the total number of row categories and $c$ is the total column categories. Lets try it out an example:
+The test statistic follows a $\chi^2$ distribution with $(r-1)\times (c-1)$ degrees of freedom, where $r$ is the total number of row categories and $c$ is the total column categories. Let's try it out on an example:
 
 **Example: Happiness and Income** - As part of their annual survey, the General Social Survey explored the relationship between income and happiness. Happiness was recorded as "Not too happy", "Pretty happy", or "Very happy", and incomes were bracketed into three categories: "Below average", "Average", and "Above average". The counts are summarized in the table below:
 
@@ -764,7 +766,7 @@ The $\chi^2$ test statistic can be computed as the sum of the elements in the ta
 
 \[ X_{obs}^2 = 4.36 + 5.16 + \cdots +0.23 + 12.6 = 54.04 \]
 
-which follows a $\chi^2$ distribution with $(3-1)\times (3 - 1) = 4$ degrees of freedom. The $p$-value is the probability of observing a value more extreme than $X_{obs}^2 = 54.05$ which is
+which follows a $\chi^2$ distribution with $(3-1)\times (3 - 1) = 4$ degrees of freedom. The $p$-value is the probability of observing a value more extreme than $X_{obs}^2 = 54.04$ which is
 
 \[P(\chi^2_4 \geq 54.04|H_0 \ \text{True}) \approx 0 \]
 

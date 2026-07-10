@@ -1,5 +1,5 @@
 ---
-title: "Week 10 Notes"
+title: "Week 10 — Spring Break (No Class)"
 author: "STAT 251 Section 03"
 output:
   html_document: default
@@ -13,15 +13,6 @@ header-includes:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(knitr)
-library(kableExtra)
-library(ggplot2)
-library(ggthemes)
-library(ggpubr)
-library(latex2exp)
-library(gganimate)
-
-path = 'Data/'
 ```
 
-# NO CLASS - Spring Break!!!
+# NO CLASS - Spring Break

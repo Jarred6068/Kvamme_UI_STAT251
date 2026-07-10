@@ -171,7 +171,7 @@ plt.top = ggarrange(A, B, nrow = 1)
 ggarrange(plt.top, C, nrow = 2)
 ```
 
-* From the plot above, we can see that two distributions with the same $\sigma$ will have the same general shape, but if they have different $\\mu$ the location of the center will be different. Thus changing the value of the mean $\\mu$ will shift the position of the distribution on the real number line. 
+* From the plot above, we can see that two distributions with the same $\sigma$ will have the same general shape, but if they have different $\mu$ the location of the center will be different. Thus changing the value of the mean $\mu$ will shift the position of the distribution on the real number line.
 
 * The cumulative density curve for a normal distribution forms a shape like the letter S called a <i>sigmoid</i> curve. See the plot below
 
@@ -217,7 +217,7 @@ The density curve of a normal distribution at any point $x$ is given by the func
 
 \[ f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{\frac{-1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \]
 
-We will not make direct use of this function in this class however, this function represents a key point in the mathematical work in probability and statistics regarding variables that exhibit <i>normality</i>
+We will not make direct use of this function in this class; however, this function represents a key point in the mathematical work in probability and statistics regarding variables that exhibit <i>normality</i>.
 
 Why is the normal distribution important?
 
@@ -305,6 +305,8 @@ B = ggplot()+
   geom_text(aes(x = mean(x)-sd(x)/2, y = 0.2), label = '50%')+
   geom_text(aes(x = mean(x)+sd(x)/2, y = 0.2), label = '84%')+
   geom_text(aes(x = mean(x)+(1.5*sd(x)), y = 0.2), label = '97.5%')+
+  # TODO: cumulative-label imprecision - these are CDF values at +3sd (~99.85%)
+  # and beyond (~99.9%); '99.7%'/'100%' conflate them with the within-+/-3sd figure.
   geom_text(aes(x = mean(x)+2.5*sd(x), y = 0.2), label = '99.7%')+
   geom_text(aes(x = mean(x)+3.5*sd(x), y = 0.2), label = '100%')+
   theme_classic2()+
@@ -325,29 +327,32 @@ Consider the distribution of the height of female college athletes from a survey
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 set.seed(222)
-gss = read.csv(paste0(path, 'georgia_student_survey.csv'))
-ggplot()+xlim(50, 80)+geom_histogram(aes(x = rnorm(60, 65, 5), y = ..density..), 
-                        bins = ceiling(sqrt(60)), 
+ggplot()+xlim(50, 80)+geom_histogram(aes(x = rnorm(60, 65, 5), y = ..density..),
+                        bins = ceiling(sqrt(60)),
                         color = 'black',
                         fill = 'lightgrey')+
   stat_function(fun = dnorm, args = list(mean = 65, sd = 5))+
   theme_classic2()+
   xlab('Height in inches')
-
-s = sd(x = rnorm(60, 65, 5))
 ```
 
 
 
 * Approximately, what proportion of the students will have a height between 60 and 70 inches?
 
+  * 60 and 70 inches are exactly 1 standard deviation ($\sigma = 5$) below and above the mean ($\mu = 65$), so by the empirical rule approximately $68\%$ of students fall in this range.
+
 * Approximately, what proportion of the students will have a height $\geq 70$ inches?
+
+  * 70 inches is 1 standard deviation above the mean. About $68\%$ fall within $\pm 1\sigma$, leaving $32\%$ in the two tails, so approximately $16\%$ are at or above 70 inches.
 
 * Approximately, what proportion of the students will have a height between 55 and 75 inches?
 
+  * 55 and 75 inches are 2 standard deviations below and above the mean, so by the empirical rule approximately $95\%$ of students fall in this range.
+
 ### Standardizing Observations: The Z-score
 
-From the empirical rule, we know that nearly all of the observations in a bell-shaped distribution will have a value within $\pm 3\sigma$ of the mean. Therefore, we can use the property of the empirical rule of normal distributions to come up with a criteria for defining outliers that is specific to these types of distributions. 
+From the empirical rule, we know that nearly all of the observations in a bell-shaped distribution will have a value within $\pm 3\sigma$ of the mean. Therefore, we can use the property of the empirical rule of normal distributions to come up with a criterion for defining outliers that is specific to these types of distributions.
 
 * We can define an outlier as an observation whose value is more than $3\sigma$ greater than the mean or  $3\sigma$ less than the mean. 
 
@@ -355,15 +360,15 @@ From the empirical rule, we know that nearly all of the observations in a bell-s
 
 How can we easily tell how far an observation is from the mean?
 
-* First, it is important to note that the value of $\sigma$ or $s$ is affected by the units of the variable. For example, in the distribution of college student heights above, height is recorded in inches and the standard deviation of college student height was about $s = 5$. However if, we have the same dataset and height was recorded in millimeters then the standard deviation would be much larger at $s = 127$ because the units have smaller increment. This makes comparing normal distributions, or determining outliers dependent on the scale of the underlying variable.   
+* First, it is important to note that the value of $\sigma$ or $s$ is affected by the units of the variable. For example, in the distribution of college student heights above, height is recorded in inches and the standard deviation of college student height was about $s = 5$. However, if we have the same dataset and height was recorded in millimeters then the standard deviation would be much larger at $s = 127$ because the units have a smaller increment. This makes comparing normal distributions, or determining outliers dependent on the scale of the underlying variable.   
 
 * To get around this, we can use something called a **z-score**. A z-score is a standardization of an observation from a normal distribution that can be directly interpreted as the number of standard deviations the observation falls from the mean. Mathematically a z-score is defined as 
 
 \[ z_i = \frac{\text{observation} -\text{mean}}{\text{standard deviation}} =  \frac{x_i - \bar{x}}{s} \]
 
-by subtracting off the mean and dividing by the standard deviation, we are performing a <i>linear transformation</i> to convert $x$ into a new unit scale. If the original distribution of $X$ is normal $x_i \sim N(\bar{x}, s)$, then computing the z-score represents a rescaling of $X$ such that 
+by subtracting off the mean and dividing by the standard deviation, we are performing a <i>linear transformation</i> to convert $x$ into a new unit scale. If the original distribution of $X$ is normal $x_i \sim N(\mu, \sigma)$, then computing the z-score represents a rescaling of $X$ such that
 
-$$z_i = \frac{x_i - \bar{x}}{s} \sim N(\bar{x} - \bar{x}, s/s)$$ 
+$$z_i = \frac{x_i - \bar{x}}{s} \sim N(0, 1)$$
 
 The distribution of $z_i$ is a special case of the normal distribution called the **standard normal distribution**. The standard normal distribution has a mean of zero and a standard deviation of one and we often define this in symbols as $z_i \sim N(0,1)$
 
@@ -373,18 +378,18 @@ Lets consider the following example using data collected on the air pollution of
 
 dat = read.csv(paste0(path, 'EU_CO2.csv'))
 
-kable(dat, format = 'html', col.names = c('Country', 'Abbreviation', 'C02 Emissions Per Capita (metric tons)'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(dat, format = 'html', col.names = c('Country', 'Abbreviation', 'CO2 Emissions Per Capita (metric tons)'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
 
-The mean of C02 emissions is $\bar{x} \approx 7.9$ with a standard deviation of $s \approx 3.6$. Compute the $z-score$ for the C02 air pollution of the country Luxembourg. Is Luxembourg an outlier? If so, what does this mean in terms of its C02 pollution?
+The mean of CO2 emissions is $\bar{x} \approx 7.9$ with a standard deviation of $s \approx 3.6$. Compute the $z-score$ for the CO2 air pollution of the country Luxembourg. Is Luxembourg an outlier? If so, what does this mean in terms of its CO2 pollution?
 
 
 * The z-score for Luxembourg is computed as 
 $$z = \frac{21.4 - 7.9}{3.6} = 3.75$$
 
-* This indicates that the C02 emissions for the country Luxembourg is 3.75 standard deviations above the mean C02 emissions in the EU. Using the $\pm 2s$ rule for determining outliers, we would conclude that the emissions for Luxembourg are an outlier relative to the emissions for the rest of the European Union. Thus by computing a z-score we can quickly discover how extreme an observation is relative to its distribution.  
+* This indicates that the CO2 emissions for the country Luxembourg is 3.75 standard deviations above the mean CO2 emissions in the EU. Using the $\pm 2s$ rule for determining outliers, we would conclude that the emissions for Luxembourg are an outlier relative to the emissions for the rest of the European Union. Thus by computing a z-score we can quickly discover how extreme an observation is relative to its distribution.  
 
 
 A note about <i> linear transformations </i>:
@@ -413,7 +418,7 @@ ggplot(data = df, aes(x = value))+
 
 ### Sampling Distributions
 
-Consider a small study to estimate the average trunk diameter (in feet) of Western Red Ceders at the idlers rest nature preserve just outside of Moscow. The population distribution is given by the histogram and dot plot below. The population consists of $N = 109$ trees and the mean diameter is $\mu = 4.05$ with standard deviation $\sigma = 1.81$. The green diamond below denotes the value of the population mean diameter for trees at the Idler's Rest nature preserve. 
+Consider a small study to estimate the average trunk diameter (in feet) of Western Red Cedars at the Idler's Rest nature preserve just outside of Moscow. The population distribution is given by the histogram and dot plot below. The population consists of $N = 109$ trees and the mean diameter is $\mu = `r {set.seed(235); round(mean(rnorm(109, mean = 4, sd = 1.8)), 2)}`$ with standard deviation $\sigma = `r {set.seed(235); round(sd(rnorm(109, mean = 4, sd = 1.8)), 2)}`$. The green diamond below denotes the value of the population mean diameter for trees at the Idler's Rest nature preserve.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
 set.seed(235)
@@ -426,7 +431,7 @@ P1 = ggplot()+
   theme_classic2()+
   ylab('Frequency')+
   xlab('Tree Trunk Diameter In Feet')+
-  ggtitle('Distribution of Western Red Ceder Trunk Diameter')+
+  ggtitle('Distribution of Western Red Cedar Trunk Diameter')+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
@@ -451,7 +456,7 @@ P2 = ggplot()+
   theme_classic2()+
   ylab('Frequency')+
   xlab('Tree Trunk Diameter In Feet')+
-  ggtitle('Distribution of Western Red Ceder Trunk Diameters')+
+  ggtitle('Distribution of Western Red Cedar Trunk Diameters')+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
@@ -460,7 +465,7 @@ plot(P2)
 ```
 
 
-The 20 red dots in the plot above represent the trees we selected to measure the diameter. From this sample of 20 trees, we estimate the mean diameter to be $\bar{x}_1 = 4.35$ feet. Now imagine we repeat this process and gather a new sample of $20$ trees selected randomly from the population.  
+The 20 red dots in the plot above represent the trees we selected to measure the diameter. From this sample of 20 trees, we estimate the mean diameter to be $\bar{x}_1 = `r round(mean(wrc[sel]), 2)`$ feet. Now imagine we repeat this process and gather a new sample of $20$ trees selected randomly from the population.  
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
 set.seed(1237)
@@ -477,7 +482,7 @@ P3 = ggplot()+
   theme_classic2()+
   ylab('Frequency')+
   xlab('Tree Trunk Diameter In Feet')+
-  ggtitle('Distribution of Western Red Ceder Trunk Diameters')+
+  ggtitle('Distribution of Western Red Cedar Trunk Diameters')+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 
@@ -485,7 +490,7 @@ plot(P3)
   
 ```
 
-The blue dots in the plot above constitute the trees selected for measurement in the second sample. This time the sample mean is computed as $\bar{x}_2 = 2.98$ feet. Clearly, our estimate of $\mu$ is dependent on the sample we select. Now imagine that we repeat this process many times - selecting a sample of 20 trees, measuring their diameters and computing the sample mean. It's easy to imagine that we would produce a distribution of estimates of $\mu$. Such a distribution is called a **sampling distribution** and represents the distribution of a statistic. The sampling distribution of for mean diameter from $10,000$ samples of $n=20$ trees is given below. 
+The blue dots in the plot above constitute the trees selected for measurement in the second sample. This time the sample mean is computed as $\bar{x}_2 = `r round(mean(wrc[sel2]), 2)`$ feet. Clearly, our estimate of $\mu$ is dependent on the sample we select. Now imagine that we repeat this process many times - selecting a sample of 20 trees, measuring their diameters and computing the sample mean. It's easy to imagine that we would produce a distribution of estimates of $\mu$. Such a distribution is called a **sampling distribution** and represents the distribution of a statistic. The sampling distribution of for mean diameter from $10,000$ samples of $n=20$ trees is given below. 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=8}
 newseeds = 1:10000
@@ -513,10 +518,10 @@ plot(P4)
 
 The variation in the sampling distribution of the mean shown above is because of the differences between the samples. Again, the green dot represents the population mean ($\mu$). From the plot, you can observe that the sampling distribution of $\bar{x}$ is centered at the true value of the population parameter.
 
-The **margin of error** of an estimate is how far we expect an estimate to fall from the true value of a population parameter. It defines a set of boundaries that allows us to quantify the how much an estimate is expected to vary between samples. Formally, it is the largest distance between the true population parameter and an estimate that is <u>not an outlier</u>. Thus if we use the $\pm 2\sigma$ rule to define outliers, the margin of error of our estimate is the interval $\hat{\theta} - 2\sigma < \theta < \hat{\theta} + 2\sigma$.
+The **margin of error** of an estimate is how far we expect an estimate to fall from the true value of a population parameter. It defines a set of boundaries that allows us to quantify how much an estimate is expected to vary between samples. Formally, it is the largest distance between the true population parameter and an estimate that is <u>not an outlier</u>. Because the margin of error describes the variability of the estimate $\hat{\theta}$ across samples, it is built from the **standard error** ($SE$) of the estimate - the standard deviation of its sampling distribution - not the standard deviation $\sigma$ of individual observations. Thus if we use the $\pm 2\cdot SE$ rule to define outliers, the margin of error of our estimate is the interval $\hat{\theta} - 2\cdot SE < \theta < \hat{\theta} + 2\cdot SE$.
 
 
-In statistics, we often hear the words <i>significant</i> and <i>not significant</i> when a particular statistical result is discussed. A **Statistically significant** result is one that is decidedly <i>not</i> due to ordinary variation - this means a result that is not due to chance or coincidence. Thus, by convention, we consider statistically significant results a result that falls outside the **margin of error**. 
+In statistics, we often hear the words <i>significant</i> and <i>not significant</i> when a particular statistical result is discussed. A **statistically significant** result is one that is decidedly <i>not</i> due to ordinary variation - this means a result that is unlikely to have arisen from chance or coincidence alone. By convention, we consider a result statistically significant when it is too large to be explained by ordinary sampling variation.
 
 ## Study Design
 
@@ -524,7 +529,7 @@ We've covered basic data analysis tools, like graphs and numbers, to describe in
 
 ### Anecdotal Data 
 
-It is often tempting to draw conclusions based on our personal experiences or from second-hand accounts that are shared with us. An example of anecdotal evidence might be a person claiming that a particular herbal supplement cured their chronic headaches. Or A friend may claim that a starvation diet is healthy because they knew a few people who did it and they didn't experience any major health effects. However, <i>anecdotes</i> such as these are typically based on haphazardly selected individual cases and do not provide a sound basis for drawing conclusions.
+It is often tempting to draw conclusions based on our personal experiences or from second-hand accounts that are shared with us. An example of anecdotal evidence might be a person claiming that a particular herbal supplement cured their chronic headaches. Or a friend may claim that a starvation diet is healthy because they knew a few people who did it and they didn't experience any major health effects. However, <i>anecdotes</i> such as these are typically based on haphazardly selected individual cases and do not provide a sound basis for drawing conclusions.
 
 * Can you think of a time where you or someone you know made a claim based on anecdotal evidence?
 
@@ -557,7 +562,7 @@ Both observational and experimental studies seek to quantify the relationship be
 
   * Experimental studies control the assignment of observations to the explanatory variable(s) through <i> randomization </i>. This means experimental studies control for factors that may influence a statistical relationship between two variables and provide good evidence for causal effects.  
  
-  * Observational studies alone <i> cannot </i> definitively establish a causal relationship between two variables. This is because observational studies are prone to **lurking variable** - an unknown variable that the researchers did not account for in the study and has an association with both the response and explanatory variables. Lurking variables can create the illusion of a statistical relationship when none exists
+  * Observational studies alone <i> cannot </i> definitively establish a causal relationship between two variables. This is because observational studies are prone to a **lurking variable** - an unknown variable that the researchers did not account for in the study and has an association with both the response and explanatory variables. Lurking variables can create the illusion of a statistical relationship when none exists
   
 
 Example: Many studies have looked at the relationship between coffee consumption as an indicator for coronary artery disease. Studies that fail to adjust for other risk factors, like smoking, have often reported a positive association between these two variables. Thus smoking acts as a lurking variable, magnifying the relationship between drinking coffee and coronary artery disease risk  
@@ -584,7 +589,7 @@ digraph {
 
 ### Experimental Design
 
-A study is considered an experiment when we actually manipulate explanatory variable in order to observe how it changes the outcomes of the response variables. Lets start with some terminology:
+A study is considered an experiment when we actually manipulate an explanatory variable in order to observe how it changes the outcomes of the response variables. Lets start with some terminology:
 
   * The individuals (observations) on which the experiment is done are called **experimental units**
   
@@ -594,7 +599,7 @@ A study is considered an experiment when we actually manipulate explanatory vari
   
   * Explanatory variables are called **factors** and the various conditions of the **factors** are called **factor levels**.
   
-Example: What are the effects of repeated exposure to an advertising message? The answer may be influenced by both the length of the add and the number of times it is seen. Consider an experiment which used undergraduate college students as subjects. All subjects were exposed to a 40 TV-show that included adds for a fast food chain. Subjects were randomized to either a 30-second or 90-second commercial. The same commercial was shown 1, 3 or 5 times randomly during the show. After viewing the show and commercials, students were asked to self report on a Likert scale how their craving level for the advertised food. 
+Example: What are the effects of repeated exposure to an advertising message? The answer may be influenced by both the length of the ad and the number of times it is seen. Consider an experiment which used undergraduate college students as subjects. All subjects were exposed to a 40 minute TV-show that included ads for a fast food chain. Subjects were randomized to either a 30-second or 90-second commercial. The same commercial was shown 1, 3 or 5 times randomly during the show. After viewing the show and commercials, students were asked to self-report their craving level for the advertised food on a Likert scale.
 
 * what is the response variable?
 
@@ -602,7 +607,7 @@ Example: What are the effects of repeated exposure to an advertising message? Th
 
 * What are the factor levels?
 
-Both experimental studies and observational studies <i>use randomization</i> to select a sample of individuals from the population of interest. But, unlike observational studies, experiments control for the effect of lurking variables <u>through a second randomization</u> which allocates experimental units to the different levels of the treatment. This randomization balances the effect of any lurking variables so that the effects of the explanatory variable on the response can me isolated. 
+Both experimental studies and observational studies <i>use randomization</i> to select a sample of individuals from the population of interest. But, unlike observational studies, experiments control for the effect of lurking variables <u>through a second randomization</u> which allocates experimental units to the different levels of the treatment. This randomization balances the effect of any lurking variables so that the effects of the explanatory variable on the response can be isolated.
 
  * The design of an experiment is said to be **biased** if it systematically favors certain outcomes. 
  
@@ -628,7 +633,7 @@ The simplest type of experimental design is called a **completely randomized des
     
     * The random assignment ensures that any individual differences among participants are equally distributed between the two groups. Both groups are then monitored for pain relief outcomes over the specified trial period. This design allows researchers to attribute any observed differences in pain relief between the two groups to the specific formulations of the medication, minimizing the impact of potential confounding variables.
   
-**Multifactorial** experiments look at the effects of two or more treaments on a response simultaneously. There are many different types of mulitfactorial designs. Two commonly used designs are described below:
+**Multifactorial** experiments look at the effects of two or more treatments on a response simultaneously. There are many different types of mulitfactorial designs. Two commonly used designs are described below:
 
   * **Randomized block** - When subjects are not similar enough, detecting differences among the treatment groups can be difficult. We instead create groups called blocks. Blocks are organized so that units inside a block are more similar. Each block sees all treatments in random order
 
@@ -658,7 +663,7 @@ Any sampling design we choose should ensure that the sample we collect is repres
 
   * **Convenience sampling** is a type of <i>non-random</i> sampling that involves the sample being drawn from that part of the population that is close to hand.
   
-  * **Volunteer sample** –  a type of <i>non-random</i> sampling where participants self elect to be part of the study because they volunteer when asked or respond to advertisement.
+  * **Volunteer sample** –  a type of <i>non-random</i> sampling where participants self-select to be part of the study because they volunteer when asked or respond to advertisement.
     
     * the most common type of convenience sampling
     * often required when we don’t have a sampling frame for the population
@@ -666,7 +671,7 @@ Any sampling design we choose should ensure that the sample we collect is repres
 
 A sample is more likely to be representative of the population if we let chance, rather than convenience, determine which subjects are sampled. For this reason, we typically choose a sampling design that uses randomization to determine which units are selected from the sampling frame.
 
-* **Simple random sampling** (also just called random sampling) a type of <i>random</i> sampling where each subject in the sampling frame to has an <u>equal probability</u> of being selected for the sample. 
+* **Simple random sampling** (also just called random sampling) a type of <i>random</i> sampling where each subject in the sampling frame has an <u>equal probability</u> of being selected for the sample.
 
 Random sampling can be done <i> with replacement</i> or <i>without replacement</i> 
     

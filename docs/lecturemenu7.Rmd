@@ -33,24 +33,24 @@ We can think of a probability distribution as a model of a particular random pro
 
 ### The Bernoulli distribution 
 
-The Bernoulli distribution, named after Swiss mathematician Jacob Bernoulli, is the probability distribution of a discrete random variable with two possible outcomes $[0, 1]$ where the outcome $X = 1$ occurs with probability $p$ and the outcome $X = 0$ occurs with probability $1-p$. This random variable can be used to model any binary random process like flipping a coin, or any categorical variable with two categories such as male or female. The **probability mass function** - which we can think of as the function which assigns probabilities to different outcomes of random variable - is given below
+The Bernoulli distribution, named after Swiss mathematician Jacob Bernoulli, is the probability distribution of a discrete random variable with two possible outcomes $\{0, 1\}$ where the outcome $X = 1$ occurs with probability $p$ and the outcome $X = 0$ occurs with probability $1-p$. This random variable can be used to model any binary random process like flipping a coin, or any categorical variable with two categories such as male or female. The **probability mass function** - which we can think of as the function which assigns probabilities to different outcomes of random variable - is given below
 
 \[ P(X) = \begin{cases} p & \ \text{if} \  X = 1 \\
                       (1-p) & \ \text{if} \ X = 0
           \end{cases}
 \]
 
-The Bernoulli distribution has a single parameter $p$ which is referred to as the "probability of success" - referring to the probability that the outcome we are interested happens - such as getting Heads in a single flip of a coin. We usually denote that a random variable $X$ follows a Bernoulli distribution mathematically as
+The Bernoulli distribution has a single parameter $p$ which is referred to as the "probability of success" - referring to the probability that the outcome we are interested in happens - such as getting Heads in a single flip of a coin. We usually denote that a random variable $X$ follows a Bernoulli distribution mathematically as
 \[ X \sim Bernoulli(p) \]
 
-In probability theory, the term **expected value** is often used instead of mean or average however they technically mean the same thing. The expected value of a probability distribution for a random variable $X$ is denoted mathematically as $E[X]$. The Bernoulli distribution has the following expected value and variance:
+In probability theory, the term **expected value** is often used instead of mean or average; however, they technically mean the same thing. The expected value of a probability distribution for a random variable $X$ is denoted mathematically as $E[X]$. The Bernoulli distribution has the following expected value and variance:
 
 \[ E[X] = p  \]
 \[ Var[X] = p(1-p)\]
 
 where $Var[X]$ means the variance of the random variable $X$. 
 
-Its important to note than many types of random variables can be remodeled into a Bernoulli distribution. Take for example a random variable $Z$ which assigns the numbers $0$, $1$, or $2$, to people who have one of three categories of pets: cats, dogs, or fish, respectively. The following table gives the probability distribution of $Z$:
+It's important to note that many types of random variables can be remodeled into a Bernoulli distribution. Take for example a random variable $Z$ which assigns the numbers $0$, $1$, or $2$, to people who have one of three categories of pets: cats, dogs, or fish, respectively. The following table gives the probability distribution of $Z$:
 
 ```{r, echo=FALSE, warning=F, message=FALSE}
 df = cbind.data.frame(Z = c(0,1,2),
@@ -72,7 +72,7 @@ The binomial distribution is probably the most widely used discrete probability 
 
 * There are $n$ independent repetitions of the random process
 
-* the probability of success $p$ is constant all observations of the random process
+* the probability of success $p$ is constant across all observations of the random process
 
 Thus the number of trials $n$ and the probability of success $p$ are parameters of the binomial distribution. A random variable $X$ which follows the binomial distribution is denoted mathematically as 
 
@@ -82,7 +82,19 @@ Typical applications of the binomial distribution involve experimental outcomes 
 
 
 ```{r, echo = F, message=F, warning=F, fig.height=5, fig.width=10}
-
+n = 10
+p = 0.4
+bdf = cbind.data.frame(k = 0:n, prob = dbinom(0:n, size = n, prob = p))
+ggplot(data = bdf, aes(x = k, y = prob))+
+  geom_col(fill = 'steelblue', color = 'black', width = 0.7)+
+  theme_pander()+
+  scale_x_continuous(breaks = 0:n)+
+  theme(panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 16))+
+  xlab('Number of Successes (k)')+
+  ylab("Probability")+
+  ggtitle(TeX('Binomial PMF: $n = 10$, $p = 0.4$'))
 ```
 
 The mean and variance of the binomial distribution are given by:
@@ -94,7 +106,7 @@ The binomial distribution has the following probability mass function:
 
 \[ P(X = k) = \binom nk p^k (1-p)^{n-k}\]
 
-The first quantity is called the binomial coefficient and counts the number of ways to arrange $k$ successes among $n$ independent trials. Mathemtically it is defined as 
+The first quantity is called the binomial coefficient and counts the number of ways to arrange $k$ successes among $n$ independent trials. Mathematically it is defined as
 
 \[ \binom nk = \frac{n!}{k!(n-k)!}  \]
 
@@ -117,12 +129,17 @@ Using the binomial coefficient we have
 
 \[ \binom 32 = \frac{3!}{2! (3-2)!} = \frac{3\times 2\times 1}{2\times 1 \times 1} = 3 \]
 
-Example: The random variable $X$ models the number of hits in five at-bats for professional baseball player Luis Arraez of the Miami Marlins who has a hit percentage of $79\%$. Thus $X$ is a binomial random variable 
-\[ X \sim Binom(n=5, p=0.79) \]
+Example: The random variable $X$ models the number of hits in five at-bats for professional baseball player Luis Arraez of the Miami Marlins who has a hit percentage of $35\%$ (a batting average of $.350$). Thus $X$ is a binomial random variable
+\[ X \sim Binom(n=5, p=0.35) \]
 
 * Compute the probability that Luis Arraez gets <u>one hit</u> in the next five at-bats
 
+\[ P(X = 1) = \binom 51 (0.35)^1 (0.65)^4 = 5 \times 0.35 \times 0.1785 \approx 0.312 \]
+
 * Compute the probability that Luis Arraez gets more than 4 hits in the next five at-bats
+
+Here "more than 4 hits" out of 5 at-bats means all 5 are hits:
+\[ P(X > 4) = P(X = 5) = \binom 55 (0.35)^5 (0.65)^0 = (0.35)^5 \approx 0.005 \]
 
 # Lecture 14 Friday Feb. 23rd 2024
 
@@ -136,22 +153,33 @@ The Poisson (pronounced "$\text{Pwa - s}\tilde o$") distribution is named after 
 
 * Two events cannot occur at exactly the same instant; instead, at each very small sub-interval exactly one event either occurs or does not occur.
 
-* the events occur at rate $\lambda$ - also called the rate parameter - and is striclty positive $\lambda \in (0,1)$. 
+* the events occur at rate $\lambda$ - also called the rate parameter - and is strictly positive $\lambda \in (0,\infty)$.
 
 
 ```{r, echo = F, message=F, warning=F, fig.height=5, fig.width=10}
-
+lambda = 4
+pois_df = cbind.data.frame(k = 0:15, prob = dpois(0:15, lambda = lambda))
+ggplot(data = pois_df, aes(x = k, y = prob))+
+  geom_col(fill = 'darkorange', color = 'black', width = 0.7)+
+  theme_pander()+
+  scale_x_continuous(breaks = 0:15)+
+  theme(panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 16))+
+  xlab('Number of Events (k)')+
+  ylab("Probability")+
+  ggtitle(TeX('Poisson PMF: $\\lambda = 4$'))
 ```
 
-The probability mass function is given by 
+The probability mass function is given by
 
 \[ P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}\]
 
-where $k$ is the number of events occurring, $\lambda$ is the rate at which events occur. The quantity $e$ is called <i>Euhlers number</i>. It is a numerical constant that arises often in mathematics and can be characterized in many different ways. One definition occurs as the limit point of the sequence $(1+1/n)^n$:
+where $k$ is the number of events occurring, $\lambda$ is the rate at which events occur. The quantity $e$ is called <i>Euler's number</i>. It is a numerical constant that arises often in mathematics and can be characterized in many different ways. One definition occurs as the limit point of the sequence $(1+1/n)^n$:
 
 \[e = \lim_{n\rightarrow \infty} \left( 1+\frac{1}{n} \right)^n \approx 2.7183 \]
 
-virtually all calculators will have a <i>natural exponentiation</i> button for this quantitiy which is defined as 
+virtually all calculators will have a <i>natural exponentiation</i> button for this quantity which is defined as
 
 \[ e = \exp(1) \]
 
@@ -174,11 +202,17 @@ Example: Let the random variable $Y$ represent the number of phone calls placed 
 
 * What is the probability that the call center receives $8$ calls in the next hour?
 
+Here $Y \sim Poisson(\lambda = 10)$, so
+\[ P(Y = 8) = \frac{10^8 e^{-10}}{8!} \approx 0.113 \]
+
 * What is the probability that the call center receives fewer than $2$ calls in the next hour?
+
+"Fewer than 2 calls" means $0$ or $1$ call:
+\[ P(Y < 2) = P(Y = 0) + P(Y = 1) = \frac{10^0 e^{-10}}{0!} + \frac{10^1 e^{-10}}{1!} = 11 e^{-10} \approx 0.0005 \]
 
 ### Continuous random variables 
 
-Recall that continuous random variables have an uncountable number of outcomes. As a result finding probabilities for continuous random variables requires a heavier mathematical treatment. For continuous random variables, the function which assigns probabilities to different outcomes is called a **probability density function**. 
+Recall that continuous random variables have an uncountable number of outcomes. As a result, finding probabilities for continuous random variables requires a heavier mathematical treatment. For continuous random variables, the function which assigns probabilities to different outcomes is called a **probability density function**. 
 
 
 Since we cannot simply list the possible values of a continuous random variable and their probabilities, we have to rely on graphically displaying their distributions as we have done before. Consider the random variable $X$ with probability density function $f(x)$ given below
@@ -202,17 +236,17 @@ ggplot(data = dist2, aes(x = val, y = dens))+geom_step(size = 1)+
 ```
 
 
-For a continuous distribution we cannot compute the probability that $X$ is equal to some particular value because $X$ can take on infinite number of values within a range. Thus the probability density is divided among an infinite number of outcomes making the probability of any one outcome effectively zero. We can however consider the probability of that $X$ takes on a value in some sub-interval of its domain. For example, we can compute the probability $P(X<0)$. Finding this probability amounts to finding the area underneath the probability density curve of $X$ in the interval $[-1, 0)$. 
+For a continuous distribution we cannot compute the probability that $X$ is equal to some particular value because $X$ can take on infinite number of values within a range. Thus the probability density is divided among an infinite number of outcomes making the probability of any one outcome effectively zero. We can however consider the probability that $X$ takes on a value in some sub-interval of its domain. For example, we can compute the probability $P(X<0)$. Finding this probability amounts to finding the area underneath the probability density curve of $X$ in the interval $[-1, 0)$. 
 
 #### Finding probabilities from continuous distributions
 
-Normally, the mathematics of calculus would be required to compute this probability and we would need to integrate $f(x)$ over this range of values. However, in the example above we can manually extrapolate the area under the curve. Notice that the area of the curve is divided into a grid. By finding the area of a single box in the graph, we can multiplying this area by the number of boxes in previously specified range to compute the total area under the curve. For example, the area of a single box is
+Normally, the mathematics of calculus would be required to compute this probability and we would need to integrate $f(x)$ over this range of values. However, in the example above we can manually extrapolate the area under the curve. Notice that the area of the curve is divided into a grid. By finding the area of a single box in the graph, we can multiply this area by the number of boxes in the previously specified range to compute the total area under the curve. For example, the area of a single box is
 
 \[ \text{Area} = 0.25 \times 0.16 = 0.04\]
 
 Now that we know the area of a single box on the plot 
 
-\[P(X < 0) = 0.04*17 = 0.68 \]
+\[P(X < 0) = 0.04 \times 17 = 0.68 \]
 
 Lets consider another example: Below is the probability density function for a random variable $W$
 
@@ -232,15 +266,15 @@ ggplot(data = dist4, aes(x = val, y = dens))+geom_line(size = 1)+theme_pander()+
 
 * Find the probability $P(W \leq 1)$. Again, to solve this we can extrapolate the area under the curve. Since the area between $0$ and $1$ of the distribution forms a right-angle triangle we can compute the area using the formula for the area of a triangle:
 
-\[\text{area of triange} = \frac{1}{2}(b \times h) \]
+\[\text{area of triangle} = \frac{1}{2}(b \times h) \]
 
-where $b$ is the base length and $h$ is the height of the trangle.
+where $b$ is the base length and $h$ is the height of the triangle. The base runs from $0$ to $1$, so $b = 1$. The density rises in a straight line from $(0, 0)$ to the peak at $(2, 0.4)$, giving a slope of $0.4/2 = 0.2$; therefore the height of the curve at $W = 1$ is $h = 0.2 \times 1 = 0.2$.
 
 \[ P(W\leq 1) = \frac{1}{2}(1\times 0.2) = 0.1 \]
 
 
 #### Mean and variance of continuous random variables
 
-* The mean $\mu$ and variance $\sigma^2$ of continuous random variable cannot (usually) be defined or computed without calculus but their interpretations are the same as for discrete distributions
+* The mean $\mu$ and variance $\sigma^2$ of a continuous random variable cannot (usually) be defined or computed without calculus but their interpretations are the same as for discrete distributions
 
 

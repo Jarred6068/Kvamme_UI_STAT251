@@ -21,14 +21,14 @@ library(ggpubr)
 
 * **Statistics** is a scientific field that deals with the collection, description, analysis, interpretation, and presentation of data. We see and use data in nearly all aspects of our everyday lives: politics, medicine, forecasting, finance, marketing, etc. In short, we use statistics to ask and answer scientific questions and make predictions. To put it another way, statistics is the science of **data**
 
-* **data** are pieces of factual information, such as measurements which are recorded and used for the purpose of analysis. In summary, data is the raw information from which statistics are created. Statistics are the results of data analysis - its interpretation and presentation. 
+* **data** are pieces of factual information, such as measurements which are recorded and used for the purpose of analysis. In summary, data is the raw information from which statistics are created. Statistics are the results of data analysis - their interpretation and presentation.
 
 * Typically data are represented in a square table called a data table. The fundamental unit of data is an **observation** - a single __row__ of a data table representing a set of measurements on one or more __variables__. 
 
 * A **variable** is a characteristic of an observation. In a typical data table, the variables are represented by the __columns__ of the data table.  
 
 
-The following example are fictional data consisting of 20 observations of the height, age, and blaster accuracy of stormtroopers graduating from the imperial stormtrooper academy.  
+The following example is fictional data consisting of 20 observations including the identification number, duty posting, height, age, blaster accuracy, and rank of stormtroopers graduating from the imperial stormtrooper academy.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -44,20 +44,21 @@ n = 20
 `Height (cm)` = round(rnorm(n, mean = 190.5, sd = 3.3),1)
 Age = round(rnorm(n, mean = 21, sd = 2))
 `Blaster Accuracy` = rbinom(n, size = N, p = p)/N
-Rank = sample(c('PV1', 'PV2', "PFC", "CPL"), prob = c(0.4, 0.3, 0.2, 0.1))
+Rank = sample(c('PV1', 'PV2', "PFC", "CPL"), size = n, replace = TRUE, prob = c(0.4, 0.3, 0.2, 0.1))
 st.data = cbind.data.frame(`Identification Number`, `Duty Posting`, `Height (cm)`, Age, `Blaster Accuracy`, Rank)
 
 kable(st.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-The following are 15 observations of study done on the morphology of Egyptian skulls from 5 epochs of Egyptian history. For each skull, the epoch, and several measurements characterizing the shape of the skull are recorded.
+The following are 15 observations of a study done on the morphology of Egyptian skulls from 5 epochs of Egyptian history. For each skull, the epoch, and several measurements characterizing the shape of the skull are recorded.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 library(HSAUR2)
+set.seed(123)
 skull.data = rbind.data.frame(skulls[sample(c(1:dim(skulls)[1]), 15),])
-colnames(skull.data) = c('Epoch', 'maximal breadth', 'basiregmatic height', 'basilveolar length', 'nasal height')
+colnames(skull.data) = c('Epoch', 'maximal breadth', 'basibregmatic height', 'basialveolar length', 'nasal height')
 kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
@@ -66,30 +67,30 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 * Variables are distinguished by the type of information they represent. One basic distinction is between **qualitative** variables and **quantitative** variables. 
 
-  * **qualitative variables** - also called categorical variables, represent non numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the stormtrooper data above?
+  * **qualitative variables** - also called categorical variables, represent non-numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the stormtrooper data above?
 
-  * **quantitative variables** - Sometimes referred to as numeric variables, are numerical characteristics which have an inherent order or ranking. In the Egyptian skull data which variables are quantitative variables?
+  * **quantitative variables** - Sometimes referred to as numeric variables, are numerical characteristics that represent measurements with meaningful magnitudes (their values can be ordered and the differences between them are meaningful). In the Egyptian skull data which variables are quantitative variables?
 
 * Qualitative variables can be further divided between **nominal** and **ordinal** variables. 
 
-  * **nominal variables** - non numeric qualities or characteristics that can be placed in distinct categories that do not have a natural ordering. Examples of variables that cannot be ordered are gender, race, eye color, or political party. In the stormtrooper data, which variables would be considered nominal variables?
+  * **nominal variables** - non-numeric qualities or characteristics that can be placed in distinct categories that do not have a natural ordering. Examples of variables that cannot be ordered are gender, race, eye color, or political party. In the stormtrooper data, which variables would be considered nominal variables?
 
-  * **ordinal variables** - non numeric qualities or characteristics that can be placed in distinct categories with an inherent ordering. Examples include education level (i.e bachelors, masters, PhD) or temperatures (i.e cool, warm, hot). 
+  * **ordinal variables** - non numeric qualities or characteristics that can be placed in distinct categories with an inherent ordering. Examples include education level (e.g., bachelors, masters, PhD) or temperatures (e.g., cool, warm, hot).
 
     * **Likert scale** responses are a common example of ordinal variables that are typically found in surveys. A **Likert scale** is a rating scale used to measure opinions, attitudes, or behaviors. It consists of a statement or a question, followed by a series of five or seven answer statements. Respondents choose the option that best corresponds with how they feel about the statement or question. 
     
 * Quantitative variables can also be further divided between two sub-categories: **discrete** and **continuous** variables.
 
-  * **discrete variables** - are quantitative variables that take on distinct, countable values (i.e whole numbers or integers) such $0,1,2,3 ...$. Any quantitative variable that represents counts of objects/items are quantitative discrete. For example, age is a count of the number of year someone/something has been alive. 
+  * **discrete variables** - are quantitative variables that take on distinct, countable values (e.g., whole numbers or integers) such $0,1,2,3 ...$. Any quantitative variable that represents counts of objects/items are quantitative discrete. For example, age is a count of the number of years someone/something has been alive.
 
-  * **continuous variables** - are variables that can take on infinite number of values within an interval of any two specific values (e.g temperature $^{\circ} C / ^{\circ} F$, height in inches, speed in miles per hour).
+  * **continuous variables** - are variables that can take on infinite number of values within an interval of any two specific values (e.g., temperature $^{\circ} C / ^{\circ} F$, height in inches, speed in miles per hour).
 
 
 
 ### Populations and samples 
 * Statistics is generally concerned with studying properties of a **population**. You can think of a population as a collection of all possible persons, things, or objects that you are studying. Another way to think of a population is as a collection of all possible observations of a variable - both observed and unobserved.
 
-  * A population can be finite (countable) or infinite (uncountable). Many populations are so large that we treat them as if they are infinite. For example, the population of students taking STAT 251 section 03 is a finite set of 60 individuals. Alternatively, the number of germs living in a patients body is effectively infinite. 
+  * A population can be finite (countable) or infinite (uncountable). Many populations are so large that we treat them as if they are infinite. For example, the population of students taking STAT 251 section 03 is a finite set of 60 individuals. Alternatively, the number of germs living in a patient's body is effectively infinite.
 
 * For many populations, it is very difficult or even impossible to observe all members of the population. To tackle this challenge statistics uses **samples** to learn about the properties of a population. A **sample** is a subset of the population that is actually observed. You can think of a sample as a set of the observed observations. 
 
@@ -102,7 +103,7 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 ### Statistics vs. Parameters
 
-* Statistics primarily deals with **estimation** – the process of inferring an unknown quantity about a population using set of sample data. An **estimator** is a mathematical function that **estimates** a given **statistic** based on observed data. 
+* Statistics primarily deals with **estimation** – the process of inferring an unknown quantity about a population using a set of sample data. An **estimator** is a mathematical function that **estimates** a given **parameter** based on observed data.
   
   * Therefore, a **statistic** is a <u>numerical characteristic of a sample</u> that represents a property of the population called a **parameter**. Parameters are <u>numerical characteristics of a population</u> that can be estimated via a statistic. 
   
@@ -110,12 +111,12 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 * Two statistics that we will deal with in this course are the **sample mean** and **sample proportion**. 
   * A **proportion** describes the fraction of a whole that represent some property or category. It can be expressed as a value between $0$ and $1$ or as a percentage. The **sample proportion** $\hat{p}$ is the fraction of observations in the sample that represent a particular category. The <i>population proportion</i> is the fraction of observations in the population that represent a particular category. The sample proportion is defined mathematically as 
-  $$ \hat{p} = \frac{\text{Number of observed observations in category}}{n}$$
+  $$ \hat{p} = \frac{\text{Number of observations in category}}{n}$$
   The population proportion is defined mathematically as
-  $$ \hat{p} = \frac{\text{All observations in category}}{N}$$
+  $$ p = \frac{\text{All observations in category}}{N}$$
   The sample proportion $\hat{p}$ is used to estimate the population proportion $p$ 
   
-  * The **arithmetic mean** (sometimes called average) describes the center of a population or set of data. The **sample mean** $\bar{x}$ describes the central tendency of the observation in the sample. The <i>population mean</i> describes the central tendency of the entire population. The sample mean is defined mathematically as 
+  * The **arithmetic mean** (sometimes called average) describes the center of a population or set of data. The **sample mean** $\bar{x}$ describes the central tendency of the observations in the sample. The <i>population mean</i> describes the central tendency of the entire population. The sample mean is defined mathematically as 
   $$\bar{x} =  \sum_{i = 1}^{n} \frac{x_i}{n}$$
   The population mean is defined mathematically as
   $$ \mu = \sum_{i = 1}^{N} \frac{x_i}{N}$$
@@ -141,7 +142,7 @@ Recall that statistics is a science that deals with the collection, description,
 
 ## Describing and Visualizing Distributions
 
-As we learned in the previous lecture, descriptive statistics is the first step to statistical analysis and involves the summary and organization of data. One of the main ways we can summarize data is describe the characteristics of the **distribution** of the variable(s) in the data. A distribution tells us something about what kinds of values a variable can have and how often they occur. 
+As we learned in the previous lecture, descriptive statistics is the first step to statistical analysis and involves the summary and organization of data. One of the main ways we can summarize data is to describe the characteristics of the **distribution** of the variable(s) in the data. A distribution tells us something about what kinds of values a variable can have and how often they occur. 
 
 * Consider the following example: Are teens distracted by their cell phones? A study conducted by the Pew Research center surveyed 743 U.S teenagers ages 13-17 to understand how cell phones in class impacted their ability to concentrate. Each student was asked to rate the impact of cell phone use on their concentration based on a Likert scale. The data and a plot of the distribution of survey responses are given below
 
@@ -218,4 +219,4 @@ kable(cbind.data.frame(unique(x), cts, rf, cumsum(rf)), format = 'html', col.nam
 
 ```
 
-* The table above is called a **frequency table** it is a tabular display of the distribution of a variable. 
+* The table above is called a **frequency table**. It is a tabular display of the distribution of a variable.

@@ -28,13 +28,13 @@ path = 'Data/'
 
 ### Review of confidence intervals for $p$:
 
-Recall that **confidence intervals** are used to estimate the value of an <u>unknown parameter</u> with a interval of values. Confidence intervals serve two purposes: (1) they provide a range of possible values of the parameter and (2) they provide an indication of how accurate the estimate is i.e how <i>confident</i> we are in the results. A confidence interval has the general form
+Recall that **confidence intervals** are used to estimate the value of an <u>unknown parameter</u> with an interval of values. Confidence intervals serve two purposes: (1) they provide a range of possible values of the parameter and (2) they provide an indication of how accurate the estimate is i.e how <i>confident</i> we are in the results. A confidence interval has the general form
 
 \[ \text{point estimate} \ \pm \ \text{margin of error}  \]
 
 The <i>confidence</i> portion comes from the **confidence level** which states the probability that the interval will give the correct result based on the long-run frequency of the method. That is, for a confidence level of $95\%$, for example, we can expect approximately $95\%$ of confidence intervals to capture the value of the unknown parameter. However, for any given confidence interval, once it is computed the value of the parameter is either in the interval or not in the interval - but we do not know. 
 
-Before the break, we discussed three confidence intervals: 2 for a population mean and one for a population proportion. We will review the latter first. The $(1 - \alpha)\%$ confidence interval for estimating $p$ with $\hat{p}$ is given by
+Before the break, we discussed three confidence intervals: 2 for a population mean and one for a population proportion. We will review the latter first. The $100(1 - \alpha)\%$ confidence interval for estimating $p$ with $\hat{p}$ is given by
 
 \[ \hat{p} \ \pm \ z_{1 - \alpha/2} \ \sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]
 
@@ -63,18 +63,18 @@ where $\bar{x}$ denotes the sample mean and
 
 \[ m = z_{1 - \alpha/2} \ \frac{\sigma}{\sqrt{n}}\]
 
-denotes the margin of error. Recall that this interval requires that we know the value of $\sigma$ - the population standard deviation. If we do not the value of $sigma$, we could instead sub in the sample standard deviation $s$ in its place to get
+denotes the margin of error. Recall that this interval requires that we know the value of $\sigma$ - the population standard deviation. If we do not know the value of $\sigma$, we could instead sub in the sample standard deviation $s$ in its place to get
 
 \[ \bar{x} \ \pm \  z_{1 - \alpha/2} \ \frac{s}{\sqrt{n}}\]
 
-However, as we discussed before the break, the confidence interval above, which is based on the standard normal distribution, will tend have a lower than expected confidence level when $n$ is small, say $n \leq 30$. Instead, a better confidence interval that is based on the $t$-distribution is given by
+However, as we discussed before the break, the confidence interval above, which is based on the standard normal distribution, will tend to have a lower than expected confidence level when $n$ is small, say $n \leq 30$. Instead, a better confidence interval that is based on the $t$-distribution is given by
 
 \[ \bar{x} \ \pm \  t_{n-1, 1 - \alpha/2} \ \frac{s}{\sqrt{n}}\]
 
-where $t_{n-1, 1 - \alpha/2}$ is the $1-\alpha/2$ percentile of a $t$ distribution with $n-1$ degrees of freedom. The above confidence interval will give correct results regardless of sample size. Moreover, since the $t$-distribution converges to the standard normal distribution for as $n$ gets large, the two methods tend to give identical results for $n < 30$.
+where $t_{n-1, 1 - \alpha/2}$ is the $1-\alpha/2$ percentile of a $t$ distribution with $n-1$ degrees of freedom. The above confidence interval will give correct results regardless of sample size. Moreover, since the $t$-distribution converges to the standard normal distribution as $n$ gets large, the two methods tend to give identical results for large $n$.
 
 
-* **Practice** Consider the following data table which gives the mean annual temperate in central park over 10 years of recordings starting in 2009. 
+* **Practice** Consider the following data table which gives the mean annual temperature in Central Park over 10 years of recordings starting in 2009. 
 
 ```{r, echo=F, message=F, warning=F}
 cpt = read.csv(file = paste0(path, 'central_park_temps.csv'))
@@ -87,7 +87,7 @@ kable(cpt[141:150,c(1, 14)], col.names = c('Year', 'Mean Annual Temp'), format =
 
   * Verify that the average mean annual temp is $\bar{x} = 56.02$ with standard deviation $s \approx 1.13$ 
 
-  * Given the $95\%$ confidence interval for mean annual temperature
+  * Give the $95\%$ confidence interval for mean annual temperature
   
 
 
@@ -118,13 +118,13 @@ How do we choose $n$ for estimate $p$ with $\hat{p}$? Consider that
 
 \[ m = z_{1-\alpha/2} \ \sqrt{\frac{p(1-p)}{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2 p(1-p)}{m^2}\]
 
-where $m$ denotes the margin of error, $p$ is the population proportion and $z$ is the standard score corresponding the desired $(1-\alpha/2)%$ confidence level. Keep in mind that the formula above is used to determine the sample size needed when we designing a study to investigate the value of an unknown population proportion. Therefore, how do we choose the value $p$? We have essentially two options
+where $m$ denotes the margin of error, $p$ is the population proportion and $z$ is the standard score corresponding the desired $100(1-\alpha)\%$ confidence level. Keep in mind that the formula above is used to determine the sample size needed when we designing a study to investigate the value of an unknown population proportion. Therefore, how do we choose the value $p$? We have essentially two options
 
   1. We can look for related studies or prior research to inform the value of $p$
   
   2. We can use $p = 0.5$ which gives the upper bound on the sample size:
   
-\[ n = \frac{z^2 p(1-p)}{m} \leq \frac{z^2 0.5(1-0.5)}{m} \]
+\[ n = \frac{z^2 p(1-p)}{m^2} \leq \frac{z^2 0.5(1-0.5)}{m^2} \]
 
 The latter option is a conservative approach we can use when we have no prior information regarding the value of the population proportion.
 
@@ -136,11 +136,11 @@ How do we choose $n$ for estimate $\mu$ with $\bar{x}$? Consider that
 
 \[ m = z_{1-\alpha/2} \ \frac{\sigma}{\sqrt{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2 \sigma^2}{m^2}\]
 
-Notice that the above equation for $n$ requires that we known $\sigma$. So how can we choose the value of $\sigma$?. Again we have two options:
+Notice that the above equation for $n$ requires that we know $\sigma$. So how can we choose the value of $\sigma$?. Again we have two options:
 
   1. Use prior research/knowledge to inform the value of $\sigma$
   
-  2. We can use an educated guess about the possible range of $\mu$ and estimate $\sigma$ via
+  2. We can use an educated guess about the possible range of the data and estimate $\sigma$ via
   
   \[ \sigma \approx \frac{\text{range}}{4} \]
   
@@ -148,7 +148,7 @@ Notice that the above equation for $n$ requires that we known $\sigma$. So how c
 * **Try it out: ** A researcher wants to estimate the mean number of hours college students spend scrolling TikTok each week. Previous studies suggest that the standard deviation of the weekly hours spent on TikTok is approximately 2.5 hours. The researcher desires a margin of error of no more than 0.5 hours. Compute the sample size the researcher needs to estimate the mean number of hours within the desired margin of error. 
 
 
-* **Try it out: ** A marketing research firm wants to estimate the average amount a student spends during the Spring break. They want to determine it to within $\$120$ with $90\%$ confidence. One can roughly say that amount a students spends ranges from $\$100$ to $\$1700$. About how many students should they sample?
+* **Try it out: ** A marketing research firm wants to estimate the average amount a student spends during the Spring break. They want to determine it to within $\$120$ with $90\%$ confidence. One can roughly say that the amount a student spends ranges from $\$100$ to $\$1700$. About how many students should they sample?
 
 
 ### Assumptions of estimators
@@ -176,9 +176,9 @@ To have a sampling distribution that is (approximately) normal in shape, we need
 
   - The shape of the population distribution is never normal
   
-  - The sampling distribution is "sufficiently large" if both $np \geq 15$ and $n(1-p) \geq 15$.
+  - The sample size is "sufficiently large" if both $np \geq 15$ and $n(1-p) \geq 15$.
   
-#### The sampling distribution of $\hat{p}$
+#### The sampling distribution of $\bar{x}$
 
   - The shape of the population distribution <i>might</i> be normal - you can check this by plotting the data
   
@@ -191,7 +191,7 @@ To have a sampling distribution that is (approximately) normal in shape, we need
 
 Confidence intervals are an appropriate tool when the goal is to <i>estimate</i> something about a population. The second part of statistical inference deals with a very different sort of goal. Significance tests (also called hypothesis tests) combine mathematics and logic to assess the validity of a claim about a population parameter using the evidence provided in a set of data. Specifically, we compare properties of a set of observed data to a hypothesis about the population. The hypothesis is a statement that asserts something about the value of the population parameters. The results of the test are expressed in terms of probability that measures the degree to which the data agree with claim laid out by the hypothesis. 
 
-**Consider the following example**: Imagine you are a quality control manager at a electronics company that produces microchips for personal computers. To ensure quality, the company tests all chips before they are sent out to retailers. The company claims that, thanks to their post-production testing, only about $2\%$ of their microchips are defective, but recent reports about customer feedback indicate that the chips might have an issue that causes the defective rate to be higher than $2\%$. To address these concerns, you decide to conduct a study to test the claim that only $2\%$ of chips are defective. To test this, the company purchases $10$ computers from a random sample of $5$ retailers that it supplies microchips. Each computer is run through the same set of high intensity tasks to test the chips and the proportion of chips that fail is estimated. From this experiment, you estimate the proportion of defective chips to be about $2.053\%$ with a standard error of $0.019\%$ which gives a difference in rates of $0.00053\%$. 
+**Consider the following example**: Imagine you are a quality control manager at an electronics company that produces microchips for personal computers. To ensure quality, the company tests all chips before they are sent out to retailers. The company claims that, thanks to their post-production testing, only about $2\%$ of their microchips are defective, but recent reports about customer feedback indicate that the chips might have an issue that causes the defective rate to be higher than $2\%$. To address these concerns, you decide to conduct a study to test the claim that only $2\%$ of chips are defective. To test this, the company purchases $10$ computers from a random sample of $5$ retailers that it supplies microchips. Each computer is run through the same set of high intensity tasks to test the chips and the proportion of chips that fail is estimated. From this experiment, you estimate the proportion of defective chips to be about $2.053\%$ with a standard error of $0.019$ which gives a difference in rates of $0.00053$. 
 
 * From the estimate, can you conclude that the proportion of defective chips is greater than the expected rate of $2\%$? 
 
@@ -204,7 +204,7 @@ Consider a coin that is flipped $n$ times. The population distribution for a sin
 
 ```{r, echo=F, message=F, warning=F}
 df = cbind.data.frame(X = c('Heads','Tails'),
-                      `Probability(X)` = c('$p$', '$p(1-p)$'))
+                      `Probability(X)` = c('$p$', '$1-p$'))
 
 kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
@@ -218,26 +218,26 @@ The value of $p$ implies something about the coin:
   
   2. If $p \neq 0.5$ the coin is unfair. 
   
-Assume we do not know the value of $p$. We flip the coin $30$ times to produce a sample of $n = 30$ observations. It comes up heads $20$ times, so $\hat{p} = 20/30 = 2/3 \approx 0.67$ What might we decide about the value of $p$?
+Assume we do not know the value of $p$. We flip the coin $30$ times to produce a sample of $n = 30$ observations. It comes up heads $20$ times, so $\hat{p} = 20/30 = 2/3 \approx 0.67$. What might we decide about the value of $p$?
 
   1. Conclude that $p =0.5$. The result that $\hat{p} = 2/3$ **is not** statistically significant.
   
   2. Conclude that $p \neq 0.5$. The result that $\hat{p} = 2/3$ **is** statistically significant.
 
-The probability of observing a proportion of heads of $\hat{p} = 2/3$ assuming $p = 0.5$ is about $0.067$. What might we conclude about the coin?
+The probability of observing a proportion of heads of $\hat{p} = 2/3$ assuming $p = 0.5$ is about $0.067$ (using a two-sided normal approximation). What might we conclude about the coin?
 
 In this example, the probability we obtained is fairly small. There are two explanations for this probability:
 
-  (i) We have observed something unusual (i.e the coin is fair we just got a large proportion of heads by coincidence)
+  (i) We have observed something unusual (i.e the coin is fair and we just got a large proportion of heads by coincidence)
   
   (ii) The assumption that underlies the calculation is not true. (i.e the coin is not fair and the population proportion $p$ is not equal to $1/2$)
   
 So how unusual does a result need to be for us to consider the latter statement (ii) to be more plausible? We will discuss this more later on, but, in general, this is an arbitrary choice that we must make when setting up our test.
 
 
-In both of these examples, we stated hypotheses about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the the value of a parameter: a *null hypothesis* and and *alternative hypothesis*.
+In both of these examples, we stated hypotheses about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the value of a parameter: a *null hypothesis* and an *alternative hypothesis*.
 
-The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = \theta_0$ for some constant $\theta_0$
+The **null hypothesis** (denoted $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = \theta_0$ for some constant $\theta_0$
 
 The **alternative hypothesis** (denoted $H_A$) is the hypothesis of “effect” or that “something interesting has happened”. The alternative hypothesis is usually that the population parameter falls in some range of values such as:
 

@@ -34,12 +34,12 @@ Recall that a **frequency table** shows the distribution of a variable organized
 
 We can create a frequency table for any type of variable. However, when dealing with quantitative continuous variables we cannot list all possible values because the number of possible values is infinite. Therefore, we usually have to make a decision about how we want to group values of the variable, a process called binning. **Binning** is a way to group numbers of more-or-less continuous values into a smaller number of "bins". These bins represent a collection of values that fall into a certain range and make listing the possible values a lot easier. 
 
-Consider the following trivial example using the quantitative continuous variable $$X = \{1.23, \ 1.38, \ 1.76, \ 2.60, \ 2.60, \ 2.79, \ 2.89, \ 3.12, \ 3.15, \ 3.18, \ 3.65, \ 3.77, \ 3.87, \ 4.12, \ 4.41\}$$
+Consider the following trivial example using the quantitative continuous variable $$X = \{1.23, \ 1.38, \ 1.76, \ 2.60, \ 2.65, \ 2.79, \ 2.89, \ 3.12, \ 3.15, \ 3.18, \ 3.65, \ 3.77, \ 3.87, \ 4.12, \ 4.41\}$$
 
 Each observation of the variable $X$ is measured with a precision of two decimal places, and no two observations in the sample are identical. As a result if we simply listed the possible values we would have $15$ unique values each with a frequency of $1$ which would produce a frequency table that wasn't very informative. We can, instead, use binning to extract more meaningful information about the distribution of $X$. Now consider the frequency table using binning: 
 
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
-x = c(1.23,  1.38,  1.76,  2.60,  2.60,  2.79,  2.89,  3.12,  3.15,  3.18,  3.65,  3.77,  3.87,  4.12,  4.41)
+x = c(1.23,  1.38,  1.76,  2.60,  2.65,  2.79,  2.89,  3.12,  3.15,  3.18,  3.65,  3.77,  3.87,  4.12,  4.41)
 Bins = c('$1 < X \\leq 1.5$', '$1.5 < X \\leq 2$', '$2 < X \\leq 2.5$', '$2.5 < X \\leq 3$', '$3 < X \\leq 3.5$', '$3.5 < X \\leq 4$', '$4 < X \\leq 4.5$')
 freq = hist(x, breaks = seq(1, 4.5, 0.5), plot = F)$counts
 rf = freq/sum(freq)
@@ -60,7 +60,7 @@ kable(dffaith, format = 'html', col.names = c('Duration (min)', 'Waiting Time (m
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-Consider a frequency table to describe the distribution of the variable <i> waiting time (min) </i>
+Consider a frequency table to describe the distribution of the variable <i> waiting time (min) </i>:
 
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
 set.seed(123)
@@ -99,9 +99,9 @@ kable(ft, format = 'html', col.names = c('Waiting Time','Frequency', 'Relative F
 
 Descriptive statistics or graphical summaries can tell us a lot about the variables in our data. Graphs help us visualize trends in the data, identify problematic observations, and can help inform the types of analyses we should use. We may be interested in certain features related to the distribution(s) of the variable(s) in our data, such as the <i> shape, center, and variability </i>. 
 
-* **shape** refers to how observations cluster across the range of a variable. Certain aspects to note would be where observations are densely packed (values with high frequencies) and where are observations sparser (values with low frequencies). This can give us a feel for where a typical value would appear and what values may be considered "rare" or "extreme".
+* **shape** refers to how observations cluster across the range of a variable. Certain aspects to note would be where observations are densely packed (values with high frequencies) and where observations are sparser (values with low frequencies). This can give us a feel for where a typical value would appear and what values may be considered "rare" or "extreme".
 
-* **Center** refers to the ``middle point" on the distribution and also supplies information about where does a typical value falls.
+* **Center** refers to the "middle point" on the distribution and also supplies information about where a typical value falls.
 
 * **Variability** refers to how tightly observations cluster around the center of a distribution. When values are tightly packed they are said to have <i> low variability </i> vs when they are spread out they are said to have <i> high variability </i>
 
@@ -158,10 +158,10 @@ There are also many plots that can be used with quantitative data. Some of the m
   * (1) Draw a horizontal line, label it with the name of variable, and mark regular values of the variable on the line. 
   * (2) For each observation, place a dot above its value on the number line.
 
-* A **stem and leaf plot** is similar to a dot plot in that it displays individual observations of a variable. Each observation in the plot consists of a stem and a leaf. The <i> stem </i> is all of the digits except fo the last digit. The <i> leaf </i> is the last digit. For example, take the observation $12.3$ the stem for this observation is $12$ and the leaf is $3$. To construct a stem and leaf plot:
+* A **stem and leaf plot** is similar to a dot plot in that it displays individual observations of a variable. Each observation in the plot consists of a stem and a leaf. The <i> stem </i> is all of the digits except for the last digit. The <i> leaf </i> is the last digit. For example, take the observation $12.3$ the stem for this observation is $12$ and the leaf is $3$. To construct a stem and leaf plot:
   * (1) Draw a table with two columns and label the left column "Stem" and the right column "leaf". 
-  * (2) Next, sort the observations from smallest to largest and place the stems in the left column of the your table in increasing order.
-  * (3) in the left column, fill in the leaves of each stem in increasing order. 
+  * (2) Next, sort the observations from smallest to largest and place the stems in the left column of your table in increasing order.
+  * (3) in the right column, fill in the leaves of each stem in increasing order.
   
 Example: A dot plot constructed for the $n = 272$ observations collected on the waiting time between eruptions and the duration of the eruption of the Old Faithful geyser in Yellowstone National Park, Wyoming, USA. 
 
@@ -170,7 +170,7 @@ ggplot(data = faithful, aes(x = waiting))+
   geom_dotplot(dotsize = 0.5)+
   theme_classic()+
   ylab("")+
-  xlab("Waiting Time Until Erapution (Min)")+
+  xlab("Waiting Time Until Eruption (Min)")+
   theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
         axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
         panel.background = element_blank(),
@@ -190,11 +190,11 @@ stem(faithful$waiting)
 
 ```
 
-Both dot plots and stem and leaf plots are excellent choices for discrete variables with a small to moderate number of observations. However, when a variable consists of many observations, has low variability, or is continuous, it can be difficult to constructs these two plots. 
+Both dot plots and stem and leaf plots are excellent choices for discrete variables with a small to moderate number of observations. However, when a variable consists of many observations, has low variability, or is continuous, it can be difficult to construct these two plots. 
 
 * When dealing with continuous data, it is often necessary to round observations to the nearest tenth before constructing either plot.
 
-The The following are alternatives that work for variables of any number of observations.  
+The following are alternatives that work for variables of any number of observations.  
 
 
 ### More graphs for quantitative data
@@ -205,7 +205,7 @@ The The following are alternatives that work for variables of any number of obse
   * (3) Label the <i>x</i>-axis with the midpoints or endpoints of each interval. 
   * (4) Draw a bar over each value or interval with height equal to its frequency or relative frequency
 
-* In general, you can choose the the number of bins $k$ you wish to use and set the bin width $w$ accordingly or alternatively set the bin width you want and use the corresponding number of bins.  
+* In general, you can choose the number of bins $k$ you wish to use and set the bin width $w$ accordingly or alternatively set the bin width you want and use the corresponding number of bins.  
 
   * formula for choosing the number of bins based on bin width $w$
   
@@ -215,9 +215,9 @@ The The following are alternatives that work for variables of any number of obse
   
   $$ w = \frac{\max x - \min x}{k}$$
   
-  where $\min$ and $\max$ denote the smallest and larges values of the variable $x$, respectively.
+  where $\min$ and $\max$ denote the smallest and largest values of the variable $x$, respectively.
 
-* How many bins should I use? This is actually a question that has received a lot of attention in the scientific literature. Typically, you want to be sure that you don't use "too few" bins as this can causing misleading conclusions about the features of the distribution. There are several rules that are based on the coverage and number of observations of the variable:
+* How many bins should I use? This is actually a question that has received a lot of attention in the scientific literature. Typically, you want to be sure that you don't use "too few" bins as this can cause misleading conclusions about the features of the distribution. There are several rules that are based on the coverage and number of observations of the variable:
 
   * **square root method** is defined as $k = \text{round}(\sqrt{n})$. This is a fairly easy and safe rule for choosing the number of bins to use. However, for large sample sizes it can lead to a very large number of bins. 
   
@@ -261,7 +261,7 @@ w_rice = (max(faithful$waiting) - min(faithful$waiting))/k_rice
 A = ggplot(data = faithful, aes(x = waiting))+
   geom_histogram(bins = 5, color = 'black', fill = 'lightblue2')+
   theme_classic()+
-  ggtitle(TeX('Using $\\k =5$ bins'))
+  ggtitle(TeX('Using $k = 5$ bins'))
 
 B = ggplot(data = faithful, aes(x = waiting))+
   geom_histogram(binwidth = w_srm, color = 'black', fill = 'lightblue2')+
@@ -271,7 +271,7 @@ B = ggplot(data = faithful, aes(x = waiting))+
 C = ggplot(data = faithful, aes(x = waiting))+
   geom_histogram(binwidth = w_sturges, color = 'black', fill = 'lightblue2')+
   theme_classic()+
-  ggtitle('Using Stuges Rule')
+  ggtitle('Using Sturges Rule')
 
 D = ggplot(data = faithful, aes(x = waiting))+
   geom_histogram(binwidth = w_rice, color = 'black', fill = 'lightblue2')+
@@ -289,9 +289,9 @@ using $k = 4$ bins/intervals
 
 * In this example, we are given the desired number of bins, so we can use our equation to find the width of the bins $w$. 
 
-$$ w = \frac{1.34 - (-1.49)}{4} \approx \frac{3}{4} \ \text{or} \ 0.75 $$
+$$ w = \frac{1.34 - (-1.49)}{4} = \frac{2.83}{4} = 0.7075 \approx \frac{3}{4} = 0.75 $$
 
-* now that we know about how wide each interval should be we can easily comupute the intervals. First, let $a$ be the minimum value of $X$ and $b$ be the maximum value such that $\min(X) = a, \max(X) = b$. The first interval is defined as $[a \leq X < a+w]$ which gives $[-1.5 \leq X < -0.75]$. The second interval is given by $[-0.75 \leq X < -0.75 + w]$ or $[-0.75 \leq X < 0]$. Continuing this pattern gives the remaining bins yields the following frequency table:
+* now that we know about how wide each interval should be we can easily comupute the intervals. First, let $a$ be the minimum value of $X$ and $b$ be the maximum value such that $\min(X) = a, \max(X) = b$. The first interval is defined as $a < X \leq a+w$ which gives $-1.5 < X \leq -0.75$. The second interval is given by $-0.75 < X \leq -0.75 + w$ or $-0.75 < X \leq 0$. Continuing this pattern gives the remaining bins yields the following frequency table:
 
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=3, fig.width=4.5}
 set.seed(123)
