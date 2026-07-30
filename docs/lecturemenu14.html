@@ -459,49 +459,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Convert_file_to_text/webfiles/index.html">Convert files text</a>
-        </li>
-        <li>
-          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
-        </li>
-        <li>
-          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/one_sample_hypothesis_tests/webfiles/index.html">One Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/two_sample_hypothesis_tests/webfiles/index.html">Two Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/categorical_tests/webfiles/index.html">Categorical Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/non_parametric_tests/webfiles/index.html">Non-Parametric Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Regression/webfiles/index.html">Regression/ANOVA</a>
-        </li>
-      </ul>
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
     </li>
     <li>
       <a href="sac_schedule.html">SAC schedule</a>
@@ -806,7 +765,7 @@ deviations to estimate <span class="math inline">\(\sigma_1\)</span> and
 <span class="math inline">\(t\)</span>-distributed. We will see that
 test statistic <span class="math inline">\(t_{obs}\)</span> is the
 standardized difference and has approximately the same distribution.
-Here’s how we set up a two-sample hypothesis test for means:</p>
+Hereâ€™s how we set up a two-sample hypothesis test for means:</p>
 <p><strong>1. Assumptions</strong></p>
 <ul>
 <li><p>Data constitute a simple random sample</p></li>
@@ -1334,7 +1293,7 @@ would narrowly reject the null hypothesis and conclude that Iowa scores
 significantly more points per game than South Carolina on average. The
 outcome of the championship was a 75 - 87 victory for South Carolina.
 Given the conclusion of our test, this is a testament to South
-Carolina’s defensive prowess in being able to shut down a high scoring
+Carolinaâ€™s defensive prowess in being able to shut down a high scoring
 team like Iowa.</li>
 </ol>
 </div>
@@ -1866,14 +1825,14 @@ qualitative variables.</p>
 <p>Such problems are typically represented as a table where the rows
 represent the groupings of the explanatory variable and columns
 represent the categories of the response variable - often referred to as
-“two-way tables”.</p>
+â€œtwo-way tablesâ€.</p>
 </div>
 <div id="the-chi-square-goodness-of-fit-test" class="section level3">
 <h3>The Chi-square goodness of fit test</h3>
 <p>Like we have done with means and proportions, we will begin with a
 one-sample procedure for comparing the distribution of a categorical
 variable to some hypothesized model. This procedure is called the <span
-class="math inline">\(\chi^2\)</span> (“chi-squared”) goodness of fit
+class="math inline">\(\chi^2\)</span> (â€œchi-squaredâ€) goodness of fit
 test because it used to determine how well the observed distribution
 fits some proposed model of the data. We will illustrate this idea by
 starting with an example:</p>
@@ -1881,7 +1840,7 @@ starting with an example:</p>
 conducted a study in which he crossed pea plants. The plants he crossed
 had the alleles (i.e., a form or version of a gene) for both yellow
 <span class="math inline">\(Y\)</span> and green peas <span
-class="math inline">\(y\)</span> — a trait controlled by a single locus.
+class="math inline">\(y\)</span> â€” a trait controlled by a single locus.
 He believed two of his laws applied here: the Law of Segregation and the
 Law of Dominance. These laws would determine the probabilities of
 certain genotypes. This can be summarized by a Punnett square</p>
@@ -1916,7 +1875,7 @@ Green
 </tbody>
 </table>
 <ul>
-<li>If Mendel’s Laws are true, what do they imply about the probability
+<li>If Mendelâ€™s Laws are true, what do they imply about the probability
 distribution for these four outcomes (i.e., <span
 class="math inline">\(YY\)</span>, <span
 class="math inline">\(Yy\)</span>, <span
@@ -1926,7 +1885,7 @@ probability distribution of color (i.e., yellow or green) ?</li>
 </ul>
 <p>Mendel bred <span class="math inline">\(8023\)</span> offspring. Of
 these, <span class="math inline">\(6022\)</span> were yellow, and <span
-class="math inline">\(2001\)</span> were green. Do his laws “fit” the
+class="math inline">\(2001\)</span> were green. Do his laws â€œfitâ€ the
 data? That is, does the trait of color in pea plants exhibit what we
 would call Mendelian inheritance?</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
@@ -1979,7 +1938,7 @@ Green
 </table>
 <p>The above problem amounts to comparing the observed frequencies of
 each color to the frequencies that we would expect under the Mendelian
-model of inheritance. We can test whether the data fit Mendel’s model by
+model of inheritance. We can test whether the data fit Mendelâ€™s model by
 comparing the observed frequencies of pea plant colors to the
 frequencies we would expect assuming Mendelian Inheritance and
 Dominance.</p>
@@ -2019,7 +1978,7 @@ observed model exactly follows the expected model. Values greater than
 zero indicate a deviation from the expected model. Large values of <span
 class="math inline">\(X^2\)</span> indicate evidence against the null
 hypothesis.</p>
-<p>Referring back to Mendel’s pea plants we compute the expected number
+<p>Referring back to Mendelâ€™s pea plants we compute the expected number
 of yellow pea plants as <span class="math inline">\(8023\times 0.75 =
 6017.25\)</span> and the expected number of green pea plants to be <span
 class="math inline">\(8023\times 0.25 = 2005.75\)</span>. The test
@@ -2033,7 +1992,7 @@ statistic is</p>
 <p>To convert the above statistic into a <span
 class="math inline">\(p\)</span>-value we need to know its sampling
 distribution. The statistic <span class="math inline">\(X^2\)</span> is
-called a <span class="math inline">\(\chi^2\)</span> (“chi-squared”)
+called a <span class="math inline">\(\chi^2\)</span> (â€œchi-squaredâ€)
 test statistic because its sampling distribution follows a special type
 of probability distribution called the <span
 class="math inline">\(\chi^2\)</span> distribution. Like the <span
@@ -3477,7 +3436,7 @@ Confidence Level:
 <div id="lecture-28-friday-april-12th-2024" class="section level1">
 <h1>Lecture 28 Friday, April 12th 2024</h1>
 <p><strong>Warm Up: <span class="math inline">\(\chi^2\)</span> Goodness
-of Fit Test</strong> - Suppose you’re hired by a dog food company to
+of Fit Test</strong> - Suppose youâ€™re hired by a dog food company to
 help them test three new dog food flavors. You recruit a random sample
 of <span class="math inline">\(75\)</span> dogs and offer each dog a
 choice between the three flavors by placing bowls in front of them.
@@ -3536,7 +3495,7 @@ Chicken Crunch
 <p>Conduct a <span class="math inline">\(\chi^2\)</span> goodness of fit
 test to determine if the dogs show any preference for the three flavors
 being tested</p>
-<p>Note that the GOF test doesn’t tell us anything about the range of
+<p>Note that the GOF test doesnâ€™t tell us anything about the range of
 plausible valuables for the frequency parameters.</p>
 <div
 id="measureing-statistical-association-in-two-categorical-variables"
@@ -3546,7 +3505,7 @@ class="section level3">
 procedure for comparing the observed distribution of a single
 categorical variable to a specific model that we hypothesize under the
 null. We will now explore another type of inference which is also based
-on the <span class="math inline">\(\chi^2\)</span> (“chi-square”)
+on the <span class="math inline">\(\chi^2\)</span> (â€œchi-squareâ€)
 distribution. This procedure is used to determine if two categorical
 variables share an association by exploring how the distribution of
 counts of one variable changes as we condition on the categories of
@@ -3715,7 +3674,7 @@ are independent} \]</span> <span class="math display">\[ H_A:
 specify any particular direction. Because the two-way table can contain
 all sorts of possible associations, the alternative hypothesis cannot be
 described as one or two sided.</p>
-<p>To test the null hypothesis of “no dependence” between two variables
+<p>To test the null hypothesis of â€œno dependenceâ€ between two variables
 in a table with <span class="math inline">\(r\)</span> rows and <span
 class="math inline">\(c\)</span> columns, we take a similar approach to
 the goodness of fit test and compare the observed cell counts in all
@@ -3806,7 +3765,7 @@ Category 2
 </tr>
 <tr>
 <td style="text-align:left;">
-⋮
+â‹®
 </td>
 <td style="text-align:left;">
 <span class="math inline">\(\vdots\)</span>
@@ -3880,9 +3839,9 @@ categories and <span class="math inline">\(c\)</span> is the total
 column categories. Lets try it out an example:</p>
 <p><strong>Example: Happiness and Income</strong> - As part of their
 annual survey, the General Social Survey explored the relationship
-between income and happiness. Happiness was recorded as “Not too happy”,
-“Pretty happy”, or “Very happy”, and incomes were bracketed into three
-categories: “Below average”, “Average”, and “Above average”. The counts
+between income and happiness. Happiness was recorded as â€œNot too happyâ€,
+â€œPretty happyâ€, or â€œVery happyâ€, and incomes were bracketed into three
+categories: â€œBelow averageâ€, â€œAverageâ€, and â€œAbove averageâ€. The counts
 are summarized in the table below:</p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <caption>

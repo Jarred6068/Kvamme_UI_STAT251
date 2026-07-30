@@ -460,49 +460,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Convert_file_to_text/webfiles/index.html">Convert files text</a>
-        </li>
-        <li>
-          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
-        </li>
-        <li>
-          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/one_sample_hypothesis_tests/webfiles/index.html">One Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/two_sample_hypothesis_tests/webfiles/index.html">Two Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/categorical_tests/webfiles/index.html">Categorical Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/non_parametric_tests/webfiles/index.html">Non-Parametric Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Regression/webfiles/index.html">Regression/ANOVA</a>
-        </li>
-      </ul>
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
     </li>
     <li>
       <a href="sac_schedule.html">SAC schedule</a>
@@ -561,13 +520,13 @@ $(document).ready(function () {
 
 
 <div id="lecture-4-monday-jan.-22nd-2024" class="section level1">
-<h1>Lecture 4: Monday, Jan. 22nd 2024</h1>
+<h1>Lecture 4: Monday, Jan.Â 22nd 2024</h1>
 <div id="describing-the-shape-of-a-distribution."
 class="section level2">
 <h2>Describing the shape of a distribution.</h2>
 <p>The purpose of a graph is to help us understand the data. Once the
-distribution of variable is plotted, you must ask yourself “what do I
-see?”. This is when were look for the features of a distribtuion such as
+distribution of variable is plotted, you must ask yourself â€œwhat do I
+see?â€. This is when were look for the features of a distribtuion such as
 shape, center and spread. This helps us to identify interesting patterns
 or potential <strong>outliers</strong> - individual data points that lie
 outside the normal pattern of the distribution.</p>
@@ -582,7 +541,7 @@ peak, or multiple peaks. A distribution with one peak is said to be
 <ul>
 <li>bimodal or multimodal distributions typically indicate underlying
 population structure in the data. Take for example the following height
-data from Sir Francis Galton (1822–1911) who was an English
+data from Sir Francis Galton (1822â€“1911) who was an English
 statistician. Galton was interested in the relationship between the
 height of parents and their offspring. He accumulated the following
 observations of the height of 934 children from 205 families in
@@ -989,7 +948,7 @@ without some numbers describing its <i>center</i> and <i>spread</i>.
 Previously, we learned how to describe shape by visually inspecting a
 graph of the data such as a histogram, stem plot, or dot plot. Now we
 will learn some statistics we can calculate that will tell us about
-spread and center. It’s important to note that we can calculate these
+spread and center. Itâ€™s important to note that we can calculate these
 descriptive statistics for any quantitative variables but NOT for
 qualitative variables. We will start by talking about statistics for
 quantifying the center of a distribution. Two measures of center are the
@@ -1002,8 +961,8 @@ observations and tells us the center of mass or balancing point of a
 distribution <span class="math display">\[\bar{x} = \sum_{i = 1}^n
 \frac{x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}\]</span></p>
 <ul>
-<li>the symbol <span class="math inline">\(\Sigma\)</span> means to “add
-up a set of values”. Therefore, the mean is the sum of all observations
+<li>the symbol <span class="math inline">\(\Sigma\)</span> means to â€œadd
+up a set of valuesâ€. Therefore, the mean is the sum of all observations
 in the sample (or popultion) and divide the sum by the number of
 observations</li>
 <li>the mean is usually not equal to any of the values observed in the
@@ -1017,7 +976,7 @@ from least to greatest. If the number of observations <span
 class="math inline">\(n\)</span> is odd then the median is exactly the
 middle value. If the number of observations <span
 class="math inline">\(n\)</span> is even, then the median is the
-“average” of the two values in the middle.</p>
+â€œaverageâ€ of the two values in the middle.</p>
 <ul>
 <li>The median is resistant to outliers because it does not depend on
 their value like the mean does.</li>
@@ -1031,7 +990,7 @@ the mean and median of <span class="math inline">\(X\)</span></p>
 <p><span class="math display">\[\text{median} = \frac{5+6}{2} =
 5.5\]</span></p>
 <p>Now consider a the mean and median when we include the outlier
-observation <span class="math inline">\(X = 22\)</span> and note it’s
+observation <span class="math inline">\(X = 22\)</span> and note itâ€™s
 effect each statistic:</p>
 <p><span class="math display">\[X = \{ 1, 3, 5, 5, 6, 7, 7, 8,
 32\}\]</span></p>
@@ -1041,7 +1000,7 @@ effect each statistic:</p>
 6\]</span></p>
 <p>Notice that in the first set of calculations the mean was less than
 the median. Now, because of the presence of the outlier, the mean has
-surpassed the value of the median because the “weight” that the outlier
+surpassed the value of the median because the â€œweightâ€ that the outlier
 carries in terms of its value.</p>
 <ul>
 <li>This example illustrates how the mean and median behave depending
@@ -1064,7 +1023,7 @@ all values of x and <span class="math inline">\(freq(x)\)</span> and
 relative frequency of <span class="math inline">\(x\)</span>
 respectively.</li>
 </ul>
-<p>Example: Sir Ronald Fisher’s famous iris data set gives the
+<p>Example: Sir Ronald Fisherâ€™s famous iris data set gives the
 measurements in centimeters of the variables sepal length and width and
 petal length and width, respectively, for 50 flowers from each of 3
 species of iris. Consider the following frequency table of petal lengths
@@ -1227,7 +1186,7 @@ mode may not be anywhere near the center of the distribution.</li>
 </div>
 </div>
 <div id="lecture-5-wednesday-jan.-24th-2024" class="section level1">
-<h1>Lecture 5: Wednesday, Jan. 24th 2024</h1>
+<h1>Lecture 5: Wednesday, Jan.Â 24th 2024</h1>
 <div id="more-measures-of-location" class="section level3">
 <h3>More measures of location</h3>
 <p>Other useful measures of position are <strong>percentiles</strong>.
@@ -1265,7 +1224,7 @@ of the upper half of the data</p>
 statistics class:</p>
 <p><span
 class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
-<p>Find the Q1, Q2, and Q3 quartiles for these exam scores. * It’s
+<p>Find the Q1, Q2, and Q3 quartiles for these exam scores. * Itâ€™s
 easiest to start with Q2 and work from there. Q2 is the median of the
 data and, since <span class="math inline">\(n\)</span> is odd will just
 be the middle value. In this example <span class="math inline">\(Q2 =
@@ -1398,7 +1357,7 @@ all important features of a distribution.</li>
 </div>
 </div>
 <div id="friday-jan.-26th-2024---class-canceled" class="section level1">
-<h1>Friday, Jan. 26th 2024 - CLASS CANCELED</h1>
+<h1>Friday, Jan.Â 26th 2024 - CLASS CANCELED</h1>
 </div>
 
 

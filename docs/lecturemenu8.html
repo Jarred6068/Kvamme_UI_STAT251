@@ -459,49 +459,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Convert_file_to_text/webfiles/index.html">Convert files text</a>
-        </li>
-        <li>
-          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
-        </li>
-        <li>
-          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/one_sample_hypothesis_tests/webfiles/index.html">One Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/two_sample_hypothesis_tests/webfiles/index.html">Two Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/categorical_tests/webfiles/index.html">Categorical Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/non_parametric_tests/webfiles/index.html">Non-Parametric Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Regression/webfiles/index.html">Regression/ANOVA</a>
-        </li>
-      </ul>
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
     </li>
     <li>
       <a href="sac_schedule.html">SAC schedule</a>
@@ -566,7 +525,7 @@ $(document).ready(function () {
 <p>We can also talk about the normal distribution as a family of
 probability distributions. As before, the normal distribution has two
 parameters <span class="math inline">\(\mu\)</span> - the location
-parameter, and <span class="math inline">\(\sigma\)</span> the “spread”
+parameter, and <span class="math inline">\(\sigma\)</span> the â€œspreadâ€
 parameter. The normal distribution has the following probability density
 function</p>
 <p><span class="math display">\[ f(x) = \frac{1}{\sigma \sqrt{2\pi}}
@@ -2048,7 +2007,7 @@ area to left of the <span class="math inline">\(Z\)</span>-score.</p>
 <ul>
 <li><p>We can compute the <span class="math inline">\(Z\)</span> for
 <strong>any</strong> normal random variable and use the table above to
-find it’s probability.</p></li>
+find itâ€™s probability.</p></li>
 <li><p>Try it out: Suppose <span class="math inline">\(X\sim N(5,
 10)\)</span>. Compute the probability that <span
 class="math inline">\(X\geq 25\)</span></p></li>
@@ -2105,7 +2064,7 @@ one:</p>
 <p><span class="math display">\[P(-3 \leq X \leq 1) = P(X\leq 1) -
 P(X\leq -3) \]</span></p>
 <p><img src="lecturemenu8_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
-<p>However, since we don’t have a table for the specific normal
+<p>However, since we donâ€™t have a table for the specific normal
 distribution of <span class="math inline">\(X\)</span> we must again
 convert to the standard normal distribution to find each
 probability:</p>
@@ -2170,7 +2129,7 @@ variables <span class="math inline">\(X_1, X_2, ... X_n\)</span>,</p>
 <p><span class="math display">\[\frac{\sqrt{n}(\bar{X} - \mu)}{\sigma}
 \xrightarrow{d} N(0,1)\]</span></p>
 <p>Where <span class="math inline">\(\xrightarrow{d}\)</span> means
-“converge in distribution” and <span class="math inline">\(\bar{X} =
+â€œconverge in distributionâ€ and <span class="math inline">\(\bar{X} =
 \frac{1}{n} \sum_i X_i\)</span>.</p>
 <ul>
 <li>Each random variable <span class="math inline">\(X_i\)</span> can be
@@ -2182,7 +2141,7 @@ that they all have finite variance.</li>
 </ul>
 <p>Informally, this means that as the sample size increases the shape of
 a sampling distribution of <span class="math inline">\(\bar{x}\)</span>
-or <span class="math inline">\(\hat{p}\)</span> will “approach” that of
+or <span class="math inline">\(\hat{p}\)</span> will â€œapproachâ€ that of
 a normal distribution - regardless of the distribution of data
 distribution of the sample. Therefore the sampling distributions of both
 <span class="math inline">\(\bar{x}\)</span> and <span
@@ -2326,7 +2285,7 @@ called a <strong>confidence interval</strong>.</li>
 <p>Regardless of the type of inference that is being done, the
 underlying reasoning remains the same. In statistics, we use probability
 as a means of substantiating our conclusions about a particular
-population or result. Probability allows us to determine the “strength”
+population or result. Probability allows us to determine the â€œstrengthâ€
 of a conclusion by taking into account the ordinary variation in
 estimation.</p>
 </div>
@@ -2477,7 +2436,7 @@ distribution of <span class="math inline">\(\bar{x}\)</span>.</p>
 <li>Does the interval cover the true population mean?</li>
 </ul>
 <p><img src="lecturemenu8_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
-<p>In practice, once we compute the confidence interval we don’t know
+<p>In practice, once we compute the confidence interval we donâ€™t know
 for sure whether our confidence interval captures the true population
 parameter we are trying to estimate. It may be in the interval, it may
 not. But the choice in confidence level gives us flexibility in how

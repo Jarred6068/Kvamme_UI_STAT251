@@ -481,49 +481,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Convert_file_to_text/webfiles/index.html">Convert files text</a>
-        </li>
-        <li>
-          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
-        </li>
-        <li>
-          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/one_sample_hypothesis_tests/webfiles/index.html">One Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/two_sample_hypothesis_tests/webfiles/index.html">Two Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/categorical_tests/webfiles/index.html">Categorical Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/non_parametric_tests/webfiles/index.html">Non-Parametric Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Regression/webfiles/index.html">Regression/ANOVA</a>
-        </li>
-      </ul>
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
     </li>
     <li>
       <a href="sac_schedule.html">SAC schedule</a>
@@ -708,7 +667,7 @@ interpret because one or both of the variables exists on a large scale
 the covariance will naturally take on large values. Consider the
 scatterplot below which shows the relationship and covariance between
 median house value and population for 30 districts in California from
-1990 <span class="citation">(Géron 2022)</span></p>
+1990 <span class="citation">(GÃ©ron 2022)</span></p>
 <table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -964,7 +923,7 @@ Median Home Value
 </tbody>
 </table>
 <p><img src="lecturemenu15_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
-<p>Even though the plot doesn’t really show a strong relationship
+<p>Even though the plot doesnâ€™t really show a strong relationship
 between these two variables the covariance we compute is a whopping
 26,390,423. Moreover, because our two variables have different units,
 the units of the covariance we computed are nonsensical. Since
@@ -1119,8 +1078,8 @@ class="section level3">
 <h3>Introduction to simple linear regression</h3>
 <p>Correlation measures the strength of a linear relationship between
 two variables, but what if you want to go a step further and find the
-best-fit line that connects those dots? That’s where linear regression
-comes in. It’s a statistical technique that finds the straight line that
+best-fit line that connects those dots? Thatâ€™s where linear regression
+comes in. Itâ€™s a statistical technique that finds the straight line that
 best describes the relationship between two quantitative variables,
 often visualized on a scatterplot. The most basic version of this
 technique, where you fit a line to two quantitative variables, is called
@@ -1141,14 +1100,14 @@ between each point and the regression line. If you think of the
 regression line as our best guess at the relationship between <span
 class="math inline">\(X\)</span> and <span
 class="math inline">\(Y\)</span>, then the residuals represent the error
-in that guess for each point. The line that “best” fits the data is the
-one with the smallest average residual—essentially, the one with the
+in that guess for each point. The line that â€œbestâ€ fits the data is the
+one with the smallest average residualâ€”essentially, the one with the
 least error across all the points in the plot. This line gives us the
 best model to describe the relationship between the <span
 class="math inline">\(X\)</span> and <span
 class="math inline">\(Y\)</span> variables. You can take a look at <a
 href="https://www.geogebra.org/m/xC6zq7Zv">https://www.geogebra.org/m/xC6zq7Zv</a>
-to pratice fitting the “best” line.</p>
+to pratice fitting the â€œbestâ€ line.</p>
 </div>
 </div>
 <div id="lecture-30-wednesday-april-24nd-2024" class="section level1">
@@ -1235,7 +1194,7 @@ value of the residual for observation <span
 class="math inline">\(y_i\)</span>. The residuals are all vertical
 distances because the regression equation predicts values of the
 response variable.</p>
-<p>Recall that the line of “best” fit is the one that is simultaneously
+<p>Recall that the line of â€œbestâ€ fit is the one that is simultaneously
 as close as possible to all data points. Such a line will have the
 smallest possible residuals. This process involves compromise as any
 line we draw can perfectly predict any one point but may gravely
@@ -1529,7 +1488,7 @@ fit the model to maintain reliability and accuracy.</p>
 class="math inline">\(r^2\)</span></h3>
 <p>When we predict a value of <span class="math inline">\(Y\)</span>,
 why should we use the regression line? We could instead use the center
-of <span class="math inline">\(Y\)</span>’s distribution as our
+of <span class="math inline">\(Y\)</span>â€™s distribution as our
 prediction for <span class="math inline">\(Y\)</span> such as the sample
 mean <span class="math inline">\(\bar{y}\)</span>. One reason is that if
 the explanatory variable <span class="math inline">\(X\)</span> and
@@ -1609,7 +1568,7 @@ class="math inline">\(X\)</span></h3>
 \alpha + \beta x_i\)</span> yields the predicted value the response
 <span class="math inline">\(Y\)</span> for a given value of the
 independent variable <span class="math inline">\(X\)</span>. However, we
-don’t expect all observations of <span class="math inline">\(Y\)</span>
+donâ€™t expect all observations of <span class="math inline">\(Y\)</span>
 that depend on a given value of <span class="math inline">\(X\)</span>
 to have the same value because naturally there is variation among
 individuals in the population. For example, consider the linear
@@ -1811,9 +1770,9 @@ class="math inline">\(n-2\)</span> degrees of freedom.</p>
 \hat{\epsilon_i}}{\sum_i (x_i - \bar{x})^2}} \]</span></p>
 <p>A hypothesis test on the population slope <span
 class="math inline">\(\beta\)</span> is usually conducted under the null
-hypothesis <span class="math inline">\(H_0: \beta = 0\)</span> or “no
+hypothesis <span class="math inline">\(H_0: \beta = 0\)</span> or â€œno
 linear relationship between <span class="math inline">\(X\)</span> and
-<span class="math inline">\(Y\)</span>”. The test is generally two-sided
+<span class="math inline">\(Y\)</span>â€. The test is generally two-sided
 with alternative hypothesis <span class="math inline">\(H_A: \beta \neq
 0\)</span>. The test statistic is the standardized estimate</p>
 <p><span class="math display">\[t_0 = \frac{\beta -
@@ -2057,7 +2016,7 @@ Number of Times Ad Shown
 </tr>
 </tbody>
 </table>
-<p>Let’s consider a linear regression model where the response variable
+<p>Letâ€™s consider a linear regression model where the response variable
 is the number of customers who purchased the product after viewing an
 ad, and the predictor variable is the number of times each ad was
 viewed. The least-squares regression output for this model is presented
@@ -2129,7 +2088,7 @@ determination, ANOVA evaluates how much of the total variation in the
 response variable is attributed to the regression model. If there is a
 linear relationship between the predictor and the response variable, it
 implies that the predictor accounts for a significant portion of the
-response’s variance, leading to a large <span
+responseâ€™s variance, leading to a large <span
 class="math inline">\(F\)</span>-test statistic.</p>
 <p>For simple linear regression between two quantitative variables, the
 <span class="math inline">\(F\)</span>-test is always</p>
@@ -2769,7 +2728,7 @@ cold
 </tr>
 <tr>
 <td style="text-align:left;">
-Cap’n’Crunch
+Capâ€™nâ€™Crunch
 </td>
 <td style="text-align:left;">
 Q
@@ -3192,7 +3151,7 @@ cold
 </tr>
 <tr>
 <td style="text-align:left;">
-Cracklin’ Oat Bran
+Cracklinâ€™ Oat Bran
 </td>
 <td style="text-align:left;">
 K
@@ -5260,7 +5219,7 @@ cold
 </tr>
 <tr>
 <td style="text-align:left;">
-Shredded Wheat ’n’Bran
+Shredded Wheat â€™nâ€™Bran
 </td>
 <td style="text-align:left;">
 N
@@ -5873,8 +5832,8 @@ cold
 </table>
 <p>The final column, <em>Customer Rating</em>, represents the percentage
 of customers who gave a favorable rating to each cereal in consumer
-reports. Now consider the question, <em>“Do sugary cereals tend to
-receive higher ratings?”</em>. To answer this question, we will fit a
+reports. Now consider the question, <em>â€œDo sugary cereals tend to
+receive higher ratings?â€</em>. To answer this question, we will fit a
 linear model using the variable <em>Added Sugar</em> as a predictor of
 <em>Customer Rating</em>. The fitted linear model is displayed in the
 plot below.</p>
@@ -5888,7 +5847,7 @@ x\)</span> across all values of the predictor. Panel <span
 class="math inline">\(\bf B\)</span> gives the boxplots for each
 conditional distribution.</p>
 <ul>
-<li><p>Do you believe there’s a significant linear relationship between
+<li><p>Do you believe thereâ€™s a significant linear relationship between
 customer rating and the amount of added sugars?</p></li>
 <li><p>What does the fitted linear model indicate about the relationship
 between customer rating and added sugar?</p></li>
@@ -6004,7 +5963,7 @@ ANOVA test using the table above:</li>
 <div id="checking-assumptions" class="section level3">
 <h3>Checking Assumptions</h3>
 <p>Checking assumptions in simple linear regression is crucial because
-it ensures the validity and reliability of your model’s predictions and
+it ensures the validity and reliability of your modelâ€™s predictions and
 conclusions. Recall that the least-squares estimator makes several
 strong assumptions about the structure of the data (<em>linearity</em>,
 <em>independence</em>, <em>constant variance</em>, and
@@ -6016,7 +5975,7 @@ the data. Thus, when fitting the least-squares model, it best to pair
 results with a thorough investigation the residuals and any potential
 outliers.</p>
 <p>A common plot used to check the assumptions of residuals in linear
-regression is the quantile-quantile, or “Q-Q,” plot. This plot compares
+regression is the quantile-quantile, or â€œQ-Q,â€ plot. This plot compares
 the distribution of the computed residuals to the theoretical quantiles
 of a standard normal distribution. Below is the Q-Q plot and histogram
 for the residuals of the linear regression model fitting customer
@@ -6035,7 +5994,7 @@ class="math inline">\(y\)</span> with an <em>affine</em> transformation
 such as taking the <span class="math inline">\(\log\)</span> or
 square-root can help</li>
 </ul>
-<p>Another common plot is called a “residual-leverage” plot.
+<p>Another common plot is called a â€œresidual-leverageâ€ plot.
 <em>Leverage</em> is a measure that can help assess the influence a data
 point has on the regression line. A high leverage value indicates that
 the data point has a greater potential to affect the fit of the
@@ -6061,7 +6020,7 @@ Distance</strong> given by the dashed lines on the plot. Cooks distance
 is another metric to assess the influence of individual points.
 Generally speaking, points that fall above or below the dashed lines
 (i.e the Cooks distance) are potential outliers. As we can see from the
-residual vs leverage plot above, the data point labeled “4” is close but
+residual vs leverage plot above, the data point labeled â€œ4â€ is close but
 not above the dashed line indicating there are no outliers. Another
 example of a residual vs leverage plot and how to address potential
 outliers can be found here <a
@@ -6098,11 +6057,11 @@ href="https://www.statology.org/scale-location-plot/">https://www.statology.org/
 <h3 class="unnumbered">References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-geron2022hands" class="csl-entry">
-Géron, Aurélien. 2022. <em>Hands-on Machine Learning with Scikit-Learn,
-Keras, and TensorFlow</em>. " O’Reilly Media, Inc.".
+GÃ©ron, AurÃ©lien. 2022. <em>Hands-on Machine Learning with Scikit-Learn,
+Keras, and TensorFlow</em>. " Oâ€™Reilly Media, Inc.".
 </div>
 <div id="ref-lock1993" class="csl-entry">
-Lock, Robin H. 1993. <span>“1993 New Car Data.”</span> <em>Journal of
+Lock, Robin H. 1993. <span>â€œ1993 New Car Data.â€</span> <em>Journal of
 Statistics Education</em> 1 (1).
 </div>
 <div id="ref-liver" class="csl-entry">

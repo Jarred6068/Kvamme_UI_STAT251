@@ -459,49 +459,8 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Apps</a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="shiny_apps/app_descriptions.html">App Descriptions</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Convert_file_to_text/webfiles/index.html">Convert files text</a>
-        </li>
-        <li>
-          <a href="shiny_apps/HistoPlot/histogram_viewer/index.html">Random Variables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Stat_calculator/webfiles/index.html">Statistic Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Freq_table/webfiles/index.html">Frequency Tables</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Make_Graph/webfiles/index.html">Graphing</a>
-        </li>
-        <li>
-          <a href="shiny_apps/LLN/webfiles/index.html">LLN Example</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Compute_probs/webfiles/index.html">PMF/PDF Calculator</a>
-        </li>
-        <li>
-          <a href="shiny_apps/one_sample_hypothesis_tests/webfiles/index.html">One Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/two_sample_hypothesis_tests/webfiles/index.html">Two Sample Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/categorical_tests/webfiles/index.html">Categorical Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/non_parametric_tests/webfiles/index.html">Non-Parametric Tests</a>
-        </li>
-        <li>
-          <a href="shiny_apps/Regression/webfiles/index.html">Regression/ANOVA</a>
-        </li>
-      </ul>
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
     </li>
     <li>
       <a href="sac_schedule.html">SAC schedule</a>
@@ -572,9 +531,9 @@ the difference in height between the two experimental groups of tomato
 plants is measured.</p>
 <p>The gardener suspects that the plants which received the new
 fertilizer will be tend to be taller than the plants that received only
-water. They set the null hypothesis to be “no difference in height”
-which can be thought of as “the fertilizer has no effect on tomato plant
-growth”.</p>
+water. They set the null hypothesis to be â€œno difference in heightâ€
+which can be thought of as â€œthe fertilizer has no effect on tomato plant
+growthâ€.</p>
 <p><span class="math display">\[ H_0: \mu_d = 0 \]</span></p>
 <p><span class="math inline">\(\mu_d\)</span> denotes the population
 mean difference in tomato plant height between the two experimental
@@ -1149,14 +1108,14 @@ by the alternative hypothesis under the assumption that the null is
 true. In the case of this gardeners experiment, we need to compute the
 probability of observing a mean difference larger than the difference we
 observed under the sampling distribution of the null hypothesis. In
-other words, “how likely is it that we would see a difference in height
+other words, â€œhow likely is it that we would see a difference in height
 as large as the one we observed, assuming that the true difference is
-zero?”</p>
+zero?â€</p>
 <p><span class="math display">\[P(\bar{X} \geq \bar{x}_d | H_0 \
 \text{true}) \]</span></p>
 <p>To compute this probability, we need convert the difference we
 observed into a standardized score that we can look up in one of our
-tables. Since we are discussing a “mean” difference we can use the <span
+tables. Since we are discussing a â€œmeanâ€ difference we can use the <span
 class="math inline">\(t\)</span>-distribution as we did before with
 confidence intervals:</p>
 <p><span class="math display">\[ t_{obs} = \frac{\bar{x}_d -
@@ -1189,7 +1148,7 @@ class="math inline">\(t\)</span>-distribution</p>
 <p>i.e the probability of observing a <span
 class="math inline">\(t\)</span> value greater than the one we observed
 when the true difference is assumed to be <span
-class="math inline">\(\mu_d = 0\)</span>. For the gardener’s experiment,
+class="math inline">\(\mu_d = 0\)</span>. For the gardenerâ€™s experiment,
 this probability is <span class="math inline">\(3.45e^{-7} \approx
 0\)</span>, which is very small.</p>
 <p>This probability is called the <strong>p-value</strong> and it
@@ -1205,7 +1164,7 @@ class="math inline">\(\mu_d = 0\)</span> no difference in mean height)
 is not true.</p></li>
 </ol>
 <p>We prefer the second conclusion when the <span
-class="math inline">\(p\)</span>-value is “sufficiently” small and take
+class="math inline">\(p\)</span>-value is â€œsufficientlyâ€ small and take
 it as evidence against the null hypothesis. So how small is small
 enough? By convention, most tests use a probability cutoff of <span
 class="math inline">\(5\%\)</span> or less which is called the
@@ -1275,8 +1234,8 @@ upper tails of the distribution of the test statistic.</p>
 <p>Because the alternative hypothesis expresses some effect that we hope
 to find evidence for, we often begin by stating <span
 class="math inline">\(H_A\)</span> and then set up <span
-class="math inline">\(H_0\)</span> as the statement that the “hoped-for”
-effect is not present. It’s important to note that the alternative
+class="math inline">\(H_0\)</span> as the statement that the â€œhoped-forâ€
+effect is not present. Itâ€™s important to note that the alternative
 hypothesis should express the hopes or suspicions we bring to the data.
 It is biased to first look at the data and then set up the alternative
 hypothesis based on what the data show. If you do not have a direction
@@ -1290,14 +1249,14 @@ class="section level3">
 class="math inline">\(\alpha\)</span>) is how we turn the <span
 class="math inline">\(p\)</span>-value of a significance test into a
 <i>reject/not reject</i> decision about the null hypothesis. It sets how
-“strong” the evidence against the null needs to be in order for a result
+â€œstrongâ€ the evidence against the null needs to be in order for a result
 to be deemed statistically significant. The researcher determines the
 significance level before conducting the experiment.</p>
 <p>The <strong>critical value</strong> of a significance test is a point
 on the distribution of the test statistic that defines a set of values
 that call for rejecting the null hypothesis.</p>
 <p>The critical value determines the boundary of the <strong>rejection
-region</strong> – the area in the tail (or tails) of the distribution of
+region</strong> â€“ the area in the tail (or tails) of the distribution of
 the test statistic for which a result is deemed significant. The
 rejection region has an area of exactly <span
 class="math inline">\(\alpha\)</span>.</p>
@@ -1331,16 +1290,16 @@ class="math display">\[ H_A: \mu &lt; \mu_0 \]</span></p>
 class="math inline">\(&lt; \alpha\)</span> then <span
 class="math inline">\(t_{obs} &lt; t_\alpha\)</span>; <em>reject</em>
 <span class="math inline">\(H_0\)</span> (results are statistically
-significant) - this is the same as saying “if the test statistic falls
+significant) - this is the same as saying â€œif the test statistic falls
 within the rejection region then <u>reject <span
-class="math inline">\(H_0\)</span></u>”</p></li>
+class="math inline">\(H_0\)</span></u>â€</p></li>
 <li><p>If <span class="math inline">\(p\)</span>-value <span
 class="math inline">\(\geq \alpha\)</span>, then <span
 class="math inline">\(t_{obs} \geq t_\alpha\)</span>; <em>do not
 reject</em> <span class="math inline">\(H_0\)</span> (results are
-<u>not</u> statistically significant) - this is the same as saying “if
+<u>not</u> statistically significant) - this is the same as saying â€œif
 the test statistic does not fall within the rejection region then <u>do
-not reject <span class="math inline">\(H_0\)</span></u>”</p></li>
+not reject <span class="math inline">\(H_0\)</span></u>â€</p></li>
 </ol>
 <p>The <strong>critical value</strong> and <strong>rejection
 region</strong> of a test depend on the significance level of the test
