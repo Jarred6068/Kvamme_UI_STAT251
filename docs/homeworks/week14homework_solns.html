@@ -480,6 +480,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
 margin-left:2em;
@@ -642,41 +643,47 @@ interest from each group</span></p></li>
 </div>
 <div id="confidence-intervals-and-two-tailed-tests" class="section level3">
 <h3>Confidence intervals and two-tailed tests:</h3>
-<p><span class="math inline">\(\bf (1.)\)</span> For parts (a) - (d)
-given the confidence interval for the parameter under the null
-hypothesis, use the point estimate to determine whether the null
-hypothesis <span class="math inline">\(H_0\)</span> should be
-<strong>Rejected</strong> or <strong>Not Rejected</strong> and denote
-significance level <span class="math inline">\(\alpha\)</span></p>
-<p>a.) <span class="math inline">\(H_0: \mu_0 = -2\)</span> <br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> <br> <span class="math inline">\(95\%\)</span> CI for <span class="math inline">\(\mu_0 \in [-3.0, -2.4]\)</span> <br> <span class="math inline">\(\bar{x} = -2.7\)</span> <span class="math display">\[ \text{Decision} = \color{red}{\text{fail to
-reject} \ H_0} \\
+<p><span class="math inline">\(\bf (1.)\)</span> For parts (a) - (d) you
+are given a confidence interval for the parameter along with the point
+estimate it was built from. Determine whether the null hypothesis <span class="math inline">\(H_0\)</span> should be <strong>Rejected</strong>
+or <strong>Not Rejected</strong> by checking whether the value claimed
+under <span class="math inline">\(H_0\)</span> falls inside the
+interval, and give the significance level <span class="math inline">\(\alpha\)</span></p>
+<p>a.) <span class="math inline">\(H_0: \mu = -2\)</span> <br> <span class="math inline">\(H_A: \mu \neq -2\)</span> <br> <span class="math inline">\(95\%\)</span> CI for <span class="math inline">\(\mu \in [-3.0, -2.4]\)</span> <br> <span class="math inline">\(\bar{x} = -2.7\)</span> <span class="math display">\[ \text{Decision} = \color{red}{\text{reject} \
+H_0} \\
   \alpha = \color{red}{0.05} \]</span></p>
-<p>b.) <span class="math inline">\(H_0: p_0 = 0.9\)</span> <br> <span class="math inline">\(H_A: p \neq p_0\)</span> <br> <span class="math inline">\(99\%\)</span> CI for <span class="math inline">\(p_0 \in [0.972, 0.968]\)</span> <br> <span class="math inline">\(\hat{p} = 0.97\)</span></p>
+<p><span style="color: red;">The null value <span class="math inline">\(-2\)</span> lies outside <span class="math inline">\([-3.0, -2.4]\)</span>, so <span class="math inline">\(H_0\)</span> is rejected at the <span class="math inline">\(5\%\)</span> level.</span></p>
+<p>b.) <span class="math inline">\(H_0: p = 0.9\)</span> <br> <span class="math inline">\(H_A: p \neq 0.9\)</span> <br> <span class="math inline">\(99\%\)</span> CI for <span class="math inline">\(p
+\in [0.968, 0.972]\)</span> <br> <span class="math inline">\(\hat{p} =
+0.97\)</span></p>
 <p><span class="math display">\[ \text{Decision} =
-\color{red}{\text{fail to reject} \ H_0} \\
+\color{red}{\text{reject} \ H_0} \\
   \alpha = \color{red}{0.01} \]</span></p>
-<p>c.) <span class="math inline">\(H_0: \mu_0 = 0\)</span> <br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> <br> <span class="math inline">\(90\%\)</span> CI for <span class="math inline">\(\mu_0 \in [-3.63, 7.49]\)</span> <br> <span class="math inline">\(\bar{x} = 1.93\)</span></p>
+<p><span style="color: red;">The null value <span class="math inline">\(0.9\)</span> lies outside <span class="math inline">\([0.968, 0.972]\)</span>, so <span class="math inline">\(H_0\)</span> is rejected at the <span class="math inline">\(1\%\)</span> level.</span></p>
+<p>c.) <span class="math inline">\(H_0: \mu = 0\)</span> <br> <span class="math inline">\(H_A: \mu \neq 0\)</span> <br> <span class="math inline">\(90\%\)</span> CI for <span class="math inline">\(\mu \in [-3.63, 7.49]\)</span> <br> <span class="math inline">\(\bar{x} = 1.93\)</span></p>
 <p><span class="math display">\[ \text{Decision} =
 \color{red}{\text{fail to reject} \ H_0} \\
   \alpha = \color{red}{0.1} \]</span></p>
-<p>d.) <span class="math inline">\(H_0: \mu_0 = 50\)</span><br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span><br> <span class="math inline">\(85\%\)</span> CI for <span class="math inline">\(\mu_0 \in [93.6, 139]\)</span><br> <span class="math inline">\(\bar{x} = 116.3\)</span></p>
+<p><span style="color: red;">The null value <span class="math inline">\(0\)</span> lies inside <span class="math inline">\([-3.63, 7.49]\)</span>, so there is not enough
+evidence to reject <span class="math inline">\(H_0\)</span> at the <span class="math inline">\(10\%\)</span> level.</span></p>
+<p>d.) <span class="math inline">\(H_0: \mu = 50\)</span><br> <span class="math inline">\(H_A: \mu \neq 50\)</span><br> <span class="math inline">\(85\%\)</span> CI for <span class="math inline">\(\mu \in [93.6, 139]\)</span><br> <span class="math inline">\(\bar{x} = 116.3\)</span></p>
 <p><span class="math display">\[ \text{Decision} =
-\color{red}{\text{fail to reject} \ H_0} \\
+\color{red}{\text{reject} \ H_0} \\
   \alpha = \color{red}{0.15} \]</span></p>
+<p><span style="color: red;">The null value <span class="math inline">\(50\)</span> lies outside <span class="math inline">\([93.6, 139]\)</span>, so <span class="math inline">\(H_0\)</span> is rejected at the <span class="math inline">\(15\%\)</span> level.</span></p>
 </div>
 <div id="the-sign-test" class="section level3">
 <h3>The sign test</h3>
 <p><br> <br></p>
 <p><span class="math inline">\(\bf (2.)\)</span> A dermatologist is
 conducting an experiment to test whether a new topical skin care cream
-reduces the appearance facial of acne. From a sample of <span class="math inline">\(20\)</span> patients with acne the researcher
-gives each patient a score from <span class="math inline">\(1-5\)</span>
-where (5) representing the severity of their acne before the topical
-cream is applied. Patients are then asked to use the topical cream for
-<span class="math inline">\(10\)</span> days. Following the <span class="math inline">\(10\)</span> day treatment, patients are given a
+reduces the appearance of facial acne. From a sample of <span class="math inline">\(20\)</span> patients with acne the researcher
+gives each patient a score from <span class="math inline">\(1-5\)</span>, where (1) represents the mildest
+acne and (5) represents the most severe acne, before the topical cream
+is applied. Patients are then asked to use the topical cream for <span class="math inline">\(10\)</span> days. Following the <span class="math inline">\(10\)</span> day treatment, patients are given a
 new acne score between <span class="math inline">\(1-5\)</span>. The
 data for this experiment is given in the table below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1035,40 +1042,48 @@ Sign
 </tbody>
 </table>
 <p>The dermatologist is particularly interested in whether the new
-product can improve the scars’ appearance. They plan to test the null
-hypothesis <span class="math inline">\(H_0: p_0 = 0.5\)</span> using a
-right-tailed test with alternative hypothesis <span class="math inline">\(H_A: p&gt;0.5\)</span> using a sign test to
+product improves the appearance of the patients’ acne. They plan to test
+the null hypothesis <span class="math inline">\(H_0: p = 0.5\)</span>
+using a right-tailed test with alternative hypothesis <span class="math inline">\(H_A: p&gt;0.5\)</span> using a sign test to
 determine if there is enough evidence to conclude that the topical cream
-a positive effect on reducing facial acne at the <span class="math inline">\(\alpha = 0.05\)</span> level.</p>
-<p>a.) Fill in the table above by computing the difference between in
-acne scores before and after applying the skin care cream. Record the
-sign of each difference and report the total number of positive signs
-<span class="math inline">\(s\)</span></p>
-<p>b.) What does a “positive” sign indicate in this experiment? <span style="color: red;">A positive sign indicates that the skin cream
-reduced the appearance of dry skin</span></p>
+has a positive effect on reducing facial acne at the <span class="math inline">\(\alpha = 0.05\)</span> level.</p>
+<p>a.) Fill in the table above by computing the difference in acne
+scores before and after applying the skin care cream. Record the sign of
+each difference and report the total number of positive signs <span class="math inline">\(s\)</span>. Note that any patient whose score did
+not change (a difference of zero) is dropped from the test, so the
+number of observations used in the sign test is the number of non-zero
+differences.</p>
+<p><span style="color: red;">Of the <span class="math inline">\(20\)</span> patients, <span class="math inline">\(14\)</span> had a positive difference, <span class="math inline">\(1\)</span> had a negative difference, and <span class="math inline">\(5\)</span> had a difference of zero. The five tied
+patients are discarded, leaving <span class="math inline">\(n =
+15\)</span> observations with <span class="math inline">\(s =
+14\)</span> positive signs.</span></p>
+<p>b.) What does a “positive” sign indicate in this experiment? <span style="color: red;">A positive sign indicates that the patient’s acne
+score went down after treatment - that is, the skin cream reduced the
+appearance of their acne</span></p>
 <p>c.) Compute the <span class="math inline">\(p\)</span>-value for the
 sign test <span style="color: red;">The number of positive signs is
-<span class="math inline">\(s = 14\)</span>. The <span class="math inline">\(p\)</span>value is probability of observing <span class="math inline">\(14\)</span> or more positive signs in <span class="math inline">\(15\)</span> observations given by <span class="math display">\[p\text{-value} = P(S\geq s | H_0) = \sum_{k =
-14}^{15}\frac{20!}{k!(20 - k)!} \cdot 0.5^k \cdot (1-0.5)^{20-k}
+<span class="math inline">\(s = 14\)</span> out of <span class="math inline">\(n = 15\)</span> non-zero differences. The <span class="math inline">\(p\)</span>-value is the probability of observing
+<span class="math inline">\(14\)</span> or more positive signs in <span class="math inline">\(15\)</span> observations, given by <span class="math display">\[p\text{-value} = P(S\geq s | H_0) = \sum_{k =
+14}^{15}\frac{15!}{k!(15 - k)!} \cdot 0.5^k \cdot (1-0.5)^{15-k}
 \]</span> <span class="math display">\[ \approx 0.0005  \]</span>
 </span></p>
 <p>d.) Use the <span class="math inline">\(p\)</span>-value from part
 (c) to determine if there is enough evidence to conclude that the
 topical cream product has a positive effect on reducing the appearance
 of acne. Interpret your decision in context.</p>
-<p><span style="color: red;">At the <span class="math inline">\(\alpha =
-0.05\)</span> significance level, we reject the null hypothesis and
-determine that there is sufficient evidence to support that the skin
-cream reduces dry skin</span></p>
+<p><span style="color: red;">Since the <span class="math inline">\(p\)</span>-value <span class="math inline">\(0.0005\)</span> is less than <span class="math inline">\(\alpha = 0.05\)</span>, we reject the null
+hypothesis at the <span class="math inline">\(5\%\)</span> significance
+level. There is sufficient evidence to conclude that the topical cream
+reduces the appearance of facial acne</span></p>
 <p><br> <br></p>
 <p><span class="math inline">\(\bf (3.)\)</span> In a boreal forest,
 researchers conducted an experiment to study how herbivores respond to
 variations in food plant quality and quantity at the stand level. They
 fertilized young forest stands and observed herbivore use over the
 subsequent year. The data collected included the number of animal tracks
-in in the fertilized and control plots <span class="citation">(Ball,
+in the fertilized and control plots <span class="citation">(Ball,
 Danell, and Sunesson 2000)</span></p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1296,7 +1311,7 @@ Sign
 </tbody>
 </table>
 <p>The researchers are interested in whether or not fertilizing stands
-increased herbaceous activity. Conduct a sign test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
+increased herbivore activity. Conduct a sign test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
 determine if fertilized plots have significantly more herbivore tracks
 than control plots</p>
 <p>a.) Fill in the table above by computing the difference in animal
@@ -1305,10 +1320,12 @@ difference and report the total number of positive signs <span class="math inlin
 <p>b.) What does a “positive” sign indicate in this experiment? <span style="color: red;">A positive sign indicates that the fertilized stands
 have more animal tracks</span></p>
 <p>c.) Compute the <span class="math inline">\(p\)</span>-value for the
-sign test <span style="color: red;">The number of positive signs is
-<span class="math inline">\(s = 12\)</span>. The <span class="math inline">\(p\)</span>value is probability of observing <span class="math inline">\(12\)</span> or more positive signs in <span class="math inline">\(12\)</span> observations given by <span class="math display">\[p\text{-value} = P(S\geq s | H_0) =
+sign test <span style="color: red;">Every one of the <span class="math inline">\(12\)</span> differences is positive, so <span class="math inline">\(s = 12\)</span> out of <span class="math inline">\(n = 12\)</span> (there are no ties to discard).
+The <span class="math inline">\(p\)</span>-value is the probability of
+observing <span class="math inline">\(12\)</span> or more positive signs
+in <span class="math inline">\(12\)</span> observations, given by <span class="math display">\[p\text{-value} = P(S\geq s | H_0) =
 \frac{12!}{12!(12 - 12)!} \cdot 0.5^{12}\cdot(1-0.5)^{12-12} \]</span>
-<span class="math display">\[ 0.5^{12} \]</span> <span class="math display">\[ \approx 0  \]</span></span></p>
+<span class="math display">\[ = 0.5^{12} \]</span> <span class="math display">\[ \approx 0.00024  \]</span></span></p>
 <p>d.) Use the <span class="math inline">\(p\)</span>-value from part
 (c) to determine if there is enough evidence to conclude that fertilized
 stands have more herbivore activity. <span style="color: red;">At the
@@ -1336,7 +1353,7 @@ conducted among the public since late 2022 <span class="citation">(Ryan
 and Bycoffe 2024)</span>. The historic approval sentiment is
 characterized from <span class="math inline">\(39\)</span> Gallup polls
 conducted since early 2001.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1394,11 +1411,12 @@ proportion is</li>
 </ol>
 <p><span class="math display">\[\hat{p} =
 \frac{0.4116(192)+0.5087(39)}{192+39} = 0.428\]</span></p>
-<p><span class="math inline">\(n\hat{p} = 0.428(231) = 99\)</span> and
-<span class="math inline">\(n(1-\hat{p}) = 0.572(231) = 132\)</span> are
-both greater than the required <span class="math inline">\(15\)</span>
-and thus the sample size is sufficient to meet the asymptotic
-requirement of the test </span></p>
+<p>The success/failure condition must be checked in <u>each</u> group
+separately using the pooled <span class="math inline">\(\hat{p}\)</span>: for group 1, <span class="math inline">\(n_1\hat{p} = 192(0.428) = 82\)</span> and <span class="math inline">\(n_1(1-\hat{p}) = 192(0.572) = 110\)</span>; for
+group 2, <span class="math inline">\(n_2\hat{p} = 39(0.428) =
+17\)</span> and <span class="math inline">\(n_2(1-\hat{p}) = 39(0.572) =
+22\)</span>. All four counts exceed the required <span class="math inline">\(15\)</span>, so the sample sizes are sufficient to
+meet the asymptotic requirement of the test </span></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span> and the alternative
 hypothesis is <span class="math inline">\(H_A: p_1 - p_2 &lt;
@@ -1422,8 +1440,8 @@ depending on how you rounded </span></p>
 <li><span style="color: red;">At the <span class="math inline">\(\alpha
 = 0.05\)</span> significance level, we fail to reject the null
 hypothesis of no difference and conclude that the current SCOTUS
-approval rating is not significantly different than the historical
-average of about <span class="math inline">\(50.1\%\)</span> approving
+approval rating is not significantly lower than the historical average
+of about <span class="math inline">\(50.9\%\)</span> approving
 </span></li>
 </ol>
 <p><br> <br></p>
@@ -1434,7 +1452,7 @@ COVID-19 started. The researchers hypothesized that children in abusive
 homes might be in more danger because they weren’t going to school and
 their families were under more stress <span class="citation">(Martins-Filho et al. 2020)</span>. A summary of the
 study is reported below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1447,7 +1465,7 @@ Parameter
 Total Registries
 </th>
 <th style="text-align:right;">
-Registries for Childer under 12 Years of Age
+Registries for Children under 12 Years of Age
 </th>
 <th style="text-align:right;">
 Relative Proportion
@@ -1492,21 +1510,26 @@ After COVID-19 (2020)
 </tbody>
 </table>
 <p>Conduct a two-sample test at the <span class="math inline">\(\alpha =
-0.01\)</span> significance level to determine whether the rate of
-reported child abuse for children under the age of <span class="math inline">\(12\)</span> was significantly different after the
+0.01\)</span> significance level to determine whether the proportion of
+abuse registries involving children under the age of <span class="math inline">\(12\)</span> was significantly different after the
 start of the COVID-19 pandemic - be sure to address all five steps of
-the hypothesis test</p>
+the hypothesis test. (Note that this proportion is the share of all
+registries that involve a child under 12, not the underlying rate of
+abuse in the population.)</p>
 <ol style="list-style-type: decimal">
 <li><span style="color: red;">the pooled estimate of the common
 proportion is</li>
 </ol>
 <p><span class="math display">\[\hat{p} = \frac{18+16}{70+53} =
 0.276\]</span></p>
-<p><span class="math inline">\(n\hat{p} = 0.276(123) = 34\)</span> and
-<span class="math inline">\(n(1-\hat{p}) = 0.723(123) = 89\)</span> are
-both greater than the required <span class="math inline">\(15\)</span>
-and thus the sample size is sufficient to meet the asymptotic
-requirement of the test </span></p>
+<p>Checking the success/failure condition in <u>each</u> group using the
+pooled <span class="math inline">\(\hat{p}\)</span>: for group 1, <span class="math inline">\(n_1\hat{p} = 70(0.276) = 19.3\)</span> and <span class="math inline">\(n_1(1-\hat{p}) = 70(0.724) = 50.7\)</span>; for
+group 2, <span class="math inline">\(n_2\hat{p} = 53(0.276) =
+14.6\)</span> and <span class="math inline">\(n_2(1-\hat{p}) = 53(0.724)
+= 38.4\)</span>. Note that <span class="math inline">\(n_2\hat{p} =
+14.6\)</span> falls just below the guideline of <span class="math inline">\(15\)</span>, so the normal approximation here is
+borderline and the results should be interpreted with some caution
+</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span> and the alternative
 hypothesis is <span class="math inline">\(H_A: p_1 - p_2 \neq
@@ -1531,14 +1554,14 @@ slightly different depending on how you rounded</span></p>
 <ol start="5" style="list-style-type: decimal">
 <li><span style="color: red;">At the <span class="math inline">\(\alpha
 = 0.01\)</span> significance level we fail to reject the null hypothesis
-and conclude that the proportion of reported child abuse cases for
-children under 12 years of before and after the start of the COVID-19
+and conclude that the proportion of abuse registries involving children
+under 12 years of age before and after the start of the COVID-19
 pandemic are not significantly different</span></li>
 </ol>
 <p><br></p>
 </div>
-<div id="comparing-two-population-proportions-mu_1-and-mu_2" class="section level3">
-<h3>Comparing two population proportions <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span></h3>
+<div id="comparing-two-population-means-mu_1-and-mu_2" class="section level3">
+<h3>Comparing two population means <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span></h3>
 <p><span class="math inline">\(\bf (6.)\)</span> A study published in
 the journal <i>Physical Culture and Sport. Studies and Research</i>
 explored what motivates athletes to keep playing sports, comparing team
@@ -1549,11 +1572,13 @@ disciplines (kung fu and taekwondo). The study evaluated motivational
 factors affecting sport participation based on eight fields:
 achievement/status, teamwork, fitness, energy release, situational
 factors, skill development, friendship, and fun. Each field was
-evaluated based on a survey that quantified sentiment in each field
-using three-level likert scale responses (very important=3, somewhat
-important=2, and not important=1). The results of the study are
-summarized in the table below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+evaluated based on a survey in which every item was scored on a
+three-level likert scale (very important=3, somewhat important=2, and
+not important=1). A field contains several items, and an athlete’s score
+for that field is the <strong>sum</strong> of their item responses - so
+field scores range well above 3. The results of the study are summarized
+in the table below:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1873,11 +1898,10 @@ Individual
 </tr>
 </tbody>
 </table>
-<p>Conduct a pooled (assume the sample vairances are equal) two
-independent samples <span class="math inline">\(t\)</span>-test at the
-<span class="math inline">\(\alpha = 0.05\)</span> significance level to
+<p>Conduct a two independent samples <span class="math inline">\(t\)</span>-test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
 determine whether fitness as a motivating factor is significantly
-different between team and individual sports.</p>
+different between team and individual sports. Assume the populations
+have the SAME variance.</p>
 <ol style="list-style-type: decimal">
 <li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> where <span class="math inline">\(\mu_1\)</span> is the mean score for fitness for
 team sports and <span class="math inline">\(\mu_2\)</span> is the mean
@@ -1889,7 +1913,7 @@ variance is</p></li>
 </ol>
 <p><span class="math display">\[s_{pooled} = \sqrt{\frac{(203 - 1)1.27^2
 + (62-1)0.94^2}{203+62 - 2}} = 1.201 \]</span></p>
-<p>the estiamted standard error assuming the samples are independent
+<p>the estimated standard error assuming the samples are independent and
 have the same variance is given by</p>
 <p><span class="math display">\[ SE(\hat{\mu}_d) =
 1.201\cdot\sqrt{\frac{1}{203}+\frac{1}{62}} = 0.174\]</span></p>
@@ -1920,7 +1944,7 @@ characteristics of maturation and growth in two lowland populations
 from 1986 - 1989. A summary of the body lengths for male and female
 frogs from 1 - 4 years in age in both populations are summarized
 below.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -2163,11 +2187,12 @@ Thevenon
 <p>Conduct a two independent samples <span class="math inline">\(t\)</span>-test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
 evaluate whether there is a statistically significant difference in the
 mean body lengths of four-year-old male frogs between the Servotte and
-Thévenon populations. Assume the sample variances are NOT equal.</p>
+Thévenon populations. Assume the populations have DIFFERENT
+variances.</p>
 <ol style="list-style-type: decimal">
 <li><p><span style="color: red;">The null hypothesis is <span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> where <span class="math inline">\(\mu_1\)</span> is the mean male body length for
-frogs in the Servotte popultion and <span class="math inline">\(\mu_2\)</span> is the mean male body length for
-frogs in the Thevenon population. The alternative hypothesis is <span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span></span></p></li>
+frogs in the Servotte population and <span class="math inline">\(\mu_2\)</span> is the mean male body length for
+frogs in the Thévenon population. The alternative hypothesis is <span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span></span></p></li>
 <li><p><span style="color: red;">The estimated standard error assuming
 the samples are independent and <u>do not have</u> the same variance is
 given by</p></li>
@@ -2185,7 +2210,7 @@ given by</p></li>
 </ol>
 <p><span class="math display">\[ p\text{-value} = P(|t|\geq
 |t_{obs}||H_0) \]</span> <span class="math display">\[= 2\left[P(t \geq
-1.531 | H_0)\right] = 0.077\]</span> </span></p>
+1.531 | H_0)\right] = 2(0.077) = 0.154\]</span> </span></p>
 <ol start="4" style="list-style-type: decimal">
 <li><span style="color: red;">At the <span class="math inline">\(\alpha
 = 0.05\)</span> significance level, we fail to reject the null
@@ -2196,7 +2221,7 @@ not significantly different between the two populations.</span></li>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-augert1993plasticity" class="csl-entry">
 Augert, Dominique, and Pierre Joly. 1993. <span>“Plasticity of Age at
 Maturity Between Two Neighbouring Populations of the Common Frog (Rana

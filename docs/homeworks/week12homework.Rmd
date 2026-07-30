@@ -25,8 +25,7 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 mainpath = '../Data/'
-wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
-whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+whiskpath = '../assets/whiskerMaster.csv'
 
 datapath = '../Data/'
 #<span style="color: red;"></span>
@@ -114,7 +113,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 
 ### Confidence intervals for a population proportion $p$
 
-$\bf (4)$ A survey conducted by the state of Georgia surveyed colleges students as part of a larger effort to characterized student behavior [@agresti2007art]. One the questions in the survey asked students to report their political party affiliation. The table below summarizes the proportion of students who reported being Republican, Democrat, or Independent.
+$\bf (4)$ A survey conducted by the state of Georgia surveyed college students as part of a larger effort to characterize student behavior [@agresti2007art]. One of the questions in the survey asked students to report their political party affiliation. The table below summarizes the proportion of students who reported being Republican, Democrat, or Independent.
 
 ```{r, echo=F, message=F, warning=F}
 set.seed(555)
@@ -168,7 +167,7 @@ hs = read.csv(file = paste0(mainpath, 'housing.csv'))
 
 hss = hs[sample(1:dim(hs)[1], 25), ]
 
-df = cbind.data.frame(`Variable`= c('Median Age of House Owner', 'Total Rooms (per block)', 'Total Bedrooms (per block)', 'Population of District', 'Number of Households (per block)', 'Median Family Income (in tens of thousands of USD)', 'Median House value (USD)'),
+df = cbind.data.frame(`Variable`= c('Median Age of Houses (per block)', 'Total Rooms (per block)', 'Total Bedrooms (per block)', 'Population of District', 'Number of Households (per block)', 'Median Family Income (in tens of thousands of USD)', 'Median House value (USD)'),
                       `Sample Mean` = c(mean(hss$housing_median_age), mean(hss$total_rooms),
                                         mean(hss$total_bedrooms), mean(hss$population),
                                         mean(hss$households), mean(hss$median_income),
@@ -197,7 +196,7 @@ $\bf (7)$ According to a 2023 study published by the Saudi Heart Association, a 
 
 <br>
 
-$\bf (8)$ Recent concerns over the rise in global infertility has drawn significant attention to the harmful effects of microplastics, PFAS, and highly processed foods [@zhang2022microplastics; @agarwal2015unique]. A study from 2002 published in found that approximately $15\%$ of couples worldwide experienced infertility [@sharlip2002best]. Assuming a similar rate of infertility in the U.S, compute the sample size needed to estimate infertility of U.S couples at the $99\%$ confidence level and within a margin of error of $4\%$.
+$\bf (8)$ Recent concerns over the rise in global infertility have drawn significant attention to the harmful effects of microplastics, PFAS, and highly processed foods [@zhang2022microplastics; @agarwal2015unique]. A study from 2002 published in <i>Fertility and Sterility</i> found that approximately $15\%$ of couples worldwide experienced infertility [@sharlip2002best]. Assuming a similar rate of infertility in the U.S, compute the sample size needed to estimate infertility of U.S couples at the $99\%$ confidence level and within a margin of error of $4\%$.
 
 <br>
 
@@ -260,7 +259,7 @@ $\bf (16)$ A toy manufacturer claims that $50\%$ of their toy robots are defect-
 
 <br>
 
-$\bf (17)$ A pharmaceutical company has developed a new drug designed to cure a specific bacterial infection. They claim that their drug is effective, with a cure rate of $20\%$. However, a group of independent researchers believes that the cure rate less than what the pharmaceutical company claims. To investigate, the researchers conduct a clinical trial on $300$ patients suffering from the bacterial infection. After the trial, they find that $70$ out of the $300$ patients were cured using the new drug. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$ with $H_0: p_0 = 0.2$, $H_A: p < p_0$
+$\bf (17)$ A pharmaceutical company has developed a new drug designed to cure a specific bacterial infection. They claim that their drug is effective, with a cure rate of $20\%$. However, a group of independent researchers believes that the cure rate is less than what the pharmaceutical company claims. To investigate, the researchers conduct a clinical trial on $300$ patients suffering from the bacterial infection. After the trial, they find that $70$ out of the $300$ patients were cured using the new drug. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$ with $H_0: p_0 = 0.2$, $H_A: p < p_0$
 
   * a.) Compute the critical value for this test
 
@@ -268,19 +267,19 @@ $\bf (17)$ A pharmaceutical company has developed a new drug designed to cure a 
 
   * c.) Compute the $p$-value
 
-  * d.) Is there enough evidence to conclude that the cure rate of the new drug is less than rate claimed by the pharmaceutical company? 
+  * d.) Is there enough evidence to conclude that the cure rate of the new drug is less than the rate claimed by the pharmaceutical company? 
 
 <br>
 
 ### Hypothesis tests for a population mean $\mu$
 
-$\bf (18)$ A soft drink company claims that their new "Zero Sugar" soda contains zero grams of added sugar per 12-ounce can. To test this claim, a random sample of $25$ cans of this soda is selected. The sample mean is found to be $1.3$ grams of added sugar per can, with a standard deviation of $0.5$ grams. To determine if there is enough evidence to reject the company's claim and conclude that the soda does not contain zero grams of added sugar per can, a group of researchers are interested in testing the following hypotheses: $H_0: \mu_0 = 0$, $H_A: \mu \neq \mu_0$ at the $\alpha = 0.01$ significance level.
+$\bf (18)$ A soft drink company claims that their new "Zero Sugar" soda contains zero grams of added sugar per 12-ounce can. To test this claim, a random sample of $25$ cans of this soda is selected. The sample mean is found to be $1.3$ grams of added sugar per can, with a standard deviation of $0.5$ grams. To determine if there is enough evidence to reject the company's claim and conclude that the soda does not contain zero grams of added sugar per can, a group of researchers is interested in testing the following hypotheses: $H_0: \mu_0 = 0$, $H_A: \mu \neq \mu_0$ at the $\alpha = 0.01$ significance level.
 
   * a.) Using the significance level above, is there evidence that the soda produced by the soft drink company contains added sugars?
 
 <br>
 
-$\bf (19)$ A group of botanists is studying the growth rate of Venus fly traps in a controlled greenhouse environment. Based on historical data, the typical growth rate of Venus fly traps is believed to be $100$ millimeters per year. The botanists suspect that the current growth rate in their greenhouse is higher than this historical value. To investigate, they take a random sample of $40$ Venus fly traps and measure their growth rates over a year. After the study, they find that the sample mean growth rate for the $40$ Venus fly traps is $105$ millimeters with a standard deviation of $12$mm. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$
+$\bf (19)$ A group of botanists is studying the growth rate of Venus fly traps in a controlled greenhouse environment. Based on historical data, the typical growth rate of Venus fly traps is believed to be $100$ millimeters per year. The botanists suspect that the current growth rate in their greenhouse is higher than this historical value. To investigate, they take a random sample of $40$ Venus fly traps and measure their growth rates over a year. After the study, they find that the sample mean growth rate for the $40$ Venus fly traps is $105$ millimeters per year with a standard deviation of $12$mm. To test their suspicion, they set up a hypothesis test with a significance level of $\alpha = 0.05$
 
   * a.) State the null and alternative hypotheses
 

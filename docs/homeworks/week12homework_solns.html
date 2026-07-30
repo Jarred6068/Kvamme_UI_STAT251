@@ -480,6 +480,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
 margin-left:2em;
@@ -667,7 +668,7 @@ degrees of freedom <span style="color: red;"> <span class="math inline">\(= 1 - 
 with the corresponding <span class="math inline">\(\alpha\)</span> level
 and critical value for each confidence interval for a population
 proportion.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:center;">
@@ -754,7 +755,7 @@ critical value: <span class="math inline">\(z_{1-\alpha/2}\)</span>
 with the corresponding <span class="math inline">\(\alpha\)</span> level
 and critical value for each confidence interval for a population
 mean.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:center;">
@@ -864,13 +865,13 @@ critical value: <span class="math inline">\(t_{n-1, 1-\alpha/2}\)</span>
 <div id="confidence-intervals-for-a-population-proportion-p" class="section level3">
 <h3>Confidence intervals for a population proportion <span class="math inline">\(p\)</span></h3>
 <p><span class="math inline">\(\bf (4)\)</span> A survey conducted by
-the state of Georgia surveyed colleges students as part of a larger
-effort to characterized student behavior <span class="citation">(Agresti
-and Franklin 2007)</span>. One the questions in the survey asked
+the state of Georgia surveyed college students as part of a larger
+effort to characterize student behavior <span class="citation">(Agresti
+and Franklin 2007)</span>. One of the questions in the survey asked
 students to report their political party affiliation. The table below
 summarizes the proportion of students who reported being Republican,
 Democrat, or Independent.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -945,7 +946,7 @@ members to complete an online survey <span class="citation">(de Vries
 2023)</span>. One of the survey questions asked customers to rate their
 satisfaction level on a likert scale. The results of this survey
 question are summarized below</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
 Customer responses for the survey question “How satisfied are you with
 your membership of the organisation overall?”
@@ -1072,7 +1073,7 @@ housing in California taken from the 1990 census. The full dataset is
 featured in Aurélien Géron’s book ‘Hands-On Machine learning with
 Scikit-Learn and TensorFlow’ <span class="citation">(Géron 2022)</span>.
 Use the table to answer parts (a) and (b)</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
 Summary statistics for housing data in California from the 1990 census.
 Estimates are derived from a random sample of 25 observations from
@@ -1096,7 +1097,7 @@ Sample Standard Deviation
 <tbody>
 <tr>
 <td style="text-align:left;">
-Median Age of House Owner
+Median Age of Houses (per block)
 </td>
 <td style="text-align:right;">
 24.28
@@ -1178,11 +1179,11 @@ Median House value (USD)
 median family income for households in California in 1990</li>
 </ul>
 <pre class="r"><code>sample.size = 25
-sample.mean = 3.74*10000 #converting estimate to USD
-sample.sd =  1.54*10000 #converting standard deviation to USD
+sample.mean = round(mean(hss$median_income), 2)*10000 #converting estimate to USD
+sample.sd =  round(sd(hss$median_income), 2)*10000 #converting standard deviation to USD
 confidence.lvl = 0.95
 
-CI = one.sample.t.CI(xbar = sample.mean, 
+CI = one.sample.t.CI(xbar = sample.mean,
                      s = sample.sd,
                      n = sample.size,
                      alpha = 1 - confidence.lvl,
@@ -1194,17 +1195,22 @@ CI = one.sample.t.CI(xbar = sample.mean,
 ## [1] Margin of error = 6356.8076
 ## [1] 95 % CI = [31043.1924,43756.8076]
 ## [1] --------------------------------------------------</code></pre>
-<pre class="r"><code># At the 95% confidence level, we estimate the average median family income in California in 1990 to be no less than $31,043 USD and no more than $43,756 USD. </code></pre>
+<p><span style="color: red;">At the <span class="math inline">\(95\%\)</span> confidence level, we estimate the
+average median family income in California in 1990 to be no less than
+$31,043 USD and no more than $43,757 USD. If we repeated this sampling
+procedure many times, <span class="math inline">\(95\%\)</span> of the
+intervals constructed this way would contain the true
+average.</span></p>
 <ul>
 <li>b.) Construct and interpret a <span class="math inline">\(99\%\)</span> confidence interval for the average
 number of bedrooms per block in California in 1990</li>
 </ul>
 <pre class="r"><code>sample.size = 25
-sample.mean = 640.52
-sample.sd =  380.55 
+sample.mean = round(mean(hss$total_bedrooms), 2)
+sample.sd =  round(sd(hss$total_bedrooms), 2)
 confidence.lvl = 0.99
 
-CI = one.sample.t.CI(xbar = sample.mean, 
+CI = one.sample.t.CI(xbar = sample.mean,
                      s = sample.sd,
                      n = sample.size,
                      alpha = 1 - confidence.lvl,
@@ -1216,7 +1222,12 @@ CI = one.sample.t.CI(xbar = sample.mean,
 ## [1] Margin of error = 212.8751
 ## [1] 99 % CI = [427.6449,853.3951]
 ## [1] --------------------------------------------------</code></pre>
-<pre class="r"><code># At the 99% confidence level, we estimate the average number of bedrooms per block in California in 1990 to be no less than 427.6 and no more than 853.4</code></pre>
+<p><span style="color: red;">At the <span class="math inline">\(99\%\)</span> confidence level, we estimate the
+average number of bedrooms per block in California in 1990 to be no less
+than 427.6 and no more than 853.4. If we repeated this sampling
+procedure many times, <span class="math inline">\(99\%\)</span> of the
+intervals constructed this way would contain the true
+average.</span></p>
 <p><br></p>
 </div>
 <div id="choosing-a-minimum-sample-size" class="section level3">
@@ -1237,21 +1248,23 @@ alpha = 1 - confidence.lvl
 
 z = qnorm(1 - alpha/2) #standard score for confidence level of 95%
 
-n = round((z^2*p*(1-p))/m^2) # compute sample size - round to nearest whole number
+n = ceiling((z^2*p*(1-p))/m^2) # compute sample size - always round UP
 
 # a sample size of approximately
 print(paste0(&#39;n = &#39;, n, &#39; observations&#39;))</code></pre>
-<pre><code>## [1] &quot;n = 3114 observations&quot;</code></pre>
-<pre class="r"><code>#are needed to achieve the desire confidence level and margin of error</code></pre>
+<pre><code>## [1] &quot;n = 3115 observations&quot;</code></pre>
+<pre class="r"><code>#are needed to achieve the desired confidence level and margin of error</code></pre>
 <p><br></p>
 <p><span class="math inline">\(\bf (8)\)</span> Recent concerns over the
-rise in global infertility has drawn significant attention to the
+rise in global infertility have drawn significant attention to the
 harmful effects of microplastics, PFAS, and highly processed foods <span class="citation">(Zhang et al. 2022; Agarwal et al. 2015)</span>. A
-study from 2002 published in found that approximately <span class="math inline">\(15\%\)</span> of couples worldwide experienced
-infertility <span class="citation">(Sharlip et al. 2002)</span>.
-Assuming a similar rate of infertility in the U.S, compute the sample
-size needed to estimate infertility of U.S couples at the <span class="math inline">\(99\%\)</span> confidence level and within a margin
-of error of <span class="math inline">\(4\%\)</span>.</p>
+study from 2002 published in <i>Fertility and Sterility</i> found that
+approximately <span class="math inline">\(15\%\)</span> of couples
+worldwide experienced infertility <span class="citation">(Sharlip et al.
+2002)</span>. Assuming a similar rate of infertility in the U.S, compute
+the sample size needed to estimate infertility of U.S couples at the
+<span class="math inline">\(99\%\)</span> confidence level and within a
+margin of error of <span class="math inline">\(4\%\)</span>.</p>
 <pre class="r"><code>m = 0.04 #desired margin of error
 p = 0.15 #expected proportion of infertile couples based on previous studies
 confidence.lvl = 0.99
@@ -1259,12 +1272,12 @@ alpha = 1 - confidence.lvl
 
 z = qnorm(1 - alpha/2) #standard score for confidence level of 99%
 
-n = round((z^2*p*(1-p))/m^2) # compute sample size - round to nearest whole number
+n = ceiling((z^2*p*(1-p))/m^2) # compute sample size - always round UP
 
 # a sample size of approximately
 print(paste0(&#39;n = &#39;, n, &#39; observations&#39;))</code></pre>
 <pre><code>## [1] &quot;n = 529 observations&quot;</code></pre>
-<pre class="r"><code>#are needed to achieve the desire confidence level and margin of error</code></pre>
+<pre class="r"><code>#are needed to achieve the desired confidence level and margin of error</code></pre>
 <p><br></p>
 </div>
 <div id="assumptions-of-estimators" class="section level3">
@@ -1444,19 +1457,24 @@ one.sample.prop.test(p0 = null.value,
 ## [1] Pvalue = 0.0455
 ## [1] Decision: reject H0
 ## [1] ======================================================</code></pre>
-<p><span style="color: red;">At the <span class="math inline">\(10\%\)</span> significance level we fail to reject
-the null hypothesis and conclude that the proportion of defective toy
-robots is not significantly different than <span class="math inline">\(0.5\)</span> </span></p>
+<p><span style="color: red;">The test statistic is <span class="math inline">\(Z_{obs} = \frac{0.40 -
+0.50}{\sqrt{0.5(1-0.5)/100}} = -2.00\)</span> with a two-tailed <span class="math inline">\(p\)</span>-value of <span class="math inline">\(0.0455\)</span>. Since <span class="math inline">\(0.0455 &lt; \alpha = 0.1\)</span> (equivalently,
+<span class="math inline">\(|Z_{obs}| = 2.00 &gt; 1.645\)</span>), at
+the <span class="math inline">\(10\%\)</span> significance level we
+reject the null hypothesis and conclude that the proportion of
+defect-free toy robots is significantly different from the
+manufacturer’s claim of <span class="math inline">\(0.5\)</span>
+</span></p>
 <p><br></p>
 <p><span class="math inline">\(\bf (17)\)</span> A pharmaceutical
 company has developed a new drug designed to cure a specific bacterial
 infection. They claim that their drug is effective, with a cure rate of
 <span class="math inline">\(20\%\)</span>. However, a group of
-independent researchers believes that the cure rate less than what the
-pharmaceutical company claims. To investigate, the researchers conduct a
-clinical trial on <span class="math inline">\(300\)</span> patients
-suffering from the bacterial infection. After the trial, they find that
-<span class="math inline">\(70\)</span> out of the <span class="math inline">\(300\)</span> patients were cured using the new
+independent researchers believes that the cure rate is less than what
+the pharmaceutical company claims. To investigate, the researchers
+conduct a clinical trial on <span class="math inline">\(300\)</span>
+patients suffering from the bacterial infection. After the trial, they
+find that <span class="math inline">\(70\)</span> out of the <span class="math inline">\(300\)</span> patients were cured using the new
 drug. To test their suspicion, they set up a hypothesis test with a
 significance level of <span class="math inline">\(\alpha = 0.05\)</span>
 with <span class="math inline">\(H_0: p_0 = 0.2\)</span>, <span class="math inline">\(H_A: p &lt; p_0\)</span></p>
@@ -1488,7 +1506,7 @@ one.sample.prop.test(p0 = null.value,
 <li><p>a.) Compute the critical value for this test</p>
 <p><span style="color: red;">the critical value is <span class="math inline">\(Z_{\alpha} = -1.64\)</span></span></p></li>
 <li><p>b.) Compute the test statistic <span class="math inline">\(Z_{obs}\)</span></p>
-<p><span style="color: red;">the critical value is <span class="math display">\[Z_{obs} = \frac{0.233 -
+<p><span style="color: red;">the test statistic is <span class="math display">\[Z_{obs} = \frac{0.233 -
 0.2}{\sqrt{\frac{0.2(1-0.2)}{300}}} = 1.44 \]</span> </span></p></li>
 <li><p>c.) Compute the <span class="math inline">\(p\)</span>-value</p></li>
 </ul>
@@ -1496,7 +1514,8 @@ one.sample.prop.test(p0 = null.value,
 \]</span> </span></p>
 <ul>
 <li>d.) Is there enough evidence to conclude that the cure rate of the
-new drug is less than rate claimed by the pharmaceutical company?</li>
+new drug is less than the rate claimed by the pharmaceutical
+company?</li>
 </ul>
 <p><span style="color: red;">At the <span class="math inline">\(5\%\)</span> significance level, we fail to reject
 the null hypothesis and conclude that the proportion of patients cured
@@ -1512,7 +1531,7 @@ sample mean is found to be <span class="math inline">\(1.3\)</span>
 grams of added sugar per can, with a standard deviation of <span class="math inline">\(0.5\)</span> grams. To determine if there is
 enough evidence to reject the company’s claim and conclude that the soda
 does not contain zero grams of added sugar per can, a group of
-researchers are interested in testing the following hypotheses: <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> at the <span class="math inline">\(\alpha = 0.01\)</span> significance level.</p>
+researchers is interested in testing the following hypotheses: <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> at the <span class="math inline">\(\alpha = 0.01\)</span> significance level.</p>
 <ul>
 <li>a.) Using the significance level above, is there evidence that the
 soda produced by the soft drink company contains added sugars?</li>
@@ -1562,10 +1581,9 @@ in their greenhouse is higher than this historical value. To
 investigate, they take a random sample of <span class="math inline">\(40\)</span> Venus fly traps and measure their
 growth rates over a year. After the study, they find that the sample
 mean growth rate for the <span class="math inline">\(40\)</span> Venus
-fly traps is <span class="math inline">\(105\)</span> millimeters with a
-standard deviation of <span class="math inline">\(12\)</span>mm. To test
-their suspicion, they set up a hypothesis test with a significance level
-of <span class="math inline">\(\alpha = 0.05\)</span></p>
+fly traps is <span class="math inline">\(105\)</span> millimeters per
+year with a standard deviation of <span class="math inline">\(12\)</span>mm. To test their suspicion, they set
+up a hypothesis test with a significance level of <span class="math inline">\(\alpha = 0.05\)</span></p>
 <pre class="r"><code>test.type = &#39;upper.tail&#39;
 null.value = 100
 sample.mean = 105
@@ -1599,7 +1617,7 @@ one.sample.t.test(m0 = null.value,
 <p><span style="color: red;">The null hypothesis is that the mean growth
 rate of venus fly traps is <span class="math inline">\(100\)</span>mm
 per year. <span class="math display">\[H_0: \mu_0 = 100 \]</span> The
-alternative hypothesis is that the growth rate is higher than <span class="math inline">\(100\)</span>mm per year <span class="math display">\[H_0: \mu &gt; \mu_0\]</span> </span></p>
+alternative hypothesis is that the growth rate is higher than <span class="math inline">\(100\)</span>mm per year <span class="math display">\[H_A: \mu &gt; 100\]</span> </span></p>
 <ul>
 <li>b.) Compute the critical value for this test</li>
 </ul>
@@ -1630,7 +1648,7 @@ significantly higher than 100 mm per year.</span></p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-agarwal2015unique" class="csl-entry">
 Agarwal, Ashok, Aditi Mulgund, Alaa Hamada, and Michelle Renee Chyatte.
 2015. <span>“A Unique View on Male Infertility Around the Globe.”</span>

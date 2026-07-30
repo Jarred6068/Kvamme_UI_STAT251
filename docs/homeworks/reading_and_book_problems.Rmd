@@ -29,19 +29,19 @@ Chapter 4: Sections 4.1 - 4.3, 4.6 p.243 - 258 and p.266 - 270
 
 ## Week 7 - 8
 
-Chapter 5: Sections 5.1 p.311 - 315
+Chapter 5: Section 5.1 p.311 - 315
 
 Chapter 6: Sections 6.2 - 6.4, p.371 - 398
 
 Chapter 7: All Sections p. 399 - 442
 
-Week 9 - 12: 
+## Week 9 - 12
 
 Chapter 8: All sections p. 443 - 504
 
 Chapter 9: All sections p. 505 - 566
 
-Week 13:
+## Week 13
 
 Chapter 10: All sections p. 567 - 620
  
@@ -61,41 +61,41 @@ Week 6:
 
   * Practice problems chapter 3 p. 215 - 219, problems 1-35, 36-37, 39, 44-45, 48-49,51-53, 54-57
   
-  * homework problems chapter 3 p. 219 - , problems 66-79, 81-84, 87-89, 91, 94-99, 101-110, 112
+  * Homework problems chapter 3, problems 66-79, 81-84, 87-89, 91, 94-99, 101-110, 112
   
 Week 7:
 
   * Practice problems chapter 4 p. 281 - 287, problems 1-44, 56-68
   
-  * homework problems chapter 4 p. 288 - 299, problems 69-103, 117-129
+  * Homework problems chapter 4 p. 288 - 299, problems 69-103, 117-129
   
   * Practice problems chapter 5 p. 345 - 346, problems 3-15
   
-  * homework problems chapter 5 p. 352, problems 72-73
+  * Homework problems chapter 5 p. 352, problems 72-73
 
   
 Week 8:
 
   * Practice problems chapter 6 p. 386 - 388, problems 43 - 59
 
-  * homework problems chapter 6 p. 389 - , problems 60-61, 63-88
+  * Homework problems chapter 6, problems 60-61, 63-88
   
   * Practice problems chapter 7 p. 426 - 430, All problems
 
-  * homework problems chapter 7 p. 430 - 438, All problems 
+  * Homework problems chapter 7 p. 430 - 438, All problems 
   
-Week 9 - 12: 
+:
 
   * Practice problems chapter 8 all problems
 
-  * homework problems chapter 8 all problems
+  * Homework problems chapter 8 all problems
   
   * Practice problems chapter 9 all problems
 
-  * homework problems chapter 9 all problems 
+  * Homework problems chapter 9 all problems 
   
-Week 13:
+:
 
   * Practice problems chapter 10 all problems
 
-  * homework problems chapter 10 all problems
+  * Homework problems chapter 10 all problems

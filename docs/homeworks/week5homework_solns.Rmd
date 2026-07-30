@@ -24,14 +24,13 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 mainpath = '../Data/'
-wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
-whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+whiskpath = '../assets/whiskerMaster.csv'
 
 datapath = '../Data/'
 ```
 
 
-$\bf (1)$ Rocket League is a popular online video game and E-sport that emerged in 2015. The game enjoys a healthy following of around 93 million players per month. The game features players from around the world who compete in sports like soccer (football), basketball and hockey while controlling RC-like vehicles. The most popular game-mode is doubles soccer in which teams of two players each try to outscore each other by hitting a soccer ball into the opposing goal. In the course of each match, the player controlled vehicles often collide in what is commonly referred to as a "bump". The following histogram shows the distribution of the average number of "bumps" per match for a given player of Rocket League 
+$\bf (1)$ Rocket League is a popular online video game and E-sport that emerged in 2015. The game enjoys a healthy following of around 93 million players per month. The game features players from around the world who compete in sports like soccer (football), basketball and hockey while controlling RC-like vehicles. The most popular game-mode is doubles soccer in which teams of two players each try to outscore each other by hitting a soccer ball into the opposing goal. In the course of each match, the player-controlled vehicles often collide in what is commonly referred to as a "bump". The following histogram shows the distribution of the average number of "bumps" per match for a given player of Rocket League 
 
 ```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=8}
 RL = read.table(paste0(datapath, 'RLData.txt'), sep = ',', header = T)
@@ -62,21 +61,22 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
 
 (d) After playing a new match, the player logs 620 bumps. Calculate the $z$-score for this match and explain the meaning of the z-score in relation to the average number of bumps. How many standard deviations is the player's performance from the mean number of bumps?
 
-<span style="color: red;">\[ z = \frac{620 - 355}{69} = 3.84  \ \text{standard deviations}\] </span>
+<span style="color: red;">\[ z = \frac{620 - 355}{69} = 3.84 \]
+The player's performance in this match is $3.84$ standard deviations **above** the mean number of bumps. A $z$-score this large means the match is extremely unusual for this player - under the empirical rule almost all matches fall within $3$ standard deviations of the mean, so 620 bumps is far beyond the player's typical performance.</span>
 
-**Figure 1** Pinneped whisker morphology - Ginter et al. 2012           |  A juvenile Harp Seal
+**Figure 1** Pinniped whisker morphology - Ginter et al. 2012           |  A juvenile Harp Seal
 :-------------------------:|:-------------------------:
-![](C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png)  |  ![](../misc/Harp_seal_whitecoat.jpg)
+![](../assets/whisker_types.png)  |  ![](../assets/Harp_seal_whitecoat.jpg)
 
 
 <!-- \begin{figure} -->
 <!-- \centering -->
 <!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png} -->
-<!--       \caption{Pinneped whisker morphology - Ginter et al. 2012} -->
+<!--       \includegraphics{../assets/whisker_types.png} -->
+<!--       \caption{Pinniped whisker morphology - Ginter et al. 2012} -->
 <!--     \end{minipage}\hfill -->
 <!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/Harpseal.jpg} -->
+<!--       \includegraphics{../assets/Harp_seal_whitecoat.jpg} -->
 <!--       \caption{A juvenile Harp Seal} -->
 <!--     \end{minipage} -->
 <!-- \end{figure} -->
@@ -89,7 +89,7 @@ ga = read.csv(paste0(mainpath, 'georgia_student_survey.csv'))
 
 
 $\bf (2)$
-Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals and their vibrissal hair shafts demonstrate a diversity of shapes (**See Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals from 9 species of seals and sea lion. Their goal was to better characterize whisker morphology and evolution. The following data are the recorded whisker lengths of 20 Harp Seals (given in **Table 1**). Note that the data have been sorted according to increasing ``Total Length (cm)" for your convenience - use the table to answer the following questions:
+Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals and their vibrissal hair shafts demonstrate a diversity of shapes (**See Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals from 9 species of seals and sea lions. Their goal was to better characterize whisker morphology and evolution. The following data are the recorded whisker lengths of 20 Harp Seals (given in **Table 1**). Note that the data have been sorted according to increasing "Total Length (cm)" for your convenience - use the table to answer the following questions:
 
 
 \newpage
@@ -117,17 +117,17 @@ print(paste0('comma separated values = ', paste0(round(FS[ix,]$total.length,2), 
 
 \newpage
 
-(a) Compute the quartiles, interquartile range, mean, and standard deviation for the variable ``Total Length (cm)" - (use the course website apps for help)
+(a) Compute the quartiles, interquartile range, mean, and standard deviation for the variable "Total Length (cm)" - (use the course website apps for help)
 
 <span style="color: red;">\begin{eqnarray} Q1 = \frac{4.33+4.34}{2} = 4.335 \approx 4.34 \\\nonumber
  median =  \frac{4.41+4.43}{2} = 4.42 \\\nonumber
  Q3 = \frac{4.48+4.51}{2} = 4.49 \\\nonumber
  IQR =  4.49 - 4.34 = 0.15 \\\nonumber
- \bar{x} =  \sum_{i = 1}^{20} \frac{4.18 + 4.23 + \cdots 5.08}{20} = 4.446 \\\nonumber
- s =  \sqrt{\sum_{i = 1}^{20}\frac{(4.18 - 4.45)^2 + (4.23 - 4.45)^2 + \cdots (5.08 - 4.45)^2}{19}} = 0.189 \\\nonumber
+ \bar{x} =  \frac{4.18 + 4.23 + \cdots + 5.08}{20} = 4.446 \\\nonumber
+ s =  \sqrt{\frac{(4.18 - 4.45)^2 + (4.23 - 4.45)^2 + \cdots + (5.08 - 4.45)^2}{19}} = 0.189 \\\nonumber
 \end{eqnarray}</span>
 
-(b) Make a boxplot of the variable ``Total Length" and make note of any outliers
+(b) Make a boxplot of the variable "Total Length" and make note of any outliers
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
 X = FS[ix,]$total.length
@@ -159,7 +159,7 @@ text(x=locals[3], labels =paste("IQR", round(estims[4] - estims[2],2), sep = " =
 
 
 $\bf (3)$
-Use the following pair of boxplots constructed from the Pinneped whisker data in $\textbf{Table 1}$. The boxplots show the distribution of total whisker length (cm) for whiskers with 2 beads vs whiskers with three beads. Answer the following questions:
+Use the following pair of boxplots constructed from the Pinniped whisker data in $\textbf{Table 1}$. The boxplots show the distribution of total whisker length (cm) for whiskers with 2 beads vs whiskers with three beads. Answer the following questions:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
 FS$num.beads = as.factor(FS$num.beads)
@@ -199,18 +199,18 @@ paste('comma separated values = ', paste0(round(bead3$total.length, 1), collapse
 
 (a) Using the boxplot above, do the whisker lengths for 2 bead and 3 bead whiskers follow a normal distribution? why or why not? 
 
-<span style="color: red;">The distribution for 2 beads is normally distributed (given by the symmetry of boxplot) but the distribution for 3 beads is skewed</span>
+<span style="color: red;">The boxplot for 2 bead whiskers is roughly symmetric, which is consistent with (though not proof of) an approximately normal distribution. The boxplot for 3 bead whiskers is clearly skewed, so those whisker lengths are not approximately normal</span>
 
 (b) Suppose researchers observe two new Harp Seals (Denoted Seal 1 and Seal 2) and record their total whiskers lengths and the number of beads on the whiskers. Seal 1 has a total whisker length of 4.32 (cm) and the whisker has 3 beads. Seal 2 has a total whisker length of 4.34 (cm) but the whisker has only 2 beads. Suppose we want to know how they compare <i>relative</i> to the distribution of whiskers with the same number of beads. Confirm that the whisker length of seal 1 has a $z$-score of $-1.07$ while Seal 2 has a $z$-score of $-0.43$. Refer to the boxplot above
 
-<span style="color: red;">The mean length for whiskers with two beads and three beads is $\bar{x}_{2beads} = 4.32$ and $\bar{x}_{3beads} = 4.61$ respectively. The standard deviation in length for whiskers with 2 and 3 beads is $s_{2beads} = 0.121$ and $s_{3beads} = 0.270$ respectively. Seal 1 has a $z$-score of 
+<span style="color: red;">The mean length for whiskers with two beads and three beads is $\bar{x}_{2beads} = 4.39$ and $\bar{x}_{3beads} = 4.61$ respectively. The standard deviation in length for whiskers with 2 and 3 beads is $s_{2beads} = 0.121$ and $s_{3beads} = 0.270$ respectively. Seal 1 has a $z$-score of 
 \[z_1 = \frac{4.32 - \bar{x_3}}{s_3} = \frac{4.32 - 4.61}{0.27} = -1.07\]
 And Seal 2 has a $z$-score of
 \[z_2 = \frac{4.34 - \bar{x_2}}{s_2} = \frac{4.34 - 4.39}{0.12} = -0.43\] </span>
 
 (c) If the researchers were to observe the whisker length of a new seal and the whisker had 3 beads, how long or short would the whisker of this observation have to be for it to be considered an outlier? (assume the data is approximately normal)
 
-<span style="color: red;">Since the data is approximately symmetric (normal) we can use the 2 standard deviations rule $\bar{x}-2s > x > \bar{x}+2s$ - the whisker would have to be greater than
+<span style="color: red;">Since the data is approximately symmetric (normal) we can use the 2 standard deviations rule: an observation is flagged as an outlier when $x < \bar{x}-2s$ **or** $x > \bar{x}+2s$ - so the whisker would have to be greater than
 \[ \bar{x}_3 + 2s = 4.608 + 2\times 0.270 = 5.148 (cm) \]
 or less than 
 \[ \bar{x}_3 - 2s = 4.608 - 2\times 0.270 = 4.068 (cm)\]</span>
@@ -245,7 +245,7 @@ paste('Comma separated values = ', paste0(x, collapse = ','))
 
 (a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$. Compare your answer with the cumulative distribution plot above, why might the two answers differ? (hint: think about shape and how that relates to the empirical rule)
 
-<span style="color: red;">approximately $-3$ and $13$. Using the plot above the answers are approximately -2.5 and 11.1. The percentiles differ because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with deviations from normality/span>
+<span style="color: red;">approximately $-3$ and $13$. Using the plot above the answers are approximately -2.5 and 11.1. The percentiles differ because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with deviations from normality</span>
 
 (b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-3$ and $13$?
 
@@ -255,11 +255,11 @@ paste('Comma separated values = ', paste0(x, collapse = ','))
 
 <span style="color: red;">
 \[ z_1 = \frac{11.5 - 5}{4} \approx 1.63 \]
-No, because $1.63 < 2$
+The observation $x_1 = 11.5$ sits $1.63$ standard deviations above the mean. It is not an outlier, because $1.63 < 2$
 </span>
 <span style="color: red;">
 \[ z_2 = \frac{-4.7 - 5}{4} \approx -2.43 \]
-Yes, because $-2.43 < -2$
+The observation $x_2 = -4.7$ sits $2.43$ standard deviations below the mean. It would be flagged as an outlier, because $-2.43 < -2$
 </span>
 
 
@@ -285,9 +285,9 @@ Name the sampling method used in each of the following situations:
 
 (a) A man is standing outside of a grocery store handing out questionnaires to shoppers asking them to evaluate their shopping experience and the quality of service. He does not ask shoppers who have their hands full carrying groceries, but instead asks all shoppers who have only a few items or have both hands free to fill out the questionnaire.
 
-<span style="color: red;">convienence sampling</span>
+<span style="color: red;">convenience sampling</span>
 
-(b) A gardener has garden box in which he has planted 10 rows of corn. Each row consists of eight corn plants. The gardener wishes to know the average height of the corn plants in the garden box so he randomly selects rows 1, 5, and 9 and measures the height of all corn plants in those rows.
+(b) A gardener has a garden box in which he has planted 10 rows of corn. Each row consists of eight corn plants. The gardener wishes to know the average height of the corn plants in the garden box so he randomly selects rows 1, 5, and 9 and measures the height of all corn plants in those rows.
 
 <span style="color: red;">cluster sampling</span>
 
@@ -296,7 +296,7 @@ Name the sampling method used in each of the following situations:
 <span style="color: red;">stratified random sampling</span>
 
 
-(d) A local polling company wishes to know what proportion of citizens in Moscow, Idaho are voting for the republican candidate in mayoral race. The polling company records this information for every 5th voter who leaves the voting booth.
+(d) A local polling company wishes to know what proportion of citizens in Moscow, Idaho are voting for the Republican candidate in the mayoral race. The polling company records this information for every 5th voter who leaves the voting booth.
 
 <span style="color: red;">systematic sampling</span>
 

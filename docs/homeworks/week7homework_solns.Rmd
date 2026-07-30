@@ -24,8 +24,7 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 mainpath = '../Data/'
-wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
-whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+whiskpath = '../assets/whiskerMaster.csv'
 
 datapath = '../Data/'
 #<span style="color: red;"></span>
@@ -38,13 +37,13 @@ library(ggvenn)
 ### Definitions
 Define the following terms/concepts
 
-* a.) Sampling Error - <span style="color: red;">how close a given estimate is from the true population parameter it is estimating</span>
+* a.) Sampling Error - <span style="color: red;">the difference between a sample estimate and the true population parameter it is estimating, which arises because we observe only a subset of the population</span>
 
 * b.) Law of Large Numbers - <span style="color: red;">A theorem in probability and statistics which states that the relative frequency of an event will tend to “approach” (in some sense) the probability of an event as the number of observations increases</span>
 
-* c.) Sample Space - <span style="color: red;">the collection of all possible outcomes of a random phenomena or experiment</span>
+* c.) Sample Space - <span style="color: red;">the collection of all possible outcomes of a random phenomenon or experiment</span>
 
-* d.) Event - <span style="color: red;">An outcome of a random phenomena or experiment</span>
+* d.) Event - <span style="color: red;">A set of outcomes of a random phenomenon or experiment - that is, any subset of the sample space</span>
 
 * e.) Union - <span style="color: red;">the combined outcomes of two events</span>
 
@@ -53,7 +52,7 @@ Define the following terms/concepts
 * g.) Random Trial - <span style="color: red;">a process or experiment that can be repeated
 with a well-defined set of possible outcomes.</span>
 
-* h.) Random Variable - <span style="color: red;">a function that maps from the sample space of event to a value</span>
+* h.) Random Variable - <span style="color: red;">a function that assigns a numerical value to each outcome in the sample space</span>
 
 * i.) Probability distribution - <span style="color: red;">a function that gives the probabilities of different possible outcomes of a random variable</span>
 
@@ -75,7 +74,7 @@ $\bf (1)$ A fair coin is thrown 3 times. What is the probability that <u>at leas
 <span style="color: red;">
 \[P(\text{At least one heads}) = 1-P(\text{No Heads})\]
 The sample space of this event is 
-\[\mathbb{S} = \begin{bmatrix} \text{No heads} = (H,H,H) \\ 
+\[\mathbb{S} = \begin{bmatrix} \text{No heads} = (T,T,T) \\
 \text{1 Heads} = (H,T,T),(T,H,T),(T,T,H)  \\
 \text{2 Heads} = (H,H,T),(H,T,H),(T,H,H) \\
 \text{All Heads} = (H,H,H) \end{bmatrix} \]
@@ -86,7 +85,6 @@ The sample space consists of 8 possible outcomes and there is only one outcome w
 $\bf (2)$ Suppose that in a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Create a Venn diagram that models this situation. What is the probability that a student is in the band or plays a sport?
 
 ```{r, eval = T, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
-setwd("../misc/")
 x1 = c(paste(rep('bs', 5), 1:5), paste(rep('b', 8), 1:8))
 x2 = c(paste(rep('bs', 5), 1:5), paste(rep('s', 15),1:15))
 
@@ -113,7 +111,7 @@ ggvenn(
 
 $\bf (3)$ A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards (9 numbered cards and 3 face cards, and an Ace). 
 
-* Suppose a single card is drawn at random, what is the probability that it is a numbered?
+* Suppose a single card is drawn at random, what is the probability that it is a numbered card?
 
 <span style="color: red;">\[P(\text{Card is numbered}) = \frac{\text{Number of ways to get numbered card}}{\text{Total number of cards}} = \frac{9 \cdot 4}{52} \]</span>
 
@@ -127,7 +125,7 @@ $\bf (4)$ An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two ba
 <span style="color: red;">Since the balls are selected <u>with replacement</u> the two events are independent. Therefore, the intersection of the two events: $A$ first ball yellow and $B$ second ball is red is given by
 \[P(A\cap B) = \frac{4}{16} \cdot \frac{7}{16}  = \frac{7}{64}\]</span>
 
-$\bf (5)$ The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is Windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume that these three types of weather events are independent. What is the probability that a given day is both Rainy, Cloudy, and Windy?
+$\bf (5)$ The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is Windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume that these three types of weather events are independent. What is the probability that a given day is Rainy, Cloudy, and Windy?
 
 <span style="color: red;">We are told the events are independent and we wish to find the intersection of $R$, $W$ and $C$:
 \[P(R\cap W\cap C) = (0.1)(0.2)(0.7) = 0.014 \]</span>
@@ -146,7 +144,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 
 ```
 
-* Derive the sampling distribution for the mean of $n=2$ observations of $\bar{X}$
+* Derive the sampling distribution for the mean of $n=2$ observations of $X$
 
 <span style="color: red;">The sample space for a mean of two observations of $X$ is given below.</span>
 ```{r, echo=F, message=F, warning=F}
@@ -178,16 +176,19 @@ sigma.sq = sum((unq.means-avg)^2*px)
 sigma = sqrt(sigma.sq)
 ```
 
-* Compute the population mean $\mu$ and population standard deviation $\sigma$ of $X$
+* Compute the mean $\mu_{\bar{X}}$ and standard deviation $\sigma_{\bar{X}}$ of the sampling distribution of $\bar{X}$
 
-<span style="color: red;">\[\mu =\sum_x xP(x) \]
-\[= 1(0.0625)+2(0.125)+\cdots +3.5(0.125)+4(0.0625)\]
+<span style="color: red;">Using the sampling distribution of $\bar{X}$ derived above:
+\[\mu_{\bar{X}} =\sum_{\bar{x}} \bar{x}P(\bar{x}) \]
+\[= 1(0.0625)+1.5(0.125)+\cdots +3.5(0.125)+4(0.0625)\]
 \[= 2.5 \]</span>
 
-<span style="color: red;">\[\sigma =\sqrt{\sum_x (x-\mu)^2P(x)} \]
-\[= \sqrt{(1-2.5)^2(0.0625)+(2-2.5)^2(0.125)+\cdots +(3.5-2.5)^2(0.125)+(4-2.5)^2(0.0625)} \]
+<span style="color: red;">\[\sigma_{\bar{X}} =\sqrt{\sum_{\bar{x}} (\bar{x}-\mu_{\bar{X}})^2P(\bar{x})} \]
+\[= \sqrt{(1-2.5)^2(0.0625)+(1.5-2.5)^2(0.125)+\cdots +(3.5-2.5)^2(0.125)+(4-2.5)^2(0.0625)} \]
 \[= \sqrt{0.625} \]
 \[= 0.791\]</span>
+
+<span style="color: red;">Note that this agrees with the population values for $X$ itself: $\mu = 2.5$ and $\sigma = \sqrt{1.25} = 1.118$, and the standard deviation of the sampling distribution is $\sigma/\sqrt{n} = 1.118/\sqrt{2} = 0.791$.</span>
 
 $\bf (7)$ A random variable $Y$ has two possible outcomes. The outcome $Y = 1$ occurs with probability $p = 0.23$. Derive the sampling distribution for the proportion of outcomes with $Y = 1$ in a sample of $n = 3$ observations of $Y$.
 
@@ -338,13 +339,13 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%
 
 * What is the probability the mean distance is 35.33 yards or 55 yards?
 
-<span style="color: red;">Let $A$ be the event $\bar{X} = 35.33$ and $B$ be the event $\bar{X} = 55$, then
-\[P(A\cup B) = P(X = 35.33)+P(X = 55) = 0.3+0.08 = 0.38 \]</span>
+<span style="color: red;">Let $A$ be the event $\bar{X} = 35.33$ and $B$ be the event $\bar{X} = 55$. These outcomes are disjoint, so
+\[P(A\cup B) = P(\bar{X} = 35.33)+P(\bar{X} = 55) = 0.4+0.08 = 0.48 \]</span>
 
 
 
 
-$\bf (10)$ A random variable $X$ follows a binomial distribution with with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 successes, that is what is $P(X < 3)$?
+$\bf (10)$ A random variable $X$ follows a binomial distribution with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 successes, that is what is $P(X < 3)$?
 
 <span style="color: red;">Let $X \sim Binomial(p = 0.43, n = 8)$ then</span>
 
@@ -374,10 +375,12 @@ $\bf (12)$ A random variable $W$ follows a Poisson distribution with rate parame
 
 $\bf (13)$ A factory experiences on average 3 equipment malfunctions per day, following a Poisson distribution with a rate parameter of 3. Calculate the probability that on a randomly selected day, the factory will <u>observe 3 or more</u> equipment malfunctions.
 
-<span style="color: red;">let $X$ represent the number of equipment failures in a given day for the factor, then \[X\sim Poisson(\lambda = 3)\]
+<span style="color: red;">let $X$ represent the number of equipment failures in a given day for the factory, then \[X\sim Poisson(\lambda = 3)\]
 \[P(X\geq 3) = 1 - P(X< 3)\]
-\[P(X < 3) =  P(X = 0)+P(X = 1)+P(X = 2)\]
-\[= 1-\sum_{k=0}^2 \frac{3^k\cdot e^{-3}}{k!} \approx 0.577\]
+where
+\[P(X < 3) =  P(X = 0)+P(X = 1)+P(X = 2) = \sum_{k=0}^2 \frac{3^k\cdot e^{-3}}{k!} \approx 0.423\]
+so
+\[P(X\geq 3) = 1 - 0.423 \approx 0.577\]
 </span>
 
 ## Deriving Probabilities From Continuous Distributions
@@ -498,7 +501,8 @@ $P(2<Z<3)=2(0.05)+(0.5)(1)(0.2) = 0.2$</span>
 
 * Give the approximate value of the $25th$ percentile of distribution of $Z$
 
-<span style="color: red;">$Q1 \approx 2$</span>
+<span style="color: red;">Reading from the plot, the area to the left of $Z=2$ is $0.3$, so the $25th$ percentile lies just below $2$. Working it out exactly: on $[0,2]$ the density is the line $f(z) = 0.15z$, so the area to the left of $z$ is $0.075z^2$. Setting $0.075z^2 = 0.25$ gives
+\[Q1 = \sqrt{0.25/0.075} \approx 1.83\]</span>
 
 
 
@@ -546,23 +550,23 @@ Using a $Z$-table, find the following (approximate) probabilities for $X$. You c
 \[ z_{\text{upper}} = \frac{33-25}{4} = 2\]
 \[ P(0<Z<2) = P(Z<2) - P(Z<0) = 0.977 - 0.5 = 0.477\]</span>
 
-* What is the value of $X$ marks the $95th$ percentile of the distribution?
+* What is the value of $X$ that marks the $95th$ percentile of the distribution?
 
 <span style="color: red;">the $95th$ percentile of a standard normal distribution is $z=1.645$ plugging this into the $z$-score equation and solving for $X$ gives
 \[ (z\times \sigma) + \mu = (1.645\times 4) + 25 = 31.58 \]</span>
 
-* What is the value of $X$ marks the $40th$ percentile of the distribution?
+* What is the value of $X$ that marks the $40th$ percentile of the distribution?
 
-<span style="color: red;">the $40th$ percentile of a standard normal distribution is $z=-0.253$ 
-\[  (z\times \sigma) + \mu = (-0.253\times 4)+25 = 23.9 \]</span>
+<span style="color: red;">the $40th$ percentile of a standard normal distribution is $z=-0.253$
+\[  (z\times \sigma) + \mu = (-0.253\times 4)+25 = 23.99 \approx 24.0 \]</span>
 
 
-${\bf 18.)}$ Suppose that a random variable $X$ follows a normal distribution with mean $\mu = -5$ and standard deviation $\sigma = 1.8$. Using the plot of a the $Z$-distribution below, shade in the area corresponding to the probability $P(-2< X <0.5)$
+${\bf 18.)}$ Suppose that a random variable $X$ follows a normal distribution with mean $\mu = -5$ and standard deviation $\sigma = 1.8$. Using the plot of the $Z$-distribution below, shade in the area corresponding to the probability $P(-2< X <0.5)$
 
 
 <span style="color: red;">start by finding the $z$-scores\[ P(-2<X<0.5) = P(X<0.5) - P(X<-2)  \]
-\[ z_{\text{lower}} = \frac{0.5 - (-5)}{1.8} = 3.06\]
-\[ z_{\text{upper}} = \frac{-2 - (-5)}{1.8} = 1.67\]
+\[ z_{\text{lower}} = \frac{-2 - (-5)}{1.8} = 1.67\]
+\[ z_{\text{upper}} = \frac{0.5 - (-5)}{1.8} = 3.06\]
 \[P(-2<X<0.5) = P(1.67< Z < 3.06)  \]</span>
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}

@@ -25,8 +25,7 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 mainpath = '../Data/'
-wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
-whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+whiskpath = '../assets/whiskerMaster.csv'
 
 datapath = '../Data/'
 source('../misc/stat251_tools.R')
@@ -64,45 +63,53 @@ Define the following terms/concepts
 
 ### Confidence intervals and two-tailed tests:
 
-$\bf (1.)$ For parts (a) - (d) given the confidence interval for the parameter under the null hypothesis, use the point estimate to determine whether the null hypothesis $H_0$ should be **Rejected** or **Not Rejected** and denote significance level $\alpha$
+$\bf (1.)$ For parts (a) - (d) you are given a confidence interval for the parameter along with the point estimate it was built from. Determine whether the null hypothesis $H_0$ should be **Rejected** or **Not Rejected** by checking whether the value claimed under $H_0$ falls inside the interval, and give the significance level $\alpha$
 
-a.) $H_0: \mu_0 = -2$ <br> 
-  $H_A: \mu \neq \mu_0$ <br> 
-  $95\%$ CI for $\mu_0 \in [-3.0, -2.4]$ <br> 
+a.) $H_0: \mu = -2$ <br>
+  $H_A: \mu \neq -2$ <br>
+  $95\%$ CI for $\mu \in [-3.0, -2.4]$ <br>
   $\bar{x} = -2.7$
-  \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
-  \alpha = \color{red}{0.05} \] 
+  \[ \text{Decision} = \color{red}{\text{reject} \ H_0} \\
+  \alpha = \color{red}{0.05} \]
 
-b.) $H_0: p_0 = 0.9$ <br> 
-$H_A: p \neq p_0$ <br>
-$99\%$ CI for $p_0 \in [0.972, 0.968]$ <br>
-$\hat{p} = 0.97$ 
+  <span style="color: red;">The null value $-2$ lies outside $[-3.0, -2.4]$, so $H_0$ is rejected at the $5\%$ level.</span>
 
-  \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
-  \alpha = \color{red}{0.01} \] 
+b.) $H_0: p = 0.9$ <br>
+$H_A: p \neq 0.9$ <br>
+$99\%$ CI for $p \in [0.968, 0.972]$ <br>
+$\hat{p} = 0.97$
 
-c.) $H_0: \mu_0 = 0$ <br> 
-$H_A: \mu \neq \mu_0$ <br>
-$90\%$ CI for $\mu_0 \in [-3.63, 7.49]$ <br> 
+  \[ \text{Decision} = \color{red}{\text{reject} \ H_0} \\
+  \alpha = \color{red}{0.01} \]
+
+  <span style="color: red;">The null value $0.9$ lies outside $[0.968, 0.972]$, so $H_0$ is rejected at the $1\%$ level.</span>
+
+c.) $H_0: \mu = 0$ <br>
+$H_A: \mu \neq 0$ <br>
+$90\%$ CI for $\mu \in [-3.63, 7.49]$ <br>
 $\bar{x} = 1.93$
 
   \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
-  \alpha = \color{red}{0.1} \] 
+  \alpha = \color{red}{0.1} \]
 
-d.) $H_0: \mu_0 = 50$<br> 
-$H_A: \mu \neq \mu_0$<br>
-$85\%$ CI for $\mu_0 \in [93.6, 139]$<br> 
+  <span style="color: red;">The null value $0$ lies inside $[-3.63, 7.49]$, so there is not enough evidence to reject $H_0$ at the $10\%$ level.</span>
+
+d.) $H_0: \mu = 50$<br>
+$H_A: \mu \neq 50$<br>
+$85\%$ CI for $\mu \in [93.6, 139]$<br>
 $\bar{x} = 116.3$
 
-  \[ \text{Decision} = \color{red}{\text{fail to reject} \ H_0} \\
-  \alpha = \color{red}{0.15} \] 
+  \[ \text{Decision} = \color{red}{\text{reject} \ H_0} \\
+  \alpha = \color{red}{0.15} \]
+
+  <span style="color: red;">The null value $50$ lies outside $[93.6, 139]$, so $H_0$ is rejected at the $15\%$ level.</span>
 
 ### The sign test
 
 <br>
 <br>
 
-$\bf (2.)$ A dermatologist is conducting an experiment to test whether a new topical skin care cream reduces the appearance facial of acne. From a sample of $20$ patients with acne the researcher gives each patient a score from $1-5$ where (5) representing the severity of their acne before the topical cream is applied. Patients are then asked to use the topical cream for $10$ days. Following the $10$ day treatment, patients are given a new acne score between $1-5$. The data for this experiment is given in the table below:
+$\bf (2.)$ A dermatologist is conducting an experiment to test whether a new topical skin care cream reduces the appearance of facial acne. From a sample of $20$ patients with acne the researcher gives each patient a score from $1-5$, where (1) represents the mildest acne and (5) represents the most severe acne, before the topical cream is applied. Patients are then asked to use the topical cream for $10$ days. Following the $10$ day treatment, patients are given a new acne score between $1-5$. The data for this experiment is given in the table below:
 
 
 
@@ -128,26 +135,28 @@ kable(tab, format = 'html', digits = 3,
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-The dermatologist is particularly interested in whether the new product can improve the scars' appearance. They plan to test the null hypothesis $H_0: p_0 = 0.5$ using a right-tailed test with alternative hypothesis $H_A: p>0.5$ using a sign test to determine if there is enough evidence to conclude that the topical cream a positive effect on reducing facial acne at the $\alpha = 0.05$ level.
+The dermatologist is particularly interested in whether the new product improves the appearance of the patients' acne. They plan to test the null hypothesis $H_0: p = 0.5$ using a right-tailed test with alternative hypothesis $H_A: p>0.5$ using a sign test to determine if there is enough evidence to conclude that the topical cream has a positive effect on reducing facial acne at the $\alpha = 0.05$ level.
 
-  a.) Fill in the table above by computing the difference between in acne scores before and after applying the skin care cream. Record the sign of each difference and report the total number of positive signs $s$
+  a.) Fill in the table above by computing the difference in acne scores before and after applying the skin care cream. Record the sign of each difference and report the total number of positive signs $s$. Note that any patient whose score did not change (a difference of zero) is dropped from the test, so the number of observations used in the sign test is the number of non-zero differences.
 
-  b.) What does a "positive" sign indicate in this experiment? 
-  <span style="color: red;">A positive sign indicates that the skin cream reduced the appearance of dry skin</span>
+  <span style="color: red;">Of the $20$ patients, $14$ had a positive difference, $1$ had a negative difference, and $5$ had a difference of zero. The five tied patients are discarded, leaving $n = 15$ observations with $s = 14$ positive signs.</span>
 
-  c.) Compute the $p$-value for the sign test <span style="color: red;">The number of positive signs is $s = 14$. The $p$value is probability of observing $14$ or more positive signs in $15$ observations given by 
-  \[p\text{-value} = P(S\geq s | H_0) = \sum_{k = 14}^{15}\frac{20!}{k!(20 - k)!} \cdot 0.5^k \cdot (1-0.5)^{20-k} \]
+  b.) What does a "positive" sign indicate in this experiment?
+  <span style="color: red;">A positive sign indicates that the patient's acne score went down after treatment - that is, the skin cream reduced the appearance of their acne</span>
+
+  c.) Compute the $p$-value for the sign test <span style="color: red;">The number of positive signs is $s = 14$ out of $n = 15$ non-zero differences. The $p$-value is the probability of observing $14$ or more positive signs in $15$ observations, given by
+  \[p\text{-value} = P(S\geq s | H_0) = \sum_{k = 14}^{15}\frac{15!}{k!(15 - k)!} \cdot 0.5^k \cdot (1-0.5)^{15-k} \]
   \[ \approx 0.0005  \]
   </span>
 
   d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that the topical cream product has a positive effect on reducing the appearance of acne. Interpret your decision in context.
-  
-  <span style="color: red;">At the $\alpha = 0.05$ significance level, we reject the null hypothesis and determine that there is sufficient evidence to support that the skin cream reduces dry skin</span>
+
+  <span style="color: red;">Since the $p$-value $0.0005$ is less than $\alpha = 0.05$, we reject the null hypothesis at the $5\%$ significance level. There is sufficient evidence to conclude that the topical cream reduces the appearance of facial acne</span>
 
 <br>
 <br>
 
-$\bf (3.)$ In a boreal forest, researchers conducted an experiment to study how herbivores respond to variations in food plant quality and quantity at the stand level. They fertilized young forest stands and observed herbivore use over the subsequent year. The data collected included the number of animal tracks in in the fertilized and control plots [@ball2000response]
+$\bf (3.)$ In a boreal forest, researchers conducted an experiment to study how herbivores respond to variations in food plant quality and quantity at the stand level. They fertilized young forest stands and observed herbivore use over the subsequent year. The data collected included the number of animal tracks in the fertilized and control plots [@ball2000response]
 
 ```{r, echo=F, warning=F, message=F}
 herbivore_data <- cbind.data.frame(
@@ -170,7 +179,7 @@ kable(herbivore_data, format = 'html', digits = 2,
 
 ```
 
-The researchers are interested in whether or not fertilizing stands increased herbaceous activity. Conduct a sign test at the $\alpha = 0.05$ significance level to determine if fertilized plots have significantly more herbivore tracks than control plots
+The researchers are interested in whether or not fertilizing stands increased herbivore activity. Conduct a sign test at the $\alpha = 0.05$ significance level to determine if fertilized plots have significantly more herbivore tracks than control plots
 
 
 
@@ -178,9 +187,9 @@ a.) Fill in the table above by computing the difference in animal tracks between
 
   b.) What does a "positive" sign indicate in this experiment? <span style="color: red;">A positive sign indicates that the fertilized stands have more animal tracks</span>
 
-  c.) Compute the $p$-value for the sign test <span style="color: red;">The number of positive signs is $s = 12$. The $p$value is probability of observing $12$ or more positive signs in $12$ observations given by  \[p\text{-value} = P(S\geq s | H_0) = \frac{12!}{12!(12 - 12)!} \cdot 0.5^{12}\cdot(1-0.5)^{12-12} \]
-  \[ 0.5^{12} \]
-  \[ \approx 0  \]</span>
+  c.) Compute the $p$-value for the sign test <span style="color: red;">Every one of the $12$ differences is positive, so $s = 12$ out of $n = 12$ (there are no ties to discard). The $p$-value is the probability of observing $12$ or more positive signs in $12$ observations, given by  \[p\text{-value} = P(S\geq s | H_0) = \frac{12!}{12!(12 - 12)!} \cdot 0.5^{12}\cdot(1-0.5)^{12-12} \]
+  \[ = 0.5^{12} \]
+  \[ \approx 0.00024  \]</span>
 
   d.) Use the $p$-value from part (c) to determine if there is enough evidence to conclude that fertilized stands have more herbivore activity. <span style="color: red;">At the $\alpha = 0.05$ significance level we reject the null hypothesis and conclude that fertilized stands have significantly more animal activity than non-fertilized stands</span>
   
@@ -214,7 +223,7 @@ Conduct a two-sample test at the $\alpha = 0.05$ significance level to determine
   
   \[\hat{p} = \frac{0.4116(192)+0.5087(39)}{192+39} = 0.428\]
   
-  $n\hat{p} = 0.428(231) = 99$ and $n(1-\hat{p}) = 0.572(231) = 132$ are both greater than the required $15$ and thus the sample size is sufficient to meet the asymptotic requirement of the test 
+  The success/failure condition must be checked in <u>each</u> group separately using the pooled $\hat{p}$: for group 1, $n_1\hat{p} = 192(0.428) = 82$ and $n_1(1-\hat{p}) = 192(0.572) = 110$; for group 2, $n_2\hat{p} = 39(0.428) = 17$ and $n_2(1-\hat{p}) = 39(0.572) = 22$. All four counts exceed the required $15$, so the sample sizes are sufficient to meet the asymptotic requirement of the test
   </span>
   
   2. <span style="color: red;">The null hypothesis is $H_0: p_1 - p_2 = 0$ and the alternative hypothesis is $H_A: p_1 - p_2 < 0$</span>
@@ -235,7 +244,7 @@ Conduct a two-sample test at the $\alpha = 0.05$ significance level to determine
   Note that your $p$-value may be slightly different depending on how you rounded
   </span>
   
-  5. <span style="color: red;">At the $\alpha = 0.05$ significance level, we fail to reject the null hypothesis of no difference and conclude that the current SCOTUS approval rating is not significantly different than the historical average of about $50.1\%$ approving </span>
+  5. <span style="color: red;">At the $\alpha = 0.05$ significance level, we fail to reject the null hypothesis of no difference and conclude that the current SCOTUS approval rating is not significantly lower than the historical average of about $50.9\%$ approving </span>
 
 <br>
 <br>
@@ -246,7 +255,7 @@ $\bf (5.)$ A study published in the <i>Journal of Paediatrics and Child Health</
 df = cbind.data.frame(Period = c('Before COVID-19 (2019)', 'After COVID-19 (2020)'),
                       `Parameter` = c('$p_1$','$p_2$'),
                       `Total Registries` = c(70,53),
-                      `Registries for Childer under 12 Years of Age` = c(18, 16),
+                      `Registries for Children under 12 Years of Age` = c(18, 16),
                       `Relative Proportion` = c(round(18/70,3), round(16/53,3)))
 
 kable(df, format = 'html', digits = 2,
@@ -256,14 +265,14 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-Conduct a two-sample test at the $\alpha = 0.01$ significance level to determine whether the rate of reported child abuse for children under the age of $12$ was significantly different after the start of the COVID-19 pandemic - be sure to address all five steps of the hypothesis test
+Conduct a two-sample test at the $\alpha = 0.01$ significance level to determine whether the proportion of abuse registries involving children under the age of $12$ was significantly different after the start of the COVID-19 pandemic - be sure to address all five steps of the hypothesis test. (Note that this proportion is the share of all registries that involve a child under 12, not the underlying rate of abuse in the population.)
 
 
 1. <span style="color: red;">the pooled estimate of the common proportion is 
   
   \[\hat{p} = \frac{18+16}{70+53} = 0.276\]
   
-  $n\hat{p} = 0.276(123) = 34$ and $n(1-\hat{p}) = 0.723(123) = 89$ are both greater than the required $15$ and thus the sample size is sufficient to meet the asymptotic requirement of the test 
+  Checking the success/failure condition in <u>each</u> group using the pooled $\hat{p}$: for group 1, $n_1\hat{p} = 70(0.276) = 19.3$ and $n_1(1-\hat{p}) = 70(0.724) = 50.7$; for group 2, $n_2\hat{p} = 53(0.276) = 14.6$ and $n_2(1-\hat{p}) = 53(0.724) = 38.4$. Note that $n_2\hat{p} = 14.6$ falls just below the guideline of $15$, so the normal approximation here is borderline and the results should be interpreted with some caution
   </span>
   
   2. <span style="color: red;">The null hypothesis is $H_0: p_1 - p_2 = 0$ and the alternative hypothesis is $H_A: p_1 - p_2 \neq 0$</span>
@@ -286,13 +295,13 @@ Conduct a two-sample test at the $\alpha = 0.01$ significance level to determine
   
   Note that your $p$-value may be slightly different depending on how you rounded</span>
   
-  5. <span style="color: red;">At the $\alpha = 0.01$ significance level we fail to reject the null hypothesis and conclude that the proportion of reported child abuse cases for children under 12 years of before and after the start of the COVID-19 pandemic are not significantly different</span>
+  5. <span style="color: red;">At the $\alpha = 0.01$ significance level we fail to reject the null hypothesis and conclude that the proportion of abuse registries involving children under 12 years of age before and after the start of the COVID-19 pandemic are not significantly different</span>
 
 <br>
 
-### Comparing two population proportions $\mu_1$ and $\mu_2$
+### Comparing two population means $\mu_1$ and $\mu_2$
 
-$\bf (6.)$ A study published in the journal <i>Physical Culture and Sport. Studies and Research</i> explored what motivates athletes to keep playing sports, comparing team sports like football with individual ones like taekwondo [@moradi2020motivation]. The study used stratified random sampling to survey $265$ athletes from four team disciplines (football, volleyball, basketball, handball) and 2 individual disciplines (kung fu and taekwondo). The study evaluated motivational factors affecting sport participation based on eight fields: achievement/status, teamwork, fitness, energy release, situational factors, skill development, friendship, and fun. Each field was evaluated based on a survey that quantified sentiment in each field using three-level likert scale responses (very important=3, somewhat important=2, and not important=1). The results of the study are summarized in the table below: 
+$\bf (6.)$ A study published in the journal <i>Physical Culture and Sport. Studies and Research</i> explored what motivates athletes to keep playing sports, comparing team sports like football with individual ones like taekwondo [@moradi2020motivation]. The study used stratified random sampling to survey $265$ athletes from four team disciplines (football, volleyball, basketball, handball) and 2 individual disciplines (kung fu and taekwondo). The study evaluated motivational factors affecting sport participation based on eight fields: achievement/status, teamwork, fitness, energy release, situational factors, skill development, friendship, and fun. Each field was evaluated based on a survey in which every item was scored on a three-level likert scale (very important=3, somewhat important=2, and not important=1). A field contains several items, and an athlete's score for that field is the **sum** of their item responses - so field scores range well above 3. The results of the study are summarized in the table below:
 
 ```{r, echo=F, warning=F, message=F}
 tab = read.csv(file = paste0(datapath, 'sports_motivation_summary.csv'))
@@ -306,7 +315,7 @@ kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sp
 
 ```
 
-Conduct a pooled (assume the sample vairances are equal) two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports.
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports. Assume the populations have the SAME variance.
 
 
   1. <span style="color: red;">The null hypothesis is $H_0: \mu_1 - \mu_2 = 0$ where $\mu_1$ is the mean score for fitness for team sports and $\mu_2$ is the mean score for fitness for individual sports. The alternative hypothesis is $H_A: \mu_1 - \mu_2 \neq 0$</span>
@@ -315,7 +324,7 @@ Conduct a pooled (assume the sample vairances are equal) two independent samples
   
   \[s_{pooled} = \sqrt{\frac{(203 - 1)1.27^2 + (62-1)0.94^2}{203+62 - 2}} = 1.201 \]
   
-  the estiamted standard error assuming the samples are independent have the same variance is given by 
+  the estimated standard error assuming the samples are independent and have the same variance is given by
   
   \[ SE(\hat{\mu}_d) = 1.201\cdot\sqrt{\frac{1}{203}+\frac{1}{62}} = 0.174\]
   
@@ -353,10 +362,10 @@ kable(tab, format = 'html', digits = 2, col.names = c('Age (Years)', 'Population
 ```
 
 
-Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to evaluate whether there is a statistically significant difference in the mean body lengths of four-year-old male frogs between the Servotte and Thévenon populations. Assume the sample variances are NOT equal.
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to evaluate whether there is a statistically significant difference in the mean body lengths of four-year-old male frogs between the Servotte and Thévenon populations. Assume the populations have DIFFERENT variances.
 
 
-1. <span style="color: red;">The null hypothesis is $H_0: \mu_1 - \mu_2 = 0$ where $\mu_1$ is the mean male body length for frogs in the Servotte popultion and $\mu_2$ is the mean male body length for frogs in the Thevenon population. The alternative hypothesis is $H_A: \mu_1 - \mu_2 \neq 0$</span>
+1. <span style="color: red;">The null hypothesis is $H_0: \mu_1 - \mu_2 = 0$ where $\mu_1$ is the mean male body length for frogs in the Servotte population and $\mu_2$ is the mean male body length for frogs in the Thévenon population. The alternative hypothesis is $H_A: \mu_1 - \mu_2 \neq 0$</span>
   
   2. <span style="color: red;">The estimated standard error assuming the samples are independent and <u>do not have</u> the same variance is given by 
   
@@ -373,7 +382,7 @@ Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance l
   3. <span style="color: red;">The $p$-value is 
   
   \[ p\text{-value} = P(|t|\geq |t_{obs}||H_0) \]
-  \[= 2\left[P(t \geq 1.531 | H_0)\right] = 0.077\]
+  \[= 2\left[P(t \geq 1.531 | H_0)\right] = 2(0.077) = 0.154\]
   </span>
   
   4. <span style="color: red;">At the $\alpha = 0.05$ significance level, we fail to reject the null hypothesis and conclude that body lengths of four year old male frogs is not significantly different between the two populations.</span>

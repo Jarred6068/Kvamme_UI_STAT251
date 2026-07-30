@@ -25,8 +25,7 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 mainpath = '../Data/'
-wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
-whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+whiskpath = '../assets/whiskerMaster.csv'
 
 datapath = '../Data/'
 #<span style="color: red;"></span>
@@ -49,34 +48,34 @@ Define the following terms/concepts
 
 ### Confidence intervals and two-tailed tests:
 
-$\bf (1.)$ For parts (a) - (d) given the confidence interval for the parameter under the null hypothesis, use the point estimate to determine whether the null hypothesis $H_0$ should be **Rejected** or **Not Rejected** and denote significance level $\alpha$
+$\bf (1.)$ For parts (a) - (d) you are given a confidence interval for the parameter along with the point estimate it was built from. Determine whether the null hypothesis $H_0$ should be **Rejected** or **Not Rejected** by checking whether the value claimed under $H_0$ falls inside the interval, and give the significance level $\alpha$
 
-a.) $H_0: \mu_0 = -2$ <br> 
-  $H_A: \mu \neq \mu_0$ <br> 
-  $95\%$ CI for $\mu_0 \in [-3.0, -2.4]$ <br> 
+a.) $H_0: \mu = -2$ <br>
+  $H_A: \mu \neq -2$ <br>
+  $95\%$ CI for $\mu \in [-3.0, -2.4]$ <br>
   $\bar{x} = -2.7$
   \[ \text{Decision} = \_\_\_\_\_\_\_ \\
-  \alpha = \_\_\_\_\_\_ \] 
+  \alpha = \_\_\_\_\_\_ \]
 
-b.) $H_0: p_0 = 0.9$ <br> 
-$H_A: p \neq p_0$ <br>
-$99\%$ CI for $p_0 \in [0.972, 0.968]$ <br>
-$\hat{p} = 0.97$ 
+b.) $H_0: p = 0.9$ <br>
+$H_A: p \neq 0.9$ <br>
+$99\%$ CI for $p \in [0.968, 0.972]$ <br>
+$\hat{p} = 0.97$
 
 \[ \text{Decision} = \_\_\_\_\_\_\_ \\
   \alpha = \_\_\_\_\_\_ \]
 
-c.) $H_0: \mu_0 = 0$ <br> 
-$H_A: \mu \neq \mu_0$ <br>
-$90\%$ CI for $\mu_0 \in [-3.63, 7.49]$ <br> 
+c.) $H_0: \mu = 0$ <br>
+$H_A: \mu \neq 0$ <br>
+$90\%$ CI for $\mu \in [-3.63, 7.49]$ <br>
 $\bar{x} = 1.93$
 
 \[ \text{Decision} = \_\_\_\_\_\_\_ \\
   \alpha = \_\_\_\_\_\_ \]
 
-d.) $H_0: \mu_0 = 50$<br> 
-$H_A: \mu \neq \mu_0$<br>
-$85\%$ CI for $\mu_0 \in [93.6, 139]$<br> 
+d.) $H_0: \mu = 50$<br>
+$H_A: \mu \neq 50$<br>
+$85\%$ CI for $\mu \in [93.6, 139]$<br>
 $\bar{x} = 116.3$
 
 \[ \text{Decision} = \_\_\_\_\_\_\_ \\
@@ -87,7 +86,7 @@ $\bar{x} = 116.3$
 <br>
 <br>
 
-$\bf (2.)$ A dermatologist is conducting an experiment to test whether a new topical skin care cream reduces the appearance facial of acne. From a sample of $20$ patients with acne the researcher gives each patient a score from $1-5$ where (5) representing the severity of their acne before the topical cream is applied. Patients are then asked to use the topical cream for $10$ days. Following the $10$ day treatment, patients are given a new acne score between $1-5$. The data for this experiment is given in the table below:
+$\bf (2.)$ A dermatologist is conducting an experiment to test whether a new topical skin care cream reduces the appearance of facial acne. From a sample of $20$ patients with acne the researcher gives each patient a score from $1-5$, where (1) represents the mildest acne and (5) represents the most severe acne, before the topical cream is applied. Patients are then asked to use the topical cream for $10$ days. Following the $10$ day treatment, patients are given a new acne score between $1-5$. The data for this experiment is given in the table below:
 
 
 
@@ -105,9 +104,9 @@ kable(tab, format = 'html', digits = 3,
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-The dermatologist is particularly interested in whether the new product can improve the scars' appearance. They plan to test the null hypothesis $H_0: p_0 = 0.5$ using a right-tailed test with alternative hypothesis $H_A: p>0.5$ using a sign test to determine if there is enough evidence to conclude that the topical cream a positive effect on reducing facial acne at the $\alpha = 0.05$ level.
+The dermatologist is particularly interested in whether the new product improves the appearance of the patients' acne. They plan to test the null hypothesis $H_0: p = 0.5$ using a right-tailed test with alternative hypothesis $H_A: p>0.5$ using a sign test to determine if there is enough evidence to conclude that the topical cream has a positive effect on reducing facial acne at the $\alpha = 0.05$ level.
 
-  a.) Fill in the table above by computing the difference between in acne scores before and after applying the skin care cream. Record the sign of each difference and report the total number of positive signs $s$
+  a.) Fill in the table above by computing the difference in acne scores before and after applying the skin care cream. Record the sign of each difference and report the total number of positive signs $s$. Note that any patient whose score did not change (a difference of zero) is dropped from the test, so the number of observations used in the sign test is the number of non-zero differences.
 
   b.) What does a "positive" sign indicate in this experiment? 
 
@@ -118,7 +117,7 @@ The dermatologist is particularly interested in whether the new product can impr
 <br>
 <br>
 
-$\bf (3.)$ In a boreal forest, researchers conducted an experiment to study how herbivores respond to variations in food plant quality and quantity at the stand level. They fertilized young forest stands and observed herbivore use over the subsequent year. The data collected included the number of animal tracks in in the fertilized and control plots [@ball2000response]
+$\bf (3.)$ In a boreal forest, researchers conducted an experiment to study how herbivores respond to variations in food plant quality and quantity at the stand level. They fertilized young forest stands and observed herbivore use over the subsequent year. The data collected included the number of animal tracks in the fertilized and control plots [@ball2000response]
 
 ```{r, echo=F, warning=F, message=F}
 herbivore_data <- cbind.data.frame(
@@ -135,7 +134,7 @@ kable(herbivore_data, format = 'html', digits = 2,
 
 ```
 
-The researchers are interested in whether or not fertilizing stands increased herbaceous activity. Conduct a sign test at the $\alpha = 0.05$ signifcance level to determine if fertilized plots have significantly more herbivore tracks than control plots
+The researchers are interested in whether or not fertilizing stands increased herbivore activity. Conduct a sign test at the $\alpha = 0.05$ significance level to determine if fertilized plots have significantly more herbivore tracks than control plots
 
 
 
@@ -182,7 +181,7 @@ $\bf (5.)$ A study published in the <i>Journal of Paediatrics and Child Health</
 df = cbind.data.frame(Period = c('Before COVID-19 (2019)', 'After COVID-19 (2020)'),
                       `Parameter` = c('$p_1$','$p_2$'),
                       `Total Registries` = c(70,53),
-                      `Registries for Childer under 12 Years of Age` = c(18, 16),
+                      `Registries for Children under 12 Years of Age` = c(18, 16),
                       `Relative Proportion` = c(round(18/70,3), round(16/53,3)))
 
 kable(df, format = 'html', digits = 2,
@@ -192,26 +191,27 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-Conduct a two-sample test at the $\alpha = 0.01$ significance level to determine whether the rate of reported child abuse for children under the age of $12$ was significantly different after the start of the COVID-19 pandemic - be sure to address all five steps of the hypothesis test
+Conduct a two-sample test at the $\alpha = 0.01$ significance level to determine whether the proportion of abuse registries involving children under the age of $12$ was significantly different after the start of the COVID-19 pandemic - be sure to address all five steps of the hypothesis test. (Note that this proportion is the share of all registries that involve a child under 12, not the underlying rate of abuse in the population.)
 
 <br>
 
-### Comparing two population proportions $\mu_1$ and $\mu_2$
+### Comparing two population means $\mu_1$ and $\mu_2$
 
-$\bf (6.)$ A study published in the journal <i>Physical Culture and Sport. Studies and Research</i> explored what motivates athletes to keep playing sports, comparing team sports like football with individual ones like taekwondo [@moradi2020motivation]. The study used stratified random sampling to survey $265$ athletes from four team disciplines (football, volleyball, basketball, handball) and 2 individual disciplines (kung fu and taekwondo). The study evaluated motivational factors affecting sport participation based on eight fields: achievement/status, teamwork, fitness, energy release, situational factors, skill development, friendship, and fun. Each field was evaluated based on a survey that quantified sentiment in each field using three-level likert scale responses (very important=3, somewhat important=2, and not important=1). The results of the study are summarized in the table below: 
+$\bf (6.)$ A study published in the journal <i>Physical Culture and Sport. Studies and Research</i> explored what motivates athletes to keep playing sports, comparing team sports like football with individual ones like taekwondo [@moradi2020motivation]. The study used stratified random sampling to survey $265$ athletes from four team disciplines (football, volleyball, basketball, handball) and 2 individual disciplines (kung fu and taekwondo). The study evaluated motivational factors affecting sport participation based on eight fields: achievement/status, teamwork, fitness, energy release, situational factors, skill development, friendship, and fun. Each field was evaluated based on a survey in which every item was scored on a three-level likert scale (very important=3, somewhat important=2, and not important=1). A field contains several items, and an athlete's score for that field is the **sum** of their item responses - so field scores range well above 3. The results of the study are summarized in the table below:
 
 ```{r, echo=F, warning=F, message=F}
 tab = read.csv(file = paste0(datapath, 'sports_motivation_summary.csv'))
 tab$Variables[tab$Variables == '\''] = ''
+tab$DF = rep(c(203, 62), 9)
 
-kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Degrees of Freedom'),
+kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Sample Size'),
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
 ```
 
-Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports. Assume the populations have the SAME variance. 
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports. Assume the populations have the SAME variance.
 
 <br>
 <br>
@@ -220,11 +220,10 @@ $\bf (7.)$ A 1993 study published in the <i>Canadian Journal of Zoology</i> inve
 
 
 ```{r, echo=F, warning=F, message=F}
-tab = read.csv(file = paste0(datapath, 'sports_motivation_summary.csv'))
-tab$Variables[tab$Variables == '\''] = ''
-tab$DF = rep(c(203, 62), 9)
+tab = read.csv(file = paste0(datapath, 'frog_body_sizes.csv'))
 
-kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Sample Size'),
+
+kable(tab, format = 'html', digits = 2, col.names = c('Age (Years)', 'Population Location', 'Male Body Length (mm)','Stdev', 'Sample size', 'Female Body Length (mm)', 'Stdev', 'Sample Size'),
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
