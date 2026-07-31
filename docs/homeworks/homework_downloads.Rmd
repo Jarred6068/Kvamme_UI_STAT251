@@ -1,0 +1,116 @@
+---
+title: "Homework Downloads"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(knitr)
+library(kableExtra)
+
+# Build the download table for one homework. `files` is a two-column matrix of
+# path (relative to this page) and description. Links use the HTML `download`
+# attribute so a browser saves the .csv instead of rendering it as text.
+downloads <- function(files) {
+  # knitr runs with this .Rmd's directory as the working directory, so the same
+  # relative paths used in the links also resolve on disk
+  size <- vapply(files[, 1], function(p) {
+    if (!file.exists(p)) return("MISSING")
+    kb <- file.size(p) / 1024
+    if (kb >= 1024) sprintf("%.1f MB", kb / 1024) else sprintf("%.0f KB", max(kb, 1))
+  }, character(1))
+
+  link <- sprintf('<a href="%s" download>%s</a>', files[, 1], basename(files[, 1]))
+
+  kable(cbind.data.frame(File = link, Description = files[, 2], Size = size),
+        format = 'html', escape = FALSE, row.names = FALSE) %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+    kable_styling(bootstrap_options = 'striped')
+}
+```
+
+Each homework below lists the printable assignment (PDF) together with every
+data table it uses, in `.csv` form. The `.csv` files are written directly from
+the same code that prints the tables in the assignment, so they always match
+what you see in the problem.
+
+You do **not** need R or any special software to open these — a `.csv` opens in
+Excel, Google Sheets, or Numbers.
+
+Remember that homework must be turned in **on paper, in pen or pencil**. These
+files are here so you can read the data comfortably, not so you can type up your
+answers.
+
+<br>
+
+## Homework 1 {#hw1}
+
+```{r}
+downloads(rbind(
+  c("week1homework.pdf",                          "Assignment (printable PDF)"),
+  c("../Data/homework_tables/hw1_coin_flips.csv", "Problem 6 — results of 15 coin flips"),
+  c("../Data/homework_tables/hw1_age_distribution.csv", "Problem 7 — age distribution of survey respondents"),
+  c("../Data/homework_tables/hw1_spam_types.csv", "Problem 8 — most common types of email spam"),
+  c("../Data/homework_tables/hw1_gpa_values.csv", "Problem 10 — high school GPA for 35 college students (raw and rounded)"),
+  c("../Data/cereal.csv",                         "Problem 15 — sodium and sugar content of 20 cereal brands")
+))
+```
+
+<br>
+
+## Homework 2 {#hw2}
+
+```{r}
+downloads(rbind(
+  c("week5homework.pdf",                                    "Assignment (printable PDF)"),
+  c("../Data/homework_tables/hw2_harp_seal_whiskers.csv",   "Problem 2 — whisker length and bead count for 20 Harp Seals"),
+  c("../assets/whiskerMaster.csv",                          "Problem 2 — full Pinniped whisker dataset (all species; optional)")
+))
+```
+
+<br>
+
+## Homework 3 {#hw3}
+
+```{r}
+downloads(rbind(
+  c("week7homework.pdf",                                      "Assignment (printable PDF)"),
+  c("../Data/homework_tables/hw3_prob_dist_X.csv",            "Problem 6 — probability distribution of X"),
+  c("../Data/homework_tables/hw3_tree_volume_dist.csv",       "Problem 8 — probability distribution of tree volume"),
+  c("../Data/homework_tables/hw3_punt_distance_dist.csv",     "Problem 9 — sampling distribution of mean punt distance")
+))
+```
+
+<br>
+
+## Homework 4 {#hw4}
+
+```{r}
+downloads(rbind(
+  c("week12homework.pdf",                                              "Assignment (printable PDF)"),
+  c("../Data/homework_tables/hw4_confidence_levels_proportion.csv",    "Problem 2 — confidence levels to fill in (proportion)"),
+  c("../Data/homework_tables/hw4_confidence_levels_mean.csv",          "Problem 3 — confidence levels and sample sizes to fill in (mean)"),
+  c("../Data/homework_tables/hw4_political_party.csv",                 "Problem 4 — political party affiliation of Georgia college students"),
+  c("../Data/homework_tables/hw4_membership_satisfaction.csv",         "Problem 5 — health club membership satisfaction survey"),
+  c("../Data/homework_tables/hw4_housing_summary.csv",                 "Problem 6 — summary statistics for 1990 California census housing")
+))
+```
+
+<br>
+
+## Homework 5 {#hw5}
+
+```{r}
+downloads(rbind(
+  c("week14homework.pdf",                                            "Assignment (printable PDF)"),
+  c("../Data/homework_tables/hw5_acne_scores.csv",                   "Problem 2 — acne scores for 20 patients, before and after treatment"),
+  c("../Data/homework_tables/hw5_herbivore_tracks.csv",              "Problem 3 — herbivore tracks in fertilized and control plots"),
+  c("../Data/homework_tables/hw5_scotus_summary.csv",                "Problem 4 — current and historical SCOTUS approval polling summary"),
+  c("../Data/homework_tables/hw5_covid_child_abuse_reports.csv",     "Problem 5 — child abuse registries before and after COVID-19"),
+  c("../Data/sports_motivation_summary.csv",                         "Problem 6 — motivational factors by sport type"),
+  c("../Data/frog_body_sizes.csv",                                   "Problem 7 — frog body length by age, sex, and population")
+))
+```

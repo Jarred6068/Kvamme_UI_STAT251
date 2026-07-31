@@ -33,6 +33,30 @@ library(kableExtra)
 # (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
 #  flattened into a vertical list of cell values instead of a table)
 tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# write the printed table out as a downloadable .csv (linked from the
+# Homeworks > Data & PDF Downloads menu). Returns its input unchanged, so the
+# rendered table is exactly what it was before and the .csv can never drift
+# from the assignment -- both come from this same object.
+export_tbl <- function(x, file, names = NULL, digits = NULL) {
+  d <- as.data.frame(x, check.names = FALSE)
+  if (!is.null(names)) colnames(d) <- names
+  # round to match what the rendered table shows
+  if (!is.null(digits))
+    d[] <- lapply(d, function(cl) if (is.numeric(cl)) round(cl, digits) else cl)
+  # strip inline LaTeX from cells that carry it, so they read plainly in Excel
+  d[] <- lapply(d, function(cl) {
+    if (is.character(cl) || is.factor(cl)) {
+      cl <- as.character(cl)
+      m <- grepl('\\$', cl)
+      cl[m] <- gsub('[${}\\\\_]', '', cl[m])
+    }
+    cl
+  })
+  dir <- '../Data/homework_tables'
+  dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+  write.csv(d, file.path(dir, file), row.names = FALSE)
+  x
+}
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -97,7 +121,12 @@ emptyvec = rep('', length(alpha))
 df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
                       `$\\alpha$` = emptyvec,
                       `critical value: $z_{1-\\alpha/2}$` = emptyvec)
-                      
+
+# the alpha and critical-value columns are blank for students to fill in, so
+# export only the confidence levels they are given
+export_tbl(cbind.data.frame(`Confidence Level (%)` = 100*(1-alpha)),
+           'hw4_confidence_levels_proportion.csv',
+           names = 'Confidence Level (%)')
 
 kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
@@ -117,7 +146,12 @@ df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
                       `Sample size` = paste0('$n = ', n, '$'),
                       `$\\alpha$` = emptyvec,
                       `critical value: $t_{n-1, 1-\\alpha/2}$` = emptyvec)
-                      
+
+# blank columns are for students to fill in; export the given values only
+export_tbl(cbind.data.frame(`Confidence Level (%)` = 100*(1-alpha),
+                            `Sample Size` = n),
+           'hw4_confidence_levels_mean.csv',
+           names = c('Confidence Level (%)', 'Sample Size'))
 
 kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
@@ -139,7 +173,9 @@ df = cbind.data.frame(`Political Party Affiliation` = c('Democrat', 'Republican'
                       Count = c(8, 36, 15),
                       `$\\hat{p}$` = c(8, 36, 15)/sum(c(8,36,15)))
 
-kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(export_tbl(df, 'hw4_political_party.csv', digits = 2,
+                 names = c('Political Party Affiliation', 'Count', 'p-hat')),
+      format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
@@ -161,7 +197,9 @@ df = cbind.data.frame(Response = levels(dat$Q12_1),
 
 
 
-kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
+kable(export_tbl(df, 'hw4_membership_satisfaction.csv', digits = 2,
+                 names = c('Response', 'Count', 'p-hat')),
+      format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
       caption = "Customer responses for the survey question \"How satisfied are you with your membership of the organisation overall?\"")%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
@@ -192,7 +230,9 @@ df = cbind.data.frame(`Variable`= c('Median Age of Houses (per block)', 'Total R
                                         sd(hss$households), sd(hss$median_income),
                                         sd(hss$median_house_value)))
 
-kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
+kable(export_tbl(df, 'hw4_housing_summary.csv', digits = 2,
+                 names = c('Variable', 'Sample Mean', 'Sample Standard Deviation')),
+      format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
       caption = 'Summary statistics for housing data in California from the 1990 census. Estimates are derived from a random sample of 25 observations from Aurélien Géron\'s dataset featured in \'Hands-On Machine learning with Scikit-Learn and TensorFlow\', originally comprising observations from over 20,000 districts in California')%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 

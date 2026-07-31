@@ -1,4 +1,12 @@
-/docs/Data
+# docs/Data is ignored wholesale because it holds bulky teaching datasets
+# (Spotify_Youtube.csv alone is 30 MB). The exceptions below are the small files
+# the site actually serves to students from the Homeworks > Data & PDF Downloads
+# page -- without them those links 404 on GitHub Pages.
+/docs/Data/*
+!/docs/Data/homework_tables/
+!/docs/Data/cereal.csv
+!/docs/Data/sports_motivation_summary.csv
+!/docs/Data/frog_body_sizes.csv
 /docs/Examinations
 CLAUDE.md
 

@@ -1,0 +1,8 @@
+"Response","Count","p-hat"
+"Completely dissatisfied",0,0
+"Very dissatisfied",0,0
+"Dissatisfied",3,0.01
+"Neutral",20,0.09
+"Satisfied",64,0.3
+"Very satisfied",109,0.51
+"Completely satisfied",19,0.09

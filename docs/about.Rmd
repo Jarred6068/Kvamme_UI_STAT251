@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 <img src="images/headshot.jpg" alt="Jarred Kvamme" style="width: 320px; max-width: 100%; border-radius: 8px;">
 </div>
 
-I earned my Ph.D. in Bioinformatics and Computational Biology and my M.S. in Statistical Science from the University of Idaho. I currently work as a Full-Stack Web Developer with the University of Idaho's Research Computing and Data Services (RCDS), where I collaborate with researchers across a wide range of disciplines to develop software, data-driven applications, and AI-enabled research solutions.
+I earned my Ph.D. in Bioinformatics and Computational Biology and my M.S. in Statistical Science from the University of Idaho in 2025. I currently work as a Full-Stack Web Developer with the University of Idaho's Research Computing and Data Services (RCDS), where I collaborate with researchers across a wide range of disciplines to develop software, data-driven applications, and AI-enabled research solutions.
 
 My passion for statistics began during my undergraduate studies while working on ecological research projects involving dam flow impacts on Montana river systems and tailwater trout populations, as well as modeling goshawk population dynamics in southwest Montana. Those experiences sparked a lasting interest in using quantitative methods to better understand complex biological systems.
 

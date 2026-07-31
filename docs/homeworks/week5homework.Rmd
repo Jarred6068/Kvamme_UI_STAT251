@@ -32,6 +32,30 @@ library(kableExtra)
 # (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
 #  flattened into a vertical list of cell values instead of a table)
 tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# write the printed table out as a downloadable .csv (linked from the
+# Homeworks > Data & PDF Downloads menu). Returns its input unchanged, so the
+# rendered table is exactly what it was before and the .csv can never drift
+# from the assignment -- both come from this same object.
+export_tbl <- function(x, file, names = NULL, digits = NULL) {
+  d <- as.data.frame(x, check.names = FALSE)
+  if (!is.null(names)) colnames(d) <- names
+  # round to match what the rendered table shows
+  if (!is.null(digits))
+    d[] <- lapply(d, function(cl) if (is.numeric(cl)) round(cl, digits) else cl)
+  # strip inline LaTeX from cells that carry it, so they read plainly in Excel
+  d[] <- lapply(d, function(cl) {
+    if (is.character(cl) || is.factor(cl)) {
+      cl <- as.character(cl)
+      m <- grepl('\\$', cl)
+      cl[m] <- gsub('[${}\\\\_]', '', cl[m])
+    }
+    cl
+  })
+  dir <- '../Data/homework_tables'
+  dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+  write.csv(d, file.path(dir, file), row.names = FALSE)
+  x
+}
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -111,7 +135,10 @@ FS[10,]=c(5.08, 3)
 
 ix = sort(FS$total.length, index.return = T)$ix
 
-kable(cbind.data.frame(c(1:20), FS[ix,]), format = tbl_fmt, booktabs = T, escape = F, 
+kable(export_tbl(cbind.data.frame(c(1:20), FS[ix,]),
+                 'hw2_harp_seal_whiskers.csv', digits = 2,
+                 names = c('Observation', 'Whisker Total Length (cm)', 'Number of Beads')),
+      format = tbl_fmt, booktabs = T, escape = F,
       col.names = c("Observation","Whisker Total Length (cm)", "Number of Beads"), digits = 2,
       row.names = F, caption = 'Whisker Length data for $n = 20$ Harp Seals')%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
