@@ -5,7 +5,18 @@ output:
   pdf_document: default
 always_allow_html: true
 header-includes:
-  \usepackage{float}
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{colortbl}
+  - \usepackage{wrapfig}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
 bibliography: ../misc/home2bibs.bib
 ---
 
