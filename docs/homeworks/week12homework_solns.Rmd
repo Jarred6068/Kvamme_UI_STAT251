@@ -18,6 +18,10 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -93,8 +97,8 @@ df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
                       `critical value: $z_{1-\\alpha/2}$` = paste0('$\\color{red}{', round(qnorm(1-alpha/2), 3), '}$'))
                       
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F, align=rep('c', 3))%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F, align=rep('c', 3))%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -113,8 +117,8 @@ df = cbind.data.frame(`Confidence Level` = paste0('$', 100*(1-alpha), '\\%$'),
                       `critical value: $t_{n-1, 1-\\alpha/2}$` = paste0('$\\color{red}{', round(qt(1-alpha/2, n-1), 3), '}$'))
                       
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F, align=rep('c', 3))%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F, align=rep('c', 3))%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -133,8 +137,8 @@ df = cbind.data.frame(`Political Party Affiliation` = c('Democrat', 'Republican'
                       Count = c(8, 36, 15),
                       `$\\hat{p}$` = c(8, 36, 15)/sum(c(8,36,15)))
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -168,9 +172,9 @@ df = cbind.data.frame(Response = levels(dat$Q12_1),
 
 
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F,
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
       caption = "Customer responses for the survey question \"How satisfied are you with your membership of the organisation overall?\"")%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -214,9 +218,9 @@ df = cbind.data.frame(`Variable`=  c('Median Age of Houses (per block)', 'Total 
                                         sd(hss$households), sd(hss$median_income),
                                         sd(hss$median_house_value)))
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F,
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
       caption = 'Summary statistics for housing data in California from the 1990 census. Estimates are derived from a random sample of 25 observations from Aurélien Géron\'s dataset featured in \'Hands-On Machine learning with Scikit-Learn and TensorFlow\', originally comprising observations from over 20,000 districts in California')%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 

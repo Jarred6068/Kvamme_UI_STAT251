@@ -24,9 +24,8 @@ library(gganimate)
 path = 'Data/'
 ```
 
-# Lecture 15 Monday, Feb.26th 2024
 
-#### The normal distribution revisited
+# The normal distribution revisited
 
 We can also talk about the normal distribution as a family of probability distributions. As before, the normal distribution has two parameters $\mu$ - the location parameter, and $\sigma$ the "spread" parameter. The normal distribution has the following probability density function 
 
@@ -177,7 +176,7 @@ Therefore, we can compute the original probability as
 \[= 0.773 - 0.401 = 0.372\]
 
 
-# Lecture 16 Wednesday, Feb.28th 2024
+# Lecture 16
 
 Now that we have a strong understanding of the theory of mathematical probability we can use it to connect back to estimation and statistical inference. At this point we have learned about three different probability distributions:
 
@@ -400,9 +399,8 @@ In other words, the probability that the distance between $\bar{x}$ and $\mu$ do
 Consider the following example:
 
 
-# Lecture 17 Friday, March 1st 2024
 
-### Inference and Estimation
+# Inference and Estimation
 
 Statistical inference is used to draw conclusions about a population or process based on sample data. Inference has two general types: <i>significance test</i> (also referred to as <i>hypothesis testing</i>) and **estimation**. Estimation consists of
 

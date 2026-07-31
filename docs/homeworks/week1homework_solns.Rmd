@@ -4,6 +4,8 @@ output:
   html_document: default
   pdf_document: default
 always_allow_html: true
+header-includes:
+  \usepackage{float}
 ---
 
 
@@ -14,6 +16,16 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=8, fig.height=8, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# red-highlight answer text inside table cells, in whichever format is rendering
+# (a bare <span> would be printed verbatim in the PDF)
+red <- function(x) {
+  if (knitr::is_latex_output()) paste0("\\textcolor{red}{", x, "}")
+  else paste0('<span style="color: red;">', x, '</span>')
+}
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -68,8 +80,8 @@ ${\bf (6)}$ Consider the following data obtained from flipping a coin 15 times. 
 set.seed(123)
 df = data.frame(`coin flip result:` = sample(c("H", "T"), 15, replace = T))
 
-kable(t(df), format = 'html', booktabs = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(t(df), format = tbl_fmt, booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 Compute the frequency table for the variable "coin flip result" and answer the following questions:
@@ -80,8 +92,8 @@ x1 = c('H', 'T')
 x2 = c(7,8)
 x3 = c('7/15 = 0.47','8/15 = 0.53')
 
-kable(cbind.data.frame(x1, x2, x3), format = 'html', col.names = c('Result', 'Frequency', 'Relative Frequency'), booktabs = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(cbind.data.frame(x1, x2, x3), format = tbl_fmt, col.names = c('Result', 'Frequency', 'Relative Frequency'), booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 * **(a)** What type of variable is "Coin Flip Result"?
@@ -102,17 +114,12 @@ set.seed(123)
 
 ag = c('1-18','19-24','25-35','36-50','51-69','70 and over')
 cts = c(10, 97, 70, 36, 14, 5)
-rf = c('<span style="color: red;">0.04</span>', 
-       '<span style="color: red;">0.42</span>',
-       '<span style="color: red;">0.30</span>',
-       '<span style="color: red;">0.16</span>',
-       '<span style="color: red;">0.06</span>',
-       '<span style="color: red;">0.02</span>')
+rf = red(c('0.04', '0.42', '0.30', '0.16', '0.06', '0.02'))
 
-age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts', '<span style="color: red;">Relative Frequency</span>'), rbind.data.frame(ag, cts, rf))
+age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts', red('Relative Frequency')), rbind.data.frame(ag, cts, rf))
 
-kable(age.dist, format = 'html', col.names = rep('', 7), booktabs = T, row.names = F,escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(age.dist, format = tbl_fmt, col.names = rep('', 7), booktabs = T, row.names = F,escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 Use this table to answer parts a - d
@@ -151,8 +158,8 @@ Percentage = c(14.5, 16.2, 7.3, 7.8, 21.0, 14.2)
 
 spam.dist = cbind.data.frame(`Type of Spam`, Percentage)
 
-kable(spam.dist, format = 'html', booktabs = T, row.names = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(spam.dist, format = tbl_fmt, booktabs = T, row.names = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -210,8 +217,8 @@ FT = cbind.data.frame(GPA = hsGPA_values,
                       `Relative frequency` = round(hsGPA_RF,2),
                       `Cumulative RF` = round(hsGPA_cRF, 2))
 
-kable(FT, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(FT, format = tbl_fmt, digits = 2, row.names = F, booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
                       
 
 ```
@@ -397,10 +404,10 @@ ${\bf (15)}$ Consider the following $n = 20$ observations of several popular cer
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 cereal = read.csv(paste0(path, 'cereal.csv'))
-kable(cereal, format = 'html', col.names = c("Brand", "Sodium (mg)", "Sugar (g)", 'Type'))%>%
+kable(cereal, format = tbl_fmt, col.names = c("Brand", "Sodium (mg)", "Sugar (g)", 'Type'))%>%
   kable_styling(full_width = FALSE) %>%
   column_spec(4, width = "18em")%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -436,7 +443,9 @@ Tabular = cbind.data.frame(`Sugar (g)` = c("< = 2 (g)",
                            `RF(x)` = x_rf[1:9],
                            `CRF(x)` = x_crf[1:9])
 
-kable(Tabular, caption = "Frequency table used to construct histogram for the variable \"Sugar (g)\"")
+kable(Tabular, format = tbl_fmt, digits = 2, booktabs = T,
+      caption = "Frequency table used to construct histogram for the variable \"Sugar (g)\"")%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
   
 ```
 

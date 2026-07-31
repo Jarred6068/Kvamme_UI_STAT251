@@ -1,0 +1,33 @@
+---
+title: "Week 16 Notes"
+author: "STAT 251 Section 03"
+output:
+  html_document: default
+  #pdf_document: default
+always_allow_html: true
+header-includes:
+  \usepackage{float}
+  \usepackage{tikz}
+bibliography: misc/Week_15_bibs.bib
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+library(latex2exp)
+library(gganimate)
+
+path = 'Data/'
+
+##stat pack
+source('misc/stat251_tools.R')
+
+```
+
+<!-- Week 16: Dec 7, 9, 11 2026 - ANOVA continued, final review, Q&A -->
+

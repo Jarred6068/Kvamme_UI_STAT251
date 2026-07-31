@@ -18,6 +18,16 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# red-highlight answer text inside table cells, in whichever format is rendering
+# (a bare <span> would be printed verbatim in the PDF)
+red <- function(x) {
+  if (knitr::is_latex_output()) paste0("\\textcolor{red}{", x, "}")
+  else paste0('<span style="color: red;">', x, '</span>')
+}
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -123,16 +133,16 @@ tab = cbind.data.frame(`Patient Number` = c(1:20),
                                                         replace = T))
 
 Diff = tab$`Score Before Treatment` - tab$`Score After Treatment`
-tab$Difference = paste0('<span style="color: red;">$',Diff, '$</span>')
+tab$Difference = red(paste0('$', Diff, '$'))
 sign = rep(0, 20)
-sign[Diff > 0] = '<span style="color: red;">$+$</span>'
-sign[Diff < 0] = '<span style="color: red;">$-$</span>'
+sign[Diff > 0] = red('$+$')
+sign[Diff < 0] = red('$-$')
 sign[Diff == 0] = ''
 tab$Sign = sign
 
-kable(tab, format = 'html', digits = 3,
+kable(tab, format = tbl_fmt, digits = 3,
       row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 ```
 
 The dermatologist is particularly interested in whether the new product improves the appearance of the patients' acne. They plan to test the null hypothesis $H_0: p = 0.5$ using a right-tailed test with alternative hypothesis $H_A: p>0.5$ using a sign test to determine if there is enough evidence to conclude that the topical cream has a positive effect on reducing facial acne at the $\alpha = 0.05$ level.
@@ -166,16 +176,16 @@ herbivore_data <- cbind.data.frame(
 )
 
 Diff = herbivore_data$`Number of Tracks In Fertilized plots` - herbivore_data$`Number of Tracks In Control Plots`
-herbivore_data$Difference = paste0('<span style="color: red;">$',Diff, '$</span>')
+herbivore_data$Difference = red(paste0('$', Diff, '$'))
 sign = rep(0, 12)
-sign[Diff > 0] = '<span style="color: red;">$+$</span>'
-sign[Diff < 0] = '<span style="color: red;">$-$</span>'
+sign[Diff > 0] = red('$+$')
+sign[Diff < 0] = red('$-$')
 sign[Diff == 0] = ''
 herbivore_data$Sign = sign
 
-kable(herbivore_data, format = 'html', digits = 2,
+kable(herbivore_data, format = tbl_fmt, digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -210,9 +220,9 @@ sumtab = cbind.data.frame(`Period` = c('Current Approval (2022 - 2024)', 'Past A
                           `Sample Size` = c(dim(poll_data)[1], dim(hs_poll_data_gallup)[1]),
                           `Mean SCOTUS Approval Rating` = c(mean(poll_data$yes), mean(na.omit(hs_poll_data_gallup$Approve))))
 
-kable(sumtab, format = 'html', digits = 2,
+kable(sumtab, format = tbl_fmt, digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -258,9 +268,9 @@ df = cbind.data.frame(Period = c('Before COVID-19 (2019)', 'After COVID-19 (2020
                       `Registries for Children under 12 Years of Age` = c(18, 16),
                       `Relative Proportion` = c(round(18/70,3), round(16/53,3)))
 
-kable(df, format = 'html', digits = 2,
+kable(df, format = tbl_fmt, digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 
 ```
@@ -308,9 +318,9 @@ tab = read.csv(file = paste0(datapath, 'sports_motivation_summary.csv'))
 tab$Variables[tab$Variables == '\''] = ''
 tab$DF = rep(c(203, 62), 9)
 
-kable(tab, format = 'html', digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Sample Size'),
+kable(tab, format = tbl_fmt, digits = 2, col.names = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Sample Size'),
       row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 
 ```
@@ -354,9 +364,9 @@ $\bf (7.)$ A 1993 study published in the <i>Canadian Journal of Zoology</i> inve
 tab = read.csv(file = paste0(datapath, 'frog_body_sizes.csv'))
 
 
-kable(tab, format = 'html', digits = 2, col.names = c('Age (Years)', 'Population Location', 'Male Body Length (mm)','Stdev', 'Sample size', 'Female Body Length (mm)', 'Stdev', 'Sample Size'),
+kable(tab, format = tbl_fmt, digits = 2, col.names = c('Age (Years)', 'Population Location', 'Male Body Length (mm)','Stdev', 'Sample size', 'Female Body Length (mm)', 'Stdev', 'Sample Size'),
       row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 
 ```

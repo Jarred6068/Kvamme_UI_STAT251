@@ -14,8 +14,7 @@ library(ggpubr)
 ```
 
 
-# Lecture 1: Wednesday Jan. 10th 2024
-## Introduction to statistical methods
+# Introduction to statistical methods
 
 ### Data, observations, variables
 
@@ -168,9 +167,8 @@ Recall that statistics is a science that deals with the collection, description,
 
 * **Key Point:** Descriptive statistics can be applied to samples or populations. Inferential statistics are only applied to samples in order to make inferences about a population.  
 
-# Lecture 2: Friday, Jan. 12th 2024 
 
-## Describing and Visualizing Distributions
+# Describing and Visualizing Distributions
 
 As we learned in the previous lecture, descriptive statistics is the first step to statistical analysis and involves the summary and organization of data. One of the main ways we can summarize data is to describe the characteristics of the **distribution** of the variable(s) in the data. A distribution tells us something about what kinds of values a variable can have and how often they occur. 
 

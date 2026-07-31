@@ -23,10 +23,9 @@ library(latex2exp)
 path = 'Data/'
 ```
 
-# Lecture 7: Monday, Feb.5th 2024
 
 
-### Density Curves
+# Density Curves
 
 We have discussed previously that a histogram is a good tool for visualizing a distribution for most variables. Nevertheless, it is crucial to recognize that the bars in a histogram depict discrete frequencies corresponding to distinct values, or in the case of continuous variables, to discrete intervals. In contrast, the true nature of a continuous variable involves a distribution function that is inherently continuous. Consequently, this distribution is more accurately represented by a smooth curve rather than discrete bars. We call such a curve a **density curve** and the <i>density</i> component can be interpreted as a continuous measure of "how often" a value occurs. We will talk more about the nature of density later when we discuss probability. For now, it is useful to know that a density curve is how we represent the distribution of a continuous variable in theory. The plot below gives a visual example of the difference between a density curve and a histogram for a continuous random variable $X$
 
@@ -414,9 +413,8 @@ ggplot(data = df, aes(x = value))+
 
 ```
 
-# Lecture 8: Wednesday, Feb.7th 2024
 
-### Sampling Distributions
+# Sampling Distributions
 
 Consider a small study to estimate the average trunk diameter (in feet) of Western Red Cedars at the Idler's Rest nature preserve just outside of Moscow. The population distribution is given by the histogram and dot plot below. The population consists of $N = 109$ trees and the mean diameter is $\mu = `r {set.seed(235); round(mean(rnorm(109, mean = 4, sd = 1.8)), 2)}`$ with standard deviation $\sigma = `r {set.seed(235); round(sd(rnorm(109, mean = 4, sd = 1.8)), 2)}`$. The green diamond below denotes the value of the population mean diameter for trees at the Idler's Rest nature preserve.
 
@@ -554,9 +552,8 @@ There are two primary study designs:
   * An experimental study is a <i>controlled</i> study to investigate the relationship between a response and explanatory variable
   
   
-# Lecture 9: Wednesday, Feb.9th 2024
 
-### Causation vs Association
+# Causation vs Association
 
 Both observational and experimental studies seek to quantify the relationship between the response and explanatory variables. If two variables are statistically related we say they share a statistical <i>association</i>. If two variables are causally related, then changes in the explanatory variable <i>cause</i> measurable changes in the response variable. It is important to note that an association between two variables <u> does not imply </u> that they have a cause and effect relationship. 
 

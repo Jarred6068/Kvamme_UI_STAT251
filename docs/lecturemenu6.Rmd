@@ -23,9 +23,8 @@ library(latex2exp)
 path = 'Data/'
 ```
 
-# Lecture 10: Monday, Feb.12th 2024
 
-### Sources of Bias In Surveys
+# Sources of Bias In Surveys
 
 Last Friday, we introduced the idea of <i>randomization</i> as a means of selecting a sample from the population through a sampling design called **Simple random sampling**. Using random numbers to select individuals ensures that those selected to be in the sample are representative of the true population. However, large surveys of the human population require more than just sampling design with randomization. 
 
@@ -135,7 +134,7 @@ A = ggplot()+geom_point(aes(x = x1, y = y1), shape = 21, fill = 'red', size = 3)
   geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
   ggtitle('No Bias')+
   ylab('Low Variance')+
-  theme(axis.title.y = element_text(14, angle = 90),
+  theme(axis.title.y = element_text(size = 14, angle = 90),
         plot.title = element_text(hjust = 0.5))
 
 x2 = rnorm(n, 1, 0.5)
@@ -148,7 +147,7 @@ B = ggplot()+geom_point(aes(x = x2, y = y2), shape = 21, fill = 'red', size = 3)
   geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
   ggtitle('Biased')+
   ylab('')+
-  theme(axis.title.y = element_text(14),
+  theme(axis.title.y = element_text(size = 14),
         plot.title = element_text(hjust = 0.5))
 
 x3 = rnorm(n, 0, 1)
@@ -161,7 +160,7 @@ C = ggplot()+geom_point(aes(x = x3, y = y3), shape = 21, fill = 'red', size = 3)
   geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
   ggtitle('')+
   ylab('High Variance')+
-  theme(axis.title.y = element_text(14, angle = 90),
+  theme(axis.title.y = element_text(size = 14, angle = 90),
         plot.title = element_text(hjust = 0.5))
 
 x4 = rnorm(n, 1, 1)
@@ -174,7 +173,7 @@ D = ggplot()+geom_point(aes(x = x4, y = y4), shape = 21, fill = 'red', size = 3)
   geom_text(aes(x = 0, y = 0), label = TeX('$\\theta$'), size = 12)+
   ggtitle('')+
   ylab('')+
-  theme(axis.title.y = element_text(14),
+  theme(axis.title.y = element_text(size = 14),
         plot.title = element_text(hjust = 0.5))
 
 ggarrange(A, B, C, D, nrow =2, ncol = 2)
@@ -234,9 +233,8 @@ Under a randomized experiment or survey, we can reduce variability in the sampli
 * And we can often further reduce variability in our estimate by choosing a design that accounts for things like subject or sample heterogeneity.  
 
 
-# Lecture 11: Wednesday, Feb.14th 2024
 
-### Introduction to probability
+# Introduction to probability
 
 The reasoning of statistical inference relies on asking "how often would this method give the correct result if I used it many times?". When we produce data by random sampling or through randomized experiments, the outcomes of our analysis are determined by the rules of mathematical probability. 
 
@@ -364,7 +362,7 @@ ggplot(subset(exp.bernoulli, LN == 'Running Prop.'), aes(x = SS, y = Y))+
 
 One assumption that we made in the coin flip example was that the trials were **independent trials**. This means that the outcome of one flip of the coin did not depend on the outcome of a previous flip. 
 
-# Lecture 12: Wednesday, Feb.16th 2024
+# Lecture 12
 
 The sample space of a random process can consist of numbers such as the numbers on a six-sided die or qualitative values such as getting heads or tails from tossing a coin. However in statistics we typically deal with numerical outcomes such as the number of heads in a small number of tosses. When we record the outcomes of random process with numbers we get a **random variable**. We usually denote random variables with capital letters such as $X$ or $Y$. 
 

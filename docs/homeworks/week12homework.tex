@@ -1,0 +1,540 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage{float}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Homework 4},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Homework 4}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\subsubsection{Definitions}\label{definitions}
+
+Define the following terms/concepts
+
+\begin{itemize}
+\item
+  a.) Describe the central limit theorem and its significance to the
+  sampling distribution for a sample proportion or mean
+\item
+  b.) Margin of error
+\item
+  c.) Describe the ``basic form'' of a confidence interval
+\item
+  d.) Confidence level
+\item
+  e.) Critical value
+\item
+  f.) When are \(t\)-distribution and standard normal distribution
+  approximately the same shape?
+\item
+  g.) How are the degrees of freedom of a \(t\)-distribution related to
+  its shape?
+\item
+  h.) Significance level
+\item
+  i.) Rejection region
+\end{itemize}
+
+\subsubsection{\texorpdfstring{Finding probabilities from the \(t\) and
+\(z\)
+distributions}{Finding probabilities from the t and z distributions}}\label{finding-probabilities-from-the-t-and-z-distributions}
+
+\(\bf (1)\) Use the appropriate table to find the probability of each
+\(z\) or \(t\) score.
+
+\begin{itemize}
+\item
+  a.) \(P(Z > 1.3)\)
+\item
+  b.) \(P(Z \leq 0.33)\)
+\item
+  c.) \(P(Z \leq -2.1)\)
+\item
+  d.) \(P(t > 1.97)\) with 5 degrees of freedom
+\item
+  e.) \(P(t \leq 2.9)\) with 2 degrees of freedom
+\item
+  f.) \(P(t \geq -0.98)\) with 8 degrees of freedom
+\end{itemize}
+
+\subsubsection{\texorpdfstring{Finding standard scores and
+\(\alpha\)}{Finding standard scores and \textbackslash alpha}}\label{finding-standard-scores-and-alpha}
+
+\(\bf (2)\) Fill in the table below with the corresponding \(\alpha\)
+level and critical value for each confidence interval for a population
+proportion.
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{lll}
+\toprule
+Confidence Level & $\alpha$ & critical value: $z_{1-\alpha/2}$\\
+\midrule
+\cellcolor{gray!10}{$90\%$} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{}\\
+$88\%$ &  & \\
+\cellcolor{gray!10}{$97\%$} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{}\\
+$96\%$ &  & \\
+\cellcolor{gray!10}{$78\%$} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{}\\
+\addlinespace
+$99\%$ &  & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\(\bf (3)\) Fill in the table below with the corresponding \(\alpha\)
+level and critical value for each confidence interval for a population
+mean.
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{llll}
+\toprule
+Confidence Level & Sample size & $\alpha$ & critical value: $t_{n-1, 1-\alpha/2}$\\
+\midrule
+\cellcolor{gray!10}{$92\%$} & \cellcolor{gray!10}{$n = 5$} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{}\\
+$86\%$ & $n = 8$ &  & \\
+\cellcolor{gray!10}{$98\%$} & \cellcolor{gray!10}{$n = 11$} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{}\\
+$99.9\%$ & $n = 14$ &  & \\
+\cellcolor{gray!10}{$82\%$} & \cellcolor{gray!10}{$n = 40$} & \cellcolor{gray!10}{} & \cellcolor{gray!10}{}\\
+\addlinespace
+$95\%$ & $n = 13$ &  & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Confidence intervals}\label{confidence-intervals}
+
+\subsubsection{\texorpdfstring{Confidence intervals for a population
+proportion
+\(p\)}{Confidence intervals for a population proportion p}}\label{confidence-intervals-for-a-population-proportion-p}
+
+\(\bf (4)\) A survey conducted by the state of Georgia surveyed college
+students as part of a larger effort to characterize student behavior
+(Agresti and Franklin 2007). One of the questions in the survey asked
+students to report their political party affiliation. The table below
+summarizes the proportion of students who reported being Republican,
+Democrat, or Independent.
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{lrr}
+\toprule
+Political Party Affiliation & Count & $\hat{p}$\\
+\midrule
+\cellcolor{gray!10}{Democrat} & \cellcolor{gray!10}{8} & \cellcolor{gray!10}{0.14}\\
+Republican & 36 & 0.61\\
+\cellcolor{gray!10}{Independent} & \cellcolor{gray!10}{15} & \cellcolor{gray!10}{0.25}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Using the table above, construct a \(90\%\) confidence interval for the
+proportion of Independent college student voters in the state of
+Georgia.
+
+\(\bf (5)\) As part of an effort to improve health services, a health
+club in the United Kingdom asked club members to complete an online
+survey (de Vries 2023). One of the survey questions asked customers to
+rate their satisfaction level on a likert scale. The results of this
+survey question are summarized below
+
+\begin{table}[H]
+\centering\centering
+\caption{\label{tab:unnamed-chunk-4}Customer responses for the survey question "How satisfied are you with your membership of the organisation overall?"}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+Response & Count & $\hat{p}$\\
+\midrule
+\cellcolor{gray!10}{Completely dissatisfied} & \cellcolor{gray!10}{0} & \cellcolor{gray!10}{0.00}\\
+Very dissatisfied & 0 & 0.00\\
+\cellcolor{gray!10}{Dissatisfied} & \cellcolor{gray!10}{3} & \cellcolor{gray!10}{0.01}\\
+Neutral & 20 & 0.09\\
+\cellcolor{gray!10}{Satisfied} & \cellcolor{gray!10}{64} & \cellcolor{gray!10}{0.30}\\
+\addlinespace
+Very satisfied & 109 & 0.51\\
+\cellcolor{gray!10}{Completely satisfied} & \cellcolor{gray!10}{19} & \cellcolor{gray!10}{0.09}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Using the table above, construct a \(95\%\) confidence interval for the
+proportion of customers that are ``very satisfied'' or more.
+
+\subsubsection{\texorpdfstring{Confidence intervals for a population
+mean
+\(\mu\)}{Confidence intervals for a population mean \textbackslash mu}}\label{confidence-intervals-for-a-population-mean-mu}
+
+\(\bf (6)\) The following table summarizes variables from a random
+sample of \(25\) observations from a dataset concerning housing in
+California taken from the 1990 census. The full dataset is featured in
+Aurélien Géron's book `Hands-On Machine learning with Scikit-Learn and
+TensorFlow' (Géron 2022). Use the table to answer parts (a) and (b)
+
+\begin{table}[H]
+\centering\centering
+\caption{\label{tab:unnamed-chunk-5}Summary statistics for housing data in California from the 1990 census. Estimates are derived from a random sample of 25 observations from Aurélien Géron's dataset featured in 'Hands-On Machine learning with Scikit-Learn and TensorFlow', originally comprising observations from over 20,000 districts in California}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+Variable & Sample Mean & Sample Standard Deviation\\
+\midrule
+\cellcolor{gray!10}{Median Age of Houses (per block)} & \cellcolor{gray!10}{24.28} & \cellcolor{gray!10}{13.56}\\
+Total Rooms (per block) & 3263.72 & 2105.99\\
+\cellcolor{gray!10}{Total Bedrooms (per block)} & \cellcolor{gray!10}{640.52} & \cellcolor{gray!10}{380.55}\\
+Population of District & 1861.68 & 1193.30\\
+\cellcolor{gray!10}{Number of Households (per block)} & \cellcolor{gray!10}{584.24} & \cellcolor{gray!10}{330.38}\\
+\addlinespace
+Median Family Income (in tens of thousands of USD) & 3.74 & 1.54\\
+\cellcolor{gray!10}{Median House value (USD)} & \cellcolor{gray!10}{179320.04} & \cellcolor{gray!10}{109450.56}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item
+  a.) Construct and interpret a \(95\%\) confidence interval for the
+  average median family income for households in California in 1990
+\item
+  b.) Construct and interpret a \(99\%\) confidence interval for the
+  average number of bedrooms per block in California in 1990
+\end{itemize}
+
+\subsubsection{Choosing a minimum sample
+size}\label{choosing-a-minimum-sample-size}
+
+\(\bf (7)\) According to a 2023 study published by the Saudi Heart
+Association, a survey of college students from Taibah University in
+Medina, Saudi Arabia, found that \(24\%\) of students reported using
+e-cigarettes (Alzahrani et al. 2023). Assuming a comparable rate of
+e-cigarette use in the U.S., what sample size is required to estimate
+the proportion of college students who use e-cigarettes at the \(95\%\)
+confidence level and within a margin of error of \(1.5\%\)?
+
+\(\bf (8)\) Recent concerns over the rise in global infertility have
+drawn significant attention to the harmful effects of microplastics,
+PFAS, and highly processed foods (Zhang et al. 2022; Agarwal et al.
+2015). A study from 2002 published in Fertility and Sterility found that
+approximately \(15\%\) of couples worldwide experienced infertility
+(Sharlip et al. 2002). Assuming a similar rate of infertility in the
+U.S, compute the sample size needed to estimate infertility of U.S
+couples at the \(99\%\) confidence level and within a margin of error of
+\(4\%\).
+
+\subsubsection{Assumptions of
+estimators}\label{assumptions-of-estimators}
+
+\(\bf (9)\) Describe the assumptions associated with estimating \(p\)
+with \(\hat{p}\)
+
+\(\bf (10)\) Describe the assumptions associated with estimating \(\mu\)
+with \(\bar{x}\)
+
+\section{Significance testing}\label{significance-testing}
+
+\subsubsection{Stating hypotheses}\label{stating-hypotheses}
+
+\(\bf (11)\) A pharmaceutical company produces a generic version of the
+pain reliever ibuprofen, marketing a tablet with a 200 milligram dose.
+Concerned about the accuracy of the dosing process, the manufacturer
+suspects that the machine filling the tablets may be malfunctioning
+leading to a smaller dose in each tablet. The manufacturer wishes to
+conduct a significance test to determine if the dose is significantly
+lower than 200 milligrams. State the null and alternative hypotheses for
+this test
+
+\(\bf (12)\) A financial institution invests in a pharmaceutical
+company, which produces a widely prescribed antidepressant medication
+with a market value of \$100 per share. Worried about potential
+discrepancies in the market valuation, the institution suspects that
+recent market trends may have led to an underestimation of the stock's
+value. The institution plans to conduct a significance test to determine
+if the stock's value has significantly increased. State the null and
+alternative hypotheses for this test.
+
+\(\bf (13)\) A semiconductor manufacturing company produces microchips
+with a target defect rate of 0.1\% per batch. Concerned about the
+quality control process, the company suspects that recent changes in
+manufacturing procedures may have resulted in a change in the defect
+rate. The company intends to conduct a significance test to determine if
+the defect rate is significantly different than the target rate of
+0.1\%. State the null and alternative hypotheses for this test.
+
+\subsubsection{The Decision Rule}\label{the-decision-rule}
+
+\(\bf (14)\) For each set of hypotheses, significance level, and
+\(p\)-value. State whether the test rejects or fails to reject the null
+hypothesis.
+
+\begin{itemize}
+\item
+  a.) \(H_0: \mu = 0\); \(H_A: \mu \neq 0\); \(\alpha = 0.01\);
+  \(p\)-value \(= 0.0098\)
+\item
+  b.) \(H_0: p = 0.5\); \(H_A: p > 0.5\); \(\alpha = 0.05\); \(p\)-value
+  \(= 0.086\)
+\item
+  c.) \(H_0: \mu = 100\); \(H_A: \mu < 100\); \(\alpha = 0.001\);
+  \(p\)-value \(= 0.0015\)
+\item
+  d.) \(H_0: p = 0.9\); \(H_A: p \neq 0.9\); \(\alpha = 0.1\);
+  \(p\)-value \(= 0.053\)
+\end{itemize}
+
+\(\bf (15)\) For each set of hypotheses, significance level, sample
+size, and test statistic. Give the critical value and state whether the
+test rejects or fails to reject the null hypothesis.
+
+\begin{itemize}
+\item
+  a.) \(H_0: \mu = 15\); \(H_A: \mu > 15\); \(n = 33\);
+  \(\alpha = 0.05\); \(t_{obs} = 2.13\)
+\item
+  b.) \(H_0: \mu = 0\); \(H_A: \mu \neq 0\); \(n = 14\);
+  \(\alpha = 0.01\) ; \(t_{obs} = -4.1\)
+\item
+  c.) \(H_0: p = 0.5\); \(H_A: p < 0.5\); \(n = 120\); \(\alpha = 0.1\);
+  \(Z_{obs} = -1.5\)
+\item
+  d.) \(H_0: p = 0.05\); \(H_A: p \neq 0.05\); \(n = 60\);
+  \(\alpha = 0.03\); \(Z_{obs} = 1.95\)
+\end{itemize}
+
+\subsubsection{\texorpdfstring{Hypothesis tests for a population
+proportion
+\(p\)}{Hypothesis tests for a population proportion p}}\label{hypothesis-tests-for-a-population-proportion-p}
+
+\(\bf (16)\) A toy manufacturer claims that \(50\%\) of their toy robots
+are defect-free. However, a quality control inspector suspects that the
+actual proportion of defect-free robots is different from what the
+manufacturer claims. To investigate, the inspector randomly selects
+\(100\) toy robots from a production batch and examines them for
+defects. After the inspection, the inspector finds that \(40\) out of
+the \(100\) toy robots are defect-free. To test their suspicion, they
+set up a two-tailed hypothesis test with a significance level
+\(\alpha = 0.1\) and hypotheses \(H_0: p_0 = 0.5\) (manufacturer's
+claim) \(H_A: p \neq p_0\).
+
+\begin{itemize}
+\tightlist
+\item
+  a.) Using the significance level above, is there enough evidence to
+  conclude that the proportion of defect-free toy robots is different
+  from the manufacturer's claim?
+\end{itemize}
+
+\(\bf (17)\) A pharmaceutical company has developed a new drug designed
+to cure a specific bacterial infection. They claim that their drug is
+effective, with a cure rate of \(20\%\). However, a group of independent
+researchers believes that the cure rate is less than what the
+pharmaceutical company claims. To investigate, the researchers conduct a
+clinical trial on \(300\) patients suffering from the bacterial
+infection. After the trial, they find that \(70\) out of the \(300\)
+patients were cured using the new drug. To test their suspicion, they
+set up a hypothesis test with a significance level of \(\alpha = 0.05\)
+with \(H_0: p_0 = 0.2\), \(H_A: p < p_0\)
+
+\begin{itemize}
+\item
+  a.) Compute the critical value for this test
+\item
+  b.) Compute the test statistic \(Z_{obs}\)
+\item
+  c.) Compute the \(p\)-value
+\item
+  d.) Is there enough evidence to conclude that the cure rate of the new
+  drug is less than the rate claimed by the pharmaceutical company?
+\end{itemize}
+
+\subsubsection{\texorpdfstring{Hypothesis tests for a population mean
+\(\mu\)}{Hypothesis tests for a population mean \textbackslash mu}}\label{hypothesis-tests-for-a-population-mean-mu}
+
+\(\bf (18)\) A soft drink company claims that their new ``Zero Sugar''
+soda contains zero grams of added sugar per 12-ounce can. To test this
+claim, a random sample of \(25\) cans of this soda is selected. The
+sample mean is found to be \(1.3\) grams of added sugar per can, with a
+standard deviation of \(0.5\) grams. To determine if there is enough
+evidence to reject the company's claim and conclude that the soda does
+not contain zero grams of added sugar per can, a group of researchers is
+interested in testing the following hypotheses: \(H_0: \mu_0 = 0\),
+\(H_A: \mu \neq \mu_0\) at the \(\alpha = 0.01\) significance level.
+
+\begin{itemize}
+\tightlist
+\item
+  a.) Using the significance level above, is there evidence that the
+  soda produced by the soft drink company contains added sugars?
+\end{itemize}
+
+\(\bf (19)\) A group of botanists is studying the growth rate of Venus
+fly traps in a controlled greenhouse environment. Based on historical
+data, the typical growth rate of Venus fly traps is believed to be
+\(100\) millimeters per year. The botanists suspect that the current
+growth rate in their greenhouse is higher than this historical value. To
+investigate, they take a random sample of \(40\) Venus fly traps and
+measure their growth rates over a year. After the study, they find that
+the sample mean growth rate for the \(40\) Venus fly traps is \(105\)
+millimeters per year with a standard deviation of \(12\)mm. To test
+their suspicion, they set up a hypothesis test with a significance level
+of \(\alpha = 0.05\)
+
+\begin{itemize}
+\item
+  a.) State the null and alternative hypotheses
+\item
+  b.) Compute the critical value for this test
+\item
+  c.) Compute the test statistic \(t_{obs}\)
+\item
+  d.) Compute the \(p\)-value
+\item
+  e.) Is there enough evidence to conclude that the current growth rate
+  of Venus fly traps in the greenhouse is higher than the historical
+  value of \(100\) millimeters per year?
+\end{itemize}
+
+\newpage
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-agarwal2015unique}
+Agarwal, Ashok, Aditi Mulgund, Alaa Hamada, and Michelle Renee Chyatte.
+2015. {``A Unique View on Male Infertility Around the Globe.''}
+\emph{Reproductive Biology and Endocrinology} 13: 1--9.
+
+\bibitem[\citeproctext]{ref-agresti2007art}
+Agresti, Alan, and Christine Franklin. 2007. {``The Art and Science of
+Learning from Data.''} \emph{Upper Saddle River, New Jersey} 88.
+
+\bibitem[\citeproctext]{ref-alzahrani2023prevalence}
+Alzahrani, Talal, Marwan F Alhazmi, Ahmed N Alharbi, Feras T AlAhmadi,
+Amer N Alhubayshi, and Bader A Alzahrani. 2023. {``The Prevalence of
+Electronic Cigarette Use Among College Students of Taibah University and
+Symptoms of Cardiovascular Disease.''} \emph{Journal of the Saudi Heart
+Association} 35 (2): 163.
+
+\bibitem[\citeproctext]{ref-andriesurvey}
+de Vries, Andrie. 2023. \emph{Surveydata: Tools to Work with Survey
+Data}. \url{https://CRAN.R-project.org/package=surveydata}.
+
+\bibitem[\citeproctext]{ref-geron2022hands}
+Géron, Aurélien. 2022. \emph{Hands-on Machine Learning with
+Scikit-Learn, Keras, and TensorFlow}. " O'Reilly Media, Inc.".
+
+\bibitem[\citeproctext]{ref-sharlip2002best}
+Sharlip, Ira D, Jonathan P Jarow, Arnold M Belker, Larry I Lipshultz,
+Mark Sigman, Anthony J Thomas, Peter N Schlegel, et al. 2002. {``Best
+Practice Policies for Male Infertility.''} \emph{Fertility and
+Sterility} 77 (5): 873--82.
+
+\bibitem[\citeproctext]{ref-zhang2022microplastics}
+Zhang, Chenming, Jianshe Chen, Sicheng Ma, Zixue Sun, and Zulong Wang.
+2022. {``Microplastics May Be a Significant Cause of Male
+Infertility.''} \emph{American Journal of Men's Health} 16 (3):
+15579883221096549.
+
+\end{CSLReferences}
+
+\end{document}

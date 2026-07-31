@@ -8,7 +8,7 @@ always_allow_html: true
 header-includes:
   \usepackage{float}
   \usepackage{tikz}
-
+bibliography: misc/Week_13_bibs.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -28,625 +28,584 @@ source('misc/stat251_tools.R')
 
 ```
 
-# Lecture 21 Monday, March 25th 2024
+# Lecture 24
 
-**Warm Up:** Consider the following example - a gardener is conducting an experiment to evaluate the effectiveness of a new fertilizer on the heights of tomato plants. They purchase 80 tomato plants from their local seedling outlet. The gardener randomly selects $40$ of plants to receive a fertilizer and water mixture and the remaining half to receive only water. After one month the mean height is recorded in both groups and the difference in height between the two experimental groups of tomato plants is measured. 
+**Warm Up:** 
 
-The gardener suspects that the plants which received the new fertilizer will tend to be taller than the plants that received only water. They set the null hypothesis to be "no difference in height" which can be thought of as "the fertilizer has no effect on tomato plant growth". 
+  1. A car company claims that their Hybrid Sedan averages 35 mpg. You randomly select 8 of these vehicles from a local dealership and test their gas mileage under similar conditions.
 
-\[ H_0: \mu_d = 0 \]
+You get the following MPG scores:
 
-$\mu_d$ denotes the population mean difference in tomato plant height between the two experimental groups. We can use the sample mean difference $\bar{x}_d$ to estimate $\mu_d$ which is calculated as 
+MPG:	$30,28,32,26,33,25,28,30$
 
-\[\bar{x}_d = \frac{1}{n}\sum_i (x_{i} - y_i) \]
+Consider the following $95\%$ confidence interval for the null hypothesis $\mu = 35$, $[26.68, 31.32]$. Does the actual gas mileage for these cars deviate significantly from $35$? Why or why not?
+  
+  2. A concern was raised in Australia that the percentage of deaths of Aboriginal prisoners was higher than the percent of deaths of non-Aboriginal prisoners, which is $0.27\%$. A sample of six years (1990-1995) of data was collected, and it was found that out of $14,495$ Aboriginal prisoners, $51$ died ("Indigenous deaths in," 1996). Do the data provide enough evidence to show that the proportion of deaths of Aboriginal prisoners is more than $0.27\%$?
+  
+### Parametric vs Non-parametric tests
 
-where $x_i$ is the height of tomato plants receiving the fertilizer and $y_i$ is the height the tomato plants receiving only water.
+The hypothesis tests that we have learned up to this point are called **parametric** tests. Parametric tests make assumptions about the population distribution from which the data are sampled. For example:
 
-Since the suspicion is that the plants receiving fertilizer will be taller, the alternative hypothesis is
+  * The test for a proportion assumes that either the sample size is large enough and that the “success” and “failures” are well balanced so that the population distribution of $X$ is approximately normal
+  
+  * The test for a population mean explicitly assumes that the population distribution of $X$ is normal 
+  
+Another group of hypothesis tests are said to be **non-parametric**. Non-parametric tests make few or no assumptions about the underlying distribution of the data. Still, both types of analyses assume the data are generated from a randomization procedure and that the observations in the data are independent and come from the same distribution. However, in non-parametric statistics, the distribution can be any distribution. 
 
-\[ H_A: \mu_d > 0 \]
+* **Advantages of Non-parametric tests**
 
-The data from the gardeners experiment are shown below:
+  1. They may be the only alternative when sample sizes are very small (unless the population distribution is known exactly, but this is almost never the case)
+
+  2. They make few assumptions about the population distribution of the data
+
+  3. They are advantageous when the data represent crude measurements such as subjective ratings/rankings (e.g, Likert responses)
+
+  4. They often have simpler computations and interpretations than parametric tests
+
+* **Disadvantages of Non-parametric tests**
+
+  1. They are generally less powerful than their parametric analogues
+
+
+### The sign test
+
+The sign test is a non-parametric significance test that is typically used for paired observations such as data gathered from a matched-pairs designs. For example, consider an experiment where individuals are weighed before and after a treatment with a weight loss drug and the difference in weight is recorded. Such data is appropriate for the sign test. 
+
+The sign test is relatively under-powered compared to the other parametric tests we have learned about. However, it is very flexible and makes almost no assumptions about the data or its population distribution. The sign test is especially useful when data arise from crude measurements or when observations have a ranked order such as movie ratings or taste scores, to name a few examples. 
+
+To demonstrate the use of the sign test, consider the following data from a study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision. The ratings were given as a number between $1-7$ with $1$ indicating wife-dominated decision making and $7$ indicating husband-dominated decision making.
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-x = rnorm(40, 45, 2.5)
-y = rnorm(40, 41, 4.1)
+Couple = c(1:17)
+Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
+Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
+Difference = Husband - Wife
+Sign = Difference
+Sign[which(Difference > 0)] = '$+$'
+Sign[which(Difference < 0)] = '$-$'
+Sign[which(Difference == 0)] = ''
 
-diff = x - y
-
-df = cbind.data.frame(x, y, diff)
+df = cbind.data.frame(Couple, Husband, Wife, Difference, Sign)
 
 kable(df, format = 'html', digits = 2, 
-      col.names = c('Height Fertilized (Inches)', 'Height Water Only (Inches)', 'Difference In Height (Inches)'),
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
 ```
 
-The summary statistics from the gardeners data are listed below
+
+The second to last column "Difference" gives the difference in rating between the husbands rating and wifes rating for each couple. The last column denoted "Sign" indicates whether each difference was positive or negative. Positive differences indicate that husband perceives themselves as more dominating in decision making while negative signs indicated that the wife perceives themselves as more dominating. In this example, ignoring differences of zero, there are a total of $14$ signs and $11$ of them are positive. Let $p$ be the probability that a given sign is positive and consider the following pair of hypotheses:
+
+\[H_0: p = 0.5; \ \ H_A: p \neq 0.5 \]
+
+The null hypothesis indicates that the presence of a positive or negative sign is essentially random while the alternative indicates that positive and negative signs are not equally likely, reflecting a systematic difference in opinion between the husband and wife in each couple. Under the null hypothesis, the number of positive signs is a binomial random variable with probability $p = 0.5$. 
+
+\[P(s) = \frac{n!}{s!(n-s)!}p^s(1-p)^{n-s} \]
+
+where $n$ is the total number of signs and $s$ is the number of positive signs. Thus the sampling distribution of the number of positive signs is a binomial distribution
 
 ```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
 
-x = rnorm(40, 45, 2.5)
-y = rnorm(40, 41, 4.1)
-diff = x - y
+probtype = 'P(X >= k)'
+k = 11
+df = data.frame(success = 0:14, 
+                prob = dbinom(x = 0:14, size = 14, prob = 0.5))
+        if(probtype == 'P(X = k)'){
+          df=df %>% mutate(condition = ifelse(success == k, as.character(k), "failure")) 
+          lbl = paste0('$P(X = ', k, ') = ')
+        }else if (probtype == 'P(X <= k)'){
+           df=df %>% mutate(condition = ifelse(success <= k, as.character(k), "failure")) 
+           lbl = paste0('$P(X \\leq ', k, ') = ')
+        }else{
+          df=df %>% mutate(condition = ifelse(success >= k, as.character(k), "failure"))
+          lbl = paste0('$P(X \\geq ', k, ') = ')
+        }
+        
+        px = round(sum(df$prob[which(df$condition == k)]),4)
+        ggplot(data = df, aes(x = success, y = prob, fill = condition)) +
+          geom_bar(stat = 'identity', color = 'black') +
+          geom_col() +
+          geom_text(aes(label = round(prob,4), y = prob + 0.01),
+                    position = position_dodge(0.9),
+                    size = 3,
+                    vjust = 0)+
+          geom_text(aes(x = mean(success),
+                        y = max(prob) + 0.08),
+                    label = TeX(paste0(lbl, px, '$')),
+                    size = 5,
+                    vjust = 0)+
+          scale_y_continuous(limits = c(0, min(max(df$prob+0.14), 1)))+
+          labs(title = paste0("Probability of X =", k, " or more positive signs."),
+               subtitle = TeX(paste0("$X \\sim binom(n = ", 14, ", p = ", 0.5, ')$')),
+               x = "Number of Positive Signs",
+               y = "Probability")+
+          theme_classic2()+
+          theme(legend.position = 'none')
 
-n = 40
-xbar = mean(x)
-sdx = sd(x)
-ybar = mean(y)
-sdy = sd(y)
-md = mean(diff)
-sdmd = sd(diff)
+
+```
+
+Recall that the $p$-value of a significance test is the probability of observing a value as or more extreme than the test statistic. In the case of the sign test, the test statistic is the number of positive signs and the $p$-value is the probability of observing more or fewer signs, depending the nature of the alternative hypothesis. For a test of the hypotheses given above, the $p$-value is the probability of getting $11$ or more positive signs multiplied by $2$ because it is a two-tailed test. This gives
+
+\[p\text{-value} = 2\times P(S \geq 11 | H_0 \ \text{True}) = 2\sum_{k = 11}^n \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} \]
+\[ = 2(0.0222+0.0056+0.0009+0.0001) = 2(0.0287) = 0.0574 \]
+
+Assuming a significance level of $5\%$, we would fail to reject the null hypothesis, and we would conclude that the probability of a positive sign is not significantly different than $p = 0.5$. In the original context of the test, this indicates that husbands and wives do not differ significantly in their perceived relative influence in major financial decision making. 
+
+The five steps of the sign test are given below:
+
+1. Assumptions: data are matched pairs
+
+2. State the null and alternative hypotheses. Note that the hypothesis are defined in terms of the probability of a positive sign. Usually the null is that $p = 0.5$ i.e positive and negative signs are equally likely/ random. 
+
+3. Compute the differences and sign of each difference for all pairs of observations. The test statistic is the number of positive signs.
+
+4. Compute the $p$-value from a binomial distribution
+
+5. Make a decision 
 
 
-df = cbind.data.frame(c('Sample size', 'Mean Height (Fertilized)', 'SD (Fertilized)', 'Mean Height (Water Only)', 'SD (Water Only)', 'Mean Difference (Fertilized - Water Only)', 'SD Difference'),
-                      c('$n$','$\\bar{x}$','$s_x$','$\\bar{y}$','$s_y$','$\\bar{x}_d$','$s_d$'),
-                      c(n, xbar, sdx, ybar, sdy, md, sdmd))
+Like we have seen before with tests for $p$ and $\mu$ the sign test can be right, left or two-tailed tests. 
+
+```{r, echo=FALSE, warning=F, message=F}
+
+
+df = cbind.data.frame(`Alternative Hypothesis $H_A$` = c('$H_A: p > 0.5$','$H_A: p < 0.5$','$H_A: p \\neq 0.5$'),
+                      `$p$-value` = c('$P(S \\geq s | H_0 \\ \\text{True})$', '$P(S \\leq s | H_0 \\ \\text{True})$', '$2\\times P(S \\geq s | H_0 \\ \\text{True})$'))
 
 
 kable(df, format = 'html', digits = 2, 
-      col.names = c('Name', 'Symbol', 'Value'),
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
-
 ```
 
-Recall from last week that a significance test is a test of the null hypothesis. To test the null hypothesis, we compute the scenario given by the alternative hypothesis under the assumption that the null is true. In the case of this gardeners experiment, we need to compute the probability of observing a mean difference larger than the difference we observed under the sampling distribution of the null hypothesis. In other words, "how likely is it that we would see a difference in height as large as the one we observed, assuming that the true difference is zero?" 
+We can also tabulate the probabilities for different outcomes of the sign test to produce a table like the $Z$ or $t$ table we have used previously. The table below gives the (point) probabilities for different combinations of positive and total signs. The columns represent the total number of signs and the rows represent the number of positive signs. 
 
-\[P(\bar{X} \geq \bar{x}_d | H_0 \ \text{true}) \]
-
-To compute this probability, we need convert the difference we observed into a standardized score that we can look up in one of our tables. Since we are discussing a "mean" difference we can use the $t$-distribution as we did before with confidence intervals:
-
-\[ t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}}  = \frac{4.14 - 0}{4.43/\sqrt{40}} = 5.91 \sim t(n-1)\]
-
-Where $\bar{x}_d$ is the sample mean difference in height, $\mu_d$ is population mean difference under the null hypothesis, and $s_d$ is the sample standard deviation for the difference in height. The above formula converts the observed difference $\bar{x}_d$ to a $t$-score from a $t$-distribution with $n-1$ degrees of freedom under the assumption that the null hypothesis is true. $t_{obs}$ is called the **test statistic** - it measures the discrepancy (distance) between the point estimate of the parameter and the hypothesized value of the parameter under the null hypothesis. It tells us approximately how many standard deviations the observed mean difference is from the population mean difference under the null. 
-
-Using the above formula the gardener calculates a $t$-score of $t_{obs} = 5.91$ with $39$ degrees of freedom. The probability from earlier can be re-framed in the context of the $t$-distribution
-
-\[P(t \geq t_{\text{obs}}| H_0 \ \text{true}) = 1-P(t< t_{\text{obs}}|H_0 \ \text{true}) \]
-
-i.e the probability of observing a $t$ value greater than the one we observed when the true difference is assumed to be $\mu_d = 0$. For the gardener's experiment, this probability is $3.39 \times 10^{-7} \approx 0$, which is very small.
-
-
-This probability is called the **p-value** and it measures the probability of observing an estimate as or more extreme than the one we observed under the assumption that the null hypothesis is true. So what does this small probability mean? Just as we observed with the coin flip example from last week, it can mean one of two things:
-
-1. We observed something very unusual
-
-2. The assumption underlying the calculation (i.e $\mu_d = 0$ no difference in mean height) is not true.
-
-We prefer the second conclusion when the $p$-value is "sufficiently" small and take it as evidence against the null hypothesis. So how small is small enough? By convention, most tests use a probability cutoff of $5\%$ or less which is called the **significance level** of the test. The significance level of a test is denoted as $\alpha$. For the gardeners test $\alpha = 0.05$. $\alpha$ sets the boundary for how big (or small) the test statistic needs to be to conclude that the test statistic is <u>statistically significant</u>.
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-x = rnorm(40, 45, 2.5)
-y = rnorm(40, 41, 4.1)
+n = 5:15
+s = 0:15
 
-diff = x - y
+mat = matrix(0, nrow = length(s), ncol = length(n))
 
-xbar = mean(x)
-sdx = sd(x)
-ybar = mean(y)
-sdy = sd(y)
-md = mean(diff)
-sdmd = sd(diff)
+for(i in 1:length(n)){
+  mat[,i] = round(dbinom(s, n[i], 0.5), 5)
+}
 
-gen.density.plot(bbox = c(-5, 5), n = 40, dist = 't', test = 'upper.tail', obs = md)
-#one.sample.t.test(m0 = 0, xbar = md, s = sdmd, n = 40, test = 'upper.tail')
+mat[which(mat == 1)] = ''
+final = cbind.data.frame(s, mat)
+colnames(final) = c('Number of positive signs', n)
+
+kable(final, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
 
 
 ```
 
-In the plot above, $t_{1-\alpha}$ denotes the boundary for significance in the gardener's test. Any $t$-value greater than $t_{1-\alpha}$ will have a **p-value** less than $\alpha$ and be deemed <i>significant</i>
+# Lecture 25
 
-What were the steps involved with this test?
+**Practice: The Sign Test** - A group of $12$ fly fisherman are testing two types of flies to determine which one is more effective at catching trout in the Selway River. Each fly fisherman makes $10$ casts with each fly lure and records the number of trout that are caught. Use the table below to conduct a two-sided sign test at the $\alpha = 0.05$ significance level:
 
-  * **step 1** - The first step in any hypothesis test is to address the assumptions we make about the data. The hypothesis tests we will learn in this class assume that the data are produced by a randomization process. There may also be assumptions about the population distribution.
-  
-  * **step 2** - Formulate the question you wish to evaluate and set up the null and alternative hypotheses.
-  
-  * **step 3** - Calculate the **test statistic** which measures the discrepancy (distance) between the the estimate of the parameter and the hypothesized value of the parameter under the null.
-  
-  * **step 4** - Compute the **$p$-value** - the probability of observing a value of the test statistic that is as extreme or more extreme than the observed value given that the null hypothesis is true
-  
-  * **step 5** - Make a conclusion about the null hypothesis - we either (i) fail to reject the null hypothesis and conclude that there is not sufficient evidence in favor of the alternative or (ii) reject the null hypothesis in favor of the alternative
-
-
-With the examples of significance tests we have discussed thus far we have learned two formal significance tests: one concerning a population proportion $p$ and one concerning a population mean $\mu$.
-
-# Lecture 22 Wednesday, March 27th 2024
-
-### Setting up the null and alternative hypothesis
-
-As we stated previously, the null hypothesis is a statement about the value of a population parameter. The alternative hypothesis is a statement about our suspicions regarding the value of that parameter. The alternative hypothesis can be directional such as $H_A: p > p_0$ (called an upper tail test) or $H_A: p < p_0$ (called a lower tailed test). These types of alternative hypotheses are called *one-sided* because they direct our attention to either the lower or upper tail of the distribution of the test statistic. If our suspicion about the parameter is that it differs in either direction or if we are unsure, the alternative hypothesis is $H_A: p \neq p_0$ and the test is called *two-sided* because the suspicion includes both the lower and upper tails of the distribution of the test statistic. 
-
-Because the alternative hypothesis expresses some effect that we hope to find evidence for, we often begin by stating $H_A$ and then set up $H_0$ as the statement that the "hoped-for" effect is not present. It's important to note that the alternative hypothesis should express the hopes or suspicions we bring to the data. It is biased to first look at the data and then set up the alternative hypothesis based on what the data show. If you do not have a direction firmly in mind before gathering the data you must use a two-sided test.
-
-### Significance level, critical value, and decision making
-
-The **significance level** of test (denoted $\alpha$) is how we turn the $p$-value of a significance test into a <i>reject/not reject</i> decision about the null hypothesis. It sets how "strong" the evidence against the null needs to be in order for a result to be deemed statistically significant. The researcher determines the significance level before conducting the experiment.
-
-The **critical value** of a significance test is a point on the distribution of the test statistic that defines a set of values that call for rejecting the null hypothesis. 
-
-The critical value determines the boundary of the **rejection region** – the area in the tail (or tails) of the distribution of the test statistic for which a result is deemed significant. The rejection region has an area of exactly $\alpha$.
-
-
-The significance level, critical value, and rejection region are all related to each other but we typically only set the significance level. The critical value and rejection region then follow from the specified significance level. All three of these things are used to help us turn the $p$-value of a hypothesis test into a formal decision about the null hypothesis. The decision rule is as follows:
-
-  1. If $p$-value $< \alpha$, then *reject* $H_0$ (results are statistically significant)
-  
-  2. If $p$-value $\geq \alpha$, then *do not reject* $H_0$ (results are <u>not</u> statistically significant)
-
-So how does this relate the to critical value and rejection region? We can state the decision rule in terms of both of these quantities but to do so is more nuanced and depends on the direction (or lack there of) of the alternative hypothesis. For example, consider the null hypothesis and alternative hypotheses
-
-\[ H_0: \mu = \mu_0 \]
-\[ H_A: \mu < \mu_0 \]
-
-The decision rule stated in terms of the critical value and rejection region is:
-
-  1. If $p$-value $< \alpha$ then $t_{obs} < t_\alpha$; *reject* $H_0$ (results are statistically significant) - this is the same as saying "if the test statistic falls within the rejection region then <u>reject $H_0$</u>"
-  
-  2. If $p$-value $\geq \alpha$, then $t_{obs} \geq t_\alpha$; *do not reject* $H_0$ (results are <u>not</u> statistically significant) - this is the same as saying "if the test statistic does not fall within the rejection region then <u>do not reject $H_0$</u>"
-  
-The **critical value** and **rejection region** of a test depend on the significance level of the test and the direction of the alternative hypothesis. Consider the plots below: 
-
-
-
-```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=10, fig.cap='This plot depicts the decision rule for a given alternative hypothesis at a significance level $\\alpha = 0.05$. In each subplot, the rejection region is highlighted in turquoise and the critical value(s) are denoted by the vertical dashed lines.'}
-
-A = ggplot()+xlim(-4, 4)+theme_bw()+
-  stat_function(fun = dnorm,
-                geom = 'area',
-                fill = 'orange',
-                alpha = 0.4)+
-  stat_function(fun = d_limit,
-                          args = list(alpha = 0.05,
-                                      test = 'two.tailed',
-                                      dist = 'z',
-                                      n = 100), 
-                          geom = "area", 
-                          fill = "cyan3", 
-                          alpha = 0.7)+
-  stat_function(fun = dnorm,
-                size = 1)+
-  geom_vline(xintercept = c(qnorm(0.05/2), qnorm(1-(0.05/2))), size = 2, linetype = 'dashed')+
-  geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
-  geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
-  geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
-  xlab('Z')+
-  ylab('Probability Density')+
-  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p \\neq c$'))+
-  theme(axis.text = element_text(size = 12),
-        axis.title = element_text(size = 14))
-
-
-
-B = ggplot()+xlim(-4, 4)+theme_bw()+
-  stat_function(fun = dnorm,
-                geom = 'area',
-                fill = 'orange',
-                alpha = 0.4)+
-  stat_function(fun = d_limit,
-                          args = list(alpha = 0.05,
-                                      test = 'upper.tail',
-                                      dist = 'z',
-                                      n = 100), 
-                          geom = "area", 
-                          fill = "cyan3", 
-                          alpha = 0.7)+
-  stat_function(fun = dnorm,
-                size = 1)+
-  geom_vline(xintercept = c(qnorm(1-0.05)), size = 2, linetype = 'dashed')+
-  geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
-  #geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
-  geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
-  xlab('Z')+
-  ylab('Probability Density')+
-  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p > p_0$'))+
-  theme(axis.text = element_text(size = 12),
-        axis.title = element_text(size = 14))
-
-C = ggplot()+xlim(-4, 4)+theme_bw()+
-  stat_function(fun = dnorm,
-                geom = 'area',
-                fill = 'orange',
-                alpha = 0.4)+
-  stat_function(fun = d_limit,
-                          args = list(alpha = 0.05,
-                                      test = 'lower.tail',
-                                      dist = 'z',
-                                      n = 100), 
-                          geom = "area", 
-                          fill = "cyan3", 
-                          alpha = 0.7)+
-  stat_function(fun = dnorm,
-                size = 1)+
-  geom_vline(xintercept = c(qnorm(0.05)), size = 2, linetype = 'dashed')+
-  geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
-  geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
-  #geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
-  xlab('Z')+
-  ylab('Probability Density')+
-  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p < p_0$'))+
-  theme(axis.text = element_text(size = 12),
-        axis.title = element_text(size = 14))
-
-ggarrange(A, B, C, nrow = 3)
-```
-
-
-Consider the six plots below which show the position of the critical value, and rejection region for the three types of alternative hypotheses at two significance levels. What do you notice about the relationship between the significance level and the rejection region?
-
-
-```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=14}
+```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-md = NA
-A = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'upper.tail', obs = md, alpha = 0.05)
-A1 = A+ggtitle(TeX('$H_A: p > p_0$'))
-B = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'lower.tail', obs = md, alpha = 0.05)
-B1 = B+ggtitle(TeX('$H_A: p < p_0$'))
-C = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'two.tailed', obs = md, alpha = 0.05)
-C1 = C+ggtitle(TeX('$H_A: p \\neq p_0$'))
+Fisherman = c(1:12)
+Fly2 = sample(0:4, 12, replace = T, prob = c(0.1, 0.2, 0.4, 0.2, 0.1))
+Fly1 = sample(1:5, 12, replace = T, prob = c(0.2, 0.5, 0.1, 0.1, 0.1))
+Difference = Fly1 - Fly2
+Sign = rep(0, 12)
+Sign[Difference> 0] = '$+$'
+Sign[Difference == 0] = ''
+Sign[Difference<0] = '$-$'
 
-AA = ggarrange(A1, B1, C1, nrow = 3)
-
-AAf = annotate_figure(AA, top = text_grob(TeX('$\\alpha = 0.05$')), fig.lab.size = 16,
-                      fig.lab.face = 'bold')
-
-
-A2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'upper.tail', obs = md, alpha = 0.01)+
-  ggtitle(TeX('$H_A: p > p_0$'))
-B2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'lower.tail', obs = md, alpha = 0.01)+
-  ggtitle(TeX('$H_A: p < p_0$'))
-C2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'two.tailed', obs = md, alpha = 0.01)+
-  ggtitle(TeX('$H_A: p \\neq p_0$'))
-
-BB = ggarrange(A2, B2, C2, nrow = 3)
-BBf = annotate_figure(BB, top = text_grob(TeX('$\\alpha = 0.01$')), fig.lab.size = 16,
-                      fig.lab.face = 'bold')
-
-ggarrange(AAf, BBf, nrow = 1, ncol = 2)
-
-```
-
-Notice from the plots above that the alternative hypothesis also impacts how significant a result must be in order to reject the null. Specifically, a result need not be as extreme under the alternative hypotheses $H_A: p > p_0$ and $H_A: p < p_0$ to be statistically significant. This is because when we suspect the direction of the effect we have more information about the parameter which improves our ability to detect a significant result.
-
-# Lecture 23 Friday, March 29th 2024
-
-### Significance tests concerning $p$
-
-The following are the steps for conducting a significance tests for a population proportion:
-
-  1. **Assumptions**
-    
-  * The sample size is sufficiently large. The sample size is sufficiently large whenever $np_0 \geq 15$ and $n(1-p_0) \geq 15$ where $p_0$ is the value of $p$ specified under the null hypothesis. If these conditions are not met the inference may not be correct. 
-    
-  2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
-  
-  \[H_0: p = c \]
-  
-  * the alternative hypotheses, critical values, and rejection regions are listed below:
-  
-```{r, echo=FALSE, warning=F, message=F}
-
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \\neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
-                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_{1-\\alpha}$','$Z_{\\alpha}$'),
-                      `Rejection Region` = c('$-\\infty \\leq Z \\leq Z_{\\alpha/2}$ or $Z_{1-\\alpha/2}\\leq Z \\leq \\infty$','$Z_{1-\\alpha} \\leq Z \\leq \\infty$','$-\\infty \\leq Z \\leq Z_{\\alpha}$'))
+df = cbind.data.frame(Fisherman, Fly1, Fly2, Difference, Sign)
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
-```
-  
-  
-  3. **Compute the test statistic**
-  
-  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1 - p_0)}{n}}} \sim N(0,1) \]
-  
-  4. **Compute the $p$-value.** 
-  
-  * Under the assumption in [1.] the test statistic follows a standard normal distribution. The $p$-value corresponding to each alternative hypothesis is given below:
-  
-  
-  
-```{r, echo=FALSE, warning=F, message=F}
 
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \\neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
-                      `$p$-value` = c('$P( Z  \\geq | Z_{obs} | | H_0 \\ \\text{True})$','$P( Z \\geq Z_{obs} | H_0 \\ \\text{True})$','$P( Z \\leq Z_{obs} | H_0 \\ \\text{True})$'))
+```
+
+
+The null hypothesis is $H_0: p_0 = 0.5$ the probability of positive sign is $50\%$. The alternative hypothesis is that one of the flies catches more fish $H_A: p\neq p_0$. There are $s = 7$ positive signs out of a total of 9 total signs. The $p$-value for the two sided test is given by
+
+
+\[\text{$p$-value} = 2\times P(S\geq s| H_0 \ \text{True}) = 2\left[\sum_{k = 7}^9 \frac{9!}{k!(9-k)!}0.5^k(1-0.5)^{9-k}\right]\]
+
+\[ = 2\times[0.0703+0.0175+0.0019] = 2(0.0898) \approx 0.179 \]
+
+Our $p$-value is greater than $\alpha$ and thus we fail to reject the null hypothesis and conclude the number of fish caught with each fly lure is not significantly different (i.e the probability of a positive sign is not significantly different than $p = 0.5$)
+
+### Comparing Two Groups
+
+Up to this point in the course we have learned how to conduct inference on a single sample. Analyzing a single variable is referred to as **univariate** analysis. However, in statistics we are often interested in comparing two different groups across some measurement. This involves exploring the relationship between two variables: An **explanatory variable** which defines the groups of interests and a **response variable** which measures the outcome of interest from each group. Examples include exploring the relationship between gender and height or between treatment group (i.e placebo group and treatment group) and patient outcome. 
+
+Statistical analyses that explore the relationship between two variables are called **bivariate** analyses. Just as we had univariate significance tests for a population mean and population proportion, we also have well defined significance tests for the inference of two variables - these are often called **two-sample tests** because we treat the observations in each group as a sample from a distinct population. Thus two-sample tests are used to compare the population parameters of <u>two different populations</u>. 
+
+### Independent vs Dependent Samples
+In bivariate analyses, we have to be considerate of whether the samples belonging to the two groups are dependent or independent. 
+  
+  * **independent samples** - occur when the observations in one sample are independent (have no statistical association) of the observations in the other sample. This is most always the case in experiments that use randomization to allocate subjects to treatment groups
+  
+  * **dependent samples** - occur when the observations in one sample are associated with the observations in another sample – this can happen when the same subjects are used for each sample such as matched pair designs
+
+Dependent samples cause some difficulties for bivariate analyses of two groups. This is because computing the standard error under dependent samples can be a very complex computation (more on this later).
+
+### Introduction to two-sample tests
+
+### Comparing two proportions
+
+Comparative studies, such as comparing two related but distinct groups, are by far the most common type of statistical analysis. We often want to compare the proportions of individuals from two groups that share some characteristic. Examples include:
+
+  * Proportion of college students who binge drink among high and low GPA students
+  
+  * Proportion of religious voters among Republicans and Democrats.
+  
+These problems concern the comparison of two populations (high and low GPA students; Republicans and Democrats). The two groups being compared are called <i>population 1</i> and <i>population 2</i>, and the two population proportions are called $p_1$ and $p_2$. For two population proportions we will consider only the case of two independent samples. The data consist of two independent simple random samples of sizes $n_1$ and $n_2$ from populations 1 and 2, respectively. The proportion of observations having the characteristic of interest in each sample estimates the corresponding population proportion. The notation is outlined in the table below:
+
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(Population = c(1, 2),
+                      `Population Proportion` = c('$p_1$', '$p_2$'),
+                      `Sample Size` = c('$n_1$', '$n_2$'),
+                      `Count of Successes` = c('$X_1$', '$X_2$'),
+                      `Sample Proportion` = c('$\\hat{p}_1 = X_1/n_1$', '$\\hat{p}_2 = X_2/n_2$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
+
 ```
 
-  
-  5. **Draw a conclusion**: if $p$-value $< \alpha$ <i>reject</i> $H_0$. Else <i>fail to reject</i> $H_0$. 
-    
+We compare two population proportions by looking at the difference between them. 
 
+\[D = \hat{p}_1 - \hat{p}_2 \]
 
+When the samples from both groups are sufficiently large, the sampling distribution of the difference in proportion $D$ is approximately normal. Like we saw before with the univariate case, inference procedures for comparing proportions are based on $z$, the normal approximation, and on standardizing the difference $D$. The difference $D$ is an unbiased estimator of the population difference $p_1 - p_2$. Moreover, because the two samples are independent, the variance of the difference is the sum of the population variances:
 
-**Practice:**
+\[\sigma^2_D = \frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2} \]
 
-1. A leading electric vehicle (EV) manufacturer claims that at least $20\%$ of all vehicles sold in a particular region are electric. To verify this claim, a consumer advocacy group randomly surveys $500$ recent vehicle purchases in the region and finds that $115$ of them are electric. Conduct a significance test at the $\alpha = 0.01$ significance level to determine if the proportion of vehicles sold is less than the manufacturer's claim.
+Thus when the sample sizes are sufficiently large $D$ follows a normal distribution 
 
-*Solution.* Here $n = 500$, $p_0 = 0.20$, and the sample proportion is $\hat{p} = 115/500 = 0.23$. We test $H_0: p = 0.20$ against the lower-tail alternative $H_A: p < 0.20$ at $\alpha = 0.01$.
+\[D \sim  N\left(p_1 - p_2, \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}\right)\]
 
-  * **Check the assumption.** $np_0 = 500(0.20) = 100 \geq 15$ and $n(1-p_0) = 500(0.80) = 400 \geq 15$, so the sample is large enough for the normal approximation.
+As we did before we will start by constructing a confidence interval for the population difference $D$.
 
-  * **Test statistic.**
-  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} = \frac{0.23 - 0.20}{\sqrt{\frac{0.20(0.80)}{500}}} = \frac{0.03}{0.0179} = 1.68 \]
+the point estimate is 
+\[D = \hat{p}_1 - \hat{p}_2 \]
+with standard error 
 
-  * **$p$-value.** For the lower-tail alternative, $p\text{-value} = P(Z \leq 1.68) \approx 0.95$.
+\[ SE_D = \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\]
 
-  * **Conclusion.** Since the $p$-value $\approx 0.95$ is far greater than $\alpha = 0.01$, we *fail to reject* $H_0$. The observed proportion ($0.23$) is actually above the claimed $0.20$, so there is no evidence that the true proportion of EVs is less than $20\%$.
+this gives the margin of error
 
+\[m = z\times SE_D \]
 
+putting all together the $100(1-\alpha)\%$ confidence interval for the population difference in proportion is
 
-### Significance tests concerning $\mu$
+\[ (\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2} \times SE_D\]
 
-The following are the steps for conducting a significance test for a population mean:
+The critical value $Z_{1-\alpha/2}$ is the same critical value that we used in the one-sample case
 
-  1. **Assumptions**
-    
-  * The population distribution is approximately normal. This can be checked by making a plot of the data. 
-    
-  2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
-  
-  \[H_0: \mu = c \]
-  
-  * the alternative hypotheses, critical values, and rejection regions are listed below:
-  
+**Example: Aspirin and Heart Attacks** - A large-scale randomized experiment investigated the effect of regular aspirin use on myocardial infarctions (i.e., heart attacks)[@steering1989final]. The results are summarized below:
+
 ```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
 
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
-                      `Critical Value` = c('$t_{n-1, 1-\\alpha/2}$','$t_{n-1, 1-\\alpha}$','$t_{n-1, \\alpha}$'),
-                      `Rejection Region` = c('$t_{n-1, 1-\\alpha/2}\\leq t \\leq \\infty$','$t_{n-1, 1-\\alpha} \\leq t \\leq \\infty$','$-\\infty \\leq t \\leq t_{n-1, \\alpha}$'))
+df = cbind.data.frame(Group = c("Aspirin", "Placebo"),
+                      `Population Proportion` = c('$p_1$', '$p_2$'),
+                      `Sample Size` = c('$11037$', '$11034$'),
+                      `Patients Who Experienced Heart Attacks` = c('$104$', '$189$'),
+                      `Patients Who did Not Experience A Heart Attack` = c('$10933$','$10845$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
+
 ```
+
+Construct a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between those taking aspirin and those taking the placebo
+
+**Understand the Problem:**
+
+  * We have two groups: <u>Aspirin</u> and <u>Placebo</u>.
+
+  * We want to estimate the difference in proportions of patients experiencing heart attacks between these two groups.
+
+  * We have sample data for each group, including the sample proportions and sample sizes.
+
+**Calculate Sample Proportions:**
   
+  * Sample proportion for Aspirin group: $\hat{p}_1 = \frac{104}{11037} = 0.0094$
+
+  * Sample proportion for Placebo group: $\hat{p}_2 = \frac{189}{11034} = 0.0171$
+
+**Calculate the Standard Error:**
+
+  * The standard error for the difference in proportions is given by: 
   
-  3. **Compute the test statistic**
+  \[ SE = \sqrt{\frac{0.0094 (1-0.0094)}{11037} + \frac{0.0171(1-0.0171)}{11034}} = 0.0015 \] 
+
+**Determine the Z-Critical Value:**
+
+  * For a $95\%$ confidence interval, the critical value $Z_{1-\alpha/2}$ is approximately $1.96$ (from the standard normal distribution).
+
+**Calculate the Margin of Error:**
+
+  * The margin of error is given by: 
   
-  \[ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} \sim t(n-1)\]
+  \[ m = 1.96 \times 0.0015 = 0.0029\]
+
+**Construct the Confidence Interval:**
+
+  * The confidence interval is: 
   
-  4. **Compute the $p$-value.** 
+  \[ \text{Confidence Interval} = (\hat{p}_1 - \hat{p}_2) \pm \text{Margin of Error} \]
+
+  Confidence Interval $= (0.0094 - 0.0171) \pm 0.0029 = [-0.0107, -0.0047]$
+
+**Interpretation:** 
   
-  * Under the assumption in [1.] the test statistic follows a $t$ distribution with $n-1$ degrees of freedom. The $p$-value corresponding to each alternative hypothesis is given below:
+  * We are $95\%$ confident that the true difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups is no less than $-0.0107$ and no greater than $-0.0047$. Since the interval lies entirely below zero (excludes 0), we can conclude that the proportion of heart attacks is likely lower in the Aspirin group compared to the Placebo group. 
+
+
+**Try it out:** A manufacturing company is interested in assessing the effectiveness of two different production methods, $A$ and $B$, in terms of the proportion of defective products produced. A random sample of $200$ products produced using method $A$ yielded $30$ defective products, while a sample of $250$ products produced using method $B$ yielded $20$ defective products.
+
+Construct a $95\%$ confidence interval for the difference in proportions of defective products between method $A$ and method $B$.
+
+<br>
+<br>
+
+# Lecture 26
+
+Recall the Aspirin and Heart Attacks example from **Lecture 25**. In that example, we constructed a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups. The interval was approximately $[-0.0107, -0.0047]$. If the confidence interval we computed had included the value zero, it would suggest that the two proportions might be equal i.e $p_1 = p_2$. In other words, we would have little evidence that there is a real difference between the two groups. Conversely, if the confidence interval does not include zero, we have stronger evidence that there is a significant difference between the two populations under study.
+
+Just as we did for population proportions in the univariate case, we can easily construct a hypothesis  test which will allow us to formally evaluate whether an observed difference between two groups is statistically significant or merely due to random variation. 
+
+### Significance tests for comparing two proportions
+
+A hypothesis test used to compare the population proportions from two different but independent groups is based on the standardized difference in proportion $D$. Recall that, if the samples obtained from each group are sufficiently large, then the sampling distribution of $D$ is approximately distributed as standard normal. Here’s how we set up a two-sample hypothesis test for proportions:
+
+**1. Assumptions**
+
+  * Data constitute a simple random sample 
   
+  * The two groups are independent
   
+  * $n\hat{p}$ and $n(1-\hat{p})$ are both greater than 15. Note that $\hat{p}$ here is pooled sample proportion (see below)
+
+**2. Null and Alternative Hypotheses**
+
+  * The **null** hypothesis is generally that the two population proportions are equal (i.e no difference)
+  
+  \[H_0: p_1 = p_2 \ \ \  \text{which is the same as} \ \ \ H_0: p_1 - p_2 = 0\]
+  
+  * The alternative hypothesis can be either lower, upper, or two tailed just as it was with our univariate tests. The table below gives the possible alternative hypotheses and their critical values:
   
 ```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
 
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
-                      `$p$-value` = c('$P( t  \\geq | t_{obs} | | H_0 \\ \\text{True})$','$P( t \\geq t_{obs} | H_0 \\ \\text{True})$','$P( t \\leq t_{obs} | H_0 \\ \\text{True})$'))
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
+                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_\\alpha$','$Z_{1-\\alpha}$'),
+                      `Rejection Region` = c('$|Z| \\geq Z_{1-\\alpha/2}$',
+                                             '$Z\\leq Z_{\\alpha}$',
+                                             '$Z\\geq Z_{1-\\alpha}$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
+
 ```
 
+**3. Test statistic**
+
+  * The null hypothesis is that the two populations are equal (i.e they have the same proportion). If the null is true then we can view all of the data as coming from from the same distribution. Thus the test statistic under the null hypothesis is based on the <i>pooled estimate</i> of the population proportion denoted $\hat{p}$:
   
-  5. **Draw a conclusion**: if $p$-value $< \alpha$ <i>reject</i> $H_0$. Else <i>fail to reject</i> $H_0$. 
-    
-
-**Practice:**
-
-1. A government agency is interested in understanding the average annual income of households in a particular region to inform economic policies. The agency hypothesizes that the mean annual income of households in this region is $\$50,000$. To test this, they collect a random sample of $100$ households from the region and estimate the annual income to be $\$45,323$ with a standard deviation of $\$13,121$. Conduct a hypothesis test at the $\alpha = 0.05$ significance level to determine if the annual income is significantly different than the agency's hypothesis for this region.
-
-*Solution.* Here $n = 100$, $\bar{x} = 45{,}323$, $s = 13{,}121$, and $\mu_0 = 50{,}000$. Because we are asked whether the mean is *different* (in either direction), we test $H_0: \mu = 50{,}000$ against the two-sided alternative $H_A: \mu \neq 50{,}000$ at $\alpha = 0.05$.
-
-  * **Check the assumption.** The sample size $n = 100$ is large, so by the Central Limit Theorem the sampling distribution of $\bar{x}$ is approximately normal.
-
-  * **Test statistic.**
-  \[ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{45{,}323 - 50{,}000}{13{,}121/\sqrt{100}} = \frac{-4677}{1312.1} = -3.57 \sim t(99) \]
-
-  * **$p$-value.** For the two-sided alternative, $p\text{-value} = 2 \times P(t \leq -3.57) \approx 0.0006$.
-
-  * **Conclusion.** Since the $p$-value $\approx 0.0006$ is less than $\alpha = 0.05$, we *reject* $H_0$. There is strong evidence that the mean annual household income differs from $\$50{,}000$ (specifically, the data suggest it is lower).
-
-### Relationship between two-sided tests and confidence intervals
-
-Recall the basic idea of a confidence interval. We construct an interval that includes the true value of the parameter $\mu$ or $p$ with specified frequency $100(1-\alpha)\%$. Now consider a two-sided significance test for a population mean. A two-sided test constructs an **acceptance region** around the value of the parameter suggested in the null hypothesis (i.e $\mu_0$). At the $100(1-\alpha)\%$ confidence level, this acceptance region is given by $[\mu_0-t_{1-\alpha/2} \times \frac{s}{\sqrt{n}}, \mu_0 + t_{1-\alpha/2}\times \frac{s}{\sqrt{n}}]$. Values of $\bar{x}$ that are not in this interval seem to be incompatible with the data. Thus when $\bar{x}$ is not in this interval, it is statistically significant and the null hypothesis is rejected. This produces a significance test at $\alpha = 0.05$ significance level.
-
-
-**Example**
-
-Return to the household income problem above ($\mu_0 = 50{,}000$, $n = 100$, $\bar{x} = 45{,}323$, $s = 13{,}121$, $\alpha = 0.05$). The standard error is $s/\sqrt{n} = 13{,}121/\sqrt{100} = 1312.1$, and with $n-1 = 99$ degrees of freedom the critical value is $t_{99,\ 0.975} \approx 1.984$. The $95\%$ acceptance region around $\mu_0$ is
-
-\[ \left[50{,}000 - 1.984 \times 1312.1,\ \ 50{,}000 + 1.984 \times 1312.1\right] = [47{,}397,\ 52{,}603] \]
-
-The observed sample mean $\bar{x} = 45{,}323$ falls **outside** this interval, so we reject $H_0$ at the $\alpha = 0.05$ level. This is exactly the same decision we reached with the test statistic ($t_{obs} = -3.57$, $p$-value $\approx 0.0006 < 0.05$): a two-sided test rejects $H_0$ precisely when the observed $\bar{x}$ lies outside the $100(1-\alpha)\%$ acceptance region centered at $\mu_0$.
-
-
-### Types of Errors
-
-Conducting a hypothesis test is a simple-enough procedure in the modern age as many software programs effortlessly give out a $p$-value for a chosen test and dataset. However, using tests wisely is another matter entirely. A single significant result is not irrefutable evidence of a statistical relationship. This is because all tests come with a probability of making an error. Moreover, other factors can influence the outcome of a test such as the presence of outliers in the data. In addition, when sample sizes are very large, even tiny deviations from the null hypothesis can be deemed significant - this is related to the **power** of a test. 
-
-Statistical **power** is the ability to reject the null hypothesis when it is, in fact, false. For example, the power of a right-tailed (or upper tail) test of a population mean is given by
-\[ Power = P(t > t_{1-\alpha} | H_0 \ \text{Not True}) \]
-
-There are several factors that influence the power of a statistical test. Some of the ways to increase power are:
-
-  1. Increase the sample size
+  \[ \hat{p} = \frac{\text{number of successes in both samples}}{\text{total number of observations from both samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]
+  The pooled estimate combines all of the information from both samples
   
-  2. Increase the significance level $\alpha$
+  * Recall that the population standard deviation of the difference in proportions is 
   
-  3. Choose a more powerful test
+  \[\sigma_D = \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}  \]
+  
+  However, under the null hypothesis the two proportions are equal giving
+  
+  \[ = \sqrt{\frac{p(1-p)}{n_1}+\frac{p(1-p)}{n_2}} \]
 
-The significance level of a test, like the confidence level, tells us how reliable the test is in repeated use. Thus a test at $\alpha = 0.05$ significance level will return the correct result $95/100$ times when $H_0$ is in fact true and when the test is conducted on data arising from the same conditions. The $5/100$ times that the test gives the incorrect result is called the **type I error** rate
+  \[= \sqrt{p(1-p)\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]
+  
+  We estimate $\sigma_D$ by substituting in the <i>pooled estimate</i> of the population proportion:
+  
+  \[ SE_{D_\text{pooled}} = \sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]
+  
+  Combining these elements, the test statistic under a null hypothesis of no difference $H_0: p_1 - p_2 = 0$ is given by 
+  
+  \[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}} \sim N(0,1) \]
+  
 
-The **type I error** rate is the probability that we reject the null when the null is in fact true (denoted $\alpha$). 
+**4. $p$-value**
 
-For example, the probability of committing a type I error for a right-tailed (or upper tail) test of a population mean is 
-\[ P( t > t_{1-\alpha} | H_0 \ \text{True}) =\alpha \]
-
-Another type of error that can occur is called a **type II error** (denoted $\beta$). This type of error occurs when we fail to reject the null hypothesis but the alternative hypothesis is true.
-
-
-The probability of committing a type II error for a right-tailed (or upper tail) test of a population mean is 
-\[ P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) =\beta \]
-
-
-Looking at the previous example it is easy to see that power is the complement of the type II error rate.
-
-\[ Power = P(t \geq t_{1-\alpha} | H_0 \ \text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]
-\[ = 1-\beta \]
-
-The relationship between the result of a test and the truth underlying the test can be summarized as follows:
+  * The $p$-values corresponding to each alternative hypothesis are listed in the table below
 
 ```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
 
-df = rbind.data.frame(x = c('Decision: Reject $H_0$','$\\alpha$', '$1-\\beta$'),
-                      y = c('Decision: Fail To Reject $H_0$','$1 - \\alpha$', '$\\beta$'))
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
+                      `$p$-value` = c('$P(|Z| \\geq |Z_{obs}||H_0)$',
+                                             '$P(Z \\leq Z_{obs}|H_0)$',
+                                             '$P(Z\\geq Z_{obs}|H_0)$'))
 
-kable(df, format = 'html', digits = 2, col.names = c('', '$H_0$ is True', '$H_0$ is False'),
+kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
+
 ```
 
+**5. Decision rule**
 
-This can be visualized in terms the distribution of the test statistic under the null and alternative hypotheses. The plot below shows the relationship between power, type I and type II error rates in a right-tailed test of a population mean conducted at the $\alpha$ significance level. 
-
-```{r, echo=FALSE, warning=F, message=F, fig.height=6, fig.width=12}
-
-dlim_A = function(x, q, mean, sd, test){
-  q_a = q
-  y = dnorm(x, mean, sd)
-  
-  
-  if(test == 'two.tailed'){
-    y[which(x>-q_a & x<q_a)] <- NA  
-    return(y)
-  }else if (test == 'upper.tail'){
-    y[which(x < q_a)] <- NA
-    return(y)
-  }else{
-    y[which(x > q_a)] <- NA
-    return(y)
-  }
-  
-}
-
-dlim_0 = function(x, q, test){
-  q_a = q
-  y = dnorm(x)
-  
-  
-  if(test == 'two.tailed'){
-    y[which(x>-q_a & x<q_a)] <- NA  
-    return(y)
-  }else if (test == 'upper.tail'){
-    y[which(x < q_a)] <- NA
-    return(y)
-  }else{
-    y[which(x > q_a)] <- NA
-    return(y)
-  }
-  
-}
+  \[\text{Reject} \ \ H_0 \ \ \text{if} \ \ \text{$p$-value} < \alpha \]
 
 
-alpha = 0.05
-data = cbind.data.frame(x = seq(-4, 7, 0.001))
-ggplot(data = data, aes(x = x, fill = 'grey'))+theme_bw()+
-  stat_function(fun = dnorm,
-                geom = 'area',
-                fill = 'blue',
-                alpha = 0.5)+
-  
-  stat_function(fun = dnorm,
-                args = list(mean = 3, sd = 1),
-                geom = 'area',
-                fill = 'red',
-                alpha = 0.5)+
-  
-  stat_function(fun = dlim_A,
-                args = list(q = qnorm(1-alpha)+.05, mean = 3, sd = 1, test = 'lower.tail'),
-                geom = 'area',
-                fill = 'green',
-                alpha = 0.9)+
-  stat_function(fun = dlim_0,
-                args = list(q = qnorm(1-alpha)-0.05, test = 'upper.tail'),
-                geom = 'area',
-                fill = 'orange',
-                alpha = 0.9)+
-  
-   stat_function(fun = dnorm,
-                size = 1.5)+
-  
-  stat_function(fun = dnorm,
-                args = list(mean = 3, sd = 1),
-                size = 1.5,
-                linetype = 'dashed')+
-  geom_segment(aes(x = qnorm(1-alpha), y = 0, xend = qnorm(1-alpha), yend = 0.4), size = 1, linetype = 'dotted')+
-  geom_text(aes(x = 0, y = dnorm(0)+0.05), label = 'Distribution Under H0', size = 6)+
-  geom_text(aes(x = 3, y = dnorm(3, 3, 1)+0.05), label = 'Distribution Under HA', size = 6)+
-  geom_text(aes(x = 1.3, y = dnorm(1.3, 3, 1)/2), label = TeX('$\\beta$'), size = 7)+
-  geom_text(aes(x = qnorm(1-alpha)+.4, y = dnorm(qnorm(1-alpha)+0.4)/2), label = TeX('$\\alpha$'), size = 7)+
-  geom_text(aes(x = 3, y = dnorm(3, 3, 1)/2), label = TeX('$1-\\beta$'), size = 9)+
-  scale_x_continuous(breaks=c(0, qnorm(1-alpha), 3),
-        labels=c(TeX('$\\mu_0$'), TeX('$Z_{1-\\alpha}$'), TeX('$\\mu > \\mu_0$')))+
-  ylab('Probability Density')+
-  xlab('')+
-  theme(axis.text = element_text(size = 18),
-        axis.title = element_text(size = 15)) 
+
+**Example - The impact of Covid on scholarly activity?** - During the COVID-19 pandemic, as faculty members shifted to working from home, women in academic medicine reported decreased manuscript submissions and shouldered a disproportionate share of childcare responsibilities. A study published in the <i>Journal of the American College of Radiology</i> examined the scholarly activity among male and female contributors during the COVID-19 Pandemic of 2019 and 2020. Specifically, they evaluated the proportion of female contributors submitting manuscripts and accepting peer review invitations before (April - October, 2019) and after the start of the coronavirus pandemic (April - October, 2020) [@mogensen2021impact]. A summary of the data in this study are given below:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Year` = c('April - October 2019', 'April - October 2020'),
+                      `Number of Manuscripts with Female First Author` = c('$140$', '$172$'), 
+                      `Number of Manuscripts with Male First Author` = c('$171$', '$269$'),
+                      `All First Authors` = c('$311$', '$441$'),
+                      `Relative Percentage of Manuscripts with Female First Author` = c('$140/311 = 0.450$', '$172/441 = 0.390$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
 
 
 ```
-* in the plot above, the green region represents the probability of committing a type II error, the orange region the probability of committing a type I error and the pink/red region is the power of the test. 
+
+Conduct a hypothesis test at the $5\%$ significance level to determine if the relative percentage of scholarly activity among female scholars was <i>significantly reduced</i> after the start of the coronavirus pandemic 
 
 
-**Below** the three panels show the relationship between power, the probability of a type I error and the probability of a type II error.
-```{r, echo=F, message=F, warning=F, fig.height=6, fig.width=10}
-significance.level = seq(0.001, 0.5, 0.001)
-t = qnorm(1-significance.level)
-beta = pnorm(t, mean = 1)
-power = 1-beta
-df = cbind.data.frame(significance.level, t , beta, power)
+**Step 1** To check the sample size assumptions of this test we must first calculate the pooled relative proportion:
 
-A=ggplot(data = df, aes(x = significance.level, y = power))+geom_line(size = 1)+
-  theme_hc()+
-  xlab(TeX("Significance level $\\alpha$"))+
-  ylab("Power")+
-  theme(axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16))
+\[\hat{p} = \frac{140+172}{311+441} = 0.415 \]
 
-B=ggplot(data = df, aes(x = beta, y = power))+geom_line(size = 1)+
-  theme_hc()+
-  xlab(TeX("Type II Error $\\beta$"))+
-  ylab("Power")+
-  theme(axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16))
-
-C=ggplot(data = df, aes(x = beta, y = significance.level))+geom_line(size = 1)+
-  theme_hc()+
-  xlab(TeX("Type II Error $\\beta$"))+
-  ylab(TeX("Significance level $\\alpha$"))+
-  theme(axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16))
+Since the pooled estimate is nearly 0.5 and both sample sizes are quite large ($n_1 = 311$ and $n_2 = 441$), the quantities $n_1\hat{p}$, $n_1(1-\hat{p})$, $n_2\hat{p}$, and $n_2(1-\hat{p})$ are all greater than the required $15$.
 
 
+**Step 2** We want to test the null hypothesis that there is no significant difference in the relative percentage of scholarly activity among female scholars before and after the pandemic:
 
-ggarrange(ggarrange(A, B, ncol = 2), C, nrow = 2)
+\[ H_0: p_1 - p_2 = 0\]
+\[ H_A: p_1 - p_2 < 0\]
 
-```
+where $p_1$ is the relative proportion of manuscripts with female first authors after the start of the pandemic and $p_2$ is the relative proportion of manuscripts with female first authors before the start of the pandemic. The critical value is $Z_{\alpha} = -1.645$.
+
+**Step 3**
+
+Using the pooled estimate from **Step 1**, the pooled standard error of the population difference $D$ is 
+
+\[ SE_{D_\text{pooled}} = \sqrt{0.415(1-0.415)\left(\frac{1}{311}+\frac{1}{441}\right)} = 0.0365\]
+
+The test statistic is 
+
+\[Z_{obs} = \frac{(0.390 - 0.450) - 0}{SE_{D_\text{pooled}}} = -1.65 \]
+
+**Step 4**
+
+The $p$-value is 
+
+\[P(Z \leq -1.65 | H_0 \ \ \text{True})  = 0.0495\]
+
+**Decision**
+
+Since the $p$-value is less than the significance level of $5\%$, we reject the null hypothesis of no difference and conclude that the relative proportion of manuscripts with female first authors significantly decreased after the start of the COVID-19 pandemic. 
+
+<br>
+<br>
+
+### $D$ as a measure of association 
+
+Consider again the difference in proportion $D$. In statistical analysis, we often study the relationship between two categorical variables. We are regularly interested in whether one variable (the explanatory variable) influences or explains the outcomes of another variable (the response variable). The statistic $D$ is a measure of the strength of statistical association between some grouping variable and some response that is measured across those groups. Consider two populations (groups) based on some characteristic (e.g., treatment vs. control, male vs. female, etc). For each population the response variable records the fraction of the population that relates to some category or specific outcome (e.g. patient outcome, preference, occurrence of an event). The value of $D$ ranges between $-1$ and $1$ and has the following interpretation:
+
+**Interpretation:**
+
+Given $D = p_1 - p_2$ which compares the difference in proportion across groups/populations 1 and 2
+
+  * values of $-1$ or $1$ indicate the strongest possible association between the categories of the grouping variable and the categories of the response variable
+  
+  * values near or at $0$ indicates that the explanatory and response variables are independent of each other
+
+
+<br>
+<br>
+<br>
+<br>
+
+### References
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

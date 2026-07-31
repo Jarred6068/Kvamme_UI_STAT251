@@ -14,9 +14,8 @@ library(ggpubr)
 library(latex2exp)
 ```
 
-# Lecture 6: Monday, Jan. 29th 2024
 
-### Percentiles and the Cumulative Distribution
+# Percentiles and the Cumulative Distribution
 Another form of the distribution of a variable is called the cumulative distribution. The **cumulative distribution** shows the relationship between the value of a variable and the cumulative relative frequency. For discrete variables, the cumulative distribution can be represented as a **step function**.
 
 * Consider the following 20 observations of the sugar and sodium content in different brands of cereal in the US

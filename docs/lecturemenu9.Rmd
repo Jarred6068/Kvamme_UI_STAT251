@@ -25,7 +25,7 @@ path = 'Data/'
 ```
 
 <!-- TODO: this Week 9 file contains only Lecture 18; confirm the second lecture is intentionally absent. -->
-# Lecture 18 Monday, March 4th 2024
+# Lecture 18
 
 Last week we introduced the **confidence interval** which is used to estimate a parameter with an interval of values. We can choose how wide to make the confidence interval by selecting the **confidence level** - which is the probability that the interval will contain the true parameter value **<u>before</u>** the data are gathered. The confidence level is controlled via the standard score $z$. The standard score gives the number of standard errors to add and subtract from our estimate. Therefore, we must look up the appropriate standard score $z$ from the standard normal table.
 

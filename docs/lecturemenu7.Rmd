@@ -23,11 +23,8 @@ library(latex2exp)
 path = 'Data/'
 ```
 
-# Monday, Feb.19th 2024 - NO CLASS
 
-# Lecture 13 Wednesday Feb. 21st 2024
-
-### Common discrete distributions
+# Common discrete distributions
 
 We can think of a probability distribution as a model of a particular random process. Some types of random variables are commonly encountered and thus common models of these random variables have emerged to describe their probability distributions. Below we will introduce a few of the most commonly used probability distributions for discrete random variables.
 
@@ -141,9 +138,8 @@ Example: The random variable $X$ models the number of hits in five at-bats for p
 Here "more than 4 hits" out of 5 at-bats means all 5 are hits:
 \[ P(X > 4) = P(X = 5) = \binom 55 (0.35)^5 (0.65)^0 = (0.35)^5 \approx 0.005 \]
 
-# Lecture 14 Friday Feb. 23rd 2024
 
-### The Poisson distribution
+# The Poisson distribution
 
 The Poisson (pronounced "$\text{Pwa - s}\tilde o$") distribution is named after French Scientist Siméon Denis Poisson (1781–1840). It models the probability that a given number of events occur in a fixed interval of time, assuming the events occur independently of each other and with a known constant mean rate $\lambda$. Thus, a Poisson random variable has the following characteristics:
 

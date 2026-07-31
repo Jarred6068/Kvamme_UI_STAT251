@@ -17,6 +17,10 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -105,10 +109,10 @@ FS[10,]=c(5.08, 3)
 
 ix = sort(FS$total.length, index.return = T)$ix
 
-kable(cbind.data.frame(c(1:20), FS[ix,]), format = 'html', booktabs = T, escape = F, 
+kable(cbind.data.frame(c(1:20), FS[ix,]), format = tbl_fmt, booktabs = T, escape = F, 
       col.names = c("Observation","Whisker Total Length (cm)", "Number of Beads"), digits = 2,
       row.names = F, caption = 'Whisker Length data for $n = 20$ Harp Seals')%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 print(paste0('comma separated values = ', paste0(round(FS[ix,]$total.length,2), collapse = ',')))
 ```

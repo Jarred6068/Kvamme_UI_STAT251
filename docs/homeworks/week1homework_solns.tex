@@ -1,0 +1,634 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{float}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Homework 1 Solutions},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Homework 1 Solutions}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\({\bf (1)}\) Define the following terms:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} Population - the collection of all possible persons,
+  events, or objects of interest
+\item
+  \textbf{(b)} Sample - the subset of the population that we actually
+  observe (the observed observations)
+\item
+  \textbf{(c)} Parameter - A numerical characteristic of a population
+  (alternatively: A function of the entire population)
+\item
+  \textbf{(d)} Statistic - A numerical characteristic of a sample
+  (alternatively: A function of the sample)
+\end{itemize}
+
+\({\bf (2)}\) Explain the difference between a \textbf{qualitative}
+(categorical) and a \textbf{quantitative} variable
+
+{A qualitative variable is a non-numeric characteristic such as a name
+or label while a quantitative variable is numerical characteristic such
+as a measurement or count}
+
+\({\bf (3)}\) Explain the difference between a \textbf{discrete} and a
+\textbf{continuous} variable and give an example of each
+
+{A discrete variable is a quantitative variable that takes on only
+distinct whole number (integer) values such as counts whereas a
+continuous variable is a quantitative variable that can assume any value
+within a certain interval such temperature or height}
+
+\({\bf (4)}\) Explain the difference between a \textbf{nominal} and an
+\textbf{ordinal} variable and give an example of each
+
+{A nominal variable is a qualitative variable that has categories with
+no inherent ordering such as the names of a city or the brands or shoes.
+An ordinal variable is a qualitative variable that has an inherent
+ordering to its categories such as a Likert score or education level.}
+
+\({\bf (5)}\) \textbf{At What age did women marry?} A historian wants to
+estimate the average age at marriage of women in New England in the
+early 19th century. Within her state archives, she finds marriage
+records for the years \(1800 - 1820\), which she treats as a sample of
+all marriage records from the early 19th century. The average age of the
+women in the records is \(24.1\) years of age. Using the appropriate
+statistical method, she estimates that the average age of brides in the
+early \(19^{th}\)- century New England was between \(23.5\) and \(24.7\)
+years of age.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} Which part of this example gives a descriptive summary of
+  the data? {When she computes a mean of \(24.1\) years of age from the
+  marriage records}
+\item
+  \textbf{(b)} Which part of this example draws an inference about a
+  population? {The part where she estimates the average age of women to
+  be married in the 19th century to be between \(23.5\) and \(24.7\)
+  years for the population}
+\item
+  \textbf{(c)} What population is the historian studying? {All women who
+  married in New England in the early 19th century}
+\item
+  \textbf{(d)} The average age the historian computed from the
+  historical records was 24.1 years of age. Is 24.1 years of age a
+  statistic or a parameter? Why? {A statistic. The quantity \(24.1\) was
+  computed from a sample of marriage records spanning the first \(20\)
+  years of the century}
+\end{itemize}
+
+\({\bf (6)}\) Consider the following data obtained from flipping a coin
+15 times. A value of \(H\) denotes the coin was heads whereas a value of
+\(T\) denotes the coin flip was tails.
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{llllllllllllllll}
+\toprule
+\cellcolor{gray!10}{coin.flip.result.} & \cellcolor{gray!10}{H} & \cellcolor{gray!10}{H} & \cellcolor{gray!10}{H} & \cellcolor{gray!10}{T} & \cellcolor{gray!10}{H} & \cellcolor{gray!10}{T} & \cellcolor{gray!10}{T} & \cellcolor{gray!10}{T} & \cellcolor{gray!10}{H} & \cellcolor{gray!10}{H} & \cellcolor{gray!10}{T} & \cellcolor{gray!10}{T} & \cellcolor{gray!10}{T} & \cellcolor{gray!10}{H} & \cellcolor{gray!10}{T}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Compute the frequency table for the variable ``coin flip result'' and
+answer the following questions:
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{lrl}
+\toprule
+Result & Frequency & Relative Frequency\\
+\midrule
+\cellcolor{gray!10}{H} & \cellcolor{gray!10}{7} & \cellcolor{gray!10}{7/15 = 0.47}\\
+T & 8 & 8/15 = 0.53\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} What type of variable is ``Coin Flip Result''?
+  {Qualitative nominal variable}
+\item
+  \textbf{(b)} What proportion of the coin flips were heads? {\(0.47\)
+  or \(47\%\)}
+\item
+  \textbf{(c)} Why do we not compute the cumulative relative frequency
+  for this variable? {The variable is nominal and therefore has no
+  inherent ordering for summing up the relative frequencies}
+\item
+  \textbf{(d)} What is the best graphical display for this variable and
+  why? {Since there are only two categories (heads or tails) a pie chart
+  or bar graph would be sufficient to show the distribution}
+\end{itemize}
+
+\({\bf (7)}\) A survey about color preferences reported the age
+distribution of the people who responded. Below are the results
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{lllllll}
+\toprule
+ &  &  &  &  &  & \\
+\midrule
+\cellcolor{gray!10}{Age Group (Years)} & \cellcolor{gray!10}{1-18} & \cellcolor{gray!10}{19-24} & \cellcolor{gray!10}{25-35} & \cellcolor{gray!10}{36-50} & \cellcolor{gray!10}{51-69} & \cellcolor{gray!10}{70 and over}\\
+Counts & 10 & 97 & 70 & 36 & 14 & 5\\
+\cellcolor{gray!10}{\textcolor{red}{Relative Frequency}} & \cellcolor{gray!10}{\textcolor{red}{0.04}} & \cellcolor{gray!10}{\textcolor{red}{0.42}} & \cellcolor{gray!10}{\textcolor{red}{0.30}} & \cellcolor{gray!10}{\textcolor{red}{0.16}} & \cellcolor{gray!10}{\textcolor{red}{0.06}} & \cellcolor{gray!10}{\textcolor{red}{0.02}}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Use this table to answer parts a - d
+
+\begin{itemize}
+\item
+  \textbf{(a)} Compute the relative frequency for each age group
+\item
+  \textbf{(b)} Make a bar graph where the heights of the bars are
+  relative frequencies
+  \includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-4-1.pdf}
+\item
+  \textbf{(c)} Describe the distribution {the distribution is slightly
+  right skew indicating that most respondents were between 19 and 35
+  years of age}
+\item
+  \textbf{(d)} Explain why your bar graph is not a histogram {A
+  histogram has intervals of equal length}
+\end{itemize}
+
+\({\bf (8)}\) Email spam is the curse of the internet. The table below
+gives a compilation of the most common types of spam
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{lr}
+\toprule
+Type of Spam & Percentage\\
+\midrule
+\cellcolor{gray!10}{Adult} & \cellcolor{gray!10}{14.5}\\
+Financial & 16.2\\
+\cellcolor{gray!10}{Health} & \cellcolor{gray!10}{7.3}\\
+Leisure & 7.8\\
+\cellcolor{gray!10}{Products} & \cellcolor{gray!10}{21.0}\\
+\addlinespace
+Scams & 14.2\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Use the table to answer the questions a and b
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} Report the modal spam category {The modal category is
+  ``Products'' because it has the highest frequency}
+\item
+  \textbf{(b)} Construct a \textbf{Pareto chart} using the table above
+  \includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-6-1.pdf}
+\end{itemize}
+
+\({\bf (9)}\) A farmer in Idaho is interested in the number of rainy
+days in a given year so he records the number of rainy \(R\), cloudy
+\(C\) and sunny \(S\) days over two weeks in May. His observations are
+\[\{R,R,C,C,C,S,S,C,R,R,C,R,S,S\}\] Use the farmer's observations to
+answer the following questions.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} Based on the farmer's observations, what proportion of
+  days were rainy? {\[\hat{p}_{\text{rainy}} = \frac{5}{14} = 0.36\] }
+\item
+  \textbf{(b)} Is the proportion in part \textbf{(a)} a statistic or a
+  parameter? why? {It is a statistic because it was computed from a
+  sample of 14 observations of the weather}
+\item
+  \textbf{(c)} What population is the farmer studying? is it a finite or
+  infinite population? {The population is all 365 days in a given year.
+  It is finite}
+\end{itemize}
+
+\({\bf (10)}\) Consider the following data from a survey conducted on
+college students in the state of Florida. As part of their research,
+surveyors recorded the high school performance (measured in grade point
+average - GPA) of 35 college students from across the state. For your
+convenience the data have been sorted from least to greatest:
+
+\[2.0, 2.1, 2.3, 2.8, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0,\]
+\[3.0, 3.0, 3.0, 3.1, 3.2, 3.3, 3.3, 3.4,  3.4, 3.4,\]
+\[3.4, 3.5, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7, 3.8,\]
+\[3.8, 3.8, 3.8, 4.0, 4.0\]
+
+The following frequency table gives the distribution of the variable
+high school GPA (with values rounded to nearest 0.5). Fill in the table
+and answer the following questions:
+
+\begin{table}[H]
+\centering\centering
+\begin{tabular}{rrrr}
+\toprule
+GPA & Frequency & Relative frequency & Cumulative RF\\
+\midrule
+\cellcolor{gray!10}{2.0} & \cellcolor{gray!10}{2} & \cellcolor{gray!10}{0.06} & \cellcolor{gray!10}{0.06}\\
+2.5 & 1 & 0.03 & 0.09\\
+\cellcolor{gray!10}{3.0} & \cellcolor{gray!10}{12} & \cellcolor{gray!10}{0.34} & \cellcolor{gray!10}{0.43}\\
+3.5 & 14 & 0.40 & 0.83\\
+\cellcolor{gray!10}{4.0} & \cellcolor{gray!10}{6} & \cellcolor{gray!10}{0.17} & \cellcolor{gray!10}{1.00}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} What type of variable is GPA? {Quantitative continuous}
+\item
+  \textbf{(b)} What proportion of college students had a high school GPA
+  \(> 3.0\)? (use the rounded frequency table) {From the rounded
+  frequency table, \(14 + 6 = 20\) of the 35 students fall above 3.0, so
+  the proportion is \(20/35 = 0.57\). (Working from the raw, unrounded
+  data instead gives \(22/35 = 0.63\).)}
+\item
+  \textbf{(c)} What proportion of college students had a high school GPA
+  \(< 3.0\)? (use the rounded frequency table) {From the rounded
+  frequency table, \(2 + 1 = 3\) of the 35 students fall below 3.0, so
+  the proportion is \(3/35 = 0.09\). (Working from the raw, unrounded
+  data instead gives \(4/35 = 0.11\).)}
+\item
+  \textbf{(d)} What is the \textbf{mean} GPA in this sample? {Using the
+  raw data,
+  \[\bar{x} = \frac{2.0+2.1+...+4.0+4.0}{35} = \frac{114.5}{35} = 3.27 \approx 3.3\]
+  Using the rounded frequency table instead gives a very slightly
+  different value,
+  \[\bar{x} = \frac{2(2.0)+1(2.5)+12(3.0)+14(3.5)+6(4.0)}{35} = \frac{115.5}{35} = 3.30\]}
+\item
+  \textbf{(e)} What is the \textbf{median} GPA in this sample? {median
+  \(= 3.4\)}
+\item
+  \textbf{(f)} What is the \textbf{mode} of GPA in this sample?
+\end{itemize}
+
+{Using the frequency table on the rounded values the mode is the value
+with the highest relative frequency \$ = 3.5\$}
+
+{(Using the raw data) the mode is the most frequent value observed in
+the data which is \(3.0\) }
+
+\begin{itemize}
+\item
+  \textbf{(g)} Construct a dot plot for the variable GPA (hint use the
+  frequency table)
+  \includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-8-1.pdf}
+\item
+  \textbf{(h)} Construct a histogram for the variable GPA (hint use the
+  frequency table)
+  \includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-9-1.pdf}
+\item
+  \textbf{(i)} Construct a stem and leaf plot for the variable GPA
+\end{itemize}
+
+\begin{verbatim}
+## [1] "Using the Rounded GPA scores:"
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##   The decimal point is 1 digit(s) to the left of the |
+## 
+##   20 | 00
+##   22 | 
+##   24 | 0
+##   26 | 
+##   28 | 
+##   30 | 000000000000
+##   32 | 
+##   34 | 00000000000000
+##   36 | 
+##   38 | 
+##   40 | 000000
+## 
+## NULL
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "Using the Raw Data:"
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##   The decimal point is 1 digit(s) to the left of the |
+## 
+##   20 | 0
+##   21 | 0
+##   22 | 
+##   23 | 0
+##   24 | 
+##   25 | 
+##   26 | 
+##   27 | 
+##   28 | 0
+##   29 | 
+##   30 | 000000000
+##   31 | 0
+##   32 | 0
+##   33 | 00
+##   34 | 0000
+##   35 | 0000
+##   36 | 00
+##   37 | 00
+##   38 | 0000
+##   39 | 
+##   40 | 00
+## 
+## NULL
+\end{verbatim}
+
+\({\bf (11)}\) Which statistic is more resistant to outliers, the mean
+or median? Why?
+
+{The median is resistant to outliers because it relies on only the
+middle value (or middle two values if \(n\) is even). Therefore, how far
+a value is from the center does not influence the median. The mean,
+however, is computed using \textbf{ALL} values in a sample distribution.
+This causes the mean to be pulled in the direction of extreme values.}
+
+\({\bf (12)}\) Describe the shape of the following distributions and for
+each distribution identify if the mean will be larger, smaller or the
+same as the median.
+
+\textbf{(a)} {Skew right. The mean will be greater than median because
+the center of the data is pulled toward the right side of the
+distribution}
+
+\includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\textbf{(b)}\\
+{Symmetric/Bell shaped. The mean and the median will be equal}
+
+\includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\textbf{(c)}\\
+{Skew left. The mean will be less than median because the center of the
+data is pulled toward the left side of the distribution}
+
+\includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\newpage
+
+\({\bf (13)}\) Consider the following four sets of observations of a
+quantitative variable \(x\). For your convenience the observations have
+been sorted in increasing order. Match datasets \(1-4\) with the correct
+histogram (labeled \(A - D\))
+
+\[\text{Dataset 1} = \{0.1, 1.1, 2.6, 2.7, 3.4, 3.4, 4.1, 4.4, 8.8, 9.6\}\]
+\[\text{Dataset 2}= \{0.1, 0.3, 1.2, 2.4, 4.4, 4.5, 8.0, 8.9, 9.3, 9.3\}\]
+\[\text{Dataset 3} = \{1.1, 3.8, 5.3, 6.0, 6.2, 6.9, 7.9, 7.9, 8.1, 8.7\}\]
+\[\text{Dataset 4} = \{3.4, 4.5, 5.4, 5.6, 7.0, 8.5, 8.9, 9.2, 9.7, 9.7\}\]
+\includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  {Dataset 1 goes with histogram A}
+\item
+  {Dataset 2 goes with histogram D}
+\item
+  {Dataset 3 goes with histogram B}
+\item
+  {Dataset 4 goes with histogram C}
+\end{itemize}
+
+\({\bf (14)}\) Consider the following set of 10 observations of a
+variable \(X\) sorted from least to greatest:
+\[3.3, 3.8, 4.0, 4.8, 4.8, 5.1, 5.2, 5.6, 5.7, 6.9\] Use the data to
+answer parts a-b
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} Given the data, compute the \(40^{th}\) percentile of
+  \(X\) {With \(n = 10\) observations, the \(40^{th}\) percentile falls
+  at position \(0.40 \times 10 = 4\). Because this lands exactly on a
+  data position, we average the \(4^{th}\) and \(5^{th}\) values - both
+  of which are \(4.8\): \[P_{40} = \frac{4.8+4.8}{2} = 4.8\] (Counting
+  the \(4^{th}\) value directly gives the same answer here.)}
+\item
+  \textbf{(b)} Compute Interquartile Range (IQR) range of \(X\)
+  {\[IQR = 5.6 - 4.0 = 1.6\]}
+\end{itemize}
+
+\({\bf (15)}\) Consider the following \(n = 20\) observations of several
+popular cereal brands and answer questions a - g about the variable
+``Sugar (g)'':
+
+\begin{table}[H]
+\centering\centering\centering
+\begin{tabular}{l|r|r|>{\raggedright\arraybackslash}p{18em}}
+\hline
+Brand & Sodium (mg) & Sugar (g) & Type\\
+\hline
+\cellcolor{gray!10}{Frosted Mini Wheats} & \cellcolor{gray!10}{0} & \cellcolor{gray!10}{11} & \cellcolor{gray!10}{A}\\
+\hline
+Raisin Bran & 340 & 18 & A\\
+\hline
+\cellcolor{gray!10}{All Bran} & \cellcolor{gray!10}{70} & \cellcolor{gray!10}{5} & \cellcolor{gray!10}{A}\\
+\hline
+Apple Jacks & 140 & 14 & C\\
+\hline
+\cellcolor{gray!10}{Captain Crunch} & \cellcolor{gray!10}{200} & \cellcolor{gray!10}{12} & \cellcolor{gray!10}{C}\\
+\hline
+Cheerios & 180 & 1 & C\\
+\hline
+\cellcolor{gray!10}{Cinnamon Toast Crunch} & \cellcolor{gray!10}{210} & \cellcolor{gray!10}{10} & \cellcolor{gray!10}{C}\\
+\hline
+Crackling Oat Bran & 150 & 16 & A\\
+\hline
+\cellcolor{gray!10}{Fiber One} & \cellcolor{gray!10}{100} & \cellcolor{gray!10}{0} & \cellcolor{gray!10}{A}\\
+\hline
+Frosted Flakes & 130 & 12 & C\\
+\hline
+\cellcolor{gray!10}{Froot Loops} & \cellcolor{gray!10}{140} & \cellcolor{gray!10}{14} & \cellcolor{gray!10}{C}\\
+\hline
+Honey Bunches of Oats & 180 & 7 & A\\
+\hline
+\cellcolor{gray!10}{Honey Nut Cheerios} & \cellcolor{gray!10}{190} & \cellcolor{gray!10}{9} & \cellcolor{gray!10}{C}\\
+\hline
+Life & 160 & 6 & C\\
+\hline
+\cellcolor{gray!10}{Rice Krispies} & \cellcolor{gray!10}{290} & \cellcolor{gray!10}{3} & \cellcolor{gray!10}{C}\\
+\hline
+Honey Smacks & 50 & 15 & A\\
+\hline
+\cellcolor{gray!10}{Special K} & \cellcolor{gray!10}{220} & \cellcolor{gray!10}{4} & \cellcolor{gray!10}{A}\\
+\hline
+Wheaties & 180 & 4 & A\\
+\hline
+\cellcolor{gray!10}{Corn Flakes} & \cellcolor{gray!10}{200} & \cellcolor{gray!10}{3} & \cellcolor{gray!10}{A}\\
+\hline
+Honeycomb & 210 & 11 & C\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(a)} Construct a histogram of the data using the following
+  bins: \(\leq 2 (g)\), \(2 - 4 (g)\), \(4 - 6 (g)\),
+  \(6 - 8 (g)\),\(8 - 10 (g)\), \(10 - 12 (g)\),
+  \(12 - 14 (g)\),\(14 - 16 (g)\),\(> 16 (g)\) (hint start by creating a
+  frequency table)
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-16-1.pdf}
+\caption{(A) Histogram of the variable sugar (g) using the bins in the
+frequency table (above)}
+\end{figure}
+
+\begin{table}[H]
+\centering\centering
+\caption{\label{tab:unnamed-chunk-16}Frequency table used to construct histogram for the variable "Sugar (g)"}
+\centering
+\begin{tabular}[t]{lrrr}
+\toprule
+Sugar (g) & Frequency & RF(x) & CRF(x)\\
+\midrule
+\cellcolor{gray!10}{< = 2 (g)} & \cellcolor{gray!10}{2} & \cellcolor{gray!10}{0.10} & \cellcolor{gray!10}{0.10}\\
+2 - 4 (g) & 4 & 0.20 & 0.30\\
+\cellcolor{gray!10}{4 - 6 (g)} & \cellcolor{gray!10}{2} & \cellcolor{gray!10}{0.10} & \cellcolor{gray!10}{0.40}\\
+6 - 8 (g) & 1 & 0.05 & 0.45\\
+\cellcolor{gray!10}{8 - 10 (g)} & \cellcolor{gray!10}{2} & \cellcolor{gray!10}{0.10} & \cellcolor{gray!10}{0.55}\\
+\addlinespace
+10 - 12 (g) & 4 & 0.20 & 0.75\\
+\cellcolor{gray!10}{12 - 14 (g)} & \cellcolor{gray!10}{2} & \cellcolor{gray!10}{0.10} & \cellcolor{gray!10}{0.85}\\
+14 - 16 (g) & 2 & 0.10 & 0.95\\
+\cellcolor{gray!10}{> 16 (g)} & \cellcolor{gray!10}{1} & \cellcolor{gray!10}{0.05} & \cellcolor{gray!10}{1.00}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item
+  \textbf{(b)} Compute the mean, median, and mode of the variable
+  ``Sugar (g)'' {Using the raw data there are 5 modes each with a
+  frequency of 2 mode(s) \(= 3,4,11,12,14\)} {median
+  \(= \frac{9+10}{2} = 9.5\)}
+  {\[\bar{x} = \frac{1}{20}\sum_{i=1}^{20} x_i = \frac{(11+18+5+14+...+3+11)}{20} = 8.75\]
+  (note that the mean may be slightly different if you used the
+  frequency table above}
+\item
+  \textbf{(c)} Compute the variance and standard deviation of the
+  variable ``Sugar (g)''
+  {\[s^2 = \frac{1}{19}\sum_{i=1}^{20} (x_i-\bar{x})^2 = \frac{(11 - 8.75)^2 + (18-8.75)^2 + ...+(3-8.75)^2 + (11 - 8.75)^2}{19}\]
+  \[ = \frac{5.06 + 85.56 + ...+33.06+5.06}{19} = 28.3\]
+  \[s = \sqrt{s^2} = \sqrt{28.3} = 5.32\]}
+\item
+  \textbf{(d)} Compute the quartiles (Q1, Q2, Q3) and interquartile
+  range of the variable ``Sugar (g)''
+  {\[Q1 = 4, \ Q2 = \text{median} = 9.5, \ Q3 = 13, \ IQR = 13 - 4 = 9\]}
+\item
+  \textbf{(e)} Create a box and whisker plot for the variable ``Sugar
+  (g)'' and mark the Q1, Q2, and Q3 quartiles, the median and any
+  potential outliers
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-17-1.pdf}
+\caption{Boxplot of Sugar content in 20 cereal brands}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(f)} Plot the Cumulative Distribution of the variable ``Sugar
+  (g)''
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{week1homework_solns_files/figure-latex/unnamed-chunk-18-1.pdf}
+\caption{Cumulative Distribution of Sugar (g)}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(g)} What proportion of cereals have a sugar content less than
+  or equal to 10 grams? {\[55\%\]}
+\end{itemize}
+
+\end{document}

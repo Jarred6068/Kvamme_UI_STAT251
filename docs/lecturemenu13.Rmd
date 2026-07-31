@@ -9,6 +9,7 @@ header-includes:
   \usepackage{float}
   \usepackage{tikz}
 bibliography: misc/Week_13_bibs.bib
+urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
@@ -28,261 +29,20 @@ source('misc/stat251_tools.R')
 
 ```
 
-# Lecture 24 Monday, April 1st 2024
-
-**Warm Up:** 
-
-  1. A car company claims that their Hybrid Sedan averages 35 mpg. You randomly select 8 of these vehicles from a local dealership and test their gas mileage under similar conditions.
-
-You get the following MPG scores:
-
-MPG:	$30,28,32,26,33,25,28,30$
-
-Consider the following $95\%$ confidence interval for the null hypothesis $\mu = 35$, $[26.68, 31.32]$. Does the actual gas mileage for these cars deviate significantly from $35$? Why or why not?
   
-  2. A concern was raised in Australia that the percentage of deaths of Aboriginal prisoners was higher than the percent of deaths of non-Aboriginal prisoners, which is $0.27\%$. A sample of six years (1990-1995) of data was collected, and it was found that out of $14,495$ Aboriginal prisoners, $51$ died ("Indigenous deaths in," 1996). Do the data provide enough evidence to show that the proportion of deaths of Aboriginal prisoners is more than $0.27\%$?
-  
-### Parametric vs Non-parametric tests
+# Comparing two means
 
-The hypothesis tests that we have learned up to this point are called **parametric** tests. Parametric tests make assumptions about the population distribution from which the data are sampled. For example:
-
-  * The test for a proportion assumes that either the sample size is large enough and that the “success” and “failures” are well balanced so that the population distribution of $X$ is approximately normal
-  
-  * The test for a population mean explicitly assumes that the population distribution of $X$ is normal 
-  
-Another group of hypothesis tests are said to be **non-parametric**. Non-parametric tests make few or no assumptions about the underlying distribution of the data. Still, both types of analyses assume the data are generated from a randomization procedure and that the observations in the data are independent and come from the same distribution. However, in non-parametric statistics, the distribution can be any distribution. 
-
-* **Advantages of Non-parametric tests**
-
-  1. They may be the only alternative when sample sizes are very small (unless the population distribution is known exactly, but this is almost never the case)
-
-  2. They make few assumptions about the population distribution of the data
-
-  3. They are advantageous when the data represent crude measurements such as subjective ratings/rankings (e.g, Likert responses)
-
-  4. They often have simpler computations and interpretations than parametric tests
-
-* **Disadvantages of Non-parametric tests**
-
-  1. They are generally less powerful than their parametric analogues
-
-
-### The sign test
-
-The sign test is a non-parametric significance test that is typically used for paired observations such as data gathered from a matched-pairs designs. For example, consider an experiment where individuals are weighed before and after a treatment with a weight loss drug and the difference in weight is recorded. Such data is appropriate for the sign test. 
-
-The sign test is relatively under-powered compared to the other parametric tests we have learned about. However, it is very flexible and makes almost no assumptions about the data or its population distribution. The sign test is especially useful when data arise from crude measurements or when observations have a ranked order such as movie ratings or taste scores, to name a few examples. 
-
-To demonstrate the use of the sign test, consider the following data from a study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision. The ratings were given as a number between $1-7$ with $1$ indicating wife-dominated decision making and $7$ indicating husband-dominated decision making.
-
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-Couple = c(1:17)
-Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
-Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
-Difference = Husband - Wife
-Sign = Difference
-Sign[which(Difference > 0)] = '$+$'
-Sign[which(Difference < 0)] = '$-$'
-Sign[which(Difference == 0)] = ''
-
-df = cbind.data.frame(Couple, Husband, Wife, Difference, Sign)
-
-kable(df, format = 'html', digits = 2, 
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-```
-
-
-The second to last column "Difference" gives the difference in rating between the husbands rating and wifes rating for each couple. The last column denoted "Sign" indicates whether each difference was positive or negative. Positive differences indicate that husband perceives themselves as more dominating in decision making while negative signs indicated that the wife perceives themselves as more dominating. In this example, ignoring differences of zero, there are a total of $14$ signs and $11$ of them are positive. Let $p$ be the probability that a given sign is positive and consider the following pair of hypotheses:
-
-\[H_0: p = 0.5; \ \ H_A: p \neq 0.5 \]
-
-The null hypothesis indicates that the presence of a positive or negative sign is essentially random while the alternative indicates that positive and negative signs are not equally likely, reflecting a systematic difference in opinion between the husband and wife in each couple. Under the null hypothesis, the number of positive signs is a binomial random variable with probability $p = 0.5$. 
-
-\[P(s) = \frac{n!}{s!(n-s)!}p^s(1-p)^{n-s} \]
-
-where $n$ is the total number of signs and $s$ is the number of positive signs. Thus the sampling distribution of the number of positive signs is a binomial distribution
-
-```{r, echo=FALSE, warning=F, message=F}
-
-probtype = 'P(X >= k)'
-k = 11
-df = data.frame(success = 0:14, 
-                prob = dbinom(x = 0:14, size = 14, prob = 0.5))
-        if(probtype == 'P(X = k)'){
-          df=df %>% mutate(condition = ifelse(success == k, as.character(k), "failure")) 
-          lbl = paste0('$P(X = ', k, ') = ')
-        }else if (probtype == 'P(X <= k)'){
-           df=df %>% mutate(condition = ifelse(success <= k, as.character(k), "failure")) 
-           lbl = paste0('$P(X \\leq ', k, ') = ')
-        }else{
-          df=df %>% mutate(condition = ifelse(success >= k, as.character(k), "failure"))
-          lbl = paste0('$P(X \\geq ', k, ') = ')
-        }
-        
-        px = round(sum(df$prob[which(df$condition == k)]),4)
-        ggplot(data = df, aes(x = success, y = prob, fill = condition)) +
-          geom_bar(stat = 'identity', color = 'black') +
-          geom_col() +
-          geom_text(aes(label = round(prob,4), y = prob + 0.01),
-                    position = position_dodge(0.9),
-                    size = 3,
-                    vjust = 0)+
-          geom_text(aes(x = mean(success),
-                        y = max(prob) + 0.08),
-                    label = TeX(paste0(lbl, px, '$')),
-                    size = 5,
-                    vjust = 0)+
-          scale_y_continuous(limits = c(0, min(max(df$prob+0.14), 1)))+
-          labs(title = paste0("Probability of X =", k, " or more positive signs."),
-               subtitle = TeX(paste0("$X \\sim binom(n = ", 14, ", p = ", 0.5, ')$')),
-               x = "Number of Positive Signs",
-               y = "Probability")+
-          theme_classic2()+
-          theme(legend.position = 'none')
-
-
-```
-
-Recall that the $p$-value of a significance test is the probability of observing a value as or more extreme than the test statistic. In the case of the sign test, the test statistic is the number of positive signs and the $p$-value is the probability of observing more or fewer signs, depending the nature of the alternative hypothesis. For a test of the hypotheses given above, the $p$-value is the probability of getting $11$ or more positive signs multiplied by $2$ because it is a two-tailed test. This gives
-
-\[p\text{-value} = 2\times P(S \geq 11 | H_0 \ \text{True}) = 2\sum_{k = 11}^n \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} \]
-\[ = 2(0.0222+0.0056+0.0009+0.0001) = 2(0.0287) = 0.0574 \]
-
-Assuming a significance level of $5\%$, we would fail to reject the null hypothesis, and we would conclude that the probability of a positive sign is not significantly different than $p = 0.5$. In the original context of the test, this indicates that husbands and wives do not differ significantly in their perceived relative influence in major financial decision making. 
-
-The five steps of the sign test are given below:
-
-1. Assumptions: data are matched pairs
-
-2. State the null and alternative hypotheses. Note that the hypothesis are defined in terms of the probability of a positive sign. Usually the null is that $p = 0.5$ i.e positive and negative signs are equally likely/ random. 
-
-3. Compute the differences and sign of each difference for all pairs of observations. The test statistic is the number of positive signs.
-
-4. Compute the $p$-value from a binomial distribution
-
-5. Make a decision 
-
-
-Like we have seen before with tests for $p$ and $\mu$ the sign test can be right, left or two-tailed tests. 
-
-```{r, echo=FALSE, warning=F, message=F}
-
-
-df = cbind.data.frame(`Alternative Hypothesis $H_A$` = c('$H_A: p > 0.5$','$H_A: p < 0.5$','$H_A: p \\neq 0.5$'),
-                      `$p$-value` = c('$P(S \\geq s | H_0 \\ \\text{True})$', '$P(S \\leq s | H_0 \\ \\text{True})$', '$2\\times P(S \\geq s | H_0 \\ \\text{True})$'))
-
-
-kable(df, format = 'html', digits = 2, 
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-```
-
-We can also tabulate the probabilities for different outcomes of the sign test to produce a table like the $Z$ or $t$ table we have used previously. The table below gives the (point) probabilities for different combinations of positive and total signs. The columns represent the total number of signs and the rows represent the number of positive signs. 
-
-
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-n = 5:15
-s = 0:15
-
-mat = matrix(0, nrow = length(s), ncol = length(n))
-
-for(i in 1:length(n)){
-  mat[,i] = round(dbinom(s, n[i], 0.5), 5)
-}
-
-mat[which(mat == 1)] = ''
-final = cbind.data.frame(s, mat)
-colnames(final) = c('Number of positive signs', n)
-
-kable(final, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
-```
-
-# Lecture 25 Wednesday, April 3rd 2024
-
-**Practice: The Sign Test** - A group of $12$ fly fisherman are testing two types of flies to determine which one is more effective at catching trout in the Selway River. Each fly fisherman makes $10$ casts with each fly lure and records the number of trout that are caught. Use the table below to conduct a two-sided sign test at the $\alpha = 0.05$ significance level:
-
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-Fisherman = c(1:12)
-Fly2 = sample(0:4, 12, replace = T, prob = c(0.1, 0.2, 0.4, 0.2, 0.1))
-Fly1 = sample(1:5, 12, replace = T, prob = c(0.2, 0.5, 0.1, 0.1, 0.1))
-Difference = Fly1 - Fly2
-Sign = rep(0, 12)
-Sign[Difference> 0] = '$+$'
-Sign[Difference == 0] = ''
-Sign[Difference<0] = '$-$'
-
-df = cbind.data.frame(Fisherman, Fly1, Fly2, Difference, Sign)
-
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
-```
-
-
-The null hypothesis is $H_0: p_0 = 0.5$ the probability of positive sign is $50\%$. The alternative hypothesis is that one of the flies catches more fish $H_A: p\neq p_0$. There are $s = 7$ positive signs out of a total of 9 total signs. The $p$-value for the two sided test is given by
-
-
-\[\text{$p$-value} = 2\times P(S\geq s| H_0 \ \text{True}) = 2\left[\sum_{k = 7}^9 \frac{9!}{k!(9-k)!}0.5^k(1-0.5)^{9-k}\right]\]
-
-\[ = 2\times[0.0703+0.0175+0.0019] = 2(0.0898) \approx 0.179 \]
-
-Our $p$-value is greater than $\alpha$ and thus we fail to reject the null hypothesis and conclude the number of fish caught with each fly lure is not significantly different (i.e the probability of a positive sign is not significantly different than $p = 0.5$)
-
-### Comparing Two Groups
-
-Up to this point in the course we have learned how to conduct inference on a single sample. Analyzing a single variable is referred to as **univariate** analysis. However, in statistics we are often interested in comparing two different groups across some measurement. This involves exploring the relationship between two variables: An **explanatory variable** which defines the groups of interests and a **response variable** which measures the outcome of interest from each group. Examples include exploring the relationship between gender and height or between treatment group (i.e placebo group and treatment group) and patient outcome. 
-
-Statistical analyses that explore the relationship between two variables are called **bivariate** analyses. Just as we had univariate significance tests for a population mean and population proportion, we also have well defined significance tests for the inference of two variables - these are often called **two-sample tests** because we treat the observations in each group as a sample from a distinct population. Thus two-sample tests are used to compare the population parameters of <u>two different populations</u>. 
-
-### Independent vs Dependent Samples
-In bivariate analyses, we have to be considerate of whether the samples belonging to the two groups are dependent or independent. 
-  
-  * **independent samples** - occur when the observations in one sample are independent (have no statistical association) of the observations in the other sample. This is most always the case in experiments that use randomization to allocate subjects to treatment groups
-  
-  * **dependent samples** - occur when the observations in one sample are associated with the observations in another sample – this can happen when the same subjects are used for each sample such as matched pair designs
-
-Dependent samples cause some difficulties for bivariate analyses of two groups. This is because computing the standard error under dependent samples can be a very complex computation (more on this later).
-
-### Introduction to two-sample tests
-
-### Comparing two proportions
-
-Comparative studies, such as comparing two related but distinct groups, are by far the most common type of statistical analysis. We often want to compare the proportions of individuals from two groups that share some characteristic. Examples include:
-
-  * Proportion of college students who binge drink among high and low GPA students
-  
-  * Proportion of religious voters among Republicans and Democrats.
-  
-These problems concern the comparison of two populations (high and low GPA students; Republicans and Democrats). The two groups being compared are called <i>population 1</i> and <i>population 2</i>, and the two population proportions are called $p_1$ and $p_2$. For two population proportions we will consider only the case of two independent samples. The data consist of two independent simple random samples of sizes $n_1$ and $n_2$ from populations 1 and 2, respectively. The proportion of observations having the characteristic of interest in each sample estimates the corresponding population proportion. The notation is outlined in the table below:
-
-
+Last week we learned how to compare two populations across a qualitative response variable by comparing their relative proportions. Now we will learn how we can compare two groups on a quantitative response variable by comparing their means. There are many cases where researchers might be interested in comparing groups across a quantitative variable. For example, a teacher may be interested in comparing the average test scores of students in two different classes (Class A and Class B). A social scientist may be interested in whether there is a difference in salaries between men and women within a company. In any case, we are again dealing with two samples of sizes $n_1$ and $n_2$ which come from populations <i>population 1</i> and <i>population 2</i> and with means as $\mu_1$ and $\mu_2$. 
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
 df = cbind.data.frame(Population = c(1, 2),
-                      `Population Proportion` = c('$p_1$', '$p_2$'),
+                      `Population Mean` = c('$\\mu_1$', '$\\mu_2$'),
+                      `Population Stdev` = c('$\\sigma_1$','$\\sigma_2$'),
                       `Sample Size` = c('$n_1$', '$n_2$'),
-                      `Count of Successes` = c('$X_1$', '$X_2$'),
-                      `Sample Proportion` = c('$\\hat{p}_1 = X_1/n_1$', '$\\hat{p}_2 = X_2/n_2$'))
+                      `Sample Mean` = c('$\\bar{x}_1$', '$\\bar{x}_2$'),
+                      `Sample Stdev` = c('$s_1$','$s_2$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -292,46 +52,49 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-We compare two population proportions by looking at the difference between them. 
 
-\[D = \hat{p}_1 - \hat{p}_2 \]
+Let $\mu_d = \mu_1 - \mu_2$ be the mean difference between the two populations. We can construct confidence intervals to estimate the average difference as well as conduct hypothesis tests to determine if two populations are significantly different.
 
-When the samples from both groups are sufficiently large, the sampling distribution of the difference in proportion $D$ is approximately normal. Like we saw before with the univariate case, inference procedures for comparing proportions are based on $z$, the normal approximation, and on standardizing the difference $D$. The difference $D$ is an unbiased estimator of the population difference $p_1 - p_2$. Moreover, because the two samples are independent, the variance of the difference is the sum of the population variances:
+### A confidence interval for the mean difference $\mu_d$
 
-\[\sigma^2_D = \frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2} \]
+We will begin by assuming that we are dealing with two independent samples from two distinct populations. The natural estimator of $\mu_d$ is the difference between the sample means 
 
-Thus when the sample sizes are sufficiently large $D$ follows a normal distribution 
+\[\hat{\mu}_d = \bar{x}_1 - \bar{x}_2\]
 
-\[D \sim  N\left(p_1 - p_2, \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}\right)\]
+To base our inference on the above estimator, we must know its sampling distribution. If we assume that both samples come from populations that are normally distributed, then the distribution of the difference will also be normally distributed and the variances will add:
 
-As we did before we will start by constructing a confidence interval for the population difference $D$.
+\[Var[\mu_1 - \mu_2] = \frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]
 
-the point estimate is 
-\[D = \hat{p}_1 - \hat{p}_2 \]
-with standard error 
+In practice, $\sigma_1^2$ and $\sigma_2^2$ are unknown population parameters but can be estimated by substituting in the sample variances $s_1^2$ and $s_2^2$. This gives the following standard deviation for the estimator $\hat{\mu}_d$
 
-\[ SE_D = \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\]
+\[SE(\hat{\mu}_d) = \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}  \]
 
-this gives the margin of error
+Just as it was for a single mean, estimating the population variances with the sample variances adds additional uncertainty. Thus, the sampling distribution for the difference in two means is $t$-distributed, although the degrees of freedom are calculated differently. The actual formula for the degrees of freedom is quite messy and difficult to compute:
 
-\[m = z\times SE_D \]
+\[df = \frac{\left(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}\right)^2}{ \frac{1}{n_1 - 1}\left(\frac{s_1^2}{n_1}\right)^2 + \frac{1}{n_2-1}\left(\frac{s_2^2}{n_2}\right)^2} \]
 
-putting all together the $100(1-\alpha)\%$ confidence interval for the population difference in proportion is
+We will instead compute the degrees of freedom by taking the smaller of $n_1-1$ and $n_2 - 1$ which is a lower bound on the formula above 
 
-\[ (\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2} \times SE_D\]
+\[\frac{\hat{\mu}_d - \mu_d}{SE(\hat{\mu}_d)} \sim t(\min(n_1 - 1, n_2 - 1)) \]
 
-The critical value $Z_{1-\alpha/2}$ is the same critical value that we used in the one-sample case
+The margin of error for estimating the mean difference at the $100(1-\alpha)\%$ level is given by
 
-**Example: Aspirin and Heart Attacks** - A large-scale randomized experiment investigated the effect of regular aspirin use on myocardial infarctions (i.e., heart attacks)[@steering1989final]. The results are summarized below:
+\[m = t_{1-\alpha/2} \times SE(\hat{\mu}_d) \]
+
+which gives the following confidence interval for the mean difference
+
+\[(\bar{x}_1 - \bar{x}_2) \pm  t_{1-\alpha/2} \times SE(\hat{\mu}_d)\]
+
+**Example: Comparing Customer Satisfaction Levels** - Suppose we want to compare the customer satisfaction levels of two competing cable television companies, Company 1 and Company 2. We randomly select customers from each company and ask them to rate their cable companies on a five-point scale (with 1 being least satisfied and 5 most satisfied). The data are summarized in the table below:
+
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-df = cbind.data.frame(Group = c("Aspirin", "Placebo"),
-                      `Population Proportion` = c('$p_1$', '$p_2$'),
-                      `Sample Size` = c('$11037$', '$11034$'),
-                      `Patients Who Experienced Heart Attacks` = c('$104$', '$189$'),
-                      `Patients Who did Not Experience A Heart Attack` = c('$10933$','$10845$'))
+df = cbind.data.frame(`Group` = c('Company 1', 'Company 2'),
+                      `Number of customers` = c(174, 355),
+                      `Sample Mean Rating` = c(4.2, 3.8),
+                      `Sample Stdev` = c(0.8, 1.1))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -341,67 +104,25 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-Construct a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between those taking aspirin and those taking the placebo
 
-**Understand the Problem:**
+Estimate the difference in mean satisfaction levels between the two companies at the $95\%$ confidence level.
 
-  * We have two groups: <u>Aspirin</u> and <u>Placebo</u>.
+Let $\mu_1$ represent the mean satisfaction score for company 1 and $\mu_2$ represent the mean satisfaction score for company 2. The estimated mean difference in customer satisfaction is 
+\[\hat{\mu}_d = 4.2 - 3.8 = 0.4 \]
 
-  * We want to estimate the difference in proportions of patients experiencing heart attacks between these two groups.
+Since the confidence level is $95\%$ the standard score will be approximately the $t_{1-0.05/2} = t_{0.975}$ or the $97.5th$ percentile of a $t$-distribution with $173$ degrees of freedom. Since the $t$ and $z$ distributions are approximately equal for sample sizes $\geq 30$ we will use the standard score $1.96$. The standard error of the difference is given by 
 
-  * We have sample data for each group, including the sample proportions and sample sizes.
+\[SE(\hat{\mu}_d) = \sqrt{\frac{0.8^2}{174}+\frac{1.1^2}{355}} =0.0842  \]
 
-**Calculate Sample Proportions:**
-  
-  * Sample proportion for Aspirin group: $\hat{p}_1 = \frac{104}{11037} = 0.0094$
+Which yields the follow margin of error
 
-  * Sample proportion for Placebo group: $\hat{p}_2 = \frac{189}{11034} = 0.0171$
+\[ m = 1.96 (0.0842) = 0.165\]
 
-**Calculate the Standard Error:**
+The $95\%$ confidence interval is $[0.24, 0.56]$. Thus, at the $95\%$ confidence level we estimate the mean difference in customer satisfaction score to be no less than $0.24$ and no more than $0.56$. Notice that the above confidence interval does not span zero and thus likely constitutes a real, but small, difference between the companies
 
-  * The standard error for the difference in proportions is given by: 
-  
-  \[ SE = \sqrt{\frac{0.0094 (1-0.0094)}{11037} + \frac{0.0171(1-0.0171)}{11034}} = 0.0015 \] 
+### A significance test for comparing two means: independent samples
 
-**Determine the Z-Critical Value:**
-
-  * For a $95\%$ confidence interval, the critical value $Z_{1-\alpha/2}$ is approximately $1.96$ (from the standard normal distribution).
-
-**Calculate the Margin of Error:**
-
-  * The margin of error is given by: 
-  
-  \[ m = 1.96 \times 0.0015 = 0.0029\]
-
-**Construct the Confidence Interval:**
-
-  * The confidence interval is: 
-  
-  \[ \text{Confidence Interval} = (\hat{p}_1 - \hat{p}_2) \pm \text{Margin of Error} \]
-
-  Confidence Interval $= (0.0094 - 0.0171) \pm 0.0029 = [-0.0107, -0.0047]$
-
-**Interpretation:** 
-  
-  * We are $95\%$ confident that the true difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups is no less than $-0.0107$ and no greater than $-0.0047$. Since the interval lies entirely below zero (excludes 0), we can conclude that the proportion of heart attacks is likely lower in the Aspirin group compared to the Placebo group. 
-
-
-**Try it out:** A manufacturing company is interested in assessing the effectiveness of two different production methods, $A$ and $B$, in terms of the proportion of defective products produced. A random sample of $200$ products produced using method $A$ yielded $30$ defective products, while a sample of $250$ products produced using method $B$ yielded $20$ defective products.
-
-Construct a $95\%$ confidence interval for the difference in proportions of defective products between method $A$ and method $B$.
-
-<br>
-<br>
-
-# Lecture 26 Monday, April 4th 2024
-
-Recall the Aspirin and Heart Attacks example from **Lecture 25**. In that example, we constructed a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups. The interval was approximately $[-0.0107, -0.0047]$. If the confidence interval we computed had included the value zero, it would suggest that the two proportions might be equal i.e $p_1 = p_2$. In other words, we would have little evidence that there is a real difference between the two groups. Conversely, if the confidence interval does not include zero, we have stronger evidence that there is a significant difference between the two populations under study.
-
-Just as we did for population proportions in the univariate case, we can easily construct a hypothesis  test which will allow us to formally evaluate whether an observed difference between two groups is statistically significant or merely due to random variation. 
-
-### Significance tests for comparing two proportions
-
-A hypothesis test used to compare the population proportions from two different but independent groups is based on the standardized difference in proportion $D$. Recall that, if the samples obtained from each group are sufficiently large, then the sampling distribution of $D$ is approximately distributed as standard normal. Here’s how we set up a two-sample hypothesis test for proportions:
+We can also test for a difference between two groups on a quantitative response variable by comparing their means. The set up for a significance test for a difference in two means is more or less the same as we saw previously for two proportions, however, the calculations now involve $\bar{x}_1$, $\bar{x}_2$, $s_1$ and $s_2$. Recall that, under the assumption of normality for both populations and when using the sample standard deviations to estimate $\sigma_1$ and $\sigma_2$ the difference in means is $t$-distributed. We will see that test statistic $t_{obs}$ is the standardized difference and has approximately the same distribution. Here’s how we set up a two-sample hypothesis test for means:
 
 **1. Assumptions**
 
@@ -409,24 +130,24 @@ A hypothesis test used to compare the population proportions from two different 
   
   * The two groups are independent
   
-  * $n\hat{p}$ and $n(1-\hat{p})$ are both greater than 15. Note that $\hat{p}$ here is pooled sample proportion (see below)
+  * Both populations are normally distributed
 
 **2. Null and Alternative Hypotheses**
 
-  * The **null** hypothesis is generally that the two population proportions are equal (i.e no difference)
+  * The **null** hypothesis is generally that the two population means are equal (i.e no difference)
   
-  \[H_0: p_1 = p_2 \ \ \  \text{which is the same as} \ \ \ H_0: p_1 - p_2 = 0\]
+  \[H_0: \mu_1 = \mu_2 \ \ \  \text{which is the same as} \ \ \ H_0: \mu_1 - \mu_2 = 0\]
   
   * The alternative hypothesis can be either lower, upper, or two tailed just as it was with our univariate tests. The table below gives the possible alternative hypotheses and their critical values:
   
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
-                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_\\alpha$','$Z_{1-\\alpha}$'),
-                      `Rejection Region` = c('$|Z| \\geq Z_{1-\\alpha/2}$',
-                                             '$Z\\leq Z_{\\alpha}$',
-                                             '$Z\\geq Z_{1-\\alpha}$'))
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu_1 - \\mu_2 \\neq 0$','$H_A: \\mu_1 - \\mu_2 < 0$','$H_A: \\mu_1 - \\mu_2 > 0$'),
+                      `Critical Value` = c('$t_{1-\\alpha/2}$','$t_\\alpha$','$t_{1-\\alpha}$'),
+                      `Rejection Region` = c('$|t| \\geq t_{1-\\alpha/2}$',
+                                             '$t\\leq t_{\\alpha}$',
+                                             '$t\\geq t_{1-\\alpha}$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -438,28 +159,11 @@ kable(df, format = 'html', digits = 2,
 
 **3. Test statistic**
 
-  * The null hypothesis is that the two populations are equal (i.e they have the same proportion). If the null is true then we can view all of the data as coming from from the same distribution. Thus the test statistic under the null hypothesis is based on the <i>pooled estimate</i> of the population proportion denoted $\hat{p}$:
+  * Under the null hypotheses the test statistic is the standardized difference
   
-  \[ \hat{p} = \frac{\text{number of successes in both samples}}{\text{total number of observations from both samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]
-  The pooled estimate combines all of the information from both samples
+  \[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}  \]
   
-  * Recall that the population standard deviation of the difference in proportions is 
-  
-  \[\sigma_D = \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}  \]
-  
-  However, under the null hypothesis the two proportions are equal giving
-  
-  \[ = \sqrt{\frac{p(1-p)}{n_1}+\frac{p(1-p)}{n_2}} \]
-
-  \[= \sqrt{p(1-p)\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]
-  
-  We estimate $\sigma_D$ by substituting in the <i>pooled estimate</i> of the population proportion:
-  
-  \[ SE_{D_\text{pooled}} = \sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]
-  
-  Combining these elements, the test statistic under a null hypothesis of no difference $H_0: p_1 - p_2 = 0$ is given by 
-  
-  \[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}} \sim N(0,1) \]
+  The above test statistic is only approximately $t$-distributed. However, the lower bound for the degrees of freedom given by $\min(n_1 - 1, n_2 - 1)$ generally leads to conservative estimates and tests and is thus favorable. 
   
 
 **4. $p$-value**
@@ -469,10 +173,10 @@ kable(df, format = 'html', digits = 2,
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
-                      `$p$-value` = c('$P(|Z| \\geq |Z_{obs}||H_0)$',
-                                             '$P(Z \\leq Z_{obs}|H_0)$',
-                                             '$P(Z\\geq Z_{obs}|H_0)$'))
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu_1 - \\mu_2 \\neq 0$','$H_A: \\mu_1 - \\mu_2 < 0$','$H_A: \\mu_1 - \\mu_2 > 0$'),
+                      `$p$-value` = c('$P(|t| \\geq |t_{obs}||H_0)$',
+                                             '$P(t \\leq t_{obs}|H_0)$',
+                                             '$P(t\\geq t_{obs}|H_0)$'))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -485,19 +189,70 @@ kable(df, format = 'html', digits = 2,
 **5. Decision rule**
 
   \[\text{Reject} \ \ H_0 \ \ \text{if} \ \ \text{$p$-value} < \alpha \]
+  
+  
+
+#### The pooled $t$ test
+
+There is one situation where the above test statistic has exactly a $t$-distribution and that occurs when we can assume that both populations have the same standard deviation. In this case, we need only substitute a single sample standard deviation for $\sigma_1$ and $\sigma_2$. We call this the pooled estimate of the standard deviation:
+
+\[ s_{pooled} = \sqrt{ \frac{(n_1 - 1)s_1^2 + (n_2 -1)s_2^2}{n_1+n_2 - 2}}\]
+
+$s_{pooled}$ is called the **pooled estimator** of the common standard deviation $\sigma$ because it combines the information from both samples.
+
+The test statistic under the assumption of equal variances becomes 
+
+\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}  \]
+
+which is exactly distributed as a $t$ distribution with $n_1+n_2 - 2$ degrees of freedom. The test based on the pooled estimate of the standard deviation is more powerful because the sampling distribution is exact and not an approximation as it is in the unpooled case.
+
+Which test should you use?
+
+  * In practice, a significance test for determining equality of variances can be run prior to the $t$-test to determine if the pooled or unpooled test statistic should be used. More information about this test can be found <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda359.htm#:~:text=An%20F%2Dtest%20(Snedecor%20and,the%20variances%20are%20not%20equal.">here</a>
 
 
-
-**Example - The impact of Covid on scholarly activity?** - During the COVID-19 pandemic, as faculty members shifted to working from home, women in academic medicine reported decreased manuscript submissions and shouldered a disproportionate share of childcare responsibilities. A study published in the <i>Journal of the American College of Radiology</i> examined the scholarly activity among male and female contributors during the COVID-19 Pandemic of 2019 and 2020. Specifically, they evaluated the proportion of female contributors submitting manuscripts and accepting peer review invitations before (April - October, 2019) and after the start of the coronavirus pandemic (April - October, 2020) [@mogensen2021impact]. A summary of the data in this study are given below:
+**Example: NCAA Women's Basketball** - Sunday April 7th South Carolina and Iowa contended for the NCAA women's basketball championship. Consider the following table which gives the opponent and number of points scored for both teams in their last $15$ games leading up to the championship.
 
 ```{r, echo=FALSE, warning=F, message=F}
 set.seed(123)
 
-df = cbind.data.frame(`Year` = c('April - October 2019', 'April - October 2020'),
-                      `Number of Manuscripts with Female First Author` = c('$140$', '$172$'), 
-                      `Number of Manuscripts with Male First Author` = c('$171$', '$269$'),
-                      `All First Authors` = c('$311$', '$441$'),
-                      `Relative Percentage of Manuscripts with Female First Author` = c('$140/311 = 0.450$', '$172/441 = 0.390$'))
+sc.matchup = rev(c('UConn','Tennessee','Georgia','Alabama', 'Kentucky', 'Arkansas', 'Tennessee', 'Texas A&M','Tennessee', 'LSU','Presbyterian', 'UNC', 'Indiana', 'Oregon State','NC State'))
+sc = c(78, 70, 79, 88, 91, 79, 74, 79, 76, 98, 103, 72, 70, 66, 83)
+spacer = rep('', 15)
+io.matchup = rev(c('Penn State','Nebraska','Michigan','Indiana','Illinois','Minnesota', 'Ohio State', 'Penn State', 'Michigan', 'Nebraska', 'Holy Cross', 'West Virginia', 'Colorado', 'LSU', 'UConn'))
+io = c(71, 94, 89, 64, 91, 94, 95, 95, 93, 108, 101, 69, 106, 79, 111)
+
+df1 = cbind.data.frame(`South Carolina` = sc,
+                       `Matchup` = sc.matchup,
+                       `-` = spacer,
+                       `Iowa` = io,
+                       `Matchup` = io.matchup)
+
+kable(df1, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+
+```
+
+
+The summary of the last $15$ games is given below:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+sc.matchup = rev(c('UConn','Tennessee','Georgia','Alabama', 'Kentucky', 'Arkansas', 'Tennessee', 'Texas A&M','Tennessee', 'LSU','Presbyterian', 'UNC', 'Indiana', 'Oregon State','NC State'))
+sc = c(78, 70, 79, 88, 91, 79, 74, 79, 76, 98, 103, 72, 70, 66, 83)
+spacer = rep('', 15)
+io.matchup = rev(c('Penn State','Nebraska','Michigan','Indiana','Illinois','Minnesota', 'Ohio State', 'Penn State', 'Michigan', 'Nebraska', 'Holy Cross', 'West Virginia', 'Colorado', 'LSU', 'UConn'))
+io = c(71, 94, 89, 64, 91, 94, 95, 95, 93, 108, 101, 69, 106, 79, 111)
+
+df = cbind.data.frame(Population = c('Iowa', 'South Carolina'),
+                      `Population Mean` = c('$\\mu_1$', '$\\mu_2$'),
+                      `Sample Size` = c('$n_1 = 15$', '$n_2 = 15$'),
+                      `Sample Mean` = c(round(mean(io), 2), round(mean(sc), 2)),
+                      `Sample Stdev` = c(round(sd(io), 2), round(sd(sc), 2)))
 
 kable(df, format = 'html', digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -507,58 +262,513 @@ kable(df, format = 'html', digits = 2,
 
 ```
 
-Conduct a hypothesis test at the $5\%$ significance level to determine if the relative percentage of scholarly activity among female scholars was <i>significantly reduced</i> after the start of the coronavirus pandemic 
 
+Conduct an unpooled two sample $t$-test at the $\alpha = 0.05$ significance level to determine if there is a significant difference between the championship teams in the mean number of points scored per game.
 
-**Step 1** To check the sample size assumptions of this test we must first calculate the pooled relative proportion:
-
-\[\hat{p} = \frac{140+172}{311+441} = 0.415 \]
-
-Since the pooled estimate is nearly 0.5 and both sample sizes are quite large ($n_1 = 311$ and $n_2 = 441$), the quantities $n_1\hat{p}$, $n_1(1-\hat{p})$, $n_2\hat{p}$, and $n_2(1-\hat{p})$ are all greater than the required $15$.
-
-
-**Step 2** We want to test the null hypothesis that there is no significant difference in the relative percentage of scholarly activity among female scholars before and after the pandemic:
-
-\[ H_0: p_1 - p_2 = 0\]
-\[ H_A: p_1 - p_2 < 0\]
-
-where $p_1$ is the relative proportion of manuscripts with female first authors after the start of the pandemic and $p_2$ is the relative proportion of manuscripts with female first authors before the start of the pandemic. The critical value is $Z_{\alpha} = -1.645$.
-
-**Step 3**
-
-Using the pooled estimate from **Step 1**, the pooled standard error of the population difference $D$ is 
-
-\[ SE_{D_\text{pooled}} = \sqrt{0.415(1-0.415)\left(\frac{1}{311}+\frac{1}{441}\right)} = 0.0365\]
-
-The test statistic is 
-
-\[Z_{obs} = \frac{(0.390 - 0.450) - 0}{SE_{D_\text{pooled}}} = -1.65 \]
-
-**Step 4**
-
-The $p$-value is 
-
-\[P(Z \leq -1.65 | H_0 \ \ \text{True})  = 0.0495\]
-
-**Decision**
-
-Since the $p$-value is less than the significance level of $5\%$, we reject the null hypothesis of no difference and conclude that the relative proportion of manuscripts with female first authors significantly decreased after the start of the COVID-19 pandemic. 
-
-<br>
-<br>
-
-### $D$ as a measure of association 
-
-Consider again the difference in proportion $D$. In statistical analysis, we often study the relationship between two categorical variables. We are regularly interested in whether one variable (the explanatory variable) influences or explains the outcomes of another variable (the response variable). The statistic $D$ is a measure of the strength of statistical association between some grouping variable and some response that is measured across those groups. Consider two populations (groups) based on some characteristic (e.g., treatment vs. control, male vs. female, etc). For each population the response variable records the fraction of the population that relates to some category or specific outcome (e.g. patient outcome, preference, occurrence of an event). The value of $D$ ranges between $-1$ and $1$ and has the following interpretation:
-
-**Interpretation:**
-
-Given $D = p_1 - p_2$ which compares the difference in proportion across groups/populations 1 and 2
-
-  * values of $-1$ or $1$ indicate the strongest possible association between the categories of the grouping variable and the categories of the response variable
+  1. Let $\mu_1$ be the mean number of points scored per game for Iowa and $\mu_2$ be the mean number of points scored per game for South Carolina. The null hypothesis is that there is no difference in the mean number of points between the two teams 
   
-  * values near or at $0$ indicates that the explanatory and response variables are independent of each other
+  \[H_0: \mu_1 = \mu_2 \]
+  
+  The alternative hypothesis is that the two teams are different
+  
+  \[H_A: \mu_1 \neq \mu_2\]
+  
+  2. The estimated difference is given by $\hat{\mu}_d = \bar{x}_1 - \bar{x}_2 = 10.27$. The test statistic for the unpooled test is 
+  
+  \[ t_{obs} = \frac{90.67 - 80.40}{\sqrt{\frac{14.21^2}{15}+\frac{10.57^2}{15}}} \approx 2.246\]
+  
+  which is approximately distributed as 
+  
+  \[ t_{obs}\sim t(df = 14) \]
+  
+  3. The $p$-value is
+  
+  \[\text{$p$-value} = 2\left[P(|t| \geq |t_{obs}||H_0)\right] = 2(0.0207) = 0.0414 \]
+  
+  4. Based on the $p$-value above we would narrowly reject the null hypothesis and conclude that there is a significant difference in the mean number of points scored per game between Iowa and South Carolina. The outcome of the championship was an 87 - 75 victory for South Carolina. Given the conclusion of our test, this is a testament to South Carolina's defensive prowess in being able to shut down a high scoring team like Iowa. 
 
+
+
+# Paired $t$ test
+Comparative methods (i.e methods that compare two groups/samples across a quantitative variable) are more common and often preferred over one sample procedures. One common comparative design that makes use of single-sample procedures for a population mean is called the paired $t$-test. This test is used to draw inferences about a population mean in matched-pairs designs and can be thought of as the parametric analogue of the <i>sign test</i> we learned previously. Recall that in matched-pairs studies subjects are matched based on common characteristics and the quantitative outcome is compared within each pair. 
+
+  * matched-pairs designs are most common when randomization is not possible
+  
+  * often used when observations are taken on the same subject (before and after treatment)
+  
+In a paired $t$-test we convert a comparative study into a one-sample procedure by making the response variable the difference between the two observations in each pair $d_i = x_i - y_i$. The parameter under study is the population mean difference $\mu_d$ which can be estimated by the sample mean difference $\bar{x}_d = \bar{x} - \bar{y}$ computed over all pairwise differences. The standard deviation of the difference $\sigma_d$ is then estimated with the sample standard deviation of the difference. Inference is then treated in the same way as one-sample procedures for a population mean
+
+  * the $100(1 - \alpha)\%$ confidence interval for the mean pairwise difference is
+  
+  \[ \bar{x}_d \pm t_{1-\alpha/2} \frac{s_d}{\sqrt{n}}\]
+  
+  * the test statistic for a significance test regarding the pairwise difference is given by
+  
+  \[t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}} \sim t(n - 1) \]
+  
+  * by treating the above procedure as a one-sample $t$ test we make the assumption that the population distribution of differences is approximately normal. 
+  
+**Example: Revisiting the Spousal Dominance Problem** - Recall the study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision.
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+Couple = c(1:17)
+Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
+Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
+Difference = Husband - Wife
+
+df = cbind.data.frame(Couple, Husband, Wife, Difference)
+
+kable(df, format = 'html', digits = 2, 
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+A summary of the difference in rating between husbands and wives is given below:
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+Couple = c(1:17)
+Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
+Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
+Difference = Husband - Wife
+
+df = cbind.data.frame(`Parameter` = c('$\\mu_d$'),
+                      `Estimate` = c(round(mean(Difference),2)),
+                      `Stdev` = c(round(sd(Difference), 2)))
+
+kable(df, format = 'html', digits = 2, 
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+Conduct a paired $t$-test at the $\alpha = 0.05$ significance level to determine if husbands and wives differ in their perceived influence on financial decision making
+
+### Summary of inference procedures
+
+The table below summarizes the procedures we have learned so far in the course
+
+```{r, echo=F, message=F, warning=F}
+
+df = cbind.data.frame(`Parameter` = c('$p$','$p_1 - p_2$', '$\\mu$', '$\\mu_1 - \\mu_2$','$\\mu_1 - \\mu_2$', '$\\mu_d$'),
+                      `Type` = c('one-sample', 'two-sample', 'one-sample', 'two-sample', 'pooled two-sample', 'matched pairs'),
+                      `Response Variable` = c('Categorical','Categorical', 'Quantitative', 'Quantitative', 'Quantitative','Quantitative'),
+                      
+                      `$100(1 - \\alpha)\\%$ CI` = c('$\\hat{p}\\pm Z_{1-\\alpha/2}\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}$',
+                                                  
+                                                  '$(\\hat{p}_1 - \\hat{p}_2)\\pm Z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1}+\\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$',
+                                                  
+                                                  '$\\bar{x} \\pm t_{1-\\alpha/2, n-1}\\frac{s}{\\sqrt{n}}$',
+                                                  
+                                                  '$(\\bar{x}_1 - \\bar{x}_2) \\pm  t_{1-\\alpha/2, \\min(n_1 -1, n_2-1)} \\sqrt{\\frac{s_1^2}{n_1}+\\frac{s_2^2}{n_2}}$',
+                                                  
+                                                  '$(\\bar{x}_1 - \\bar{x}_2) \\pm  t_{1-\\alpha/2, n_1+n_2 - 2} s_{pooled}\\sqrt{\\frac{1}{n_1}+\\frac{1}{n_2}}$',
+                                                  
+                                                  '$\\bar{x}_d \\pm t_{1-\\alpha/2, n-1}\\frac{s_d}{\\sqrt{n}}$'),
+                      
+                      
+                      `Test statistic` = c('$\\frac{\\hat{p} - p_0}{\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}}$',
+                                           
+                                           '$\\frac{\\hat{p}_1 - \\hat{p}_2}{ \\sqrt{\\hat{p}(1-\\hat{p})\\left(\\frac{1}{n_1}+\\frac{1}{n_2}\\right)}}$',
+                                           
+                                           '$\\frac{\\bar{x} - \\mu_0}{s/\\sqrt{n}}$',
+                                           
+                                           '$\\frac{\\bar{x}_1 - \\bar{x}_2}{\\sqrt{\\frac{s_1^2}{n_1}+\\frac{s_2^2}{n_2}}}$',
+                                           
+                                           '$\\frac{\\bar{x}_1 - \\bar{x}_2}{s_{pooled}\\sqrt{\\frac{1}{n_1}+\\frac{1}{n_2}}}$',
+                                           '$\\frac{\\bar{x}_d - \\mu_d}{s_d/\\sqrt{n}}$'),
+                      `Distribution` = c('$z$','$z$', '$t(n-1)$','$t(\\min(n_1 - 1, n_2 - 1))$','$t(n_1+n_2 - 2)$','$t(n-1)$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+### Statistical Inference for qualitative data
+
+Despite significantly expanding our statistical tools for inference, we are still quite limited in our ability to analyze qualitative responses. Our tests for a proportion are useful for comparing a single category of a qualitative variable across one or two samples, but what if we are interested in comparing multiple categories across more than one population? We will now explore some of the common tools for analyzing qualitative data. The inference techniques for analyzing qualitative variables are generally concerned with comparing a response variable with two or more categories across an explanatory variable with two or more groupings by exploring how the conditional distribution of the response varies across the groups of the explanatory variable. In other words, these inference procedures are designed to analyze the statistical association between two multi-category qualitative variables. 
+
+Such problems are typically represented as a table where the rows represent the groupings of the explanatory variable and columns represent the categories of the response variable - often referred to as "two-way tables". 
+
+
+### The Chi-square goodness of fit test
+
+Like we have done with means and proportions, we will begin with a one-sample procedure for comparing the distribution of a categorical variable to some hypothesized model. This procedure is called the $\chi^2$ ("chi-squared") goodness of fit test because it used to determine how well the observed distribution fits some proposed model of the data. We will illustrate this idea by starting with an example:
+
+**Example: Gregor Mendel's Peas** - Gregor Mendel conducted a study in which he crossed pea plants. The plants he crossed had the alleles (i.e., a form or version of a gene) for both yellow $Y$ and green peas $y$ — a trait controlled by a single locus. He believed two of his laws applied here: the Law of Segregation and the Law of Dominance. These laws would determine the probabilities of certain genotypes. This can be summarized by a Punnett square
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(c('$YY = 0.25$', '$Yy = 0.25$'),
+                      c('$Yy = 0.25$', '$yy = 0.25$'))
+row.names(df) = c('Yellow','Green')
+
+kable(df, format = 'html', digits = 2, col.names = c('Yellow', 'Green'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+  * If Mendel’s Laws are true, what do they imply about the probability distribution for these four outcomes (i.e., $YY$, $Yy$, $yY$, or $yy$)? And what does this imply about the probability distribution of color (i.e., yellow or green) ?
+
+
+Mendel bred $8023$ offspring. Of these, $6022$ were yellow, and $2001$ were green. Do his laws “fit” the data? That is, does the trait of color in pea plants exhibit what we would call Mendelian inheritance?
+
+
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+df = cbind.data.frame(`Color` = c('Yellow', 'Green'),
+                      `Expected Frequency` = c(0.75, 0.25),
+                      `Observed Count` = c(6022, 2001),
+                      `Observed Frequency` = c(6022/8023, 2001/8023))
+
+kable(df, format = 'html', digits = 4,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+The above problem amounts to comparing the observed frequencies of each color to the frequencies that we would expect under the Mendelian model of inheritance. We can test whether the data fit Mendel's model by comparing the observed frequencies of pea plant colors to the frequencies we would expect assuming Mendelian Inheritance and Dominance. 
+
+In this case the null hypothesis is that the offspring of the pea plants follows Mendelian inheritance or 
+
+\[H_0: p_{yellow} = 0.75; p_{green} = 0.25 \]
+
+The alternative is that one or more of the frequencies for each color do not follow the frequencies defined in the null hypothesis. To generalize for a categorical variable with $k$ possible outcomes the null becomes $H_0: p_i = c_i; \forall i\in[1:k]$ and $H_A:$ at least one $p_i \neq c_i$. 
+
+The above hypothesis test uses a $\chi^2$ test statistic defined as
+
+\[X^2 = \sum_{i =1}^k \frac{(\text{observed count}_i - \text{expected count}_i)^2}{\text{expected count}_i} \]
+
+  * $k$ is the number of possible outcomes
+  
+  * the observed count is the number of observations we observed with outcome $i$
+  
+  * the expected count is the number of observations we expect to have outcome $i$ which is calculated under the null hypothesis as $np_i$
+  
+  * We can think of this calculation as measuring the total (relative) squared distance from the observed model to the model we defined under the null hypothesis.
+  
+$X^2$ can take on values between $0$ and positive $\infty$. A value of zero means the observed model exactly follows the expected model. Values greater than zero indicate a deviation from the expected model. Large values of $X^2$ indicate evidence against the null hypothesis.
+  
+Referring back to Mendel's pea plants we compute the expected number of yellow pea plants as $8023\times 0.75 = 6017.25$ and the expected number of green pea plants to be $8023\times 0.25 = 2005.75$. The test statistic is 
+
+\[X^2 = \frac{(6022 - 6017.25)^2}{6017.25} +\frac{(2001 - 2005.75)^2}{2005.75} \]
+
+\[ = 0.0037 + 0.0112  \]
+
+\[ \approx 0.015\]
+
+#### The Chi-square distribution
+
+To convert the above statistic into a $p$-value we need to know its sampling distribution. The statistic $X^2$ is called a $\chi^2$ ("chi-squared") test statistic because its sampling distribution follows a special type of probability distribution called the $\chi^2$ distribution. Like the $t$ distribution, the $\chi^2$ distributions form a family of distributions controlled by a single parameter - the degrees of freedom. We will use the notation $\chi^2(df)$ to depict a specific member of this family. For the goodness of fit test, the test statistic $X^2$ follows a $\chi^2$ distribution with $k-1$ degrees of freedom where $k$ represents the number of categories of the qualitative variable
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.width=10, fig.height=6, results = 'hide'}
+
+x = seq(0, 20, 0.01)
+df1 = dchisq(x, 1)
+df2 = dchisq(x, 2)
+df4 = dchisq(x, 4)
+df6 = dchisq(x, 6)
+df8 = dchisq(x, 8)
+#df12 = dchisq(x, 12)
+df = cbind.data.frame(`$\\chi^2$` = rep(x, 5),
+                      `Density` = c(df1, df2, df4, df6, df8),# df12),
+                      `Degrees of freedom` = c(rep('df = 1', length(x)),
+                                               rep('df = 2', length(x)),
+                                               rep('df = 4', length(x)),
+                                               rep('df = 6', length(x)),
+                                               rep('df = 8', length(x))
+                                               #rep('df = 12', length(x))
+                                               ))
+
+ggplot(data = df, aes(x = `$\\chi^2$`, y = Density, color = `Degrees of freedom`))+
+  geom_line(size = 1.5)+
+  scale_y_continuous(limits = c(0, 0.5))+
+  theme_bw()+
+  theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 12))+
+  xlab(TeX('$\\chi^2$'))+
+  ggtitle(TeX('The $\\chi^2$ Distribution'))
+
+```
+  * Note from the graph above that as the degrees of freedom increase the $\chi^2$ distribution converges in shape to a normal distribution. 
+  
+  * Under the special case of a $\chi^2(1)$ the $\chi^2$ statistic is equal to the square of a standard normal distribution $Z^2$.
+  
+  * In general, a $\chi^2$ random variable with $k$ degrees of freedom can be represented as a sum of $k$ squared normal random variables
+  
+  \[\chi^2_k = \sum_{i = 1}^k Z_i^2 = Z_1^2 + Z_2^2 + \cdots Z_k^2 \]
+
+  * Like the $t$ distribution, we can look up the probability of different chi-squared random variables using the degrees of freedom and a table of pre-computed probabilities:
+
+```{r, echo=F, message=F, warning=F}
+DF = c(1:30, 40, 50, 100)
+probs = rbind.data.frame(cbind.data.frame(c('$DF$', DF), 
+                         c('',round(qchisq(1-0.5/2, DF), 3)), c('',round(qchisq(1-0.4/2, DF),3)),
+                         c('',round(qchisq(1-0.3/2, DF),3)), c('',round(qchisq(1-0.25/2, DF),3)), 
+                         c('',round(qchisq(1-0.2/2, DF), 3)), c('',round(qchisq(1-0.15/2, DF),3)), 
+                         c('',round(qchisq(1-0.1/2, DF),3)), c('',round(qchisq(1-0.05/2, DF),3)),
+                         c('',round(qchisq(1-0.01/2, DF),3)), c('',round(qchisq(1 - 0.005/2, DF),3)),
+                         c('',round(qchisq(1 - 0.001/2, DF),3))),
+                         c('Z-score', round(qnorm(1-c(0.5, 0.4, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.01, 0.005, 0.001)/2),3)),
+                         c('Confidence Level:', 
+                           paste0('$',100*(1-c(0.5, 0.4, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0.01, 0.005, 0.001)), '\\%$')))
+                        
+
+df = rbind.data.frame(probs)
+
+kable(df, format = 'html', digits = 2, col.names = c('Upper tail', 0.25, 0.2, 0.15, 0.125, 0.1, 0.075, 0.05, 0.025, 0.005, 0.0025, 0.0005),
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+<br>
+<br>
+
+# Lecture 29
+
+**Warm Up: $\chi^2$ Goodness of Fit Test** - Suppose you’re hired by a dog food company to help them test three new dog food flavors. You recruit a random sample of $75$ dogs and offer each dog a choice between the three flavors by placing bowls in front of them. Assuming that the dogs have no preference, you expect that the flavors will be equally popular among the dogs, with about $25$ dogs choosing each flavor. After weeks of hard work, your dog food experiment is complete and you compile your data in a table:
+
+
+```{r, echo=F, message=F, warning=F}
+
+df = cbind.data.frame(Flavor = c('Garlic Blast','Bacon Delight','Chicken Crunch'),
+                      `Observed Count` = c(22, 30, 23),
+                      `Expected Count` = c('','',''))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria", font_size = 12)%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Conduct a $\chi^2$ goodness of fit test to determine if the dogs show any preference for the three flavors being tested
+
+
+Note that the GOF test doesn't tell us anything about the range of plausible values for the frequency parameters.
+
+### Measuring statistical association in two categorical variables
+
+As stated previously, the goodness of fit test is a one-sample procedure for comparing the observed distribution of a single categorical variable to a specific model that we hypothesize under the null. We will now explore another type of inference which is also based on the $\chi^2$ ("chi-square") distribution. This procedure is used to determine if two categorical variables share an association by exploring how the distribution of counts of one variable changes as we condition on the categories of another variable. 
+
+### $\chi^2$ test of independence
+
+The $\chi^2$ test of independence is used to examine the relationship between two categorical variables in a two-way table (also called a **contingency table**). Consider the following hypothetical table which compares the categorical variable $A$, which has two categories, with the categorical variable $B$ which has three categories.
+
+```{r, echo=F, message=F, warning=F}
+
+df = rbind.data.frame(c('','', '', 'Variable A', ''),
+                      c('','','Category 1', 'Category 2', 'Marginal Distribution B'),
+                      cbind.data.frame(` ` = c('','Variable B','',''), 
+                                       ` ` = c('Category 1','Category 2','Category 3','Marginal Distribution A'), 
+                      `Category 1` = c('$P(\\text{Category} \\ 1A | \\text{Category} \\ 1B)$',
+                                       '$P(\\text{Category} \\ 1A | \\text{Category} \\ 2B)$',
+                                       '$P(\\text{Category} \\ 1A | \\text{Category} \\ 3B)$',
+                                       '$\\sum_i P(\\text{Category} \\ 1A | \\text{Category} \\ iB)$'),
+                      
+                      `Category 2` = c('$P(\\text{Category} \\ 2A | \\text{Category} \\ 1B)$',
+                                       '$P(\\text{Category} \\ 2A | \\text{Category} \\ 2B)$',
+                                       '$P(\\text{Category} \\ 2A | \\text{Category} \\ 3B)$',
+                                       '$\\sum_i P(\\text{Category} \\ 2A | \\text{Category} \\ iB)$'),
+                      
+                      `Marginal B` = c('$\\sum_j P(\\text{Category} \\ jA | \\text{Category} \\ 1B)$',
+                                       '$\\sum_j P(\\text{Category} \\ jA | \\text{Category} \\ 2B)$',
+                                       '$\\sum_j P(\\text{Category} \\ jA | \\text{Category} \\ 3B)$',
+                                       '1')))
+
+kable(df, format = 'html', digits = 2, col.names = c('','','','',''),
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria", font_size = 12)%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+The two-way table above helps us to break down the relationship between the outcomes of <i>Variable A</i> and the outcomes of <i>Variable B</i>. As we can see from the table, the cells give the conditional probabilities (or more often frequencies/counts) of each category of $A$ across each category of $B$. There are also usually row and column totals displayed in a two-way table which summarize the marginal distributions of each variable. 
+
+A **$\chi$-square test of independence** takes advantage of the two-way table above to determine if the conditional distribution of the response variable (the columns) changes across the categories of the explanatory variable (the rows). In the example above, we can see that each row gives the conditional distribution of the response variable for a given category of the explanatory variable. If *variable A* and *variable B* are independent then the rows of the table should be more or less the same across all categories of the explanatory variable. If the outcomes of *variable A* depend on the outcomes of variable $B$, then the rows of the table will change as we move across the categories of *variable B*.
+
+The null and alternative hypothesis of a $\chi$-square test of independence are simple. The null hypothesis is that the two variables being tested are independent and the alternative is that they not independent
+
+\[ H_0: \text{Variable A and Variable B are independent} \]
+\[ H_A: \text{Variable A and Variable B are NOT independent}\]
+
+Like the goodness of fit test, the alternative hypothesis does not specify any particular direction. Because the two-way table can contain all sorts of possible associations, the alternative hypothesis cannot be described as one or two sided.
+
+To test the null hypothesis of "no dependence" between two variables in a table with $r$ rows and $c$ columns, we take a similar approach to the goodness of fit test and compare the observed cell counts in all cells of the table to their expected cell counts under the null hypothesis. 
+
+
+
+In essence we are comparing two tables which represent two distributions: the table of **observed cell counts** which represents the observed joint distribution of the response and explanatory variables and the table of **expected cell counts** which represents expected joint distribution of the two variables the null hypothesis of no association. 
+
+
+The test statistic summarizes the differences (i.e distance) between the counts in the observed table with the counts in the expected table.  
+
+\[ X_{obs}^2 = \sum_{i=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}}  \]
+
+
+Where $o_{ij}$ represents the observed count for the $i^{th}$ row and $j^{th}$ column of the contingency table: 
+
+```{r, echo=F, message=F, warning=F}
+
+df <- data.frame(
+  ` ` = c("Category 1", "Category 2", "⋮", "Category r", "Total"),
+  `Category 1` = c("$o_{11}$", "$o_{21}$", "$\\vdots$", "$o_{r1}$", "$\\sum_{i=1}^r o_{i1}$"),
+  `Category 2` = c("$o_{12}$", "$o_{22}$", "$\\vdots$", "$o_{r2}$", "$\\sum_{i=1}^r o_{i2}$"),
+  `⋯` = c("$\\cdots$", "$\\cdots$", "$\\vdots$", "$\\cdots$", "$\\cdots$"),
+  `Category c` = c("$o_{1c}$", "$o_{2c}$", "$\\vdots$", "$o_{rc}$", "$\\sum_{i=1}^r o_{ic}$"),
+  `Total` = c("$\\sum_{j=1}^c o_{1j}$", "$\\sum_{j=1}^c o_{2j}$", "$\\vdots$", "$\\sum_{j=1}^c o_{rj}$", "$n = \\sum_{i=1}^r\\sum_{j=1}^c o_{ij}$")
+)
+
+kable(df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of observed counts',
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+The expected counts for $i,j^{th}$ cell of the table are computed from the observed counts such that
+			
+\[ e_{ij} = \frac{ \big[ \sum_{i = 1}^r o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r \sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column total}}{n}  \]
+
+
+The test statistic follows a $\chi^2$ distribution with $(r-1)\times (c-1)$ degrees of freedom, where $r$ is the total number of row categories and $c$ is the total column categories. Let's try it out on an example:
+
+**Example: Happiness and Income** - As part of their annual survey, the General Social Survey explored the relationship between income and happiness. Happiness was recorded as "Not too happy", "Pretty happy", or "Very happy", and incomes were bracketed into three categories: "Below average", "Average", and "Above average". The counts are summarized in the table below:
+
+```{r, echo=F, message=F, warning=F}
+
+df = cbind.data.frame(
+  Income = c("Above Average", "Average", "Below Average", "Total"),
+  `Not Too Happy` = c(29, 83, 104, 216),
+  `Pretty Happy` = c(178, 494, 314, 986),
+  `Very Happy` = c(135, 277, 119, 531),
+  Total = c(342, 854, 537, 1733)
+)
+
+kable(df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of observed counts',
+      row.names = F, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Conduct a $\chi^2$ test of independence to determine if there is evidence to support that income is related to happiness 
+
+* The table of expected counts is given below 
+
+```{r, echo=F, message=F, warning=F}
+
+observed = cbind.data.frame(
+  Income = c("Above Average", "Average", "Below Average", "Total"),
+  `Not Too Happy` = c(29, 83, 104, 216),
+  `Pretty Happy` = c(178, 494, 314, 986),
+  `Very Happy` = c(135, 277, 119, 531),
+  Total = c(342, 854, 537, 1733)
+)
+
+
+# Calculate row and column totals
+row_totals <- observed$Total[1:3]
+col_totals <- c(sum(observed$`Not Too Happy`[1:3]), sum(observed$`Pretty Happy`[1:3]), sum(observed$`Very Happy`[1:3]))
+grand_total <- sum(row_totals)
+
+# Calculate expected counts
+expected <- matrix(nrow = 3, ncol = 3)
+for (i in 1:3) {
+  for (j in 1:3) {
+    expected[i, j] <- paste0('$\\frac{', row_totals[i], '\\times ', col_totals[j],'}','{',grand_total, '} = ',round((row_totals[i] * col_totals[j]) / grand_total, 2), '$')
+  }
+}
+
+# Convert matrix to data frame for kable
+expected_df <- as.data.frame(expected)
+colnames(expected_df) <- c("Not Too Happy", "Pretty Happy", "Very Happy")
+
+# Add row names
+rownames(expected_df) <- c("Above Average", "Average", "Below Average")
+
+
+kable(expected_df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of expected counts',
+      row.names = T, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+* the table below gives the squared deviations across all cell counts 
+
+
+```{r, echo=F, message=F, warning=F}
+
+observed = cbind.data.frame(
+  Income = c("Above Average", "Average", "Below Average", "Total"),
+  `Not Too Happy` = c(29, 83, 104, 216),
+  `Pretty Happy` = c(178, 494, 314, 986),
+  `Very Happy` = c(135, 277, 119, 531),
+  Total = c(342, 854, 537, 1733)
+)
+
+
+# Calculate row and column totals
+row_totals <- observed$Total[1:3]
+col_totals <- c(sum(observed$`Not Too Happy`[1:3]), sum(observed$`Pretty Happy`[1:3]), sum(observed$`Very Happy`[1:3]))
+grand_total <- sum(row_totals)
+
+# Calculate expected counts
+expected <- matrix(nrow = 3, ncol = 3)
+for (i in 1:3) {
+  for (j in 1:3) {
+    expected[i, j] <- (row_totals[i] * col_totals[j]) / grand_total
+  }
+}
+
+# Convert matrix to data frame for kable
+expected_df <- as.data.frame(expected)
+colnames(expected_df) <- c("Not Too Happy", "Pretty Happy", "Very Happy")
+
+# Add row names
+rownames(expected_df) <- c("Above Average", "Average", "Below Average")
+
+differences <- matrix(nrow = 3, ncol = 3)
+for (i in 1:3) {
+  for (j in 1:3) {
+    differences[i,j] = paste0('$\\frac{(', round(expected_df[i,j],2), ' - ', round(observed[1:3, 2:4][i,j],2), ')^2}{', round(expected_df[i,j],2), '} = ', round((expected_df[i,j] - observed[1:3, 2:4][i,j])^2/expected_df[i,j], 2), '$')
+  }
+}
+
+differences_df = as.data.frame(differences)
+colnames(differences_df) <- c("Not Too Happy", "Pretty Happy", "Very Happy")
+
+# Add row names
+rownames(differences_df) <- c("Above Average", "Average", "Below Average")
+
+
+kable(differences_df, format = 'html', digits = 2, caption = 'The $r \\times c$ table of differences',
+      row.names = T, booktabs = F, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+
+The $\chi^2$ test statistic can be computed as the sum of the elements in the table above 
+
+\[ X_{obs}^2 = 4.36 + 5.16 + \cdots +0.23 + 12.6 = 54.04 \]
+
+which follows a $\chi^2$ distribution with $(3-1)\times (3 - 1) = 4$ degrees of freedom. The $p$-value is the probability of observing a value more extreme than $X_{obs}^2 = 54.04$ which is
+
+\[P(\chi^2_4 \geq 54.04|H_0 \ \text{True}) \approx 0 \]
+
+Thus, at $\alpha = 0.05$ level we would conclude that there is significant evidence that income and happiness are related. 
 
 <br>
 <br>

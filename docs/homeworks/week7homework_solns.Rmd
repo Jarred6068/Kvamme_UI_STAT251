@@ -17,6 +17,10 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -139,8 +143,8 @@ $\bf (6)$ A random variable $X$ has the following probability distribution
 df = cbind.data.frame(X = c(1,2,3,4),
                       `P(X)` = c(0.25, 0.25, 0.25, 0.25))
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -151,8 +155,8 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 x = expand.grid(`Observation 1` = c(1:4), `Observation 2` = c(1:4))
 df = cbind.data.frame(x, rowMeans(x))
 
-kable(df, format = 'html', col.names = c('Observation 1', 'Observation 2', '$\\bar{X}$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, col.names = c('Observation 1', 'Observation 2', '$\\bar{X}$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 
 ```
@@ -167,8 +171,8 @@ xlabs = apply(x, 1, function(x) paste0("(", paste(x, collapse = ","), ")",collap
 
 df = cbind.data.frame(unq.means, paste0('$\\color{red}{',summary(as.factor(rowMeans(x))), '(0.25^2)', '=', 0.25^2*summary(as.factor(rowMeans(x))), '}$'))
 
-kable(df, format = 'html', digits = 2, col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 px = 0.25^2*summary(as.factor(rowMeans(x)))
 avg = sum(unq.means*px)
@@ -195,8 +199,8 @@ $\bf (7)$ A random variable $Y$ has two possible outcomes. The outcome $Y = 1$ o
 <span style="color: red;">The population distribution of $Y$ is given by:</span>
 ```{r, echo=F, message=F, warning=F}
 df = cbind(`$Y$` = c(0,1), `$P(Y)$` = c(0.77, 0.23))
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 ```
 
 <span style="color: red;">The sample space for the sample proportion of 3 observations of $Y$ is given below.</span>
@@ -205,8 +209,8 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 gr = expand.grid(`Observation 1`=c(0,1), `Observation 2`=c(0,1), `Observation 3`=c(0,1))
 df = cbind.data.frame(gr, `$\\hat{p}$`=rowMeans(gr)) 
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 ```
 
 <span style="color: red;">The sampling distribution of $\hat{p}$ is given by:</span>
@@ -226,8 +230,8 @@ probs = paste0('$\\color{red}{',summary(as.factor(rowMeans(gr))), case.labs, '='
 
 df2 = cbind.data.frame(unq.props, probs)
 
-kable(df2, format = 'html', col.names = c('$\\hat{p}$','$P(\\hat{p})$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df2, format = tbl_fmt, col.names = c('$\\hat{p}$','$P(\\hat{p})$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 ```
 
 
@@ -239,8 +243,8 @@ $\bf (8)$ Consider a survey of tree volume. Suppose that in the population of tr
 df = cbind.data.frame(X = c(10,20,30,40),
                       `P(X)` = c(0.1, 0.2, 0.3, 0.4))
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -265,8 +269,8 @@ feet by computing them yourself.
 x = expand.grid(`Observation 1` = seq(10, 40, 10), `Observation 2` = seq(10, 40, 10))
 df = cbind.data.frame(x, rowMeans(x))
 
-kable(df, format = 'html', col.names = c('Observation 1', 'Observation 2', '$\\bar{X}$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, col.names = c('Observation 1', 'Observation 2', '$\\bar{X}$'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 ```
 
 
@@ -300,8 +304,8 @@ xlabs = apply(gr, 1, function(x) paste0("(", paste(x, collapse = ","), ")",colla
 probs = paste0('$\\color{red}{', case.labs, '=', round(cases,4), '}$')
 df2 = cbind.data.frame(unq.means, probs)
 
-kable(df2, format = 'html', digits = 2, col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df2, format = tbl_fmt, digits = 2, col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 px = 0.25^2*summary(as.factor(rowMeans(x)))
 avg = sum(unq.means*px)
@@ -317,8 +321,8 @@ $\bf (9)$ Michael Dickson, who plays for the Seattle Seahawks, is a punter in th
 
 df = cbind.data.frame(`$\\bar{X} =$ Mean Punt Distance` = c(35.33, 45.67, 55.00, 60.33, 65.67),
                       `$P(\\bar{X})$` = c(0.4, 0.5, 0.08, 0.01, 0.01))
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 

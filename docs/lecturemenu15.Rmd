@@ -29,7 +29,7 @@ source('misc/stat251_tools.R')
 
 ```
 
-# Lecture 30 Monday, April 22nd 2024
+# Lecture 30
 
 In many studies, the goal is to show that changes in one or more explanatory variables actually cause changes in a response variable. The statistical techniques we will describe this week will require us to distinguish between explanatory and response variables. You will often see explanatory variables called the **independent variable** and response variable called the **dependent variable**. The idea behind this language is that the response variable depends on the outcomes of the explanatory variable (if they share a statistical relationship).  
 
@@ -404,9 +404,8 @@ ggplot()+
 
 Residuals are the vertical distances (red lines in the plot above) between each point and the regression line. If you think of the regression line as our best guess at the relationship between $X$ and $Y$, then the residuals represent the error in that guess for each point. The line that "best" fits the data is the one with the smallest average residual—essentially, the one with the least error across all the points in the plot. This line gives us the best model to describe the relationship between the $X$ and $Y$ variables. You can take a look at [https://www.geogebra.org/m/xC6zq7Zv](https://www.geogebra.org/m/xC6zq7Zv) to practice fitting the "best" line.
 
-# Lecture 31 Wednesday, April 24th 2024
 
-### The simple linear model
+# The simple linear model
 
 We learned on Monday that a scatterplot can be used to visualize and check for a **linear** relationship between two quantitative variables. We also learned that straight line fitted through the data points can be used to describe that trend. We will use the notation 
 
@@ -697,9 +696,8 @@ Thus team batting average explains roughly $32\%$ of the variation in the averag
 
 
 
-# Lecture 32 Friday, April 26th 2024
 
-### Regression relates the mean of $Y$ to $X$
+# Regression relates the mean of $Y$ to $X$
 
 The prediction equation $\hat{y}_i = \alpha + \beta x_i$ yields the predicted value the response $Y$ for a given value of the independent variable $X$. However, we don't expect all observations of $Y$ that depend on a given value of $X$ to have the same value because naturally there is variation among individuals in the population. For example, consider the linear regression below which relates the age of $189$ mothers in the U.S to the birth weight of their infants [@MASS].
 
@@ -837,10 +835,9 @@ You can confirm the $p$-value is $\approx 0.22$ using the $t$-table on the resou
 
 
 
-# Lecture 33 Monday April 29th 2024
 
 
-### An alternative way to test association
+# An alternative way to test association
 
 Consider the following dataset containing information about 1,143 social media ads from an anonymous company, detailing the number of times each ad was viewed and the total number of customers who made a purchase after viewing each ad [@liver].
 

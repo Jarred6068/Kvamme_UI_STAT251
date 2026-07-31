@@ -14,9 +14,11 @@ library(ggpubr)
 library(latex2exp)
 ```
 
-# Lecture 4: Monday, Jan. 22nd 2024
+# NO CLASS — Labor Day (Monday, September 7, 2026)
 
-## Describing the shape of a distribution. 
+
+
+# Describing the shape of a distribution. 
 
 The purpose of a graph is to help us understand the data. Once the distribution of variable is plotted, you must ask yourself "what do I see?". This is when we look for the features of a distribution such as shape, center and spread. This helps us to identify interesting patterns or potential **outliers** - individual data points that lie outside the normal pattern of the distribution.
 
@@ -282,9 +284,8 @@ We have several numerical quantities that we can compute from a distribution tha
   * The mode is NOT a measure of center. For symmetric distributions with a single peak it will be approximately the same as the median and mean but for distributions that are skewed or have multiple peaks the mode may not be anywhere near the center of the distribution. 
 
 
-# Lecture 5: Wednesday, Jan. 24th 2024
 
-### More measures of location
+# More measures of location
 Other useful measures of position are **percentiles**. The **$p^{th}$** percentile of a distribution is the value that has $p$ percent of the observations fall at or below it. Take the following simple example of 13 observations of the outcome of rolling a fair six-sided die
 $$X = \{1,2,2,2,2,2,3,4,4,5,5,6,6\}$$
 
@@ -537,4 +538,3 @@ ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
 * Notice from the plot above that the boxplot will not show if the distribution has multiple peaks or gaps. For this reason, a boxplot should always be plotted along with a histogram to ensure you capture all important features of a distribution. 
 
 
-# Friday, Jan. 26th 2024 - CLASS CANCELED
