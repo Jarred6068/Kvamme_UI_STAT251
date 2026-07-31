@@ -480,6 +480,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
 margin-left:2em;
@@ -613,21 +614,23 @@ display: none;
 </div>
 <div id="confidence-intervals-and-two-tailed-tests" class="section level3">
 <h3>Confidence intervals and two-tailed tests:</h3>
-<p><span class="math inline">\(\bf (1.)\)</span> For parts (a) - (d)
-given the confidence interval for the parameter under the null
-hypothesis, use the point estimate to determine whether the null
-hypothesis <span class="math inline">\(H_0\)</span> should be
-<strong>Rejected</strong> or <strong>Not Rejected</strong> and denote
-significance level <span class="math inline">\(\alpha\)</span></p>
-<p>a.) <span class="math inline">\(H_0: \mu_0 = -2\)</span> <br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> <br> <span class="math inline">\(95\%\)</span> CI for <span class="math inline">\(\mu_0 \in [-3.0, -2.4]\)</span> <br> <span class="math inline">\(\bar{x} = -2.7\)</span> <span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
+<p><span class="math inline">\(\bf (1.)\)</span> For parts (a) - (d) you
+are given a confidence interval for the parameter along with the point
+estimate it was built from. Determine whether the null hypothesis <span class="math inline">\(H_0\)</span> should be <strong>Rejected</strong>
+or <strong>Not Rejected</strong> by checking whether the value claimed
+under <span class="math inline">\(H_0\)</span> falls inside the
+interval, and give the significance level <span class="math inline">\(\alpha\)</span></p>
+<p>a.) <span class="math inline">\(H_0: \mu = -2\)</span> <br> <span class="math inline">\(H_A: \mu \neq -2\)</span> <br> <span class="math inline">\(95\%\)</span> CI for <span class="math inline">\(\mu \in [-3.0, -2.4]\)</span> <br> <span class="math inline">\(\bar{x} = -2.7\)</span> <span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
   \alpha = \_\_\_\_\_\_ \]</span></p>
-<p>b.) <span class="math inline">\(H_0: p_0 = 0.9\)</span> <br> <span class="math inline">\(H_A: p \neq p_0\)</span> <br> <span class="math inline">\(99\%\)</span> CI for <span class="math inline">\(p_0 \in [0.972, 0.968]\)</span> <br> <span class="math inline">\(\hat{p} = 0.97\)</span></p>
+<p>b.) <span class="math inline">\(H_0: p = 0.9\)</span> <br> <span class="math inline">\(H_A: p \neq 0.9\)</span> <br> <span class="math inline">\(99\%\)</span> CI for <span class="math inline">\(p
+\in [0.968, 0.972]\)</span> <br> <span class="math inline">\(\hat{p} =
+0.97\)</span></p>
 <p><span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
   \alpha = \_\_\_\_\_\_ \]</span></p>
-<p>c.) <span class="math inline">\(H_0: \mu_0 = 0\)</span> <br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> <br> <span class="math inline">\(90\%\)</span> CI for <span class="math inline">\(\mu_0 \in [-3.63, 7.49]\)</span> <br> <span class="math inline">\(\bar{x} = 1.93\)</span></p>
+<p>c.) <span class="math inline">\(H_0: \mu = 0\)</span> <br> <span class="math inline">\(H_A: \mu \neq 0\)</span> <br> <span class="math inline">\(90\%\)</span> CI for <span class="math inline">\(\mu \in [-3.63, 7.49]\)</span> <br> <span class="math inline">\(\bar{x} = 1.93\)</span></p>
 <p><span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
   \alpha = \_\_\_\_\_\_ \]</span></p>
-<p>d.) <span class="math inline">\(H_0: \mu_0 = 50\)</span><br> <span class="math inline">\(H_A: \mu \neq \mu_0\)</span><br> <span class="math inline">\(85\%\)</span> CI for <span class="math inline">\(\mu_0 \in [93.6, 139]\)</span><br> <span class="math inline">\(\bar{x} = 116.3\)</span></p>
+<p>d.) <span class="math inline">\(H_0: \mu = 50\)</span><br> <span class="math inline">\(H_A: \mu \neq 50\)</span><br> <span class="math inline">\(85\%\)</span> CI for <span class="math inline">\(\mu \in [93.6, 139]\)</span><br> <span class="math inline">\(\bar{x} = 116.3\)</span></p>
 <p><span class="math display">\[ \text{Decision} = \_\_\_\_\_\_\_ \\
   \alpha = \_\_\_\_\_\_ \]</span></p>
 </div>
@@ -636,14 +639,13 @@ significance level <span class="math inline">\(\alpha\)</span></p>
 <p><br> <br></p>
 <p><span class="math inline">\(\bf (2.)\)</span> A dermatologist is
 conducting an experiment to test whether a new topical skin care cream
-reduces the appearance facial of acne. From a sample of <span class="math inline">\(20\)</span> patients with acne the researcher
-gives each patient a score from <span class="math inline">\(1-5\)</span>
-where (5) representing the severity of their acne before the topical
-cream is applied. Patients are then asked to use the topical cream for
-<span class="math inline">\(10\)</span> days. Following the <span class="math inline">\(10\)</span> day treatment, patients are given a
+reduces the appearance of facial acne. From a sample of <span class="math inline">\(20\)</span> patients with acne the researcher
+gives each patient a score from <span class="math inline">\(1-5\)</span>, where (1) represents the mildest
+acne and (5) represents the most severe acne, before the topical cream
+is applied. Patients are then asked to use the topical cream for <span class="math inline">\(10\)</span> days. Following the <span class="math inline">\(10\)</span> day treatment, patients are given a
 new acne score between <span class="math inline">\(1-5\)</span>. The
 data for this experiment is given in the table below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -967,15 +969,17 @@ Sign
 </tbody>
 </table>
 <p>The dermatologist is particularly interested in whether the new
-product can improve the scars’ appearance. They plan to test the null
-hypothesis <span class="math inline">\(H_0: p_0 = 0.5\)</span> using a
-right-tailed test with alternative hypothesis <span class="math inline">\(H_A: p&gt;0.5\)</span> using a sign test to
+product improves the appearance of the patients’ acne. They plan to test
+the null hypothesis <span class="math inline">\(H_0: p = 0.5\)</span>
+using a right-tailed test with alternative hypothesis <span class="math inline">\(H_A: p&gt;0.5\)</span> using a sign test to
 determine if there is enough evidence to conclude that the topical cream
-a positive effect on reducing facial acne at the <span class="math inline">\(\alpha = 0.05\)</span> level.</p>
-<p>a.) Fill in the table above by computing the difference between in
-acne scores before and after applying the skin care cream. Record the
-sign of each difference and report the total number of positive signs
-<span class="math inline">\(s\)</span></p>
+has a positive effect on reducing facial acne at the <span class="math inline">\(\alpha = 0.05\)</span> level.</p>
+<p>a.) Fill in the table above by computing the difference in acne
+scores before and after applying the skin care cream. Record the sign of
+each difference and report the total number of positive signs <span class="math inline">\(s\)</span>. Note that any patient whose score did
+not change (a difference of zero) is dropped from the test, so the
+number of observations used in the sign test is the number of non-zero
+differences.</p>
 <p>b.) What does a “positive” sign indicate in this experiment?</p>
 <p>c.) Compute the <span class="math inline">\(p\)</span>-value for the
 sign test</p>
@@ -989,9 +993,9 @@ researchers conducted an experiment to study how herbivores respond to
 variations in food plant quality and quantity at the stand level. They
 fertilized young forest stands and observed herbivore use over the
 subsequent year. The data collected included the number of animal tracks
-in in the fertilized and control plots <span class="citation">(Ball,
+in the fertilized and control plots <span class="citation">(Ball,
 Danell, and Sunesson 2000)</span></p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1195,7 +1199,7 @@ Sign
 </tbody>
 </table>
 <p>The researchers are interested in whether or not fertilizing stands
-increased herbaceous activity. Conduct a sign test at the <span class="math inline">\(\alpha = 0.05\)</span> signifcance level to
+increased herbivore activity. Conduct a sign test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
 determine if fertilized plots have significantly more herbivore tracks
 than control plots</p>
 <p>a.) Fill in the table above by computing the difference in animal
@@ -1228,7 +1232,7 @@ conducted among the public since late 2022 <span class="citation">(Ryan
 and Bycoffe 2024)</span>. The historic approval sentiment is
 characterized from <span class="math inline">\(39\)</span> Gallup polls
 conducted since early 2001.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1288,7 +1292,7 @@ COVID-19 started. The researchers hypothesized that children in abusive
 homes might be in more danger because they weren’t going to school and
 their families were under more stress <span class="citation">(Martins-Filho et al. 2020)</span>. A summary of the
 study is reported below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1301,7 +1305,7 @@ Parameter
 Total Registries
 </th>
 <th style="text-align:right;">
-Registries for Childer under 12 Years of Age
+Registries for Children under 12 Years of Age
 </th>
 <th style="text-align:right;">
 Relative Proportion
@@ -1346,14 +1350,16 @@ After COVID-19 (2020)
 </tbody>
 </table>
 <p>Conduct a two-sample test at the <span class="math inline">\(\alpha =
-0.01\)</span> significance level to determine whether the rate of
-reported child abuse for children under the age of <span class="math inline">\(12\)</span> was significantly different after the
+0.01\)</span> significance level to determine whether the proportion of
+abuse registries involving children under the age of <span class="math inline">\(12\)</span> was significantly different after the
 start of the COVID-19 pandemic - be sure to address all five steps of
-the hypothesis test</p>
+the hypothesis test. (Note that this proportion is the share of all
+registries that involve a child under 12, not the underlying rate of
+abuse in the population.)</p>
 <p><br></p>
 </div>
-<div id="comparing-two-population-proportions-mu_1-and-mu_2" class="section level3">
-<h3>Comparing two population proportions <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span></h3>
+<div id="comparing-two-population-means-mu_1-and-mu_2" class="section level3">
+<h3>Comparing two population means <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span></h3>
 <p><span class="math inline">\(\bf (6.)\)</span> A study published in
 the journal <i>Physical Culture and Sport. Studies and Research</i>
 explored what motivates athletes to keep playing sports, comparing team
@@ -1364,344 +1370,13 @@ disciplines (kung fu and taekwondo). The study evaluated motivational
 factors affecting sport participation based on eight fields:
 achievement/status, teamwork, fitness, energy release, situational
 factors, skill development, friendship, and fun. Each field was
-evaluated based on a survey that quantified sentiment in each field
-using three-level likert scale responses (very important=3, somewhat
-important=2, and not important=1). The results of the study are
-summarized in the table below:</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Motivational Factor
-</th>
-<th style="text-align:left;">
-Sport Type
-</th>
-<th style="text-align:right;">
-Sample Mean
-</th>
-<th style="text-align:right;">
-Sample Stdev.
-</th>
-<th style="text-align:right;">
-Degrees of Freedom
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Participation (total)
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-75.67
-</td>
-<td style="text-align:right;">
-9.38
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-80.50
-</td>
-<td style="text-align:right;">
-8.40
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Achievement
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-15.03
-</td>
-<td style="text-align:right;">
-2.71
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-15.72
-</td>
-<td style="text-align:right;">
-3.03
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Teamwork
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-8.11
-</td>
-<td style="text-align:right;">
-1.21
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-7.68
-</td>
-<td style="text-align:right;">
-1.23
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Energy Release
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-11.88
-</td>
-<td style="text-align:right;">
-2.05
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-12.85
-</td>
-<td style="text-align:right;">
-2.07
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Fitness
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.79
-</td>
-<td style="text-align:right;">
-1.27
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.40
-</td>
-<td style="text-align:right;">
-0.94
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Situational Factors
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.48
-</td>
-<td style="text-align:right;">
-1.44
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.33
-</td>
-<td style="text-align:right;">
-0.98
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Skill Development
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.94
-</td>
-<td style="text-align:right;">
-1.28
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.42
-</td>
-<td style="text-align:right;">
-1.07
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Friendship
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-9.57
-</td>
-<td style="text-align:right;">
-1.78
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-10.50
-</td>
-<td style="text-align:right;">
-1.51
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Fun
-</td>
-<td style="text-align:left;">
-Team
-</td>
-<td style="text-align:right;">
-7.74
-</td>
-<td style="text-align:right;">
-1.20
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Individual
-</td>
-<td style="text-align:right;">
-8.18
-</td>
-<td style="text-align:right;">
-1.04
-</td>
-<td style="text-align:right;">
-263
-</td>
-</tr>
-</tbody>
-</table>
-<p>Conduct a two independent samples <span class="math inline">\(t\)</span>-test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
-determine whether fitness as a motivating factor is significantly
-different between team and individual sports. Assume the populations
-have the SAME variance.</p>
-<p><br> <br></p>
-<p><span class="math inline">\(\bf (7.)\)</span> A 1993 study published
-in the <i>Canadian Journal of Zoology</i> investigated the
-characteristics of maturation and growth in two lowland populations
-(Servotte and Thevenon) of European Common Frogs <i>Rana temporaria</i>
-<span class="citation">(Augert and Joly 1993)</span> in Southeast France
-from 1986 - 1989. A summary of the body lengths for male and female
-frogs from 1 - 4 years in age in both populations are summarized
-below.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+evaluated based on a survey in which every item was scored on a
+three-level likert scale (very important=3, somewhat important=2, and
+not important=1). A field contains several items, and an athlete’s score
+for that field is the <strong>sum</strong> of their item responses - so
+field scores range well above 3. The results of the study are summarized
+in the table below:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -2022,6 +1697,259 @@ Individual
 </tbody>
 </table>
 <p>Conduct a two independent samples <span class="math inline">\(t\)</span>-test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
+determine whether fitness as a motivating factor is significantly
+different between team and individual sports. Assume the populations
+have the SAME variance.</p>
+<p><br> <br></p>
+<p><span class="math inline">\(\bf (7.)\)</span> A 1993 study published
+in the <i>Canadian Journal of Zoology</i> investigated the
+characteristics of maturation and growth in two lowland populations
+(Servotte and Thevenon) of European Common Frogs <i>Rana temporaria</i>
+<span class="citation">(Augert and Joly 1993)</span> in Southeast France
+from 1986 - 1989. A summary of the body lengths for male and female
+frogs from 1 - 4 years in age in both populations are summarized
+below.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Age (Years)
+</th>
+<th style="text-align:left;">
+Population Location
+</th>
+<th style="text-align:right;">
+Male Body Length (mm)
+</th>
+<th style="text-align:right;">
+Stdev
+</th>
+<th style="text-align:right;">
+Sample size
+</th>
+<th style="text-align:right;">
+Female Body Length (mm)
+</th>
+<th style="text-align:right;">
+Stdev
+</th>
+<th style="text-align:right;">
+Sample Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+5.3
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+33.4
+</td>
+<td style="text-align:right;">
+5.4
+</td>
+<td style="text-align:right;">
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+55.8
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+59.7
+</td>
+<td style="text-align:right;">
+6.2
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+61.2
+</td>
+<td style="text-align:right;">
+5.3
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+65.6
+</td>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:right;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Servotte
+</td>
+<td style="text-align:right;">
+64.7
+</td>
+<td style="text-align:right;">
+7.3
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+69.6
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+32.9
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+32.8
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+51.8
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+53.3
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+29
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+59.9
+</td>
+<td style="text-align:right;">
+5.4
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+59.9
+</td>
+<td style="text-align:right;">
+6.4
+</td>
+<td style="text-align:right;">
+21
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Thevenon
+</td>
+<td style="text-align:right;">
+61.0
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+63.0
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a two independent samples <span class="math inline">\(t\)</span>-test at the <span class="math inline">\(\alpha = 0.05\)</span> significance level to
 evaluate whether there is a statistically significant difference in the
 mean body lengths of four-year-old male frogs between the Servotte and
 Thévenon populations. Assume the populations have DIFFERENT
@@ -2030,7 +1958,7 @@ variances.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-augert1993plasticity" class="csl-entry">
 Augert, Dominique, and Pierre Joly. 1993. <span>“Plasticity of Age at
 Maturity Between Two Neighbouring Populations of the Common Frog (Rana

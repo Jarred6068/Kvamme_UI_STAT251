@@ -5,7 +5,18 @@ output:
   pdf_document: default
 always_allow_html: true
 header-includes:
-  \usepackage{float}
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{colortbl}
+  - \usepackage{wrapfig}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
 bibliography: ../misc/home2bibs.bib
 ---
 
@@ -17,6 +28,10 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -24,14 +39,13 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 mainpath = '../Data/'
-wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
-whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+whiskpath = '../assets/whiskerMaster.csv'
 
 datapath = '../Data/'
 ```
 
 
-$\bf (1)$ Rocket League is a popular online video game and E-sport that emerged in 2015. The game enjoys a healthy following of around 93 million players per month. The game features players from around the world who compete in sports like soccer (football), basketball and hockey while controlling RC-like vehicles. The most popular game-mode is doubles soccer in which teams of two players each try to outscore each other by hitting a soccer ball into the opposing goal. In the course of each match, the player controlled vehicles often collide in what is commonly referred to as a "bump". The following histogram shows the distribution of the average number of "bumps" per match for a given player of Rocket League 
+$\bf (1)$ Rocket League is a popular online video game and E-sport that emerged in 2015. The game enjoys a healthy following of around 93 million players per month. The game features players from around the world who compete in sports like soccer (football), basketball and hockey while controlling RC-like vehicles. The most popular game-mode is doubles soccer in which teams of two players each try to outscore each other by hitting a soccer ball into the opposing goal. In the course of each match, the player-controlled vehicles often collide in what is commonly referred to as a "bump". The following histogram shows the distribution of the average number of "bumps" per match for a given player of Rocket League 
 
 ```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=8}
 RL = read.table(paste0(datapath, 'RLData.txt'), sep = ',', header = T)
@@ -49,7 +63,7 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
 
 (a) Assuming a mean of $\bar{x} = 355$ and standard deviation of $s = 69$, in approximately what proportion of matches did the player have more than 423 bumps?
 
-(b) Approximately what proportion of matches did the player have more than 217 bumps but fewer than 492 bumps?
+(b) Approximately what proportion of matches did the player have more than 217 bumps but fewer than 493 bumps?
 
 (c) How many bumps would the player need to have in a match to be in the top $2.5\%$ of matches?
 
@@ -57,18 +71,18 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
 
 
 
-**Figure 1** Pinneped whisker morphology - Ginter et al. 2012           |  A juvenile Harp Seal
+**Figure 1** Pinniped whisker morphology - Ginter et al. 2012           |  A juvenile Harp Seal
 :-------------------------:|:-------------------------:
-![](C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png)  |  ![](../misc/Harp_seal_whitecoat.jpg)
+![](../assets/whisker_types.png)  |  ![](../assets/Harp_seal_whitecoat.jpg)
 
 <!-- \begin{figure} -->
 <!-- \centering -->
 <!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{C:/Users/Bruin/Desktop/GS Academia/SEM 2/STAT 519/PROJ 1/Proj1 presentation/whisker types.png} -->
-<!--       \caption{Pinneped whisker morphology - Ginter et al. 2012} -->
+<!--       \includegraphics{../assets/whisker_types.png} -->
+<!--       \caption{Pinniped whisker morphology - Ginter et al. 2012} -->
 <!--     \end{minipage}\hfill -->
 <!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_2/Harpseal.jpg} -->
+<!--       \includegraphics{../assets/Harp_seal_whitecoat.jpg} -->
 <!--       \caption{A juvenile Harp Seal} -->
 <!--     \end{minipage} -->
 <!-- \end{figure} -->
@@ -81,7 +95,7 @@ ga = read.csv(paste0(mainpath, 'georgia_student_survey.csv'))
 
 
 $\bf (2)$
-Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals and their vibrissal hair shafts demonstrate a diversity of shapes (**See Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals from 9 species of seals and sea lion. Their goal was to better characterize whisker morphology and evolution. The following data are the recorded whisker lengths of 20 Harp Seals (given in **Table 1**). Note that the data have been sorted according to increasing ``Total Length (cm)" for your convenience - use the table to answer the following questions:
+Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals and their vibrissal hair shafts demonstrate a diversity of shapes (**See Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals from 9 species of seals and sea lions. Their goal was to better characterize whisker morphology and evolution. The following data are the recorded whisker lengths of 20 Harp Seals (given in **Table 1**). Note that the data have been sorted according to increasing "Total Length (cm)" for your convenience - use the table to answer the following questions:
 
 
 \newpage
@@ -97,10 +111,10 @@ FS[10,]=c(5.08, 3)
 
 ix = sort(FS$total.length, index.return = T)$ix
 
-kable(cbind.data.frame(c(1:20), FS[ix,]), format = 'html', booktabs = T, escape = F, 
+kable(cbind.data.frame(c(1:20), FS[ix,]), format = tbl_fmt, booktabs = T, escape = F, 
       col.names = c("Observation","Whisker Total Length (cm)", "Number of Beads"), digits = 2,
       row.names = F, caption = 'Whisker Length data for $n = 20$ Harp Seals')%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 print(paste0('comma separated values = ', paste0(round(FS[ix,]$total.length,2), collapse = ',')))
 ```
@@ -109,9 +123,9 @@ print(paste0('comma separated values = ', paste0(round(FS[ix,]$total.length,2), 
 
 \newpage
 
-(a) (a) Compute the quartiles, interquartile range, mean, and standard deviation for the variable ``Total Length (cm)" - (use the course website apps for help)
+(a) Compute the quartiles, interquartile range, mean, and standard deviation for the variable "Total Length (cm)" - (use the course website apps for help)
 
-(b) Make a boxplot of the variable ``Total Length" and make note of any outliers
+(b) Make a boxplot of the variable "Total Length" and make note of any outliers
 
 (c) Observation 20 has a total whisker length of 5.08 (cm), how many standard deviations is this observation from the mean whisker length? (hint compute the $z$-score for this observation)
 
@@ -119,7 +133,7 @@ print(paste0('comma separated values = ', paste0(round(FS[ix,]$total.length,2), 
 
 
 $\bf (3)$
-Use the following pair of boxplots constructed from the Pinneped whisker data in $\textbf{Table 1}$. The boxplots show the distribution of total whisker length (cm) for whiskers with 2 beads vs whiskers with three beads. Answer the following questions:
+Use the following pair of boxplots constructed from the Pinniped whisker data in $\textbf{Table 1}$. The boxplots show the distribution of total whisker length (cm) for whiskers with 2 beads vs whiskers with three beads. Answer the following questions:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
 FS$num.beads = as.factor(FS$num.beads)
@@ -222,12 +236,12 @@ Name the sampling method used in each of the following situations:
 
 (a) A man is standing outside of a grocery store handing out questionnaires to shoppers asking them to evaluate their shopping experience and the quality of service. He does not ask shoppers who have their hands full carrying groceries, but instead asks all shoppers who have only a few items or have both hands free to fill out the questionnaire.
 
-(b) A gardener has garden box in which he has planted 10 rows of corn. Each row consists of eight corn plants. The gardener wishes to know the average height of the corn plants in the garden box so he randomly selects rows 1, 5, and 9 and measures the height of all corn plants in those rows.
+(b) A gardener has a garden box in which he has planted 10 rows of corn. Each row consists of eight corn plants. The gardener wishes to know the average height of the corn plants in the garden box so he randomly selects rows 1, 5, and 9 and measures the height of all corn plants in those rows.
 
 (c) A company wishes to know how employees feel about compensation and benefits. Over the next few weeks, the company asks 30 employees from each of its branch locations to fill out a survey regarding compensation. 
 
 
-(d) A local polling company wishes to know what proportion of citizens in Moscow, Idaho are voting for the republican candidate in mayoral race. The polling company records this information for every 5th voter who leaves the voting booth.
+(d) A local polling company wishes to know what proportion of citizens in Moscow, Idaho are voting for the Republican candidate in the mayoral race. The polling company records this information for every 5th voter who leaves the voting booth.
 
 
 (e) A lumber company wishes to estimate the amount of usable lumber on a plot of land. The company randomly selects 100 trees and measures their diameter, height, and volume, in order to estimate the number of board feet of each tree. 

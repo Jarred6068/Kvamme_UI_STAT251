@@ -4,6 +4,19 @@ output:
   html_document: default
   pdf_document: default
 always_allow_html: true
+header-includes:
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{colortbl}
+  - \usepackage{wrapfig}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
 ---
 
 
@@ -14,6 +27,16 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=8, fig.height=8, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# red-highlight answer text inside table cells, in whichever format is rendering
+# (a bare <span> would be printed verbatim in the PDF)
+red <- function(x) {
+  if (knitr::is_latex_output()) paste0("\\textcolor{red}{", x, "}")
+  else paste0('<span style="color: red;">', x, '</span>')
+}
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -57,9 +80,8 @@ ${\bf (5)}$ **At What age did women marry?**  A historian wants to estimate the 
 <span style="color: red;">When she computes a mean of $24.1$ years of age from the marriage records</span>
 * **(b)** Which part of this example draws an inference about a population?
 <span style="color: red;">The part where she estimates the average age of women to be married in the 19th century to be between $23.5$ and $24.7$ years for the population</span>
-* **(c)** What population is the historian is studying?
-<span style="color: red;">All women who married in the 19th century}}
-\item[(d)]{The average age the historian computed from the historical records was 24.1 years of age.</span>
+* **(c)** What population is the historian studying?
+<span style="color: red;">All women who married in New England in the early 19th century</span>
 * **(d)** The average age the historian computed from the historical records was 24.1 years of age. Is 24.1 years of age a statistic or a parameter? Why?
 <span style="color: red;">A statistic. The quantity $24.1$ was computed from a sample of marriage records spanning the first $20$ years of the century</span>
 
@@ -69,11 +91,11 @@ ${\bf (6)}$ Consider the following data obtained from flipping a coin 15 times. 
 set.seed(123)
 df = data.frame(`coin flip result:` = sample(c("H", "T"), 15, replace = T))
 
-kable(t(df), format = 'html', booktabs = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(t(df), format = tbl_fmt, booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
-Compute the frequency table for the variable ``coin flip result" and answer the following questions:
+Compute the frequency table for the variable "coin flip result" and answer the following questions:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 set.seed(123)
@@ -81,17 +103,17 @@ x1 = c('H', 'T')
 x2 = c(7,8)
 x3 = c('7/15 = 0.47','8/15 = 0.53')
 
-kable(cbind.data.frame(x1, x2, x3), format = 'html', col.names = c('Result', 'Frequency', 'Relative Frequency'), booktabs = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(cbind.data.frame(x1, x2, x3), format = tbl_fmt, col.names = c('Result', 'Frequency', 'Relative Frequency'), booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
-* **(a)** What type of variable is ``Coin Flip Result"?
+* **(a)** What type of variable is "Coin Flip Result"?
 <span style="color: red;">Qualitative nominal variable</span>
 * **(b)** What proportion of the coin flips were heads?
 <span style="color: red;">$0.47$ or $47\%$</span>
 * **(c)** Why do we not compute the cumulative relative frequency for this variable?
 <span style="color: red;">The variable is nominal and therefore has no inherent ordering for summing up the relative frequencies</span>
-* **(d)** What the best graphical display for this variable and why?
+* **(d)** What is the best graphical display for this variable and why?
 <span style="color: red;">Since there are only two categories (heads or tails) a pie chart or bar graph would be sufficient to show the distribution</span>
 
 
@@ -101,19 +123,14 @@ ${\bf (7)}$ A survey about color preferences reported the age distribution of th
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 set.seed(123)
 
-ag = c('1-18','19-24','25-25','36-60','51-69','70 and over')
+ag = c('1-18','19-24','25-35','36-50','51-69','70 and over')
 cts = c(10, 97, 70, 36, 14, 5)
-rf = c('<span style="color: red;">0.04</span>', 
-       '<span style="color: red;">0.42</span>',
-       '<span style="color: red;">0.30</span>',
-       '<span style="color: red;">0.16</span>',
-       '<span style="color: red;">0.06</span>',
-       '<span style="color: red;">0.02</span>')
+rf = red(c('0.04', '0.42', '0.30', '0.16', '0.06', '0.02'))
 
-age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts', '<span style="color: red;">Relative Frequency</span>'), rbind.data.frame(ag, cts, rf))
+age.dist = cbind.data.frame(c('Age Group (Years)', 'Counts', red('Relative Frequency')), rbind.data.frame(ag, cts, rf))
 
-kable(age.dist, format = 'html', col.names = rep('', 7), booktabs = T, row.names = F,escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(age.dist, format = tbl_fmt, col.names = rep('', 7), booktabs = T, row.names = F,escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 Use this table to answer parts a - d
@@ -124,7 +141,7 @@ Use this table to answer parts a - d
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 set.seed(123)
 
-ag = c('1-18','19-24','25-35','36-60','51-69','70 and over')
+ag = c('1-18','19-24','25-35','36-50','51-69','70 and over')
 cts = c(10, 97, 70, 36, 14, 5)
 
 rf = cts/sum(cts)
@@ -139,7 +156,7 @@ ggplot()+geom_bar(aes(x = ag, y = rf), stat = 'identity',
 
 ```
 * **(c)** Describe the distribution
-<span style="color: red;">the distribution is slightly right skew indicating that most respondants were between 19 and 35 years of age</span>
+<span style="color: red;">the distribution is slightly right skew indicating that most respondents were between 19 and 35 years of age</span>
 * **(d)** Explain why your bar graph is not a histogram
 <span style="color: red;">A histogram has intervals of equal length</span>
 
@@ -152,8 +169,8 @@ Percentage = c(14.5, 16.2, 7.3, 7.8, 21.0, 14.2)
 
 spam.dist = cbind.data.frame(`Type of Spam`, Percentage)
 
-kable(spam.dist, format = 'html', booktabs = T, row.names = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(spam.dist, format = tbl_fmt, booktabs = T, row.names = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -164,7 +181,7 @@ Use the table to answer the questions a and b
 * **(b)** Construct a **Pareto chart** using the table above
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=4}
 
-ggplot(data = spam.dist, aes(x = `Type of Spam`, y = sort(Percentage, decreasing = T)))+
+ggplot(data = spam.dist, aes(x = reorder(`Type of Spam`, -Percentage), y = Percentage))+
   geom_bar(stat = 'identity', color = 'black', fill = 'lightblue2')+
   theme_hc()+
   xlab('Type of Spam')+
@@ -174,9 +191,9 @@ ggplot(data = spam.dist, aes(x = `Type of Spam`, y = sort(Percentage, decreasing
 
 
 
-${\bf (9)}$ A farmer in Idaho is interested in the number of rainy days in a given year so he records the number of rainy $R$, cloudy $C$ and sunny $S$ days over two weeks in $May$. His observations are $$\{R,R,C,C,C,S,S,C,R,R,C,R,S,S\}$$. Use the farmers observations to answer the following questions.  
+${\bf (9)}$ A farmer in Idaho is interested in the number of rainy days in a given year so he records the number of rainy $R$, cloudy $C$ and sunny $S$ days over two weeks in May. His observations are $$\{R,R,C,C,C,S,S,C,R,R,C,R,S,S\}$$ Use the farmer's observations to answer the following questions.  
 
-* **(a)** Based on the farmers observations, what proportion of days were rainy? 
+* **(a)** Based on the farmer's observations, what proportion of days were rainy? 
 <span style="color: red;">$$\hat{p}_{\text{rainy}} = \frac{5}{14} = 0.36$$ </span>
 * **(b)** Is the proportion in part **(a)** a statistic or a parameter? why?
 <span style="color: red;">It is a statistic because it was computed from a sample of 14 observations of the weather</span>
@@ -211,8 +228,8 @@ FT = cbind.data.frame(GPA = hsGPA_values,
                       `Relative frequency` = round(hsGPA_RF,2),
                       `Cumulative RF` = round(hsGPA_cRF, 2))
 
-kable(FT, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(FT, format = tbl_fmt, digits = 2, row.names = F, booktabs = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
                       
 
 ```
@@ -220,12 +237,15 @@ kable(FT, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 * **(a)** What type of variable is GPA?
 <span style="color: red;">Quantitative continuous</span>
-* **(b)** What proportion of college students had a high school GPA $> 3.0$?
-<span style="color: red;">0.57</span>
-* **(c)** What proportion of college students had a high school GPA $< 3.0$?
-<span style="color: red;">0.09</span>
+* **(b)** What proportion of college students had a high school GPA $> 3.0$? (use the rounded frequency table)
+<span style="color: red;">From the rounded frequency table, $14 + 6 = 20$ of the 35 students fall above 3.0, so the proportion is $20/35 = 0.57$. (Working from the raw, unrounded data instead gives $22/35 = 0.63$.)</span>
+* **(c)** What proportion of college students had a high school GPA $< 3.0$? (use the rounded frequency table)
+<span style="color: red;">From the rounded frequency table, $2 + 1 = 3$ of the 35 students fall below 3.0, so the proportion is $3/35 = 0.09$. (Working from the raw, unrounded data instead gives $4/35 = 0.11$.)</span>
 * **(d)** What is the **mean** GPA in this sample?
-<span style="color: red;">$$\bar{x} = \frac{2.0+2.1+...+4.0+4.0}{35} = \frac{2(2)+1(2.5)+...+6(4)}{35} = 3.3$$</span>
+<span style="color: red;">Using the raw data,
+$$\bar{x} = \frac{2.0+2.1+...+4.0+4.0}{35} = \frac{114.5}{35} = 3.27 \approx 3.3$$
+Using the rounded frequency table instead gives a very slightly different value,
+$$\bar{x} = \frac{2(2.0)+1(2.5)+12(3.0)+14(3.5)+6(4.0)}{35} = \frac{115.5}{35} = 3.30$$</span>
 * **(e)** What is the **median** GPA in this sample?
 <span style="color: red;">median $= 3.4$</span>
 * **(f)** What is the **mode** of GPA in this sample?
@@ -252,7 +272,7 @@ A = ggplot(data = df, aes(x = Raw))+
   geom_dotplot(dotsize = 1)+
   theme_classic()+
   ylab("")+
-  xlab("Student High School GPA")+
+  xlab("Sugar (g)")+
   theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
         axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
         panel.background = element_blank(),
@@ -383,20 +403,22 @@ ${\bf (14)}$ Consider the following set of 10 observations of a variable $X$ sor
 $$3.3, 3.8, 4.0, 4.8, 4.8, 5.1, 5.2, 5.6, 5.7, 6.9$$
 Use the data to answer parts a-b
 
-* **(a)** Given the data, compute the $50^{th}$ percentile of $X$ 
-<span style="color: red;">$$\frac{4.8+5.1}{2} = 4.95$$</span>
+* **(a)** Given the data, compute the $40^{th}$ percentile of $X$
+<span style="color: red;">With $n = 10$ observations, the $40^{th}$ percentile falls at position $0.40 \times 10 = 4$. Because this lands exactly on a data position, we average the $4^{th}$ and $5^{th}$ values - both of which are $4.8$:
+$$P_{40} = \frac{4.8+4.8}{2} = 4.8$$
+(Counting the $4^{th}$ value directly gives the same answer here.)</span>
 * **(b)** Compute Interquartile Range (IQR) range of $X$
 <span style="color: red;">$$IQR = 5.6 - 4.0 = 1.6$$</span>
 
 
-${\bf (15)}$ Consider the following $n = 20$ observations of the sugar and sodium content of several popular cereal brands and answer questions a - g:
+${\bf (15)}$ Consider the following $n = 20$ observations of several popular cereal brands and answer questions a - g about the variable "Sugar (g)":
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 cereal = read.csv(paste0(path, 'cereal.csv'))
-kable(cereal, format = 'html', col.names = c("Brand", "Sodium (mg)", "Sugar (g)", 'Type'))%>%
+kable(cereal, format = tbl_fmt, col.names = c("Brand", "Sodium (mg)", "Sugar (g)", 'Type'))%>%
   kable_styling(full_width = FALSE) %>%
   column_spec(4, width = "18em")%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -408,7 +430,7 @@ A = ggplot(data = cereal, aes(x = Sugar))+
   geom_histogram(breaks = seq(0, 20, 2), color = 'black', fill = 'grey')+
   theme_classic()+
   ylab("Frequency")+
-  xlab("Student High School GPA")+
+  xlab("Sugar (g)")+
   theme(axis.text.x = element_text(size = 12),
         axis.title.x = element_text(size = 14),
         axis.text.y = element_text(size = 12),
@@ -432,27 +454,29 @@ Tabular = cbind.data.frame(`Sugar (g)` = c("< = 2 (g)",
                            `RF(x)` = x_rf[1:9],
                            `CRF(x)` = x_crf[1:9])
 
-kable(Tabular, caption = "Frequency table used to construct histogram for the variable \"Sugar (g)\"")
+kable(Tabular, format = tbl_fmt, digits = 2, booktabs = T,
+      caption = "Frequency table used to construct histogram for the variable \"Sugar (g)\"")%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
   
 ```
 
 
 <br>
 
-* **(b)** Compute the mean, median, and mode of the variable ``Sugar (g)"
+* **(b)** Compute the mean, median, and mode of the variable "Sugar (g)"
 <span style="color: red;">Using the raw data there are 5 modes each with a frequency of 2
 mode(s) $= 3,4,11,12,14$</span>
 <span style="color: red;">median $= \frac{9+10}{2} = 9.5$</span>
 <span style="color: red;">$$\bar{x} = \frac{1}{20}\sum_{i=1}^{20} x_i = \frac{(11+18+5+14+...+3+11)}{20} = 8.75$$ (note that the mean may be slightly different if you used the frequency table above</span>
 
-* **(c)** Compute the variance and standard deviation of the variable ``Sugar (g)"
-<span style="color: red;">$$s^2 = \frac{1}{19}\sum_{i=1}^{19} (x-\bar{x})^2 = \frac{(11 - 8.75)^2 + (18-8.75)^2 + ...+(3-8.75)^2 + (11 - 8.75)^2}{19}$$  $$ = \frac{5.06 + 85.56 + ...+33.06+5.06}{19} = 28.3$$ $$s = \sqrt{s^2} = \sqrt{28.3} = 5.32$$</span>
+* **(c)** Compute the variance and standard deviation of the variable "Sugar (g)"
+<span style="color: red;">$$s^2 = \frac{1}{19}\sum_{i=1}^{20} (x_i-\bar{x})^2 = \frac{(11 - 8.75)^2 + (18-8.75)^2 + ...+(3-8.75)^2 + (11 - 8.75)^2}{19}$$  $$ = \frac{5.06 + 85.56 + ...+33.06+5.06}{19} = 28.3$$ $$s = \sqrt{s^2} = \sqrt{28.3} = 5.32$$</span>
 
 
-* **(d)** Compute the quartiles (Q1, Q2, Q3) and interquartile range of the variable ``Sugar (g)"
+* **(d)** Compute the quartiles (Q1, Q2, Q3) and interquartile range of the variable "Sugar (g)"
 <span style="color: red;">$$Q1 = 4, \ Q2 = \text{median} = 9.5, \ Q3 = 13, \ IQR = 13 - 4 = 9$$</span>
 
-* **(e)** Create a box and whisker plot for the variable ``Sugar (g)" and mark the Q1, Q2, and Q3 quartiles, the median and any potential outliers
+* **(e)** Create a box and whisker plot for the variable "Sugar (g)" and mark the Q1, Q2, and Q3 quartiles, the median and any potential outliers
 
 ```{r, fig.cap = "Boxplot of Sugar content in 20 cereal brands", fig.height=5, fig.width=6, echo=FALSE, message = FALSE, warning=FALSE}
 X = cereal$Sugar
@@ -469,7 +493,7 @@ text(x=estims-0.1, labels =paste(c("Min", "Q1","Median", "Q3", "Max"),
 text(x=Q3-Q1, labels =paste("IQR", Q3 - Q1, sep = " = "), y=1.5, cex = 0.68)
 ```
 
-* **(f)** Plot the Cumulative Distribution of the variable ``Sugar (g)"
+* **(f)** Plot the Cumulative Distribution of the variable "Sugar (g)"
 
 ```{r, fig.cap = "Cumulative Distribution of Sugar (g)", fig.height=3, fig.width=4, echo=FALSE, message = FALSE, warning=FALSE}
 
@@ -502,7 +526,6 @@ A=ggplot()+geom_step(aes(x = x_rounded$breaks[2:10], y = x_crf[1:9]), size = 0.8
 <!-- **(18)** True or False: A **deviation} is defined as the most frequent value in a distribution -->
 <!-- * **(a)** True -->
 <!-- * **(b)** False -->
-
 
 
 

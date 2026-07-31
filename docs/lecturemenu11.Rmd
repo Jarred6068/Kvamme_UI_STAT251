@@ -22,230 +22,629 @@ library(latex2exp)
 library(gganimate)
 
 path = 'Data/'
+
+##stat pack
+source('misc/stat251_tools.R')
+
 ```
 
-# Lecture 19 Monday, March 18th 2024
+# Lecture 21
 
-### Review of confidence intervals for $p$:
+**Warm Up:** Consider the following example - a gardener is conducting an experiment to evaluate the effectiveness of a new fertilizer on the heights of tomato plants. They purchase 80 tomato plants from their local seedling outlet. The gardener randomly selects $40$ of plants to receive a fertilizer and water mixture and the remaining half to receive only water. After one month the mean height is recorded in both groups and the difference in height between the two experimental groups of tomato plants is measured. 
 
-Recall that **confidence intervals** are used to estimate the value of an <u>unknown parameter</u> with a interval of values. Confidence intervals serve two purposes: (1) they provide a range of possible values of the parameter and (2) they provide an indication of how accurate the estimate is i.e how <i>confident</i> we are in the results. A confidence interval has the general form
+The gardener suspects that the plants which received the new fertilizer will tend to be taller than the plants that received only water. They set the null hypothesis to be "no difference in height" which can be thought of as "the fertilizer has no effect on tomato plant growth". 
 
-\[ \text{point estimate} \ \pm \ \text{margin of error}  \]
+\[ H_0: \mu_d = 0 \]
 
-The <i>confidence</i> portion comes from the **confidence level** which states the probability that the interval will give the correct result based on the long-run frequency of the method. That is, for a confidence level of $95\%$, for example, we can expect approximately $95\%$ of confidence intervals to capture the value of the unknown parameter. However, for any given confidence interval, once it is computed the value of the parameter is either in the interval or not in the interval - but we do not know. 
+$\mu_d$ denotes the population mean difference in tomato plant height between the two experimental groups. We can use the sample mean difference $\bar{x}_d$ to estimate $\mu_d$ which is calculated as 
 
-Before the break, we discussed three confidence intervals: 2 for a population mean and one for a population proportion. We will review the latter first. The $(1 - \alpha)\%$ confidence interval for estimating $p$ with $\hat{p}$ is given by
+\[\bar{x}_d = \frac{1}{n}\sum_i (x_{i} - y_i) \]
 
-\[ \hat{p} \ \pm \ z_{1 - \alpha/2} \ \sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]
+where $x_i$ is the height of tomato plants receiving the fertilizer and $y_i$ is the height the tomato plants receiving only water.
 
-where $\hat{p}$ denotes the sample proportion and 
+Since the suspicion is that the plants receiving fertilizer will be taller, the alternative hypothesis is
 
-\[ m = z_{1 - \alpha/2} \sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]
+\[ H_A: \mu_d > 0 \]
 
-denotes the margin of error. 
+The data from the gardeners experiment are shown below:
 
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
 
-* **Practice:** Investors in the stock market are often interested in understanding the true proportion of stocks that go up and down each week. Suppose a random sample of $150$ stocks is taken, and it is found that $82$ of them have increased in value during the past week.
+x = rnorm(40, 45, 2.5)
+y = rnorm(40, 41, 4.1)
 
-  (a) compute the margin of error $m$
-    
-  (b) Give the $95\%$ confidence interval for the true proportion of stocks $p$
-    
-  (c) If you instead wanted the $99\%$ confidence interval for the same sample, would the margin of error be greater than, less than, or equal to the margin of error you computed in part (a)?
+diff = x - y
 
-### Review of confidence intervals for $\mu$:
+df = cbind.data.frame(x, y, diff)
 
-For estimating $\mu$ with $\bar{x}$, we first proposed the following confidence interval
-
-\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \ \frac{\sigma}{\sqrt{n}}\]
-
-where $\bar{x}$ denotes the sample mean and 
-
-\[ m = z_{1 - \alpha/2} \ \frac{\sigma}{\sqrt{n}}\]
-
-denotes the margin of error. Recall that this interval requires that we know the value of $\sigma$ - the population standard deviation. If we do not the value of $sigma$, we could instead sub in the sample standard deviation $s$ in its place to get
-
-\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \ \frac{s}{\sqrt{n}}\]
-
-However, as we discussed before the break, the confidence interval above, which is based on the standard normal distribution, will tend have a lower than expected confidence level when $n$ is small, say $n \leq 30$. Instead, a better confidence interval that is based on the $t$-distribution is given by
-
-\[ \bar{x} \ \pm \  t_{n-1, 1 - \alpha/2} \ \frac{s}{\sqrt{n}}\]
-
-where $t_{n-1, 1 - \alpha/2}$ is the $1-\alpha/2$ percentile of a $t$ distribution with $n-1$ degrees of freedom. The above confidence interval will give correct results regardless of sample size. Moreover, since the $t$-distribution converges to the standard normal distribution for as $n$ gets large, the two methods tend to give identical results for $n < 30$.
-
-
-* **Practice** Consider the following data table which gives the mean annual temperate in central park over 10 years of recordings starting in 2009. 
-
-```{r, echo=F, message=F, warning=F}
-cpt = read.csv(file = paste0(path, 'central_park_temps.csv'))
-
-kable(cpt[141:150,c(1, 14)], col.names = c('Year', 'Mean Annual Temp'), format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(df, format = 'html', digits = 2, 
+      col.names = c('Height Fertilized (Inches)', 'Height Water Only (Inches)', 'Difference In Height (Inches)'),
+      row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
 ```
 
-  * Verify that the average mean annual temp is $\bar{x} = 56.02$ with standard deviation $s \approx 1.13$ 
+The summary statistics from the gardeners data are listed below
 
-  * Given the $95\%$ confidence interval for mean annual temperature
-  
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
 
+x = rnorm(40, 45, 2.5)
+y = rnorm(40, 41, 4.1)
+diff = x - y
 
-### Factors that influence the margin of error:
-
-When we compute a confidence interval, we would like the interval to be as small as possible. Why? simply put, because we want the most precise estimate of the parameter that we can get. A small interval is the result of a small margin of error. However, several factors affect the width of the margin of error of an estimate. The margin of error of a confidence interval decreases as:
-
-  1. The confidence level decreases 
-  
-  2. The population standard deviation $\sigma$ decreases
-  
-  3. The sample size $n$ increases
-  
-[See this link here](https://digitalfirst.bfwpub.com/stats_applet/stats_applet_20_ciprop.html) to check these properties yourself! 
-  
-First, we typically do not want to decrease the confidence level. By convention, most confidence intervals reported in academic journals are at least $90\%$ or greater. This is because we want to retain a high degree of <i>confidence</i> that our estimate is accurate. Secondly, we have no control over the value of the population standard deviation. $\sigma$ is a property of the population. If $\sigma$ is inherently large for the population under study, then we are out of luck in that regard. 
+n = 40
+xbar = mean(x)
+sdx = sd(x)
+ybar = mean(y)
+sdy = sd(y)
+md = mean(diff)
+sdmd = sd(diff)
 
 
-However, we are fortunate in that we can control the sample size of our study. Recall that the standard deviation for the sampling distributions of $\bar{x}$ and $\hat{p}$ both involve division by the number of observations in the sample $n$. Therefore, we can reduce the margin of error of our estimate of $\mu$ or $p$ by increasing $n$ - the number of observations in the sample. 
-
-### Choosing a minimum sample size
-
-While it is nice that we can simply choose to observe a large number of observations from the population to get a small margin of error, real studies and surveys cost time, money, and effort on behalf of the researchers. Therefore, we want to avoid taking an arbitrarily large number of observations. Instead, we would like to observe only as many observations as needed to achieve a certain precision in our estimate. 
-
-Luckily, with a little bit of algebra we can rearrange the formula for the margin of error to determine the sample size we required to achieve a desired level of precision. 
-
-How do we choose $n$ for estimate $p$ with $\hat{p}$? Consider that
-
-\[ m = z_{1-\alpha/2} \ \sqrt{\frac{p(1-p)}{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2 p(1-p)}{m^2}\]
-
-where $m$ denotes the margin of error, $p$ is the population proportion and $z$ is the standard score corresponding the desired $(1-\alpha/2)%$ confidence level. Keep in mind that the formula above is used to determine the sample size needed when we designing a study to investigate the value of an unknown population proportion. Therefore, how do we choose the value $p$? We have essentially two options
-
-  1. We can look for related studies or prior research to inform the value of $p$
-  
-  2. We can use $p = 0.5$ which gives the upper bound on the sample size:
-  
-\[ n = \frac{z^2 p(1-p)}{m} \leq \frac{z^2 0.5(1-0.5)}{m} \]
-
-The latter option is a conservative approach we can use when we have no prior information regarding the value of the population proportion.
-
-* **Try it out: **  The sensitivity of a medical test is the probability of a positive result when the condition (e.g., disease) is present. Rapid strep tests have a sensitivity of about $0.95$. A new rapid strep test has been developed but its sensitivity is unknown. How many tests would be necessary to estimate its sensitivity with a margin of error of $0.02$ at a confidence level of $95\%$?
+df = cbind.data.frame(c('Sample size', 'Mean Height (Fertilized)', 'SD (Fertilized)', 'Mean Height (Water Only)', 'SD (Water Only)', 'Mean Difference (Fertilized - Water Only)', 'SD Difference'),
+                      c('$n$','$\\bar{x}$','$s_x$','$\\bar{y}$','$s_y$','$\\bar{x}_d$','$s_d$'),
+                      c(n, xbar, sdx, ybar, sdy, md, sdmd))
 
 
-How do we choose $n$ for estimate $\mu$ with $\bar{x}$? Consider that
-
-
-\[ m = z_{1-\alpha/2} \ \frac{\sigma}{\sqrt{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2 \sigma^2}{m^2}\]
-
-Notice that the above equation for $n$ requires that we known $\sigma$. So how can we choose the value of $\sigma$?. Again we have two options:
-
-  1. Use prior research/knowledge to inform the value of $\sigma$
-  
-  2. We can use an educated guess about the possible range of $\mu$ and estimate $\sigma$ via
-  
-  \[ \sigma \approx \frac{\text{range}}{4} \]
-  
-  
-* **Try it out: ** A researcher wants to estimate the mean number of hours college students spend scrolling TikTok each week. Previous studies suggest that the standard deviation of the weekly hours spent on TikTok is approximately 2.5 hours. The researcher desires a margin of error of no more than 0.5 hours. Compute the sample size the researcher needs to estimate the mean number of hours within the desired margin of error. 
-
-
-* **Try it out: ** A marketing research firm wants to estimate the average amount a student spends during the Spring break. They want to determine it to within $\$120$ with $90\%$ confidence. One can roughly say that amount a students spends ranges from $\$100$ to $\$1700$. About how many students should they sample?
-
-
-### Assumptions of estimators
-When we compute the confidence intervals that we have learned above we make a few assumptions about the data and the estimator: 
-
-  * We assume the data constitute a random sample
-  
-  * We assume that the statistic is unbiased
-  
-  * We assume an infinite population size. **Note** that under small, finite populations the formulas for the confidence intervals will be different. 
-
-  * That we can compute (approximately) the correct standard error
-  
-  * The shape of the sampling distribution is approximately normal. 
-  
-To have a sampling distribution that is (approximately) normal in shape, we need at least one of the following two conditions:
-
-  1. The population distribution of the variable needs to be (approximately) normal in shape
-
-  
-  2. The sample size (n) is sufficiently large.
-
-
-#### The sampling distribution of $\hat{p}$
-
-  - The shape of the population distribution is never normal
-  
-  - The sampling distribution is "sufficiently large" if both $np \geq 15$ and $n(1-p) \geq 15$.
-  
-#### The sampling distribution of $\hat{p}$
-
-  - The shape of the population distribution <i>might</i> be normal - you can check this by plotting the data
-  
-  - The sampling distribution will be approximately normal if $n$ is large enough
-  
-
-# Lecture 20 Monday, March 20th 2024
-
-### Introduction to tests of significance
-
-Confidence intervals are an appropriate tool when the goal is to <i>estimate</i> something about a population. The second part of statistical inference deals with a very different sort of goal. Significance tests (also called hypothesis tests) combine mathematics and logic to assess the validity of a claim about a population parameter using the evidence provided in a set of data. Specifically, we compare properties of a set of observed data to a hypothesis about the population. The hypothesis is a statement that asserts something about the value of the population parameters. The results of the test are expressed in terms of probability that measures the degree to which the data agree with claim laid out by the hypothesis. 
-
-**Consider the following example**: Imagine you are a quality control manager at a electronics company that produces microchips for personal computers. To ensure quality, the company tests all chips before they are sent out to retailers. The company claims that, thanks to their post-production testing, only about $2\%$ of their microchips are defective, but recent reports about customer feedback indicate that the chips might have an issue that causes the defective rate to be higher than $2\%$. To address these concerns, you decide to conduct a study to test the claim that only $2\%$ of chips are defective. To test this, the company purchases $10$ computers from a random sample of $5$ retailers that it supplies microchips. Each computer is run through the same set of high intensity tasks to test the chips and the proportion of chips that fail is estimated. From this experiment, you estimate the proportion of defective chips to be about $2.053\%$ with a standard error of $0.019\%$ which gives a difference in rates of $0.00053\%$. 
-
-* From the estimate, can you conclude that the proportion of defective chips is greater than the expected rate of $2\%$? 
-
-One way to answer this question is to compute the probability of obtaining a difference as large or larger than the one you have observed. This probability is $0.48$. Since this probability is quite large, we conclude that observing a difference of $0.00053$ is not surprising if the defective rate of the sample is the same as the population rate of $2\%$. In this case, the sample supports the initial claim that the defective rate is about $2\%$.
-
-
-A **statistically significant** result is one that is decidedly not due to “ordinary variation” in the data (i.e., not due to chance or not a coincidence). **Significance tests** are how we decide whether or not an observed result is statistically significant.
-
-Consider a coin that is flipped $n$ times. The population distribution for a single flip is given below:
-
-```{r, echo=F, message=F, warning=F}
-df = cbind.data.frame(X = c('Heads','Tails'),
-                      `Probability(X)` = c('$p$', '$p(1-p)$'))
-
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(df, format = 'html', digits = 2, 
+      col.names = c('Name', 'Symbol', 'Value'),
+      row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 
 ```
 
-The value of $p$ implies something about the coin:
+Recall from last week that a significance test is a test of the null hypothesis. To test the null hypothesis, we compute the scenario given by the alternative hypothesis under the assumption that the null is true. In the case of this gardeners experiment, we need to compute the probability of observing a mean difference larger than the difference we observed under the sampling distribution of the null hypothesis. In other words, "how likely is it that we would see a difference in height as large as the one we observed, assuming that the true difference is zero?" 
 
-  1. If $p = 0.5$ the coin is fair
+\[P(\bar{X} \geq \bar{x}_d | H_0 \ \text{true}) \]
+
+To compute this probability, we need convert the difference we observed into a standardized score that we can look up in one of our tables. Since we are discussing a "mean" difference we can use the $t$-distribution as we did before with confidence intervals:
+
+\[ t_{obs} = \frac{\bar{x}_d - \mu_d}{s_d/\sqrt{n}}  = \frac{4.14 - 0}{4.43/\sqrt{40}} = 5.91 \sim t(n-1)\]
+
+Where $\bar{x}_d$ is the sample mean difference in height, $\mu_d$ is population mean difference under the null hypothesis, and $s_d$ is the sample standard deviation for the difference in height. The above formula converts the observed difference $\bar{x}_d$ to a $t$-score from a $t$-distribution with $n-1$ degrees of freedom under the assumption that the null hypothesis is true. $t_{obs}$ is called the **test statistic** - it measures the discrepancy (distance) between the point estimate of the parameter and the hypothesized value of the parameter under the null hypothesis. It tells us approximately how many standard deviations the observed mean difference is from the population mean difference under the null. 
+
+Using the above formula the gardener calculates a $t$-score of $t_{obs} = 5.91$ with $39$ degrees of freedom. The probability from earlier can be re-framed in the context of the $t$-distribution
+
+\[P(t \geq t_{\text{obs}}| H_0 \ \text{true}) = 1-P(t< t_{\text{obs}}|H_0 \ \text{true}) \]
+
+i.e the probability of observing a $t$ value greater than the one we observed when the true difference is assumed to be $\mu_d = 0$. For the gardener's experiment, this probability is $3.39 \times 10^{-7} \approx 0$, which is very small.
+
+
+This probability is called the **p-value** and it measures the probability of observing an estimate as or more extreme than the one we observed under the assumption that the null hypothesis is true. So what does this small probability mean? Just as we observed with the coin flip example from last week, it can mean one of two things:
+
+1. We observed something very unusual
+
+2. The assumption underlying the calculation (i.e $\mu_d = 0$ no difference in mean height) is not true.
+
+We prefer the second conclusion when the $p$-value is "sufficiently" small and take it as evidence against the null hypothesis. So how small is small enough? By convention, most tests use a probability cutoff of $5\%$ or less which is called the **significance level** of the test. The significance level of a test is denoted as $\alpha$. For the gardeners test $\alpha = 0.05$. $\alpha$ sets the boundary for how big (or small) the test statistic needs to be to conclude that the test statistic is <u>statistically significant</u>.
+
+```{r, echo=FALSE, warning=F, message=F}
+set.seed(123)
+
+x = rnorm(40, 45, 2.5)
+y = rnorm(40, 41, 4.1)
+
+diff = x - y
+
+xbar = mean(x)
+sdx = sd(x)
+ybar = mean(y)
+sdy = sd(y)
+md = mean(diff)
+sdmd = sd(diff)
+
+gen.density.plot(bbox = c(-5, 5), n = 40, dist = 't', test = 'upper.tail', obs = md)
+#one.sample.t.test(m0 = 0, xbar = md, s = sdmd, n = 40, test = 'upper.tail')
+
+
+```
+
+In the plot above, $t_{1-\alpha}$ denotes the boundary for significance in the gardener's test. Any $t$-value greater than $t_{1-\alpha}$ will have a **p-value** less than $\alpha$ and be deemed <i>significant</i>
+
+What were the steps involved with this test?
+
+  * **step 1** - The first step in any hypothesis test is to address the assumptions we make about the data. The hypothesis tests we will learn in this class assume that the data are produced by a randomization process. There may also be assumptions about the population distribution.
   
-  2. If $p \neq 0.5$ the coin is unfair. 
+  * **step 2** - Formulate the question you wish to evaluate and set up the null and alternative hypotheses.
   
-Assume we do not know the value of $p$. We flip the coin $30$ times to produce a sample of $n = 30$ observations. It comes up heads $20$ times, so $\hat{p} = 20/30 = 2/3 \approx 0.67$ What might we decide about the value of $p$?
-
-  1. Conclude that $p =0.5$. The result that $\hat{p} = 2/3$ **is not** statistically significant.
+  * **step 3** - Calculate the **test statistic** which measures the discrepancy (distance) between the the estimate of the parameter and the hypothesized value of the parameter under the null.
   
-  2. Conclude that $p \neq 0.5$. The result that $\hat{p} = 2/3$ **is** statistically significant.
-
-The probability of observing a proportion of heads of $\hat{p} = 2/3$ assuming $p = 0.5$ is about $0.067$. What might we conclude about the coin?
-
-In this example, the probability we obtained is fairly small. There are two explanations for this probability:
-
-  (i) We have observed something unusual (i.e the coin is fair we just got a large proportion of heads by coincidence)
+  * **step 4** - Compute the **$p$-value** - the probability of observing a value of the test statistic that is as extreme or more extreme than the observed value given that the null hypothesis is true
   
-  (ii) The assumption that underlies the calculation is not true. (i.e the coin is not fair and the population proportion $p$ is not equal to $1/2$)
+  * **step 5** - Make a conclusion about the null hypothesis - we either (i) fail to reject the null hypothesis and conclude that there is not sufficient evidence in favor of the alternative or (ii) reject the null hypothesis in favor of the alternative
+
+
+With the examples of significance tests we have discussed thus far we have learned two formal significance tests: one concerning a population proportion $p$ and one concerning a population mean $\mu$.
+
+
+# Setting up the null and alternative hypothesis
+
+As we stated previously, the null hypothesis is a statement about the value of a population parameter. The alternative hypothesis is a statement about our suspicions regarding the value of that parameter. The alternative hypothesis can be directional such as $H_A: p > p_0$ (called an upper tail test) or $H_A: p < p_0$ (called a lower tailed test). These types of alternative hypotheses are called *one-sided* because they direct our attention to either the lower or upper tail of the distribution of the test statistic. If our suspicion about the parameter is that it differs in either direction or if we are unsure, the alternative hypothesis is $H_A: p \neq p_0$ and the test is called *two-sided* because the suspicion includes both the lower and upper tails of the distribution of the test statistic. 
+
+Because the alternative hypothesis expresses some effect that we hope to find evidence for, we often begin by stating $H_A$ and then set up $H_0$ as the statement that the "hoped-for" effect is not present. It's important to note that the alternative hypothesis should express the hopes or suspicions we bring to the data. It is biased to first look at the data and then set up the alternative hypothesis based on what the data show. If you do not have a direction firmly in mind before gathering the data you must use a two-sided test.
+
+### Significance level, critical value, and decision making
+
+The **significance level** of test (denoted $\alpha$) is how we turn the $p$-value of a significance test into a <i>reject/not reject</i> decision about the null hypothesis. It sets how "strong" the evidence against the null needs to be in order for a result to be deemed statistically significant. The researcher determines the significance level before conducting the experiment.
+
+The **critical value** of a significance test is a point on the distribution of the test statistic that defines a set of values that call for rejecting the null hypothesis. 
+
+The critical value determines the boundary of the **rejection region** – the area in the tail (or tails) of the distribution of the test statistic for which a result is deemed significant. The rejection region has an area of exactly $\alpha$.
+
+
+The significance level, critical value, and rejection region are all related to each other but we typically only set the significance level. The critical value and rejection region then follow from the specified significance level. All three of these things are used to help us turn the $p$-value of a hypothesis test into a formal decision about the null hypothesis. The decision rule is as follows:
+
+  1. If $p$-value $< \alpha$, then *reject* $H_0$ (results are statistically significant)
   
-So how unusual does a result need to be for us to consider the latter statement (ii) to be more plausible? We will discuss this more later on, but, in general, this is an arbitrary choice that we must make when setting up our test.
+  2. If $p$-value $\geq \alpha$, then *do not reject* $H_0$ (results are <u>not</u> statistically significant)
+
+So how does this relate the to critical value and rejection region? We can state the decision rule in terms of both of these quantities but to do so is more nuanced and depends on the direction (or lack there of) of the alternative hypothesis. For example, consider the null hypothesis and alternative hypotheses
+
+\[ H_0: \mu = \mu_0 \]
+\[ H_A: \mu < \mu_0 \]
+
+The decision rule stated in terms of the critical value and rejection region is:
+
+  1. If $p$-value $< \alpha$ then $t_{obs} < t_\alpha$; *reject* $H_0$ (results are statistically significant) - this is the same as saying "if the test statistic falls within the rejection region then <u>reject $H_0$</u>"
+  
+  2. If $p$-value $\geq \alpha$, then $t_{obs} \geq t_\alpha$; *do not reject* $H_0$ (results are <u>not</u> statistically significant) - this is the same as saying "if the test statistic does not fall within the rejection region then <u>do not reject $H_0$</u>"
+  
+The **critical value** and **rejection region** of a test depend on the significance level of the test and the direction of the alternative hypothesis. Consider the plots below: 
 
 
-In both of these examples, we stated hypotheses about the value of the parameter and then proposed a counter hypothesis about that value. A significance test is a comparison between two such **hypotheses** about the the value of a parameter: a *null hypothesis* and and *alternative hypothesis*.
 
-The **null hypothesis** (denote $H_0$) is usually the hypothesis of “no effect” or that “nothing interesting is happening”. The null hypothesis is usually that the population parameter equals some value $H_0: \theta = \theta_0$ for some constant $\theta_0$
+```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=10, fig.cap='This plot depicts the decision rule for a given alternative hypothesis at a significance level $\\alpha = 0.05$. In each subplot, the rejection region is highlighted in turquoise and the critical value(s) are denoted by the vertical dashed lines.'}
 
-The **alternative hypothesis** (denoted $H_A$) is the hypothesis of “effect” or that “something interesting has happened”. The alternative hypothesis is usually that the population parameter falls in some range of values such as:
+A = ggplot()+xlim(-4, 4)+theme_bw()+
+  stat_function(fun = dnorm,
+                geom = 'area',
+                fill = 'orange',
+                alpha = 0.4)+
+  stat_function(fun = d_limit,
+                          args = list(alpha = 0.05,
+                                      test = 'two.tailed',
+                                      dist = 'z',
+                                      n = 100), 
+                          geom = "area", 
+                          fill = "cyan3", 
+                          alpha = 0.7)+
+  stat_function(fun = dnorm,
+                size = 1)+
+  geom_vline(xintercept = c(qnorm(0.05/2), qnorm(1-(0.05/2))), size = 2, linetype = 'dashed')+
+  geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
+  geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
+  geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
+  xlab('Z')+
+  ylab('Probability Density')+
+  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p \\neq c$'))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
 
-The value of the parameter is greater than the value proposed in the null hypothesis
-\[H_A: \theta > \theta_0  \]
-The value of the parameter is less than the value proposed in the null hypothesis
-\[H_A: \theta < \theta_0 \]
-The value of the parameter is different than the value proposed in the null hypothesis (could be greater than or less than - we aren't sure, we just suspect its different)
-\[H_A: \theta \neq \theta_0 \]
 
-   - the alternative hypothesis expresses our "suspicions" that we have about the data. For example, <i> we suspect the defect rate is higher than $2\%$</i> or <i> we suspect the coin is not fair </i>.
+
+B = ggplot()+xlim(-4, 4)+theme_bw()+
+  stat_function(fun = dnorm,
+                geom = 'area',
+                fill = 'orange',
+                alpha = 0.4)+
+  stat_function(fun = d_limit,
+                          args = list(alpha = 0.05,
+                                      test = 'upper.tail',
+                                      dist = 'z',
+                                      n = 100), 
+                          geom = "area", 
+                          fill = "cyan3", 
+                          alpha = 0.7)+
+  stat_function(fun = dnorm,
+                size = 1)+
+  geom_vline(xintercept = c(qnorm(1-0.05)), size = 2, linetype = 'dashed')+
+  geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
+  #geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
+  geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
+  xlab('Z')+
+  ylab('Probability Density')+
+  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p > p_0$'))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+C = ggplot()+xlim(-4, 4)+theme_bw()+
+  stat_function(fun = dnorm,
+                geom = 'area',
+                fill = 'orange',
+                alpha = 0.4)+
+  stat_function(fun = d_limit,
+                          args = list(alpha = 0.05,
+                                      test = 'lower.tail',
+                                      dist = 'z',
+                                      n = 100), 
+                          geom = "area", 
+                          fill = "cyan3", 
+                          alpha = 0.7)+
+  stat_function(fun = dnorm,
+                size = 1)+
+  geom_vline(xintercept = c(qnorm(0.05)), size = 2, linetype = 'dashed')+
+  geom_text(aes(x = 0, y = 0.15), label = TeX('Do Not Reject $H_0$'), size = 8)+
+  geom_text(aes(x = -3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
+  #geom_text(aes(x = 3, y = 0.15), label = TeX('Reject $H_0$'), size = 8)+
+  xlab('Z')+
+  ylab('Probability Density')+
+  ggtitle('Distribution Under the Null', subtitle = TeX('Alternative Hypothesis: $H_A: p < p_0$'))+
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14))
+
+ggarrange(A, B, C, nrow = 3)
+```
+
+
+Consider the six plots below which show the position of the critical value, and rejection region for the three types of alternative hypotheses at two significance levels. What do you notice about the relationship between the significance level and the rejection region?
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=12, fig.width=14}
+set.seed(123)
+
+md = NA
+A = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'upper.tail', obs = md, alpha = 0.05)
+A1 = A+ggtitle(TeX('$H_A: p > p_0$'))
+B = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'lower.tail', obs = md, alpha = 0.05)
+B1 = B+ggtitle(TeX('$H_A: p < p_0$'))
+C = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'two.tailed', obs = md, alpha = 0.05)
+C1 = C+ggtitle(TeX('$H_A: p \\neq p_0$'))
+
+AA = ggarrange(A1, B1, C1, nrow = 3)
+
+AAf = annotate_figure(AA, top = text_grob(TeX('$\\alpha = 0.05$')), fig.lab.size = 16,
+                      fig.lab.face = 'bold')
+
+
+A2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'upper.tail', obs = md, alpha = 0.01)+
+  ggtitle(TeX('$H_A: p > p_0$'))
+B2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'lower.tail', obs = md, alpha = 0.01)+
+  ggtitle(TeX('$H_A: p < p_0$'))
+C2 = gen.density.plot(bbox = c(-4, 4), n = 40, dist = 'z', test = 'two.tailed', obs = md, alpha = 0.01)+
+  ggtitle(TeX('$H_A: p \\neq p_0$'))
+
+BB = ggarrange(A2, B2, C2, nrow = 3)
+BBf = annotate_figure(BB, top = text_grob(TeX('$\\alpha = 0.01$')), fig.lab.size = 16,
+                      fig.lab.face = 'bold')
+
+ggarrange(AAf, BBf, nrow = 1, ncol = 2)
+
+```
+
+Notice from the plots above that the alternative hypothesis also impacts how significant a result must be in order to reject the null. Specifically, a result need not be as extreme under the alternative hypotheses $H_A: p > p_0$ and $H_A: p < p_0$ to be statistically significant. This is because when we suspect the direction of the effect we have more information about the parameter which improves our ability to detect a significant result.
+
+
+# Significance tests concerning $p$
+
+The following are the steps for conducting a significance tests for a population proportion:
+
+  1. **Assumptions**
+    
+  * The sample size is sufficiently large. The sample size is sufficiently large whenever $np_0 \geq 15$ and $n(1-p_0) \geq 15$ where $p_0$ is the value of $p$ specified under the null hypothesis. If these conditions are not met the inference may not be correct. 
+    
+  2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
+  
+  \[H_0: p = c \]
+  
+  * the alternative hypotheses, critical values, and rejection regions are listed below:
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \\neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
+                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_{1-\\alpha}$','$Z_{\\alpha}$'),
+                      `Rejection Region` = c('$-\\infty \\leq Z \\leq Z_{\\alpha/2}$ or $Z_{1-\\alpha/2}\\leq Z \\leq \\infty$','$Z_{1-\\alpha} \\leq Z \\leq \\infty$','$-\\infty \\leq Z \\leq Z_{\\alpha}$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+  
+  
+  3. **Compute the test statistic**
+  
+  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1 - p_0)}{n}}} \sim N(0,1) \]
+  
+  4. **Compute the $p$-value.** 
+  
+  * Under the assumption in [1.] the test statistic follows a standard normal distribution. The $p$-value corresponding to each alternative hypothesis is given below:
+  
+  
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p \\neq p_0$','$H_A: p > p_0$','$H_A: p < p_0$'),
+                      `$p$-value` = c('$P( Z  \\geq | Z_{obs} | | H_0 \\ \\text{True})$','$P( Z \\geq Z_{obs} | H_0 \\ \\text{True})$','$P( Z \\leq Z_{obs} | H_0 \\ \\text{True})$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+  
+  5. **Draw a conclusion**: if $p$-value $< \alpha$ <i>reject</i> $H_0$. Else <i>fail to reject</i> $H_0$. 
+    
+
+
+
+**Practice:**
+
+1. A leading electric vehicle (EV) manufacturer claims that at least $20\%$ of all vehicles sold in a particular region are electric. To verify this claim, a consumer advocacy group randomly surveys $500$ recent vehicle purchases in the region and finds that $115$ of them are electric. Conduct a significance test at the $\alpha = 0.01$ significance level to determine if the proportion of vehicles sold is less than the manufacturer's claim.
+
+*Solution.* Here $n = 500$, $p_0 = 0.20$, and the sample proportion is $\hat{p} = 115/500 = 0.23$. We test $H_0: p = 0.20$ against the lower-tail alternative $H_A: p < 0.20$ at $\alpha = 0.01$.
+
+  * **Check the assumption.** $np_0 = 500(0.20) = 100 \geq 15$ and $n(1-p_0) = 500(0.80) = 400 \geq 15$, so the sample is large enough for the normal approximation.
+
+  * **Test statistic.**
+  \[ Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} = \frac{0.23 - 0.20}{\sqrt{\frac{0.20(0.80)}{500}}} = \frac{0.03}{0.0179} = 1.68 \]
+
+  * **$p$-value.** For the lower-tail alternative, $p\text{-value} = P(Z \leq 1.68) \approx 0.95$.
+
+  * **Conclusion.** Since the $p$-value $\approx 0.95$ is far greater than $\alpha = 0.01$, we *fail to reject* $H_0$. The observed proportion ($0.23$) is actually above the claimed $0.20$, so there is no evidence that the true proportion of EVs is less than $20\%$.
+
+
+
+### Significance tests concerning $\mu$
+
+The following are the steps for conducting a significance test for a population mean:
+
+  1. **Assumptions**
+    
+  * The population distribution is approximately normal. This can be checked by making a plot of the data. 
+    
+  2. **State the null and alternative hypotheses**. For a constant $c$ the null hypothesis is 
+  
+  \[H_0: \mu = c \]
+  
+  * the alternative hypotheses, critical values, and rejection regions are listed below:
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
+                      `Critical Value` = c('$t_{n-1, 1-\\alpha/2}$','$t_{n-1, 1-\\alpha}$','$t_{n-1, \\alpha}$'),
+                      `Rejection Region` = c('$t_{n-1, 1-\\alpha/2}\\leq t \\leq \\infty$','$t_{n-1, 1-\\alpha} \\leq t \\leq \\infty$','$-\\infty \\leq t \\leq t_{n-1, \\alpha}$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+  
+  
+  3. **Compute the test statistic**
+  
+  \[ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} \sim t(n-1)\]
+  
+  4. **Compute the $p$-value.** 
+  
+  * Under the assumption in [1.] the test statistic follows a $t$ distribution with $n-1$ degrees of freedom. The $p$-value corresponding to each alternative hypothesis is given below:
+  
+  
+  
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: \\mu \\neq \\mu_0$','$H_A: \\mu > \\mu_0$','$H_A: \\mu < \\mu_0$'),
+                      `$p$-value` = c('$P( t  \\geq | t_{obs} | | H_0 \\ \\text{True})$','$P( t \\geq t_{obs} | H_0 \\ \\text{True})$','$P( t \\leq t_{obs} | H_0 \\ \\text{True})$'))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+  
+  5. **Draw a conclusion**: if $p$-value $< \alpha$ <i>reject</i> $H_0$. Else <i>fail to reject</i> $H_0$. 
+    
+
+**Practice:**
+
+1. A government agency is interested in understanding the average annual income of households in a particular region to inform economic policies. The agency hypothesizes that the mean annual income of households in this region is $\$50,000$. To test this, they collect a random sample of $100$ households from the region and estimate the annual income to be $\$45,323$ with a standard deviation of $\$13,121$. Conduct a hypothesis test at the $\alpha = 0.05$ significance level to determine if the annual income is significantly different than the agency's hypothesis for this region.
+
+*Solution.* Here $n = 100$, $\bar{x} = 45{,}323$, $s = 13{,}121$, and $\mu_0 = 50{,}000$. Because we are asked whether the mean is *different* (in either direction), we test $H_0: \mu = 50{,}000$ against the two-sided alternative $H_A: \mu \neq 50{,}000$ at $\alpha = 0.05$.
+
+  * **Check the assumption.** The sample size $n = 100$ is large, so by the Central Limit Theorem the sampling distribution of $\bar{x}$ is approximately normal.
+
+  * **Test statistic.**
+  \[ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{45{,}323 - 50{,}000}{13{,}121/\sqrt{100}} = \frac{-4677}{1312.1} = -3.57 \sim t(99) \]
+
+  * **$p$-value.** For the two-sided alternative, $p\text{-value} = 2 \times P(t \leq -3.57) \approx 0.0006$.
+
+  * **Conclusion.** Since the $p$-value $\approx 0.0006$ is less than $\alpha = 0.05$, we *reject* $H_0$. There is strong evidence that the mean annual household income differs from $\$50{,}000$ (specifically, the data suggest it is lower).
+
+### Relationship between two-sided tests and confidence intervals
+
+Recall the basic idea of a confidence interval. We construct an interval that includes the true value of the parameter $\mu$ or $p$ with specified frequency $100(1-\alpha)\%$. Now consider a two-sided significance test for a population mean. A two-sided test constructs an **acceptance region** around the value of the parameter suggested in the null hypothesis (i.e $\mu_0$). At the $100(1-\alpha)\%$ confidence level, this acceptance region is given by $[\mu_0-t_{1-\alpha/2} \times \frac{s}{\sqrt{n}}, \mu_0 + t_{1-\alpha/2}\times \frac{s}{\sqrt{n}}]$. Values of $\bar{x}$ that are not in this interval seem to be incompatible with the data. Thus when $\bar{x}$ is not in this interval, it is statistically significant and the null hypothesis is rejected. This produces a significance test at $\alpha = 0.05$ significance level.
+
+
+**Example**
+
+Return to the household income problem above ($\mu_0 = 50{,}000$, $n = 100$, $\bar{x} = 45{,}323$, $s = 13{,}121$, $\alpha = 0.05$). The standard error is $s/\sqrt{n} = 13{,}121/\sqrt{100} = 1312.1$, and with $n-1 = 99$ degrees of freedom the critical value is $t_{99,\ 0.975} \approx 1.984$. The $95\%$ acceptance region around $\mu_0$ is
+
+\[ \left[50{,}000 - 1.984 \times 1312.1,\ \ 50{,}000 + 1.984 \times 1312.1\right] = [47{,}397,\ 52{,}603] \]
+
+The observed sample mean $\bar{x} = 45{,}323$ falls **outside** this interval, so we reject $H_0$ at the $\alpha = 0.05$ level. This is exactly the same decision we reached with the test statistic ($t_{obs} = -3.57$, $p$-value $\approx 0.0006 < 0.05$): a two-sided test rejects $H_0$ precisely when the observed $\bar{x}$ lies outside the $100(1-\alpha)\%$ acceptance region centered at $\mu_0$.
+
+
+### Types of Errors
+
+Conducting a hypothesis test is a simple-enough procedure in the modern age as many software programs effortlessly give out a $p$-value for a chosen test and dataset. However, using tests wisely is another matter entirely. A single significant result is not irrefutable evidence of a statistical relationship. This is because all tests come with a probability of making an error. Moreover, other factors can influence the outcome of a test such as the presence of outliers in the data. In addition, when sample sizes are very large, even tiny deviations from the null hypothesis can be deemed significant - this is related to the **power** of a test. 
+
+Statistical **power** is the ability to reject the null hypothesis when it is, in fact, false. For example, the power of a right-tailed (or upper tail) test of a population mean is given by
+\[ Power = P(t > t_{1-\alpha} | H_0 \ \text{Not True}) \]
+
+There are several factors that influence the power of a statistical test. Some of the ways to increase power are:
+
+  1. Increase the sample size
+  
+  2. Increase the significance level $\alpha$
+  
+  3. Choose a more powerful test
+
+The significance level of a test, like the confidence level, tells us how reliable the test is in repeated use. Thus a test at $\alpha = 0.05$ significance level will return the correct result $95/100$ times when $H_0$ is in fact true and when the test is conducted on data arising from the same conditions. The $5/100$ times that the test gives the incorrect result is called the **type I error** rate
+
+The **type I error** rate is the probability that we reject the null when the null is in fact true (denoted $\alpha$). 
+
+For example, the probability of committing a type I error for a right-tailed (or upper tail) test of a population mean is 
+\[ P( t > t_{1-\alpha} | H_0 \ \text{True}) =\alpha \]
+
+Another type of error that can occur is called a **type II error** (denoted $\beta$). This type of error occurs when we fail to reject the null hypothesis but the alternative hypothesis is true.
+
+
+The probability of committing a type II error for a right-tailed (or upper tail) test of a population mean is 
+\[ P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) =\beta \]
+
+
+Looking at the previous example it is easy to see that power is the complement of the type II error rate.
+
+\[ Power = P(t \geq t_{1-\alpha} | H_0 \ \text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) \]
+\[ = 1-\beta \]
+
+The relationship between the result of a test and the truth underlying the test can be summarized as follows:
+
+```{r, echo=FALSE, warning=F, message=F}
+
+df = rbind.data.frame(x = c('Decision: Reject $H_0$','$\\alpha$', '$1-\\beta$'),
+                      y = c('Decision: Fail To Reject $H_0$','$1 - \\alpha$', '$\\beta$'))
+
+kable(df, format = 'html', digits = 2, col.names = c('', '$H_0$ is True', '$H_0$ is False'),
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+
+```
+
+
+This can be visualized in terms the distribution of the test statistic under the null and alternative hypotheses. The plot below shows the relationship between power, type I and type II error rates in a right-tailed test of a population mean conducted at the $\alpha$ significance level. 
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=6, fig.width=12}
+
+dlim_A = function(x, q, mean, sd, test){
+  q_a = q
+  y = dnorm(x, mean, sd)
+  
+  
+  if(test == 'two.tailed'){
+    y[which(x>-q_a & x<q_a)] <- NA  
+    return(y)
+  }else if (test == 'upper.tail'){
+    y[which(x < q_a)] <- NA
+    return(y)
+  }else{
+    y[which(x > q_a)] <- NA
+    return(y)
+  }
+  
+}
+
+dlim_0 = function(x, q, test){
+  q_a = q
+  y = dnorm(x)
+  
+  
+  if(test == 'two.tailed'){
+    y[which(x>-q_a & x<q_a)] <- NA  
+    return(y)
+  }else if (test == 'upper.tail'){
+    y[which(x < q_a)] <- NA
+    return(y)
+  }else{
+    y[which(x > q_a)] <- NA
+    return(y)
+  }
+  
+}
+
+
+alpha = 0.05
+data = cbind.data.frame(x = seq(-4, 7, 0.001))
+ggplot(data = data, aes(x = x, fill = 'grey'))+theme_bw()+
+  stat_function(fun = dnorm,
+                geom = 'area',
+                fill = 'blue',
+                alpha = 0.5)+
+  
+  stat_function(fun = dnorm,
+                args = list(mean = 3, sd = 1),
+                geom = 'area',
+                fill = 'red',
+                alpha = 0.5)+
+  
+  stat_function(fun = dlim_A,
+                args = list(q = qnorm(1-alpha)+.05, mean = 3, sd = 1, test = 'lower.tail'),
+                geom = 'area',
+                fill = 'green',
+                alpha = 0.9)+
+  stat_function(fun = dlim_0,
+                args = list(q = qnorm(1-alpha)-0.05, test = 'upper.tail'),
+                geom = 'area',
+                fill = 'orange',
+                alpha = 0.9)+
+  
+   stat_function(fun = dnorm,
+                size = 1.5)+
+  
+  stat_function(fun = dnorm,
+                args = list(mean = 3, sd = 1),
+                size = 1.5,
+                linetype = 'dashed')+
+  geom_segment(aes(x = qnorm(1-alpha), y = 0, xend = qnorm(1-alpha), yend = 0.4), size = 1, linetype = 'dotted')+
+  geom_text(aes(x = 0, y = dnorm(0)+0.05), label = 'Distribution Under H0', size = 6)+
+  geom_text(aes(x = 3, y = dnorm(3, 3, 1)+0.05), label = 'Distribution Under HA', size = 6)+
+  geom_text(aes(x = 1.3, y = dnorm(1.3, 3, 1)/2), label = TeX('$\\beta$'), size = 7)+
+  geom_text(aes(x = qnorm(1-alpha)+.4, y = dnorm(qnorm(1-alpha)+0.4)/2), label = TeX('$\\alpha$'), size = 7)+
+  geom_text(aes(x = 3, y = dnorm(3, 3, 1)/2), label = TeX('$1-\\beta$'), size = 9)+
+  scale_x_continuous(breaks=c(0, qnorm(1-alpha), 3),
+        labels=c(TeX('$\\mu_0$'), TeX('$Z_{1-\\alpha}$'), TeX('$\\mu > \\mu_0$')))+
+  ylab('Probability Density')+
+  xlab('')+
+  theme(axis.text = element_text(size = 18),
+        axis.title = element_text(size = 15)) 
+
+
+```
+* in the plot above, the green region represents the probability of committing a type II error, the orange region the probability of committing a type I error and the pink/red region is the power of the test. 
+
+
+**Below** the three panels show the relationship between power, the probability of a type I error and the probability of a type II error.
+```{r, echo=F, message=F, warning=F, fig.height=6, fig.width=10}
+significance.level = seq(0.001, 0.5, 0.001)
+t = qnorm(1-significance.level)
+beta = pnorm(t, mean = 1)
+power = 1-beta
+df = cbind.data.frame(significance.level, t , beta, power)
+
+A=ggplot(data = df, aes(x = significance.level, y = power))+geom_line(size = 1)+
+  theme_hc()+
+  xlab(TeX("Significance level $\\alpha$"))+
+  ylab("Power")+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
+
+B=ggplot(data = df, aes(x = beta, y = power))+geom_line(size = 1)+
+  theme_hc()+
+  xlab(TeX("Type II Error $\\beta$"))+
+  ylab("Power")+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
+
+C=ggplot(data = df, aes(x = beta, y = significance.level))+geom_line(size = 1)+
+  theme_hc()+
+  xlab(TeX("Type II Error $\\beta$"))+
+  ylab(TeX("Significance level $\\alpha$"))+
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
+
+
+
+ggarrange(ggarrange(A, B, ncol = 2), C, nrow = 2)
+
+```

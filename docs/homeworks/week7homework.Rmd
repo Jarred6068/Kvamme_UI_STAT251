@@ -5,7 +5,18 @@ output:
   pdf_document: default
 always_allow_html: true
 header-includes:
-  \usepackage{float}
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{colortbl}
+  - \usepackage{wrapfig}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
 bibliography: ../misc/home2bibs.bib
 ---
 
@@ -17,6 +28,10 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
 #knitr::opts_chunk$set(list(echo = FALSE, eval = FALSE))
 library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -24,8 +39,7 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 mainpath = '../Data/'
-wmpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/watermelon/simulated datasets/ wawamelon/WaterMelonMaster.csv'
-whiskpath = 'C:/Users/Bruin/Desktop/GS Academia/MS_Stat/SEM 2/STAT 519/PROJ 1/Whiskers/SimSealData/whiskerMaster.csv'
+whiskpath = '../assets/whiskerMaster.csv'
 
 datapath = '../Data/'
 #<span style="color: red;"></span>
@@ -76,7 +90,7 @@ $\bf (2)$ Suppose that in a class of 30 students, 8 students are in band, 15 stu
 
 $\bf (3)$ A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards (9 numbered cards and 3 face cards, and an Ace). 
 
-* Suppose a single card is drawn at random, what is the probability that it is a numbered?
+* Suppose a single card is drawn at random, what is the probability that it is a numbered card?
 
 <br>
 
@@ -88,7 +102,7 @@ $\bf (4)$ An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two ba
 
 <br>
 
-$\bf (5)$ The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is Windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume that these three types of weather events are independent. What is the probability that a given day is both Rainy, Cloudy, and Windy?
+$\bf (5)$ The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is Windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume that these three types of weather events are independent. What is the probability that a given day is Rainy, Cloudy, and Windy?
 
 <br>
 
@@ -101,8 +115,8 @@ $\bf (6)$ A random variable $X$ has the following probability distribution
 df = cbind.data.frame(X = c(1,2,3,4),
                       `P(X)` = c(0.25, 0.25, 0.25, 0.25))
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -110,7 +124,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%
 
 <br>
 
-* Compute the population mean $\mu$ and population standard deviation $\sigma$ of $\bar{X}$
+* Compute the mean $\mu_{\bar{X}}$ and standard deviation $\sigma_{\bar{X}}$ of the sampling distribution of $\bar{X}$
 
 <br>
 
@@ -126,8 +140,8 @@ $\bf (8)$ Consider a survey of tree volume. Suppose that in the population of tr
 df = cbind.data.frame(X = c(10,20,30,40),
                       `P(X)` = c(0.1, 0.2, 0.3, 0.4))
 
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -148,8 +162,8 @@ $\bf (9)$ Michael Dickson, who plays for the Seattle Seahawks, is a punter in th
 
 df = cbind.data.frame(`$\\bar{X} =$ Mean Punt Distance` = c(35.33, 45.67, 55.00, 60.33, 65.67),
                       `$P(\\bar{X})$` = c(0.4, 0.5, 0.08, 0.01, 0.01))
-kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = T)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
 
@@ -169,7 +183,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%
 
 <br>
 
-$\bf (10)$ A random variable $X$ follows a binomial distribution with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 success, that is what is $P(X < 3)$?
+$\bf (10)$ A random variable $X$ follows a binomial distribution with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 successes, that is what is $P(X < 3)$?
 
 <br>
 
@@ -338,16 +352,16 @@ Using a $Z$-table, find the following (approximate) probabilities for $X$. You c
 
 <br>
 
-* What is the value of $X$ marks the $95th$ percentile of the distribution?
+* What is the value of $X$ that marks the $95th$ percentile of the distribution?
 
 <br>
 
-* What is the value of $X$ marks the $40th$ percentile of the distribution?
+* What is the value of $X$ that marks the $40th$ percentile of the distribution?
 
 <br>
 
 
-${\bf 18.)}$ Suppose that a random variable $X$ follows a normal distribution with mean $\mu = -5$ and standard deviation $\sigma = 1.8$. Using the plot of a the $Z$-distribution below, shade in the area corresponding to the probability $P(-2< X <0.5)$
+${\bf 18.)}$ Suppose that a random variable $X$ follows a normal distribution with mean $\mu = -5$ and standard deviation $\sigma = 1.8$. Using the plot of the $Z$-distribution below, shade in the area corresponding to the probability $P(-2< X <0.5)$
 
 
 

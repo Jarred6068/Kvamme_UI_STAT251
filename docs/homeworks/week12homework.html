@@ -480,6 +480,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
 margin-left:2em;
@@ -639,7 +640,7 @@ degrees of freedom</p></li>
 with the corresponding <span class="math inline">\(\alpha\)</span> level
 and critical value for each confidence interval for a population
 proportion.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -714,7 +715,7 @@ critical value: <span class="math inline">\(z_{1-\alpha/2}\)</span>
 with the corresponding <span class="math inline">\(\alpha\)</span> level
 and critical value for each confidence interval for a population
 mean.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -812,13 +813,13 @@ critical value: <span class="math inline">\(t_{n-1, 1-\alpha/2}\)</span>
 <div id="confidence-intervals-for-a-population-proportion-p" class="section level3">
 <h3>Confidence intervals for a population proportion <span class="math inline">\(p\)</span></h3>
 <p><span class="math inline">\(\bf (4)\)</span> A survey conducted by
-the state of Georgia surveyed colleges students as part of a larger
-effort to characterized student behavior <span class="citation">(Agresti
-and Franklin 2007)</span>. One the questions in the survey asked
+the state of Georgia surveyed college students as part of a larger
+effort to characterize student behavior <span class="citation">(Agresti
+and Franklin 2007)</span>. One of the questions in the survey asked
 students to report their political party affiliation. The table below
 summarizes the proportion of students who reported being Republican,
 Democrat, or Independent.</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -878,7 +879,7 @@ members to complete an online survey <span class="citation">(de Vries
 2023)</span>. One of the survey questions asked customers to rate their
 satisfaction level on a likert scale. The results of this survey
 question are summarized below</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
 Customer responses for the survey question “How satisfied are you with
 your membership of the organisation overall?”
@@ -988,7 +989,7 @@ housing in California taken from the 1990 census. The full dataset is
 featured in Aurélien Géron’s book ‘Hands-On Machine learning with
 Scikit-Learn and TensorFlow’ <span class="citation">(Géron 2022)</span>.
 Use the table to answer parts (a) and (b)</p>
-<table class=" lightable-classic table table-striped" style="color: black; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; color: black; margin-left: auto; margin-right: auto;">
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption>
 Summary statistics for housing data in California from the 1990 census.
 Estimates are derived from a random sample of 25 observations from
@@ -1012,7 +1013,7 @@ Sample Standard Deviation
 <tbody>
 <tr>
 <td style="text-align:left;">
-Median Age of House Owner
+Median Age of Houses (per block)
 </td>
 <td style="text-align:right;">
 24.28
@@ -1110,13 +1111,15 @@ e-cigarettes at the <span class="math inline">\(95\%\)</span> confidence
 level and within a margin of error of <span class="math inline">\(1.5\%\)</span>?</p>
 <p><br></p>
 <p><span class="math inline">\(\bf (8)\)</span> Recent concerns over the
-rise in global infertility has drawn significant attention to the
+rise in global infertility have drawn significant attention to the
 harmful effects of microplastics, PFAS, and highly processed foods <span class="citation">(Zhang et al. 2022; Agarwal et al. 2015)</span>. A
-study from 2002 published in found that approximately <span class="math inline">\(15\%\)</span> of couples worldwide experienced
-infertility <span class="citation">(Sharlip et al. 2002)</span>.
-Assuming a similar rate of infertility in the U.S, compute the sample
-size needed to estimate infertility of U.S couples at the <span class="math inline">\(99\%\)</span> confidence level and within a margin
-of error of <span class="math inline">\(4\%\)</span>.</p>
+study from 2002 published in <i>Fertility and Sterility</i> found that
+approximately <span class="math inline">\(15\%\)</span> of couples
+worldwide experienced infertility <span class="citation">(Sharlip et al.
+2002)</span>. Assuming a similar rate of infertility in the U.S, compute
+the sample size needed to estimate infertility of U.S couples at the
+<span class="math inline">\(99\%\)</span> confidence level and within a
+margin of error of <span class="math inline">\(4\%\)</span>.</p>
 <p><br></p>
 </div>
 <div id="assumptions-of-estimators" class="section level3">
@@ -1214,11 +1217,11 @@ the manufacturer’s claim?</li>
 company has developed a new drug designed to cure a specific bacterial
 infection. They claim that their drug is effective, with a cure rate of
 <span class="math inline">\(20\%\)</span>. However, a group of
-independent researchers believes that the cure rate less than what the
-pharmaceutical company claims. To investigate, the researchers conduct a
-clinical trial on <span class="math inline">\(300\)</span> patients
-suffering from the bacterial infection. After the trial, they find that
-<span class="math inline">\(70\)</span> out of the <span class="math inline">\(300\)</span> patients were cured using the new
+independent researchers believes that the cure rate is less than what
+the pharmaceutical company claims. To investigate, the researchers
+conduct a clinical trial on <span class="math inline">\(300\)</span>
+patients suffering from the bacterial infection. After the trial, they
+find that <span class="math inline">\(70\)</span> out of the <span class="math inline">\(300\)</span> patients were cured using the new
 drug. To test their suspicion, they set up a hypothesis test with a
 significance level of <span class="math inline">\(\alpha = 0.05\)</span>
 with <span class="math inline">\(H_0: p_0 = 0.2\)</span>, <span class="math inline">\(H_A: p &lt; p_0\)</span></p>
@@ -1227,7 +1230,7 @@ with <span class="math inline">\(H_0: p_0 = 0.2\)</span>, <span class="math inli
 <li><p>b.) Compute the test statistic <span class="math inline">\(Z_{obs}\)</span></p></li>
 <li><p>c.) Compute the <span class="math inline">\(p\)</span>-value</p></li>
 <li><p>d.) Is there enough evidence to conclude that the cure rate of
-the new drug is less than rate claimed by the pharmaceutical
+the new drug is less than the rate claimed by the pharmaceutical
 company?</p></li>
 </ul>
 <p><br></p>
@@ -1241,7 +1244,7 @@ sample mean is found to be <span class="math inline">\(1.3\)</span>
 grams of added sugar per can, with a standard deviation of <span class="math inline">\(0.5\)</span> grams. To determine if there is
 enough evidence to reject the company’s claim and conclude that the soda
 does not contain zero grams of added sugar per can, a group of
-researchers are interested in testing the following hypotheses: <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> at the <span class="math inline">\(\alpha = 0.01\)</span> significance level.</p>
+researchers is interested in testing the following hypotheses: <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> at the <span class="math inline">\(\alpha = 0.01\)</span> significance level.</p>
 <ul>
 <li>a.) Using the significance level above, is there evidence that the
 soda produced by the soft drink company contains added sugars?</li>
@@ -1256,10 +1259,9 @@ in their greenhouse is higher than this historical value. To
 investigate, they take a random sample of <span class="math inline">\(40\)</span> Venus fly traps and measure their
 growth rates over a year. After the study, they find that the sample
 mean growth rate for the <span class="math inline">\(40\)</span> Venus
-fly traps is <span class="math inline">\(105\)</span> millimeters with a
-standard deviation of <span class="math inline">\(12\)</span>mm. To test
-their suspicion, they set up a hypothesis test with a significance level
-of <span class="math inline">\(\alpha = 0.05\)</span></p>
+fly traps is <span class="math inline">\(105\)</span> millimeters per
+year with a standard deviation of <span class="math inline">\(12\)</span>mm. To test their suspicion, they set
+up a hypothesis test with a significance level of <span class="math inline">\(\alpha = 0.05\)</span></p>
 <ul>
 <li><p>a.) State the null and alternative hypotheses</p></li>
 <li><p>b.) Compute the critical value for this test</p></li>
@@ -1276,7 +1278,7 @@ year?</p></li>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-agarwal2015unique" class="csl-entry">
 Agarwal, Ashok, Aditi Mulgund, Alaa Hamada, and Michelle Renee Chyatte.
 2015. <span>“A Unique View on Male Infertility Around the Globe.”</span>

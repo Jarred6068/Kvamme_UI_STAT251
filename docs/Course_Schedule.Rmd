@@ -10,6 +10,10 @@ urlcolor: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+**STAT 251 -- Fall 2026.** Classes begin Monday, August 24 and end Friday, December 11.
+Labor Day (September 7) and Fall Recess (November 23--27) are university holidays.
+Final examinations run December 14--18.
+
 <table border="1" cellspacing="10" style="width:60%">
     <tr>
         <td>**WEEK 1**</td>
@@ -24,20 +28,8 @@ knitr::opts_chunk$set(echo = TRUE)
         <td></td>
     </tr>
     <tr>
-        <td>Monday </td>
-        <td>January 8, 2024</td>
-        <td>NO CLASS</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Wednesday</td>
-        <td>January 10, 2024</td>
+        <td>Monday</td>
+        <td>August 24, 2026</td>
         <td>Introduction: The big picture</td>
         <td></td>
     </tr>
@@ -48,9 +40,27 @@ knitr::opts_chunk$set(echo = TRUE)
         <td></td>
     </tr>
     <tr>
-        <td>Friday</td>
-        <td>January 12, 2024</td>
+        <td>Wednesday</td>
+        <td>August 26, 2026</td>
         <td>Describing and visualizing distributions</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Friday</td>
+        <td>August 28, 2026</td>
+        <td>Distributions and frequency tables</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -67,8 +77,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>January 15, 2024</td>
-        <td>No Class </td>
+        <td>August 31, 2026</td>
+        <td>Measures of location and position</td>
         <td></td>
     </tr>
     <tr>
@@ -79,8 +89,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>January 17, 2024</td>
-        <td>CLASS CANCELED - Flooding TLC</td>
+        <td>September  2, 2026</td>
+        <td>Measures of spread, boxplot</td>
         <td></td>
     </tr>
     <tr>
@@ -91,8 +101,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>January 19, 2024</td>
-        <td>Distributions and frequency tables</td>
+        <td>September  4, 2026</td>
+        <td>Measures of spread, cumulative distributions</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -109,8 +125,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>January 22, 2024</td>
-        <td>Measures of location and position</td>
+        <td>September  7, 2026</td>
+        <td>Labor Day - NO CLASS</td>
         <td></td>
     </tr>
     <tr>
@@ -121,8 +137,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>January 24, 2024</td>
-        <td>Measures of spread, boxplot</td>
+        <td>September  9, 2026</td>
+        <td>The normal distribution, z-scores, transformations</td>
         <td></td>
     </tr>
     <tr>
@@ -133,8 +149,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>January 26, 2024</td>
-        <td>CLASS CANCELED</td>
+        <td>September 11, 2026</td>
+        <td>Identifying outliers, margin of error, statistical significance</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -151,8 +173,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>January 29, 2024</td>
-        <td>Measures of spread, cumulative distributions </td>
+        <td>September 14, 2026</td>
+        <td>Study and sampling designs</td>
         <td></td>
     </tr>
     <tr>
@@ -163,8 +185,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>January 31, 2024</td>
-        <td>Exam 1 Review </td>
+        <td>September 16, 2026</td>
+        <td>Exam 1 Review</td>
         <td></td>
     </tr>
     <tr>
@@ -175,8 +197,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>February 2, 2024</td>
-        <td>Exam 1 </td>
+        <td>September 18, 2026</td>
+        <td>Exam 1</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -193,8 +221,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>February 5, 2024</td>
-        <td>The normal distribution, z-scores, transformations</td>
+        <td>September 21, 2026</td>
+        <td>Introduction to probability, random variables, discrete probability distributions</td>
         <td></td>
     </tr>
     <tr>
@@ -205,8 +233,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>February 7, 2024</td>
-        <td>Identifying outliers, margin of error, statistical significance</td>
+        <td>September 23, 2026</td>
+        <td>Discrete probability distributions</td>
         <td></td>
     </tr>
     <tr>
@@ -217,8 +245,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>February 9, 2024</td>
-        <td>Study and sampling designs</td>
+        <td>September 25, 2026</td>
+        <td>Continuous probability distributions</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -235,8 +269,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>February 12, 2024</td>
-        <td>Introduction to probability, random variables, discrete probability distributions</td>
+        <td>September 28, 2026</td>
+        <td>Sampling distributions and the central limit theorem</td>
         <td></td>
     </tr>
     <tr>
@@ -247,8 +281,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>February 14, 2024</td>
-        <td>Discrete probability distributions</td>
+        <td>September 30, 2026</td>
+        <td>More on sampling distributions, Introduction to confidence intervals</td>
         <td></td>
     </tr>
     <tr>
@@ -259,8 +293,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>February 16, 2024</td>
-        <td>Continuous probability distributions</td>
+        <td>October  2, 2026</td>
+        <td>Confidence Intervals for a population proportion</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -277,8 +317,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>February 19, 2024</td>
-        <td>NO CLASS</td>
+        <td>October  5, 2026</td>
+        <td>Confidence Intervals for a population mean</td>
         <td></td>
     </tr>
     <tr>
@@ -289,8 +329,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>February 21, 2024</td>
-        <td>Sampling distributions and the central limit theorem</td>
+        <td>October  7, 2026</td>
+        <td>Bootstrap confidence intervals</td>
         <td></td>
     </tr>
     <tr>
@@ -301,8 +341,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>February 23, 2024</td>
-        <td>More on sampling distributions, Introduction to confidence intervals</td>
+        <td>October  9, 2026</td>
+        <td>Choosing a minimum sample size, assumptions of estimators</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -319,8 +365,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>February 26, 2024</td>
-        <td>Confidence Intervals for a population proportion</td>
+        <td>October 12, 2026</td>
+        <td>Catch-up / review buffer</td>
         <td></td>
     </tr>
     <tr>
@@ -331,8 +377,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>February 28, 2024</td>
-        <td>Confidence Intervals for a population mean</td>
+        <td>October 14, 2026</td>
+        <td>Exam 2 Review</td>
         <td></td>
     </tr>
     <tr>
@@ -343,8 +389,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>March 1, 2024</td>
-        <td>Bootstrap confidence intervals</td>
+        <td>October 16, 2026</td>
+        <td>Exam 2</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -361,8 +413,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>March 4, 2024</td>
-        <td>Choosing a minimum sample size, assumptions of estimators </td>
+        <td>October 19, 2026</td>
+        <td>Introduction to significance tests, P-values</td>
         <td></td>
     </tr>
     <tr>
@@ -373,8 +425,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>March 6, 2024</td>
-        <td>Exam 2 Review </td>
+        <td>October 21, 2026</td>
+        <td>Tests for a population proportion</td>
         <td></td>
     </tr>
     <tr>
@@ -385,8 +437,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>March 8, 2024</td>
-        <td>Exam 2</td>
+        <td>October 23, 2026</td>
+        <td>Tests for a population mean</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -403,8 +461,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>March 11, 2024</td>
-        <td>Spring Recess no Class </td>
+        <td>October 26, 2026</td>
+        <td>Composite hypotheses, relationship between confidence intervals and hypothesis tests, the sign test</td>
         <td></td>
     </tr>
     <tr>
@@ -415,8 +473,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>March 13, 2024</td>
-        <td></td>
+        <td>October 28, 2026</td>
+        <td>Making decisions, types of errors in hypothesis tests, statistical power</td>
         <td></td>
     </tr>
     <tr>
@@ -427,7 +485,13 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>March 15, 2024</td>
+        <td>October 30, 2026</td>
+        <td>Introduction to two-sample tests, independent vs dependent samples</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
     </tr>
@@ -445,8 +509,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>March 18, 2024</td>
-        <td>Introduction to significance tests, Pvalues</td>
+        <td>November  2, 2026</td>
+        <td>Tests for comparing two independent proportions or two independent means</td>
         <td></td>
     </tr>
     <tr>
@@ -457,8 +521,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>March 20, 2024</td>
-        <td>Tests for a population proportion</td>
+        <td>November  4, 2026</td>
+        <td>Tests for dependent samples, causal inference</td>
         <td></td>
     </tr>
     <tr>
@@ -469,8 +533,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>March 22, 2024</td>
-        <td>NO CLASS</td>
+        <td>November  6, 2026</td>
+        <td>Introduction to analyzing categorical variables</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -487,8 +557,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>March 25, 2024</td>
-        <td>Tests for a population mean</td>
+        <td>November  9, 2026</td>
+        <td>Goodness-of-fit tests and tests of independence</td>
         <td></td>
     </tr>
     <tr>
@@ -499,8 +569,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>March 27, 2024</td>
-        <td>Composite hypotheses, relationship between confidence intervals and hypothesis tests, the sign test</td>
+        <td>November 11, 2026</td>
+        <td>Cramer's V, McNemar's Test, Fisher's exact test</td>
         <td></td>
     </tr>
     <tr>
@@ -511,8 +581,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>March 29, 2024</td>
-        <td>Making decisions, types of errors in hypothesis test, statistical power</td>
+        <td>November 13, 2026</td>
+        <td>Catch-up / review buffer</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -529,8 +605,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>April 1, 2024</td>
-        <td>Introduction to two-sample tests, independent vs dependent samples</td>
+        <td>November 16, 2026</td>
+        <td>Measures of association</td>
         <td></td>
     </tr>
     <tr>
@@ -541,8 +617,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>April 3, 2024</td>
-        <td>Tests for comparing two independent proportions or two independent means</td>
+        <td>November 18, 2026</td>
+        <td>Exam 3 Review</td>
         <td></td>
     </tr>
     <tr>
@@ -553,12 +629,18 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>April 5, 2024</td>
-        <td>Tests for dependent samples, causal inference</td>
+        <td>November 20, 2026</td>
+        <td>Exam 3</td>
         <td></td>
     </tr>
     <tr>
-        <td>**WEEK 14**</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>**WEEK 14 -- FALL RECESS**</td>
         <td></td>
         <td></td>
         <td></td>
@@ -571,8 +653,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>April 8, 2024</td>
-        <td>Introduction to analyzing categorical variables</td>
+        <td>November 23, 2026</td>
+        <td>FALL RECESS - No Class</td>
         <td></td>
     </tr>
     <tr>
@@ -583,8 +665,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>April 10, 2024</td>
-        <td>Goodness-of-fit tests and tests of independence</td>
+        <td>November 25, 2026</td>
+        <td>FALL RECESS - No Class</td>
         <td></td>
     </tr>
     <tr>
@@ -595,8 +677,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>April 12, 2024</td>
-        <td>Cramers V, McNemars Test, Fishers exact test</td>
+        <td>November 27, 2026</td>
+        <td>FALL RECESS - No Class</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -613,8 +701,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>April 15, 2024</td>
-        <td>Exam 3 Review</td>
+        <td>November 30, 2026</td>
+        <td>Correlation and simple linear regression</td>
         <td></td>
     </tr>
     <tr>
@@ -625,8 +713,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>April 17, 2024</td>
-        <td>Exam 3</td>
+        <td>December  2, 2026</td>
+        <td>Coefficient of determination, tests for slope coefficients</td>
         <td></td>
     </tr>
     <tr>
@@ -637,8 +725,14 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>April 19, 2024</td>
-        <td>Measures of association </td>
+        <td>December  4, 2026</td>
+        <td>ANOVA</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
     <tr>
@@ -655,49 +749,7 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Monday</td>
-        <td>April 22, 2024</td>
-        <td>Correlation and simple linear regression</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Wednesday</td>
-        <td>April 24, 2024</td>
-        <td>Coefficient of determination, tests for slope coefficients </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Friday</td>
-        <td>April 26, 2024</td>
-        <td>ANOVA</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>**No Exam WEEK**</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>**Day**</td>
-        <td>**Date**</td>
-        <td>**Topic**</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Monday</td>
-        <td>April 29, 2024</td>
+        <td>December  7, 2026</td>
         <td>ANOVA continued</td>
         <td></td>
     </tr>
@@ -709,7 +761,7 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Wednesday</td>
-        <td>May 1, 2024</td>
+        <td>December  9, 2026</td>
         <td>Final exam Jeopardy review</td>
         <td></td>
     </tr>
@@ -721,32 +773,32 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>May 3, 2024</td>
+        <td>December 11, 2026</td>
         <td>Optional Q & A Session</td>
         <td></td>
     </tr>
     <tr>
-        <td>**Final Exam WEEK**</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Monday</td>
-        <td>May 6, 2024</td>
-        <td>Final Exam Day, Time: 8:00 am - 10:00 am TLC 022</td>
-        <td></td>
-    </tr>
-    <tr>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td>Wednesday</td>
-        <td>May 8, 2024</td>
+        <td>**FINALS WEEK**</td>
         <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>**Day**</td>
+        <td>**Date**</td>
+        <td>**Topic**</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Monday--Friday</td>
+        <td>December 14--18, 2026</td>
+        <td>Final Exam -- day, time and room set by the Registrar</td>
         <td></td>
     </tr>
     <tr>
@@ -757,7 +809,8 @@ knitr::opts_chunk$set(echo = TRUE)
     </tr>
     <tr>
         <td>Friday</td>
-        <td>May 10, 2024</td>
+        <td>December 18, 2026</td>
         <td>Course project due at midnight</td>
+        <td></td>
     </tr>
 </table>

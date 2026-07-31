@@ -44,10 +44,12 @@ navbar:
             href: lecturemenu12.html
           - text: 'Week 13'
             href: lecturemenu13.html
-          - text: 'Week 14'
+          - text: 'Week 14 — Fall Recess'
             href: lecturemenu14.html
           - text: 'Week 15'
             href: lecturemenu15.html
+          - text: 'Week 16'
+            href: lecturemenu16.html
         - text: 'Lecture Slides'
           href: lecslidesindex.html
     - text: 'Homeworks'
@@ -114,34 +116,8 @@ navbar:
         href: data.html
     - text: 'Resources'
       menu:
-        - text: 'Apps'
-          menu:
-          - text: 'App Descriptions'
-            href: shiny_apps/app_descriptions.html
-          - text: 'Convert files text'
-            href: shiny_apps/site/Convert_file_to_text/index.html
-          - text: 'Random Variables'
-            href: shiny_apps/site/HistoPlot/index.html
-          - text: 'Statistic Calculator'
-            href: shiny_apps/site/Stat_calculator/index.html
-          - text: 'Frequency Tables'
-            href: shiny_apps/site/Freq_table/index.html
-          - text: 'Graphing'
-            href: shiny_apps/site/Make_Graph/index.html
-          - text: 'LLN Example'
-            href: shiny_apps/site/LLN/index.html
-          - text: 'PMF/PDF Calculator'
-            href: shiny_apps/site/Compute_probs/index.html
-          - text: 'One Sample Tests'
-            href: shiny_apps/site/one_sample_hypothesis_tests/index.html
-          - text: 'Two Sample Tests'
-            href: shiny_apps/site/two_sample_hypothesis_tests/index.html
-          - text: 'Categorical Tests'
-            href: shiny_apps/site/categorical_tests/index.html
-          - text: 'Non-Parametric Tests'
-            href: shiny_apps/site/non_parametric_tests/index.html
-          - text: 'Regression/ANOVA'
-            href: shiny_apps/site/Regression/index.html
+        - text: 'Tools/Calculators'
+          href: https://stat-tools.jmks-homelab.dev/
         - text: 'SAC schedule'
           href: sac_schedule.html
         - text: 'Tables'
