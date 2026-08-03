@@ -10,6 +10,7 @@ library(VennDiagram)
 
 #this function is a helper function for gen.density.plot
 d_limit <- function(x, alpha, test, dist, n) {
+  test <- match.arg(test, c('two.tailed', 'upper.tail', 'lower.tail'))
   if(dist == 'z'){
     y = dnorm(x)
     q_a = qnorm(1-alpha)
@@ -36,9 +37,11 @@ d_limit <- function(x, alpha, test, dist, n) {
 # this function plots a density curve for the z and t distributions and allows for shading the 
 # the rejection regions on the plot
 gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c('z','t'), alpha = 0.05, obs = 0.5,
-                          test = c('two.tail','lower.tail', 'upper.tail'), shade = TRUE,
+                          test = c('two.tailed','lower.tail', 'upper.tail'), shade = TRUE,
                           txt.sz = 5){
-  
+  test <- match.arg(test)
+  dist <- match.arg(dist)
+
   p = ggplot(data.frame(x = bbox), aes(x = x))+
     theme_bw()
   if(shade == TRUE){
@@ -189,6 +192,7 @@ one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
 # test for a population proportion 
 one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                                 verbose = TRUE){
+  test <- match.arg(test)
   
   estimate.SE = one.sample.prop.SE(p0, n)
   Zobs = (phat - p0)/estimate.SE
@@ -269,6 +273,7 @@ one.sample.t.CI = function(xbar, s, n, alpha = 0.05, verbose = FALSE){
 # one sample t test 
 one.sample.t.test = function(m0, xbar, s, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                              verbose = TRUE){
+  test <- match.arg(test)
   
   df = n - 1
   estimate.SE = one.sample.t.SE(s, n)
@@ -349,6 +354,7 @@ two.sample.prop.CI = function(p1,p2,n1,n2,tail = 'two.tail',alpha = 0.05, verbos
 #two sample proportion test
 two.sample.prop.test = function(p0,x1,x2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                                 pooled = TRUE, verbose = TRUE){
+  test <- match.arg(test)
   
   
   p1 = x1/n1
@@ -438,6 +444,8 @@ two.sample.t.CI = function(x1,x2,s1,s2,n1,n2, tail = 'two.tail',alpha = 0.05, ve
 #two sample t test 
 two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                              pooling = c('pooled', 'unpooled','approx.unpooled'), verbose = TRUE){
+  test <- match.arg(test)
+  pooling <- match.arg(pooling)
   
   estimate = x1 - x2
   estimate.SE = two.sample.t.SE(s1, s2, n1, n2)
@@ -497,6 +505,7 @@ two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.
 # the classic sign test
 sign.test = function(p0, x1, x2, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                      verbose = TRUE){
+  test <- match.arg(test)
   
   diffs = x1 - x2
   total.signs = sum(diffs>0)+sum(diffs<0)
@@ -563,6 +572,7 @@ rank.sum.stat=function(X, Y){
 # the classic Wilcoxon sum-rank test for two indepdent samples
 Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, alpha = 0.05, 
                                   test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE){
+  test <- match.arg(test)
   
   if(is.null(S)){
     S = rank.sum.stat(X,Y)
@@ -619,17 +629,26 @@ Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, 
 #A simple function to compute the signed-rank statistic
 sign.rank.stat = function(X,Y, ...){
   diffs = X-Y
-  if(sum(diffs == 0)>0){
-    omit = which(diffs == 0)
-    abs.diffs = abs(diffs[-omit])
-  }else{
-    abs.diffs = abs(diffs)
-  }
-  negative = which(diffs[-omit] < 0)
-  positive = which(diffs[-omit] > 0)
+
+  # Zero differences are discarded, which is the standard Wilcoxon treatment.
+  #
+  # This used to be written as an if/else that defined `omit` ONLY when at
+  # least one difference was zero, and then used `diffs[-omit]` unconditionally
+  # below. With no ties - the normal case for continuous data - `omit` did not
+  # exist and the call failed with "object 'omit' not found". Worse, if an
+  # `omit` happened to exist in the calling environment, R's scoping found it
+  # and silently applied the signs to the WRONG observations, returning a wrong
+  # W with no error at all.
+  #
+  # A logical mask fixes both, and avoids the negative-indexing trap that makes
+  # the obvious repair (omit = integer(0)) just as broken: `x[-integer(0)]`
+  # returns an EMPTY vector, not the whole of x.
+  kept      = diffs[diffs != 0]
+  abs.diffs = abs(kept)
+
   ranks = rank(abs.diffs, ...)
   signed.ranks = ranks
-  signed.ranks[negative] = -1*ranks[negative]
+  signed.ranks[kept < 0] = -1*ranks[kept < 0]
   W = sum(signed.ranks)
   return(list(W = W, differences = diffs, absolute.diff = abs.diffs, ranks = ranks, signed.ranks = signed.ranks))
 }
@@ -638,19 +657,30 @@ sign.rank.stat = function(X,Y, ...){
 Wilcoxon.sign.rank.test = function(m0, X=NULL, Y=NULL, W=NULL, n=NULL,  alpha = 0.05, 
                                   test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE,
                                   ...){
+  test <- match.arg(test)
   
+  # EW, VW and Z used to be computed INSIDE this if-block but are used
+  # unconditionally below (and printed at the end). Passing a precomputed W -
+  # which this signature explicitly invites - therefore failed with
+  # "object 'EW' not found". Same shape of bug as the one in sign.rank.stat
+  # above: assigned in one branch, used in all of them.
   if(is.null(W)){
-    W = sign.rank.stat(X,Y,...)$W
-    if(length(X)==length(Y)){
-      n = length(X)
-      EW = m0
-      VW = (n*(n+1)*(2*n +1))/6
-      Z = (W-m0)/sqrt(VW)
-    }else{
+    if(is.null(X) || is.null(Y)){
+      stop('supply either W (with n), or both X and Y!...stopping')
+    }
+    if(length(X)!=length(Y)){
       stop('length(X) != length(Y)!...stopping')
     }
+    W = sign.rank.stat(X,Y,...)$W
+    n = length(X)
+  }else if(is.null(n)){
+    stop('when W is supplied directly, n must be supplied too!...stopping')
   }
-  
+
+  EW = m0
+  VW = (n*(n+1)*(2*n +1))/6
+  Z = (W-m0)/sqrt(VW)
+
 
   if(test == 'two.tail'){
     crit = qnorm(1-alpha/2, EW, sqrt(VW))
@@ -749,6 +779,7 @@ chi.squared.GOF.test = function(observed.ct=NULL, expected.freq=NULL, expected.c
 # chi square test of independence and homogeneity
 chi.squared.test = function(cont.table, var1.name = NULL, var2.name = NULL, alpha = 0.05, 
                             test = c('homogeneity','independence'), verbose = TRUE,...){
+  test <- match.arg(test)
   
   r.t = rowSums(cont.table)
   c.t = colSums(cont.table)
