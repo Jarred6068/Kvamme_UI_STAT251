@@ -17,6 +17,10 @@ knitr::opts_chunk$set(echo = TRUE)
 Labor Day (September 7) and Fall Recess (November 23--27) are university holidays.
 Final examinations run December 14--18.
 
+For registration deadlines, withdrawal dates, holidays and the official
+academic calendar, see the University of Idaho
+[Dates and Deadlines](https://catalog.uidaho.edu/calendar/) page.
+
 <table border="1" cellspacing="10" style="width:60%">
     <tr>
         <td>**WEEK 1**</td>
