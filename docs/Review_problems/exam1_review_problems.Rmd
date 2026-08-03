@@ -162,7 +162,7 @@ ggplot()+geom_blank()+
 <br>
 <br>
 ${\bf (4)}$
-Again, consider the 10 observations of measurements made on Egyptian skulls from five epochs given in problem $\bf (1)$. Answer parts (a)  (c) 
+Again, consider the 10 observations of measurements made on Egyptian skulls from five epochs given in problem $\bf (3)$. Answer parts (a)  (c)
 <ol type="a">
   <li>Construct a histogram for the variable $nh$ (nasal height) using the following intervals: $48 < X \leq 50$, $50< X \leq 52$, $52< X\leq 54$, and $54< X\leq 56$. Start by filling in the frequency table below</li>
 
