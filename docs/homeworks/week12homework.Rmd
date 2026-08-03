@@ -56,7 +56,10 @@ export_tbl <- function(x, file, names = NULL, digits = NULL) {
   dir <- '../Data/homework_tables'
   dir.create(dir, showWarnings = FALSE, recursive = TRUE)
   write.csv(d, file.path(dir, file), row.names = FALSE)
-  x
+  # invisible(), not a bare `x`: this helper is always called as a bare
+  # statement for its CSV side effect. Returning x visibly made knitr echo
+  # the entire data frame as ## console output above the real kable table.
+  invisible(x)
 }
 library(knitr)
 library(latex2exp)
