@@ -40,29 +40,36 @@ tryCatch({
   #ggthemes, plyr, ggvenn and surveydata between them) should not cost you the
   #other 28 pages. Failures are collected and reported at the end instead.
   subdirs <- c("homeworks", "misc", "Review_problems", "study_guides")
-  pages <- list.files(subdirs, pattern = "\\.Rmd$", full.names = TRUE)
 
   failures <- list()
-  for (page in pages) {
-    #This one source has spaces in its filename but the navbar links the
-    #hyphenated name, so it was renamed by hand at some point. Rendering it
-    #normally would quietly produce a NEW spaced-name file and leave the linked
-    #page stale and unstyled.
-    out <- if (basename(page) == "Non Parametric Tests For Two Samples.Rmd") {
-      "Non-Parametric-Tests-For-Two-Samples.html"
-    } else NULL
+  for (subdir in subdirs) {
+    #Render from INSIDE each directory rather than passing output_file /
+    #output_dir from docs/. Those arguments leave the working directory at
+    #docs/, so a page reading '../Data/whatever.csv' resolves it to the repo
+    #root instead of docs/Data and dies with "cannot open the connection".
+    #Non-Parametric-Tests-For-Two-Samples is the page that trips on this.
+    #Rendering from within the directory keeps every relative path in the .Rmd
+    #meaning what it says.
+    here <- setwd(subdir)
 
-    message("Rendering: ", page)
-    tryCatch(
-      #output_dir is passed explicitly: render() resolves a relative
-      #output_file against the CURRENT working directory (docs/), not the
-      #input file's directory, so without it the renamed page would be written
-      #to docs/ instead of docs/misc/.
-      rmarkdown::render(page, output_format = "html_document",
-                        output_file = out, output_dir = dirname(page),
-                        quiet = TRUE),
-      error = function(e) failures[[page]] <<- conditionMessage(e)
-    )
+    for (page in list.files(pattern = "\\.Rmd$")) {
+      #This one source has spaces in its filename but the navbar links the
+      #hyphenated name, so it was renamed by hand at some point. Rendering it
+      #normally would quietly produce a NEW spaced-name file and leave the
+      #linked page stale and unstyled.
+      out <- if (page == "Non Parametric Tests For Two Samples.Rmd") {
+        "Non-Parametric-Tests-For-Two-Samples.html"
+      } else NULL
+
+      message("Rendering: ", file.path(subdir, page))
+      tryCatch(
+        rmarkdown::render(page, output_format = "html_document",
+                          output_file = out, quiet = TRUE),
+        error = function(e) failures[[file.path(subdir, page)]] <<- conditionMessage(e)
+      )
+    }
+
+    setwd(here)
   }
 
   if (length(failures)) {
