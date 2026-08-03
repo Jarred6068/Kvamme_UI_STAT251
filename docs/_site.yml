@@ -78,6 +78,20 @@ navbar:
             href: homeworks/week12homework_solns.html
           - text: 'Hmwk 5 Solutions'
             href: homeworks/week14homework_solns.html
+        - text: 'Data & PDF Downloads'
+          menu:
+          - text: 'Homework 1'
+            href: homeworks/homework_downloads.html#hw1
+          - text: 'Homework 2'
+            href: homeworks/homework_downloads.html#hw2
+          - text: 'Homework 3'
+            href: homeworks/homework_downloads.html#hw3
+          - text: 'Homework 4'
+            href: homeworks/homework_downloads.html#hw4
+          - text: 'Homework 5'
+            href: homeworks/homework_downloads.html#hw5
+          - text: 'All downloads'
+            href: homeworks/homework_downloads.html
         - text: 'Reading & Extra Problems'
           href: homeworks/reading_and_book_problems.html
     - text: 'Exam Study Guides'

@@ -32,6 +32,30 @@ library(kableExtra)
 # (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
 #  flattened into a vertical list of cell values instead of a table)
 tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# write the printed table out as a downloadable .csv (linked from the
+# Homeworks > Data & PDF Downloads menu). Returns its input unchanged, so the
+# rendered table is exactly what it was before and the .csv can never drift
+# from the assignment -- both come from this same object.
+export_tbl <- function(x, file, names = NULL, digits = NULL) {
+  d <- as.data.frame(x, check.names = FALSE)
+  if (!is.null(names)) colnames(d) <- names
+  # round to match what the rendered table shows
+  if (!is.null(digits))
+    d[] <- lapply(d, function(cl) if (is.numeric(cl)) round(cl, digits) else cl)
+  # strip inline LaTeX from cells that carry it, so they read plainly in Excel
+  d[] <- lapply(d, function(cl) {
+    if (is.character(cl) || is.factor(cl)) {
+      cl <- as.character(cl)
+      m <- grepl('\\$', cl)
+      cl[m] <- gsub('[${}\\\\_]', '', cl[m])
+    }
+    cl
+  })
+  dir <- '../Data/homework_tables'
+  dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+  write.csv(d, file.path(dir, file), row.names = FALSE)
+  x
+}
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -115,7 +139,8 @@ $\bf (6)$ A random variable $X$ has the following probability distribution
 df = cbind.data.frame(X = c(1,2,3,4),
                       `P(X)` = c(0.25, 0.25, 0.25, 0.25))
 
-kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(export_tbl(df, 'hw3_prob_dist_X.csv', digits = 2, names = c('X', 'P(X)')),
+      format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
@@ -140,7 +165,9 @@ $\bf (8)$ Consider a survey of tree volume. Suppose that in the population of tr
 df = cbind.data.frame(X = c(10,20,30,40),
                       `P(X)` = c(0.1, 0.2, 0.3, 0.4))
 
-kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(export_tbl(df, 'hw3_tree_volume_dist.csv', digits = 2,
+                 names = c('Tree Volume (cubic feet)', 'P(X)')),
+      format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```
@@ -162,7 +189,9 @@ $\bf (9)$ Michael Dickson, who plays for the Seattle Seahawks, is a punter in th
 
 df = cbind.data.frame(`$\\bar{X} =$ Mean Punt Distance` = c(35.33, 45.67, 55.00, 60.33, 65.67),
                       `$P(\\bar{X})$` = c(0.4, 0.5, 0.08, 0.01, 0.01))
-kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = T)%>%
+kable(export_tbl(df, 'hw3_punt_distance_dist.csv', digits = 2,
+                 names = c('Mean Punt Distance (yards)', 'P(Xbar)')),
+      format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
 ```

@@ -33,6 +33,30 @@ library(kableExtra)
 # (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
 #  flattened into a vertical list of cell values instead of a table)
 tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# write the printed table out as a downloadable .csv (linked from the
+# Homeworks > Data & PDF Downloads menu). Returns its input unchanged, so the
+# rendered table is exactly what it was before and the .csv can never drift
+# from the assignment -- both come from this same object.
+export_tbl <- function(x, file, names = NULL, digits = NULL) {
+  d <- as.data.frame(x, check.names = FALSE)
+  if (!is.null(names)) colnames(d) <- names
+  # round to match what the rendered table shows
+  if (!is.null(digits))
+    d[] <- lapply(d, function(cl) if (is.numeric(cl)) round(cl, digits) else cl)
+  # strip inline LaTeX from cells that carry it, so they read plainly in Excel
+  d[] <- lapply(d, function(cl) {
+    if (is.character(cl) || is.factor(cl)) {
+      cl <- as.character(cl)
+      m <- grepl('\\$', cl)
+      cl[m] <- gsub('[${}\\\\_]', '', cl[m])
+    }
+    cl
+  })
+  dir <- '../Data/homework_tables'
+  dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+  write.csv(d, file.path(dir, file), row.names = FALSE)
+  x
+}
 library(knitr)
 library(latex2exp)
 library(gridExtra)
@@ -114,6 +138,10 @@ tab = cbind.data.frame(`Patient Number` = c(1:20),
                        Difference = rep("", 20),
                        Sign = rep("", 20))
 
+# Difference/Sign are blank for students to fill in -- export the scores only
+export_tbl(tab[, 1:3], 'hw5_acne_scores.csv',
+           names = c('Patient Number', 'Score Before Treatment', 'Score After Treatment'))
+
 kable(tab, format = tbl_fmt, digits = 3,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
@@ -142,6 +170,11 @@ herbivore_data <- cbind.data.frame(
   `Difference` = rep('',12),
   `Sign` = rep('',12)
 )
+
+# Difference/Sign are blank for students to fill in -- export the counts only
+export_tbl(herbivore_data[, 1:3], 'hw5_herbivore_tracks.csv',
+           names = c('Observation', 'Number of Tracks In Fertilized Plots',
+                     'Number of Tracks In Control Plots'))
 
 kable(herbivore_data, format = tbl_fmt, digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
@@ -178,7 +211,10 @@ sumtab = cbind.data.frame(`Period` = c('Current Approval (2022 - 2024)', 'Past A
                           `Sample Size` = c(dim(poll_data)[1], dim(hs_poll_data_gallup)[1]),
                           `Mean SCOTUS Approval Rating` = c(mean(poll_data$yes), mean(na.omit(hs_poll_data_gallup$Approve))))
 
-kable(sumtab, format = tbl_fmt, digits = 2,
+kable(export_tbl(sumtab, 'hw5_scotus_summary.csv', digits = 2,
+                 names = c('Period', 'Parameter', 'Sample Size',
+                           'Mean SCOTUS Approval Rating')),
+      format = tbl_fmt, digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
@@ -199,7 +235,11 @@ df = cbind.data.frame(Period = c('Before COVID-19 (2019)', 'After COVID-19 (2020
                       `Registries for Children under 12 Years of Age` = c(18, 16),
                       `Relative Proportion` = c(round(18/70,3), round(16/53,3)))
 
-kable(df, format = tbl_fmt, digits = 2,
+kable(export_tbl(df, 'hw5_covid_child_abuse_reports.csv', digits = 2,
+                 names = c('Period', 'Parameter', 'Total Registries',
+                           'Registries for Children under 12 Years of Age',
+                           'Relative Proportion')),
+      format = tbl_fmt, digits = 2,
       row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
 
