@@ -80,7 +80,7 @@ tryCatch({
     for (f in names(failures)) message("  ", f, "\n    ", failures[[f]])
     message(strrep("-", 70))
   } else {
-    message("\nAll ", length(pages), " subdirectory pages rendered.")
+    message("\nAll ", rendered, " subdirectory pages rendered.")
   }
 }, finally = setwd(old_wd))
 
