@@ -571,8 +571,9 @@ $(document).ready(function () {
      the change here instead of adding a body class for one page.
 
      NOTE: the `author:` map form (author: / name: / email:) used to live in the
-     YAML above. Pandoc renders it as invalid HTML - a nested <a> inside an <a>
-     plus an unbalanced </address> - so it was removed rather than restyled. -->
+     YAML above. Pandoc renders it as invalid HTML - a nested anchor inside an
+     anchor, plus an unbalanced closing address tag - so it was removed rather
+     than restyled. The instructor line in the hero replaces it. -->
 <style>#header { display: none; }</style>
 <div class="hero">
 <p class="eyebrow">
@@ -589,55 +590,42 @@ University of Idaho · Instructor: Jarred Kvamme ·
 <a href="mailto:jarredk@uidaho.edu">jarredk@uidaho.edu</a>
 </p>
 </div>
+<!-- This MUST stay a pandoc raw HTML block (```{=html}).
+     Pandoc parses the inside of a <div> as markdown and treats <a> as an
+     INLINE element, so as plain markdown this grid comes back broken in one of
+     two ways: each card split across two grid cells (the trailing </a> pushed
+     into its own <p>, which then renders as a phantom "Read ->" card), or all
+     six cards wrapped in a single <p>, collapsing the grid to one cell.
+     A raw block is passed through untouched. knitr ignores {=html} fences
+     because they name no engine.
+
+     Card children are <span>s for the same reason - block-level children
+     inside an inline <a> are what pandoc splits on. -->
 <div class="card-grid">
 <a class="card" href="syllabus.html">
-<h2 class="card-title">
-Syllabus
-</h2>
-<p class="card-text">
-Grading, policies, required materials and how the course runs.
-</p>
-<p><span class="card-more">Read →</span> </a></p>
+<span class="card-title">Syllabus</span>
+<span class="card-text">Grading, policies, required materials and how the course runs.</span>
+</a>
 <a class="card" href="Course_Schedule.html">
-<h2 class="card-title">
-Course Schedule
-</h2>
-<p class="card-text">
-Week-by-week topics, reading, and exam dates.
-</p>
-<p><span class="card-more">Browse →</span> </a></p>
+<span class="card-title">Course Schedule</span>
+<span class="card-text">Week-by-week topics, reading, and exam dates.</span>
+</a>
 <a class="card" href="lecturemenu1.html">
-<h2 class="card-title">
-Lecture Notes
-</h2>
-<p class="card-text">
-Worked notes for all sixteen weeks, with R code and figures.
-</p>
-<p><span class="card-more">Weeks 1–16 →</span> </a></p>
+<span class="card-title">Lecture Notes</span>
+<span class="card-text">Worked notes for all sixteen weeks, with R code and figures.</span>
+</a>
 <a class="card" href="homeworks/homework_downloads.html">
-<h2 class="card-title">
-Homework
-</h2>
-<p class="card-text">
-All five assignments as printable PDFs, plus every data file they use.
-</p>
-<p><span class="card-more">Downloads →</span> </a></p>
+<span class="card-title">Homework</span>
+<span class="card-text">All five assignments as printable PDFs, plus every data file they use.</span>
+</a>
 <a class="card" href="study_guides/exam1_study_guide.html">
-<h2 class="card-title">
-Exam Study Guides
-</h2>
-<p class="card-text">
-Study guides and review problems for each exam and the final.
-</p>
-<p><span class="card-more">Prepare →</span> </a></p>
+<span class="card-title">Exam Study Guides</span>
+<span class="card-text">Study guides and review problems for each exam and the final.</span>
+</a>
 <a class="card" href="https://stat-tools.jmks-homelab.dev/">
-<h2 class="card-title">
-Tools &amp; Calculators
-</h2>
-<p class="card-text">
-Interactive calculators for probabilities, tests, and plots.
-</p>
-<p><span class="card-more">Open →</span> </a></p>
+<span class="card-title">Tools &amp; Calculators</span>
+<span class="card-text">Interactive calculators for probabilities, tests, and plots.</span>
+</a>
 </div>
 <div class="band">
 <h2 class="band-title">
