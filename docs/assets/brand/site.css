@@ -817,6 +817,21 @@ a,
   margin: 0;
 }
 
+/* The hero is dark in BOTH themes, so links inside it always need the
+   dark-background treatment. Without this they inherit light mode's
+   --site-link (black), which is invisible on the black hero - the instructor
+   email silently vanished. Gold is 9.4:1 here, so it is safe. */
+.main-container .hero a {
+  color: var(--uidaho-pride-gold);
+  text-decoration-color: var(--uidaho-pride-gold);
+}
+
+.main-container .hero a:hover,
+.main-container .hero a:focus {
+  color: var(--uidaho-pride-gold);
+  background-color: rgba(var(--uidaho-white-rgb), 0.12);
+}
+
 
 /* 15. Buttons ======================================================== */
 
