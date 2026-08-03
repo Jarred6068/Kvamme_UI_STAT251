@@ -1,0 +1,48 @@
+/*
+ * University of Idaho brand colors.
+ * Source: https://www.uidaho.edu/brand
+ *
+ * Tagline: "Driving discovery, innovation and impact"
+ *
+ * Usage notes:
+ * - Pride Gold is the primary brand color.
+ * - Silver, White, and Black are secondary.
+ * - Metallic Gold is intentionally omitted: it's special-use only and
+ *   requires consultation with U of I Creative Services.
+ * - U of I logos/wordmarks are registered trademarks: do not alter color,
+ *   rotation, proportion, or apply effects (drop shadows, etc.).
+ */
+
+:root {
+  /* Primary */
+  --uidaho-pride-gold: #F1B300;
+  --uidaho-pride-gold-rgb: 241, 179, 0;
+
+  /* Secondary */
+  --uidaho-silver: #808080;
+  --uidaho-silver-rgb: 128, 128, 128;
+
+  --uidaho-white: #FFFFFF;
+  --uidaho-white-rgb: 255, 255, 255;
+
+  --uidaho-black: #191919;
+  --uidaho-black-rgb: 25, 25, 25;
+
+  /* Semantic aliases */
+  --uidaho-brand-primary: var(--uidaho-pride-gold);
+  --uidaho-brand-on-primary: var(--uidaho-black);
+  --uidaho-brand-text: var(--uidaho-black);
+  --uidaho-brand-surface: var(--uidaho-white);
+  --uidaho-brand-muted: var(--uidaho-silver);
+
+  /* Typography */
+  --uidaho-brand-font-sans: system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --uidaho-brand-eyebrow-letter-spacing: 0.05em;
+
+  /* Decorative */
+  --uidaho-brand-accent-border-width: 4px;
+  --uidaho-brand-accent-border: var(--uidaho-brand-accent-border-width) solid
+    var(--uidaho-pride-gold);
+  --uidaho-brand-separator-color: rgba(var(--uidaho-silver-rgb), 0.4);
+}

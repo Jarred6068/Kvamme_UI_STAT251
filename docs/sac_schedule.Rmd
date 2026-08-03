@@ -1,7 +1,10 @@
 ---
 title: "Statistics Assistance Center (SAC) Schedule"
-output:
-  html_document: default
+output: html_document
+## NOTE: keep this a scalar (or a non-empty map). The form
+##   output:
+##     html_document: default
+## silently discards the whole _site.yml output block - see _site.yml.
 ---
 
 ```{r setup, include=FALSE}

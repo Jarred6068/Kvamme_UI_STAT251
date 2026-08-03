@@ -1,9 +1,12 @@
 ---
 title: "Week 11 Notes"
 author: "STAT 251 Section 03"
-output:
-  html_document: default
-  #pdf_document: default
+output: html_document
+## pdf_document: default   ## (already disabled before this change)
+## NOTE: keep this a scalar (or a non-empty map). The form
+##   output:
+##     html_document: default
+## silently discards the whole _site.yml output block - see _site.yml.
 always_allow_html: true
 header-includes:
   \usepackage{float}

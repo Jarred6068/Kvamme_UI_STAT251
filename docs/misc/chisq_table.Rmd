@@ -1,8 +1,11 @@
 ---
 title: "Chi Square Distribution"
 author: "STAT 251 Section 03"
-output:
-  html_document: default
+output: html_document
+## NOTE: keep this a scalar (or a non-empty map). The form
+##   output:
+##     html_document: default
+## silently discards this directory's _output.yml - see docs/_site.yml.
   #pdf_document: default
 always_allow_html: true
 header-includes:

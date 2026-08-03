@@ -1,8 +1,10 @@
 ---
 title: "Syllabus"
 output:
+  html_document:
+    keep_md: false   ## no-op; its only job is to keep html_document a MAP
+                     ## so the _site.yml output block merges in. See _site.yml.
   pdf_document: default
-  html_document: default
 header-includes: \usepackage{float} \usepackage{hyperref}
 urlcolor: blue
 ---

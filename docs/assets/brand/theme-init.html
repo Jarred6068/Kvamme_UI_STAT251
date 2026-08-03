@@ -1,0 +1,24 @@
+<!--
+  Pre-paint theme resolution. Included via `includes: in_header:` so it lands in
+  <head> and runs synchronously before first paint - that is what prevents a
+  flash of the wrong theme on load.
+
+  We ALWAYS set data-theme (never leave it unset), which lets site.css express
+  dark mode as a plain `:root[data-theme="dark"]` block with no duplicated
+  @media (prefers-color-scheme) rules.
+-->
+<script>
+(function () {
+  var stored = null;
+  // localStorage THROWS (not returns null) in Safari private browsing and in
+  // some file:// contexts - which is exactly how these pages get previewed
+  // locally. An uncaught throw here would leave data-theme unset and kill
+  // every dark-mode rule on the page.
+  try { stored = window.localStorage.getItem('stat251-theme'); } catch (e) { stored = null; }
+
+  var theme = (stored === 'dark' || stored === 'light') ? stored :
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
