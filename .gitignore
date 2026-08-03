@@ -1,12 +1,24 @@
 # docs/Data is ignored wholesale because it holds bulky teaching datasets
-# (Spotify_Youtube.csv alone is 30 MB). The exceptions below are the small files
-# the site actually serves to students from the Homeworks > Data & PDF Downloads
-# page -- without them those links 404 on GitHub Pages.
+# (Spotify_Youtube.csv alone is 30 MB). The exceptions below are the files the
+# student-facing pages actually need: without them the download links 404 on
+# GitHub Pages and the homework/review/exam sources cannot be re-rendered.
 /docs/Data/*
 !/docs/Data/homework_tables/
+
+# linked directly from Homeworks > Data & PDF Downloads
 !/docs/Data/cereal.csv
 !/docs/Data/sports_motivation_summary.csv
 !/docs/Data/frog_body_sizes.csv
+
+# read at render time by homeworks/, Review_problems/, Examinations/, misc/
+!/docs/Data/georgia_student_survey.csv
+!/docs/Data/historical_scotus_approval.csv
+!/docs/Data/housing.csv
+!/docs/Data/NL_team_statistics.csv
+!/docs/Data/RLData.txt
+!/docs/Data/scotus_approval_polls.csv
+!/docs/Data/systol_table.csv
+!/docs/Data/teacher_salary.csv
 /docs/Examinations
 CLAUDE.md
 
