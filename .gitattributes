@@ -1,0 +1,16 @@
+# The rendered site is committed (GitHub Pages serves docs/ directly), so every
+# build shows up in review. Mark it generated: GitHub then collapses these files
+# in pull requests instead of surfacing thousands of lines of pandoc output.
+#
+# This matters here more than usual. The 28 self-contained pages under
+# homeworks/, misc/, Review_problems/ and study_guides/ inline the brand
+# stylesheet, and pandoc is inconsistent about whether it emits that stylesheet
+# pretty-printed or collapsed onto one very long line. Both render identically,
+# but the flip reads as ~850 deletions per page - a ~24,000-line diff for a
+# two-line CSS change. See docs/assets/brand/README.md.
+#
+# linguist-generated (not -diff): the diff stays available if you ask for it,
+# it is just collapsed by default. Never treat these files as review signal -
+# check the .Rmd/.css sources instead, and re-render to reproduce.
+docs/**/*.html linguist-generated=true
+docs/syllabus.pdf binary

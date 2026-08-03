@@ -66,6 +66,32 @@ candidates for an upstream PR rather than a permanent local fork:
 - **No `url()` anywhere.** The 29 subdirectory pages render self-contained,
   which inlines this stylesheet; pandoc then re-resolves `url()` against a
   different base and the reference breaks silently.
+
+- **Editing this file can produce an enormous, meaningless diff.** When the
+  stylesheet is inlined into the 28 self-contained pages, pandoc sometimes emits
+  it pretty-printed (one declaration per line) and sometimes emits the *entire
+  stylesheet on a single ~20,000-character line*. The rendered pages are
+  byte-equivalent either way and look identical, but git scores the flip as
+  ~850 deletions and 1 insertion **per page** — so a two-line CSS tweak can show
+  up as a ~24,000-line deletion across the site.
+
+  Ruled out by testing: file size (padding the old stylesheet *larger* did not
+  trigger it), line endings (LF and CRLF behave identically), and HTML tags
+  inside comments. **The actual trigger is not known.** It is content-dependent
+  somewhere in this file, and it is cosmetic.
+
+  Check which form you are in:
+
+  ```bash
+  # ~36 chars = pretty-printed;  ~20000 = collapsed onto one line
+  n=$(grep -n 'site-brand-version' docs/misc/t_table.html | cut -d: -f1)
+  sed -n "${n}p" docs/misc/t_table.html | wc -c
+  ```
+
+  Never judge such a diff by its line count. Verify content equivalence instead:
+  compare byte size and the distinct `--site-*` token count between revisions.
+  `.gitattributes` marks the rendered HTML as generated so GitHub collapses it
+  in review rather than showing tens of thousands of phantom deletions.
 - **Keep the `--site-brand-version` declaration in `:root`.** It is how you
   verify a rendered page actually picked up the branding, and it has to stay a
   *declaration* — pandoc strips CSS comments when it inlines this stylesheet

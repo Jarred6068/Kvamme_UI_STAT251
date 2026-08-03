@@ -737,9 +737,7 @@ a,
   background-color: rgba(var(--uidaho-pride-gold-rgb), 0.06);
 }
 
-/* Spans made block, not <h2>/<p>: pandoc splits block-level children out of an
-   inline <a>, which broke the grid. See the comment above the card grid in
-   index.Rmd. */
+/* Block spans, not headings/paragraphs - see the card grid note in index.Rmd. */
 .card-title {
   display: block;
   font-size: 1.15rem;
