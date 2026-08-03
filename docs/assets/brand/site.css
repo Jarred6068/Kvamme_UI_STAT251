@@ -702,23 +702,30 @@ a,
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin: 2rem 0;
+  gap: 1.5rem;
+  margin: 2rem 0 2.5rem;
 }
 
 @media (max-width: 991px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 575px) { .card-grid { grid-template-columns: 1fr; } }
 
+/* Bootstrap 3 has no .card component (cards are a Bootstrap 4 feature), so
+   this follows the BS4/5 card conventions by hand: uniform hairline border,
+   rounded corners, soft elevation, generous padding. The brand's gold accent
+   moves off the top edge - a full-width 4px slab there is what made these read
+   as blocky - and becomes a short rule under the title, matching how headings
+   are accented elsewhere on the site. */
 .card {
   display: block;
   height: 100%;
   background-color: var(--site-surface);
   border: 1px solid var(--site-border);
-  border-top: var(--uidaho-brand-accent-border);
-  padding: 1.25rem 1.35rem;
+  border-radius: 8px;
+  padding: 1.5rem 1.6rem;
   color: var(--site-text);
   text-decoration: none;
-  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
 }
 
 /* Cards are links; suppress the global underline treatment. */
@@ -732,25 +739,36 @@ a,
 
 .main-container a.card:hover,
 .main-container a.card:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
-  background-color: rgba(var(--uidaho-pride-gold-rgb), 0.06);
+  transform: translateY(-3px);
+  border-color: var(--uidaho-pride-gold);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 10px 24px rgba(0, 0, 0, 0.10);
 }
 
 /* Block spans, not headings/paragraphs - see the card grid note in index.Rmd. */
 .card-title {
   display: block;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.3;
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.6rem;
   color: var(--site-text);
+}
+
+/* The brand gold accent, as a short rule under the title rather than a slab
+   across the top edge. */
+.card-title::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  margin-top: 0.6rem;
+  border-bottom: 3px solid var(--uidaho-pride-gold);
 }
 
 .card-text {
   display: block;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 1.05rem;
+  line-height: 1.6;
   color: var(--site-text-muted);
   margin: 0;
 }
