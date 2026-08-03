@@ -26,8 +26,52 @@ if (!rmarkdown::pandoc_available()) {
 
 #render your sweet site, restoring the original working directory whether the
 #render succeeds or errors out.
-tryCatch(
-  rmarkdown::render_site(),
-  finally = setwd(old_wd)
-)
+tryCatch({
+  rmarkdown::render_site()
+
+  #render_site() only builds the .Rmd files in docs/ itself - it does not
+  #recurse. The pages under homeworks/, misc/, Review_problems/ and
+  #study_guides/ have to be rendered individually, picking up the brand config
+  #from each directory's _output.yml.
+  #
+  #Rendered one at a time inside tryCatch rather than with sapply: the stock
+  #site generator aborts the whole build on the first failure, and a single
+  #missing package (these pages need kableExtra, latex2exp, gridExtra, ggpubr,
+  #ggthemes, plyr, ggvenn and surveydata between them) should not cost you the
+  #other 28 pages. Failures are collected and reported at the end instead.
+  subdirs <- c("homeworks", "misc", "Review_problems", "study_guides")
+  pages <- list.files(subdirs, pattern = "\\.Rmd$", full.names = TRUE)
+
+  failures <- list()
+  for (page in pages) {
+    #This one source has spaces in its filename but the navbar links the
+    #hyphenated name, so it was renamed by hand at some point. Rendering it
+    #normally would quietly produce a NEW spaced-name file and leave the linked
+    #page stale and unstyled.
+    out <- if (basename(page) == "Non Parametric Tests For Two Samples.Rmd") {
+      "Non-Parametric-Tests-For-Two-Samples.html"
+    } else NULL
+
+    message("Rendering: ", page)
+    tryCatch(
+      #output_dir is passed explicitly: render() resolves a relative
+      #output_file against the CURRENT working directory (docs/), not the
+      #input file's directory, so without it the renamed page would be written
+      #to docs/ instead of docs/misc/.
+      rmarkdown::render(page, output_format = "html_document",
+                        output_file = out, output_dir = dirname(page),
+                        quiet = TRUE),
+      error = function(e) failures[[page]] <<- conditionMessage(e)
+    )
+  }
+
+  if (length(failures)) {
+    message("\n", strrep("-", 70))
+    message(length(failures), " page(s) FAILED to render and kept their previous HTML:")
+    for (f in names(failures)) message("  ", f, "\n    ", failures[[f]])
+    message(strrep("-", 70))
+  } else {
+    message("\nAll ", length(pages), " subdirectory pages rendered.")
+  }
+}, finally = setwd(old_wd))
 

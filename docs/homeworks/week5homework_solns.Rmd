@@ -1,7 +1,8 @@
 ---
 title: "Homework 2 Solutions"
 output:
-  html_document: default
+  html_document:
+    keep_md: false   ## no-op; keeps html_document a MAP so _output.yml merges in
   pdf_document: default
 always_allow_html: true
 header-includes:

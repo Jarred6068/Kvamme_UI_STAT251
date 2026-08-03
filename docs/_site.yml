@@ -155,11 +155,45 @@ navbar:
         - text: 'Downloading R/Rstudio'
           href: misc/R_download_instructions.html
 
+## ---------------------------------------------------------------------------
+## WARNING - the YAML merge trap.
+##
+## A page whose front matter says
+##     output:
+##       html_document: default
+## DISCARDS THIS ENTIRE BLOCK. rmarkdown merges site config into page config
+## with merge_lists(), which RECURSES only when both sides are maps. The string
+## "default" is not a map, so the site-level html_document block is REPLACED
+## rather than merged, and the page renders with no theme, no css, no includes.
+## It still renders fine - the failure is completely silent.
+##
+## Page front matter must therefore be either the scalar `output: html_document`
+## or a NON-EMPTY map. Pages that genuinely also emit a PDF use
+##     output:
+##       html_document:
+##         keep_md: false      # no-op; only there to keep this a MAP
+##       pdf_document: default
+##
+## To verify no page has regressed, grep the rendered HTML for the sentinel
+## string UIBRAND-V1 - see the comment at the top of assets/brand/site.css.
+## ---------------------------------------------------------------------------
 output:
   html_document:
 ##    lib_dir: 'libs' ## If you have a custom set of R libraries
-    theme: sandstone ## Preference
-    highlight: textmate ## Preference
-    include:
-##      after_body: footer.html ## Input html for a custom footer
-    css: styles.css ## custom CSS
+    ## Vanilla Bootstrap 3, not sandstone: 15 of 26 top-level pages and all of
+    ## the subdirectory pages already render with plain bootstrap (see above),
+    ## so this unifies rather than changes most of the site. Sandstone also
+    ## hardcodes an off-brand #3e3f3a text colour and a Roboto stack that never
+    ## loads. Do NOT set `theme: null` - html_document only reads the navbar
+    ## from _site.yml when theme is non-null, so that would delete the navbar.
+    theme: default
+    ## Keep textmate: it routes through highlight.js and emits .hljs-* classes,
+    ## which is what assets/brand/site.css styles. Other values switch to
+    ## pandoc's own highlighter with a completely different class vocabulary.
+    highlight: textmate
+    css:
+      - assets/brand/uidaho-branding.css
+      - assets/brand/site.css
+    includes:
+      in_header: assets/brand/theme-init.html
+      after_body: assets/brand/theme-toggle.html

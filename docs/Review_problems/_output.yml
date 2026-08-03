@@ -1,0 +1,22 @@
+## Brand config for the pages in this directory.
+##
+## These pages are NOT part of the rmarkdown site: `render_site()` only renders
+## .Rmd files in docs/ itself, so nothing here ever reads docs/_site.yml. They
+## are rendered individually (see the subdirectory pass in docs/build_site.R),
+## which is why the config is duplicated per directory - the relative asset
+## paths differ from the top-level ones and cannot be shared.
+##
+## They also have no navbar, by design. The theme toggle injector falls back to
+## a floating button when it finds no .navbar-header.
+##
+## WARNING: a page whose own front matter says `html_document: default` will
+## DISCARD everything below - see docs/_site.yml for the full explanation.
+html_document:
+  theme: default
+  highlight: textmate
+  css:
+    - ../assets/brand/uidaho-branding.css
+    - ../assets/brand/site.css
+  includes:
+    in_header: ../assets/brand/theme-init.html
+    after_body: ../assets/brand/theme-toggle.html
