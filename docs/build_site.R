@@ -42,6 +42,7 @@ tryCatch({
   subdirs <- c("homeworks", "misc", "Review_problems", "study_guides")
 
   failures <- list()
+  rendered <- 0L
   for (subdir in subdirs) {
     #Render from INSIDE each directory rather than passing output_file /
     #output_dir from docs/. Those arguments leave the working directory at
@@ -62,6 +63,7 @@ tryCatch({
       } else NULL
 
       message("Rendering: ", file.path(subdir, page))
+      rendered <- rendered + 1L
       tryCatch(
         rmarkdown::render(page, output_format = "html_document",
                           output_file = out, quiet = TRUE),
