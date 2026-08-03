@@ -31,10 +31,34 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<!--
+  Pre-paint theme resolution. Included via `includes: in_header:` so it lands in
+  <head> and runs synchronously before first paint - that is what prevents a
+  flash of the wrong theme on load.
+
+  We ALWAYS set data-theme (never leave it unset), which lets site.css express
+  dark mode as a plain `:root[data-theme="dark"]` block with no duplicated
+  @media (prefers-color-scheme) rules.
+-->
+<script>
+(function () {
+  var stored = null;
+  // localStorage THROWS (not returns null) in Safari private browsing and in
+  // some file:// contexts - which is exactly how these pages get previewed
+  // locally. An uncaught throw here would leave data-theme unset and kill
+  // every dark-mode rule on the page.
+  try { stored = window.localStorage.getItem('stat251-theme'); } catch (e) { stored = null; }
+
+  var theme = (stored === 'dark' || stored === 'light') ? stored :
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -84,6 +108,8 @@ div.csl-indent {
 }
 </style>
 
+<link rel="stylesheet" href="assets/brand/uidaho-branding.css" type="text/css" />
+<link rel="stylesheet" href="assets/brand/site.css" type="text/css" />
 
 
 
@@ -2651,6 +2677,73 @@ Medicine</em> 321 (3): 129–35.
 </div>
 </div>
 
+<!--
+  Light/dark toggle. Included via `includes: after_body:`.
+
+  Two ordering constraints, both load-bearing - do not "modernise" this:
+
+  1. NOT wrapped in DOMContentLoaded / $(document).ready / defer.
+     An after_body <script> runs synchronously during parsing, so the button is
+     already in the DOM when rmarkdown's navbar script measures
+     `$(".navbar").first().height() + 15` at ready-time to set body padding-top.
+     Deferring would turn a guaranteed ordering into a race we'd lose - jQuery's
+     ready queue is FIFO and the template registered its handler first, in <head>.
+
+  2. A <button>, not an <a href="#">.
+     rmarkdown's active-link script queries `a[href="..."]`; an anchor would get
+     swept into that and would also jump the page to the top on click.
+
+  It injects into .navbar-header (NOT .navbar-right) so the control stays visible
+  at mobile widths - .navbar-right lives inside .navbar-collapse and is hidden
+  below 768px until the hamburger is opened. Pages with no navbar at all (the
+  homeworks/, misc/, study_guides/, Review_problems/ pages) get a floating button.
+-->
+<script>
+(function () {
+  var root = document.documentElement;
+  var KEY = 'stat251-theme';
+
+  var SUN = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4' +
+    'M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"/></svg>';
+
+  var MOON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" ' +
+    'aria-hidden="true" focusable="false">' +
+    '<path d="M20.7 14.6A8.6 8.6 0 0 1 9.4 3.3a8.6 8.6 0 1 0 11.3 11.3z"/></svg>';
+
+  function paint(theme) {
+    // Show the action, not the state: in dark mode the button offers "Light".
+    var goingTo = theme === 'dark' ? 'light' : 'dark';
+    btn.innerHTML = (theme === 'dark' ? SUN : MOON) +
+      '<span class="theme-toggle-label">' + (goingTo === 'dark' ? 'Dark' : 'Light') + '</span>';
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    btn.setAttribute('title', 'Switch to ' + goingTo + ' mode');
+  }
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'theme-toggle';
+  btn.setAttribute('aria-label', 'Toggle dark mode');
+  paint(root.getAttribute('data-theme') || 'light');
+
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    paint(next);
+    try { window.localStorage.setItem(KEY, next); } catch (e) { /* private mode; session-only */ }
+  });
+
+  var header = document.querySelector('.navbar .navbar-header');
+  if (header) {
+    btn.classList.add('theme-toggle-nav');
+    header.appendChild(btn);
+  } else {
+    btn.classList.add('theme-toggle-floating');
+    document.body.appendChild(btn);
+  }
+})();
+</script>
 
 
 
