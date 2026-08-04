@@ -21,6 +21,10 @@ For registration deadlines, withdrawal dates, holidays and the official
 academic calendar, see the University of Idaho
 [Dates and Deadlines](https://catalog.uidaho.edu/calendar/) page.
 
+**Please note: this schedule is meant to provide an outline of the semester and
+is tentative. The pace of the course may deviate from the exact schedule
+outlined below. Any changes will be announced in class and posted here.**
+
 <table border="1" cellspacing="10" style="width:60%">
     <tr>
         <td>**WEEK 1**</td>
@@ -157,7 +161,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Friday</td>
         <td>September 11, 2026</td>
-        <td>Identifying outliers, margin of error, statistical significance</td>
+        <td>Identifying outliers, margin of error, statistical significance -- **Homework 1 due**</td>
         <td></td>
     </tr>
     <tr>
@@ -349,7 +353,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Friday</td>
         <td>October  9, 2026</td>
-        <td>Choosing a minimum sample size, assumptions of estimators</td>
+        <td>Choosing a minimum sample size, assumptions of estimators -- **Homework 2 due**</td>
         <td></td>
     </tr>
     <tr>
@@ -493,7 +497,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Friday</td>
         <td>October 30, 2026</td>
-        <td>Introduction to two-sample tests, independent vs dependent samples</td>
+        <td>Introduction to two-sample tests, independent vs dependent samples -- **Homework 3 due**</td>
         <td></td>
     </tr>
     <tr>
@@ -589,7 +593,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Friday</td>
         <td>November 13, 2026</td>
-        <td>Catch-up / review buffer</td>
+        <td>Catch-up / review buffer -- **Homework 4 due**</td>
         <td></td>
     </tr>
     <tr>
@@ -733,7 +737,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Friday</td>
         <td>December  4, 2026</td>
-        <td>Simple linear regression continued: omnibus F-test, checking assumptions</td>
+        <td>Simple linear regression continued: omnibus F-test, checking assumptions -- **Homework 5 due**</td>
         <td></td>
     </tr>
     <tr>
