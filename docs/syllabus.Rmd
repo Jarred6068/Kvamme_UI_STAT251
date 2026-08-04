@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # STAT 251 Statistical Methods Section 03
-* **Instructor:** Jarred M. Kvamme (pronounced ``Kuh-Wah-mee"), PhD Candidate and instructor, Department of Bioinformatics and Computational Biology. **Email** [jarredk@uidaho.edu](jarredk@uidaho.edu). My office is in the basement level of Brink Hall - **Room Number B-17** - My office hours are 11:30AM - 2:30PM Monday, Wednesday, and Friday. I am also available to meet by appointment.
+* **Instructor:** Jarred M. Kvamme (pronounced ``Kuh-Wah-mee"), PhD, instructor, Department of Bioinformatics and Computational Biology. **Email** [jarredk@uidaho.edu](jarredk@uidaho.edu). My office is in the basement level of Brink Hall - **Room Number B-17** - My office hours are 11:30AM - 2:30PM Monday, Wednesday, and Friday. I am also available to meet by appointment.
 	
 * **Teaching Assistant:** To be announced. **Email:** To be announced.
 
