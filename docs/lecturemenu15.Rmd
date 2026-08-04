@@ -408,7 +408,11 @@ ggplot()+
 Residuals are the vertical distances (red lines in the plot above) between each point and the regression line. If you think of the regression line as our best guess at the relationship between $X$ and $Y$, then the residuals represent the error in that guess for each point. The line that "best" fits the data is the one with the smallest average residual—essentially, the one with the least error across all the points in the plot. This line gives us the best model to describe the relationship between the $X$ and $Y$ variables. You can take a look at [https://www.geogebra.org/m/xC6zq7Zv](https://www.geogebra.org/m/xC6zq7Zv) to practice fitting the "best" line.
 
 
-# The simple linear model
+# Lecture 31
+
+Monday was about *describing* the association between two quantitative variables: a scatterplot to see it, and the correlation coefficient to measure its strength and direction. Today we move from describing that association to *modelling* it. We will write down a straight-line model for the relationship, find the line that fits the data best, use it to predict values of the response, and then measure how much of the variation in the response that line actually explains.
+
+### The simple linear model
 
 We learned on Monday that a scatterplot can be used to visualize and check for a **linear** relationship between two quantitative variables. We also learned that straight line fitted through the data points can be used to describe that trend. We will use the notation 
 
@@ -700,7 +704,11 @@ Thus team batting average explains roughly $32\%$ of the variation in the averag
 
 
 
-# Regression relates the mean of $Y$ to $X$
+# Lecture 32
+
+So far the regression line has been a *description* of the sample: we found the least-squares line, used it to predict, and measured its fit with $r^2$. But the slope we computed is a statistic, and like any statistic it would change if we collected a different sample. Today we treat regression as *inference*. We ask whether the association we see is strong enough to conclude that a relationship exists in the population, we test the slope, we look at a second test of the same question based on variances, and we finish by checking the assumptions that make any of those conclusions trustworthy.
+
+### Regression relates the mean of $Y$ to $X$
 
 The prediction equation $\hat{y}_i = \alpha + \beta x_i$ yields the predicted value the response $Y$ for a given value of the independent variable $X$. However, we don't expect all observations of $Y$ that depend on a given value of $X$ to have the same value because naturally there is variation among individuals in the population. For example, consider the linear regression below which relates the age of $189$ mothers in the U.S to the birth weight of their infants [@MASS].
 
@@ -840,7 +848,7 @@ You can confirm the $p$-value is $\approx 0.22$ using the $t$-table on the resou
 
 
 
-# An alternative way to test association
+### An alternative way to test association
 
 Consider the following dataset containing information about 1,143 social media ads from an anonymous company, detailing the number of times each ad was viewed and the total number of customers who made a purchase after viewing each ad [@liver].
 

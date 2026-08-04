@@ -1163,8 +1163,18 @@ href="https://www.geogebra.org/m/xC6zq7Zv">https://www.geogebra.org/m/xC6zq7Zv</
 to practice fitting the “best” line.</p>
 </div>
 </div>
-<div id="the-simple-linear-model" class="section level1">
-<h1>The simple linear model</h1>
+<div id="lecture-31" class="section level1">
+<h1>Lecture 31</h1>
+<p>Monday was about <em>describing</em> the association between two
+quantitative variables: a scatterplot to see it, and the correlation
+coefficient to measure its strength and direction. Today we move from
+describing that association to <em>modelling</em> it. We will write down
+a straight-line model for the relationship, find the line that fits the
+data best, use it to predict values of the response, and then measure
+how much of the variation in the response that line actually
+explains.</p>
+<div id="the-simple-linear-model" class="section level3">
+<h3>The simple linear model</h3>
 <p>We learned on Monday that a scatterplot can be used to visualize and
 check for a <strong>linear</strong> relationship between two
 quantitative variables. We also learned that straight line fitted
@@ -1208,6 +1218,7 @@ class="math inline">\(X\)</span>. A 1-unit increase in <span
 class="math inline">\(X\)</span> could be a trivial amount or it could
 be huge.</p></li>
 </ul>
+</div>
 <div id="finding-a-regression-line-and-the-least-squares-estimator"
 class="section level3">
 <h3>Finding a regression line and the least-squares estimator</h3>
@@ -1627,10 +1638,22 @@ number of runs scored by teams in the American League of Major League
 Baseball.</p>
 </div>
 </div>
-<div id="regression-relates-the-mean-of-y-to-x" class="section level1">
-<h1>Regression relates the mean of <span
+<div id="lecture-32" class="section level1">
+<h1>Lecture 32</h1>
+<p>So far the regression line has been a <em>description</em> of the
+sample: we found the least-squares line, used it to predict, and
+measured its fit with <span class="math inline">\(r^2\)</span>. But the
+slope we computed is a statistic, and like any statistic it would change
+if we collected a different sample. Today we treat regression as
+<em>inference</em>. We ask whether the association we see is strong
+enough to conclude that a relationship exists in the population, we test
+the slope, we look at a second test of the same question based on
+variances, and we finish by checking the assumptions that make any of
+those conclusions trustworthy.</p>
+<div id="regression-relates-the-mean-of-y-to-x" class="section level3">
+<h3>Regression relates the mean of <span
 class="math inline">\(Y\)</span> to <span
-class="math inline">\(X\)</span></h1>
+class="math inline">\(X\)</span></h3>
 <p>The prediction equation <span class="math inline">\(\hat{y}_i =
 \alpha + \beta x_i\)</span> yields the predicted value the response
 <span class="math inline">\(Y\)</span> for a given value of the
@@ -1764,6 +1787,7 @@ class="math inline">\(\beta\)</span> are population parameters that are
 unknown. The quantity <span class="math inline">\(\mu_y\)</span> is the
 population mean of <span class="math inline">\(y\)</span> for a given
 value of <span class="math inline">\(x\)</span>.</p>
+</div>
 <div id="statistical-inference-for-linear-regression"
 class="section level3">
 <h3>Statistical inference for linear regression</h3>
@@ -1913,9 +1937,8 @@ class="math inline">\(R\)</span> output, the hypothesis test also
 confirms that age of mother and infant birth weight are not
 significantly associated.</p>
 </div>
-</div>
-<div id="an-alternative-way-to-test-association" class="section level1">
-<h1>An alternative way to test association</h1>
+<div id="an-alternative-way-to-test-association" class="section level3">
+<h3>An alternative way to test association</h3>
 <p>Consider the following dataset containing information about 1,143
 social media ads from an anonymous company, detailing the number of
 times each ad was viewed and the total number of customers who made a
@@ -2263,6 +2286,7 @@ anova(model)</code></pre>
 ## Residuals                  1141 1833.9    1.61                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
 <div id="an-application-example" class="section level3">
 <h3>An Application Example</h3>
 <p><strong>Example:</strong> Consider the following dataset which

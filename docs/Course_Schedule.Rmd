@@ -733,7 +733,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Friday</td>
         <td>December  4, 2026</td>
-        <td>ANOVA</td>
+        <td>Simple linear regression continued: omnibus F-test, checking assumptions</td>
         <td></td>
     </tr>
     <tr>
@@ -757,7 +757,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Monday</td>
         <td>December  7, 2026</td>
-        <td>ANOVA continued</td>
+        <td>Analysis of variance (ANOVA): comparing several means</td>
         <td></td>
     </tr>
     <tr>
@@ -769,7 +769,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Wednesday</td>
         <td>December  9, 2026</td>
-        <td>Final exam Jeopardy review</td>
+        <td>ANOVA continued: multiple comparisons and checking assumptions</td>
         <td></td>
     </tr>
     <tr>
@@ -781,7 +781,7 @@ academic calendar, see the University of Idaho
     <tr>
         <td>Friday</td>
         <td>December 11, 2026</td>
-        <td>Optional Q & A Session</td>
+        <td>Final exam Jeopardy review</td>
         <td></td>
     </tr>
     <tr>

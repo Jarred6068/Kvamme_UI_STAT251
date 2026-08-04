@@ -11,7 +11,7 @@ always_allow_html: true
 header-includes:
   \usepackage{float}
   \usepackage{tikz}
-bibliography: misc/Week_15_bibs.bib
+bibliography: misc/Week_16_bibs.bib
 urlcolor: blue
 ---
 
@@ -23,7 +23,6 @@ library(ggplot2)
 library(ggthemes)
 library(ggpubr)
 library(latex2exp)
-library(gganimate)
 
 path = 'Data/'
 
@@ -32,5 +31,390 @@ source('misc/stat251_tools.R')
 
 ```
 
-<!-- Week 16: Dec 7, 9, 11 2026 - ANOVA continued, final review, Q&A -->
+<!-- Week 16: Dec 7, 9, 11 2026 - ANOVA (two lectures) + final exam Jeopardy review -->
 
+# Lecture 33
+
+Earlier in the semester we compared the means of **two** independent groups using a two-sample $t$-test. A great many real questions, though, involve **more than two** groups. Does the effect on plant growth depend on which of three fertilizers we use? Do four teaching methods produce different average exam scores? Do five varieties of wheat differ in average yield?
+
+The method for answering questions like these is called the **Analysis of Variance**, almost always shortened to **ANOVA**. The name sounds like it is about variances, and in a sense it is, but the question it answers is about **means**. The central idea is one you have already met in a different guise: we split the total variation in the response into a part explained by the groups and a part left over, and then judge whether the explained part is large enough to take seriously.
+
+### Why not just run several two-sample $t$-tests?
+
+The obvious thing to try is to test every pair of groups separately. With three groups $A$, $B$ and $C$ that means three tests: $A$ vs $B$, $A$ vs $C$, and $B$ vs $C$. Why not do that?
+
+The problem is that each test carries its own chance of a Type I error. If you run one test at $\alpha = 0.05$, you have a $5\%$ chance of wrongly declaring a difference. But if you run several tests and announce a finding when *any one* of them is significant, the chance that at least one is a false alarm grows quickly. With $k$ groups there are $\binom{k}{2}$ pairs, and if the tests were independent the probability of at least one false positive would be
+
+\[ P(\text{at least one Type I error}) = 1 - (1 - \alpha)^{\binom{k}{2}} \]
+
+```{r, echo=FALSE, warning=F, message=F}
+
+k <- 2:6
+m <- choose(k, 2)
+df <- cbind.data.frame(`Number of groups $k$` = k,
+                       `Number of pairwise tests` = m,
+                       `P(at least one Type I error)` = sprintf('%.4f', 1 - 0.95^m))
+
+kable(df, format = 'html', digits = 4,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+With six groups you would be wrong more often than a coin flip. This is called the **multiple comparisons problem**, and it is the reason we do not simply test every pair. ANOVA replaces all of those tests with a **single** test of one overall question:
+
+\[ H_0: \mu_1 = \mu_2 = \cdots = \mu_k \]
+
+\[ H_A: \text{at least one } \mu_i \text{ differs from the others} \]
+
+Notice how modest the alternative is. ANOVA does not claim to tell you *which* means differ, or by how much — only that they are not all the same. Finding out which ones differ is the subject of the next lecture.
+
+### The idea behind the analysis of variance
+
+Suppose we measure a response in each of three groups. There are two quite different reasons the observations are not all identical:
+
+* observations **within** the same group differ from one another, because individuals naturally vary; and
+* observations in **different** groups differ, because the group means may not be the same.
+
+The first is noise. The second is signal. ANOVA compares the size of the second to the size of the first. If the group means are far apart *relative to* the scatter inside the groups, we have evidence that the population means really do differ. If the group means are close together compared with the noise, we do not.
+
+The plot below shows the same three group means in two situations. On the left the within-group scatter is small and the separation between groups stands out clearly. On the right the group means sit in exactly the same places, but the noise is so large that the separation is unconvincing.
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=4, fig.width=10}
+set.seed(123)
+
+# Each group is re-centred on its target mean so that the group means are
+# EXACTLY the same in both panels - only the spread changes. That is the whole
+# point of the picture, so it should not be left to sampling variation.
+mk <- function(sd, lbl) {
+  mu <- c(A = 9, B = 13, C = 11)
+  y  <- unlist(lapply(mu, function(m) { e <- rnorm(12, 0, sd); m + e - mean(e) }))
+  data.frame(group = rep(c('A','B','C'), each = 12), y = y, panel = lbl)
+}
+d <- rbind(mk(0.8, 'Small within-group variation'),
+           mk(3.5, 'Large within-group variation'))
+
+# facet_wrap orders panels by factor level, not by the order they were bound in,
+# so set the levels explicitly - otherwise "Large" sorts alphabetically first and
+# the panels appear in the opposite order to the text.
+d$panel <- factor(d$panel, levels = c('Small within-group variation',
+                                      'Large within-group variation'))
+
+ggplot(d, aes(x = group, y = y, colour = group)) +
+  geom_jitter(width = 0.12, size = 2, alpha = 0.8) +
+  stat_summary(fun = mean, geom = 'crossbar', width = 0.5, colour = 'black') +
+  facet_wrap(~panel) +
+  theme_bw() +
+  theme(legend.position = 'none',
+        axis.title = element_text(size = 13),
+        strip.text = element_text(size = 12)) +
+  xlab('Group') + ylab('Response')
+
+```
+
+The black bars mark the group means. They sit in the same places in both panels — what changes is how believable the separation is. ANOVA turns that visual judgement into a number.
+
+### Notation
+
+Suppose we have $k$ groups. Write
+
+* $n_i$ for the number of observations in group $i$, and $N = n_1 + n_2 + \cdots + n_k$ for the total sample size;
+* $y_{ij}$ for the $j$th observation in group $i$;
+* $\bar{y}_i$ for the mean of group $i$ (the **group mean**);
+* $\bar{y}$ for the mean of all $N$ observations together (the **grand mean**).
+
+### Partitioning the total variation
+
+Measure the total variation in the response as the sum of squared deviations of every observation from the grand mean:
+
+\[ SS_T = \sum_{i=1}^{k} \sum_{j=1}^{n_i} (y_{ij} - \bar{y})^2 \]
+
+This total splits into exactly two pieces. The **between-group** sum of squares measures how far the group means sit from the grand mean,
+
+\[ SS_B = \sum_{i=1}^{k} n_i (\bar{y}_i - \bar{y})^2 \]
+
+and the **within-group** sum of squares measures how far individual observations sit from their own group mean,
+
+\[ SS_W = \sum_{i=1}^{k} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \]
+
+and these add up:
+
+\[ SS_T = SS_B + SS_W \]
+
+This should look familiar. In simple linear regression we split the total variation the same way, into a part explained by the model and a part left over, $SS_T = SS_R + SS_E$. ANOVA is the same idea with a categorical explanatory variable instead of a quantitative one: $SS_B$ plays the role of $SS_R$, and $SS_W$ plays the role of $SS_E$.
+
+### From sums of squares to the $F$-statistic
+
+We cannot compare $SS_B$ and $SS_W$ directly, because each is built from a different number of free quantities. As always, we divide by degrees of freedom to get a **mean square**, which is just a variance:
+
+\[ MS_B = \frac{SS_B}{k-1} \qquad\qquad MS_W = \frac{SS_W}{N-k} \]
+
+The between-group mean square has $k-1$ degrees of freedom because it is built from $k$ group means around one grand mean. The within-group mean square has $N - k$ degrees of freedom because each of the $k$ groups contributes $n_i - 1$. The two add to $N-1$, the total degrees of freedom.
+
+The test statistic is their ratio:
+
+\[ F_0 = \frac{MS_B}{MS_W} = \frac{SS_B/(k-1)}{SS_W/(N-k)} \sim F(k-1, \ N-k) \]
+
+If $H_0$ is true and all the population means really are equal, then the group means differ only by chance, $MS_B$ and $MS_W$ are both estimating the same underlying variance, and $F_0$ should be near $1$. If the means genuinely differ, $MS_B$ is inflated and $F_0$ is large. Because only large values of $F_0$ are evidence against $H_0$, **the ANOVA $F$-test is always upper-tailed** — even though the alternative hypothesis is two-sided in spirit. The $p$-value is
+
+\[ p\text{-value} = P(F > F_0 \mid H_0 \ \text{true}) \]
+
+The results are collected in an **ANOVA table**:
+
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(Source = c('Between groups', 'Within groups (error)', 'Total'),
+                 `Sum of Squares` = c('$SS_B = \\sum n_i(\\bar{y}_i - \\bar{y})^2$',
+                                      '$SS_W = \\sum\\sum (y_{ij} - \\bar{y}_i)^2$',
+                                      '$SS_T = \\sum\\sum (y_{ij} - \\bar{y})^2$'),
+                 `Degrees of Freedom` = c('$k-1$', '$N-k$', '$N-1$'),
+                 `Mean Square` = c('$MS_B = SS_B/(k-1)$', '$MS_W = SS_W/(N-k)$', ''),
+                 `F-statistic` = c('$F_0 = MS_B/MS_W$','',''),
+                 `$p$-value` = c('$P(F > F_0|H_0)$', '', ''))
+
+kable(df, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+### A worked example by hand
+
+A greenhouse trial compares three fertilizers. Four plants are grown with each, and the height of each plant is recorded in centimetres after four weeks.
+
+```{r, echo=FALSE, warning=F, message=F}
+
+wide <- cbind.data.frame(`Fertilizer` = c('A','B','C'),
+                         `Heights (cm)` = c('8, 10, 9, 9', '12, 14, 13, 13', '10, 11, 12, 11'),
+                         `$n_i$` = c(4,4,4),
+                         `Group mean $\\bar{y}_i$` = c(9, 13, 11))
+
+kable(wide, format = 'html', digits = 2,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Here $k = 3$, each $n_i = 4$, and $N = 12$. The grand mean is
+
+\[ \bar{y} = \frac{8 + 10 + \cdots + 11}{12} = 11 \]
+
+**Step 1 — between-group sum of squares.** Each group has $n_i = 4$ observations:
+
+\[ SS_B = 4(9 - 11)^2 + 4(13 - 11)^2 + 4(11 - 11)^2 = 16 + 16 + 0 = 32 \]
+
+**Step 2 — within-group sum of squares.** Deviations are taken from each group's *own* mean:
+
+\[ SS_W = \underbrace{(-1)^2 + 1^2 + 0^2 + 0^2}_{\text{group A}} + \underbrace{(-1)^2 + 1^2 + 0^2 + 0^2}_{\text{group B}} + \underbrace{(-1)^2 + 0^2 + 1^2 + 0^2}_{\text{group C}} = 2 + 2 + 2 = 6 \]
+
+**Step 3 — check the partition.** $SS_T = SS_B + SS_W = 32 + 6 = 38$, which matches the total sum of squared deviations from the grand mean.
+
+**Step 4 — degrees of freedom and mean squares.**
+
+\[ MS_B = \frac{SS_B}{k-1} = \frac{32}{2} = 16 \qquad\qquad MS_W = \frac{SS_W}{N-k} = \frac{6}{9} = 0.667 \]
+
+**Step 5 — the test statistic.**
+
+\[ F_0 = \frac{MS_B}{MS_W} = \frac{16}{0.667} = 24 \sim F(2, 9) \]
+
+**Step 6 — the decision.** The critical value at $\alpha = 0.05$ is $F_{0.95}(2, 9) = 4.26$, and the $p$-value is
+
+\[ P(F > 24 \mid H_0 \ \text{true}) = 0.00025 \]
+
+Since $24 > 4.26$, or equivalently since $0.00025 < 0.05$, we **reject $H_0$** and conclude that the three fertilizers do not all produce the same mean plant height.
+
+The completed ANOVA table:
+
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(Source = c('Between groups', 'Within groups', 'Total'),
+                      `Sum of Squares` = c('32', '6', '38'),
+                      `Degrees of Freedom` = c('2', '9', '11'),
+                      `Mean Square` = c('16', '0.667', ''),
+                      `F-statistic` = c('24', '', ''),
+                      `$p$-value` = c('0.00025', '', ''))
+
+kable(df, format = 'html', digits = 3,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+R produces exactly the same table with the `aov()` function:
+
+```{r, echo=T, warning=F, message=F}
+
+fert <- data.frame(
+  Fertilizer = rep(c('A','B','C'), each = 4),
+  Height = c(8, 10, 9, 9, 12, 14, 13, 13, 10, 11, 12, 11)
+)
+
+#fit the model with aov(response ~ group, data = dataframe)
+model = aov(Height ~ Fertilizer, data = fert)
+
+summary(model)
+
+```
+
+### Assumptions
+
+The $F$-test above is trustworthy only when three conditions hold:
+
+1. **Independence.** The observations are independent of one another, both within and between groups. This comes from how the data were collected and cannot be fixed after the fact.
+2. **Normality.** The response is approximately normally distributed within each group. As with the $t$-test, this matters most when the samples are small.
+3. **Equal variances.** The population variances are the same in every group. This is the assumption that makes it sensible to pool all the within-group scatter into a single $MS_W$.
+
+A useful rule of thumb for the third condition: if the **largest group standard deviation is less than twice the smallest**, the equal-variance assumption is reasonable. We check all three on real data in the next lecture.
+
+# Lecture 34
+
+Last time we built the ANOVA $F$-test and used it to reject the hypothesis that three fertilizers produce the same mean plant height. But rejecting $H_0$ leaves the interesting question unanswered: the means are not all equal, so *which* ones differ? Today we answer that, we check the assumptions the $F$-test rests on, and we connect ANOVA back to two tests you already know.
+
+### Running an ANOVA in R
+
+R ships with a data set called `PlantGrowth`, which records the dried weight of plants grown under a control condition and two different treatments, with ten plants in each group [@dobson1983].
+
+```{r, echo=T, warning=F, message=F}
+
+#PlantGrowth is included with R - no package needed
+data("PlantGrowth")
+
+str(PlantGrowth)
+
+```
+
+Always plot the data before testing. Side-by-side boxplots show the group centres and spreads at a glance:
+
+```{r, echo=T, warning=F, message=F, fig.height=5, fig.width=8}
+
+ggplot(PlantGrowth, aes(x = group, y = weight, fill = group)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) +
+  geom_jitter(width = 0.12, size = 2) +
+  theme_bw() +
+  theme(legend.position = 'none',
+        axis.title = element_text(size = 13)) +
+  xlab('Group') + ylab('Dried weight (g)')
+
+```
+
+The group means and standard deviations:
+
+```{r, echo=FALSE, warning=F, message=F}
+
+s <- cbind.data.frame(
+  Group = levels(PlantGrowth$group),
+  `$n_i$` = as.numeric(table(PlantGrowth$group)),
+  `Mean $\\bar{y}_i$` = round(as.numeric(tapply(PlantGrowth$weight, PlantGrowth$group, mean)), 3),
+  `Standard deviation $s_i$` = round(as.numeric(tapply(PlantGrowth$weight, PlantGrowth$group, sd)), 3))
+
+kable(s, format = 'html', digits = 3,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+Now the ANOVA:
+
+```{r, echo=T, warning=F, message=F}
+
+model = aov(weight ~ group, data = PlantGrowth)
+
+summary(model)
+
+```
+
+The $F$-statistic is $F_0 = 4.85$ on $2$ and $27$ degrees of freedom, with a $p$-value of $0.016$. Since $0.016 < 0.05$ we reject $H_0$ and conclude that the three groups do not all have the same mean dried weight.
+
+### A significant $F$ does not tell you which means differ
+
+This is the point where it is tempting to look at the group means, notice that `trt2` has the largest and `trt1` the smallest, and announce that both treatments differ from the control. The $F$-test does not license any of that. It says only that the three means are not all equal.
+
+To find out *which* pairs differ we need a procedure that compares pairs while keeping the overall Type I error rate at $\alpha$ — exactly the problem that stopped us running separate $t$-tests in the first place.
+
+### Multiple comparisons: Tukey's Honest Significant Difference
+
+The standard tool is **Tukey's Honest Significant Difference** (HSD) [@tukey1949]. It compares every pair of group means and widens the intervals just enough that the $95\%$ confidence level applies to the whole *family* of comparisons at once, not to each one separately. In R it is one line:
+
+```{r, echo=T, warning=F, message=F}
+
+TukeyHSD(model)
+
+```
+
+Read the output one row at a time. `diff` is the difference in sample means, `lwr` and `upr` give a confidence interval for the true difference, and `p adj` is the $p$-value adjusted for the fact that we are making three comparisons. **A pair differs significantly when its interval does not contain zero**, equivalently when `p adj` $< \alpha$.
+
+```{r, echo=FALSE, warning=F, message=F}
+
+tk <- as.data.frame(TukeyHSD(model)$group)
+out <- cbind.data.frame(
+  Comparison = rownames(tk),
+  `Difference in means` = round(tk$diff, 3),
+  `95% CI` = sprintf('(%.3f, %.3f)', tk$lwr, tk$upr),
+  `Adjusted $p$-value` = round(tk$`p adj`, 4),
+  `Contains 0?` = ifelse(tk$lwr < 0 & tk$upr > 0, 'yes', 'no'),
+  Conclusion = ifelse(tk$`p adj` < 0.05, 'means differ', 'no evidence of a difference'))
+
+kable(out, format = 'html', digits = 4,
+      row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+
+```
+
+The result is worth pausing on. The only significant pair is `trt2` versus `trt1` ($p = 0.012$). **Neither treatment differs significantly from the control.** The overall $F$-test told us the means are not all equal, and Tukey tells us the reason is that the two treatments differ from *each other* — not that either one beats the control. Had we jumped straight from a significant $F$ to "the treatments work", we would have reported something the data do not support.
+
+An alternative you may see is the **Bonferroni correction**, which simply tests each of the $m$ pairs at level $\alpha/m$ instead of $\alpha$. With three comparisons at $\alpha = 0.05$, each pair is tested at $0.0167$. It is easy to explain and always valid, but it is more conservative than Tukey — it will miss real differences more often — so Tukey's HSD is generally preferred when all pairwise comparisons are of interest.
+
+### Checking the assumptions
+
+**Equal variances.** From the table of group standard deviations above, the largest is $0.794$ and the smallest is $0.443$. Since $0.794 < 2 \times 0.443 = 0.886$, the rule of thumb is satisfied.
+
+**Normality and constant spread.** As in regression, we examine the residuals — the distance from each observation to its group mean. A normal quantile plot checks normality, and a plot of residuals against fitted values checks that the spread is similar across groups.
+
+```{r, echo=T, warning=F, message=F, fig.height=5, fig.width=10}
+
+resid.df <- data.frame(fitted = fitted(model), residual = residuals(model))
+
+p1 <- ggplot(resid.df, aes(sample = residual)) +
+  stat_qq(size = 2) + stat_qq_line(colour = 'red') +
+  theme_bw() + xlab('Theoretical quantiles') + ylab('Sample quantiles') +
+  ggtitle('Normal Q-Q plot of residuals')
+
+p2 <- ggplot(resid.df, aes(x = fitted, y = residual)) +
+  geom_point(size = 2) +
+  geom_hline(yintercept = 0, colour = 'red') +
+  theme_bw() + xlab('Fitted value (group mean)') + ylab('Residual') +
+  ggtitle('Residuals vs fitted values')
+
+ggarrange(p1, p2, ncol = 2)
+
+```
+
+The points in the Q-Q plot lie close to the diagonal, so normality is reasonable. In the residual plot the three vertical strips have comparable heights, which again supports equal variances. **Independence** cannot be checked from these plots; it is a question about how the plants were assigned and measured.
+
+### Connections to what we already know
+
+**ANOVA with two groups is the pooled two-sample $t$-test.** If $k = 2$, the ANOVA $F$-statistic is exactly the square of the two-sample $t$-statistic, and the two tests give identical $p$-values. Dropping `trt2` and comparing the remaining two groups both ways:
+
+```{r, echo=T, warning=F, message=F}
+
+two <- PlantGrowth[PlantGrowth$group != 'trt2', ]
+two$group <- droplevels(two$group)
+
+t.stat <- t.test(weight ~ group, data = two, var.equal = TRUE)$statistic
+f.stat <- summary(aov(weight ~ group, data = two))[[1]][1, 'F value']
+
+c(`t squared` = round(unname(t.stat)^2, 4), `F statistic` = round(f.stat, 4))
+
+```
+
+**ANOVA and regression are the same partition.** In Week 15 the regression output ended with an omnibus $F$-statistic testing whether the predictor explained a significant share of the variation in the response. That test split $SS_T$ into $SS_R + SS_E$; ANOVA splits it into $SS_B + SS_W$. The arithmetic is identical — only the kind of explanatory variable changes, from quantitative in regression to categorical here.
+
+### Summary: carrying out a one-way ANOVA
+
+1. **Plot the data first.** Side-by-side boxplots show whether a difference is plausible before any test is run.
+2. **State the hypotheses.** $H_0: \mu_1 = \cdots = \mu_k$ against $H_A:$ at least one mean differs.
+3. **Run the $F$-test** with `aov()` and read the $p$-value. Remember it is always upper-tailed.
+4. **If you reject $H_0$**, follow up with Tukey's HSD to find *which* pairs differ. If you fail to reject, stop — there is nothing to follow up.
+5. **Check the assumptions**: independence from the study design, normality from a Q-Q plot of residuals, and equal variances from the residual plot and the largest-versus-smallest standard deviation rule.
+
+### References
