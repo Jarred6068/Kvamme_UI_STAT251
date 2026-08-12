@@ -384,14 +384,14 @@ display: none;
 <div id="exam-logistics" class="section level1">
 <h1>Exam Logistics:</h1>
 <ul>
-<li><p>The exam will is scheduled for Wednesday April 17th and it will
-be available to take online in Canvas through the following Sunday April
+<li><p>The exam is scheduled for Wednesday April 17th and it will be
+available to take online in Canvas through the following Sunday April
 21st</p></li>
-<li><p>You will have 2 hours to complete the exam once your start
+<li><p>You will have 2 hours to complete the exam once you start
 it</p></li>
 <li><p>I will host an open zoom session for students to ask questions
-and reach out in case they have problems during the exam - click the
-link to join <a href="link">link</a></p></li>
+and reach out in case they have problems during the exam - the join link
+will be posted in Canvas</p></li>
 <li><p>The exam will be about 20 - 25 questions long and will be open
 book/note</p></li>
 </ul>
@@ -400,8 +400,8 @@ book/note</p></li>
 <h1>Content To Study</h1>
 <p>This exam will cover material from Lectures 15 - 26 (Week 8 to
 beginning of Week 14)</p>
-<div id="concepts-and-terminiology" class="section level3">
-<h3><strong>Concepts and terminiology</strong></h3>
+<div id="concepts-and-terminology" class="section level3">
+<h3><strong>Concepts and terminology</strong></h3>
 <p>Know/be able to define the following terms and concepts:</p>
 <ul>
 <li><p>know the conditions which make the <span class="math inline">\(t\)</span> distribution equal to the <span class="math inline">\(z\)</span> distribution</p></li>
@@ -410,15 +410,15 @@ concept in statistics that states that the sampling distribution of the
 sample mean or sample proportion approaches a normal distribution as the
 sample size increases, regardless of the shape of the population
 distribution, as long as the sample size is sufficiently large.</p></li>
-<li><p><strong>Margin of error</strong> - is the largest distance
-between an estimate and a value that is not an outlier. It measures the
-uncertainty or precision associated with estimating a population
+<li><p><strong>Margin of error</strong> - the half-width of a confidence
+interval, i.e. the standard score times the standard error. It measures
+the uncertainty or precision associated with estimating a population
 parameter (such as a population mean or proportion) by quantifying the
-amount by which a sample estimate might deviate from the true population
-parameter.</p></li>
+amount by which a sample estimate might plausibly deviate from the true
+population parameter at the stated confidence level.</p></li>
 <li><p><strong>Confidence level</strong> - the probability that the
 interval will contain the true parameter value before the data are
-gathered</span></p></li>
+gathered</p></li>
 <li><p><strong>Critical value</strong> - The point on the distribution
 of the test statistic that defines a set of values that call for
 rejecting the null hypothesis - i.e the value which defines the
@@ -514,7 +514,7 @@ n(1-\hat{p}) \geq 15 \]</span></p>
 \]</span></p>
 <ul>
 <li><p><span class="math inline">\(t\)</span> is the standard score from
-a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom\</p></li>
+a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom</p></li>
 <li><p><strong>Assumptions</strong>: data are randomized, assumes
 population distribution of <span class="math inline">\(x\)</span> is
 normal</p></li>
@@ -536,7 +536,7 @@ a standard normal distribution corresponding to the desired confidence
 level</p></li>
 <li><p><span class="math inline">\(m\)</span> is the desired margin of
 error</p></li>
-<li><p><span class="math inline">\(p\)</span> and <span class="math inline">\(\sigma\)</span> must determined from prior
+<li><p><span class="math inline">\(p\)</span> and <span class="math inline">\(\sigma\)</span> must be determined from prior
 information or studies</p></li>
 </ul></li>
 </ul>
@@ -564,15 +564,13 @@ hypothesis testing</p>
 proportion</strong></h3>
 <ol style="list-style-type: decimal">
 <li><p><strong>Assumptions:</strong> <span class="math inline">\(n\)</span> is large; <span class="math inline">\(n\hat{p}\)</span> and <span class="math inline">\(n(1-\hat{p}) \geq 15\)</span></p></li>
-<li><p>State the null and alternative hypotheses</p></li>
+<li><p>State the null and alternative hypotheses, where <span class="math inline">\(p_0\)</span> is the hypothesized value of the
+population proportion</p></li>
 </ol>
 <ul>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: p_0 = 0.5 \ \ H_A: p &gt;
-p_0\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: p_0 = 0.5 \ \ H_A: p &lt;
-p_0\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: p_0 = 0.5 \ \ H_A: p \neq
-p_0\)</span></p></li>
+<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: p = p_0 \ \ H_A: p &gt; p_0\)</span></p></li>
+<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: p = p_0 \ \ H_A: p &lt; p_0\)</span></p></li>
+<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: p = p_0 \ \ H_A: p \neq p_0\)</span></p></li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li>Compute the test statistic</li>
@@ -587,7 +585,7 @@ p_0\)</span></p></li>
 \geq z_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
 <li><p><strong>Left-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(z
 \leq z_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(|z| \geq |z_{\text{obs}} || \ H_0
+<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(|z| \geq |z_{\text{obs}}| \ \mid \ H_0
 \text{true})\)</span></p></li>
 </ul>
 <ol start="5" style="list-style-type: decimal">
@@ -602,12 +600,13 @@ p_0\)</span></p></li>
 random variable <span class="math inline">\(x\)</span> is approximately
 normal (this is especially important if <span class="math inline">\(n\)</span> is small and the significance test is
 one sided)</p></li>
-<li><p>State the null and alternative hypotheses</p></li>
+<li><p>State the null and alternative hypotheses, where <span class="math inline">\(\mu_0\)</span> is the hypothesized value of the
+population mean</p></li>
 </ol>
 <ul>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: \mu_0 = 0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span></p></li>
+<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span></p></li>
+<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span></p></li>
+<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span></p></li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li>Compute the test statistic</li>
@@ -622,7 +621,7 @@ one sided)</p></li>
 \geq t_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
 <li><p><strong>Left-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(t
 \leq t_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(|t| \geq |t_{\text{obs}} || \ H_0
+<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(|t| \geq |t_{\text{obs}}| \ \mid \ H_0
 \text{true})\)</span></p></li>
 </ul>
 <ol start="5" style="list-style-type: decimal">
@@ -651,43 +650,44 @@ sign test</p></li>
 <ol style="list-style-type: decimal">
 <li><p>Assumptions: data are collected from a randomization scheme.
 Observations are independent</p></li>
-<li><p>State the null and alternative hypotheses:</p></li>
+<li><p>State the null and alternative hypotheses, where <span class="math inline">\(p\)</span> is the probability of a positive
+sign:</p></li>
 </ol>
 <ul>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: p_0 = 0.5\)</span> <span class="math inline">\(H_A: p_0 \neq p_0\)</span></p></li>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: p_0 = 0.5\)</span> <span class="math inline">\(H_A: p_0 &gt; p_0\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: p_0 = 0.5\)</span> <span class="math inline">\(H_A: p_0 &lt; p_0\)</span></p></li>
-<li><p>where <span class="math inline">\(p_0\)</span> is the probability
-of a positive sign</p></li>
+<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: p = 0.5\)</span> <span class="math inline">\(H_A: p \neq 0.5\)</span></p></li>
+<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: p = 0.5\)</span> <span class="math inline">\(H_A: p &gt; 0.5\)</span></p></li>
+<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: p = 0.5\)</span> <span class="math inline">\(H_A: p &lt; 0.5\)</span></p></li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li><p>The test statistic <span class="math inline">\(S\)</span> is the
-total number of positive signs which follows a binomial distribution
-<span class="math inline">\(X \sim \text{binom}(n, p_0)\)</span> where
-<span class="math inline">\(n\)</span> is the total number of
-signs</p></li>
+total number of positive signs, which under the null follows a binomial
+distribution <span class="math inline">\(S \sim \text{binom}(n,
+0.5)\)</span> where <span class="math inline">\(n\)</span> is the total
+number of signs</p></li>
 <li><p>The <span class="math inline">\(p\)</span>-value is computed from
-a binomial distribution under the null:</p></li>
+a binomial distribution under the null (the one-sided forms below assume
+the observed count <span class="math inline">\(s\)</span> falls in the
+tail named by <span class="math inline">\(H_A\)</span>):</p></li>
 </ol>
 <ul>
-<li>for a two-tailed test <span class="math inline">\(H_A: p_0 \neq
-p_0\)</span>:</li>
+<li>for a two-tailed test <span class="math inline">\(H_A: p \neq
+0.5\)</span>:</li>
 </ul>
 <p><span class="math display">\[2\times P(S\geq s| H_0) = 2\times \left[
 1 - P(S&lt;s| H_0)\right]\]</span></p>
 <p><span class="math display">\[ = 2 \times \left[ 1 - \sum_{k = 0}^{s -
 1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k}\right] \]</span></p>
 <ul>
-<li>for a right-tailed test <span class="math inline">\(H_A: p_0 &gt;
-p_0\)</span>:</li>
+<li>for a right-tailed test <span class="math inline">\(H_A: p &gt;
+0.5\)</span>:</li>
 </ul>
-<p><span class="math display">\[P(S\geq S| H_0) = 1 - P(S&lt;s|
+<p><span class="math display">\[P(S\geq s| H_0) = 1 - P(S&lt;s|
 H_0)\]</span></p>
 <p><span class="math display">\[ = 1 - \sum_{k = 0}^{s -
 1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \]</span></p>
 <ul>
-<li>for a left-tailed test <span class="math inline">\(H_A: p_0 &lt;
-p_0\)</span>:</li>
+<li>for a left-tailed test <span class="math inline">\(H_A: p &lt;
+0.5\)</span>:</li>
 </ul>
 <p><span class="math display">\[P(S\leq s| H_0) = \sum_{k =
 0}^{s}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \]</span></p>
@@ -708,20 +708,21 @@ only!</p></li>
 </ul>
 <div id="inference-for-two-proportions" class="section level4">
 <h4><strong>Inference for two proportions</strong></h4>
-<p><strong><span class="math inline">\((1-\alpha)\%\)</span> Confidence
-interval:</strong></p>
+<p><strong><span class="math inline">\(100(1-\alpha)\%\)</span>
+Confidence interval:</strong></p>
 <p><span class="math display">\[ (\hat{p}_1 - \hat{p}_2) \pm
 Z_{1-\alpha/2} \times
-\sqrt{\frac{\hat{p}_1(1-\hat{p})}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
+\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
 \]</span></p>
 <p><strong>Hypothesis Testing:</strong></p>
 <ol style="list-style-type: decimal">
 <li>Assumptions: Two populations are independent; random sampling,
-requires large <span class="math inline">\(n\)</span>, only valid
-when</li>
+requires large <span class="math inline">\(n\)</span> in
+<strong>both</strong> groups, only valid when</li>
 </ol>
-<p><span class="math display">\[ n\hat{p} \geq 15 \ \ \text{and} \ \
-n(1-\hat{p}) \geq 15 \]</span></p>
+<p><span class="math display">\[ n_1\hat{p} \geq 15, \ \ n_1(1-\hat{p})
+\geq 15, \ \ n_2\hat{p} \geq 15, \ \ \text{and} \ \ n_2(1-\hat{p}) \geq
+15 \]</span></p>
 <p>where <span class="math inline">\(\hat{p}\)</span> is the pooled
 estimate of the population proportion</p>
 <ol start="2" style="list-style-type: decimal">
@@ -743,13 +744,13 @@ estimate of the common proportion:</p>
 <p><span class="math display">\[\hat{p} =
 \frac{x_1+x_2}{n_1+n_2}\]</span></p>
 <p>where <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are the number of observations in the
-``success” categories for sample 1 and sample 2.</p></li>
+“success” categories for sample 1 and sample 2.</p></li>
 <li><p><span class="math inline">\(p\)</span>-value:</p></li>
 </ol>
 <ul>
 <li><p>Two-tailed test <span class="math inline">\(H_A: p_1 - p_2 \neq
-0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(|z|\geq |Z_{obs}||H_0) = 2\times\left[1 -
-P(z&lt;Z_{obs}| H_0)\right]\)</span></p></li>
+0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(|z|\geq |Z_{obs}| \mid H_0) = 2\times\left[1 -
+P(z&lt;|Z_{obs}|\ \mid H_0)\right]\)</span></p></li>
 <li><p>Right-tailed test <span class="math inline">\(H_A: p_1 - p_2 &gt;
 0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(z\geq Z_{obs}| H_0) = 1 - P(z&lt;Z_{obs}|
 H_0)\)</span></p></li>
@@ -768,13 +769,13 @@ H_0)\)</span></p></li>
 <li><p>Understand the formulas below are for two independent samples
 only!</p></li>
 </ul>
-<p><strong><span class="math inline">\((1-\alpha)\%\)</span> Confidence
-interval:</strong></p>
+<p><strong><span class="math inline">\(100(1-\alpha)\%\)</span>
+Confidence interval:</strong></p>
 <p><span class="math display">\[ (\bar{x}_1 - \bar{x}_2) \pm
 t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
 \]</span></p>
 <ul>
-<li>where <span class="math inline">\(t_{1-\alpha}\)</span> has <span class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span> degrees of
+<li>where <span class="math inline">\(t_{1-\alpha/2}\)</span> has <span class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span> degrees of
 freedom</li>
 </ul>
 <p><strong>Hypothesis Testing:</strong></p>
@@ -801,8 +802,8 @@ significance test is one sided)</p></li>
 </ol>
 <ul>
 <li><p>Two-tailed test <span class="math inline">\(H_A: \mu_1 - \mu_2
-\neq 0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(|t|\geq |t_{obs}||H_0) = 2\times\left[1 -
-P(t&lt;t_{obs}| H_0)\right]\)</span></p></li>
+\neq 0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(|t|\geq |t_{obs}| \mid H_0) = 2\times\left[1 -
+P(t&lt;|t_{obs}|\ \mid H_0)\right]\)</span></p></li>
 <li><p>Right-tailed test <span class="math inline">\(H_A: \mu_1 - \mu_2
 &gt; 0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(t\geq t_{obs}| H_0) = 1 - P(t&lt;t_{obs}|
 H_0)\)</span></p></li>

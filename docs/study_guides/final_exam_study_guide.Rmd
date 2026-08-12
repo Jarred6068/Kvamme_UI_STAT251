@@ -26,21 +26,15 @@ library(ggthemes)
 library(plyr)
 ```
 
-
----
-title: "Final Exam Information and Study Guide"
-output: html_document
----
-
 # Final Exam Information
 
-The final examination is on Monday, May. 6th, from 8:00 AM to 10:00 AM. It will be in the same room as lecture (Teaching and Learning Center, Room 22).
+The final examination is on Monday, May 6th, from 8:00 AM to 10:00 AM. It will be in the same room as lecture (Teaching and Learning Center, Room 22).
 
 It is university policy that if you have more than two final examinations scheduled on the same day based on the official final examination schedule, then you may have the extra final examination(s) rescheduled. If you need to have your final examination rescheduled, you must make arrangements with me before the final examination.
 
 The format for the final examination is similar to the other examinations, except that it will be longer (about 25-30 questions), and all questions will be multiple choice. The final examination focuses more on concepts and definitions and less on computations. However, you should be familiar with some calculations (see the study guide below). The final will have some multiple-choice questions where you need to identify either the correct formula or expression to compute, for example, a certain test statistic or confidence interval.
 
-You may need a calculator for the final examination. You may also use up to five pages of notes ($8.5$ by $11$ inches maximum, writing on both sides is fine). All formulas listed on the final exam study guide will provided. 
+You may need a calculator for the final examination. You may also use up to five pages of notes ($8.5$ by $11$ inches maximum, writing on both sides is fine). All formulas listed on the final exam study guide will be provided.
 
 As stated on the syllabus, the final examination is worth $25\%$ of your course grade. The final examination cannot be dropped. Also, please note the grading scheme listed on the course syllabus when determining what grade you might get in the course after taking the final.
 
@@ -62,24 +56,24 @@ I have organized the study guide according to the material covered on each exam.
 - Understand the distinction between **quantitative** and **qualitative variables**
 - Understand the distinction between **nominal** and **ordinal** variables
 - Understand the distinction between **discrete** vs **continuous** variables
-- Know the various measures of spread (range, IQR, variance, standard deviation) and how they computed
+- Know the various measures of spread (range, IQR, variance, standard deviation) and how they are computed
 - Know the various measures of location/center (mean, median, mode) and how they are computed.
 - Know the *five-number summary* and how it relates to a **boxplot**.
-- Know how to apply the $1.5 \times IQR$ and $2s$ rules for identifying outliers.
+- Know how to apply the $1.5 \times IQR$ rule for identifying outliers.
 - Understand what it means to say that a summary measure is *resistant* to outliers, and which summary measures we have discussed that are resistant and which are not
 
-### Exam 1 equations
+### Exam 1 Equations
 
-\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(X)\]
-	
+\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(x)\]
+
 \[s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \ \ s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}\]
 
-\[ \text{range}(x) = \text{min}(x) - \text{max}(x), \ \ IQR = Q3 - Q1 \]
-	
-\[x < Q1 - 1.5 \times (Q3 - Q1), \ \  x > Q3 - 1.5\times(Q3-Q1)\]
+\[ \text{range}(x) = \text{max}(x) - \text{min}(x), \ \ IQR = Q3 - Q1 \]
+
+\[x < Q1 - 1.5 \times (Q3 - Q1), \ \  x > Q3 + 1.5\times(Q3-Q1)\]
 
 
-# Exam 2 Concepts
+## Exam 2 Concepts
 - Understand the **empirical rule** and how it applies to bell-shaped distributions.
 - Know how to compute and interpret a **$z$-score** and how it relates to the *standard normal distribution*
 - Know the difference between **sampling error** and **margin of error**.
@@ -93,7 +87,7 @@ I have organized the study guide according to the material covered on each exam.
 - Know how to compute the mean, variance, and standard deviation of a discrete random variable from its probability distribution (when given as a table of values and probabilities).
 - Know how to compute a probability concerning a continuous random variable based on a plot of the probability density function (i.e., using the area under the curve).
 - Understand the key features that define Bernoulli, Poisson, and Binomial random variables.
-- Understand what is stated by the **central limit theory** and how it relates to the *shape* of the sampling distributions of $\bar{x}$ and $\hat{p}$
+- Understand what is stated by the **central limit theorem** and how it relates to the *shape* of the sampling distributions of $\bar{x}$ and $\hat{p}$
 - Know the means and standard deviations of sampling distributions of $\bar{x}$ and $\hat{p}$.
 
 ### Exam 2 Equations
@@ -105,8 +99,20 @@ I have organized the study guide according to the material covered on each exam.
 
 \[\sigma = \sqrt{\sum_x (x-\mu)^2\cdot P(x)} \]
 
+Binomial and Poisson probability mass functions:
 
-# Exam 3 Concepts
+\[ P(X = k) = \frac{n!}{k!(n-k)!}\cdot p^k \cdot (1-p)^{n-k} \]
+
+\[ P(X = k) = \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
+
+Means and standard deviations of the sampling distributions:
+
+\[ \mu_{\bar{x}} = \mu, \ \ \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}} \]
+
+\[ \mu_{\hat{p}} = p, \ \ \sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} \]
+
+
+## Exam 3 Concepts
 
 - Understand the “anatomy” of a confidence interval (i.e., point estimate, standard score, standard error, and margin of error). 
 \[ \text{point estimate} \pm \text{standard score} \times \text{standard error} \]
@@ -118,14 +124,14 @@ or
   
 - Know how to compute the sample size required for estimating $p$ with $\hat{p}$ for a desired margin of error $m$
 \[n = \frac{p(1-p)z^2}{m^2} \]
-- Understand when and how you would use each of the following formulas for confidence intervals:
+- Understand when and how you would use each of the following **one-sample** confidence interval formulas:
 \[ \hat{p} \pm z_{1-\alpha/2}\times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
 \[ \bar{x} \pm t_{1-\alpha/2}\times \frac{s}{\sqrt{n}} \]
-- Understand when and how you would use each of the following formulas for confidence intervals:
-\[ (\hat{p}_1 - \hat{p}_2) \pm z_{1-\alpha/2} \times \sqrt{\frac{\hat{p}_1(1-\hat{p})}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
+- Understand when and how you would use each of the following **two-sample** confidence interval formulas:
+\[ (\hat{p}_1 - \hat{p}_2) \pm z_{1-\alpha/2} \times \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
 \[ (\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}} \]
 
-- Understand what is mean by the term **statistical significance**.
+- Understand what is meant by the term **statistical significance**.
 - Know what is meant by the term $p$-value
 - Know the meaning of *critical value*, *significance level* and *rejection region* and how they relate to a significance test.
 - Understand the roles of the *null* and *alternative* hypothesis in a statistical test.
@@ -133,10 +139,10 @@ or
 - Understand how a confidence interval relates to a significance test.
 - Understand what is meant by the **power** of a significance test and what affects the power of a significance test.
 - Know the two types of errors in statistical testing: **type I** and **type II**.
-- Understand when and how you would use each of the following formulas for test statistics:
+- Understand when and how you would use each of the following **one-sample** test statistics:
 \[ z_{\text{obs}} = \frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \]
 \[ t_{\text{obs}} = \frac{\bar{x}-\mu_0}{s/\sqrt{n}} \sim t(n-1) \]
-- Understand when and how you would use each of the following formulas for test statistics:
+- Understand when and how you would use each of the following **two-sample** test statistics:
 \[ Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim N(0,1) \]
 \[ t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\sim t\big(\min(n_1 - 1, n_2 - 1)\big) \]
 
@@ -148,10 +154,10 @@ or
 
 - Understand when and how you would use each of the following formulas for the $\chi^2$ goodness-of-fit and independence test statistics:
 \[ \chi_{obs}^2 = \sum_{i=1}^c \frac{(\text{observed count}_i - \text{expected count}_i)^2}{\text{expected count}_i} \sim \chi^2(c-1)\]
-\[ \chi_{obs}^2 = \sum_{j=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}} \sim \chi^2(r-1\times c-1) \]
+\[ \chi_{obs}^2 = \sum_{i=1}^r\sum_{j=1}^c \frac{(o_{ij} - e_{ij})^2}{e_{ij}} \sim \chi^2\big((r-1)(c-1)\big) \]
 
-- Understand how compute the *expected counts* for a goodness-of-fit test and a test of independence
-\[ E_i = np_i \ \ \text{and} \ \  E_i = \frac{\text{Row}_i \text{ Total} \times \text{Column}_i \text{ Total}}{\text{n}}\]
+- Understand how to compute the *expected counts* for a goodness-of-fit test and a test of independence
+\[ E_i = np_i \ \ \text{and} \ \  E_{ij} = \frac{\text{Row}_i \text{ Total} \times \text{Column}_j \text{ Total}}{n}\]
 
 
 ### Correlation and Linear Regression 
@@ -180,7 +186,7 @@ or
 \[y_i = \alpha + \beta x_i +\epsilon_i\]
 \[\hat{\beta} = r\left(\frac{s_y}{s_x}\right) \]
 \[\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}\]
-\[SS_T = \sum (y-\bar{y})^2 = RegSS+ESS \]
+\[SS_T = \sum (y-\bar{y})^2 = SS_R + SS_E \]
 \[SS_R = \sum (\hat{y}-\bar{y})^2\]
 \[SS_E = \sum (y-\hat{y})^2\]
 \[r^2 = \frac{SS_R}{SS_T}\]

@@ -1,6 +1,18 @@
 name: "Spring 2024 STAT251-03 Course Website"
 exclude: ["download", "libs"]
 output_dir: "." ## if making website hostable on github with jekyll
+
+## ---------------------------------------------------------------------------
+## STAGED RELEASE - entries below marked `## HIDDEN` are commented out so they
+## do not appear in the navbar. To reveal a week/assignment/exam, delete the
+## leading `#` from its two lines (the `- text:` line and its `href:` line) and
+## re-render the site.
+##
+## This hides the LINKS only. The .html pages are still rendered into docs/ and
+## remain reachable by direct URL (and in git history / earlier GitHub Pages
+## deploys). If you need them genuinely unreachable, they have to be excluded
+## from the build or moved out of docs/ instead.
+## ---------------------------------------------------------------------------
 navbar:
   title: "STAT251-03"
   right:
@@ -20,36 +32,37 @@ navbar:
           menu: 
           - text: 'Week 1'
             href: lecturemenu1.html
-          - text: 'Week 2'
-            href: lecturemenu2.html
-          - text: 'Week 3'
-            href: lecturemenu3.html
-          - text: 'Week 4'
-            href: lecturemenu4.html
-          - text: 'Week 5'
-            href: lecturemenu5.html
-          - text: 'Week 6'
-            href: lecturemenu6.html
-          - text: 'Week 7'
-            href: lecturemenu7.html
-          - text: 'Week 8'
-            href: lecturemenu8.html
-          - text: 'Week 9'
-            href: lecturemenu9.html
-          - text: 'Week 10'
-            href: lecturemenu10.html
-          - text: 'Week 11'
-            href: lecturemenu11.html
-          - text: 'Week 12'
-            href: lecturemenu12.html
-          - text: 'Week 13'
-            href: lecturemenu13.html
-          - text: 'Week 14 — Fall Recess'
-            href: lecturemenu14.html
-          - text: 'Week 15'
-            href: lecturemenu15.html
-          - text: 'Week 16'
-            href: lecturemenu16.html
+##        HIDDEN - Weeks 2-16
+#         - text: 'Week 2'
+#           href: lecturemenu2.html
+#         - text: 'Week 3'
+#           href: lecturemenu3.html
+#         - text: 'Week 4'
+#           href: lecturemenu4.html
+#         - text: 'Week 5'
+#           href: lecturemenu5.html
+#         - text: 'Week 6'
+#           href: lecturemenu6.html
+#         - text: 'Week 7'
+#           href: lecturemenu7.html
+#         - text: 'Week 8'
+#           href: lecturemenu8.html
+#         - text: 'Week 9'
+#           href: lecturemenu9.html
+#         - text: 'Week 10'
+#           href: lecturemenu10.html
+#         - text: 'Week 11'
+#           href: lecturemenu11.html
+#         - text: 'Week 12'
+#           href: lecturemenu12.html
+#         - text: 'Week 13'
+#           href: lecturemenu13.html
+#         - text: 'Week 14 — Fall Recess'
+#           href: lecturemenu14.html
+#         - text: 'Week 15'
+#           href: lecturemenu15.html
+#         - text: 'Week 16'
+#           href: lecturemenu16.html
         - text: 'Lecture Slides'
           href: lecslidesindex.html
     - text: 'Homeworks'
@@ -58,38 +71,43 @@ navbar:
           menu:
           - text: 'Homework 1'
             href: homeworks/week1homework.html
-          - text: 'Homework 2'
-            href: homeworks/week5homework.html
-          - text: 'Homework 3'
-            href: homeworks/week7homework.html
-          - text: 'Homework 4'
-            href: homeworks/week12homework.html
-          - text: 'Homework 5'
-            href: homeworks/week14homework.html
+##        HIDDEN - Homeworks 2-5
+#         - text: 'Homework 2'
+#           href: homeworks/week5homework.html
+#         - text: 'Homework 3'
+#           href: homeworks/week7homework.html
+#         - text: 'Homework 4'
+#           href: homeworks/week12homework.html
+#         - text: 'Homework 5'
+#           href: homeworks/week14homework.html
         - text: 'Solutions'
-          menu: 
+          menu:
           - text: 'Hmwk 1 Solutions'
             href: homeworks/week1homework_solns.html
-          - text: 'Hmwk 2 Solutions'
-            href: homeworks/week5homework_solns.html
-          - text: 'Hmwk 3 Solutions'
-            href: homeworks/week7homework_solns.html
-          - text: 'Hmwk 4 Solutions'
-            href: homeworks/week12homework_solns.html
-          - text: 'Hmwk 5 Solutions'
-            href: homeworks/week14homework_solns.html
+##        HIDDEN - Homework 2-5 solutions
+#         - text: 'Hmwk 2 Solutions'
+#           href: homeworks/week5homework_solns.html
+#         - text: 'Hmwk 3 Solutions'
+#           href: homeworks/week7homework_solns.html
+#         - text: 'Hmwk 4 Solutions'
+#           href: homeworks/week12homework_solns.html
+#         - text: 'Hmwk 5 Solutions'
+#           href: homeworks/week14homework_solns.html
         - text: 'Data & PDF Downloads'
           menu:
           - text: 'Homework 1'
             href: homeworks/homework_downloads.html#hw1
-          - text: 'Homework 2'
-            href: homeworks/homework_downloads.html#hw2
-          - text: 'Homework 3'
-            href: homeworks/homework_downloads.html#hw3
-          - text: 'Homework 4'
-            href: homeworks/homework_downloads.html#hw4
-          - text: 'Homework 5'
-            href: homeworks/homework_downloads.html#hw5
+##        HIDDEN - Homework 2-5 anchors. NOTE: these are anchors into the single
+##        homework_downloads.html page, which still lists ALL FIVE homeworks and
+##        is still linked below as 'All downloads'.
+#         - text: 'Homework 2'
+#           href: homeworks/homework_downloads.html#hw2
+#         - text: 'Homework 3'
+#           href: homeworks/homework_downloads.html#hw3
+#         - text: 'Homework 4'
+#           href: homeworks/homework_downloads.html#hw4
+#         - text: 'Homework 5'
+#           href: homeworks/homework_downloads.html#hw5
           - text: 'All downloads'
             href: homeworks/homework_downloads.html
         - text: 'Reading & Extra Problems'
@@ -99,29 +117,30 @@ navbar:
         - text: 'Exam 1 Study Guide'
           href: study_guides/exam1_study_guide.html
         - text: 'Exam 1 Review'
-          menu: 
-            - text: 'Problems' 
+          menu:
+            - text: 'Problems'
               href: Review_problems/exam1_review_problems.html
             - text: 'Solutions'
               href: Review_problems/exam1_review_problems_solns.html
-        - text: 'Exam 2 Study Guide'
-          href: study_guides/exam2_study_guide.html
-        - text: 'Exam 2 Review'
-          menu: 
-            - text: 'Problems' 
-              href: Review_problems/exam2_review_problems.html
-            - text: 'Solutions'
-              href: Review_problems/exam2_review_problems_solns.html
-        - text: 'Exam 3 Study Guide'
-          href: study_guides/exam3_study_guide.html
-        - text: 'Exam 3 Review'
-          menu: 
-            - text: 'Problems' 
-              href: Review_problems/exam3_review_problems.html
-        - text: 'Final Exam Study Guide'
-          href: study_guides/final_exam_study_guide.html
-        - text: 'Final Exam Review'
-          href: Review_problems/final_exam_review_slides.html
+##      HIDDEN - Exams 2, 3 and the final (study guides + review problems)
+#       - text: 'Exam 2 Study Guide'
+#         href: study_guides/exam2_study_guide.html
+#       - text: 'Exam 2 Review'
+#         menu:
+#           - text: 'Problems'
+#             href: Review_problems/exam2_review_problems.html
+#           - text: 'Solutions'
+#             href: Review_problems/exam2_review_problems_solns.html
+#       - text: 'Exam 3 Study Guide'
+#         href: study_guides/exam3_study_guide.html
+#       - text: 'Exam 3 Review'
+#         menu:
+#           - text: 'Problems'
+#             href: Review_problems/exam3_review_problems.html
+#       - text: 'Final Exam Study Guide'
+#         href: study_guides/final_exam_study_guide.html
+#       - text: 'Final Exam Review'
+#         href: Review_problems/final_exam_review_slides.html
     - text: "Course Project"
       menu:
       - text: "Project Description"

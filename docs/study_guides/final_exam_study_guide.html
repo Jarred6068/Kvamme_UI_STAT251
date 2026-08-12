@@ -13,7 +13,7 @@
 
 <meta name="date" content="2024-04-29" />
 
-<title>Final Exam Information and Study Guide</title>
+<title>Final Exam Study Guide</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -374,7 +374,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Final Exam Information and Study Guide</h1>
+<h1 class="title toc-ignore">Final Exam Study Guide</h1>
 <h4 class="author">STAT 251 Section 03</h4>
 <h4 class="date">2024-04-29</h4>
 
@@ -383,7 +383,7 @@ display: none;
 
 <div id="final-exam-information" class="section level1">
 <h1>Final Exam Information</h1>
-<p>The final examination is on Monday, May. 6th, from 8:00 AM to 10:00
+<p>The final examination is on Monday, May 6th, from 8:00 AM to 10:00
 AM. It will be in the same room as lecture (Teaching and Learning
 Center, Room 22).</p>
 <p>It is university policy that if you have more than two final
@@ -403,7 +403,7 @@ example, a certain test statistic or confidence interval.</p>
 up to five pages of notes (<span class="math inline">\(8.5\)</span> by
 <span class="math inline">\(11\)</span> inches maximum, writing on both
 sides is fine). All formulas listed on the final exam study guide will
-provided.</p>
+be provided.</p>
 <p>As stated on the syllabus, the final examination is worth <span class="math inline">\(25\%\)</span> of your course grade. The final
 examination cannot be dropped. Also, please note the grading scheme
 listed on the course syllabus when determining what grade you might get
@@ -440,35 +440,33 @@ table</em>.</li>
 <li>Understand the distinction between <strong>discrete</strong> vs
 <strong>continuous</strong> variables</li>
 <li>Know the various measures of spread (range, IQR, variance, standard
-deviation) and how they computed</li>
+deviation) and how they are computed</li>
 <li>Know the various measures of location/center (mean, median, mode)
 and how they are computed.</li>
 <li>Know the <em>five-number summary</em> and how it relates to a
 <strong>boxplot</strong>.</li>
 <li>Know how to apply the <span class="math inline">\(1.5 \times
-IQR\)</span> and <span class="math inline">\(2s\)</span> rules for
-identifying outliers.</li>
+IQR\)</span> rule for identifying outliers.</li>
 <li>Understand what it means to say that a summary measure is
 <em>resistant</em> to outliers, and which summary measures we have
 discussed that are resistant and which are not</li>
 </ul>
 <div id="exam-1-equations" class="section level3">
-<h3>Exam 1 equations</h3>
+<h3>Exam 1 Equations</h3>
 <p><span class="math display">\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i,
 \ \ \bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x}
-xRF(X)\]</span></p>
+xRF(x)\]</span></p>
 <p><span class="math display">\[s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i -
 \bar{x})^2, \ \ s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i -
 \bar{x})^2}\]</span></p>
-<p><span class="math display">\[ \text{range}(x) = \text{min}(x) -
-\text{max}(x), \ \ IQR = Q3 - Q1 \]</span></p>
+<p><span class="math display">\[ \text{range}(x) = \text{max}(x) -
+\text{min}(x), \ \ IQR = Q3 - Q1 \]</span></p>
 <p><span class="math display">\[x &lt; Q1 - 1.5 \times (Q3 - Q1), \ \  x
-&gt; Q3 - 1.5\times(Q3-Q1)\]</span></p>
+&gt; Q3 + 1.5\times(Q3-Q1)\]</span></p>
 </div>
 </div>
-</div>
-<div id="exam-2-concepts" class="section level1">
-<h1>Exam 2 Concepts</h1>
+<div id="exam-2-concepts" class="section level2">
+<h2>Exam 2 Concepts</h2>
 <ul>
 <li>Understand the <strong>empirical rule</strong> and how it applies to
 bell-shaped distributions.</li>
@@ -504,8 +502,9 @@ using the area under the curve).</li>
 <li>Understand the key features that define Bernoulli, Poisson, and
 Binomial random variables.</li>
 <li>Understand what is stated by the <strong>central limit
-theory</strong> and how it relates to the <em>shape</em> of the sampling
-distributions of <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\hat{p}\)</span></li>
+theorem</strong> and how it relates to the <em>shape</em> of the
+sampling distributions of <span class="math inline">\(\bar{x}\)</span>
+and <span class="math inline">\(\hat{p}\)</span></li>
 <li>Know the means and standard deviations of sampling distributions of
 <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\hat{p}\)</span>.</li>
 </ul>
@@ -518,10 +517,20 @@ distributions of <span class="math inline">\(\bar{x}\)</span> and <span class="m
 \]</span></p>
 <p><span class="math display">\[\sigma = \sqrt{\sum_x (x-\mu)^2\cdot
 P(x)} \]</span></p>
+<p>Binomial and Poisson probability mass functions:</p>
+<p><span class="math display">\[ P(X = k) = \frac{n!}{k!(n-k)!}\cdot p^k
+\cdot (1-p)^{n-k} \]</span></p>
+<p><span class="math display">\[ P(X = k) = \frac{\lambda^k\cdot
+e^{-\lambda}}{k!} \]</span></p>
+<p>Means and standard deviations of the sampling distributions:</p>
+<p><span class="math display">\[ \mu_{\bar{x}} = \mu, \ \
+\sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}} \]</span></p>
+<p><span class="math display">\[ \mu_{\hat{p}} = p, \ \ \sigma_{\hat{p}}
+= \sqrt{\frac{p(1-p)}{n}} \]</span></p>
 </div>
 </div>
-<div id="exam-3-concepts" class="section level1">
-<h1>Exam 3 Concepts</h1>
+<div id="exam-3-concepts" class="section level2">
+<h2>Exam 3 Concepts</h2>
 <ul>
 <li><p>Understand the “anatomy” of a confidence interval (i.e., point
 estimate, standard score, standard error, and margin of error). <span class="math display">\[ \text{point estimate} \pm \text{standard score}
@@ -539,18 +548,17 @@ error and the width of a confidence interval?</li>
 <span class="math inline">\(m\)</span> <span class="math display">\[n =
 \frac{p(1-p)z^2}{m^2} \]</span></p></li>
 <li><p>Understand when and how you would use each of the following
-formulas for confidence intervals: <span class="math display">\[ \hat{p}
-\pm z_{1-\alpha/2}\times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]</span>
-<span class="math display">\[ \bar{x} \pm t_{1-\alpha/2}\times
+<strong>one-sample</strong> confidence interval formulas: <span class="math display">\[ \hat{p} \pm z_{1-\alpha/2}\times
+\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]</span> <span class="math display">\[ \bar{x} \pm t_{1-\alpha/2}\times
 \frac{s}{\sqrt{n}} \]</span></p></li>
 <li><p>Understand when and how you would use each of the following
-formulas for confidence intervals: <span class="math display">\[
-(\hat{p}_1 - \hat{p}_2) \pm z_{1-\alpha/2} \times
-\sqrt{\frac{\hat{p}_1(1-\hat{p})}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
+<strong>two-sample</strong> confidence interval formulas: <span class="math display">\[ (\hat{p}_1 - \hat{p}_2) \pm z_{1-\alpha/2}
+\times
+\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
 \]</span> <span class="math display">\[ (\bar{x}_1 - \bar{x}_2) \pm
 t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
 \]</span></p></li>
-<li><p>Understand what is mean by the term <strong>statistical
+<li><p>Understand what is meant by the term <strong>statistical
 significance</strong>.</p></li>
 <li><p>Know what is meant by the term <span class="math inline">\(p\)</span>-value</p></li>
 <li><p>Know the meaning of <em>critical value</em>, <em>significance
@@ -569,19 +577,18 @@ test.</p></li>
 <li><p>Know the two types of errors in statistical testing: <strong>type
 I</strong> and <strong>type II</strong>.</p></li>
 <li><p>Understand when and how you would use each of the following
-formulas for test statistics: <span class="math display">\[
-z_{\text{obs}} = \frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1)
-\]</span> <span class="math display">\[ t_{\text{obs}} =
+<strong>one-sample</strong> test statistics: <span class="math display">\[ z_{\text{obs}} =
+\frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \]</span> <span class="math display">\[ t_{\text{obs}} =
 \frac{\bar{x}-\mu_0}{s/\sqrt{n}} \sim t(n-1) \]</span></p></li>
 <li><p>Understand when and how you would use each of the following
-formulas for test statistics: <span class="math display">\[ Z_{obs} =
-\frac{(\hat{p}_1 - \hat{p}_2) -
+<strong>two-sample</strong> test statistics: <span class="math display">\[ Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) -
 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim
 N(0,1) \]</span> <span class="math display">\[ t_{obs} =
 \frac{(\bar{x}_1 - \bar{x}_2) -
 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\sim t\big(\min(n_1 - 1,
 n_2 - 1)\big) \]</span></p></li>
 </ul>
+</div>
 </div>
 <div id="new-material-lectures-28---32" class="section level1">
 <h1>New Material (Lectures 28 - 32)</h1>
@@ -595,13 +602,13 @@ n_2 - 1)\big) \]</span></p></li>
 formulas for the <span class="math inline">\(\chi^2\)</span>
 goodness-of-fit and independence test statistics: <span class="math display">\[ \chi_{obs}^2 = \sum_{i=1}^c
 \frac{(\text{observed count}_i - \text{expected
-count}_i)^2}{\text{expected count}_i} \sim \chi^2(c-1)\]</span> <span class="math display">\[ \chi_{obs}^2 = \sum_{j=1}^r\sum_{j=1}^c
-\frac{(o_{ij} - e_{ij})^2}{e_{ij}} \sim \chi^2(r-1\times c-1)
+count}_i)^2}{\text{expected count}_i} \sim \chi^2(c-1)\]</span> <span class="math display">\[ \chi_{obs}^2 = \sum_{i=1}^r\sum_{j=1}^c
+\frac{(o_{ij} - e_{ij})^2}{e_{ij}} \sim \chi^2\big((r-1)(c-1)\big)
 \]</span></p></li>
-<li><p>Understand how compute the <em>expected counts</em> for a
-goodness-of-fit test and a test of independence <span class="math display">\[ E_i = np_i \ \ \text{and} \ \  E_i =
-\frac{\text{Row}_i \text{ Total} \times \text{Column}_i \text{
-Total}}{\text{n}}\]</span></p></li>
+<li><p>Understand how to compute the <em>expected counts</em> for a
+goodness-of-fit test and a test of independence <span class="math display">\[ E_i = np_i \ \ \text{and} \ \  E_{ij} =
+\frac{\text{Row}_i \text{ Total} \times \text{Column}_j \text{
+Total}}{n}\]</span></p></li>
 </ul>
 </div>
 <div id="correlation-and-linear-regression" class="section level3">
@@ -640,8 +647,8 @@ dependence between the response and explanatory variables.</p></li>
 +\epsilon_i\]</span> <span class="math display">\[\hat{\beta} =
 r\left(\frac{s_y}{s_x}\right) \]</span> <span class="math display">\[\hat{\alpha} = \bar{y} -
 \hat{\beta}\bar{x}\]</span> <span class="math display">\[SS_T = \sum
-(y-\bar{y})^2 = RegSS+ESS \]</span> <span class="math display">\[SS_R =
-\sum (\hat{y}-\bar{y})^2\]</span> <span class="math display">\[SS_E =
+(y-\bar{y})^2 = SS_R + SS_E \]</span> <span class="math display">\[SS_R
+= \sum (\hat{y}-\bar{y})^2\]</span> <span class="math display">\[SS_E =
 \sum (y-\hat{y})^2\]</span> <span class="math display">\[r^2 =
 \frac{SS_R}{SS_T}\]</span></p>
 </div>

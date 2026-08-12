@@ -1,7 +1,7 @@
 ---
-title: "Exam 2 Review Problems"
+title: "Exam 2 Review Problems Solutions"
 author: "STAT 251 Section 03"
-date: "2024-01-31"
+date: "2024-03-01"
 output: html_document
 ---
 
@@ -15,8 +15,6 @@ library(ggpubr)
 library(latex2exp)
 path = '../Data/'
 path2 = '../Data/'
-
-#<span style="color: red;"></span>
 ```
 
 
@@ -35,7 +33,7 @@ $\bf 2.)$ The Tillamook dairy company regularly conducts quality control service
 <br>
 
 
-$\bf 3.)$ In the lush valleys of the Shire, hobbits are known for their fondness for good ale and hearty camaraderie. To explore the preferences of hobbits regarding different types of beer, a group of hobbit researchers visits the most popular tavern, "The Prancing Pony," during the annual Hobbiton Beer Festival. They ask patrons present at the festival to share their favorite brews. What is the name of the sampling design utilized by the hobbit researchers to study beer preferences among the hobbits of the Shire in the Lord of the Rings universe?
+$\bf 3.)$ In the lush valleys of the Shire, hobbits are known for their fondness for good ale and hearty camaraderie. To explore the preferences of hobbits regarding different types of beer, a group of hobbit researchers visits the most popular tavern, "The Green Dragon," during the annual Hobbiton Beer Festival. They ask patrons present at the festival to share their favorite brews. What is the name of the sampling design utilized by the hobbit researchers to study beer preferences among the hobbits of the Shire in the Lord of the Rings universe?
 
 <span style="color: red;">Convenience sampling</span>
 
@@ -52,45 +50,46 @@ $\bf 4.)$ In a medical study, each participant is paired with another participan
 
 
 
-$\bf 5.)$ In a research study investigating the effects of a new medication, participants are randomly assigned to one of two groups: the treatment group, which receives the experimental drug, and the control group, which receives a placebo. The random allocation ensures that each participant has an equal chance of being in either group. What is the name of this statistical design?"
+$\bf 5.)$ In a research study investigating the effects of a new medication, participants are randomly assigned to one of two groups: the treatment group, which receives the experimental drug, and the control group, which receives a placebo. The random allocation ensures that each participant has an equal chance of being in either group. What is the name of this statistical design?
 
 <span style="color: red;">Completely randomized design</span>
 
 <br>
 <br>
 
-$\bf 6.)$ In a galaxy far, far away, a research team is conducting an experiment to assess the impact of different lightsaber training techniques on the combat skills of Jedi apprentices. The researchers want to control for individual variations in Force sensitivity, so they organize the participants into blocks based on their initial lightsaber proficiency levels. Within each proficiency level, participants are randomly assigned to one of three training methods. What is the name of the statistical design employed
+$\bf 6.)$ In a galaxy far, far away, a research team is conducting an experiment to assess the impact of different lightsaber training techniques on the combat skills of Jedi apprentices. The researchers want to control for individual variations in Force sensitivity, so they organize the participants into blocks based on their initial lightsaber proficiency levels. Within each proficiency level, participants are randomly assigned to one of three training methods. What is the name of the statistical design employed?
 
-<span style="color: red;">ranomized block design</span>
+<span style="color: red;">Randomized block design</span>
 
 <br>
 <br>
 
 
-$\bf 7.)$ A random variable $X$ follows a normal distribution with mean $\mu = -5$ and variance $\sigma^2 = 10$. 
+$\bf 7.)$ A random variable $X$ follows a normal distribution with mean $\mu = -5$ and variance $\sigma^2 = 100$.
 
-  a.) What is the probability of observing a value of $X$ greater than 15 (i.e $P(X>15)$)?}
-  
+  <span style="color: red;">Note that the problem gives the **variance**, so start by taking the square root to get the standard deviation: $\sigma = \sqrt{100} = 10$</span>
+
+  a.) What is the probability of observing a value of $X$ greater than $15$ (i.e $P(X>15)$)?
+
   <span style="color: red;">\[z = \frac{15 - (-5)}{10} = 2\]
   \[P(Z > 2) = 1 - P(Z \leq 2) = 1 - 0.977 = 0.023 \]</span>
-  
-  b.) What is the probability of observing a value of $X$ less than -8 (i.e $P(X<-8)$)?}
+
+  b.) What is the probability of observing a value of $X$ less than $-8$ (i.e $P(X<-8)$)?
 
   <span style="color: red;">\[z = \frac{-8 - (-5)}{10} = -0.3\]
   \[P(Z < -0.3) = 1 - P(Z < 0.3 ) = 0.38 \]</span>
-  
+
   c.) What is the $30th$ percentile of $X$?
 
   <span style="color: red;">The 30th percentile of a standard normal distribution is $z = -0.52$
   we can use $z$ and the $z$-score equation to convert our $z$ value to the distribution of $X$
-  \[X = (z\sigma) + \mu = -0.52(10)+(-5) = -10.2\]
-  \[P(Z \geq 2) = 1 - P(Z < 2) = 1 - 0.977 = 0.023 \]</span>
-  
+  \[X = (z\sigma) + \mu = -0.52(10)+(-5) = -10.2\]</span>
+
 <br>
 <br>
 
 
-$\bf 8.)$ A fisherman has a $58\%$ chance of catching a fish every time she makes a cast. Assume that each cast is independent. Show how to compute the probability that she catches $5$ fish in the next $10$ casts. 
+$\bf 8.)$ An angler has a $58\%$ chance of catching a fish every time she makes a cast. Assume that each cast is independent. Show how to compute the probability that she catches $5$ fish in the next $10$ casts.
 
 <span style="color: red;">\[X\sim Binom(p = 0.58, n = 10) \]
 \[ P(X = 5) = \frac{10!}{5!(10 - 5)!} 0.58^5 (1- 0.58)^{10-5} = 0.216 \]</span>
@@ -100,16 +99,16 @@ $\bf 8.)$ A fisherman has a $58\%$ chance of catching a fish every time she make
 
 
 
-$\bf 9.)$ On the desert planet of Arrakis, spice harvesters must frequently be evacuated from the spice beds to avoid attacks by sandworms. On average, each spice harvester must be evacuated twice in a 24 hour period. What is the probability that a harvester will not have to be evacuate in a given 24 hour period?
+$\bf 9.)$ On the desert planet of Arrakis, spice harvesters must frequently be evacuated from the spice beds to avoid attacks by sandworms. On average, each spice harvester must be evacuated twice in a 24 hour period. What is the probability that a harvester will not have to be evacuated in a given 24 hour period?
 
 <span style="color: red;">\[ X\sim Poisson(\lambda = 2)\]
-\[P(X = 0) = \frac{2^0 e^{-2}}{0!} = e^-2 = 0.135 \]</span>
+\[P(X = 0) = \frac{2^0 e^{-2}}{0!} = e^{-2} = 0.135 \]</span>
 
 <br>
 <br>
 
 
-$\bf 10.)$ A random variable $X$ has the following probability distribution}
+$\bf 10.)$ A random variable $X$ has the following probability distribution
 
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -126,11 +125,11 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%
   \[\mu = -1(0.1)+3(0.9) = 2.6 \]
   </span>
   
-  b.)Using the table above, show how to compute the variance of $X$
-  
-  <span style="color: red;"> \[\mu = (-1 - 2.6)^2(0.1)+(3-2.6)^2(0.9) = 1.44 \]</span>
-  
-  c.Fill in the table below by deriving the sampling distribution for a mean of $n=2$ observations of $X$. Assume the observations are independent (hint: start by listing the sample space for the mean)
+  b.) Using the table above, show how to compute the variance of $X$
+
+  <span style="color: red;"> \[\sigma^2 = (-1 - 2.6)^2(0.1)+(3-2.6)^2(0.9) = 1.44 \]</span>
+
+  c.) Fill in the table below by deriving the sampling distribution for a mean of $n=2$ observations of $X$. Assume the observations are independent (hint: start by listing the sample space for the mean)
 
 ```{r, echo=FALSE, warning=F, message=F}
 df = cbind.data.frame(`Possible pairs` = c('$(-1, -1)$', '$(-1, 3)$ or $(3, -1)$', '$(3,3)$'), 
@@ -151,7 +150,7 @@ kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = T)%
 
 
 
-$\bf 11.)$ Consider the following distribution of the diameter at breast height (DBH) of a sample of Western red ceder trees. Assume that these trees have an average DBH of about $35$ inches and the standard deviation for DBH is $6$ inches. Use the empirical rule to help you answer parts (a) and (b) and show any/all work.}
+$\bf 11.)$ Consider the following distribution of the diameter at breast height (DBH) of a sample of Western red cedar trees. Assume that these trees have an average DBH of about $35$ inches and the standard deviation for DBH is $6$ inches. Use the empirical rule to help you answer parts (a) and (b) and show any/all work.
 
 ```{r, echo=FALSE, fig.height=2.5, fig.width=4, message=FALSE, warning=FALSE}
 set.seed(592)
@@ -167,8 +166,8 @@ A = ggplot()+
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(size = 15))+
   ylab('Frequency')+
-  xlab('Diameter Breast Height (DBH)')+
-  ggtitle('Distribution of Tree DBH',subtitle = 'For Wester Red Ceders')
+  xlab('Diameter at Breast Height (DBH)')+
+  ggtitle('Distribution of Tree DBH',subtitle = 'For Western Red Cedars')
 
 plot(A)
 #ggarrange(A, B, nrow = 1, ncol = 2)
@@ -178,19 +177,19 @@ plot(A)
 
   a. What proportion of trees have a DBH greater than 41 inches?
   
-  <span style="color: red;">compute the z-score: 
+  <span style="color: red;">compute the z-score:
   \[ z = \frac{41- 35}{6} = 1\]
-  by the empirical rule we know from the empirical rule that approximately $16\%$ of observations will be $1\sigma$ above the mean</span>
+  by the empirical rule we know that approximately $68\%$ of observations fall within $1\sigma$ of the mean, leaving $32\%$ split between the two tails. So approximately $16\%$ of observations will be more than $1\sigma$ above the mean</span>
 
   b. What proportion of trees have a DBH between 29 inches and 35 inches?
-  
-  <span style="color: red;">$X = 29$ is $2\sigma$ below the mean and $X = 35$ is the mean. Therefore this is the same as asking "what is $P(-2 < Z < 0)$" - which by the empirical rule should include about $47.5\%$ of the observations </span>
+
+  <span style="color: red;">$X = 29$ is $1\sigma$ below the mean and $X = 35$ is the mean. Therefore this is the same as asking "what is $P(-1 < Z < 0)$" - by the empirical rule about $68\%$ of observations fall within $1\sigma$ of the mean, and half of those are below the mean, so this includes about $34\%$ of the observations </span>
 
   c. Suppose you observe a tree with a DBH of 49.5 inches. Show how to compute and interpret the $z$-score for this tree
-  
-  <span style="color: red;">\[z = \frac{49.5 - 35}{6} = 2.41 \] The tree is 2.41 standard deviations above the mean tree DBH and could be considered an outlier.</span>
-  
+
+  <span style="color: red;">\[z = \frac{49.5 - 35}{6} = 2.42 \] The tree is 2.42 standard deviations above the mean tree DBH and could be considered an outlier.</span>
+
   d. Compute the probability of observing a tree with a DBH greater than 49.5 inches (i.e $P(X > 49.5)$)
-  
-  <span style="color: red;">\[P(X > 49.5) = P(Z > 2.41) = 1-P(Z\leq 2.41) = 0.007\]</span>
+
+  <span style="color: red;">\[P(X > 49.5) = P(Z > 2.42) = 1-P(Z\leq 2.42) = 1 - 0.992 = 0.008\]</span>
 

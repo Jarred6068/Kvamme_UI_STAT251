@@ -15,8 +15,6 @@ library(ggpubr)
 library(latex2exp)
 path = '../Data/'
 path2 = '../Data/'
-
-#<span style="color: red;"></span>
 ```
 
 In your textbook complete the following review problems:
@@ -29,7 +27,7 @@ In your textbook complete the following review problems:
   
   * **Chapter 9**
   
-    * p. 540, problems: 63, 65, 83, 75, 77
+    * p. 540, problems: 63, 65, 75, 77, 83
     
     * solutions: p. 556
   
