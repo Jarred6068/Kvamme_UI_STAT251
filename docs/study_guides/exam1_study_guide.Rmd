@@ -1,6 +1,6 @@
 ---
 title: "Exam 1 Study Guide"
-author: "STAT 251 Section 03"
+author: "STAT 251 Section 01"
 date: "2024-01-28"
 output: html_document
 ---

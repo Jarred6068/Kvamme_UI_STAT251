@@ -1,6 +1,6 @@
 ---
 title: "Final Exam Study Guide"
-author: "STAT 251 Section 03"
+author: "STAT 251 Section 01"
 date: "2024-04-29"
 output: html_document
 ## NOTE: keep this a scalar (or a non-empty map). The form
@@ -36,7 +36,7 @@ The format for the final examination is similar to the other examinations, excep
 
 You may need a calculator for the final examination. You may also use up to five pages of notes ($8.5$ by $11$ inches maximum, writing on both sides is fine). All formulas listed on the final exam study guide will be provided.
 
-As stated on the syllabus, the final examination is worth $25\%$ of your course grade. The final examination cannot be dropped. Also, please note the grading scheme listed on the course syllabus when determining what grade you might get in the course after taking the final.
+As stated on the syllabus, the final examination is worth $20\%$ of your course grade. The final examination cannot be dropped. Also, please note the grading scheme listed on the course syllabus when determining what grade you might get in the course after taking the final.
 
 While the final examination is comprehensive, it is also limited to the topics mentioned in the study guide below. I will not ask any questions about topics not mentioned below. If you want to know if a particular topic might be on the examination, just ask.
 

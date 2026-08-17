@@ -1,6 +1,6 @@
 ---
 title: "Final Exam Review"
-author: "STAT 251 Section 03"
+author: "STAT 251 Section 01"
 date: "2024-05-01"
 output: html_document
 ---

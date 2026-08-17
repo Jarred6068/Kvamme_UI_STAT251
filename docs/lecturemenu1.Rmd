@@ -1,6 +1,6 @@
 ---
 title: "Week 1 Notes"
-author: "STAT 251 Section 03"
+author: "STAT 251 Section 01"
 output: html_document
 ---
 
@@ -89,7 +89,7 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 ### Populations and samples 
 * Statistics is generally concerned with studying properties of a **population**. You can think of a population as a collection of all possible persons, things, or objects that you are studying. Another way to think of a population is as a collection of all possible observations of a variable - both observed and unobserved.
 
-  * A population can be finite (countable) or infinite (uncountable). Many populations are so large that we treat them as if they are infinite. For example, the population of students taking STAT 251 section 03 is a finite set of 60 individuals. Alternatively, the number of germs living in a patient's body is effectively infinite.
+  * A population can be finite (countable) or infinite (uncountable). Many populations are so large that we treat them as if they are infinite. For example, the population of students taking STAT 251 Section 01 is a finite set of 60 individuals. Alternatively, the number of germs living in a patient's body is effectively infinite.
 
 * For many populations, it is very difficult or even impossible to observe all members of the population. To tackle this challenge statistics uses **samples** to learn about the properties of a population. A **sample** is a subset of the population that is actually observed. You can think of a sample as a set of the observed observations. 
 

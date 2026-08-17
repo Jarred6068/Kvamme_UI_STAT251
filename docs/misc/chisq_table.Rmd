@@ -1,6 +1,6 @@
 ---
 title: "Chi Square Distribution"
-author: "STAT 251 Section 03"
+author: "STAT 251 Section 01"
 output: html_document
 ## NOTE: keep this a scalar (or a non-empty map). The form
 ##   output:

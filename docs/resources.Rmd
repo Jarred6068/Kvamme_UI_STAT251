@@ -1,5 +1,5 @@
 ---
-title: "STAT251-03 Course Resources"
+title: "STAT251-01 Course Resources"
 output: html_document
 ---
 

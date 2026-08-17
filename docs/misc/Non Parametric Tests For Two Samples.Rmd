@@ -1,6 +1,6 @@
 ---
 title: "Non Parametric Tests For Two Samples"
-author: "STAT 251 Section 03"
+author: "STAT 251 Section 01"
 output:
   html_document:
     df_print: paged

@@ -1,5 +1,5 @@
 ---
-title: "STAT251-03 Project Data"
+title: "STAT251-01 Project Data"
 output: html_document
 header-includes:
   \usepackage{float}

@@ -1,4 +1,4 @@
-name: "Spring 2024 STAT251-03 Course Website"
+name: "Fall 2026 STAT251-01 Course Website"
 exclude: ["download", "libs"]
 output_dir: "." ## if making website hostable on github with jekyll
 
@@ -14,7 +14,7 @@ output_dir: "." ## if making website hostable on github with jekyll
 ## from the build or moved out of docs/ instead.
 ## ---------------------------------------------------------------------------
 navbar:
-  title: "STAT251-03"
+  title: "STAT251-01"
   right:
     - text: "Home"
       href: index.html

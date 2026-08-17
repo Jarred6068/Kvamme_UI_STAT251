@@ -1,5 +1,5 @@
 ---
-title: "STAT251-03 Statistical Methods"
+title: "STAT251-01 Statistical Methods"
 output: html_document
 ---
 
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div class="hero">
 <p class="eyebrow">Fall 2026</p>
-<h1 class="hero-title">STAT 251-03</h1>
+<h1 class="hero-title">STAT 251-01</h1>
 <p class="hero-subtitle">Statistical Methods</p>
 <p class="hero-meta">University of Idaho &middot; Instructor: Jarred Kvamme &middot; <a href="mailto:jarredk@uidaho.edu">jarredk@uidaho.edu</a></p>
 </div>
@@ -68,7 +68,7 @@ knitr::opts_chunk$set(echo = TRUE)
 <h2 class="band-title">Welcome</h2>
 
 This site contains all the material for Jarred Kvamme's Statistical Methods
-course (STAT 251-03) at the University of Idaho for the fall semester of 2026.
+course (STAT 251-01) at the University of Idaho for the fall semester of 2026.
 
 Everything is reachable from the menu above: lecture notes are organized by
 week, homework assignments and their solutions live under **Homeworks**, and
