@@ -71,7 +71,6 @@ navbar:
           menu:
           - text: 'Homework 1'
             href: homeworks/week1homework.html
-##        HIDDEN - Homeworks 2-5
 #         - text: 'Homework 2'
 #           href: homeworks/week5homework.html
 #         - text: 'Homework 3'
@@ -84,7 +83,6 @@ navbar:
           menu:
           - text: 'Hmwk 1 Solutions'
             href: homeworks/week1homework_solns.html
-##        HIDDEN - Homework 2-5 solutions
 #         - text: 'Hmwk 2 Solutions'
 #           href: homeworks/week5homework_solns.html
 #         - text: 'Hmwk 3 Solutions'
