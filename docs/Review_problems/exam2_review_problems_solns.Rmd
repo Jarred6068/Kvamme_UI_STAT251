@@ -1,7 +1,7 @@
 ---
 title: "Exam 2 Review Problems Solutions"
 author: "STAT 251 Section 01"
-date: "2024-03-01"
+date: "2026-10-14"
 output: html_document
 ---
 

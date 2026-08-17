@@ -17,9 +17,79 @@ knitr::opts_chunk$set(echo = TRUE)
 Labor Day (September 7) and Fall Recess (November 23--27) are university holidays.
 Final examinations run December 14--18.
 
-For registration deadlines, withdrawal dates, holidays and the official
-academic calendar, see the University of Idaho
-[Dates and Deadlines](https://catalog.uidaho.edu/calendar/) page.
+## Registration and withdrawal deadlines (Fall 2026)
+
+These are the University of Idaho Registrar's official Fall 2026 deadlines. STAT 251 is a
+**full-term** course, so the *Full term* column is the one that applies to this class; the
+eight-week columns are included for reference. These deadlines are set by the Registrar,
+not by the instructor.
+
+<table border="1" cellspacing="10" style="width:80%">
+    <tr>
+        <td>**Action**</td>
+        <td>**Full term:<br>Aug. 25 -- Dec. 19**</td>
+        <td>**Early eight-week:<br>Aug. 24 -- Oct. 17**</td>
+        <td>**Late eight-week:<br>Oct. 20 -- Dec. 19**</td>
+    </tr>
+    <tr>
+        <td>Register, add or wait list *without permission*</td>
+        <td>September 2, 2026</td>
+        <td>September 2, 2026</td>
+        <td>October 24, 2026</td>
+    </tr>
+    <tr>
+        <td>Drop (no W)</td>
+        <td>September 8, 2026</td>
+        <td>September 2, 2026</td>
+        <td>October 24, 2026</td>
+    </tr>
+    <tr>
+        <td>Change variable credit</td>
+        <td>September 8, 2026</td>
+        <td>September 2, 2026</td>
+        <td>October 24, 2026</td>
+    </tr>
+    <tr>
+        <td>Change to pass/fail grading *(submit)*</td>
+        <td>September 8, 2026</td>
+        <td>September 2, 2026</td>
+        <td>October 24, 2026</td>
+    </tr>
+    <tr>
+        <td>Audit (AD grade) *(submit)*</td>
+        <td>September 8, 2026</td>
+        <td>September 2, 2026</td>
+        <td>October 24, 2026</td>
+    </tr>
+    <tr>
+        <td>Register/add late *with instructor permission override*</td>
+        <td>September 8, 2026</td>
+        <td>N/A</td>
+        <td>N/A</td>
+    </tr>
+    <tr>
+        <td>Withdraw to audit (WA grade) *(submit)*</td>
+        <td>October 31, 2026</td>
+        <td>September 26, 2026</td>
+        <td>November 21, 2026</td>
+    </tr>
+    <tr>
+        <td>Withdraw *($5 fee charged to account)*</td>
+        <td>October 31, 2026</td>
+        <td>September 26, 2026</td>
+        <td>November 21, 2026</td>
+    </tr>
+</table>
+
+If you need an instructor permission override to add the course late, contact me **before**
+the September 8 deadline -- overrides cannot be issued after that date.
+
+For the authoritative and most current list of deadlines, holidays and the official academic
+calendar, see the University of Idaho
+[Dates and Deadlines](https://www.uidaho.edu/registrar/dates-deadlines) page and the
+[Academic Calendar](https://catalog.uidaho.edu/calendar/).
+
+## Weekly schedule
 
 **Please note: this schedule is meant to provide an outline of the semester and
 is tentative. The pace of the course may deviate from the exact schedule
@@ -101,7 +171,7 @@ outlined below. Any changes will be announced in class and posted here.**
     <tr>
         <td>Wednesday</td>
         <td>September  2, 2026</td>
-        <td>Measures of spread, boxplot</td>
+        <td>Measures of spread, boxplot -- **Last day to register, add or wait list without permission**</td>
         <td></td>
     </tr>
     <tr>
@@ -149,7 +219,7 @@ outlined below. Any changes will be announced in class and posted here.**
     <tr>
         <td>Wednesday</td>
         <td>September  9, 2026</td>
-        <td>The normal distribution, z-scores, transformations</td>
+        <td>The normal distribution, z-scores, transformations -- **September 8 was the last day to drop without a W, change variable credit or grading basis, or add with an instructor permission override**</td>
         <td></td>
     </tr>
     <tr>
@@ -497,7 +567,7 @@ outlined below. Any changes will be announced in class and posted here.**
     <tr>
         <td>Friday</td>
         <td>October 30, 2026</td>
-        <td>Introduction to two-sample tests, independent vs dependent samples -- **Homework 3 due**</td>
+        <td>Introduction to two-sample tests, independent vs dependent samples -- **Homework 3 due**; **October 31 is the last day to withdraw (W) or withdraw to audit (WA)**</td>
         <td></td>
     </tr>
     <tr>

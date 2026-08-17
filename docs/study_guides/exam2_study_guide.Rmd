@@ -1,7 +1,7 @@
 ---
 title: "Exam 2 Study Guide"
 author: "STAT 251 Section 01"
-date: "2024-03-01"
+date: "2026-10-12"
 output: html_document
 ---
 
@@ -16,6 +16,15 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 ```
+
+# Exam Logistics:
+
+  * The exam is scheduled for **Friday, October 16, 2026**, and will be taken in class. An in-class review will be held on **Wednesday, October 14, 2026**
+
+  * You will have the entire 50 minute class period to complete the exam
+
+  * The exam is proctored in class but delivered through **Canvas**, so you must bring a fully charged laptop. **Notes are not permitted.** A calculator is permitted, but it must not be capable of wireless communication
+  * The exam will be about 20 - 25 questions long, with at least one bonus question. Questions are mostly multiple choice, short answer, or labeling problems, with the possibility of one or two short essay / longer explanation problems
 
 # Content To Study
 
