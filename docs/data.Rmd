@@ -36,85 +36,38 @@ dataset2 = MASS::birthwt
 dataset3 = MASS::Cars93
 #write.csv(dataset3, file = paste0(datapath,'Dataset_C_Cars.csv'))
 library(DT)
-dt1 <-   datatable(as.data.frame(dataset1), rownames=T, 
-            # filter = 'top',
-              callback=JS('$("a.buttons-collection").css("background","#008CBA");
-           $("a.buttons-collection").css("font-size","15px");
-           $("a.buttons-collection").css("border-radius", "8px");
-           $("a.buttons-collection").css("margin-right","0px");
-           return table;'),
-        extensions = 'Buttons',
-        options = list(searching=F,
-                       paging = T,
-                       bInfo = F,
-                       columnDefs = list(list(className = 'dt-left',  targets = 0),
-                                         list(className = 'dt-center',  targets = 1:10)),
-                       pageLength = 1,
-                       initComplete = JS("function(settings, json) {",
-                                         "$(this.api().table().header()).css({'background-color': '#99ccff', 'color': '#003333'});",
-                                         "}"),
-                       dom = 'Bfrtip',
-                       buttons = list(
-                                      list(extend = 'collection',
-                                           buttons = c('excel', 'csv'),
-                                           text = 'DOWNLOAD: Dataset A')
-                       )
-        )
+
+## One builder for all three previews so their options cannot drift apart.
+## Styling for the DOWNLOAD button, the dropdown and the table header lives in
+## assets/brand/site.css - it must NOT be set here as inline style, because
+## inline style beats the stylesheet and so cannot follow the dark/light theme.
+make_preview_dt <- function(data, label) {
+  datatable(
+    as.data.frame(data), rownames = TRUE,
+    extensions = 'Buttons',
+    options = list(
+      searching  = FALSE,
+      paging     = TRUE,
+      bInfo      = TRUE,
+      pageLength = 10,
+      scrollX    = TRUE,
+      ## column 0 is the rownames column; 1..ncol are the data columns. Computed
+      ## rather than hardcoded 1:10 - Cars93 has 27 columns, not 10.
+      columnDefs = list(list(className = 'dt-left',   targets = 0),
+                        list(className = 'dt-center', targets = 1:ncol(data))),
+      dom = 'Brtip',
+      buttons = list(
+        list(extend = 'collection',
+             buttons = c('excel', 'csv'),
+             text = label)
+      )
+    )
   )
+}
 
-
-dt2 <-   datatable(dataset2, rownames=T, 
-            # filter = 'top',
-              callback=JS('$("a.buttons-collection").css("background","#008CBA");
-           $("a.buttons-collection").css("font-size","15px");
-           $("a.buttons-collection").css("border-radius", "8px");
-           $("a.buttons-collection").css("margin-right","0px");
-           return table;'),
-        extensions = 'Buttons',
-        options = list(searching=F,
-                       paging = T,
-                       bInfo = F,
-                       columnDefs = list(list(className = 'dt-left',  targets = 0),
-                                         list(className = 'dt-center',  targets = 1:10)),
-                       pageLength = 1,
-                       initComplete = JS("function(settings, json) {",
-                                         "$(this.api().table().header()).css({'background-color': '#99ccff', 'color': '#003333'});",
-                                         "}"),
-                       dom = 'Bfrtip',
-                       buttons = list(
-                                      list(extend = 'collection',
-                                           buttons = c('excel', 'csv'),
-                                           text = 'DOWNLOAD: Dataset B')
-                       )
-        )
-  )
-
-
-dt3 <-   datatable(dataset3, rownames=T, 
-            # filter = 'top',
-              callback=JS('$("a.buttons-collection").css("background","#008CBA");
-           $("a.buttons-collection").css("font-size","15px");
-           $("a.buttons-collection").css("border-radius", "8px");
-           $("a.buttons-collection").css("margin-right","0px");
-           return table;'),
-        extensions = 'Buttons',
-        options = list(searching=F,
-                       paging = T,
-                       bInfo = F,
-                       columnDefs = list(list(className = 'dt-left',  targets = 0),
-                                         list(className = 'dt-center',  targets = 1:10)),
-                       pageLength = 1,
-                       initComplete = JS("function(settings, json) {",
-                                         "$(this.api().table().header()).css({'background-color': '#99ccff', 'color': '#003333'});",
-                                         "}"),
-                       dom = 'Bfrtip',
-                       buttons = list(
-                                      list(extend = 'collection',
-                                           buttons = c('excel', 'csv'),
-                                           text = 'DOWNLOAD: Dataset C')
-                       )
-        )
-  )
+dt1 <- make_preview_dt(dataset1, 'DOWNLOAD: Dataset A')
+dt2 <- make_preview_dt(dataset2, 'DOWNLOAD: Dataset B')
+dt3 <- make_preview_dt(dataset3, 'DOWNLOAD: Dataset C')
 
 ```
 <br>

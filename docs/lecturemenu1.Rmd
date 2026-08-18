@@ -49,19 +49,17 @@ Statistics began as bookkeeping about people. Long before it was a mathematical 
 * A **variable** is a characteristic of an observation. In a typical data table, the variables are represented by the __columns__ of the data table.  
 
 
-The following example is data on 20 clients contacted during a bank's direct marketing campaign for a term deposit account. For each client, the client ID, job, education level, age, average account balance, length of the marketing call, and whether the client subscribed are recorded.
+The following example is 20 of the 400 stores in the `Carseats` data set, which records sales of child car seats. For each store the unit sales, price charged, community income level, regional population, local education level, shelving location quality, and whether the store is in an urban location and in the U.S. are recorded.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-bank.data = read.csv('Data/bank_marketing_example.csv', check.names = FALSE)
-bank.data$`Balance ($)` = formatC(bank.data$`Balance ($)`, format = 'f', digits = 2, big.mark = ',')
-bank.data$`Call Length (min)` = formatC(bank.data$`Call Length (min)`, format = 'f', digits = 1)
+carseats.data = read.csv('Data/carseats_example.csv', check.names = FALSE)
 
-kable(bank.data, format = 'html', row.names = F, booktabs = T)%>%
+kable(carseats.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-<span style="font-size:80%">Source: variable structure adapted from Moro, S., Rita, P., and Cortez, P. (2014). *Bank Marketing* [Dataset]. UCI Machine Learning Repository. <https://doi.org/10.24432/C5K306>. The 20 client records shown here are simulated for illustration; the real data set contains 45,211 clients.</span>
+<span style="font-size:80%">Source: `Carseats` data set, R package `ISLR2`. James, G., Witten, D., Hastie, T., and Tibshirani, R. (2021). *An Introduction to Statistical Learning*, 2nd ed. Springer. `Carseats` is a simulated data set of 400 stores distributed with the textbook; the 20 stores shown here were drawn from it.</span>
 
 The following are 15 observations of a study done on the morphology of Egyptian skulls from 5 epochs of Egyptian history. For each skull, the epoch, and several measurements characterizing the shape of the skull are recorded.
 
@@ -79,13 +77,13 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 * Variables are distinguished by the type of information they represent. One basic distinction is between **qualitative** variables and **quantitative** variables. 
 
-  * **qualitative variables** - also called categorical variables, represent non-numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the bank marketing data above?
+  * **qualitative variables** - also called categorical variables, represent non-numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the `Carseats` data above?
 
   * **quantitative variables** - Sometimes referred to as numeric variables, are numerical characteristics that represent measurements with meaningful magnitudes (their values can be ordered and the differences between them are meaningful). In the Egyptian skull data which variables are quantitative variables?
 
 * Qualitative variables can be further divided between **nominal** and **ordinal** variables. 
 
-  * **nominal variables** - non-numeric qualities or characteristics that can be placed in distinct categories that do not have a natural ordering. Examples of variables that cannot be ordered are gender, race, eye color, or political party. In the bank marketing data, which variables would be considered nominal variables?
+  * **nominal variables** - non-numeric qualities or characteristics that can be placed in distinct categories that do not have a natural ordering. Examples of variables that cannot be ordered are gender, race, eye color, or political party. In the `Carseats` data, which variables would be considered nominal variables?
 
   * **ordinal variables** - non numeric qualities or characteristics that can be placed in distinct categories with an inherent ordering. Examples include education level (e.g., bachelors, masters, PhD) or temperatures (e.g., cool, warm, hot).
 

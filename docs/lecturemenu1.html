@@ -535,10 +535,11 @@ measurements on one or more <strong>variables</strong>.</p></li>
 observation. In a typical data table, the variables are represented by
 the <strong>columns</strong> of the data table.</p></li>
 </ul>
-<p>The following example is data on 20 clients contacted during a bank’s
-direct marketing campaign for a term deposit account. For each client,
-the client ID, job, education level, age, average account balance,
-length of the marketing call, and whether the client subscribed are
+<p>The following example is 20 of the 400 stores in the
+<code>Carseats</code> data set, which records sales of child car seats.
+For each store the unit sales, price charged, community income level,
+regional population, local education level, shelving location quality,
+and whether the store is in an urban location and in the U.S. are
 recorded.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -546,26 +547,29 @@ recorded.</p>
 <th style="text-align:right;">
 Observation
 </th>
-<th style="text-align:left;">
-Client ID
-</th>
-<th style="text-align:left;">
-Job
-</th>
-<th style="text-align:left;">
-Education
+<th style="text-align:right;">
+Sales (1,000s)
 </th>
 <th style="text-align:right;">
-Age
+Price ($)
+</th>
+<th style="text-align:right;">
+Income ($1,000s)
+</th>
+<th style="text-align:right;">
+Population (1,000s)
+</th>
+<th style="text-align:right;">
+Education (years)
 </th>
 <th style="text-align:left;">
-Balance ($)
+ShelveLoc
 </th>
 <th style="text-align:left;">
-Call Length (min)
+Urban
 </th>
 <th style="text-align:left;">
-Subscribed
+US
 </th>
 </tr>
 </thead>
@@ -574,531 +578,590 @@ Subscribed
 <td style="text-align:right;">
 1
 </td>
-<td style="text-align:left;">
-C-1047
-</td>
-<td style="text-align:left;">
-management
-</td>
-<td style="text-align:left;">
-tertiary
+<td style="text-align:right;">
+4.38
 </td>
 <td style="text-align:right;">
-42
+108
+</td>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:right;">
+173
+</td>
+<td style="text-align:right;">
+16
 </td>
 <td style="text-align:left;">
-2,143.50
+Bad
 </td>
 <td style="text-align:left;">
-4.6
+Yes
 </td>
 <td style="text-align:left;">
-no
+No
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:left;">
-C-1052
-</td>
-<td style="text-align:left;">
-blue-collar
-</td>
-<td style="text-align:left;">
-primary
+<td style="text-align:right;">
+11.62
 </td>
 <td style="text-align:right;">
-35
+139
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:right;">
+325
+</td>
+<td style="text-align:right;">
+17
 </td>
 <td style="text-align:left;">
-412.75
+Good
 </td>
 <td style="text-align:left;">
-2.1
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 3
 </td>
-<td style="text-align:left;">
-C-1068
-</td>
-<td style="text-align:left;">
-technician
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+5.07
 </td>
 <td style="text-align:right;">
-29
+96
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+334
+</td>
+<td style="text-align:right;">
+17
 </td>
 <td style="text-align:left;">
-876.20
+Bad
 </td>
 <td style="text-align:left;">
-5.8
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 4
 </td>
-<td style="text-align:left;">
-C-1073
-</td>
-<td style="text-align:left;">
-admin.
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+6.87
 </td>
 <td style="text-align:right;">
-47
+131
+</td>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:right;">
+249
+</td>
+<td style="text-align:right;">
+13
 </td>
 <td style="text-align:left;">
-1,584.05
+Medium
 </td>
 <td style="text-align:left;">
-3.2
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 5
 </td>
-<td style="text-align:left;">
-C-1089
+<td style="text-align:right;">
+11.27
 </td>
-<td style="text-align:left;">
-retired
-</td>
-<td style="text-align:left;">
-primary
+<td style="text-align:right;">
+133
 </td>
 <td style="text-align:right;">
 68
 </td>
-<td style="text-align:left;">
-3,921.40
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+16
 </td>
 <td style="text-align:left;">
-9.7
+Good
 </td>
 <td style="text-align:left;">
-yes
+Yes
+</td>
+<td style="text-align:left;">
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 6
 </td>
-<td style="text-align:left;">
-C-1094
+<td style="text-align:right;">
+3.67
 </td>
-<td style="text-align:left;">
-services
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+131
 </td>
 <td style="text-align:right;">
 31
 </td>
-<td style="text-align:left;">
--88.60
+<td style="text-align:right;">
+327
+</td>
+<td style="text-align:right;">
+16
 </td>
 <td style="text-align:left;">
-1.4
+Medium
 </td>
 <td style="text-align:left;">
-no
+Yes
+</td>
+<td style="text-align:left;">
+No
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 7
 </td>
-<td style="text-align:left;">
-C-1101
-</td>
-<td style="text-align:left;">
-management
-</td>
-<td style="text-align:left;">
-tertiary
+<td style="text-align:right;">
+4.19
 </td>
 <td style="text-align:right;">
-38
+112
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+420
+</td>
+<td style="text-align:right;">
+11
 </td>
 <td style="text-align:left;">
-4,507.85
+Bad
 </td>
 <td style="text-align:left;">
-11.2
+Yes
 </td>
 <td style="text-align:left;">
-yes
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 8
 </td>
-<td style="text-align:left;">
-C-1117
-</td>
-<td style="text-align:left;">
-blue-collar
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+4.97
 </td>
 <td style="text-align:right;">
-52
+160
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+17
 </td>
 <td style="text-align:left;">
-233.15
+Medium
 </td>
 <td style="text-align:left;">
-2.8
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 9
 </td>
-<td style="text-align:left;">
-C-1126
-</td>
-<td style="text-align:left;">
-self-employed
-</td>
-<td style="text-align:left;">
-tertiary
+<td style="text-align:right;">
+4.36
 </td>
 <td style="text-align:right;">
-44
+123
+</td>
+<td style="text-align:right;">
+41
+</td>
+<td style="text-align:right;">
+357
+</td>
+<td style="text-align:right;">
+14
 </td>
 <td style="text-align:left;">
-1,902.30
+Bad
 </td>
 <td style="text-align:left;">
-6.5
+No
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 10
 </td>
-<td style="text-align:left;">
-C-1138
-</td>
-<td style="text-align:left;">
-technician
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+8.69
 </td>
 <td style="text-align:right;">
-26
+101
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:right;">
+16
 </td>
 <td style="text-align:left;">
-145.90
+Medium
 </td>
 <td style="text-align:left;">
-3.9
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 11
 </td>
-<td style="text-align:left;">
-C-1145
-</td>
-<td style="text-align:left;">
-admin.
-</td>
-<td style="text-align:left;">
-tertiary
+<td style="text-align:right;">
+8.65
 </td>
 <td style="text-align:right;">
-33
+120
+</td>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:right;">
+218
+</td>
+<td style="text-align:right;">
+14
 </td>
 <td style="text-align:left;">
-2,760.65
+Medium
 </td>
 <td style="text-align:left;">
-8.1
+No
 </td>
 <td style="text-align:left;">
-yes
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 12
 </td>
-<td style="text-align:left;">
-C-1159
-</td>
-<td style="text-align:left;">
-entrepreneur
-</td>
-<td style="text-align:left;">
-tertiary
+<td style="text-align:right;">
+9.16
 </td>
 <td style="text-align:right;">
-50
+156
+</td>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:right;">
+435
+</td>
+<td style="text-align:right;">
+14
 </td>
 <td style="text-align:left;">
-6,318.20
+Good
 </td>
 <td style="text-align:left;">
-4.3
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 13
 </td>
-<td style="text-align:left;">
-C-1163
-</td>
-<td style="text-align:left;">
-student
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+6.37
 </td>
 <td style="text-align:right;">
-22
+132
+</td>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+18
 </td>
 <td style="text-align:left;">
-318.45
+Medium
 </td>
 <td style="text-align:left;">
-7.4
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 14
 </td>
-<td style="text-align:left;">
-C-1178
-</td>
-<td style="text-align:left;">
-blue-collar
-</td>
-<td style="text-align:left;">
-primary
+<td style="text-align:right;">
+4.21
 </td>
 <td style="text-align:right;">
-58
+137
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+502
+</td>
+<td style="text-align:right;">
+10
 </td>
 <td style="text-align:left;">
-709.10
+Medium
 </td>
 <td style="text-align:left;">
-1.9
+No
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 15
 </td>
-<td style="text-align:left;">
-C-1184
-</td>
-<td style="text-align:left;">
-services
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+8.57
 </td>
 <td style="text-align:right;">
-40
+99
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+158
+</td>
+<td style="text-align:right;">
+11
 </td>
 <td style="text-align:left;">
-1,067.35
+Medium
 </td>
 <td style="text-align:left;">
-5.1
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 16
 </td>
-<td style="text-align:left;">
-C-1190
-</td>
-<td style="text-align:left;">
-management
-</td>
-<td style="text-align:left;">
-tertiary
+<td style="text-align:right;">
+6.80
 </td>
 <td style="text-align:right;">
-45
+135
+</td>
+<td style="text-align:right;">
+117
+</td>
+<td style="text-align:right;">
+337
+</td>
+<td style="text-align:right;">
+10
 </td>
 <td style="text-align:left;">
-3,245.75
+Bad
 </td>
 <td style="text-align:left;">
-2.6
+Yes
 </td>
 <td style="text-align:left;">
-no
+Yes
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 17
 </td>
-<td style="text-align:left;">
-C-1203
-</td>
-<td style="text-align:left;">
-retired
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+8.61
 </td>
 <td style="text-align:right;">
-71
+102
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+283
+</td>
+<td style="text-align:right;">
+15
 </td>
 <td style="text-align:left;">
-2,884.00
+Medium
 </td>
 <td style="text-align:left;">
-10.5
+Yes
 </td>
 <td style="text-align:left;">
-yes
+No
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 18
 </td>
-<td style="text-align:left;">
-C-1215
-</td>
-<td style="text-align:left;">
-technician
-</td>
-<td style="text-align:left;">
-tertiary
+<td style="text-align:right;">
+10.26
 </td>
 <td style="text-align:right;">
-36
+108
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+377
+</td>
+<td style="text-align:right;">
+12
 </td>
 <td style="text-align:left;">
-952.60
+Good
 </td>
 <td style="text-align:left;">
-4.8
+Yes
 </td>
 <td style="text-align:left;">
-no
+No
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 19
 </td>
-<td style="text-align:left;">
-C-1228
-</td>
-<td style="text-align:left;">
-admin.
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+7.90
 </td>
 <td style="text-align:right;">
-49
+124
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+206
+</td>
+<td style="text-align:right;">
+11
 </td>
 <td style="text-align:left;">
-1,471.25
+Medium
 </td>
 <td style="text-align:left;">
-3.5
+Yes
 </td>
 <td style="text-align:left;">
-no
+No
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 20
 </td>
-<td style="text-align:left;">
-C-1234
-</td>
-<td style="text-align:left;">
-blue-collar
-</td>
-<td style="text-align:left;">
-secondary
+<td style="text-align:right;">
+6.81
 </td>
 <td style="text-align:right;">
-27
+125
+</td>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:right;">
+263
+</td>
+<td style="text-align:right;">
+12
 </td>
 <td style="text-align:left;">
--45.30
+Medium
 </td>
 <td style="text-align:left;">
-6.2
+No
 </td>
 <td style="text-align:left;">
-no
+No
 </td>
 </tr>
 </tbody>
 </table>
-<p><span style="font-size:80%">Source: variable structure adapted from
-Moro, S., Rita, P., and Cortez, P. (2014). <em>Bank Marketing</em>
-[Dataset]. UCI Machine Learning Repository. <a
-href="https://doi.org/10.24432/C5K306"
-class="uri">https://doi.org/10.24432/C5K306</a>. The 20 client records
-shown here are simulated for illustration; the real data set contains
-45,211 clients.</span></p>
+<p><span style="font-size:80%">Source: <code>Carseats</code> data set, R
+package <code>ISLR2</code>. James, G., Witten, D., Hastie, T., and
+Tibshirani, R. (2021). <em>An Introduction to Statistical Learning</em>,
+2nd ed. Springer. <code>Carseats</code> is a simulated data set of 400
+stores distributed with the textbook; the 20 stores shown here were
+drawn from it.</span></p>
 <p>The following are 15 observations of a study done on the morphology
 of Egyptian skulls from 5 epochs of Egyptian history. For each skull,
 the epoch, and several measurements characterizing the shape of the
@@ -1392,7 +1455,7 @@ variables and <strong>quantitative</strong> variables.</p>
 <li><p><strong>qualitative variables</strong> - also called categorical
 variables, represent non-numeric qualities or characteristics that can
 be placed in distinct categories. What are the qualitative variables in
-the bank marketing data above?</p></li>
+the <code>Carseats</code> data above?</p></li>
 <li><p><strong>quantitative variables</strong> - Sometimes referred to
 as numeric variables, are numerical characteristics that represent
 measurements with meaningful magnitudes (their values can be ordered and
@@ -1405,8 +1468,9 @@ which variables are quantitative variables?</p></li>
 <li><p><strong>nominal variables</strong> - non-numeric qualities or
 characteristics that can be placed in distinct categories that do not
 have a natural ordering. Examples of variables that cannot be ordered
-are gender, race, eye color, or political party. In the bank marketing
-data, which variables would be considered nominal variables?</p></li>
+are gender, race, eye color, or political party. In the
+<code>Carseats</code> data, which variables would be considered nominal
+variables?</p></li>
 <li><p><strong>ordinal variables</strong> - non numeric qualities or
 characteristics that can be placed in distinct categories with an
 inherent ordering. Examples include education level (e.g., bachelors,

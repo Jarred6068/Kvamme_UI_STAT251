@@ -1070,6 +1070,69 @@ a,
   border-color: var(--uidaho-pride-gold) !important;
 }
 
+/* DataTables Buttons extension - the DOWNLOAD menus on data.html.
+   DT appends div.dt-button-collection to <body>, hard-codes
+   `background-color: white` on it, and gives its items `color: inherit`, so in
+   dark mode they inherit body's white text onto a white panel and vanish. DT
+   ships dark rules for exactly this but keys them on `html.dark`, which this
+   site never sets - we use :root[data-theme]. Hence the patch-up here.
+
+   Unscoped on purpose: the panel is a child of <body>, outside .main-container,
+   so a scoped selector would never reach it. No !important needed either -
+   site.css loads after buttons.dataTables.min.css, so equal specificity wins. */
+
+div.dt-button-collection {
+  /* opaque, NOT --site-surface: this panel floats over arbitrary page content */
+  background-color: var(--site-bg);
+  border-color: var(--site-border);
+  color: var(--site-text);
+  border-radius: 0;
+}
+
+div.dt-button-collection .dt-button {
+  color: var(--site-text);
+  text-decoration: none;
+}
+
+div.dt-button-collection .dt-button:hover:not(.disabled) {
+  background: var(--site-link-hover-bg);
+  color: var(--site-text);
+}
+
+div.dt-button-background {          /* the click-away overlay behind the panel */
+  background: rgba(var(--uidaho-black-rgb), 0.55);
+}
+
+/* The trigger button. This used to be attempted from data.Rmd with
+   `$("a.buttons-collection").css(...)`, which never matched anything: Buttons
+   1.13.6 renders it as <button>, never <a>. Done properly here so it themes. */
+div.dt-buttons > .dt-button.buttons-collection {
+  background: var(--uidaho-pride-gold);
+  border: 1px solid var(--uidaho-pride-gold);
+  color: var(--uidaho-black);       /* #191919 on #F1B300 is ~10:1 */
+  border-radius: 0;
+  font-weight: 700;
+}
+
+div.dt-buttons > .dt-button.buttons-collection:hover:not(.disabled),
+div.dt-buttons > .dt-button.buttons-collection:focus:not(.disabled) {
+  background: var(--uidaho-pride-gold);
+  border-color: var(--uidaho-black);
+  color: var(--uidaho-black);
+}
+
+/* Header row. Also previously forced light-only from data.Rmd, via an
+   initComplete that set an inline background - inline style beats the
+   stylesheet, so it could not follow the theme. */
+table.dataTable thead th,
+table.dataTable thead td {
+  background-color: var(--site-surface-alt);
+  color: var(--site-text);
+  /* deliberately 2px, not --uidaho-brand-accent-border (4px): that weight is
+     for page-level accents and overpowers a data grid's header row. */
+  border-bottom: 2px solid var(--uidaho-pride-gold);
+}
+
 /* Bootstrap surfaces that would otherwise stay light in dark mode. */
 .main-container .panel,
 .main-container .well,
