@@ -3,7 +3,7 @@ title: "STAT251-01 Course Project"
 output: html_document
 header-includes:
   \usepackage{float}
-urlcolor: blue  
+urlcolor: blue
 #bibliography: home2bibs.bib
 ---
 
@@ -18,8 +18,8 @@ library(knitr)
 ```
 
 
-## Project Description: 
-This project is worth 25 points. It will be due in Canvas on **December 18th at 11:59PM**. The objective of this project is to engage you in a hands-on exploration of statistical analysis. In this project you will demonstrate your understanding of the main tenets of statistical description and inference that we have learned in this class. For this project, you will need to find data related to a topic that interests you such as finance, medicine, sports, ecology, etc. From this data, you will need to choose one or two variables that relate to a statistical question that interests you and analyze the data using the appropriate methods. I have provided three sets of data on the course website. Complete the instructions for steps 1-3 to conduct a thorough statistical analysis of your chosen variables. Write up your results as a short report (1-5 pages). You may use any statistical software available to you to analyze your chosen variables (for example: Microsoft Excel, R, SAS, Python, MATLAB, SPSS, or other). The applications in the "resources" tab on the [course website]() may also be used. I have also provided several links for online software that can be be used to complete your analyses. In addition, I have included several websites (links below) which can be used to explore publicly available datasets.
+## Project Description:
+This project is worth **20% of your course grade**. It will be due in Canvas on **December 18th, 2026 at 11:59PM**. The objective of this project is to engage you in a hands-on exploration of statistical analysis. In this project you will demonstrate your understanding of the main tenets of statistical description and inference that we have learned in this class. For this project, you will need to find data related to a topic that interests you such as finance, medicine, sports, ecology, etc. From this data, you will draw a small sample, choose one or two variables that relate to a statistical question that interests you, and analyze that sample using the appropriate methods. If you are unable to find a dataset of your own, three datasets are provided for you under the [**Data**](data.html) tab, and you may use one of those instead. Complete the instructions for **steps 1--6** to conduct a thorough statistical analysis of your chosen variables. Write up your results as a short report (1-5 pages). You may use any statistical software available to you to analyze your chosen variables (for example: Microsoft Excel, R, SAS, Python, MATLAB, SPSS, or other). The applications under the **Resources** tab of the course website ([Tools/Calculators](https://stat-tools.jmks-homelab.dev/)) may also be used. I have also provided several links for online software that can be be used to complete your analyses. In addition, I have included several websites (links below) which can be used to explore publicly available datasets.
 
 ## Links for public data
 
@@ -39,31 +39,32 @@ This project is worth 25 points. It will be due in Canvas on **December 18th at 
 * [Eurostat](https://ec.europa.eu/eurostat) is the statistical office of the European Union, and it provides access to statistical information on the European Union and its member states
 
 
-## Software Links:   
+## Software Links:
 
-[Plotly for online data visualization](https://plot.ly/create/?_ga=2.215845015.1866748034.1700201169-713259889.1700201168)   
+[Plotly for online data visualization](https://plot.ly/create/?_ga=2.215845015.1866748034.1700201169-713259889.1700201168)
 
 [RAWgraphs Online Data Vizualization Tool](https://www.rawgraphs.io/)
 
-[IMathAS Boxplot Grapher](https://www.imathas.com/stattools/boxplot.html)   
+[IMathAS Boxplot Grapher](https://www.imathas.com/stattools/boxplot.html)
 
-[Chemgrid Boxplot Maker](http://shiny.chemgrid.org/boxplotr/)   
+[Chemgrid Boxplot Maker](http://shiny.chemgrid.org/boxplotr/)
 
-[National Center For Education Statistics](https://nces.ed.gov/nceskids/createagraph/)    
+[National Center For Education Statistics](https://nces.ed.gov/nceskids/createagraph/)
 
-[Evan's Awesome AB tool (for $t$-test and $\chi^2$-test)](https://www.evanmiller.org/ab-testing/)   
+[Evan's Awesome AB tool (for $t$-test and $\chi^2$-test)](https://www.evanmiller.org/ab-testing/)
 
-[Purdue University Department of Psychology Free 2-proportion Z-test Calculator](http://www2.psych.purdue.edu/~gfrancis/calculators/proportion_test_two_sample.shtml)   
+[Purdue University Department of Psychology Free 2-proportion Z-test Calculator](http://www2.psych.purdue.edu/~gfrancis/calculators/proportion_test_two_sample.shtml)
 
 [LibreTexts Chi-Square Goodness of Fit Test Calculator](https://stats.libretexts.org/Learning_Objects/02%3A_Interactive_Statistics/36%3A__Chi-Square_Goodness_of_Fit_Test_Calculator)
 
-[LibreTexts Chi-Square Test of Independence Calculator](https://stats.libretexts.org/Learning_Objects/02%3A_Interactive_Statistics/37%3A__Chi-Square_Test_For_Independence_Calculator)   
+[LibreTexts Chi-Square Test of Independence Calculator](https://stats.libretexts.org/Learning_Objects/02%3A_Interactive_Statistics/37%3A__Chi-Square_Test_For_Independence_Calculator)
 
 [Virginia Tech Sign Test Calculator](https://camel.psyc.vt.edu/models/stats/sign_test.shtml)
 
 
-## Key Learning Objectives: 
-Gain proficiency in selecting and handling real-world datasets.
+## Key Learning Objectives:
+Gain proficiency in finding, citing, and handling real-world datasets.
+Practice drawing a sample using an appropriate sampling method and justifying that choice.
 Develop skills in using descriptive statistics to characterize the distribution of variables.
 Formulate testable hypotheses based on observed patterns or relationships in the data.
 Apply appropriate statistical tests to evaluate hypotheses and draw meaningful conclusions.
@@ -72,17 +73,24 @@ Enhance data visualization skills through the creation of descriptive plots.
 
 ## Assessment Criteria:
 
-* Clarity and relevance of the chosen statistical question (5pts).
-* Accuracy and completeness of the statistical description for each variable (5pts).
-* Appropriateness of the chosen hypothesis and statistical test (5pts).
-* Accuracy in conducting the statistical test and interpreting the results (5pts).
-* Presentation quality of descriptive plots and written analysis (5pts).
+The project is worth **20% of your course grade**. Your report is graded on:
+
+| **Component**                                                                                        | **Weight** |
+| :--------------------------------------------------------------------------------------------------- | ---------: |
+| 1. Dataset selection and citation                                                                    |    10%     |
+| 2. Clarity and relevance of the statistical question / hypothesis                                    |    15%     |
+| 3. Sampling method and justification                                                                 |    20%     |
+| 4. Accuracy and completeness of the exploratory description and plots                                |    20%     |
+| 5. Appropriateness of the chosen test, and accuracy of the hypotheses, computations, and shown work   |    25%     |
+| 6. Conclusion and interpretation of the results                                                      |    10%     |
 
 ## Deliverables:
 
 
-* A written report documenting your entire statistical process, including the statistical question, descriptive statistics, hypothesis formulation, statistical test application, and conclusion.
+* A written report documenting your entire statistical process, including the dataset citation, the statistical question, your sampling method and its justification, descriptive statistics, hypothesis formulation, statistical test application, and conclusion.
+* The sample of 20--30 observations you drew, included as a table or an appendix so that your work can be checked.
 * Visualizations of the chosen variables' distributions including plot or table captions.
+* All work shown for the calculation of the observed statistic and the test statistic.
 * Any additional insights or observations gained during the analysis.
 * This project is designed to foster a deeper understanding of statistical concepts through practical application and encourages critical thinking in formulating and testing hypotheses based on real-world data.
 
@@ -91,17 +99,37 @@ Please read all instructions carefully
 
 # Project Steps:
 
-## 1. Variable Selection:
+## 1. Dataset Selection:
 
-Choose one or two variables from a dataset that interests you or one of the provided datasets.
+Choose a dataset on a topic that interests you. The dataset may come from a website, an academic paper, a government or agency report, or another source of your choosing. If you cannot find one, you may use one of the three datasets provided under the [**Data**](data.html) tab.
 
-* **(A)** Provide some background related to the dataset you chose such as what topic it relates to, how it was gathered, sampling method etc - if available. Provide a link or appropriate reference. 
+* **(A)** **Your dataset must be cited.** Give a full reference for the source and, where the data are available online, include a **working link** to the dataset itself. A citation with a dead link, or with no link for data that live on the web, does not count.
 
-* **(B)** Articulate a statistical question related to the dataset you chose and select one or two variables that relate to this question. 
+* **(B)** Provide some background related to the dataset you chose such as what topic it relates to, who collected it, how it was gathered, the sampling method used by the original collectors, and how many observations it contains - if available.
 
-* **(C)** Write a short description of the variable(s) and how they relate to the question you are interested in exploring.
+## 2. Question and Hypothesis Formulation:
 
-## 2. Statistical Description:
+* **(A)** Articulate a statistical question about one or more variable(s) in the dataset that **you can actually test using the data you have selected**. Your question must be answerable with the variables in your dataset and with the methods we have covered in this class.
+
+* **(B)** Identify the one or two variable(s) that relate to this question, state whether each is quantitative or categorical, and write a short description of each variable and how it relates to the question you are exploring.
+
+* **(C)** State, in words, the hypothesis you expect to test. (You will write it formally in **Part 5**.)
+
+## 3. Sampling:
+
+Rather than analyzing the whole dataset, you will analyze a **sample** drawn from it.
+
+* **(A)** Draw a sample of **20 to 30 observations** from your chosen dataset using an appropriate sampling method (e.g., simple random sampling, systematic sampling, stratified sampling, or cluster sampling).
+
+* **(B)** Describe exactly how you drew the sample: the method you used, the sample size $n$, and the tool or procedure you used to select the observations (for example, a random number generator, the `sample()` function in R, or a random number table). Someone reading your report should be able to repeat what you did.
+
+* **(C)** **Provide a justification for the sampling approach you chose.** Explain why that method is appropriate for your dataset and your question, and note any bias your method could introduce.
+
+* **(D)** Report your sample in a table (or in an appendix) so that your calculations can be checked.
+
+## 4. Exploratory Statistical Description:
+
+Using **the sample you drew in Part 3**:
 
 * **(A)** Utilizing descriptive statistics, provide a comprehensive overview of each selected variable. For quantitative variables, compute the **minimum, Q1, median, mean, Q3, maximum, interquartile range (IQR), and the standard deviation** and provide them in a table format (see below). For categorical variables, construct a **frequency table** and identify the **modal category**.
 
@@ -119,17 +147,26 @@ Choose one or two variables from a dataset that interests you or one of the prov
 
 
 
-* **(B)** Create at least one descriptive plot for each variable: (e.g., histogram, boxplot, dot plot, stem-and-leaf plot, pareto chart, pie chart, bar chart) to visualize their distribution. Be sure to include a caption for each plot. 
+* **(B)** Create at least one descriptive plot for each variable: (e.g., histogram, boxplot, dot plot, stem-and-leaf plot, pareto chart, pie chart, bar chart) to visualize their distribution. Be sure to include a caption for each plot.
 
 
-* **(C)** Using the descriptive statistics computed in parts A and B, write a short description of the shape, center, and variability of your chosen variables. Make note of any outliers and how they may influence your results. 
+* **(C)** Using the descriptive statistics computed in parts A and B, write a short description of the shape, center, and variability of your chosen variables. Make note of any outliers and how they may influence your results.
 
-## 3. Hypothesis Formulation and Testing:
-Building on the statistical description in **Part 2.**, formulate a testable hypothesis (or multiple if you analyze the variables separately) related to your question in **Part 1** that explores the relationship between the chosen variables or compares it to a population parameter. Depending on the nature of your question, be sure to choose the appropriate statistical test or model. This may include any of the tests we have talked about in class such as: one and two-sample tests of means and proportions, categorical tests such as one of the $\chi^2$-tests, non-parametric tests, bootstrap tests, regression, or ANOVA.
+## 5. Hypothesis Testing:
+Building on the statistical description in **Part 4**, formally test the hypothesis you described in **Part 2**. Depending on the nature of your question, be sure to choose the appropriate statistical test or model. This may include any of the tests we have talked about in class such as: one and two-sample tests of means and proportions, categorical tests such as one of the $\chi^2$-tests, non-parametric tests, bootstrap tests, regression, or ANOVA.
 
 
-* **(A)** Write a short description justifying your choice of hypothesis test or model and how it will help you answer the statistical question you outline in **Part 1**. State the null and alternative hypotheses clearly and address any assumptions of the test and whether your data adheres to the assumptions. 
-* **(B)** Conduct the chosen statistical test: Give the critical value, degrees of freedom (if applicable), test statistic and $pvalue$ of the test. If you are using regression - be sure to report the coefficient of determination, residual standard deviation, and coefficient estimates and their standard error. If you are conducting an ANOVA, be sure to report the appropriate ANOVA table include model and error sum of squares, mean squares, F-statistics, and pvalues. 
-* **(C)** Interpret the results of your test(s) and draw conclusions regarding the validity or rejection of the hypothesis. 
+* **(A)** **Clearly define the hypothesis you wish to test.** State the **null hypothesis** ($H_0$) and the **alternative hypothesis** ($H_a$) explicitly, both in symbols and in words, and state the significance level $\alpha$ you will use.
 
+* **(B)** Write a short description justifying your choice of hypothesis test or model and how it will help you answer the statistical question you outline in **Part 2**. Address the assumptions of the test and whether your sample adheres to those assumptions.
+
+* **(C)** Apply the test to your sample and **show all of your work**. Include every step used to compute the **observed statistic** (for example, the sample mean, the sample proportion, or the observed counts) and the **test statistic**: write down the formula you are using, substitute your numbers into it, and show the intermediate quantities such as the standard error and the degrees of freedom. Report the critical value, degrees of freedom (if applicable), test statistic and $pvalue$ of the test. If you are using regression - be sure to report the coefficient of determination, residual standard deviation, and coefficient estimates and their standard error. If you are conducting an ANOVA, be sure to report the appropriate ANOVA table include model and error sum of squares, mean squares, F-statistics, and pvalues.
+
+## 6. Conclusion:
+
+* **(A)** **Report the results of your hypothesis test.** State your decision about $H_0$ (reject or fail to reject) and the evidence that led to that decision - your test statistic together with the critical value or the $pvalue$.
+
+* **(B)** **Interpret** the result in the context of your original question from **Part 2**, in plain language that a non-statistician could follow. What does this tell you about the topic you chose?
+
+* **(C)** Note any limitations of your analysis - for example the size of your sample, the sampling method you used, outliers, violated assumptions, or the fact that a conclusion drawn from your sample may not extend to the full dataset or population.
 

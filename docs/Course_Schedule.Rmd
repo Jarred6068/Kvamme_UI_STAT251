@@ -891,7 +891,7 @@ outlined below. Any changes will be announced in class and posted here.**
     <tr>
         <td>Friday</td>
         <td>December 18, 2026</td>
-        <td>Course project due at midnight</td>
+        <td>Course project due at 11:59PM</td>
         <td></td>
     </tr>
 </table>

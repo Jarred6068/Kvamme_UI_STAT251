@@ -18,8 +18,10 @@ library(knitr)
 ```
 
 
-## Project Description: 
-This project is worth 25 points, and it will be due in Canvas on **December 10th at midnight**. The objective of this project is to engage you in a hands-on exploration of statistical analysis. In this project you will demonstrate your understanding of the main tenets of statistical description and inference that we have learned in this class. You will start by selecting and investigating two variables from one of three provided datasets: Dataset A, Dataset B, or Dataset C. A detailed description of each dataset is given below
+## Project Description:
+The course project is worth **20% of your course grade**, and it will be due in Canvas on **December 18th, 2026 at 11:59PM**. The full instructions are on the [**Project Description**](project.html) page.
+
+For the project you are expected to find a dataset on a topic that interests you and cite it. If you are unable to find one, you may instead use one of the three datasets provided here: Dataset A, Dataset B, or Dataset C. A detailed description of each dataset is given below. Note that you will not analyze the whole dataset - **Part 3** of the project asks you to draw a sample of 20 to 30 observations from it using an appropriate sampling method.
 
 ## Data
 

@@ -460,6 +460,58 @@ $(document).ready(function () {
 
 <div id="introduction-to-statistical-methods" class="section level1">
 <h1>Introduction to statistical methods</h1>
+<div id="where-does-statistics-come-from" class="section level3">
+<h3>Where does statistics come from?</h3>
+<p>Statistics began as bookkeeping about people. Long before it was a
+mathematical discipline, it was the practice of counting births, deaths,
+and taxpayers so that a state could describe itself - which is also
+where the word comes from.</p>
+<ul>
+<li><p><strong>1662 - John Graunt.</strong> Working from London’s weekly
+<em>Bills of Mortality</em>, Graunt classified deaths by cause, compared
+urban and rural mortality, and built the first life table. It is
+generally regarded as the first statistical analysis of data.</p></li>
+<li><p><strong>1693 - Edmond Halley.</strong> Using birth and death
+records from the city of Breslau, Halley produced a life table complete
+enough to price life annuities, giving governments (and later insurers)
+a way to put a number on risk.</p></li>
+<li><p><strong>1749 - Gottfried Achenwall.</strong> Achenwall coined the
+German word <em>Statistik</em> for the systematic description of a
+state. Sir John Sinclair carried “statistics” into English in his
+<em>Statistical Account of Scotland</em> (1791).</p></li>
+<li><p><strong>1790 - The first national censuses.</strong> The United
+States conducted its first census in 1790; Great Britain followed in
+1801. Counting the population became a routine function of
+government.</p></li>
+<li><p><strong>1830s - Adolphe Quetelet.</strong> Quetelet applied the
+normal curve to human characteristics such as height and chest
+circumference, introducing <em>l’homme moyen</em> - “the average man” -
+and moving statistics from state record-keeping into the social
+sciences.</p></li>
+<li><p><strong>Around 1900 - Francis Galton and Karl Pearson.</strong>
+Galton and Pearson developed correlation and regression, and Pearson
+introduced the chi-square test, turning statistics into a mathematical
+discipline in its own right.</p></li>
+<li><p><strong>1908-1935 - W. S. Gosset and R. A. Fisher.</strong>
+Gosset (writing as “Student”) derived the <span
+class="math inline">\(t\)</span>-distribution while working at the
+Guinness brewery. Fisher then formalized experimental design, analysis
+of variance, and significance testing in <em>Statistical Methods for
+Research Workers</em> (1925) and <em>The Design of Experiments</em>
+(1935). Most of what we cover this semester comes from this
+period.</p></li>
+<li><p><strong>Today.</strong> The ideas are largely the same; computers
+let us apply them to data sets far larger than anything Graunt could
+count by hand.</p></li>
+</ul>
+<p><span style="font-size:80%">Sources: J. Graunt (1662), <em>Natural
+and Political Observations Made upon the Bills of Mortality</em>. E.
+Halley (1693), <em>Phil. Trans. R. Soc.</em> 17:596-610. G. Achenwall
+(1749), <em>Abriss der neuesten Staatswissenschaft</em>. A. Quetelet
+(1835), <em>Sur l’homme et le developpement de ses facultes</em>. R. A.
+Fisher (1925), <em>Statistical Methods for Research
+Workers</em>.</span></p>
+</div>
 <div id="data-observations-variables" class="section level3">
 <h3>Data, observations, variables</h3>
 <ul>
@@ -483,436 +535,570 @@ measurements on one or more <strong>variables</strong>.</p></li>
 observation. In a typical data table, the variables are represented by
 the <strong>columns</strong> of the data table.</p></li>
 </ul>
-<p>The following example is fictional data consisting of 20 observations
-including the identification number, duty posting, height, age, blaster
-accuracy, and rank of stormtroopers graduating from the imperial
-stormtrooper academy.</p>
+<p>The following example is data on 20 clients contacted during a bank’s
+direct marketing campaign for a term deposit account. For each client,
+the client ID, job, education level, age, average account balance,
+length of the marketing call, and whether the client subscribed are
+recorded.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
-Identification Number
-</th>
-<th style="text-align:left;">
-Duty Posting
-</th>
 <th style="text-align:right;">
-Height (cm)
+Observation
+</th>
+<th style="text-align:left;">
+Client ID
+</th>
+<th style="text-align:left;">
+Job
+</th>
+<th style="text-align:left;">
+Education
 </th>
 <th style="text-align:right;">
 Age
 </th>
-<th style="text-align:right;">
-Blaster Accuracy
+<th style="text-align:left;">
+Balance ($)
 </th>
 <th style="text-align:left;">
-Rank
+Call Length (min)
+</th>
+<th style="text-align:left;">
+Subscribed
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-FN-2414
-</td>
-<td style="text-align:left;">
-Berchest Station
-</td>
 <td style="text-align:right;">
-184.9
-</td>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:right;">
-0.62
+1
 </td>
 <td style="text-align:left;">
-PV1
+C-1047
+</td>
+<td style="text-align:left;">
+management
+</td>
+<td style="text-align:left;">
+tertiary
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:left;">
+2,143.50
+</td>
+<td style="text-align:left;">
+4.6
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2462
-</td>
-<td style="text-align:left;">
-Death Star
-</td>
 <td style="text-align:right;">
-193.3
-</td>
-<td style="text-align:right;">
-20
-</td>
-<td style="text-align:right;">
-0.66
+2
 </td>
 <td style="text-align:left;">
-PV1
+C-1052
+</td>
+<td style="text-align:left;">
+blue-collar
+</td>
+<td style="text-align:left;">
+primary
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+412.75
+</td>
+<td style="text-align:left;">
+2.1
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2178
-</td>
-<td style="text-align:left;">
-Death Star
-</td>
 <td style="text-align:right;">
-191.0
-</td>
-<td style="text-align:right;">
-20
-</td>
-<td style="text-align:right;">
-0.77
+3
 </td>
 <td style="text-align:left;">
-CPL
+C-1068
+</td>
+<td style="text-align:left;">
+technician
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:left;">
+876.20
+</td>
+<td style="text-align:left;">
+5.8
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2525
-</td>
-<td style="text-align:left;">
-Lothal
-</td>
 <td style="text-align:right;">
-186.7
-</td>
-<td style="text-align:right;">
-23
-</td>
-<td style="text-align:right;">
-0.61
+4
 </td>
 <td style="text-align:left;">
-PV2
+C-1073
+</td>
+<td style="text-align:left;">
+admin.
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+1,584.05
+</td>
+<td style="text-align:left;">
+3.2
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2194
-</td>
-<td style="text-align:left;">
-Corellia
-</td>
 <td style="text-align:right;">
-194.6
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-0.66
+5
 </td>
 <td style="text-align:left;">
-CPL
+C-1089
+</td>
+<td style="text-align:left;">
+retired
+</td>
+<td style="text-align:left;">
+primary
+</td>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+3,921.40
+</td>
+<td style="text-align:left;">
+9.7
+</td>
+<td style="text-align:left;">
+yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2937
+<td style="text-align:right;">
+6
 </td>
 <td style="text-align:left;">
-Fondor Ship Yard
+C-1094
+</td>
+<td style="text-align:left;">
+services
+</td>
+<td style="text-align:left;">
+secondary
 </td>
 <td style="text-align:right;">
-191.9
+31
+</td>
+<td style="text-align:left;">
+-88.60
+</td>
+<td style="text-align:left;">
+1.4
+</td>
+<td style="text-align:left;">
+no
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+C-1101
+</td>
+<td style="text-align:left;">
+management
+</td>
+<td style="text-align:left;">
+tertiary
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:left;">
+4,507.85
+</td>
+<td style="text-align:left;">
+11.2
+</td>
+<td style="text-align:left;">
+yes
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+C-1117
+</td>
+<td style="text-align:left;">
+blue-collar
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:left;">
+233.15
+</td>
+<td style="text-align:left;">
+2.8
+</td>
+<td style="text-align:left;">
+no
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+C-1126
+</td>
+<td style="text-align:left;">
+self-employed
+</td>
+<td style="text-align:left;">
+tertiary
+</td>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:left;">
+1,902.30
+</td>
+<td style="text-align:left;">
+6.5
+</td>
+<td style="text-align:left;">
+no
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+C-1138
+</td>
+<td style="text-align:left;">
+technician
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:left;">
+145.90
+</td>
+<td style="text-align:left;">
+3.9
+</td>
+<td style="text-align:left;">
+no
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+C-1145
+</td>
+<td style="text-align:left;">
+admin.
+</td>
+<td style="text-align:left;">
+tertiary
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+2,760.65
+</td>
+<td style="text-align:left;">
+8.1
+</td>
+<td style="text-align:left;">
+yes
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+C-1159
+</td>
+<td style="text-align:left;">
+entrepreneur
+</td>
+<td style="text-align:left;">
+tertiary
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:left;">
+6,318.20
+</td>
+<td style="text-align:left;">
+4.3
+</td>
+<td style="text-align:left;">
+no
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+C-1163
+</td>
+<td style="text-align:left;">
+student
+</td>
+<td style="text-align:left;">
+secondary
 </td>
 <td style="text-align:right;">
 22
 </td>
-<td style="text-align:right;">
-0.75
+<td style="text-align:left;">
+318.45
 </td>
 <td style="text-align:left;">
-PV2
+7.4
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2817
-</td>
-<td style="text-align:left;">
-Fondor Ship Yard
-</td>
 <td style="text-align:right;">
-189.5
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-0.59
+14
 </td>
 <td style="text-align:left;">
-PV2
+C-1178
+</td>
+<td style="text-align:left;">
+blue-collar
+</td>
+<td style="text-align:left;">
+primary
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+709.10
+</td>
+<td style="text-align:left;">
+1.9
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2117
-</td>
-<td style="text-align:left;">
-Death Star
-</td>
 <td style="text-align:right;">
-193.5
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-0.66
+15
 </td>
 <td style="text-align:left;">
-PV2
+C-1184
+</td>
+<td style="text-align:left;">
+services
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:left;">
+1,067.35
+</td>
+<td style="text-align:left;">
+5.1
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2298
-</td>
-<td style="text-align:left;">
-Corellia
-</td>
 <td style="text-align:right;">
-193.4
-</td>
-<td style="text-align:right;">
-24
-</td>
-<td style="text-align:right;">
-0.66
+16
 </td>
 <td style="text-align:left;">
-PV1
+C-1190
+</td>
+<td style="text-align:left;">
+management
+</td>
+<td style="text-align:left;">
+tertiary
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+3,245.75
+</td>
+<td style="text-align:left;">
+2.6
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2228
-</td>
-<td style="text-align:left;">
-Berchest Station
-</td>
 <td style="text-align:right;">
-193.2
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-0.71
+17
 </td>
 <td style="text-align:left;">
-PV2
+C-1203
+</td>
+<td style="text-align:left;">
+retired
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+2,884.00
+</td>
+<td style="text-align:left;">
+10.5
+</td>
+<td style="text-align:left;">
+yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2243
-</td>
-<td style="text-align:left;">
-Death Star
-</td>
-<td style="text-align:right;">
-192.8
-</td>
-<td style="text-align:right;">
-24
-</td>
-<td style="text-align:right;">
-0.69
-</td>
-<td style="text-align:left;">
-PV1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-FN-2013
-</td>
-<td style="text-align:left;">
-Corellia
-</td>
-<td style="text-align:right;">
-192.3
-</td>
 <td style="text-align:right;">
 18
 </td>
-<td style="text-align:right;">
-0.62
+<td style="text-align:left;">
+C-1215
 </td>
 <td style="text-align:left;">
-CPL
+technician
+</td>
+<td style="text-align:left;">
+tertiary
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+952.60
+</td>
+<td style="text-align:left;">
+4.8
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2373
-</td>
-<td style="text-align:left;">
-Lothal
-</td>
-<td style="text-align:right;">
-190.3
-</td>
-<td style="text-align:right;">
-22
-</td>
-<td style="text-align:right;">
-0.60
-</td>
-<td style="text-align:left;">
-PV2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-FN-2664
-</td>
-<td style="text-align:left;">
-Berchest Station
-</td>
-<td style="text-align:right;">
-189.5
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-0.72
-</td>
-<td style="text-align:left;">
-PV2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-FN-2601
-</td>
-<td style="text-align:left;">
-Fondor Ship Yard
-</td>
-<td style="text-align:right;">
-189.2
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:right;">
-0.73
-</td>
-<td style="text-align:left;">
-PV2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-FN-2602
-</td>
-<td style="text-align:left;">
-Lothal
-</td>
-<td style="text-align:right;">
-188.2
-</td>
-<td style="text-align:right;">
-22
-</td>
-<td style="text-align:right;">
-0.62
-</td>
-<td style="text-align:left;">
-PFC
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-FN-2767
-</td>
-<td style="text-align:left;">
-Death Star
-</td>
-<td style="text-align:right;">
-189.8
-</td>
-<td style="text-align:right;">
-20
-</td>
-<td style="text-align:right;">
-0.76
-</td>
-<td style="text-align:left;">
-PV1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-FN-2708
-</td>
-<td style="text-align:left;">
-Death Star
-</td>
-<td style="text-align:right;">
-186.3
-</td>
-<td style="text-align:right;">
-20
-</td>
-<td style="text-align:right;">
-0.61
-</td>
-<td style="text-align:left;">
-PV1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-FN-2090
-</td>
-<td style="text-align:left;">
-Fondor Ship Yard
-</td>
-<td style="text-align:right;">
-197.7
-</td>
 <td style="text-align:right;">
 19
 </td>
-<td style="text-align:right;">
-0.64
+<td style="text-align:left;">
+C-1228
 </td>
 <td style="text-align:left;">
-PV1
+admin.
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:left;">
+1,471.25
+</td>
+<td style="text-align:left;">
+3.5
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-FN-2952
-</td>
-<td style="text-align:left;">
-Corellia
-</td>
 <td style="text-align:right;">
-194.5
-</td>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:right;">
-0.57
+20
 </td>
 <td style="text-align:left;">
-PV1
+C-1234
+</td>
+<td style="text-align:left;">
+blue-collar
+</td>
+<td style="text-align:left;">
+secondary
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+-45.30
+</td>
+<td style="text-align:left;">
+6.2
+</td>
+<td style="text-align:left;">
+no
 </td>
 </tr>
 </tbody>
 </table>
+<p><span style="font-size:80%">Source: variable structure adapted from
+Moro, S., Rita, P., and Cortez, P. (2014). <em>Bank Marketing</em>
+[Dataset]. UCI Machine Learning Repository. <a
+href="https://doi.org/10.24432/C5K306"
+class="uri">https://doi.org/10.24432/C5K306</a>. The 20 client records
+shown here are simulated for illustration; the real data set contains
+45,211 clients.</span></p>
 <p>The following are 15 observations of a study done on the morphology
 of Egyptian skulls from 5 epochs of Egyptian history. For each skull,
 the epoch, and several measurements characterizing the shape of the
@@ -1206,7 +1392,7 @@ variables and <strong>quantitative</strong> variables.</p>
 <li><p><strong>qualitative variables</strong> - also called categorical
 variables, represent non-numeric qualities or characteristics that can
 be placed in distinct categories. What are the qualitative variables in
-the stormtrooper data above?</p></li>
+the bank marketing data above?</p></li>
 <li><p><strong>quantitative variables</strong> - Sometimes referred to
 as numeric variables, are numerical characteristics that represent
 measurements with meaningful magnitudes (their values can be ordered and
@@ -1219,7 +1405,7 @@ which variables are quantitative variables?</p></li>
 <li><p><strong>nominal variables</strong> - non-numeric qualities or
 characteristics that can be placed in distinct categories that do not
 have a natural ordering. Examples of variables that cannot be ordered
-are gender, race, eye color, or political party. In the stormtrooper
+are gender, race, eye color, or political party. In the bank marketing
 data, which variables would be considered nominal variables?</p></li>
 <li><p><strong>ordinal variables</strong> - non numeric qualities or
 characteristics that can be placed in distinct categories with an

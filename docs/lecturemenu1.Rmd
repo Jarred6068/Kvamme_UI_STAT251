@@ -16,6 +16,28 @@ library(ggpubr)
 
 # Introduction to statistical methods
 
+### Where does statistics come from?
+
+Statistics began as bookkeeping about people. Long before it was a mathematical discipline, it was the practice of counting births, deaths, and taxpayers so that a state could describe itself - which is also where the word comes from.
+
+* **1662 - John Graunt.** Working from London's weekly *Bills of Mortality*, Graunt classified deaths by cause, compared urban and rural mortality, and built the first life table. It is generally regarded as the first statistical analysis of data.
+
+* **1693 - Edmond Halley.** Using birth and death records from the city of Breslau, Halley produced a life table complete enough to price life annuities, giving governments (and later insurers) a way to put a number on risk.
+
+* **1749 - Gottfried Achenwall.** Achenwall coined the German word *Statistik* for the systematic description of a state. Sir John Sinclair carried "statistics" into English in his *Statistical Account of Scotland* (1791).
+
+* **1790 - The first national censuses.** The United States conducted its first census in 1790; Great Britain followed in 1801. Counting the population became a routine function of government.
+
+* **1830s - Adolphe Quetelet.** Quetelet applied the normal curve to human characteristics such as height and chest circumference, introducing *l'homme moyen* - "the average man" - and moving statistics from state record-keeping into the social sciences.
+
+* **Around 1900 - Francis Galton and Karl Pearson.** Galton and Pearson developed correlation and regression, and Pearson introduced the chi-square test, turning statistics into a mathematical discipline in its own right.
+
+* **1908-1935 - W. S. Gosset and R. A. Fisher.** Gosset (writing as "Student") derived the $t$-distribution while working at the Guinness brewery. Fisher then formalized experimental design, analysis of variance, and significance testing in *Statistical Methods for Research Workers* (1925) and *The Design of Experiments* (1935). Most of what we cover this semester comes from this period.
+
+* **Today.** The ideas are largely the same; computers let us apply them to data sets far larger than anything Graunt could count by hand.
+
+<span style="font-size:80%">Sources: J. Graunt (1662), *Natural and Political Observations Made upon the Bills of Mortality*. E. Halley (1693), *Phil. Trans. R. Soc.* 17:596-610. G. Achenwall (1749), *Abriss der neuesten Staatswissenschaft*. A. Quetelet (1835), *Sur l'homme et le developpement de ses facultes*. R. A. Fisher (1925), *Statistical Methods for Research Workers*.</span>
+
 ### Data, observations, variables
 
 * **Statistics** is a scientific field that deals with the collection, description, analysis, interpretation, and presentation of data. We see and use data in nearly all aspects of our everyday lives: politics, medicine, forecasting, finance, marketing, etc. In short, we use statistics to ask and answer scientific questions and make predictions. To put it another way, statistics is the science of **data**
@@ -27,28 +49,19 @@ library(ggpubr)
 * A **variable** is a characteristic of an observation. In a typical data table, the variables are represented by the __columns__ of the data table.  
 
 
-The following example is fictional data consisting of 20 observations including the identification number, duty posting, height, age, blaster accuracy, and rank of stormtroopers graduating from the imperial stormtrooper academy.
+The following example is data on 20 clients contacted during a bank's direct marketing campaign for a term deposit account. For each client, the client ID, job, education level, age, average account balance, length of the marketing call, and whether the client subscribed are recorded.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-library(ggplot2)
-library(ggthemes)
-set.seed(123)
-N = 100
-p = 0.65
-n = 20
-`Identification Number` = paste("FN", sample(c(2000:2999), n), sep = "-")
-`Duty Posting` = sample(c("Death Star", "Fondor Ship Yard", "Corellia", "Berchest Station", "Lothal"), n, 
-                        replace = T)
-`Height (cm)` = round(rnorm(n, mean = 190.5, sd = 3.3),1)
-Age = round(rnorm(n, mean = 21, sd = 2))
-`Blaster Accuracy` = rbinom(n, size = N, p = p)/N
-Rank = sample(c('PV1', 'PV2', "PFC", "CPL"), size = n, replace = TRUE, prob = c(0.4, 0.3, 0.2, 0.1))
-st.data = cbind.data.frame(`Identification Number`, `Duty Posting`, `Height (cm)`, Age, `Blaster Accuracy`, Rank)
+bank.data = read.csv('Data/bank_marketing_example.csv', check.names = FALSE)
+bank.data$`Balance ($)` = formatC(bank.data$`Balance ($)`, format = 'f', digits = 2, big.mark = ',')
+bank.data$`Call Length (min)` = formatC(bank.data$`Call Length (min)`, format = 'f', digits = 1)
 
-kable(st.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
+kable(bank.data, format = 'html', row.names = F, booktabs = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
+
+<span style="font-size:80%">Source: variable structure adapted from Moro, S., Rita, P., and Cortez, P. (2014). *Bank Marketing* [Dataset]. UCI Machine Learning Repository. <https://doi.org/10.24432/C5K306>. The 20 client records shown here are simulated for illustration; the real data set contains 45,211 clients.</span>
 
 The following are 15 observations of a study done on the morphology of Egyptian skulls from 5 epochs of Egyptian history. For each skull, the epoch, and several measurements characterizing the shape of the skull are recorded.
 
@@ -66,13 +79,13 @@ kable(skull.data, format = 'html', digits = 2, row.names = F, booktabs = T)%>%
 
 * Variables are distinguished by the type of information they represent. One basic distinction is between **qualitative** variables and **quantitative** variables. 
 
-  * **qualitative variables** - also called categorical variables, represent non-numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the stormtrooper data above?
+  * **qualitative variables** - also called categorical variables, represent non-numeric qualities or characteristics that can be placed in distinct categories. What are the qualitative variables in the bank marketing data above?
 
   * **quantitative variables** - Sometimes referred to as numeric variables, are numerical characteristics that represent measurements with meaningful magnitudes (their values can be ordered and the differences between them are meaningful). In the Egyptian skull data which variables are quantitative variables?
 
 * Qualitative variables can be further divided between **nominal** and **ordinal** variables. 
 
-  * **nominal variables** - non-numeric qualities or characteristics that can be placed in distinct categories that do not have a natural ordering. Examples of variables that cannot be ordered are gender, race, eye color, or political party. In the stormtrooper data, which variables would be considered nominal variables?
+  * **nominal variables** - non-numeric qualities or characteristics that can be placed in distinct categories that do not have a natural ordering. Examples of variables that cannot be ordered are gender, race, eye color, or political party. In the bank marketing data, which variables would be considered nominal variables?
 
   * **ordinal variables** - non numeric qualities or characteristics that can be placed in distinct categories with an inherent ordering. Examples include education level (e.g., bachelors, masters, PhD) or temperatures (e.g., cool, warm, hot).
 
