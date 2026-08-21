@@ -26,6 +26,8 @@ navbar:
           href: syllabus.html
         - text: 'Course Schedule'
           href: Course_Schedule.html
+        - text: 'University Resources'
+          href: university_resources.html
     - text: 'Lectures' ## setting up a drop down menu
       menu:
         - text: 'Lecture Notes'

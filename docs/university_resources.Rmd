@@ -1,0 +1,99 @@
+---
+title: "University Resources"
+output: html_document
+## NOTE: keep this a scalar (or a non-empty map). The form
+##   output:
+##     html_document: default
+## silently discards the whole _site.yml output block - see _site.yml.
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The University of Idaho Moscow campus offers many free services to students. The tables
+below list the contact information for each office for the **2026--27** academic year.
+If you are not sure where to start, ask me and I will help you find the right office.
+
+## Academic Resources
+
+| **Service** | **Contact** | **Location** |
+| :--- | :--- | :--- |
+| Academic Coaching | [acadcoaching@uidaho.edu](mailto:acadcoaching@uidaho.edu) | Idaho Student Union Building, 3rd Floor |
+| Academic Support Programs (ASP) | 208-885-1021 | Idaho Student Union Building, Room 306 |
+| American Language & Cultural Program (ALCP) | 208-885-7183 | 851 Campus Dr., Admin Building, Room 204 |
+| Career Services | 208-885-6121 | Idaho Student Union Building, 3rd Floor |
+| Center for Disability Access & Resources (CDAR) | 208-885-6307 | Bruce M. Pitman Center, Suite 127 |
+| International Programs Office (IPO) | 208-885-8984 | 901 Paradise Creek St., LLC Building #3 |
+| Library | 208-885-6534 | 850 S Rayburn Street |
+| Mathematics Assistance Center (MAC) | 208-885-6742 | Brink Hall 300 |
+| Raven Scholars Program | 208-885-9107 | Vandal Health Clinic, Room 121 |
+| Student Success Program (SSP) | 208-885-5795 | Wallace Residence Center, Basement |
+| Tribal Nations Student Affairs | 208-885-4237 | 865 W. Seventh Street |
+| TRIO | 208-885-1021 | Idaho Student Union Building, Room 306 |
+| Tutoring & College Success (TCS) | 208-885-1021 | Idaho Student Union Building, Room 306 |
+| University Honors Program | 208-885-1238 | Idaho Student Union Building, Room 315 |
+| Vandals First | 208-885-7716 | Teaching & Learning Center, Room 231 |
+| Writing Center | 208-885-6644 | Undergraduate: Library, 2nd Floor, Room 215<br>Graduate: Idaho Commons, Room 323 |
+
+## Health and Wellness
+
+| **Service** | **Contact** | **Location** |
+| :--- | :--- | :--- |
+| Counseling & Mental Health Center | 208-885-6716 | Mary Forney Hall, Room 306 |
+| Green Dot Safety Program | 208-885-5044 | Memorial Gym, Suite 109 |
+| Nutrition Counseling | [mrudley@uidaho.edu](mailto:mrudley@uidaho.edu) | Vandal Health Clinic -- 831 Ash Street |
+| Psychiatric Nurse Practitioner | 208-885-6693 | Vandal Health Clinic -- 831 Ash Street |
+| Student Health Insurance | 208-885-2210 | 831 Ash Street, Room 101 |
+| VandalCARE Team | 208-885-6757 | Teaching & Learning Center, Room 232 |
+| Vandal Health Clinic | 208-885-6693 | 831 Ash Street |
+| Vandal Health Education | 208-885-4146 | Student Recreation Center (SRC) |
+| Violence Prevention & Education | 208-885-5044 | Memorial Gym, Suite 109 |
+
+## Vandal Food Resources
+
+| **Service** | **Contact** | **Location** |
+| :--- | :--- | :--- |
+| Shoup Hall Food Pantry ("Vandal Food Pantry") | 208-885-6078 | Shoup Hall, Room 105 |
+| AgSci Biotech Lounge (marked cabinets) | 208-885-7984 | AgSci Biotech Lounge Kitchen |
+| Chas Basic Needs Kits | 208-885-6757 | Teaching & Learning Center, Room 232 |
+| Dean of Students Office | 208-885-6757 | Teaching & Learning Center, Room 232 |
+| Swipe Out Hunger | Submit a CARE referral to request | -- |
+| The Center | [thecenterpalouse@gmail.com](mailto:thecenterpalouse@gmail.com) | 822 Elm Street |
+| Violence Prevention & Education | 208-885-5044 | Memorial Gym, Suite 109 |
+| West Side Food Pantry | [www.inlandoasis.org](https://www.inlandoasis.org) | 730 W Pullman Road, Suite 3 |
+
+## Other Campus Services
+
+| **Service** | **Contact** | **Location** |
+| :--- | :--- | :--- |
+| Children's Center | 208-885-6414 | 421 Sweet Avenue |
+| Fraternity & Sorority Life (FSL) | 208-885-1114 | Idaho Student Union Building, Room 302 |
+| Housing & Residence Life (HRL) | 208-885-6571 | Wallace Residence Center, 2nd Floor |
+| Military and Veteran Services Office | 208-885-7989 | 901 Paradise Creek St., LLC Building #3 |
+| New Student Orientation | 208-885-6163 | Bruce Pitman Center, Room 135G |
+| Office of Civil Rights & Investigations (OCRI) | 208-885-4285 | 530 S Asbury Street, Suite 5 |
+| Parking & Transportation Services | 208-885-6424 | 1006 Railroad Street, Room 135 |
+| Registrar's Office | 208-885-6731 | Bruce M. Pitman Center, Room 119 |
+| Student Accounts | 208-885-7447 | Bruce M. Pitman Center, Room 125 |
+| Student Conduct | 208-885-6757 | Teaching & Learning Center, Room 232 |
+| Student Financial Aid Services | 208-885-6312 | Bruce M. Pitman Center, Room 101 |
+
+## Emergency and Security
+
+| **Service** | **Contact** | **Location** |
+| :--- | :--- | :--- |
+| Moscow Police Sub-Station | 208-882-2677 | Memorial Gym, Room 110 |
+| Safe Walk (24/7) | 1-208-885-SAFE (7233) | Call for an escort or a ride; available 24/7 |
+| Security Services | 208-885-7054 or 208-874-7550 | Memorial Gym, Room 111 |
+
+## VandalCARE
+
+If you are concerned about a fellow Vandal (student, staff, or faculty), submit a
+VandalCARE referral by visiting the
+[VandalCARE website](https://www.uidaho.edu/student-affairs/dean-of-students/vandalcare)
+or by scanning the QR code below.
+
+<img src="images/QR-code-vandalcare.png" alt="QR code linking to the VandalCARE referral form" style="width: 200px; max-width: 100%;">
+
+**If you consider the situation you are reporting an emergency, call 911 immediately.**
