@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en" xml:lang="en">
 
 <head>
 
@@ -450,6 +450,23 @@ $(document).ready(function () {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<!--
+  Bypass block (WCAG 2.4.1). Included via `includes: before_body:` so it is the
+  very first thing inside <body> - ahead of the navbar, which is what it skips.
+
+  Every top-level page puts a ~25-link fixed navbar in front of the content, so
+  without this a keyboard or switch user tabs the entire menu on every single
+  page before reaching anything they came for.
+
+  .sr-only / .sr-only-focusable are Bootstrap 3's own classes (already in
+  site_libs/bootstrap-3.3.5) - visually hidden until focused, then revealed.
+  site.css only adds the on-brand painted state and the z-index needed to sit
+  above .navbar-fixed-top.
+
+  The #main-content target does not exist in pandoc's template; a11y.html
+  stamps it onto .main-container at parse time. Both files must ship together.
+-->
+<a href="#main-content" class="sr-only sr-only-focusable skip-link">Skip to main content</a>
 
 <div id="header">
 
@@ -1197,6 +1214,95 @@ estimate of the standard deviation or variance.</p></li>
   } else {
     btn.classList.add('theme-toggle-floating');
     document.body.appendChild(btn);
+  }
+})();
+</script>
+<!--
+  Structural accessibility patches. Included via `includes: after_body:` AFTER
+  theme-toggle.html.
+
+  Why a script and not markup: everything below has to change elements that
+  pandoc's HTML template and rmarkdown's navbar generator emit. We do not own
+  either template, and the navbar is rebuilt from _site.yml on every render, so
+  a hand-edit would be overwritten. Patching the parsed DOM is the only place
+  these fixes survive a rebuild.
+
+  Why a SEPARATE file rather than appending to theme-toggle.html: that file's
+  header documents two load-bearing ordering constraints. Leave it alone.
+
+  Same synchronous-during-parsing guarantee that theme-toggle.html relies on -
+  no DOMContentLoaded, no defer. By the time an after_body script runs, the
+  navbar and .main-container are already in the DOM, and we are still ahead of
+  jQuery's ready queue.
+
+  EVERY lookup is null-guarded: 29 subdirectory pages (homeworks/, misc/,
+  study_guides/, Review_problems/) render without a navbar, and this file loads
+  on those too.
+-->
+<script>
+(function () {
+  /* 1. Main landmark + skip-link target (WCAG 1.3.1, 2.4.1).
+        pandoc emits no <main> at all; the content lives in a bare div.
+        tabindex="-1" is what makes the skip link MOVE FOCUS rather than merely
+        scroll - without it Chrome and Safari scroll and leave focus on <body>,
+        so the next Tab drops the user back at the top of the navbar. */
+  var main = document.querySelector('.main-container');
+  if (main) {
+    if (!main.id) main.id = 'main-content';
+    main.setAttribute('role', 'main');
+    main.setAttribute('tabindex', '-1');
+  }
+
+  var navbar = document.querySelector('.navbar');
+
+  /* 2. Name the hamburger (WCAG 4.1.2). rmarkdown emits the button with three
+        empty <span class="icon-bar"> and no text and no label, so screen
+        readers announce a bare "button". */
+  var toggle = document.querySelector('.navbar-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    var target = (toggle.getAttribute('data-target') || '').replace(/^#/, '');
+    if (target) toggle.setAttribute('aria-controls', target);
+  }
+
+  /* 3. Dropdown triggers advertise that they open something.
+        Bootstrap 3.3.5's own JS already maintains aria-expanded, so we only
+        add what it does not: aria-haspopup. */
+  var togglers = document.querySelectorAll('.navbar .dropdown-toggle');
+  for (var i = 0; i < togglers.length; i++) {
+    togglers[i].setAttribute('aria-haspopup', 'true');
+  }
+
+  /* 4. Drop the broken ARIA menu pattern (WCAG 4.1.2).
+        rmarkdown puts role="menu" on the dropdown <ul> but never gives the
+        children role="menuitem". A menu with no menuitems is announced as an
+        empty menu - strictly worse than no role, because it suppresses the
+        list semantics the plain <ul>/<a> markup would otherwise expose.
+        Removing the role is correct and far cheaper than implementing the
+        full APG menubar pattern (roving tabindex, arrow keys, Escape). */
+  var menus = document.querySelectorAll('.navbar [role="menu"]');
+  for (var j = 0; j < menus.length; j++) {
+    menus[j].removeAttribute('role');
+  }
+
+  /* 5. Escape hatch for the navbar-less pages (WCAG 2.4.5, 3.2.3).
+        The subdirectory pages are rendered outside render_site() and never see
+        the _site.yml navbar, so a reader who followed a menu link into one has
+        no way back except the browser's Back button - and no way at all if
+        they arrived from a bookmark or a direct link.
+
+        All 29 live exactly one directory below docs/, so '../index.html'
+        resolves for every one of them. This branch cannot run on a top-level
+        page: those all have a navbar. */
+  if (!navbar && main) {
+    var bar = document.createElement('div');
+    bar.className = 'site-backlink-bar';
+    var link = document.createElement('a');
+    link.className = 'site-backlink';
+    link.href = '../index.html';
+    link.textContent = '\u2190 Back to course site';
+    bar.appendChild(link);
+    main.insertBefore(bar, main.firstChild);
   }
 })();
 </script>

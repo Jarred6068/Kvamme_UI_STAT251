@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en" xml:lang="en">
 
 <head>
 
@@ -447,6 +447,23 @@ $(document).ready(function () {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<!--
+  Bypass block (WCAG 2.4.1). Included via `includes: before_body:` so it is the
+  very first thing inside <body> - ahead of the navbar, which is what it skips.
+
+  Every top-level page puts a ~25-link fixed navbar in front of the content, so
+  without this a keyboard or switch user tabs the entire menu on every single
+  page before reaching anything they came for.
+
+  .sr-only / .sr-only-focusable are Bootstrap 3's own classes (already in
+  site_libs/bootstrap-3.3.5) - visually hidden until focused, then revealed.
+  site.css only adds the on-brand painted state and the z-index needed to sit
+  above .navbar-fixed-top.
+
+  The #main-content target does not exist in pandoc's template; a11y.html
+  stamps it onto .main-container at parse time. Both files must ship together.
+-->
+<a href="#main-content" class="sr-only sr-only-focusable skip-link">Skip to main content</a>
 
 <div id="header">
 
@@ -469,25 +486,32 @@ deadlines. STAT 251 is a <strong>full-term</strong> course, so the
 <em>Full term</em> column is the one that applies to this class; the
 eight-week columns are included for reference. These deadlines are set
 by the Registrar, not by the instructor.</p>
-<table border="1" cellspacing="10" style="width:80%">
+<table class="deadline-table">
+<caption>
+University of Idaho Registrar deadlines for Fall 2026, by course length.
+STAT 251 is a full-term course.
+</caption>
+<thead>
 <tr>
-<td>
-<strong>Action</strong>
-</td>
-<td>
-<strong>Full term:<br>Aug. 25 – Dec. 19</strong>
-</td>
-<td>
-<strong>Early eight-week:<br>Aug. 24 – Oct. 17</strong>
-</td>
-<td>
-<strong>Late eight-week:<br>Oct. 20 – Dec. 19</strong>
-</td>
+<th scope="col">
+Action
+</th>
+<th scope="col">
+Full term:<br>Aug. 25 – Dec. 19
+</th>
+<th scope="col">
+Early eight-week:<br>Aug. 24 – Oct. 17
+</th>
+<th scope="col">
+Late eight-week:<br>Oct. 20 – Dec. 19
+</th>
 </tr>
+</thead>
+<tbody>
 <tr>
-<td>
+<th scope="row">
 Register, add or wait list <em>without permission</em>
-</td>
+</th>
 <td>
 September 2, 2026
 </td>
@@ -499,9 +523,9 @@ October 24, 2026
 </td>
 </tr>
 <tr>
-<td>
+<th scope="row">
 Drop (no W)
-</td>
+</th>
 <td>
 September 8, 2026
 </td>
@@ -513,9 +537,9 @@ October 24, 2026
 </td>
 </tr>
 <tr>
-<td>
+<th scope="row">
 Change variable credit
-</td>
+</th>
 <td>
 September 8, 2026
 </td>
@@ -527,9 +551,9 @@ October 24, 2026
 </td>
 </tr>
 <tr>
-<td>
+<th scope="row">
 Change to pass/fail grading <em>(submit)</em>
-</td>
+</th>
 <td>
 September 8, 2026
 </td>
@@ -541,9 +565,9 @@ October 24, 2026
 </td>
 </tr>
 <tr>
-<td>
+<th scope="row">
 Audit (AD grade) <em>(submit)</em>
-</td>
+</th>
 <td>
 September 8, 2026
 </td>
@@ -555,9 +579,9 @@ October 24, 2026
 </td>
 </tr>
 <tr>
-<td>
+<th scope="row">
 Register/add late <em>with instructor permission override</em>
-</td>
+</th>
 <td>
 September 8, 2026
 </td>
@@ -569,9 +593,9 @@ N/A
 </td>
 </tr>
 <tr>
-<td>
+<th scope="row">
 Withdraw to audit (WA grade) <em>(submit)</em>
-</td>
+</th>
 <td>
 October 31, 2026
 </td>
@@ -583,9 +607,9 @@ November 21, 2026
 </td>
 </tr>
 <tr>
-<td>
+<th scope="row">
 Withdraw <em>($5 fee charged to account)</em>
-</td>
+</th>
 <td>
 October 31, 2026
 </td>
@@ -596,6 +620,7 @@ September 26, 2026
 November 21, 2026
 </td>
 </tr>
+</tbody>
 </table>
 <p>If you need an instructor permission override to add the course late,
 contact me <strong>before</strong> the September 8 deadline – overrides
@@ -612,151 +637,85 @@ href="https://catalog.uidaho.edu/calendar/">Academic Calendar</a>.</p>
 the semester and is tentative. The pace of the course may deviate from
 the exact schedule outlined below. Any changes will be announced in
 class and posted here.</strong></p>
-<table border="1" cellspacing="10" style="width:60%">
+<table class="schedule-table">
+<caption>
+Week-by-week topic schedule for Fall 2026. Tentative; changes are
+announced in class and posted here.
+</caption>
+<thead>
 <tr>
-<td>
-<strong>WEEK 1</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
+<th scope="col">
+Day
+</th>
+<th scope="col">
+Date
+</th>
+<th scope="col">
+Topic
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 1
+</th>
 </tr>
 <tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 August 24, 2026
 </td>
 <td>
 Introduction: The big picture
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 August 26, 2026
 </td>
 <td>
 Describing and visualizing distributions
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 August 28, 2026
 </td>
 <td>
 Distributions and frequency tables
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 2
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 2</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 August 31, 2026
 </td>
 <td>
 Measures of location and position
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 September 2, 2026
 </td>
@@ -764,93 +723,40 @@ September 2, 2026
 Measures of spread, boxplot – <strong>Last day to register, add or wait
 list without permission</strong>
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 September 4, 2026
 </td>
 <td>
 Measures of spread, cumulative distributions
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 3
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 3</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 September 7, 2026
 </td>
 <td>
 Labor Day - NO CLASS
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 September 9, 2026
 </td>
@@ -859,23 +765,11 @@ The normal distribution, z-scores, transformations – <strong>September 8
 was the last day to drop without a W, change variable credit or grading
 basis, or add with an instructor permission override</strong>
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 September 11, 2026
 </td>
@@ -883,140 +777,58 @@ September 11, 2026
 Identifying outliers, margin of error, statistical significance –
 <strong>Homework 1 due</strong>
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 4
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 4</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 September 14, 2026
 </td>
 <td>
 Study and sampling designs
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 September 16, 2026
 </td>
 <td>
 Exam 1 Review
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 September 18, 2026
 </td>
 <td>
 Exam 1
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 5
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 5</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 September 21, 2026
 </td>
@@ -1024,232 +836,102 @@ September 21, 2026
 Introduction to probability, random variables, discrete probability
 distributions
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 September 23, 2026
 </td>
 <td>
 Discrete probability distributions
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 September 25, 2026
 </td>
 <td>
 Continuous probability distributions
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 6
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 6</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 September 28, 2026
 </td>
 <td>
 Sampling distributions and the central limit theorem
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 September 30, 2026
 </td>
 <td>
 More on sampling distributions, Introduction to confidence intervals
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 October 2, 2026
 </td>
 <td>
 Confidence Intervals for a population proportion
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 7
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 7</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 October 5, 2026
 </td>
 <td>
 Confidence Intervals for a population mean
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 October 7, 2026
 </td>
 <td>
 Bootstrap confidence intervals
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 October 9, 2026
 </td>
@@ -1257,233 +939,98 @@ October 9, 2026
 Choosing a minimum sample size, assumptions of estimators –
 <strong>Homework 2 due</strong>
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 8
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 8</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 October 12, 2026
 </td>
 <td>
 Catch-up / review buffer
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 October 14, 2026
 </td>
 <td>
 Exam 2 Review
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 October 16, 2026
 </td>
 <td>
 Exam 2
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 9
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 9</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 October 19, 2026
 </td>
 <td>
 Introduction to significance tests, P-values
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 October 21, 2026
 </td>
 <td>
 Tests for a population proportion
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 October 23, 2026
 </td>
 <td>
 Tests for a population mean
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 10
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 10</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 October 26, 2026
 </td>
@@ -1491,46 +1038,22 @@ October 26, 2026
 Composite hypotheses, relationship between confidence intervals and
 hypothesis tests, the sign test
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 October 28, 2026
 </td>
 <td>
 Making decisions, types of errors in hypothesis tests, statistical power
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 October 30, 2026
 </td>
@@ -1539,465 +1062,200 @@ Introduction to two-sample tests, independent vs dependent samples –
 <strong>Homework 3 due</strong>; <strong>October 31 is the last day to
 withdraw (W) or withdraw to audit (WA)</strong>
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 11
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 11</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 November 2, 2026
 </td>
 <td>
 Tests for comparing two independent proportions or two independent means
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 November 4, 2026
 </td>
 <td>
 Tests for dependent samples, causal inference
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 November 6, 2026
 </td>
 <td>
 Introduction to analyzing categorical variables
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 12
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 12</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 November 9, 2026
 </td>
 <td>
 Goodness-of-fit tests and tests of independence
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 November 11, 2026
 </td>
 <td>
 Cramer’s V, McNemar’s Test, Fisher’s exact test
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 November 13, 2026
 </td>
 <td>
 Catch-up / review buffer – <strong>Homework 4 due</strong>
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 13
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 13</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 November 16, 2026
 </td>
 <td>
 Measures of association
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 November 18, 2026
 </td>
 <td>
 Exam 3 Review
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 November 20, 2026
 </td>
 <td>
 Exam 3
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 14 – FALL RECESS
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 14 – FALL RECESS</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 November 23, 2026
 </td>
 <td>
 FALL RECESS - No Class
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 November 25, 2026
 </td>
 <td>
 FALL RECESS - No Class
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 November 27, 2026
 </td>
 <td>
 FALL RECESS - No Class
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 15
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 15</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 November 30, 2026
 </td>
 <td>
 Correlation and simple linear regression
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 December 2, 2026
 </td>
 <td>
 Coefficient of determination, tests for slope coefficients
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 December 4, 2026
 </td>
@@ -2005,172 +1263,77 @@ December 4, 2026
 Simple linear regression continued: omnibus F-test, checking assumptions
 – <strong>Homework 5 due</strong>
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+WEEK 16
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>WEEK 16</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday
-</td>
+</th>
 <td>
 December 7, 2026
 </td>
 <td>
 Analysis of variance (ANOVA): comparing several means
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Wednesday
-</td>
+</th>
 <td>
 December 9, 2026
 </td>
 <td>
 ANOVA continued: multiple comparisons and checking assumptions
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 December 11, 2026
 </td>
 <td>
 Final exam Jeopardy review
 </td>
-<td>
-</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th colspan="3" scope="rowgroup" class="schedule-week">
+FINALS WEEK
+</th>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>FINALS WEEK</strong>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<strong>Day</strong>
-</td>
-<td>
-<strong>Date</strong>
-</td>
-<td>
-<strong>Topic</strong>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Monday–Friday
-</td>
+</th>
 <td>
 December 14–18, 2026
 </td>
 <td>
 Final Exam – day, time and room set by the Registrar
 </td>
-<td>
-</td>
 </tr>
 <tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
+<th scope="row">
 Friday
-</td>
+</th>
 <td>
 December 18, 2026
 </td>
 <td>
 Course project due at 11:59PM
 </td>
-<td>
-</td>
 </tr>
+</tbody>
 </table>
 </div>
 
@@ -2238,6 +1401,95 @@ Course project due at 11:59PM
   } else {
     btn.classList.add('theme-toggle-floating');
     document.body.appendChild(btn);
+  }
+})();
+</script>
+<!--
+  Structural accessibility patches. Included via `includes: after_body:` AFTER
+  theme-toggle.html.
+
+  Why a script and not markup: everything below has to change elements that
+  pandoc's HTML template and rmarkdown's navbar generator emit. We do not own
+  either template, and the navbar is rebuilt from _site.yml on every render, so
+  a hand-edit would be overwritten. Patching the parsed DOM is the only place
+  these fixes survive a rebuild.
+
+  Why a SEPARATE file rather than appending to theme-toggle.html: that file's
+  header documents two load-bearing ordering constraints. Leave it alone.
+
+  Same synchronous-during-parsing guarantee that theme-toggle.html relies on -
+  no DOMContentLoaded, no defer. By the time an after_body script runs, the
+  navbar and .main-container are already in the DOM, and we are still ahead of
+  jQuery's ready queue.
+
+  EVERY lookup is null-guarded: 29 subdirectory pages (homeworks/, misc/,
+  study_guides/, Review_problems/) render without a navbar, and this file loads
+  on those too.
+-->
+<script>
+(function () {
+  /* 1. Main landmark + skip-link target (WCAG 1.3.1, 2.4.1).
+        pandoc emits no <main> at all; the content lives in a bare div.
+        tabindex="-1" is what makes the skip link MOVE FOCUS rather than merely
+        scroll - without it Chrome and Safari scroll and leave focus on <body>,
+        so the next Tab drops the user back at the top of the navbar. */
+  var main = document.querySelector('.main-container');
+  if (main) {
+    if (!main.id) main.id = 'main-content';
+    main.setAttribute('role', 'main');
+    main.setAttribute('tabindex', '-1');
+  }
+
+  var navbar = document.querySelector('.navbar');
+
+  /* 2. Name the hamburger (WCAG 4.1.2). rmarkdown emits the button with three
+        empty <span class="icon-bar"> and no text and no label, so screen
+        readers announce a bare "button". */
+  var toggle = document.querySelector('.navbar-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    var target = (toggle.getAttribute('data-target') || '').replace(/^#/, '');
+    if (target) toggle.setAttribute('aria-controls', target);
+  }
+
+  /* 3. Dropdown triggers advertise that they open something.
+        Bootstrap 3.3.5's own JS already maintains aria-expanded, so we only
+        add what it does not: aria-haspopup. */
+  var togglers = document.querySelectorAll('.navbar .dropdown-toggle');
+  for (var i = 0; i < togglers.length; i++) {
+    togglers[i].setAttribute('aria-haspopup', 'true');
+  }
+
+  /* 4. Drop the broken ARIA menu pattern (WCAG 4.1.2).
+        rmarkdown puts role="menu" on the dropdown <ul> but never gives the
+        children role="menuitem". A menu with no menuitems is announced as an
+        empty menu - strictly worse than no role, because it suppresses the
+        list semantics the plain <ul>/<a> markup would otherwise expose.
+        Removing the role is correct and far cheaper than implementing the
+        full APG menubar pattern (roving tabindex, arrow keys, Escape). */
+  var menus = document.querySelectorAll('.navbar [role="menu"]');
+  for (var j = 0; j < menus.length; j++) {
+    menus[j].removeAttribute('role');
+  }
+
+  /* 5. Escape hatch for the navbar-less pages (WCAG 2.4.5, 3.2.3).
+        The subdirectory pages are rendered outside render_site() and never see
+        the _site.yml navbar, so a reader who followed a menu link into one has
+        no way back except the browser's Back button - and no way at all if
+        they arrived from a bookmark or a direct link.
+
+        All 29 live exactly one directory below docs/, so '../index.html'
+        resolves for every one of them. This branch cannot run on a top-level
+        page: those all have a navbar. */
+  if (!navbar && main) {
+    var bar = document.createElement('div');
+    bar.className = 'site-backlink-bar';
+    var link = document.createElement('a');
+    link.className = 'site-backlink';
+    link.href = '../index.html';
+    link.textContent = '\u2190 Back to course site';
+    bar.appendChild(link);
+    main.insertBefore(bar, main.firstChild);
   }
 })();
 </script>

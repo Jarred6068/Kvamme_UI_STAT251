@@ -14,15 +14,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # STAT 251 Statistical Methods Section 01
-* **Instructor:** Jarred M. Kvamme (pronounced ``Kuh-Wah-mee"), PhD, Research Computing and Data Services. **Email** [jarredk@uidaho.edu](jarredk@uidaho.edu). My office is **Brink Hall, Room B11A**. My office hours are 2:00PM - 5:00PM on Mondays, or by appointment.
+* **Instructor:** Jarred M. Kvamme (pronounced ``Kuh-Wah-mee"), PhD, Research Computing and Data Services. **Email** [jarredk@uidaho.edu](mailto:jarredk@uidaho.edu). My office is **Brink Hall, Room B11A**. My office hours are 2:00PM - 5:00PM on Mondays, or by appointment.
 
-* **Teaching Assistant:** Kyla LaFountain. **Email:** [klafountain@uidaho.edu](klafountain@uidaho.edu)
+* **Teaching Assistant:** Kyla LaFountain. **Email:** [klafountain@uidaho.edu](mailto:klafountain@uidaho.edu)
 
 * **Meeting Time:** This course is scheduled to meet from 12:30PM-1:20PM MWF in **TLC 040**.
 	
 * **Learning Outcomes:** Introduction to statistical methods including statistical description, data displays, design of statistical studies, basic sampling methods, descriptive statistics, probability and sampling distributions; interval and point estimation, statistical inference in surveys and experiments, simple linear regression, and analysis of variance.
 	
-* **Prerequisites:** One of the following: Math 143 (with a ‘C’ or better), Math 160, Math 170, or sufficient score on SAT, ACT, or math placement test [see https://www.uidaho.edu/registrar/registration/placement](www.uidaho.edu/registrar/registration/placement)
+* **Prerequisites:** One of the following: Math 143 (with a ‘C’ or better), Math 160, Math 170, or sufficient score on SAT, ACT, or math placement test [see the math placement requirements](https://www.uidaho.edu/registrar/registration/placement)
 	
 * **Course Materials:**
   * **Textbook:** [Barbara Illowsky, Susan Dean, et. al. (2017). Introductory Statistics. OpenStax. Licensed under a Creative Commons Attribution 4.0 International License (CC BY 4.0).  OpenStax.org.](https://openstax.org/details/books/introductory-statistics-2e) You can either use the PDF version or buy a hard copy from various sites, including OpenStax.org, Amazon.com, etc.

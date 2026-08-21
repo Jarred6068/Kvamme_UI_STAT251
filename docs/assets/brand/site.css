@@ -392,6 +392,19 @@ a,
   border-left-color: var(--uidaho-pride-gold);
 }
 
+/* Keyboard access to the third level (WCAG 2.1.1).
+   rmarkdown's own rule opens these on :hover only, which makes every Week N /
+   Homework N / Z-table link mouse-only. :focus-within opens the same menu when
+   focus lands anywhere inside it, so Tab walks the nesting without any JS and
+   without touching the hover behaviour above. */
+.navbar .dropdown-submenu:focus-within > .dropdown-menu {
+  display: block;
+}
+
+.navbar .dropdown-submenu:focus-within > a:after {
+  border-left-color: var(--uidaho-pride-gold);
+}
+
 /* Below 768px Bootstrap 3 makes dropdowns static and transparent inside the
    collapsed menu, so the nested levels need explicit colour and indent. */
 @media (max-width: 767px) {
@@ -531,6 +544,29 @@ a,
   font-size: 1rem;
   color: var(--site-text);
   vertical-align: top;
+}
+
+/* --- Course_Schedule hand-authored tables ---------------------------
+   Both were rewritten from layout tables (all <td>, a phantom empty 4th
+   column, blank spacer rows) into real ones. The weekly table is SECTIONED:
+   one <tbody> per week, each introduced by a full-width th[scope=rowgroup].
+   Paint that header as a band so the visual grouping a sighted reader sees
+   matches the grouping the markup now exposes to a screen reader. */
+.main-container .schedule-table .schedule-week {
+  background-color: rgba(var(--uidaho-pride-gold-rgb), 0.18);
+  border-top: 2px solid var(--uidaho-pride-gold);
+  font-weight: 700;
+  letter-spacing: var(--uidaho-brand-eyebrow-letter-spacing);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+/* Row headers carried the same visual weight as data cells in the old layout
+   tables; 600 keeps them distinguishable without turning the first column
+   into a wall of bold. */
+.main-container .schedule-table > tbody > tr > th[scope="row"],
+.main-container .deadline-table > tbody > tr > th[scope="row"] {
+  font-weight: 600;
 }
 
 .main-container table:not([class*="lightable"]) caption {
@@ -1175,7 +1211,72 @@ button:focus-visible,
 }
 
 
-/* 20. Print ==========================================================
+/* 20. Skip link + subdirectory back link =============================
+   Both are markup this site adds itself - see assets/brand/skip-link.html and
+   assets/brand/a11y.html - so nothing else styles them.
+   ==================================================================== */
+
+/* Bootstrap 3's .sr-only-focusable already handles the hide/reveal. This only
+   paints the revealed state and lifts it over .navbar-fixed-top, which is
+   z-index 1030. Black on Pride Gold is 9.4:1 - the same pairing .btn-gold
+   uses - so it stays legible in both themes without a dark-mode override. */
+.skip-link.sr-only-focusable:active,
+.skip-link.sr-only-focusable:focus {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1040;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0.6rem 1rem;
+  clip: auto;
+  overflow: visible;
+  background-color: var(--uidaho-pride-gold);
+  color: var(--uidaho-brand-on-primary);
+  font-family: var(--site-font-sans);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0;
+  outline: 2px solid var(--site-text);
+  outline-offset: 2px;
+}
+
+/* .main-container gets tabindex="-1" so the skip link moves focus rather than
+   only scrolling. That makes it focusable, and browsers would draw a focus
+   ring around the whole page. Suppress it - the ring on the heading the user
+   lands next to is the useful signal, not a box around everything. */
+.main-container:focus {
+  outline: none;
+}
+
+/* The 29 pages under homeworks/, misc/, study_guides/ and Review_problems/ are
+   rendered outside render_site() and get no navbar, so this is their only way
+   back into the site (WCAG 2.4.5). a11y.html injects it. */
+.site-backlink-bar {
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--site-separator);
+}
+
+.main-container .site-backlink {
+  font-family: var(--site-font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--site-link);
+  text-decoration: none;
+  border-bottom: 2px solid var(--site-link-decor);
+  padding-bottom: 1px;
+}
+
+.main-container .site-backlink:hover,
+.main-container .site-backlink:focus {
+  background-color: var(--site-link-hover-bg);
+  text-decoration: none;
+}
+
+
+/* 21. Print ==========================================================
    Students print homework and study guides. Force the light palette so a
    dark-mode reader doesn't produce a black page, and drop the chrome.
    ==================================================================== */
@@ -1201,6 +1302,8 @@ button:focus-visible,
   .theme-toggle,
   .theme-toggle-nav,
   .theme-toggle-floating,
+  .skip-link,
+  .site-backlink-bar,
   .tocify {
     display: none !important;
   }

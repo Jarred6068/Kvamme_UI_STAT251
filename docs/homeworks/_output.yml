@@ -17,6 +17,15 @@ html_document:
   css:
     - ../assets/brand/uidaho-branding.css
     - ../assets/brand/site.css
+  ## lang=en on <html> (WCAG 3.1.1). pandoc's template only emits the attribute
+  ## when the metadata is set, and rmarkdown exposes no front-matter key for it,
+  ## so it has to be handed to pandoc directly.
+  pandoc_args: ["--metadata", "lang=en"]
   includes:
     in_header: ../assets/brand/theme-init.html
-    after_body: ../assets/brand/theme-toggle.html
+    ## Skip link has to be the first thing inside <body>; a11y.html stamps the
+    ## #main-content target it points at. The two ship together.
+    before_body: ../assets/brand/skip-link.html
+    after_body:
+      - ../assets/brand/theme-toggle.html
+      - ../assets/brand/a11y.html

@@ -1,0 +1,17 @@
+<!--
+  Bypass block (WCAG 2.4.1). Included via `includes: before_body:` so it is the
+  very first thing inside <body> - ahead of the navbar, which is what it skips.
+
+  Every top-level page puts a ~25-link fixed navbar in front of the content, so
+  without this a keyboard or switch user tabs the entire menu on every single
+  page before reaching anything they came for.
+
+  .sr-only / .sr-only-focusable are Bootstrap 3's own classes (already in
+  site_libs/bootstrap-3.3.5) - visually hidden until focused, then revealed.
+  site.css only adds the on-brand painted state and the z-index needed to sit
+  above .navbar-fixed-top.
+
+  The #main-content target does not exist in pandoc's template; a11y.html
+  stamps it onto .main-container at parse time. Both files must ship together.
+-->
+<a href="#main-content" class="sr-only sr-only-focusable skip-link">Skip to main content</a>
