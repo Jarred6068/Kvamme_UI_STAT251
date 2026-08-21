@@ -44,6 +44,14 @@ Statistics began as bookkeeping about people. Long before it was a mathematical 
 
 * **data** are pieces of factual information, such as measurements which are recorded and used for the purpose of analysis. In summary, data is the raw information from which statistics are created. Statistics are the results of data analysis - their interpretation and presentation.
 
+* Data can be either **structured** or **unstructured**, depending on whether or not they arrive in a predefined format.
+
+  * **structured data** - data that follow a predefined format with fixed rows, columns, and fields, so that every observation is recorded in the same way. Structured data can be stored directly in a spreadsheet or database and analyzed without any additional processing. Examples include spreadsheets and CSV files, survey responses, sensor readings, and transaction records.
+
+  * **unstructured data** - data that have no predefined format or fixed fields. Unstructured data must be processed and organized into a structured form before they can be analyzed. Examples include free-text notes, emails, and social media posts; images, audio, and video; and web pages and PDF documents.
+
+  * Nearly all of the methods in this course assume the data are structured - that is, that they have already been arranged into the kind of data table described below.
+
 * Typically data are represented in a square table called a data table. The fundamental unit of data is an **observation** - a single __row__ of a data table representing a set of measurements on one or more __variables__. 
 
 * A **variable** is a characteristic of an observation. In a typical data table, the variables are represented by the __columns__ of the data table.  

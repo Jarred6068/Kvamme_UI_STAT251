@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # STAT 251 Statistical Methods Section 01
 * **Instructor:** Jarred M. Kvamme (pronounced ``Kuh-Wah-mee"), PhD, Research Computing and Data Services. **Email** [jarredk@uidaho.edu](jarredk@uidaho.edu). My office is **Brink Hall, Room B11A**. My office hours are 2:00PM - 5:00PM on Mondays, or by appointment.
 
-* **Teaching Assistant:** Kyla LaFountain. **Email:** to be announced
+* **Teaching Assistant:** Kyla LaFountain. **Email:** [klafountain@uidaho.edu](klafountain@uidaho.edu)
 
 * **Meeting Time:** This course is scheduled to meet from 12:30PM-1:20PM MWF in **TLC 040**.
 	
@@ -52,7 +52,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * **Use of Artificial Intelligence (AI):** My view is that AI is a tool, and like any tool it should be used responsibly. Used well, it can make you a better student. Asking an AI to act as an editor for your writing, to help you search for and find resources, to explain a concept you are stuck on in a different way, or to help you map out and organize a project are all reasonable uses that support your learning. Those uses are welcome in this course.
 
-  Used poorly, AI replaces your learning instead of supporting it. Asking an AI to write your project for you and handing in work you took no real part in producing is not your work. It does not help you learn the material, it is academically dishonest, and it falls under the **Academic Honesty** policy above. I will be able to tell when an assignment was completed by an AI rather than by you. **All course projects will be scanned for original work, and any project found to be predominantly AI generated will receive a zero.**
+  Used poorly, AI replaces your learning instead of supporting it. Asking an AI to write your project for you and handing in work you took no real part in producing is not your work. It does not help you learn the material, it is academically dishonest, and it falls under the **Academic Honesty** policy above. I will be able to tell when an assignment was completed by an AI rather than by you. **All course projects will be scanned for original work. Students who do not disclose the use of AI on their work and whose work is found to contain AI generated material will be considered to have violated academic integrity under the [University of Idaho Student Code of Conduct](https://www.uidaho.edu/policies/fsh/2/2300#e1), and it may affect their grade.**
+
+  If you use AI in any capacity on your course project, you are required to disclose it. Along with your project you must submit (1) the prompts you gave the AI, (2) a citation for any AI-generated material you included, using an appropriate citation format (MLA, APA, etc.), and (3) a brief description explaining how you used AI and which service provider you used (e.g., OpenAI, Anthropic, Google). This practice helps you reflect on your learning process and ensures transparency in your academic work. If you are unsure how to document or cite AI use, please reach out or visit the [University of Idaho Writing Center](https://www.uidaho.edu/student-resources/academic-support/writing-center) for support.
 
   We live in a technological age, and learning how to augment your work and your learning with AI is a skill that will be expected of you both as a student and as a professional. This course is a good place to start building that skill. Use these tools to strengthen your own thinking, not to replace it.
 	
