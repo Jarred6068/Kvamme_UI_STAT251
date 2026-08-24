@@ -84,7 +84,7 @@ tryCatch({
   }
 
   #-------------------------------------------------------------------------
-  #PDF copies of the three pages under the Syllabus menu.
+  #PDF copies of the Syllabus-menu pages and the weekly lecture notes.
   #
   #These are printed from the ALREADY-RENDERED HTML through headless Chrome
   #rather than rendered with pdf_document, and that is deliberate.
@@ -94,13 +94,21 @@ tryCatch({
   #of those pages produces a PDF containing the prose and none of the
   #tables - silently, with no warning and a zero exit status.
   #
+  #The lecture notes are the same story: they build their tables with
+  #kableExtra's kable_styling(), which emits HTML, and twelve of the sixteen
+  #set `always_allow_html: true` - the flag whose whole purpose is to silence
+  #pandoc's warning that it is about to drop raw HTML on the way to LaTeX.
+  #That is why the `pdf_document: default` line in their front matter is
+  #commented out; do not just uncomment it.
+  #
   #Printing the HTML instead keeps the tables and picks up the `@media print`
   #block in assets/brand/site.css (section 21), which already hides the
   #navbar / theme toggle / skip link and forces the light palette.
   #
   #Chrome is optional: if it is not found the PDFs keep their previous
   #contents and the build still succeeds. Set CHROME_BIN to override.
-  pdf_pages <- c("syllabus", "Course_Schedule", "university_resources")
+  pdf_pages <- c("syllabus", "Course_Schedule", "university_resources",
+                 paste0("lecturemenu", 1:16))
 
   chrome <- Sys.getenv("CHROME_BIN")
   if (!nzchar(chrome) || !file.exists(chrome)) {
