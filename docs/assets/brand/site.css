@@ -1349,4 +1349,16 @@ button:focus-visible,
     font-size: 1em;
     word-break: break-all;
   }
+
+  /* Bootstrap 3 ships its own print styles and they expand EVERY a[href],
+     which prints each mailto: link as "name@uidaho.edu (mailto:name@uidaho.edu)"
+     and each in-page anchor as "Topic (#topic)". The http rule above is the
+     only expansion worth having in print, so cancel the rest. Bootstrap loads
+     before this sheet, but !important keeps it safe against rmarkdown's
+     runtime navbar stylesheet, which is appended last. */
+  a[href^="mailto:"]::after,
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "" !important;
+  }
 }

@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **STAT 251 -- Fall 2026.** Classes begin Monday, August 24 and end Friday, December 11.
 Labor Day (September 7) and Fall Recess (November 23--27) are university holidays.
-Final examinations run December 14--18.
+Final examinations run December 14--18; the STAT 251 final is Monday, December 14, 12:45PM--2:45PM in TLC 040.
 
 ## Registration and withdrawal deadlines (Fall 2026)
 
@@ -434,9 +434,9 @@ outlined below. Any changes will be announced in class and posted here.**
   <th colspan="3" scope="rowgroup" class="schedule-week">FINALS WEEK</th>
 </tr>
 <tr>
-  <th scope="row">Monday--Friday</th>
-  <td>December 14--18, 2026</td>
-  <td>Final Exam -- day, time and room set by the Registrar</td>
+  <th scope="row">Monday</th>
+  <td>December 14, 2026</td>
+  <td>Final Exam, 12:45PM--2:45PM, TLC 040</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

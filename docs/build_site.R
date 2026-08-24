@@ -82,5 +82,78 @@ tryCatch({
   } else {
     message("\nAll ", rendered, " subdirectory pages rendered.")
   }
+
+  #-------------------------------------------------------------------------
+  #PDF copies of the three pages under the Syllabus menu.
+  #
+  #These are printed from the ALREADY-RENDERED HTML through headless Chrome
+  #rather than rendered with pdf_document, and that is deliberate.
+  #Course_Schedule.Rmd is built almost entirely from raw HTML tables (two
+  #<table>s, ~120 <td>) and university_resources.Rmd uses raw <img>/<br>.
+  #pandoc DROPS raw HTML when the target is LaTeX, so a pdf_document render
+  #of those pages produces a PDF containing the prose and none of the
+  #tables - silently, with no warning and a zero exit status.
+  #
+  #Printing the HTML instead keeps the tables and picks up the `@media print`
+  #block in assets/brand/site.css (section 21), which already hides the
+  #navbar / theme toggle / skip link and forces the light palette.
+  #
+  #Chrome is optional: if it is not found the PDFs keep their previous
+  #contents and the build still succeeds. Set CHROME_BIN to override.
+  pdf_pages <- c("syllabus", "Course_Schedule", "university_resources")
+
+  chrome <- Sys.getenv("CHROME_BIN")
+  if (!nzchar(chrome) || !file.exists(chrome)) {
+    candidates <- c(
+      "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+      "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+      Sys.which(c("google-chrome", "chromium", "chromium-browser"))
+    )
+    candidates <- candidates[nzchar(candidates) & file.exists(candidates)]
+    chrome <- if (length(candidates)) candidates[[1]] else ""
+  }
+
+  if (!nzchar(chrome)) {
+    message("\nChrome not found - skipping PDF generation for: ",
+            paste(pdf_pages, collapse = ", "),
+            "\n  (set CHROME_BIN to the chrome.exe path to enable it)")
+  } else {
+    message("\nPrinting PDFs with: ", chrome)
+
+    #Its own throwaway profile directory. Without this, headless Chrome can
+    #refuse to start or fight over the lock when the user already has Chrome
+    #open, which is the normal case on this machine.
+    profile <- file.path(tempdir(), "build_site_chrome_profile")
+
+    for (page in pdf_pages) {
+      html <- normalizePath(paste0(page, ".html"), winslash = "/",
+                            mustWork = TRUE)
+      pdf  <- normalizePath(paste0(page, ".pdf"), winslash = "/",
+                            mustWork = FALSE)
+
+      status <- system2(chrome, c(
+        "--headless=new",
+        "--disable-gpu",
+        paste0("--user-data-dir=", shQuote(profile)),
+        #Drop Chrome's own URL/date/page-number furniture; the print CSS and
+        #the page itself supply everything that belongs in the output.
+        "--no-pdf-header-footer",
+        #The pages pull MathJax and Google Fonts. Give the network a moment
+        #to settle so the PDF is not typeset in a fallback face.
+        "--virtual-time-budget=15000",
+        paste0("--print-to-pdf=", shQuote(pdf)),
+        shQuote(paste0("file:///", html))
+      ), stdout = FALSE, stderr = FALSE)
+
+      if (status == 0 && file.exists(pdf)) {
+        message("  ", page, ".pdf (",
+                format(file.size(pdf) %/% 1024L, big.mark = ","), " KB)")
+      } else {
+        message("  FAILED: ", page, ".pdf (chrome exit status ", status,
+                ") - kept the previous file")
+      }
+    }
+  }
 }, finally = setwd(old_wd))
 

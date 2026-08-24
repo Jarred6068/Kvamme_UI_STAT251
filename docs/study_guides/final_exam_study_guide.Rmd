@@ -28,7 +28,7 @@ library(plyr)
 
 # Final Exam Information
 
-The final examination is held during finals week, **December 14--18, 2026**. The day, time and room are set by the Registrar and will be announced in class and in Canvas. You will have two hours (120 minutes) to complete it.
+The final examination is held during finals week on **Monday, December 14, 2026 from 12:45PM--2:45PM** in **TLC 040**. You will have two hours (120 minutes) to complete it.
 
 It is university policy that if you have more than two final examinations scheduled on the same day based on the official final examination schedule, then you may have the extra final examination(s) rescheduled. If you need to have your final examination rescheduled, you must make arrangements with me before the final examination.
 
