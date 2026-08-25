@@ -107,7 +107,7 @@ tryCatch({
   #
   #Chrome is optional: if it is not found the PDFs keep their previous
   #contents and the build still succeeds. Set CHROME_BIN to override.
-  pdf_pages <- c("syllabus", "Course_Schedule", "university_resources",
+  pdf_pages <- c("syllabus", "Course_Schedule", "sac_schedule", "university_resources",
                  paste0("lecturemenu", 1:16))
 
   chrome <- Sys.getenv("CHROME_BIN")

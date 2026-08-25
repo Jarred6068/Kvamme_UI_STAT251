@@ -26,6 +26,8 @@ navbar:
           href: syllabus.html
         - text: 'Course Schedule'
           href: Course_Schedule.html
+        - text: 'SAC Schedule'
+          href: sac_schedule.html
         - text: 'University Resources'
           href: university_resources.html
     - text: 'Lectures' ## setting up a drop down menu
@@ -151,8 +153,6 @@ navbar:
       menu:
         - text: 'Tools/Calculators'
           href: https://stat-tools.jmks-homelab.dev/
-        - text: 'SAC schedule'
-          href: sac_schedule.html
         - text: 'Tables'
           menu:  
           - text: 'Z-table'
