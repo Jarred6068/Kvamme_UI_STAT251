@@ -166,7 +166,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>September 11, 2026</td>
-  <td>Identifying outliers, margin of error, statistical significance -- **Homework 1 due**</td>
+  <td>Identifying outliers, margin of error, statistical significance -- **Homework 1 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -246,7 +246,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>October  9, 2026</td>
-  <td>Choosing a minimum sample size, assumptions of estimators -- **Homework 2 due**</td>
+  <td>Choosing a minimum sample size, assumptions of estimators -- **Homework 2 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -306,7 +306,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>October 30, 2026</td>
-  <td>Introduction to two-sample tests, independent vs dependent samples -- **Homework 3 due**; **October 31 is the last day to withdraw (W) or withdraw to audit (WA)**</td>
+  <td>Introduction to two-sample tests, independent vs dependent samples -- **Homework 3 due Sunday at 11:59PM**; **October 31 is the last day to withdraw (W) or withdraw to audit (WA)**</td>
 </tr>
 </tbody>
 <tbody>
@@ -346,7 +346,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>November 13, 2026</td>
-  <td>Catch-up / review buffer -- **Homework 4 due**</td>
+  <td>Catch-up / review buffer -- **Homework 4 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -406,7 +406,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>December  4, 2026</td>
-  <td>Simple linear regression continued: omnibus F-test, checking assumptions -- **Homework 5 due**</td>
+  <td>Simple linear regression continued: omnibus F-test, checking assumptions -- **Homework 5 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -439,8 +439,8 @@ outlined below. Any changes will be announced in class and posted here.**
   <td>Final Exam, 12:45PM--2:45PM, TLC 040</td>
 </tr>
 <tr>
-  <th scope="row">Friday</th>
-  <td>December 18, 2026</td>
+  <th scope="row">Saturday</th>
+  <td>December 19, 2026</td>
   <td>Course project due at 11:59PM</td>
 </tr>
 </tbody>
