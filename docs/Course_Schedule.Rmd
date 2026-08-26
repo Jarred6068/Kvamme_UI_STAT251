@@ -116,17 +116,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>August 24, 2026</td>
-  <td>Introduction: The big picture</td>
+  <td>Syllabus day: policies, website tour, Q&amp;A</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>August 26, 2026</td>
-  <td>Describing and visualizing distributions</td>
+  <td>Introduction: The big picture</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>August 28, 2026</td>
-  <td>Distributions and frequency tables</td>
+  <td>Describing and visualizing distributions</td>
 </tr>
 </tbody>
 <tbody>
@@ -136,17 +136,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>August 31, 2026</td>
-  <td>Measures of location and position</td>
+  <td>Distributions and frequency tables</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September  2, 2026</td>
-  <td>Measures of spread, boxplot -- **Last day to register, add or wait list without permission**</td>
+  <td>Measures of location and position -- **Last day to register, add or wait list without permission**</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>September  4, 2026</td>
-  <td>Measures of spread, cumulative distributions</td>
+  <td>Measures of spread, boxplot</td>
 </tr>
 </tbody>
 <tbody>
@@ -161,12 +161,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Wednesday</th>
   <td>September  9, 2026</td>
-  <td>The normal distribution, z-scores, transformations -- **September 8 was the last day to drop without a W, change variable credit or grading basis, or add with an instructor permission override**</td>
+  <td>Measures of spread, cumulative distributions -- **September 8 was the last day to drop without a W, change variable credit or grading basis, or add with an instructor permission override**</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>September 11, 2026</td>
-  <td>Identifying outliers, margin of error, statistical significance -- **Homework 1 due Sunday at 11:59PM**</td>
+  <td>The normal distribution, z-scores, transformations -- **Homework 1 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -176,7 +176,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 14, 2026</td>
-  <td>Study and sampling designs</td>
+  <td>Identifying outliers, margin of error, statistical significance</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
@@ -196,17 +196,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 21, 2026</td>
-  <td>Introduction to probability, random variables, discrete probability distributions</td>
+  <td>Study and sampling designs</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 23, 2026</td>
-  <td>Discrete probability distributions</td>
+  <td>Introduction to probability, random variables, discrete probability distributions</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>September 25, 2026</td>
-  <td>Continuous probability distributions</td>
+  <td>Discrete probability distributions</td>
 </tr>
 </tbody>
 <tbody>
@@ -216,17 +216,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 28, 2026</td>
-  <td>Sampling distributions and the central limit theorem</td>
+  <td>Continuous probability distributions</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 30, 2026</td>
-  <td>More on sampling distributions, Introduction to confidence intervals</td>
+  <td>Sampling distributions and the central limit theorem</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October  2, 2026</td>
-  <td>Confidence Intervals for a population proportion</td>
+  <td>More on sampling distributions, Introduction to confidence intervals</td>
 </tr>
 </tbody>
 <tbody>
@@ -236,17 +236,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October  5, 2026</td>
-  <td>Confidence Intervals for a population mean</td>
+  <td>Confidence Intervals for a population proportion</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>October  7, 2026</td>
-  <td>Bootstrap confidence intervals</td>
+  <td>Confidence Intervals for a population mean</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October  9, 2026</td>
-  <td>Choosing a minimum sample size, assumptions of estimators -- **Homework 2 due Sunday at 11:59PM**</td>
+  <td>Bootstrap confidence intervals -- **Homework 2 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -256,7 +256,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October 12, 2026</td>
-  <td>Catch-up / review buffer</td>
+  <td>Choosing a minimum sample size, assumptions of estimators</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
