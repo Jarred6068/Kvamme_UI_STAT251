@@ -52,11 +52,15 @@ SHOW_COLS   <- c("Observation", "Bill Length (mm)", "Bill Depth (mm)",
 
 stopifnot(nrow(penguins) == 20, all(SHOW_COLS %in% names(penguins)))
 
+#Both kinds of gap in the table get named here. Observation 4 has no measurements
+#at all; observations 9-12 were measured but could not be sexed. Naming only the
+#first left four unexplained NAs sitting in the Sex column of the slide.
 SOURCE_LINE <- paste0(
   "Source: Palmer Station Antarctica LTER. Gorman, K. B., Williams, T. D. and ",
-  "Fraser, W. R. (2014). PLoS ONE 9(3):e90081. Distributed as the R package ",
-  "palmerpenguins (Horst, Hill and Gorman, 2020). All twenty Ad&eacute;lie penguins ",
-  "measured at Torgersen Island in 2007; observation 4 was banded but not measured."
+  "Fraser, W. R. (2014). PLoS ONE 9(3):e90081. R package palmerpenguins (Horst, ",
+  "Hill and Gorman, 2020). All twenty Ad&eacute;lie penguins at Torgersen Island, ",
+  "2007; observation 4 was banded but not measured, and sex was not determined ",
+  "for observations 9&ndash;12."
 )
 
 #----------------------------------------------------------------------------
@@ -207,8 +211,10 @@ check_fits <- function(label, canvas_px, n_rows, row_px, head_px,
 message("Rendering slide 3 tables from ", basename(csv_path))
 
 mark_pop <- seq_len(nrow(penguins)) %in% SAMPLE_ROWS
+#The source line wraps to three lines now that it accounts for the unsexed birds;
+#that leaves only a few spare px of the 772, so eyeball the PNG after any change.
 check_fits("population", 772, nrow(penguins), row_px = 32, head_px = 30,
-           source_px = 16, source_lines = 2)
+           source_px = 16, source_lines = 3)
 shoot(build_html(penguins, mark_pop, font_px = 26, row_px = 32, head_px = 30,
                  source_line = SOURCE_LINE, source_px = 16),
       pop_png, 1108, 772)
