@@ -7,6 +7,8 @@
 
 # linked directly from the lecture notes (Week 1 Figure 1, reused in Week 2)
 !/docs/Data/teens_cell_phone_focus_simulated.csv
+!/docs/Data/old_faithful.csv
+!/docs/Data/carsdata.csv
 
 # linked directly from Homeworks > Data & PDF Downloads
 !/docs/Data/cereal.csv

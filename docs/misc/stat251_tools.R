@@ -1,3 +1,20 @@
+## STAT 251 - helper functions for confidence intervals and significance tests.
+##
+## This file is the single source of truth for these functions: the lecture
+## notes, homework solutions and exams source() it, and misc/hp_r_code.Rmd
+## (Resources > R code > Functions) renders straight out of it via
+## knitr::read_chunk(). Comment the code HERE and the website updates itself.
+##
+## The `## ---- name ----` lines are those read_chunk() markers. They are
+## ordinary R comments and have no effect on source(); each one starts a new
+## named block that the website can display. Keep one above every function.
+##
+## Usage on your own machine:  source('stat251_tools.R')
+
+## ---- setup-libraries ----
+# ggpubr/ggthemes are for the plot styling, latex2exp renders the Greek
+# letters in the axis labels, plyr and VennDiagram are used by the lecture
+# notes that source this file.
 
 
 
@@ -8,7 +25,10 @@ library(ggthemes)
 library(plyr)
 library(VennDiagram)
 
-#this function is a helper function for gen.density.plot
+## ---- rejection-region-helper ----
+# Helper for gen.density.plot() - not meant to be called on its own.
+# Returns the density at x, but NA everywhere OUTSIDE the rejection region.
+# ggplot skips NA values, so the shaded area lands only on the tail(s).
 d_limit <- function(x, alpha, test, dist, n) {
   test <- match.arg(test, c('two.tailed', 'upper.tail', 'lower.tail'))
   if(dist == 'z'){
@@ -34,8 +54,18 @@ d_limit <- function(x, alpha, test, dist, n) {
 }
 
 
-# this function plots a density curve for the z and t distributions and allows for shading the 
-# the rejection regions on the plot
+## ---- density-plot ----
+# Draws the distribution of the test statistic under H0, with the rejection
+# region shaded and the critical value(s) and observed statistic labelled.
+#   bbox     x-axis range to draw over
+#   n        sample size - only used to get df = n - 1 when dist = 't'
+#   dist     'z' for the standard normal, 't' for the t distribution
+#   alpha    significance level, i.e. the area shaded
+#   obs      the observed test statistic, marked on the axis
+#   test     'two.tailed', 'lower.tail' or 'upper.tail'
+#   shade    FALSE draws the curve with no shading
+#   txt.sz   size of the axis labels
+# Returns a ggplot object, so you can add to it or print it.
 gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c('z','t'), alpha = 0.05, obs = 0.5,
                           test = c('two.tailed','lower.tail', 'upper.tail'), shade = TRUE,
                           txt.sz = 5){
@@ -159,14 +189,22 @@ gen.density.plot=function(bbox = c(-4,4), n = 10, dist = c('z','t'), alpha = 0.0
 
 
 
-# standard error for a sample proportion 
+## ---- one-sample-prop-se ----
+# Standard error of a sample proportion: SE = sqrt(phat(1-phat)/n).
 one.sample.prop.SE = function(phat, n){
   SE = sqrt((phat*(1-phat))/n)
   return(SE)
 }
 
 
-# confidence interval for a population proportion 
+## ---- one-sample-prop-ci ----
+# Confidence interval for a population proportion.
+#   phat     the sample proportion
+#   n        the sample size
+#   alpha    1 - alpha is the confidence level
+#   verbose  TRUE prints the pieces of the calculation
+# Returns c(lower.bound, upper.bound). Unlike the test above, the SE here is
+# computed from phat - a confidence interval has no null value to lean on.
 one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
   SE = one.sample.prop.SE(phat, n)
   standard.score = qnorm(1-(alpha/2))
@@ -189,7 +227,16 @@ one.sample.prop.CI = function(phat, n, alpha = 0.05, verbose = FALSE){
 
 
 
-# test for a population proportion 
+## ---- one-sample-prop-test ----
+# One-sample z test for a population proportion.
+#   p0       hypothesized proportion under H0
+#   phat     the sample proportion
+#   n        the sample size
+#   alpha    significance level
+#   test     'lower.tail', 'upper.tail' or 'two.tail'
+#   verbose  TRUE prints the results
+# The test statistic uses the SE computed from p0, not from phat, because
+# the null hypothesis is assumed true while testing.
 one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                                 verbose = TRUE){
   test <- match.arg(test)
@@ -241,14 +288,22 @@ one.sample.prop.test = function(p0, phat, n, alpha = 0.05, test = c('lower.tail'
 
 
 
-#standard error for a sample mean 
+## ---- one-sample-t-se ----
+# Standard error of a sample mean: SE = s / sqrt(n).
 one.sample.t.SE = function(s, n){
   SE = s/sqrt(n)
   return(SE)
 }
 
 
-#confidence interval for a population mean 
+## ---- one-sample-t-ci ----
+# Confidence interval for a population mean.
+#   xbar     the sample mean
+#   s        the sample standard deviation
+#   n        the sample size
+#   alpha    1 - alpha is the confidence level
+#   verbose  TRUE prints the pieces of the calculation
+# Returns c(lower.bound, upper.bound).
 one.sample.t.CI = function(xbar, s, n, alpha = 0.05, verbose = FALSE){
   SE = one.sample.t.SE(s, n)
   t.score = qt(1-(alpha/2), df = n-1)
@@ -270,7 +325,16 @@ one.sample.t.CI = function(xbar, s, n, alpha = 0.05, verbose = FALSE){
 }
 
 
-# one sample t test 
+## ---- one-sample-t-test ----
+# One-sample t test for a population mean.
+#   m0       hypothesized mean under H0
+#   xbar     the sample mean
+#   s        the sample standard deviation
+#   n        the sample size
+#   alpha    significance level
+#   test     'lower.tail', 'upper.tail' or 'two.tail'
+#   verbose  TRUE prints the results
+# Prints the results and returns nothing.
 one.sample.t.test = function(m0, xbar, s, n, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                              verbose = TRUE){
   test <- match.arg(test)
@@ -316,13 +380,22 @@ one.sample.t.test = function(m0, xbar, s, n, alpha = 0.05, test = c('lower.tail'
 
 
 
-#unpooled standard error for difference in two proportions
+## ---- two-sample-prop-se ----
+# Unpooled standard error of a difference between two sample proportions:
+# SE = sqrt(p1(1-p1)/n1 + p2(1-p2)/n2).
 two.sample.prop.SE = function(p1,p2,n1,n2){
   SE = sqrt((p1*(1-p1)/n1)+(p2*(1-p2)/n2))
   return(SE)
 }
 
-#computing confidence intervals for the difference between two population proportions
+## ---- two-sample-prop-ci ----
+# Confidence interval for the difference between two population proportions.
+#   p1, p2   the two sample proportions
+#   n1, n2   the two sample sizes
+#   tail     'two.tail' for a two-sided interval, anything else one-sided
+#   alpha    1 - alpha is the confidence level
+#   verbose  TRUE prints the pieces of the calculation
+# Returns a list: estimate, interval, margin.of.error, critical.value.
 two.sample.prop.CI = function(p1,p2,n1,n2,tail = 'two.tail',alpha = 0.05, verbose = FALSE){
   diff = p1-p2
   bounds=c(0,0)
@@ -351,7 +424,18 @@ two.sample.prop.CI = function(p1,p2,n1,n2,tail = 'two.tail',alpha = 0.05, verbos
 }
 
 
-#two sample proportion test
+## ---- two-sample-prop-test ----
+# Two-sample z test for a difference between two population proportions.
+#   p0       difference under H0 (usually 0)
+#   x1, x2   the two SUCCESS COUNTS (not proportions)
+#   n1, n2   the two sample sizes
+#   alpha    significance level
+#   test     'lower.tail', 'upper.tail' or 'two.tail'
+#   pooled   TRUE uses the pooled SE, which is the right choice when H0 says
+#            the two proportions are equal; FALSE uses the unpooled SE
+#   verbose  TRUE prints the results
+# Note the interval is always built from the UNPOOLED SE, since a confidence
+# interval does not assume H0 is true.
 two.sample.prop.test = function(p0,x1,x2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                                 pooled = TRUE, verbose = TRUE){
   test <- match.arg(test)
@@ -362,6 +446,8 @@ two.sample.prop.test = function(p0,x1,x2,n1,n2,alpha = 0.05, test = c('lower.tai
   estimate = p1 - p2
   estimate.SE = two.sample.prop.SE(p1, p2, n1, n2)
   if(isTRUE(pooled)){
+    # H0 says the two proportions are equal, so under H0 there is really only
+    # ONE proportion to estimate - pool both samples into a single estimate.
     calc = 'pooled'
     p.pooled = (x1+x2)/(n1+n2)
     test.SE = sqrt( (p.pooled*(1-p.pooled))*(1/n1 + 1/n2) )
@@ -405,13 +491,24 @@ two.sample.prop.test = function(p0,x1,x2,n1,n2,alpha = 0.05, test = c('lower.tai
 } 
 
 
-#two sample unpooled standard error for means 
+## ---- two-sample-t-se ----
+# Unpooled standard error of a difference between two sample means:
+# SE = sqrt(s1^2/n1 + s2^2/n2). Variances add even though we subtract means.
 two.sample.t.SE = function(s1,s2,n1,n2){
   SE = sqrt((s1^2/n1)+(s2^2/n2))
   return(SE)
 }
 
-#confidence intervals for a difference between two means
+## ---- two-sample-t-ci ----
+# Confidence interval for the difference between two population means.
+#   x1, x2   the two sample means
+#   s1, s2   the two sample standard deviations
+#   n1, n2   the two sample sizes
+#   tail     'two.tail' for a two-sided interval, anything else one-sided
+#   alpha    1 - alpha is the confidence level
+#   verbose  TRUE prints the pieces of the calculation
+# Returns a list: estimate, interval, margin.of.error, critical.value.
+# Uses the conservative df = min(n1, n2) - 1 rather than Welch's formula.
 two.sample.t.CI = function(x1,x2,s1,s2,n1,n2, tail = 'two.tail',alpha = 0.05, verbose = FALSE){
   diff = x1-x2
   bounds=c(0,0)
@@ -441,7 +538,18 @@ two.sample.t.CI = function(x1,x2,s1,s2,n1,n2, tail = 'two.tail',alpha = 0.05, ve
 }
 
 
-#two sample t test 
+## ---- two-sample-t-test ----
+# Two-sample t test for a difference between two population means.
+#   m0       difference under H0 (usually 0)
+#   x1, x2   the two sample means
+#   s1, s2   the two sample standard deviations
+#   n1, n2   the two sample sizes
+#   alpha    significance level
+#   test     'lower.tail', 'upper.tail' or 'two.tail'
+#   pooling  'pooled' (assume equal variances), 'unpooled' (Welch), or
+#            'approx.unpooled' (Welch SE with the easy df = min(n1,n2) - 1)
+#   verbose  TRUE prints the results
+# Prints the results and returns nothing.
 two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                              pooling = c('pooled', 'unpooled','approx.unpooled'), verbose = TRUE){
   test <- match.arg(test)
@@ -450,11 +558,17 @@ two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.
   estimate = x1 - x2
   estimate.SE = two.sample.t.SE(s1, s2, n1, n2)
   if(pooling == 'pooled'){
+    # Equal variances assumed: average the two sample variances, weighted by
+    # their degrees of freedom, into one pooled estimate. Buys the full
+    # n1 + n2 - 2 degrees of freedom.
     calc = 'pooled'
     df = n1 + n2 - 2
     s.pooled = sqrt( ((n1-1)*s1^2 + (n2-1)*s2^2)/(n1+n2-2))
     test.SE = s.pooled * sqrt((1/n1)+(1/n2))
   }else if (pooling == 'unpooled'){
+    # Variances NOT assumed equal. The Welch-Satterthwaite formula below is the
+    # ugly one from the book - it usually lands on a fractional df, which is
+    # normal and not a mistake.
     calc = 'unpooled'
     df = (((s1^2/n1)+(s2^2/n2))^2)/(((s1^2/n1)^2/(n1-1)) + ((s2^2/n2)^2/(n2-1)))
     test.SE = two.sample.t.SE(s1,s2,n1,n2) 
@@ -471,11 +585,11 @@ two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.
   }else if(test == 'lower.tail'){
     critical.value = qt(alpha, df = df)
     alt.hyp = 'm1 - m2 < '
-    pvalue = pnorm(tobs)
+    pvalue = pt(tobs, df = df)
   }else{
     critical.value = qt(1-alpha, df = df)
     alt.hyp = 'm1 - m2 > '
-    pvalue = 1-pnorm(tobs)
+    pvalue = 1-pt(tobs, df = df)
   }
   
   CI = sort(c(estimate - critical.value * estimate.SE, estimate + critical.value * estimate.SE))
@@ -502,12 +616,22 @@ two.sample.t.test = function(m0,x1,x2,s1,s2,n1,n2,alpha = 0.05, test = c('lower.
 
 
 
-# the classic sign test
+## ---- sign-test ----
+# The sign test for paired data: throw away how BIG each difference is and
+# keep only whether it was + or -, then test those signs as a proportion.
+#   p0       proportion of + signs under H0 (usually 0.5)
+#   x1, x2   the two paired samples
+#   alpha    significance level
+#   test     'lower.tail', 'upper.tail' or 'two.tail'
+#   verbose  TRUE prints the results
+# P-values come from the exact binomial, not a normal approximation.
 sign.test = function(p0, x1, x2, alpha = 0.05, test = c('lower.tail','upper.tail','two.tail'),
                      verbose = TRUE){
   test <- match.arg(test)
   
   diffs = x1 - x2
+  # Pairs that tied (difference exactly 0) get no sign, so they are counted in
+  # neither total - which is why total.signs can be smaller than length(x1).
   total.signs = sum(diffs>0)+sum(diffs<0)
   positive.signs = sum(diffs>0)
   
@@ -560,7 +684,11 @@ sign.test = function(p0, x1, x2, alpha = 0.05, test = c('lower.tail','upper.tail
 
 
 
-
+## ---- rank-sum-stat ----
+# Rank-sum statistic S: pool both samples, rank them from smallest to
+# largest, then add up the ranks that belong to X.
+#   X, Y  the two independent samples
+# Returns the single number S.
 rank.sum.stat=function(X, Y){
   D = sort(c(X, Y), decreasing = FALSE)
   ranks = match(X,D)
@@ -569,7 +697,17 @@ rank.sum.stat=function(X, Y){
 }
 
 
-# the classic Wilcoxon sum-rank test for two indepdent samples
+## ---- wilcoxon-rank-sum-test ----
+# Wilcoxon rank-sum (Mann-Whitney) test for two INDEPENDENT samples - the
+# non-parametric stand-in for the two-sample t test.
+#   m0        location shift under H0 (usually 0)
+#   X, Y      the two samples; or supply S, n1 and n2 instead
+#   S         a precomputed rank sum for sample X
+#   n1, n2    the two sample sizes, required only when S is given directly
+#   alpha     significance level
+#   test      'lower.tail', 'upper.tail' or 'two.tail'
+#   verbose   TRUE prints the results
+# Prints the results and returns nothing.
 Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, alpha = 0.05, 
                                   test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE){
   test <- match.arg(test)
@@ -580,6 +718,9 @@ Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, 
     n2 = length(Y)
   }
   
+  # Convert the rank sum S into the Mann-Whitney U by subtracting the smallest
+  # rank sum sample X could possibly have had (1 + 2 + ... + n1). R's wilcox
+  # distribution functions are written in terms of U, not S.
   U = S - (n1*(n1+1))/2
   if(test == 'two.tail'){
     upper.bound = qwilcox(1-(alpha/2), n1, n2)
@@ -626,7 +767,13 @@ Wilcoxon.rank.sum.test = function(m0, X=NULL, Y=NULL, S=NULL, n1=NULL, n2=NULL, 
 
 
 
-#A simple function to compute the signed-rank statistic
+## ---- sign-rank-stat ----
+# Signed-rank statistic W for paired data: rank the ABSOLUTE differences,
+# put the sign of each difference back on its rank, then add them up.
+#   X, Y  the two paired samples
+#   ...   passed to rank() - e.g. ties.method
+# Returns a list: W, the differences, the absolute differences, the ranks
+# and the signed ranks, so the whole calculation can be shown in class.
 sign.rank.stat = function(X,Y, ...){
   diffs = X-Y
 
@@ -652,8 +799,18 @@ sign.rank.stat = function(X,Y, ...){
   W = sum(signed.ranks)
   return(list(W = W, differences = diffs, absolute.diff = abs.diffs, ranks = ranks, signed.ranks = signed.ranks))
 }
-# the classic Wilcoxon sign-rank test for two dependent samples
 
+## ---- wilcoxon-sign-rank-test ----
+# Wilcoxon signed-rank test for two DEPENDENT (paired) samples - the
+# non-parametric stand-in for the paired t test.
+#   m0       location shift under H0 (usually 0)
+#   X, Y     the two paired samples, same length
+#   W        a precomputed signed-rank statistic; supply n with it
+#   n        number of pairs, required only when W is given directly
+#   alpha    significance level
+#   test     'lower.tail', 'upper.tail' or 'two.tail'
+#   verbose  TRUE prints the results
+# Uses the normal approximation to W, so it wants a reasonable number of pairs.
 Wilcoxon.sign.rank.test = function(m0, X=NULL, Y=NULL, W=NULL, n=NULL,  alpha = 0.05, 
                                   test = c('lower.tail','upper.tail','two.tail'), verbose = TRUE,
                                   ...){
@@ -699,8 +856,12 @@ Wilcoxon.sign.rank.test = function(m0, X=NULL, Y=NULL, W=NULL, n=NULL,  alpha = 
     pvalue = 1-pnorm(W, EW, sqrt(VW))
   }
   
-  upper.bound = qnorm(1-alpha/2, EW, sqrt(VW))*sqrt(VW)+EW
-  lower.bound = qnorm(alpha/2, EW, sqrt(VW))*sqrt(VW)+EW
+  # qnorm() is already given the mean and sd of W, so it returns a bound on the
+  # W scale directly. This used to multiply that bound by sqrt(VW) and add EW a
+  # SECOND time, which inflated the interval by a factor of sqrt(VW) - a 10-pair
+  # test printed [-754.59, 754.59] for a statistic whose SE is 19.62.
+  upper.bound = qnorm(1-alpha/2, EW, sqrt(VW))
+  lower.bound = qnorm(alpha/2, EW, sqrt(VW))
   CI = c(lower.bound, upper.bound)
   decision = ifelse(pvalue<alpha, 'reject H0', 'fail to reject H0')
   if(isTRUE(verbose)){
@@ -726,7 +887,15 @@ Wilcoxon.sign.rank.test = function(m0, X=NULL, Y=NULL, W=NULL, n=NULL,  alpha = 
 
 
 
-# a function to conduct the chi-square goodness of fit test
+## ---- chi-squared-gof-test ----
+# Chi-square goodness-of-fit test: do observed counts match a claimed set of
+# probabilities?
+#   observed.ct    vector of observed counts, one per category
+#   expected.freq  claimed PROBABILITIES under H0 (must sum to 1)
+#   expected.ct    claimed COUNTS under H0 - supply this OR expected.freq
+#   alpha          significance level
+#   verbose        TRUE prints the observed/expected/distance table
+# Prints the results and returns nothing.
 chi.squared.GOF.test = function(observed.ct=NULL, expected.freq=NULL, expected.ct = NULL,  alpha = 0.05, 
                                 verbose = TRUE){
   
@@ -776,7 +945,17 @@ chi.squared.GOF.test = function(observed.ct=NULL, expected.freq=NULL, expected.c
 
 
 
-# chi square test of independence and homogeneity
+## ---- chi-squared-test ----
+# Chi-square test for a two-way table: independence or homogeneity.
+#   cont.table  matrix/table of observed counts, rows x columns
+#   var1.name   name printed for the COLUMN variable (default 'Var A')
+#   var2.name   name printed for the ROW variable (default 'Var B')
+#   alpha       significance level
+#   test        'independence' or 'homogeneity' - same arithmetic, different wording
+#   verbose     TRUE prints the observed, expected and distance tables
+# Prints the full worked table and returns nothing.
+# Independence vs homogeneity is a question of how the data were COLLECTED
+# (one sample cross-classified, vs one sample per row), not of the test itself.
 chi.squared.test = function(cont.table, var1.name = NULL, var2.name = NULL, alpha = 0.05, 
                             test = c('homogeneity','independence'), verbose = TRUE,...){
   test <- match.arg(test)
@@ -784,9 +963,15 @@ chi.squared.test = function(cont.table, var1.name = NULL, var2.name = NULL, alph
   r.t = rowSums(cont.table)
   c.t = colSums(cont.table)
   n = sum(cont.table)
+  # Expected count for every cell at once: outer() builds the table of
+  # (row total) * (column total), then dividing by n gives the familiar
+  # (R * C)/n from the notes.
   exp.cts = outer(r.t, c.t)/n
+  # Cell-by-cell (observed - expected)^2 / expected; the test statistic is
+  # just their sum.
   ct.dists = (cont.table - exp.cts)^2/exp.cts
   chi.obs = sum(ct.dists)
+  # (rows - 1) * (columns - 1)
   df = prod(dim(cont.table)-1)
   colcats = colnames(cont.table)
   rowcats = row.names(cont.table)

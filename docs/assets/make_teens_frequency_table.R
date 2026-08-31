@@ -15,6 +15,14 @@
 #ordinal. The Total row deliberately leaves that column blank - a cumulative
 #column has no total, and students ask about it every year.
 #
+#THREE images come out of this, not one. Slide 6 builds the table a column at a
+#time alongside the definition of each column, so stage 1 has Response and
+#Frequency, stage 2 adds Relative Frequency and stage 3 adds Cumulative. The
+#layout is FIXED with explicit column widths and the later columns are rendered
+#as empty cells rather than dropped, so all three images have identical geometry
+#and can be stacked on the slide - each reveal simply covers the one before it.
+#Stage 3 sits on top, which is also what a PDF export of the deck shows.
+#
 #IMPORTANT - the canvas size below fixes the aspect ratio of the output, and
 #slide24.xml stretches the picture into a frame with that same aspect. Change
 #CANVAS and you must change the frame in the slide to match, or the table comes
@@ -37,54 +45,60 @@ if (is.na(this_file)) {
 }
 if (is.na(this_file)) stop("Could not determine the script location; run it with Rscript.")
 assets_dir <- dirname(this_file)
-out_png <- file.path(assets_dir, "teens_frequency_table.png")
 
 COUNTS <- c(Never = 289L, Rarely = 216L, Sometimes = 178L, Often = 60L)
 n <- sum(COUNTS)
 rf  <- COUNTS / n
 crf <- cumsum(rf)
 
-body_rows <- paste0(
-  sprintf(paste0('<tr><td class="left">%s</td><td class="right">%d</td>',
-                 '<td class="right">%.2f</td><td class="right">%.2f</td></tr>'),
-          names(COUNTS), COUNTS, rf, crf),
-  collapse = "")
+#stage 1 = Response + Frequency, 2 adds Relative, 3 adds Cumulative.
+cell <- function(txt, cls) sprintf('<td class="%s">%s</td>', cls, txt)
 
-total_row <- sprintf(
-  paste0('<tr class="total"><td class="left">Total</td><td class="right">%d</td>',
-         '<td class="right">%.2f</td><td class="right"></td></tr>'), n, sum(rf))
+build_html <- function(stage) {
+  rows <- vapply(seq_along(COUNTS), function(i) {
+    cells <- c(cell(names(COUNTS)[i], "left"),
+               cell(sprintf("%d", COUNTS[[i]]), "right"),
+               cell(if (stage >= 2) sprintf("%.2f", rf[[i]]) else "", "right"),
+               cell(if (stage >= 3) sprintf("%.2f", crf[[i]]) else "", "right"))
+    paste0("<tr>", paste0(cells, collapse = ""), "</tr>")
+  }, character(1))
 
-#Height budget up front: the body has overflow:hidden, so anything that does not
-#fit is silently clipped rather than spilling somewhere visible.
-used <- 3L * HEAD_PX + 5L * ROW_PX
-if (used > CANVAS_H)
-  stop(sprintf("table does not fit: needs %d px of %d", used, CANVAS_H))
-message(sprintf("  %d of %d px used (%d spare)", used, CANVAS_H, CANVAS_H - used))
+  total <- paste0('<tr class="total">',
+                  cell("Total", "left"),
+                  cell(sprintf("%d", n), "right"),
+                  cell(if (stage >= 2) sprintf("%.2f", sum(rf)) else "", "right"),
+                  cell("", "right"), "</tr>")
 
-html <- sprintf('<!doctype html><html><head><meta charset="utf-8"><style>
+  heads <- c('<th class="left">Response</th>',
+             '<th class="right">Frequency</th>',
+             if (stage >= 2) '<th class="right">Relative<br>Frequency</th>'
+             else '<th class="right"></th>',
+             if (stage >= 3) '<th class="right">Cumulative<br>Relative<br>Frequency</th>'
+             else '<th class="right"></th>')
+
+  sprintf('<!doctype html><html><head><meta charset="utf-8"><style>
   html, body { margin:0; padding:0; width:100%%; height:100%%;
                background:#ffffff; overflow:hidden; }
   body { display:flex; flex-direction:column; justify-content:center;
          font-family:"Latin Modern Roman","CMU Serif","Latin Modern Roman 10",
                      "Times New Roman",Times,serif;
          font-size:%dpx; color:#000000; }
-  table { width:100%%; border-collapse:collapse; table-layout:auto; }
+  table { width:100%%; border-collapse:collapse; table-layout:fixed; }
   td { height:%dpx; padding:0 10px; white-space:nowrap; line-height:%dpx; }
   th { font-weight:normal; border-bottom:1px solid #000000; padding:0 10px;
-       line-height:%dpx; vertical-align:bottom; }
+       line-height:%dpx; height:%dpx; vertical-align:bottom; }
   thead tr { border-top:2.5px solid #000000; }
   tbody tr:last-child { border-bottom:2.5px solid #000000; }
   tr.total { border-top:1px solid #000000; }
   .left  { text-align:left; }
   .right { text-align:right; }
 </style></head><body>
-<table><thead><tr>
-  <th class="left">Response</th>
-  <th class="right">Frequency</th>
-  <th class="right">Relative<br>Frequency</th>
-  <th class="right">Cumulative<br>Relative<br>Frequency</th>
-</tr></thead><tbody>%s%s</tbody></table>
-</body></html>', FONT_PX, ROW_PX, ROW_PX, HEAD_PX, body_rows, total_row)
+<table>
+<colgroup><col style="width:26%%"><col style="width:22%%"><col style="width:26%%"><col style="width:26%%"></colgroup>
+<thead><tr>%s</tr></thead><tbody>%s%s</tbody></table>
+</body></html>', FONT_PX, ROW_PX, ROW_PX, HEAD_PX, 3L * HEAD_PX,
+    paste0(heads, collapse = ""), paste0(rows, collapse = ""), total)
+}
 
 #Chrome discovery and screenshotting: same approach as make_lecture2_slide3_tables.R,
 #including the throwaway profile so headless Chrome does not fight the user's own
@@ -102,24 +116,27 @@ find_chrome <- function() {
   candidates[[1]]
 }
 
-tmp <- tempfile(fileext = ".html")
-writeLines(html, tmp, useBytes = TRUE)
-on.exit(unlink(tmp), add = TRUE)
+shoot <- function(html, out_png) {
+  tmp <- tempfile(fileext = ".html")
+  writeLines(html, tmp, useBytes = TRUE)
+  on.exit(unlink(tmp), add = TRUE)
+  status <- system2(find_chrome(), c(
+    "--headless=new", "--disable-gpu", "--hide-scrollbars",
+    paste0("--user-data-dir=", shQuote(file.path(tempdir(), "freqtable_chrome_profile"))),
+    "--force-device-scale-factor=2", "--virtual-time-budget=4000",
+    paste0("--window-size=", CANVAS_W, ",", CANVAS_H),
+    paste0("--screenshot=", shQuote(normalizePath(out_png, winslash = "/", mustWork = FALSE))),
+    shQuote(paste0("file:///", normalizePath(tmp, winslash = "/")))
+  ), stdout = FALSE, stderr = FALSE)
+  if (status != 0 || !file.exists(out_png))
+    stop("Chrome failed to render ", basename(out_png), " (status ", status, ")")
+  message("  ", basename(out_png), " (", format(file.size(out_png) %/% 1024L, big.mark = ","), " KB)")
+}
 
-status <- system2(find_chrome(), c(
-  "--headless=new", "--disable-gpu", "--hide-scrollbars",
-  paste0("--user-data-dir=", shQuote(file.path(tempdir(), "freqtable_chrome_profile"))),
-  "--force-device-scale-factor=2", "--virtual-time-budget=4000",
-  paste0("--window-size=", CANVAS_W, ",", CANVAS_H),
-  paste0("--screenshot=", shQuote(normalizePath(out_png, winslash = "/", mustWork = FALSE))),
-  shQuote(paste0("file:///", normalizePath(tmp, winslash = "/")))
-), stdout = FALSE, stderr = FALSE)
+for (stage in 1:3)
+  shoot(build_html(stage),
+        file.path(assets_dir, sprintf("teens_frequency_table_%d.png", stage)))
 
-if (status != 0 || !file.exists(out_png))
-  stop("Chrome failed to render ", basename(out_png), " (status ", status, ")")
-
-message("Wrote ", out_png, " (", CANVAS_W * 2, "x", CANVAS_H * 2, " px, ",
-        format(file.size(out_png) %/% 1024L, big.mark = ","), " KB)")
 message("Slide frame aspect must be ", sprintf("%.4f", CANVAS_W / CANVAS_H),
         " - for a 6358151 EMU width that is ",
         round(6358151 * CANVAS_H / CANVAS_W), " EMU tall.")
