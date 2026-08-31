@@ -233,6 +233,8 @@ plot(P1+scale_fill_brewer(palette = 'Reds')+theme(legend.position = 'none')+
 
 ```
 
+<a href="./Data/teens_cell_phone_focus_simulated.csv">Download the data behind Figure 1</a> &mdash; one row per student. Pew published only the four percentages, so the individual rows are simulated; the response counts (289 Never, 216 Rarely, 178 Sometimes, 60 Often, n = 743) are the published ones and reproduce Figure 1 exactly.
+
 * Looking at the distribution of survey responses above, would you say that most teens feel they are distracted by their cell phones?
 
 ### Distributions

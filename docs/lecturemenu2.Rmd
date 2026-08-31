@@ -105,6 +105,8 @@ There are several graphs that can be used to display qualitative data. The most 
 
 * Ex. Recall the example from <i> Week 1 </i> regarding the Pew Research survey asking teens to rate how distracted they are by their cell phones. The following are a bar graph and pie chart of student responses
 
+<a href="./Data/teens_cell_phone_focus_simulated.csv">Download the response data</a> (simulated student-level rows reproducing the published Pew counts).
+
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=8}
 set.seed(123)
 teen.data = cbind.data.frame(Response = factor(c("Often", "Sometimes", "Rarely", 'Never'),

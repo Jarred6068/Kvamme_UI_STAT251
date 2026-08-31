@@ -5,6 +5,9 @@
 /docs/Data/*
 !/docs/Data/homework_tables/
 
+# linked directly from the lecture notes (Week 1 Figure 1, reused in Week 2)
+!/docs/Data/teens_cell_phone_focus_simulated.csv
+
 # linked directly from Homeworks > Data & PDF Downloads
 !/docs/Data/cereal.csv
 !/docs/Data/sports_motivation_summary.csv
