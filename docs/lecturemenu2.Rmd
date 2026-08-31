@@ -17,13 +17,13 @@ library(ggpubr)
 
 As we learned in the previous lecture, descriptive statistics is the first step to statistical analysis and involves the summary and organization of data. One of the main ways we can summarize data is to describe the characteristics of the **distribution** of the variable(s) in the data. A distribution tells us something about what kinds of values a variable can have and how often they occur. 
 
-#### Data used this week
+## Data used this week
 
 Each dataset below is a plain `.csv`, ready to read straight into R or to upload to the [tools and calculators](https://stat-tools.jmks-homelab.dev/).
 
-* <a href="./Data/teens_cell_phone_focus_simulated.csv">Teen cell-phone survey</a> &mdash; 743 responses (Figure 1 below).
-* <a href="./Data/old_faithful.csv">Old Faithful eruptions</a> &mdash; 272 eruptions, duration and waiting time.
-* <a href="./Data/carsdata.csv">MPG and engine cylinders</a> &mdash; 32 car models, used for the dot plot examples in class.
+* <a href="./Data/teens_cell_phone_focus_simulated.csv" download>Teen cell-phone survey</a> &mdash; 743 responses (Figure 1 below).
+* <a href="./Data/old_faithful.csv" download>Old Faithful eruptions</a> &mdash; 272 eruptions, duration and waiting time.
+* <a href="./Data/carsdata.csv" download>MPG and engine cylinders</a> &mdash; 32 car models, used for the dot plot examples in class.
 
 
 * Consider the following example: Are teens distracted by their cell phones? A study conducted by the Pew Research center surveyed 743 U.S teenagers ages 13-17 to understand how cell phones in class impacted their ability to concentrate. Each student was asked to rate the impact of cell phone use on their concentration based on a Likert scale. The data and a plot of the distribution of survey responses are given below
@@ -37,15 +37,15 @@ Student = c('1', '2', '3', '4', '$\\vdots$', '743')
 Age = c('13', '13', '15', '17', '$\\vdots$', '16')
 Response = c('Never','Sometimes', 'Never', 'Often', '$\\vdots$', 'Rarely')
 
-kable(cbind.data.frame(Student, Age, Response), format = 'html', digits = 2, row.names = F, booktabs = T, escape = FALSE)%>%
+kable(cbind.data.frame(Student, Age, Response), format = 'html', caption = 'Survey data layout: the first four teens and the last, of 743.', digits = 2, row.names = F, booktabs = T, escape = FALSE)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
 
-* What type of variable is <i>Age</i>? 
-* What type of variable is <i>Response</i>?
+* What type of variable is <em>Age</em>? 
+* What type of variable is <em>Response</em>?
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=4, fig.cap = 'Figure 1. Distribution of student responses to survey question \" Are You Losing Focus In Class By Checking Your Cell Phone? \" '}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=4, fig.cap = 'Figure 1. Distribution of student responses to the survey question "Are you losing focus in class by checking your cell phone?"', fig.alt = 'Horizontal bar chart of the responses of 743 teens. Never is the longest bar at 0.39, followed by Rarely at 0.29, Sometimes at 0.24, and Often the shortest at 0.08. Most teens chose Never or Rarely.'}
 #student attention likert responses
 set.seed(123)
 teen.data = cbind.data.frame(Response = factor(c("Often", "Sometimes", "Rarely", 'Never'),
@@ -53,14 +53,14 @@ teen.data = cbind.data.frame(Response = factor(c("Often", "Sometimes", "Rarely",
                              `Proportion of Teens`= c(0.08,0.24,0.29,0.39))
 
 P1 = ggplot(data = teen.data, aes(x = Response, y = `Proportion of Teens`, fill = Response))+
-  geom_bar(stat = 'identity', color = 'black', size = 0.8)+
+  geom_bar(stat = 'identity', color = 'black', linewidth = 0.8)+
   theme_hc()+
   scale_y_continuous(breaks = seq(0, 0.5, 0.1))+
   coord_flip()
 
 plot(P1+scale_fill_brewer(palette = 'Reds')+theme(legend.position = 'none')+
        theme(axis.text.x = element_text(size = 15))+
-       theme(axis.text.y = element_text(size = 15, angle = 45))+
+       theme(axis.text.y = element_text(size = 15))+
        theme(axis.title.x = element_text(size = 18))+
        theme(axis.title.y = element_text(size = 18))+
        ggtitle("Are You Losing Focus In Class By Checking Your Cell Phone?"))
@@ -68,20 +68,20 @@ plot(P1+scale_fill_brewer(palette = 'Reds')+theme(legend.position = 'none')+
 
 ```
 
-<a href="./Data/teens_cell_phone_focus_simulated.csv">Download the data behind Figure 1</a> &mdash; one row per student. Pew published only the four percentages, so the individual rows are simulated; the response counts (289 Never, 216 Rarely, 178 Sometimes, 60 Often, n = 743) are the published ones and reproduce Figure 1 exactly.
+<a href="./Data/teens_cell_phone_focus_simulated.csv" download>Download the data behind Figure 1</a> &mdash; one row per student. Pew published only the four percentages, so the individual rows are simulated; the response counts (289 Never, 216 Rarely, 178 Sometimes, 60 Often, n = 743) are the published ones and reproduce Figure 1 exactly.
 
 * Looking at the distribution of survey responses above, would you say that most teens feel they are distracted by their cell phones?
 
-### Distributions
+## Distributions
 
-Formally, a **distribution** is a function that gives (a) the possible values of a variable and (b) how often each value occurs. The <i> how often </i> is usually described using <i> frequency </i> or <i> relative frequency </i>. 
+Formally, a **distribution** is a function that gives (a) the possible values of a variable and (b) how often each value occurs. The <em>how often</em> is usually described using <em>frequency</em> or <em>relative frequency</em>. 
 
   * The **frequency** of a given value is simply a count of the number of times that the given values occurs
   * The **relative frequency** of a given value is the proportion of times that the given value occurs
   
-* We can also use the <i> cumulative relative frequency </i> to describe how often a variable occurs. The **cumulative relative frequency** is the proportion of values that are <i> less than or equal to </i> a given value in a distribution. 
+* We can also use the <em>cumulative relative frequency</em> to describe how often a variable occurs. The **cumulative relative frequency** is the proportion of values that are <em>less than or equal to</em> a given value in a distribution. 
 
-   * **Note**: As we said with the example about distracted teens, we can talk about the distribution of a categorical variable as well, however we <i>may not use</i> the cumulative relative frequency if there is no natural order to the values (i.e qualitative - nominal).  
+   * **Note**: As we said with the example about distracted teens, we can talk about the distribution of a categorical variable as well, however we <em>may not use</em> the cumulative relative frequency if there is no natural order to the values (i.e qualitative - nominal).  
 
 Consider the following hypothetical set of $10$ exam scores (out of 10 points) for students in a statistics course $$\{5, 6, 6, 7, 7, 7, 8, 9, 9, 10\}$$
 
@@ -98,7 +98,7 @@ x = c(5, 6, 6, 7, 7, 7, 8, 9, 9, 10)
 cts = summary(as.factor(x))
 rf = cts/length(x)
 
-kable(cbind.data.frame(unique(x), cts, rf, cumsum(rf)), format = 'html', col.names = c('Score','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T)%>%
+kable(cbind.data.frame(unique(x), cts, rf, cumsum(rf)), format = 'html', caption = 'Frequency table for the ten exam scores.', col.names = c('Score','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
@@ -107,7 +107,7 @@ kable(cbind.data.frame(unique(x), cts, rf, cumsum(rf)), format = 'html', col.nam
 
 A frequency table is only one way of describing a distribution, and it is the plainest. The rest of these notes introduce the other ways: how to build a frequency table when the variable is continuous, what features of a distribution we look for, and which graph suits which kind of variable.
 
-### Frequency tables for continuous variables
+## Frequency tables for continuous variables
 
 Every frequency table above listed the possible values of the variable in its first column and counted them in the rest. That works whenever the values can be listed.
 
@@ -125,23 +125,23 @@ rf = freq/sum(freq)
 crf = cumsum(rf)
 
 ft = cbind.data.frame(Bins, freq, rf, crf)
-kable(ft, format = 'html', col.names = c('Bin','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(ft, format = 'html', caption = 'Frequency table for X using seven bins of width 0.5.', col.names = c('Bin','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
 The following is another example using $n = 272$ observations collected on the waiting time between eruptions and the duration of the eruption of the Old Faithful geyser in Yellowstone National Park, Wyoming, USA. 
 
-<a href="./Data/old_faithful.csv">Download the Old Faithful data</a> (all 272 eruptions).
+<a href="./Data/old_faithful.csv" download>Download the Old Faithful data</a> (all 272 eruptions).
 
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
 
 dffaith = rbind.data.frame(round(faithful[1:8, ], 3), c("$\\vdots$", "$\\vdots$"))
 
-kable(dffaith, format = 'html', col.names = c('Duration (min)', 'Waiting Time (min)'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+kable(dffaith, format = 'html', caption = 'The first eight Old Faithful eruptions, of 272.', col.names = c('Duration (min)', 'Waiting Time (min)'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
-Consider a frequency table to describe the distribution of the variable <i> waiting time (min) </i>:
+Consider a frequency table to describe the distribution of the variable <em>waiting time (min)</em>:
 
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
 set.seed(123)
@@ -151,7 +151,7 @@ rf = freq/sum(freq)
 crf = cumsum(rf)
 
 ft = cbind.data.frame(Bins, freq, rf, crf)
-kable(ft, format = 'html', col.names = c('Waiting Time','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+kable(ft, format = 'html', caption = 'Frequency table for Old Faithful waiting time using twelve bins of width 5 minutes.', col.names = c('Waiting Time','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
@@ -160,7 +160,7 @@ kable(ft, format = 'html', col.names = c('Waiting Time','Frequency', 'Relative F
 
 **IMPORTANT**: one thing to consider is that grouping continuous data into discrete intervals leads to a loss of precision. Sometimes this can result in the loss of valuable information present in the original data. In addition, how we choose to bin the data (i.e how wide we make the intervals) may lead to different, sometimes erroneous, conclusions about the distribution and patterns within the data.
 
-Consider the frequency table for the <i>waiting time (min)</i> with only two bins
+Consider the frequency table for the <em>waiting time (min)</em> with only two bins
 
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
 set.seed(123)
@@ -170,25 +170,25 @@ rf = freq/sum(freq)
 crf = cumsum(rf)
 
 ft = cbind.data.frame(Bins, freq, rf, crf)
-kable(ft, format = 'html', col.names = c('Waiting Time','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+kable(ft, format = 'html', caption = 'The same waiting times collapsed into only two bins of width 30 minutes.', col.names = c('Waiting Time','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ```
 
 * How does using only two bins/intervals alter your conclusion regarding the typical time a visitor must wait before witnessing Old Faithful's eruption?
 
-### Features of a distribution
+## Features of a distribution
 
-Descriptive statistics or graphical summaries can tell us a lot about the variables in our data. Graphs help us visualize trends in the data, identify problematic observations, and can help inform the types of analyses we should use. We may be interested in certain features related to the distribution(s) of the variable(s) in our data, such as the <i> shape, center, and variability </i>. 
+Descriptive statistics or graphical summaries can tell us a lot about the variables in our data. Graphs help us visualize trends in the data, identify problematic observations, and can help inform the types of analyses we should use. We may be interested in certain features related to the distribution(s) of the variable(s) in our data, such as the <em>shape, center, and variability</em>. 
 
 * **shape** refers to how observations cluster across the range of a variable. Certain aspects to note would be where observations are densely packed (values with high frequencies) and where observations are sparser (values with low frequencies). This can give us a feel for where a typical value would appear and what values may be considered "rare" or "extreme".
 
 * **Center** refers to the "middle point" on the distribution and also supplies information about where a typical value falls.
 
-* **Variability** refers to how tightly observations cluster around the center of a distribution. When values are tightly packed they are said to have <i> low variability </i> vs when they are spread out they are said to have <i> high variability </i>
+* **Variability** refers to how tightly observations cluster around the center of a distribution. When values are tightly packed they are said to have <em>low variability</em> vs when they are spread out they are said to have <em>high variability</em>
 
 * **modal category** is a feature of qualitative data only and refers to the most frequent category of a qualitative variable. 
 
-### Graphs for qualitative data
+## Graphs for qualitative data
 There are several graphs that can be used to display qualitative data. The most common are bar graphs and pie charts.
 
 * A **Bar graph** is simple and widely used plot for displaying the distribution of categorical variables. Each category is represented by a bar, and the height of the bar corresponds to the frequency or proportion of observations in that category. When the bars are sorted in decreasing frequency it is called a **Pareto chart**. 
@@ -197,22 +197,22 @@ There are several graphs that can be used to display qualitative data. The most 
 
 * Ex. Recall the Pew Research survey above, asking teens to rate how distracted they are by their cell phones. The following are a bar graph and pie chart of student responses
 
-<a href="./Data/teens_cell_phone_focus_simulated.csv">Download the response data</a> (simulated student-level rows reproducing the published Pew counts).
+<a href="./Data/teens_cell_phone_focus_simulated.csv" download>Download the response data</a> (simulated student-level rows reproducing the published Pew counts).
 
-```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=8}
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=8, fig.alt = 'Two views of the same teen survey data, side by side. Left, a bar chart with Never tallest at 0.39, then Rarely at 0.29, Sometimes at 0.24, and Often shortest at 0.08. Right, the same four proportions drawn as a pie chart, shaded from light red for Never through to dark red for Often.'}
 set.seed(123)
 teen.data = cbind.data.frame(Response = factor(c("Often", "Sometimes", "Rarely", 'Never'),
                                                levels = c('Never', "Rarely", "Sometimes", "Often")),
                              `Proportion of Teens`= c(0.08,0.24,0.29,0.39))
 
 P1 = ggplot(data = teen.data, aes(x = Response, y = `Proportion of Teens`, fill = Response))+
-  geom_bar(stat = 'identity', color = 'black', size = 0.8)+
+  geom_bar(stat = 'identity', color = 'black', linewidth = 0.8)+
   theme_hc()+
   scale_y_continuous(breaks = seq(0, 0.5, 0.1))+
   scale_fill_brewer(palette = 'Reds')+
   theme(legend.position = 'none')+
   theme(axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12, angle = 45),
+        axis.text.y = element_text(size = 12),
         axis.title.x = element_text(size = 14),
         axis.title.y = element_text(size = 14))+
        ggtitle("Are You Losing Focus In Class By Checking Your Cell Phone?")
@@ -220,7 +220,11 @@ P1 = ggplot(data = teen.data, aes(x = Response, y = `Proportion of Teens`, fill 
 
 pie1 = ggplot(teen.data, aes(x = "", y = `Proportion of Teens`, fill = Response)) +
   geom_col(color = "black") +
-  geom_text(aes(label = `Proportion of Teens`), 
+  # White on the darkest slice, black on the three light ones. Black text on the
+  # darkest red of the Reds palette is only 3.7:1, under the 4.5:1 WCAG AA needs.
+  # The colours follow teen.data's ROW order: Often, Sometimes, Rarely, Never.
+  geom_text(aes(label = `Proportion of Teens`),
+            colour = c("white", "black", "black", "black"),
             position = position_stack(vjust = 0.6), size = 5) +
   coord_polar(theta = "y") +
   scale_fill_brewer(palette = 'Reds') +
@@ -232,25 +236,25 @@ pie1 = ggplot(teen.data, aes(x = "", y = `Proportion of Teens`, fill = Response)
 ggarrange(P1, pie1, nrow = 1)
 ```
 
-* what is the modal category of the variable <i> Response </i>?
+* what is the modal category of the variable <em>Response</em>?
 
-### Graphs for quantitative data
+## Graphs for quantitative data
 There are also many plots that can be used with quantitative data. Some of the most commonly used graphs are listed below. 
 
-In class we build these plots from the MPG and engine-cylinder data for 32 car models: <a href="./Data/carsdata.csv">download it here</a>.
+In class we build these plots from the <a href="./Data/carsdata.csv" download>MPG and engine-cylinder data for 32 car models</a>.
 
 * A **dot plot** shows a dot for each observation placed just above the value on the number line for that observation. To construct a dot plot:
   * (1) Draw a horizontal line, label it with the name of variable, and mark regular values of the variable on the line. 
   * (2) For each observation, place a dot above its value on the number line.
 
-* A **stem and leaf plot** is similar to a dot plot in that it displays individual observations of a variable. Each observation in the plot consists of a stem and a leaf. The <i> stem </i> is all of the digits except for the last digit. The <i> leaf </i> is the last digit. For example, take the observation $12.3$ the stem for this observation is $12$ and the leaf is $3$. To construct a stem and leaf plot:
+* A **stem and leaf plot** is similar to a dot plot in that it displays individual observations of a variable. Each observation in the plot consists of a stem and a leaf. The <em>stem</em> is all of the digits except for the last digit. The <em>leaf</em> is the last digit. For example, take the observation $12.3$ the stem for this observation is $12$ and the leaf is $3$. To construct a stem and leaf plot:
   * (1) Draw a table with two columns and label the left column "Stem" and the right column "leaf". 
   * (2) Next, sort the observations from smallest to largest and place the stems in the left column of your table in increasing order.
   * (3) in the right column, fill in the leaves of each stem in increasing order.
   
 Example: A dot plot constructed for the $n = 272$ observations collected on the waiting time between eruptions and the duration of the eruption of the Old Faithful geyser in Yellowstone National Park, Wyoming, USA. 
 
-```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=8}
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=8, fig.alt = 'Dot plot of 272 Old Faithful waiting times, ranging from 43 to 96 minutes. The dots fall into two clearly separated clusters, a smaller one centred near 55 minutes and a larger one centred near 80 minutes, with noticeably few observations in between around 65 minutes.'}
 ggplot(data = faithful, aes(x = waiting))+
   geom_dotplot(dotsize = 0.5)+
   theme_classic()+
@@ -267,7 +271,23 @@ ggplot(data = faithful, aes(x = waiting))+
 * Think about the shape of this distribution and how it relates to the time that a typical visitor can expect to wait before the geyser erupts. Is the result consistent with the frequency table we constructed earlier?
 
 
-Example: A stem and leaf plot constructed for the $n = 272$ observations collected on the waiting time between eruptions and the duration of the eruption of the Old Faithful geyser in Yellowstone National Park, Wyoming, USA. 
+Example: A stem and leaf plot constructed for the $n = 272$ observations collected on the waiting time between eruptions and the duration of the eruption of the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.
+
+Read the plot below one row at a time. The number to the left of the bar is the
+stem, here the tens digit of the waiting time; each digit to the right of the bar
+is one leaf, the units digit of a single eruption. A row reading `5 | 0011` would
+stand for four eruptions, at 50, 50, 51 and 51 minutes.
+
+Note that R has *split* each stem across two rows, so every tens digit appears
+twice: the first row collects the leaves 0 through 4, the second the leaves 5
+through 9. The two rows beginning `5` therefore cover 50–54 minutes and 55–59
+minutes respectively.
+
+The longer a row is, the more eruptions fell in that five-minute span. That is
+what makes the shape audible as well as visible: the rows grow long in the low
+fifties, shrink to their shortest in the middle sixties, then grow longest of all
+in the high seventies and low eighties — the same two clusters, and the same gap
+between them, that the dot plot showed.
 
 ```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
 
@@ -282,12 +302,12 @@ Both dot plots and stem and leaf plots are excellent choices for discrete variab
 The following are alternatives that work for variables of any number of observations.  
 
 
-### More graphs for quantitative data
+## More graphs for quantitative data
 * A **Histogram** is a specialized type of bar graph. It uses bars to portray the frequencies or relative frequencies of the possible outcomes for a quantitative variable of either type. The histogram uses binning to condense the view of a quantitative variable into a smaller set of intervals which makes it particularly useful when the number of observations is large. The width of the bins is arbitrary but all bins should be the same length and cover all possible values of the data. The steps for constructing a histogram are:
 
   * (1) Divide the data into non-overlapping intervals (bins) of equal length. 
   * (2) Compute the frequency of each interval (this is the same as constructing the frequency table for the chosen bins)
-  * (3) Label the <i>x</i>-axis with the midpoints or endpoints of each interval. 
+  * (3) Label the <em>x</em>-axis with the midpoints or endpoints of each interval. 
   * (4) Draw a bar over each value or interval with height equal to its frequency or relative frequency
 
 * In general, you can choose the number of bins $k$ you wish to use and set the bin width $w$ accordingly or alternatively set the bin width you want and use the corresponding number of bins.  
@@ -310,7 +330,7 @@ The following are alternatives that work for variables of any number of observat
   
   * **Rices Rule** is defined as $k = 2\sqrt[3]{n}$. This rule is a nice intermediate between Sturges Rule and the square root method. 
   
-```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=8}
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=8, fig.alt = "Line chart comparing three rules for choosing the number of histogram bins as the sample size grows from 1 to 1000. All three rise but at very different rates: at 1000 observations the square root method asks for about 32 bins, Rice's rule for about 20, and Sturges' rule for only about 11. Sturges' rule rises in visible steps because it is rounded to a whole number."}
 x = c(1:1000)
 y1 = round(sqrt(x))
 y2 = round(log2(x))+1
@@ -331,7 +351,7 @@ ggplot(data = df, aes(x = `Number of Observations`, y = `Number of Bins`, color 
 
 Consider the following example of histograms constructed for the $n = 272$ observations collected on the waiting time between eruptions and the duration of the eruption of the Old Faithful geyser in Yellowstone National Park, Wyoming, USA. 
 
-```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=9}
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=9, fig.alt = "Four histograms of the same 272 Old Faithful waiting times, drawn with different numbers of bins. All four show the same two-peaked shape, one peak near 55 minutes and a taller one near 80. The 5-bin version is the coarsest and nearly hides the dip between the peaks; the square root method uses about 16 bins, Rice's rule about 13, and Sturges' rule about 9, each showing the two peaks more sharply than the 5-bin version."}
 library(latex2exp)
 n = dim(faithful)[1]
 k_srm = round(sqrt(n))
@@ -388,15 +408,15 @@ rf = freq/sum(freq)
 crf = cumsum(rf)
 
 ft = cbind.data.frame(Bins, freq, rf, crf)
-kable(ft, format = 'html', col.names = c('X','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+kable(ft, format = 'html', caption = 'Frequency table for X using four bins of width 0.75.', col.names = c('X','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 
 ```
 
 * From the frequency table above, we can now easily construct the histogram of $X$ by simply drawing the appropriate bars over each interval/bin: 
 
-```{r, echo=FALSE, message=F, warning=FALSE, fig.height=3, fig.width=4.5}
-hist(c(-1.49,-0.65,-0.6,-0.54,-0.45,0.01,0.17,0.27,0.51,1.34), 
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=3, fig.width=4.5, fig.alt = 'Histogram of the ten values of X in four bins of width 0.75. The two middle bins, minus 0.75 to 0 and 0 to 0.75, each contain 4 observations, while the outer bins, minus 1.5 to minus 0.75 and 0.75 to 1.5, each contain 1. The shape is symmetric and single-peaked.'}
+hist(c(-1.49,-0.65,-0.6,-0.54,-0.45,0.01,0.17,0.27,0.51,1.34),
             breaks = seq(-1.5, 1.5, 0.75), 
             plot = T, xlab = 'X', main = 'Histogram of X')
 ```
