@@ -141,12 +141,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Wednesday</th>
   <td>September  2, 2026</td>
-  <td>Measures of location and position -- **Last day to register, add or wait list without permission**</td>
+  <td>Shape of a distribution; dot plots, stem-and-leaf plots, histograms -- **Last day to register, add or wait list without permission**</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>September  4, 2026</td>
-  <td>Measures of spread, boxplot</td>
+  <td>Measures of location and position</td>
 </tr>
 </tbody>
 <tbody>
@@ -161,12 +161,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Wednesday</th>
   <td>September  9, 2026</td>
-  <td>Measures of spread, cumulative distributions -- **September 8 was the last day to drop without a W, change variable credit or grading basis, or add with an instructor permission override**</td>
+  <td>Measures of spread, boxplot -- **September 8 was the last day to drop without a W, change variable credit or grading basis, or add with an instructor permission override**</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>September 11, 2026</td>
-  <td>The normal distribution, z-scores, transformations -- **Homework 1 due Sunday at 11:59PM**</td>
+  <td>Measures of spread, cumulative distributions -- **Homework 1 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -176,7 +176,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 14, 2026</td>
-  <td>Identifying outliers, margin of error, statistical significance</td>
+  <td>The normal distribution, z-scores, transformations</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
@@ -196,17 +196,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 21, 2026</td>
-  <td>Study and sampling designs</td>
+  <td>Identifying outliers, margin of error, statistical significance</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 23, 2026</td>
-  <td>Introduction to probability, random variables, discrete probability distributions</td>
+  <td>Study and sampling designs</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>September 25, 2026</td>
-  <td>Discrete probability distributions</td>
+  <td>Introduction to probability, random variables, discrete probability distributions</td>
 </tr>
 </tbody>
 <tbody>
@@ -216,17 +216,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 28, 2026</td>
-  <td>Continuous probability distributions</td>
+  <td>Discrete probability distributions</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 30, 2026</td>
-  <td>Sampling distributions and the central limit theorem</td>
+  <td>Continuous probability distributions</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October  2, 2026</td>
-  <td>More on sampling distributions, Introduction to confidence intervals</td>
+  <td>Sampling distributions and the central limit theorem</td>
 </tr>
 </tbody>
 <tbody>
@@ -236,17 +236,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October  5, 2026</td>
-  <td>Confidence Intervals for a population proportion</td>
+  <td>More on sampling distributions, Introduction to confidence intervals</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>October  7, 2026</td>
-  <td>Confidence Intervals for a population mean</td>
+  <td>Confidence Intervals for a population proportion</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October  9, 2026</td>
-  <td>Bootstrap confidence intervals -- **Homework 2 due Sunday at 11:59PM**</td>
+  <td>Confidence Intervals for a population mean -- **Homework 2 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -256,7 +256,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October 12, 2026</td>
-  <td>Choosing a minimum sample size, assumptions of estimators</td>
+  <td>Bootstrap confidence intervals</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
@@ -276,17 +276,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October 19, 2026</td>
-  <td>Introduction to significance tests, P-values</td>
+  <td>Choosing a minimum sample size, assumptions of estimators</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>October 21, 2026</td>
-  <td>Tests for a population proportion</td>
+  <td>Introduction to significance tests, P-values</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October 23, 2026</td>
-  <td>Tests for a population mean</td>
+  <td>Tests for a population proportion</td>
 </tr>
 </tbody>
 <tbody>
@@ -296,17 +296,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October 26, 2026</td>
-  <td>Composite hypotheses, relationship between confidence intervals and hypothesis tests, the sign test</td>
+  <td>Tests for a population mean</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>October 28, 2026</td>
-  <td>Making decisions, types of errors in hypothesis tests, statistical power</td>
+  <td>Composite hypotheses, relationship between confidence intervals and hypothesis tests, the sign test</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October 30, 2026</td>
-  <td>Introduction to two-sample tests, independent vs dependent samples -- **Homework 3 due Sunday at 11:59PM**; **October 31 is the last day to withdraw (W) or withdraw to audit (WA)**</td>
+  <td>Making decisions, types of errors in hypothesis tests, statistical power -- **Homework 3 due Sunday at 11:59PM**; **October 31 is the last day to withdraw (W) or withdraw to audit (WA)**</td>
 </tr>
 </tbody>
 <tbody>
@@ -316,17 +316,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November  2, 2026</td>
-  <td>Tests for comparing two independent proportions or two independent means</td>
+  <td>Introduction to two-sample tests, independent vs dependent samples</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>November  4, 2026</td>
-  <td>Tests for dependent samples, causal inference</td>
+  <td>Tests for comparing two independent proportions or two independent means</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>November  6, 2026</td>
-  <td>Introduction to analyzing categorical variables</td>
+  <td>Tests for dependent samples, causal inference</td>
 </tr>
 </tbody>
 <tbody>
@@ -336,17 +336,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November  9, 2026</td>
-  <td>Goodness-of-fit tests and tests of independence</td>
+  <td>Introduction to analyzing categorical variables</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>November 11, 2026</td>
-  <td>Cramer's V, McNemar's Test, Fisher's exact test</td>
+  <td>Goodness-of-fit tests and tests of independence</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>November 13, 2026</td>
-  <td>Catch-up / review buffer -- **Homework 4 due Sunday at 11:59PM**</td>
+  <td>Cramer's V, McNemar's Test, Fisher's exact test -- **Homework 4 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>

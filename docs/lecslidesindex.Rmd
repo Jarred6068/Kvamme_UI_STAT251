@@ -7,6 +7,29 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<!--
+  STAGED RELEASE - only the Week 2 slides are live. Every other week is
+  wrapped in an HTML comment below and does not render.
+
+  To reveal a week, delete the two marker lines around it: the opening line
+  that reads "HIDDEN - Week N" and the closing marker on its own line just
+  after that week's last entry. Then re-render. To hide a week again, wrap it
+  back up the same way. Keep each week in its own block so they can be
+  released one at a time.
+
+  This hides the LINKS only. The .pdf and .pptx files themselves still sit in
+  docs/lecture_slides/ and are still served by GitHub Pages, so anyone with a
+  direct URL (or an earlier deploy, or the git history) can still reach them.
+  If a deck must be genuinely unavailable, remove the file, not just the link.
+
+  One trap: a comment ends at the FIRST closing marker, so never let two
+  hyphens followed by a right angle bracket appear inside a hidden block. It
+  would end the comment early and dump the rest of the page out as raw text.
+  The week sections below are plain links and headings, so none of them
+  contain that sequence today - check before pasting anything new in.
+-->
+
+<!-- HIDDEN - Week 1
 ## Week 1
 
 ### Lecture 1
@@ -23,6 +46,8 @@ as .pdf
 <a href="./lecture_slides/Week 1/Week1_Lecture2_Slides_1_12_2024.pptx">Download File</a>
 as powerpoint
 
+-->
+
 # Week 2
 
 ### Lecture 3
@@ -32,6 +57,14 @@ as .pdf
 <a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pptx">Download File</a>
 as powerpoint
 
+### Lecture 4
+<a href="./lecture_slides/Week 2/Week2_Lecture4_slides_1_19_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 2/Week2_Lecture4_slides_1_19_2024.pptx">Download File</a>
+as powerpoint
+
+<!-- HIDDEN - Weeks 3 through 14
 # Week 3
 
 ### Lecture 4
@@ -200,3 +233,4 @@ as powerpoint
 # Week 14
 ### Lecture 26
 
+-->
