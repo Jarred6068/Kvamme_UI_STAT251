@@ -64,6 +64,13 @@ as .pdf
 <a href="./lecture_slides/Week 2/Week2_Lecture4_slides_1_19_2024.pptx">Download File</a>
 as powerpoint
 
+### Lecture 5
+<a href="./lecture_slides/Week 2/Week2_Lecture5_slides_1_19_2024.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 2/Week2_Lecture5_slides_1_19_2024.pptx">Download File</a>
+as powerpoint
+
 <!-- HIDDEN - Weeks 3 through 14
 # Week 3
 

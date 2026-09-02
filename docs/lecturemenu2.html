@@ -2073,6 +2073,311 @@ observations belong to the 1999 volkswagen beetle and jetta which was
 extremely fuel efficient for its time</p></li>
 </ul>
 </div>
+<div id="describing-distributions-with-numbers" class="section level2">
+<h2>Describing distributions with numbers</h2>
+<p>Any description of the distribution of a variable is not complete
+without some numbers describing its <i>center</i> and <i>spread</i>.
+Previously, we learned how to describe shape by visually inspecting a
+graph of the data such as a histogram, stem plot, or dot plot. Now we
+will learn some statistics we can calculate that will tell us about
+spread and center. It’s important to note that we can calculate these
+descriptive statistics for any quantitative variables but NOT for
+qualitative variables. We will start by talking about statistics for
+quantifying the center of a distribution. Two measures of center are the
+<i>mean</i> and the <i>median</i></p>
+</div>
+<div id="measures-of-center" class="section level2">
+<h2>Measures of center</h2>
+<p>The arithmetic <strong>mean</strong> (denoted <span
+class="math inline">\(\bar{x}\)</span>) is the average value of a set of
+observations and tells us the center of mass or balancing point of a
+distribution <span class="math display">\[\bar{x} = \sum_{i = 1}^n
+\frac{x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}\]</span></p>
+<ul>
+<li>the symbol <span class="math inline">\(\Sigma\)</span> means to “add
+up a set of values”. Therefore, the mean is the sum of all observations
+in the sample (or population) and divide the sum by the number of
+observations</li>
+<li>the mean is usually not equal to any of the values observed in the
+sample</li>
+<li>The mean is highly influenced by outliers. Outliers pull the value
+of the mean in their direction.</li>
+</ul>
+<p>The other measure of center is the <strong>median</strong> or middle
+value. To calculate the median, we must first arrange the data in order
+from least to greatest. If the number of observations <span
+class="math inline">\(n\)</span> is odd then the median is exactly the
+middle value. If the number of observations <span
+class="math inline">\(n\)</span> is even, then the median is the
+“average” of the two values in the middle.</p>
+<ul>
+<li>The median is resistant to outliers because it does not depend on
+their value like the mean does.</li>
+</ul>
+<p>Example: consider the following 8 observations of a quantiative
+variable <span class="math inline">\(X\)</span>: <span
+class="math display">\[X = \{ 1, 3, 5, 5, 6, 7, 7, 8\}\]</span> Compute
+the mean and median of <span class="math inline">\(X\)</span></p>
+<p><span class="math display">\[\bar{x} = \frac{1+3+5+5+6+7+7+8}{8} =
+5.25\]</span></p>
+<p><span class="math display">\[\text{median} = \frac{5+6}{2} =
+5.5\]</span></p>
+<p>Now consider a the mean and median when we include the outlier
+observation <span class="math inline">\(X = 32\)</span> and note it’s
+effect each statistic:</p>
+<p><span class="math display">\[X = \{ 1, 3, 5, 5, 6, 7, 7, 8,
+32\}\]</span></p>
+<p>The mean becomes <span class="math display">\[\bar{x} =
+\frac{1+3+5+5+6+7+7+8+32}{9} = 8.22\]</span></p>
+<p>The median becomes <span class="math display">\[\text{median} =
+6\]</span></p>
+<p>Notice that in the first set of calculations the mean was less than
+the median. Now, because of the presence of the outlier, the mean has
+surpassed the value of the median because the “weight” that the outlier
+carries in terms of its value.</p>
+<ul>
+<li>This example illustrates how the mean and median behave depending
+the shape of a distribution. Distributions with skew will pull the value
+of the mean in the direction of the tail while the median will typically
+lie between the mode and the mean of the distribution</li>
+</ul>
+<p><img src="lecturemenu2_files/figure-html/unnamed-chunk-20-1.png" width="768" /></p>
+<div id="an-alternative-formula-for-the-mean" class="section level3">
+<h3>An alternative formula for the mean</h3>
+<p>We can also compute the mean using the frequency or relative
+frequency using the following formulas</p>
+<p>Using the frequency <span class="math display">\[\bar{x} = \sum_x
+\frac{x\times \text{freq}(x)}{n}\]</span></p>
+<p>Using the relative frequency <span class="math display">\[\bar{x} =
+\sum_x x \times rf(x) \]</span></p>
+<ul>
+<li>where <span class="math inline">\(\sum_x\)</span> means to sum over
+all values of x and <span class="math inline">\(freq(x)\)</span> and
+<span class="math inline">\(rf(x)\)</span> denote the frequency and
+relative frequency of <span class="math inline">\(x\)</span>
+respectively.</li>
+</ul>
+<p>Example: Sir Ronald Fisher’s famous iris data set gives the
+measurements in centimeters of the variables sepal length and width and
+petal length and width, respectively, for 50 flowers from each of 3
+species of iris. Consider the following frequency table of petal lengths
+rounded to the nearest whole centimeter</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Petal Length (cm)
+</th>
+<th style="text-align:right;">
+Frequency
+</th>
+<th style="text-align:right;">
+Relative Frequency
+</th>
+<th style="text-align:right;">
+Cumulative Relative Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.58
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+0.97
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can compute the mean petal length using either of our formulas
+from above:</p>
+<ul>
+<li>Using frequency</li>
+</ul>
+<p><span class="math display">\[\bar{x} =
+\frac{1(24)+2(26)+3(3)+4(34)+5(35)+6(24)+7(4)}{150}\approx 3.79
+\]</span></p>
+<ul>
+<li>Using the relative frequency</li>
+</ul>
+<p><span class="math display">\[\bar{x} =
+1(0.16)+2(0.17)+3(0.02)+4(0.23)+5(0.23)+6(0.16)+7(0.03)\approx
+3.79\]</span></p>
+</div>
+</div>
+<div id="measures-of-location-the-mode" class="section level2">
+<h2>Measures of location: the mode</h2>
+<p>We have several numerical quantities that we can compute from a
+distribution that tell us where certain values fall in the distribution.
+We call these measures of location because they tell us where things are
+in the distribution. One of the simplest measures of location that have
+heard before is the <strong>mode</strong>.</p>
+<ul>
+<li>The <strong>mode</strong> is the most frequent value or category of
+a variable. It corresponds to peaks on the distribution. The mode tells
+us what the most likely values in the distribution are. The following
+are some key things to consider about the mode
+<ul>
+<li>The mode may not be unique. For example, a bimodal distribution will
+have two different values for the mode</li>
+<li>The mode is NOT a measure of center. For symmetric distributions
+with a single peak it will be approximately the same as the median and
+mean but for distributions that are skewed or have multiple peaks the
+mode may not be anywhere near the center of the distribution.</li>
+</ul></li>
+</ul>
+</div>
+<div id="measures-of-position-percentiles-and-quartiles"
+class="section level2">
+<h2>Measures of position: percentiles and quartiles</h2>
+<p>Other useful measures of position are <strong>percentiles</strong>.
+The <strong><span class="math inline">\(p^{th}\)</span></strong>
+percentile of a distribution is the value that has <span
+class="math inline">\(p\)</span> percent of the observations fall at or
+below it. Take the following simple example of 13 observations of the
+outcome of rolling a fair six-sided die <span class="math display">\[X =
+\{1,2,2,2,2,2,3,4,4,5,5,6,6\}\]</span></p>
+<p>What is the <span class="math inline">\(50^{th}\)</span> percentile
+of <span class="math inline">\(X\)</span>? Given the definition above
+the <span class="math inline">\(50^{th}\)</span> percentile of <span
+class="math inline">\(X\)</span> is <span
+class="math inline">\(3\)</span> because half of the observations in the
+sample are at or below 3. Consequently, the <span
+class="math inline">\(50th\)</span> percentile is also the median. By
+definition the median divides the data in equal halves with <span
+class="math inline">\(50\%\)</span> of observations at or below the
+median and the remaining <span class="math inline">\(50\%\)</span> of
+observation having a value greater than or equal to the median.</p>
+<p>Two other commonly useful percentiles are the <span
+class="math inline">\(25^{th}\)</span>, and <span
+class="math inline">\(75^{th}\)</span> percentiles. Together with the
+median we call these percentiles the quartiles because they divide a
+distribution into quarters.</p>
+<ul>
+<li>We denote the first quartile (<span
+class="math inline">\(25^{th}\)</span> percentile) as <span
+class="math inline">\(Q1\)</span>. It is the median of the lower half of
+the data.</li>
+<li>We denote the <span class="math inline">\(50^{th}\)</span>
+percentile or median as <span class="math inline">\(Q2\)</span></li>
+<li>We denote the third quartile (<span
+class="math inline">\(75^{th}\)</span> percentile) as <span
+class="math inline">\(Q3\)</span>. It is the median of the upper half of
+the data</li>
+</ul>
+<p><img src="lecturemenu2_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
+<p>Example: Consider the following 15 exam scores of students in a
+statistics class:</p>
+<p><span
+class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
+<p>Find the Q1, Q2, and Q3 quartiles for these exam scores. * It’s
+easiest to start with Q2 and work from there. Q2 is the median of the
+data and, since <span class="math inline">\(n\)</span> is odd will just
+be the middle value. In this example <span class="math inline">\(Q2 =
+73\)</span>. Now that we have the middle value we can divide the data
+into its upper and lower half. The lower half of the data contains the
+values</p>
+<p><span class="math display">\[\{61,61,65,65,66,68,69\}\]</span></p>
+<p>To find the first quartile we simply find the median of this subset
+of the observations which is <span class="math inline">\(Q1 =
+65\)</span>. Lastly we repeat this process for the upper half of the
+data to find the value of the third quartile. The upper half of the exam
+scores is the subset</p>
+<p><span class="math display">\[\{ 74,75,76,78,79,90,94\}\]</span></p>
+<p>and the median is <span class="math inline">\(78\)</span>, therefore
+<span class="math inline">\(Q3 = 78\)</span>.</p>
+</div>
 </div>
 
 <!--

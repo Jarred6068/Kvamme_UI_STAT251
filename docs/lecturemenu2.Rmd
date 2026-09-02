@@ -11,6 +11,7 @@ library(kableExtra)
 library(ggplot2)
 library(ggthemes)
 library(ggpubr)
+library(latex2exp)
 ```
 
 # Describing and Visualizing Distributions
@@ -553,5 +554,205 @@ ggplot(data = temp, aes(x = hwy, fill = is.outlier))+
   * How would you describe the shape of this distribution?
   
   * From the histogram we can see there are two bars that fall far to the right of the rest of the distribution. The observations comprising these bars constitute potential outliers. In fact, these three observations belong to the 1999 volkswagen beetle and jetta which was extremely fuel efficient for its time
+
+
+## Describing distributions with numbers
+
+Any description of the distribution of a variable is not complete without some numbers describing its <i>center</i> and <i>spread</i>. Previously, we learned how to describe shape by visually inspecting a graph of the data such as a histogram, stem plot, or dot plot. Now we will learn some statistics we can calculate that will tell us about spread and center. It's important to note that we can calculate these descriptive statistics for any quantitative variables but NOT for qualitative variables. We will start by talking about statistics for quantifying the center of a distribution. Two measures of center are the <i>mean</i> and the <i>median</i>
+
+## Measures of center
+
+The arithmetic **mean** (denoted $\bar{x}$) is the average value of a set of observations and tells us the center of mass or balancing point of a distribution
+$$\bar{x} = \sum_{i = 1}^n \frac{x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}$$
+
+* the symbol $\Sigma$ means to "add up a set of values". Therefore, the mean is the sum of all observations in the sample (or population) and divide the sum by the number of observations
+* the mean is usually not equal to any of the values observed in the sample
+* The mean is highly influenced by outliers. Outliers pull the value of the mean in their direction. 
   
+The other measure of center is the **median** or middle value. To calculate the median, we must first arrange the data in order from least to greatest. If the number of observations $n$ is odd then the median is exactly the middle value. If the number of observations $n$ is even, then the median is the "average" of the two values in the middle.
+
+* The median is resistant to outliers because it does not depend on their value like the mean does.
+
+Example: consider the following 8 observations of a quantiative variable $X$:
+$$X = \{ 1, 3, 5, 5, 6, 7, 7, 8\}$$
+Compute the mean and median of $X$
+
+$$\bar{x} = \frac{1+3+5+5+6+7+7+8}{8} = 5.25$$
+
+$$\text{median} = \frac{5+6}{2} = 5.5$$
+
+Now consider a the mean and median when we include the outlier observation $X = 32$ and note it's effect each statistic:
+
+$$X = \{ 1, 3, 5, 5, 6, 7, 7, 8, 32\}$$
+
+The mean becomes
+$$\bar{x} = \frac{1+3+5+5+6+7+7+8+32}{9} = 8.22$$
+
+The median becomes
+$$\text{median} = 6$$
+
+Notice that in the first set of calculations the mean was less than the median. Now, because of the presence of the outlier, the mean has surpassed the value of the median because the "weight" that the outlier carries in terms of its value. 
+
+ * This example illustrates how the mean and median behave depending the shape of a distribution. Distributions with skew will pull the value of the mean in the direction of the tail while the median will typically lie between the mode and the mean of the distribution
+ 
+```{r, eval = T, echo = F, message=F, warning=F, fig.height=5, fig.width=8}
+#distribution shapes
+set.seed(123)
+x1 = rbeta(100000, 2, 10)
+sr = ggplot()+
+  geom_histogram(aes(x = x1), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x1)+0.1, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x1), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x1)+0.1, y = 0.1), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x1)-0.1, y = 0.15), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Right')
+
+x2 = rnorm(100000)
+sym = ggplot()+
+  geom_histogram(aes(x = x2), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x2)+0.05, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x2), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x2)+0.6, y = 0.1), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x2)-0.6, y = 0.15), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Symmetric')
+
+x3 = rbeta(100000, 10, 2)
+sl = ggplot()+
+  geom_histogram(aes(x = x3), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x3)-0.1, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x3), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x3)-0.1, y = 0.1), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x3)+0.1, y = 0.15), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Skew Left')
+
+x4 = c(rnorm(50000), rnorm(50000, 3))
+bm = ggplot()+
+  geom_histogram(aes(x = x4), fill = 'lightgrey', size = 1)+
+  geom_vline(xintercept = mean(x4)+0.05, color = 'red', linetype = 'dashed', size = 1)+
+  geom_vline(xintercept = median(x4), color = 'blue', linetype = 'solid', size = 1)+
+  geom_text(aes(x = mean(x4)+0.6, y = 0.05), label = 'mean', color = 'red')+
+  geom_text(aes(x = median(x4)-0.6, y = 0.1), label = 'median', color = 'blue')+
+  theme_base()+
+  theme(axis.text.x = element_text(size = 12), axis.text.y = element_blank(),
+        axis.title.x = element_text(size = 14), axis.title.y = element_blank(),
+        axis.ticks.y = element_blank())+
+  xlab('Bimodal')
+
+ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
+
+```
+
+### An alternative formula for the mean
+We can also compute the mean using the frequency or relative frequency using the following formulas
+
+Using the frequency
+$$\bar{x} = \sum_x \frac{x\times \text{freq}(x)}{n}$$
+
+Using the relative frequency
+$$\bar{x} = \sum_x x \times rf(x) $$
+ 
+ * where $\sum_x$ means to sum over all values of x and $freq(x)$ and $rf(x)$ denote the frequency and relative frequency of $x$ respectively. 
+ 
+ Example: Sir Ronald Fisher's famous iris data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. Consider the following frequency table of petal lengths rounded to the nearest whole centimeter
+ 
+```{r, echo=FALSE, message=F, warning=FALSE, fig.height=4, fig.width=5}
+set.seed(123)
+freq = summary(as.factor(round(iris$Petal.Length)))
+rf = freq/sum(freq)
+crf = cumsum(rf)
+
+ft = cbind.data.frame(unique(round(iris$Petal.Length)), freq, rf, crf)
+kable(ft, format = 'html', col.names = c('Petal Length (cm)','Frequency', 'Relative Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+We can compute the mean petal length using either of our formulas from above:
+
+* Using frequency
+
+$$\bar{x} = \frac{1(24)+2(26)+3(3)+4(34)+5(35)+6(24)+7(4)}{150}\approx 3.79 $$
+
+* Using the relative frequency
+
+$$\bar{x} = 1(0.16)+2(0.17)+3(0.02)+4(0.23)+5(0.23)+6(0.16)+7(0.03)\approx 3.79$$
+
+## Measures of location: the mode
+
+We have several numerical quantities that we can compute from a distribution that tell us where certain values fall in the distribution. We call these measures of location because they tell us where things are in the distribution. One of the simplest measures of location that have heard before is the **mode**. 
+
+* The **mode** is the most frequent value or category of a variable. It corresponds to peaks on the distribution. The mode tells us what the most likely values in the distribution are. The following are some key things to consider about the mode 
+  * The mode may not be unique. For example, a bimodal distribution will have two different values for the mode
+  * The mode is NOT a measure of center. For symmetric distributions with a single peak it will be approximately the same as the median and mean but for distributions that are skewed or have multiple peaks the mode may not be anywhere near the center of the distribution. 
+
+
+
+## Measures of position: percentiles and quartiles
+Other useful measures of position are **percentiles**. The **$p^{th}$** percentile of a distribution is the value that has $p$ percent of the observations fall at or below it. Take the following simple example of 13 observations of the outcome of rolling a fair six-sided die
+$$X = \{1,2,2,2,2,2,3,4,4,5,5,6,6\}$$
+
+What is the $50^{th}$ percentile of $X$? Given the definition above the $50^{th}$ percentile of $X$ is $3$ because half of the observations in the sample are at or below 3. Consequently, the $50th$ percentile is also the median. By definition the median divides the data in equal halves with $50\%$ of observations at or below the median and the remaining $50\%$ of observation having a value greater than or equal to the median.
+
+Two other commonly useful percentiles are the $25^{th}$, and $75^{th}$ percentiles. Together with the median we call these percentiles the quartiles because they divide a distribution into quarters.
+
+* We denote the first quartile ($25^{th}$ percentile) as $Q1$. It is the median of the lower half of the data.
+* We denote the $50^{th}$ percentile or median as $Q2$ 
+* We denote the third quartile ($75^{th}$ percentile) as $Q3$. It is the median of the upper half of the data 
+
+
+```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=8}
+#normal quantiles
+x = rnorm(1000000)
+probs <- c(0.25, 0.5, 0.75)
+quants <- quantile(x, prob=probs)
+dens = density(x)
+df = cbind.data.frame(x = dens$x, y = dens$y)
+df$quant <- factor(findInterval(df$x,quants))
+ggplot(aes(x = x, y = y), data = df)+
+  geom_line(color = 'black', size = 1)+
+  geom_ribbon(aes(ymin = 0, ymax = y, fill = quant), alpha = 0.5)+
+  scale_x_continuous(breaks = quants, labels = c(TeX('$Q1$'),
+                                                 TeX("$Q2$"), 
+                                                 TeX("$Q3$")),
+                     limits = c(-3,3))+
+  geom_vline(xintercept = quants[1], size = 1,
+             color = 'red', linetype = 'dashed')+
+  geom_vline(xintercept = quants[2], size = 1,
+             color = 'darkgreen', linetype = 'dashed')+
+  geom_vline(xintercept = quants[3], size =1,
+             color = 'blue', linetype = 'dashed')+
+  theme_minimal()+
+  theme(legend.position = 'none',
+        axis.text.x = element_text(size = 14, angle = 45),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank())
+```
+
+
+Example: Consider the following 15 exam scores of students in a statistics class:
+
+$$\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}$$
+
+Find the Q1, Q2, and Q3 quartiles for these exam scores. 
+* It's easiest to start with Q2 and work from there. Q2 is the median of the data and, since $n$ is odd will just be the middle value. In this example $Q2 = 73$. Now that we have the middle value we can divide the data into its upper and lower half. The lower half of the data contains the values
+
+$$\{61,61,65,65,66,68,69\}$$
+
+To find the first quartile we simply find the median of this subset of the observations which is $Q1 = 65$. Lastly we repeat this process for the upper half of the data to find the value of the third quartile. The upper half of the exam scores is the subset 
+
+$$\{ 74,75,76,78,79,90,94\}$$
+
+and the median is $78$, therefore $Q3 = 78$.
+
 
