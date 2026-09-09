@@ -71,23 +71,29 @@ as .pdf
 <a href="./lecture_slides/Week 2/Week2_Lecture5_slides_1_19_2024.pptx">Download File</a>
 as powerpoint
 
-<!-- HIDDEN - Weeks 3 through 14
 # Week 3
 
-### Lecture 4
-<a href="./lecture_slides/Week 3/Week3_Lecture4_Slides_1_22_2024.pdf">Download File</a>
+### Lecture 6
+<a href="./lecture_slides/Week 3/Week3_Lecture6_Slides_9_9_2026.pdf">Download File</a>
 as .pdf
 
-<a href="./lecture_slides/Week 3/Week3_Lecture4_Slides_1_22_2024.pptx">Download File</a>
+<a href="./lecture_slides/Week 3/Week3_Lecture6_Slides_9_9_2026.pptx">Download File</a>
 as powerpoint
 
-
-### Lecture 5
-<a href="./lecture_slides/Week 3/Week3_Lecture5_Slides_1_24_2024.pdf">Download File</a>
+### Lecture 7
+<a href="./lecture_slides/Week 3/Week3_Lecture7_Slides_9_11_2026.pdf">Download File</a>
 as .pdf
 
-<a href="./lecture_slides/Week 3/Week3_Lecture5_Slides_1_24_2024.pptx">Download File</a>
+<a href="./lecture_slides/Week 3/Week3_Lecture7_Slides_9_11_2026.pptx">Download File</a>
 as powerpoint
+
+<!--
+  HIDDEN - Weeks 4 through 14.
+
+  The old Week3_Lecture4/5_*_2024 links that used to sit here are gone. Those
+  decks are still in docs/lecture_slides/Week 3/ - build_lecture5.ps1 and the
+  Week 3 2026 build scripts read them as source material - but they are 2024
+  files that no longer match the lecture numbering, so nothing should link them.
 
 # Week 4
 

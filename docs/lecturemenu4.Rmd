@@ -14,226 +14,70 @@ library(ggpubr)
 library(latex2exp)
 ```
 
+<!--
+  SCOPE OF THIS PAGE.
 
-# Percentiles and the Cumulative Distribution
-Another form of the distribution of a variable is called the cumulative distribution. The **cumulative distribution** shows the relationship between the value of a variable and the cumulative relative frequency. For discrete variables, the cumulative distribution can be represented as a **step function**.
+  Two sections used to live here and have moved to the Week 3 notes, because
+  that is the week the course schedule delivers them in:
 
-* Consider the following 20 observations of the sugar and sodium content in different brands of cereal in the US
+    * "Percentiles and the Cumulative Distribution"  -> Week 3, Friday Sept 11
+    * "Variance and standard deviation", and the n-1 / degrees-of-freedom
+      discussion                                      -> Week 3, Wednesday Sept 9
 
-```{r, echo=F, message=F, warning=FALSE, fig.height=5, fig.width=6}
-cereal = read.csv('Data/cereal.csv')
+  Do not re-add them here. The Week 3 notes derive both at more length, and two
+  copies of the same derivation drift apart the first time one is corrected.
 
-#Data
-kable(cereal, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-```
+  What is deliberately KEPT below is the cereal sodium example. It asks how many
+  standard deviations one observation sits from the mean, which is the question
+  z-scores answer, so it belongs at the front of this week rather than at the
+  back of the last one.
 
+  Week 4 is Monday Sept 14 (normal distribution, z-scores, transformations),
+  Wednesday Sept 16 (Exam 1 review) and Friday Sept 18 (Exam 1). The remaining
+  sections are written as that material is delivered.
+-->
 
-* The following is a frequency table for cereal sugar content.
-```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=8}
+# The normal distribution and $z$-scores
 
-xx = sort(unique(cereal$Sugar))
-sum.vals = summary(as.factor(cereal$Sugar))
-y = cumsum(sum.vals/sum(sum.vals))
+Week 3 finished our tour of **descriptive statistics**: we can now describe the shape of a
+distribution, its center, its spread, and the position of any individual value within it.
+Everything on Exam 1 comes from that material.
 
-kable(cbind.data.frame(xx, sum.vals, y), format = 'html', col.names = c('X', 'Frequency', 'Cumulative Relative Frequency'), digits = 2, row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-```
+This week starts a different question. So far, "far from the center" has been measured in the
+units of whatever we happened to be measuring — points on an exam, grams of sugar, milligrams
+of sodium. That makes it impossible to compare across variables: is a student 12 points above
+the class mean further from typical than a cereal 90 mg above the sodium mean? The two numbers
+are not on the same scale, so the comparison is meaningless as stated.
 
+The way out is to stop measuring distance in the original units and start measuring it in
+**standard deviations**. That single idea gives us $z$-scores, and it is what makes the normal
+distribution as useful as it is.
 
-* Using the cumulative relative frequency from the table above we can construct the cumulative distribution by plotting the cumulative relative frequency on the $y$-axis and the corresponding values of cereal sugar content on the $x$-axis
+## Measuring a deviation in standard deviations
 
-```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=8}
-ggplot()+geom_step(aes(x = xx, y = y), size = 1)+
-  geom_point(aes(x = xx, y = y), size = 3)+
-  theme_bw()+
-  scale_x_continuous(limits = c(0, 18), breaks = seq(0, 18, 2))+
-  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.1))+
-  xlab('X')+
-  ylab('Cumulative Relative Frequency')
-
-```
-
-
-* The cumulative distribution is especially useful for quickly finding percentiles of a distribution. Use the plot above to confirm that the $10^{th}$, $25^{th}$, $30^{th}$, $50^{th}$, $75^{th}$, and $90^{th}$ are $2, 4, 4.5, 9.5, 13$, and $15.5$, respectively.
-
-
-```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=8}
-p = c(0.1, 0.25, 0.3, 0.5, 0.75, 0.9)
-quants = quantile(cereal$Sugar, p, type = 2)
-
-ggplot()+
-  geom_step(aes(x = xx, y = y), size = 1)+
-  geom_point(aes(x = xx, y = y), size = 3)+
-  geom_segment(aes(x = quants[1], y = 0, xend = quants[1], yend = p[1]), 
-                     linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = quants[2], y = 0, xend = quants[2], yend = p[2]), 
-                     linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = quants[3], y = 0, xend = quants[3], yend = p[3]), 
-                     linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = quants[4], y = 0, xend = quants[4], yend = p[4]), 
-                     linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = quants[5], y = 0, xend = quants[5], yend = p[5]), 
-                     linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = quants[6], y = 0, xend = quants[6], yend = p[6]), 
-                     linetype = 'dotted', size = 1)+
-  
-  geom_segment(aes(x = 0, y = p[1], xend = quants[1], yend = p[1]), 
-                 linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = 0, y = p[2], xend = quants[2], yend = p[2]), 
-                 linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = 0, y = p[3], xend = quants[3], yend = p[3]), 
-                 linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = 0, y = p[4], xend = quants[4], yend = p[4]), 
-                 linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = 0, y = p[5], xend = quants[5], yend = p[5]), 
-                 linetype = 'dotted', size = 1)+
-  geom_segment(aes(x = 0, y = p[6], xend = quants[6], yend = p[6]), 
-                 linetype = 'dotted', size = 1)+
-  scale_x_continuous(limits = c(0, 18), breaks = seq(0, 18, 2))+
-  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.1))+
-  theme_bw()+
-  xlab('X')+
-  ylab('Cumulative Relative Frequency')
-
-
-# 
-# p = c(0.1, 0.25, 0.3, 0.5, 0.75, 0.9)
-# quants = quantile(cereal$Sugar, p, type = 2)
-# 
-# ggplot()+
-#   geom_step(aes(x = xx, y = y), size = 1)+
-#   geom_point(aes(x = xx, y = y), size = 3)+
-#   geom_segment(aes(x = quants[2], y = 0, xend = quants[2], yend = p[2]), 
-#                      linetype = 'dotted', size = 1, color = 'blue')+
-#   geom_segment(aes(x = quants[4], y = 0, xend = quants[4], yend = p[4]), 
-#                      linetype = 'dotted', size = 1, color = 'green')+
-#   geom_segment(aes(x = quants[5], y = 0, xend = quants[5], yend = p[5]), 
-#                      linetype = 'dotted', size = 1, color = 'red')+
-#   
-# 
-#   geom_segment(aes(x = 0, y = p[2], xend = quants[2], yend = p[2]), 
-#                  linetype = 'dotted', size = 1, color = 'blue')+
-#   geom_segment(aes(x = 0, y = p[4], xend = quants[4], yend = p[4]), 
-#                  linetype = 'dotted', size = 1, color = 'green')+
-#   geom_segment(aes(x = 0, y = p[5], xend = quants[5], yend = p[5]), 
-#                  linetype = 'dotted', size = 1, color = 'red')+
-#   scale_x_continuous(limits = c(0, 18), breaks = seq(0, 18, 2))+
-#   scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.1))+
-#   theme_bw()+
-#   xlab('X')+
-#   ylab('Cumulative Relative Frequency')
-
-```
-
-
-* When using a plot of the cumulative distribution to find the quartiles or percentiles of a distribution use the following rule:
-  * if the number of observations is odd, then the $p^{th}$ percentile will be exactly the value of the point for which $p$-percent of the observations fall below. 
-  * if the number of observations is even, then the $p^{th}$ percentile will be the mid point of the horizontal bar
-  * Consider the example above for US cereals which had 20 observations. Because there are an even number of observations, we calculate the value of the $90^{th}$ percentile as 15.5 and not 15 because 15.5 is the midpoint of the horizontal bar for that percentile. 
-
-### Variance and standard deviation
-
-The five number summary is not the only numerical summary of a distribution. More commonly, a statistical description of a variable will include the mean as a measure of center and the **standard deviation** as a measure of spread. The **standard deviation** measures how far observations are from the center of a distribution. We denote the sample standard deviation as $s$ and the population standard deviation as $\sigma$. 
-
-The distance between a given observation and the center (i.e the mean) is called the **deviation**. A deviation can be represented mathematically as $x_i - \bar{x}$ where $x_i$ denotes an observation from the sample or population. Every observation in a sample or population has a deviation from the mean. 
-
-Example: Consider the height (in inches) of a sample of five college students from the University of Idaho and their deviations
-
-$$ X = \{61,62,62,68,75\} $$
-
-```{r, echo = F, message=F, warning=F, fig.height=4, fig.width=6}
-x = c(61,62,62,68,75)
-y = x - mean(x)
-label_points = x - y/2
-ggplot()+geom_point(aes(x = x, y = y), shape = 21, fill = 'lightgrey', size = 5)+
-  geom_segment(aes(x = x, y = y,
-                   xend = mean(x), yend = y), size = 1.2, linetype = 'dotted')+
-  geom_vline(xintercept = mean(x), linetype = 'solid', color = 'red', size = 2)+
-  geom_text(aes(x = label_points, y = c(y[1:4]+0.4, y[5] - 0.5)), label = as.character(round(y,1)))+
-  geom_text(aes(x = 73, y = 3), label = paste('mean(x) = ', mean(x)), color = 'red')+
-  scale_y_continuous(limits = c(min(y), max(y)))+
-  scale_x_continuous(limits = c(55, 80), breaks = seq(55, 80, 5))+
-  xlab('Height in inches')+
-  ylab('Deviation in inches')+
-  theme_classic()+
-  theme(axis.title.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.line.x = element_blank(),
-        axis.text.x = element_blank())+
-  coord_flip()
-
-```
-
-Before we can discuss how to compute the **standard deviation** of a variable we must first discuss its **variance**. The **variance** of a distribution is the sum of squared deviations of the observations in a sample from their mean. We represent the variance of a sample with the symbol $s^2$ and the variance of a population with $\sigma^2$. The sample variance is defined mathematically as:
-
-$$s^2 = \frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar{x})^2 = \frac{(x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \cdots + (x_n - \bar{x})^2}{n-1}$$
-
-From the variance, the standard deviation becomes very easy to compute as is it simply the square root of the variance:
-
-$$ s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar{x})^2}$$
-
-The idea behind variance and standard deviation as measures of spread is straight forward. The deviations $x_i - \bar{x}$ tell us how dispersed the observations are about their center. Some of the deviations will be positive values and some will be negative because some values fall above and below the value of the mean, respectively. In fact, <i>the sum of all deviations will be zero</i>
-
-$$\sum_{i = 1}^n (x_i - \bar{x}) = 0$$
-
-squaring the deviations ensures that all of the distances are positive. As a result large deviations will have large positive values. The variance is the average squared deviation, so the standard deviation is a measure of the average deviation/distance that an observation falls from the center of a distribution. Both $s^2$ and $s$ will be large if the observations are very spread out and will be small if the observations are densely clustered around the mean. 
-
-Example: Compute the variance and standard deviation in height (in inches) for a sample of five college students from the University of Idaho
-
-$$ X = \{61,62,62,68,75\} $$
-
-The mean of this sample is $\bar{x} = 65.6$
-
-$$s^2 = \frac{(61-65.6)^2+(62-65.6)^2+(62-65.6)^2+(68 - 65.6)^2+(75-65.6)^2}{5-1} = 35.3$$
-
-and now we can take the square root to find the standard deviation
-
-$$s = \sqrt{35.3} \approx 5.9$$
-
-* One important thing to keep in mind is that the variance and standard deviation are both computed from ALL of the observations in a sample/population. As a result, they are influenced by the presence of outliers. Therefore, a large positive or negative outlier will increase the value of the variance or standard deviation. Consider what happens to the variance and standard deviation of the height example above when a new observation is added with value $x = 92$
-
-$$ X = \{ 61,62,62,68,75,92\} $$
-
-Now the mean is $\bar{x} = 70$. The variance and standard deviation become
-
-$$s^2 = \frac{(61-70)^2+(62-70)^2+(62-70)^2+(68-70)^2+(75-70)^2+(92-70)^2}{6-1} = 144.4$$
-
-and now we can take the square root to find the standard deviation
-
-$$s = \sqrt{144.4} \approx 12.01$$
-
-As we can see, the presence of this large, positive outlier has doubled the value of the standard deviation
-
-
-
-* Consider the the cereal example from above. The following is a dot plot overlayed on the histogram of the variable sodium content (mg) of the cereals 
+Recall the twenty US breakfast cereals from the Week 3 notes. Below is a dot plot of their
+sodium content overlaid on a histogram of the same variable.
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=5, fig.width=6}
+cereal <- read.csv('Data/cereal.csv')
 
-# kable(cereal[1:10,], format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
-#   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
 ggplot(data = cereal, aes(x = Sodium))+
   geom_histogram(color = 'black', fill = 'lightgrey',bins = 5)+
   geom_dotplot(binwidth = 20, dotsize = 0.8, fill = 'black')+
   theme_hc()
 ```
 
-
 * What is the largest positive deviation in this dataset? How does this deviation compare to the standard deviation of the entire dataset?
 
 * The largest deviation belongs to the cereal Raisin Bran which has a sodium content of 340 mg. Its deviation is $340 - 167 = 173$. The standard deviation for the whole dataset is about 77mg, so this deviation is about $173/77 \approx 2.25$ standard deviations above the mean. This indicates that Raisin Bran has a much higher sodium content than majority of the cereal brands in this dataset.
 
-<br>
-<br>
-You might have asked yourself "why is the variance divided by $n-1$ and not $n$?" 
+That last sentence is doing something new, and it is worth naming. We did not say Raisin Bran
+was 173 mg above the mean and leave it there — we divided that deviation by the standard
+deviation and reported the answer as "about 2.25 standard deviations above the mean". Dividing
+a deviation by $s$ strips the units off it, and what is left is a number that means the same
+thing no matter what was being measured. It is the quantity we will call a **$z$-score**:
 
-* Recall that the sum of deviations is aways zero. Thus the last deviation can always be found once we know the other $n-1$ deviations. Take for example a set of two observations $X = \{-5, 5\}$. The mean is $0$ and the deviations are also $-5$ and $5$. If we only knew one of the deviations, say -5, then we know that the other deviation <i>must be 5</i> for their sum to be zero. This means that for any sum of deviations we are not averaging $n$ unrelated things but $n-1$. The last deviation is always related to the sum of the previous deviations. Thus only $n-1$ observations are allowed to <i>vary freely</i>. 
+$$z = \frac{x - \bar{x}}{s}$$
 
-* We call $n-1$ the **degrees of freedom** of the variance or standard deviation. This word comes up often in statistics. Another way to think about this quantity is that it represents the number of pieces of independent information that we have. When we estimate quantities from the sample, we use up degrees of freedom. When we compute the variance or standard deviation we must first <i>use up</i> a degree of freedom to estimate the mean. This leaves only $n-1$ degrees of freedom for the remaining estimate of the standard deviation or variance.   
-
-
-
-
-
-
+A cereal at $z = 2.25$ and a student at $z = 2.25$ are equally unusual within their own
+distributions, even though one is measured in milligrams and the other in exam points.

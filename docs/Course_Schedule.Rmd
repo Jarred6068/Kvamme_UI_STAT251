@@ -166,7 +166,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>September 11, 2026</td>
-  <td>Measures of spread, cumulative distributions -- **Homework 1 due Sunday at 11:59PM**</td>
+  <td>Cumulative distributions; last day of material for Exam 1 -- **Homework 1 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>

@@ -532,9 +532,20 @@ class="math inline">\(Q1\)</span> and <span
 class="math inline">\(Q3\)</span></p></li>
 <li><p>The IQR is very resistant to outliers since it ignores the
 extreme ends of a distribution</p></li>
-<li><p>What is the IQR for the previous example of statistics students
-exam scores?</p></li>
 </ul>
+<p>Take the 15 statistics exam scores from the Week 2 notes,</p>
+<p><span
+class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
+<p>for which we found <span class="math inline">\(Q1 = 65\)</span>,
+<span class="math inline">\(Q2 = 73\)</span> and <span
+class="math inline">\(Q3 = 78\)</span>. Their interquartile range is</p>
+<p><span class="math display">\[IQR = Q3 - Q1 = 78 - 65 =
+13\]</span></p>
+<p>so the middle half of the class scored within 13 points of one
+another. Compare that with the range, <span class="math inline">\(94 -
+61 = 33\)</span>: the range is more than twice as large, because it is
+measuring the distance out to the two most extreme students rather than
+the bulk of the class.</p>
 </div>
 <div id="deviations-variance-and-the-standard-deviation"
 class="section level2">
@@ -744,6 +755,141 @@ distribution is skewed or has outliers, the IQR is the more honest
 description of spread.</li>
 </ul>
 </div>
+<div id="which-measures-should-you-report" class="section level3">
+<h3>Which measures should you report?</h3>
+<p>A measure is <strong>resistant</strong> when a single extreme
+observation barely moves it. Whether a summary is resistant comes down
+to one thing: does it use every observation, or only positions in the
+ordered data?</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Measure
+</th>
+<th style="text-align:left;">
+Describes
+</th>
+<th style="text-align:left;">
+Computed from
+</th>
+<th style="text-align:left;">
+Resistant to outliers?
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mean <span class="math inline">\(\bar{x}\)</span>
+</td>
+<td style="text-align:left;">
+center
+</td>
+<td style="text-align:left;">
+every observation
+</td>
+<td style="text-align:left;">
+No
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Median
+</td>
+<td style="text-align:left;">
+center
+</td>
+<td style="text-align:left;">
+the middle position
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mode
+</td>
+<td style="text-align:left;">
+center
+</td>
+<td style="text-align:left;">
+the most frequent value
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Range
+</td>
+<td style="text-align:left;">
+spread
+</td>
+<td style="text-align:left;">
+the two most extreme values
+</td>
+<td style="text-align:left;">
+No – the worst of all
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IQR
+</td>
+<td style="text-align:left;">
+spread
+</td>
+<td style="text-align:left;">
+the two quartiles
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Variance <span class="math inline">\(s^2\)</span>
+</td>
+<td style="text-align:left;">
+spread
+</td>
+<td style="text-align:left;">
+every observation
+</td>
+<td style="text-align:left;">
+No
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Standard deviation <span class="math inline">\(s\)</span>
+</td>
+<td style="text-align:left;">
+spread
+</td>
+<td style="text-align:left;">
+every observation
+</td>
+<td style="text-align:left;">
+No
+</td>
+</tr>
+</tbody>
+</table>
+<p>The practical consequence is that the measures come in
+<strong>matched pairs</strong>, and you should not mix them:</p>
+<ul>
+<li>If the distribution is roughly symmetric with no outliers, report
+the <strong>mean and the standard deviation</strong>.</li>
+<li>If it is skewed, or has outliers, report the <strong>median and the
+IQR</strong>.</li>
+</ul>
+<p>A mean quoted next to an IQR answers two different questions and
+neither of them well.</p>
+</div>
 </div>
 <div id="a-five-number-summary" class="section level2">
 <h2>A five number summary</h2>
@@ -775,50 +921,571 @@ create display.</p>
 connecting them.</li>
 <li>Draw a line inside of the box showing the position of the
 median</li>
-<li>From each end of the box, draw a line extending outward <span
-class="math inline">\(1.5 \times IQR\)</span>.
+<li>Work out how far <span class="math inline">\(1.5 \times IQR\)</span>
+reaches beyond each end of the box. These two positions, <span
+class="math inline">\(Q1 - 1.5 \times IQR\)</span> and <span
+class="math inline">\(Q3 + 1.5 \times IQR\)</span>, are the
+<strong>fences</strong>. They are not drawn.
 <ul>
-<li>The lower whisker is drawn to either the minimum value or <span
-class="math inline">\(Q1 - 1.5 \times IQR\)</span> depending on which is
-greater.</li>
-<li>The upper whisker extends to either the maximum value or <span
-class="math inline">\(Q3 + 1.5 \times IQR\)</span> depending on which is
-smaller</li>
+<li>The lower whisker is drawn out to the <strong>smallest observation
+that is still at or above</strong> the lower fence.</li>
+<li>The upper whisker is drawn out to the <strong>largest observation
+that is still at or below</strong> the upper fence.</li>
+<li>A whisker therefore ends on an actual data value, never on the fence
+itself. When no observation falls outside a fence, the whisker simply
+reaches the minimum or the maximum.</li>
 </ul></li>
-<li>Any observations extending beyond <span class="math inline">\(1.5
-\times IQR\)</span> below Q1 or above Q3 are marked and considered
-outliers.</li>
+<li>Any observation beyond a fence is marked as an outlier and drawn as
+its own point.</li>
 </ul></li>
 </ul>
+<div id="identifying-outliers-the-1.5-times-iqr-rule"
+class="section level3">
+<h3>Identifying outliers: the <span class="math inline">\(1.5 \times
+IQR\)</span> rule</h3>
+<p>Up to now “outlier” has meant “a value that looks extreme”, which is
+a judgement call. The boxplot replaces it with an arithmetic rule.
+Define the two <strong>fences</strong></p>
+<p><span class="math display">\[\text{lower fence} = Q1 - 1.5 \times IQR
+\qquad \text{upper fence} = Q3 + 1.5 \times IQR\]</span></p>
+<p>and then:</p>
+<ul>
+<li>any observation <strong>outside</strong> a fence is flagged as an
+outlier and drawn as its own point;</li>
+<li>each whisker stops at the <strong>most extreme observation still
+inside</strong> the fences — which is why a whisker does not always
+reach the minimum or the maximum;</li>
+<li>the fences themselves are never drawn on the plot.</li>
+</ul>
+<p>Being flagged does not make an observation wrong. It marks it as
+worth a second look — it may be a genuinely unusual case, or a recording
+error.</p>
+<p>Applied to the 15 exam scores, where <span class="math inline">\(Q1 =
+65\)</span>, <span class="math inline">\(Q3 = 78\)</span> and <span
+class="math inline">\(IQR = 13\)</span>:</p>
+<p><span class="math display">\[65 - 1.5(13) = 45.5 \qquad 78 + 1.5(13)
+= 97.5\]</span></p>
+<p>Every score lies between 45.5 and 97.5, so nothing is flagged and the
+whiskers run all the way out to 61 and 94. The second example below is
+the interesting case, where they do not.</p>
 <p>Example: consider the boxplot constructed for our example of student
 exam scores</p>
 <p><span
 class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-4-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
 <p>Example2: consider the boxplot constructed for variable <span
 class="math inline">\(X\)</span></p>
 <p><span class="math display">\[X = \{-5.7, -2.6, -1.5, -1.3, -0.4, 0.2,
 1.5, 2.2, 2.3, 2.6, 2.9, 10.4 \}\]</span></p>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
+<p>Here the rule bites. With <span class="math inline">\(Q1 =
+-1.4\)</span>, <span class="math inline">\(Q3 = 2.45\)</span> and <span
+class="math inline">\(IQR = 3.85\)</span>, the fences are</p>
+<p><span class="math display">\[-1.4 - 1.5(3.85) = -7.175 \qquad 2.45 +
+1.5(3.85) = 8.225\]</span></p>
+<p>The value <span class="math inline">\(10.4\)</span> sits above the
+upper fence, so it is plotted as its own point and the upper whisker
+stops at <span class="math inline">\(2.9\)</span>, the largest
+observation that is not an outlier. Notice also how differently the two
+measures of spread describe this variable: the range is <span
+class="math inline">\(10.4 - (-5.7) = 16.1\)</span>, inflated by the one
+extreme value, while the <span class="math inline">\(IQR = 3.85\)</span>
+is untouched by it.</p>
 <ul>
 <li>boxplots are great for comparing distributions and identifying skew.
 Consider our example for comparing the youtube views of two content
 creators.</li>
 </ul>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-7-1.png" width="576" /></p>
 <ul>
 <li>Using the boxplots makes the disparity in spread between the two
 Content Creators much more apparent. Boxplots are also great for
 identifying skew in a distribution. Consider the plot below which shows
 how you can interpret skew in relation to a boxplot.</li>
 </ul>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-7-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-8-1.png" width="576" /></p>
 <ul>
 <li>Notice from the plot above that the boxplot will not show if the
 distribution has multiple peaks or gaps. For this reason, a boxplot
 should always be plotted along with a histogram to ensure you capture
 all important features of a distribution.</li>
 </ul>
+</div>
+</div>
+</div>
+<div id="cumulative-distributions" class="section level1">
+<h1>Cumulative distributions</h1>
+<p>There is one more way to draw a distribution, and it is the one built
+for answering questions about <strong>position</strong>. The
+<strong>cumulative distribution</strong> shows the relationship between
+the value of a variable and the cumulative relative frequency. For
+discrete variables it is drawn as a <strong>step function</strong>: flat
+between observed values, jumping at each one by that value’s relative
+frequency. It only ever climbs, it starts at 0 and it finishes at 1.</p>
+<p>Consider the sugar content, in grams per serving, of 20 US breakfast
+cereals.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Cereal
+</th>
+<th style="text-align:right;">
+Sugar (g)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Fiber One
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cheerios
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Corn Flakes
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rice Krispies
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Special K
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wheaties
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+All Bran
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Life
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Honey Bunches of Oats
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Honey Nut Cheerios
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cinnamon Toast Crunch
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frosted Mini Wheats
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Honeycomb
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Captain Crunch
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frosted Flakes
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Apple Jacks
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Froot Loops
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Honey Smacks
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Crackling Oat Bran
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Raisin Bran
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+</tbody>
+</table>
+<p>The frequency table carries a cumulative relative frequency column,
+which is all the cumulative distribution needs.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+<span class="math inline">\(x\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(F(x)\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(RF(x)\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(CRF(x)\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.55
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+<td style="text-align:right;">
+0.85
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.90
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+</tr>
+</tbody>
+</table>
+<p>Plotting the cumulative relative frequency on the <span
+class="math inline">\(y\)</span>-axis against the values of the variable
+on the <span class="math inline">\(x\)</span>-axis gives the cumulative
+distribution.</p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
+<div id="reading-percentiles-off-the-cumulative-distribution"
+class="section level2">
+<h2>Reading percentiles off the cumulative distribution</h2>
+<p>This plot is a percentile machine. To find the <span
+class="math inline">\(p^{th}\)</span> percentile: go up the <span
+class="math inline">\(y\)</span>-axis to <span
+class="math inline">\(p/100\)</span>, read across to the curve, and drop
+down to the <span class="math inline">\(x\)</span>-axis. To go the other
+way — to ask what percentile a particular value sits at — start on the
+<span class="math inline">\(x\)</span>-axis instead, go up to the curve,
+and read across to the <span class="math inline">\(y\)</span>-axis.</p>
+<p>One detail decides the answer whenever the reading lands on one of
+the flat runs:</p>
+<ul>
+<li>if reading across at <span class="math inline">\(p/100\)</span>
+<strong>crosses a jump</strong>, the <span
+class="math inline">\(p^{th}\)</span> percentile is the value at that
+jump;</li>
+<li>if the horizontal bar sits <strong>exactly</strong> at height <span
+class="math inline">\(p/100\)</span>, the <span
+class="math inline">\(p^{th}\)</span> percentile is the <strong>midpoint
+of that bar</strong> — the average of the value it starts at and the
+next value up.</li>
+</ul>
+<p>The second case only arises when <span
+class="math inline">\(n\)</span> is even, which is why <span
+class="math inline">\(n = 20\)</span> is worth noticing here. Reading
+across at <span class="math inline">\(0.90\)</span> lands on the bar
+that runs from 15 to 16, so the <span
+class="math inline">\(90^{th}\)</span> percentile is <span
+class="math inline">\((15+16)/2 = 15.5\)</span> and not 15.</p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
+<p>Use the plot to confirm that the <span
+class="math inline">\(10^{th}\)</span>, <span
+class="math inline">\(25^{th}\)</span>, <span
+class="math inline">\(30^{th}\)</span>, <span
+class="math inline">\(50^{th}\)</span>, <span
+class="math inline">\(75^{th}\)</span> and <span
+class="math inline">\(90^{th}\)</span> percentiles are <span
+class="math inline">\(2, 4, 4.5, 9.5, 13, 15.5\)</span>
+respectively.</p>
+<p>The quartiles are just three of these percentiles, so the whole five
+number summary can be read off the same picture: the minimum is where
+the curve leaves 0 and the maximum is where it reaches 1.</p>
+<p><span class="math display">\[Q1 = 4 \qquad Q2 = 9.5 \qquad Q3 = 13
+\qquad IQR = 13 - 4 = 9\]</span></p>
+<p>These are the same three numbers you get by halving the ordered data,
+which is the point: the cumulative distribution is not a new definition
+of a quartile, only a faster way to read one off — and unlike the
+halving method it gives you <em>any</em> percentile, not just the
+quartiles.</p>
 </div>
 </div>
 

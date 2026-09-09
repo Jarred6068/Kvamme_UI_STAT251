@@ -58,7 +58,17 @@ A better measure of spread that can be computed from the first and third quartil
 
 * The IQR is very resistant to outliers since it ignores the extreme ends of a distribution
 
-* What is the IQR for the previous example of statistics students exam scores?
+Take the 15 statistics exam scores from the Week 2 notes,
+
+$$\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}$$
+
+for which we found $Q1 = 65$, $Q2 = 73$ and $Q3 = 78$. Their interquartile range is
+
+$$IQR = Q3 - Q1 = 78 - 65 = 13$$
+
+so the middle half of the class scored within 13 points of one another. Compare that with
+the range, $94 - 61 = 33$: the range is more than twice as large, because it is measuring
+the distance out to the two most extreme students rather than the bulk of the class.
 
 ## Deviations, variance and the standard deviation
 
@@ -132,6 +142,36 @@ variance $\sigma^2$. Dividing by $n$ would systematically underestimate it.
   influenced by outliers**. When a distribution is skewed or has outliers, the IQR is
   the more honest description of spread.
 
+### Which measures should you report?
+
+A measure is **resistant** when a single extreme observation barely moves it. Whether a
+summary is resistant comes down to one thing: does it use every observation, or only
+positions in the ordered data?
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+res <- data.frame(
+  Measure = c('Mean $\\bar{x}$', 'Median', 'Mode',
+              'Range', 'IQR', 'Variance $s^2$', 'Standard deviation $s$'),
+  Describes = c('center', 'center', 'center', 'spread', 'spread', 'spread', 'spread'),
+  Uses = c('every observation', 'the middle position', 'the most frequent value',
+           'the two most extreme values', 'the two quartiles',
+           'every observation', 'every observation'),
+  Resistant = c('No', 'Yes', 'Yes', 'No -- the worst of all', 'Yes', 'No', 'No'))
+kable(res, format = 'html', row.names = FALSE, booktabs = TRUE, escape = FALSE,
+      col.names = c('Measure', 'Describes', 'Computed from', 'Resistant to outliers?')) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = 'striped')
+```
+
+The practical consequence is that the measures come in **matched pairs**, and you should
+not mix them:
+
+* If the distribution is roughly symmetric with no outliers, report the **mean and the
+  standard deviation**.
+* If it is skewed, or has outliers, report the **median and the IQR**.
+
+A mean quoted next to an IQR answers two different questions and neither of them well.
+
 ## A five number summary
 
 Combining several numerical descriptors together is the best way to get a good feel for the characteristics of a distribution. A common method for summarizing a set of data is to use the **five number summary** which combines the minimum, maximum, and quartiles together. 
@@ -149,12 +189,41 @@ Often these five numbers are displayed graphically in a plot called a **box and 
 * Steps for constructing a boxplot:
   * Mark the position of the first and third quartile and draw a box connecting them.
   * Draw a line inside of the box showing the position of the median
-  * From each end of the box, draw a line extending outward $1.5 \times IQR$. 
-    * The lower whisker is drawn to either the minimum value or $Q1 - 1.5 \times IQR$ depending on which is greater.
-    * The upper whisker extends to either the maximum value or $Q3 + 1.5 \times IQR$ depending on which is smaller
-  
-  * Any observations extending beyond $1.5 \times IQR$ below Q1 or above Q3 are marked and considered outliers.
-  
+  * Work out how far $1.5 \times IQR$ reaches beyond each end of the box. These two positions,
+    $Q1 - 1.5 \times IQR$ and $Q3 + 1.5 \times IQR$, are the **fences**. They are not drawn.
+    * The lower whisker is drawn out to the **smallest observation that is still at or above**
+      the lower fence.
+    * The upper whisker is drawn out to the **largest observation that is still at or below**
+      the upper fence.
+    * A whisker therefore ends on an actual data value, never on the fence itself. When no
+      observation falls outside a fence, the whisker simply reaches the minimum or the maximum.
+
+  * Any observation beyond a fence is marked as an outlier and drawn as its own point.
+
+### Identifying outliers: the $1.5 \times IQR$ rule
+
+Up to now "outlier" has meant "a value that looks extreme", which is a judgement call. The
+boxplot replaces it with an arithmetic rule. Define the two **fences**
+
+$$\text{lower fence} = Q1 - 1.5 \times IQR \qquad \text{upper fence} = Q3 + 1.5 \times IQR$$
+
+and then:
+
+* any observation **outside** a fence is flagged as an outlier and drawn as its own point;
+* each whisker stops at the **most extreme observation still inside** the fences — which is
+  why a whisker does not always reach the minimum or the maximum;
+* the fences themselves are never drawn on the plot.
+
+Being flagged does not make an observation wrong. It marks it as worth a second look — it
+may be a genuinely unusual case, or a recording error.
+
+Applied to the 15 exam scores, where $Q1 = 65$, $Q3 = 78$ and $IQR = 13$:
+
+$$65 - 1.5(13) = 45.5 \qquad 78 + 1.5(13) = 97.5$$
+
+Every score lies between 45.5 and 97.5, so nothing is flagged and the whiskers run all the
+way out to 61 and 94. The second example below is the interesting case, where they do not.
+
 Example: consider the boxplot constructed for our example of student exam scores
 
 $$\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}$$
@@ -187,16 +256,35 @@ Q1 = median(rv[1:6])
 med = median(rv)
 Q3 = median(rv[7:12])
 IQR = Q3-Q1
+lo_fence = Q1 - 1.5*IQR
+hi_fence = Q3 + 1.5*IQR
 minv = min(rv)
-maxv = max(rv)
-estims = c(minv, Q1, med, Q3, maxv)
-
+# The upper whisker stops at the largest value INSIDE the fence, not at the
+# maximum. Labelling the whisker end "Max = 10.4" (as an earlier version did)
+# points at 10.4 while the plot draws 10.4 as an outlier somewhere else
+# entirely, which is exactly the confusion this example exists to clear up.
+hi_whisker = max(rv[rv <= hi_fence])
+outliers = rv[rv < lo_fence | rv > hi_fence]
+estims = c(minv, Q1, med, Q3, hi_whisker)
 
 boxplot(rv, horizontal = TRUE, axes = TRUE, staplewex = 1)
-text(x=estims+c(0.1,0,0,0,-0.5), labels =paste(c("Min", "Q1","Median", "Q3", "Max"), estims, sep = "="),
+text(x=estims+c(0.1,0,0,0,0.1), labels =paste(c("Min", "Q1","Median", "Q3", "whisker"), estims, sep = "="),
      y=c(1.3,1.25,1.3,1.25,1.3), cex = 0.6)
+# Right-aligned just to the left of the point: centred on 10.4 the label runs off
+# the edge of the panel.
+text(x=outliers-0.15, labels = paste("outlier", outliers, sep = " = "), y = 1.3, cex = 0.6, adj = 1)
 text(x=med, labels =paste("IQR", round(IQR,2), sep = " = "), y=1.5, cex = 0.7)
 ```
+
+Here the rule bites. With $Q1 = `r Q1`$, $Q3 = `r Q3`$ and $IQR = `r IQR`$, the fences are
+
+$$`r Q1` - 1.5(`r IQR`) = `r lo_fence` \qquad `r Q3` + 1.5(`r IQR`) = `r hi_fence`$$
+
+The value $10.4$ sits above the upper fence, so it is plotted as its own point and the upper
+whisker stops at $`r hi_whisker`$, the largest observation that is not an outlier. Notice also
+how differently the two measures of spread describe this variable: the range is
+$10.4 - (-5.7) = `r max(rv) - min(rv)`$, inflated by the one extreme value, while the
+$IQR = `r IQR`$ is untouched by it.
   
   
 * boxplots are great for comparing distributions and identifying skew. Consider our example for comparing the youtube views of two content creators. 
@@ -223,10 +311,21 @@ ggplot(data = ytv, aes(x = Views, fill = `Content Creator`))+
 
 ```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=6}
 
-a=rbeta(100000, 2, 10)
-b=rnorm(100000)
-c=rbeta(100000, 10, 2)
-d=c(rnorm(50000), rnorm(50000, 3))
+# set.seed, so the figure is the same every time the page is rebuilt. Without it
+# the four panels were redrawn from fresh random draws on every render, and the
+# outlier counts the text sits next to changed underneath it.
+set.seed(251)
+
+# n = 2000, not 100000. At n = 100000 the 1.5 x IQR rule flags several thousand
+# points and each panel wears a solid red carpet running off both ends - which,
+# on the page that just introduced that rule, reads as "real data is mostly
+# outliers". 2000 draws keep the density curves smooth while leaving an outlier
+# count that looks like something you could actually meet.
+n_shape = 2000
+a=rbeta(n_shape, 2, 10)
+b=rnorm(n_shape)
+c=rbeta(n_shape, 10, 2)
+d=c(rnorm(n_shape/2), rnorm(n_shape/2, 3))
 
 
 iqra = IQR(a)
@@ -286,6 +385,123 @@ ggarrange(sym, sl, sr, bm, nrow = 2, ncol = 2)
 
 ```
 
-* Notice from the plot above that the boxplot will not show if the distribution has multiple peaks or gaps. For this reason, a boxplot should always be plotted along with a histogram to ensure you capture all important features of a distribution. 
+* Notice from the plot above that the boxplot will not show if the distribution has multiple peaks or gaps. For this reason, a boxplot should always be plotted along with a histogram to ensure you capture all important features of a distribution.
+
+# Cumulative distributions
+
+There is one more way to draw a distribution, and it is the one built for answering questions
+about **position**. The **cumulative distribution** shows the relationship between the value of
+a variable and the cumulative relative frequency. For discrete variables it is drawn as a
+**step function**: flat between observed values, jumping at each one by that value's relative
+frequency. It only ever climbs, it starts at 0 and it finishes at 1.
+
+Consider the sugar content, in grams per serving, of 20 US breakfast cereals.
+
+```{r, echo=F, message=F, warning=FALSE}
+cereal <- read.csv('Data/cereal.csv')
+sugar  <- cereal$Sugar
+
+kable(cereal[order(cereal$Sugar, cereal$Cereal), c('Cereal', 'Sugar')],
+      format = 'html', row.names = FALSE, booktabs = TRUE, escape = FALSE,
+      col.names = c('Cereal', 'Sugar (g)')) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = 'striped')
+```
+
+The frequency table carries a cumulative relative frequency column, which is all the
+cumulative distribution needs.
+
+```{r, echo=F, message=F, warning=F}
+tb  <- table(sugar)
+tab <- data.frame(x = as.numeric(names(tb)), f = as.integer(tb))
+tab$rf  <- tab$f / length(sugar)
+tab$crf <- cumsum(tab$rf)
+
+kable(tab, format = 'html', digits = 2, row.names = FALSE, booktabs = TRUE, escape = FALSE,
+      col.names = c('$x$', '$F(x)$', '$RF(x)$', '$CRF(x)$')) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = 'striped')
+```
+
+Plotting the cumulative relative frequency on the $y$-axis against the values of the variable
+on the $x$-axis gives the cumulative distribution.
+
+```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=8}
+lead <- data.frame(x = -1, crf = 0)
+ggplot() +
+  geom_step(data = rbind(lead, tab[, c('x','crf')]), aes(x = x, y = crf),
+            direction = 'hv', linewidth = 1) +
+  geom_point(data = tab, aes(x = x, y = crf), size = 3) +
+  scale_x_continuous(limits = c(-1, 19), breaks = seq(0, 18, 2)) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
+  theme_bw() +
+  xlab('Sugar content (g)') +
+  ylab('Cumulative Relative Frequency')
+```
+
+## Reading percentiles off the cumulative distribution
+
+This plot is a percentile machine. To find the $p^{th}$ percentile: go up the $y$-axis to
+$p/100$, read across to the curve, and drop down to the $x$-axis. To go the other way — to ask
+what percentile a particular value sits at — start on the $x$-axis instead, go up to the curve,
+and read across to the $y$-axis.
+
+One detail decides the answer whenever the reading lands on one of the flat runs:
+
+* if reading across at $p/100$ **crosses a jump**, the $p^{th}$ percentile is the value at
+  that jump;
+* if the horizontal bar sits **exactly** at height $p/100$, the $p^{th}$ percentile is the
+  **midpoint of that bar** — the average of the value it starts at and the next value up.
+
+The second case only arises when $n$ is even, which is why $n = 20$ is worth noticing here.
+Reading across at $0.90$ lands on the bar that runs from 15 to 16, so the $90^{th}$ percentile
+is $(15+16)/2 = 15.5$ and not 15.
+
+```{r, echo=F, message=F, warning=F, fig.height=5, fig.width=8}
+p <- c(0.1, 0.25, 0.3, 0.5, 0.75, 0.9)
+
+# The percentile rule as taught above, in code: the midpoint of the bar when the
+# crf lands exactly on p, otherwise the first value whose crf has passed p.
+pct <- function(p, tol = 1e-9) {
+  hit <- which(abs(tab$crf - p) < tol)
+  if (length(hit) && hit[1] < nrow(tab)) return((tab$x[hit[1]] + tab$x[hit[1]+1]) / 2)
+  tab$x[which(tab$crf >= p - tol)[1]]
+}
+quants <- vapply(p, pct, numeric(1))
+
+# This has to agree with halving the ordered data, the method from Week 2.
+xs <- sort(sugar); n <- length(xs); half <- n %/% 2
+stopifnot(identical(quants[c(2,4,5)],
+                    c(median(xs[1:half]), median(xs), median(xs[(n-half+1):n]))))
+
+ggplot() +
+  geom_step(data = rbind(lead, tab[, c('x','crf')]), aes(x = x, y = crf),
+            direction = 'hv', linewidth = 1) +
+  geom_point(data = tab, aes(x = x, y = crf), size = 3) +
+  geom_segment(aes(x = -1, xend = quants, y = p, yend = p),
+               linetype = 'dotted', linewidth = 1) +
+  geom_segment(aes(x = quants, xend = quants, y = p, yend = 0),
+               linetype = 'dotted', linewidth = 1) +
+  geom_point(aes(x = quants, y = p), size = 3, shape = 21, fill = 'white', stroke = 1.2) +
+  scale_x_continuous(limits = c(-1, 19), breaks = seq(0, 18, 2)) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
+  theme_bw() +
+  xlab('Sugar content (g)') +
+  ylab('Cumulative Relative Frequency')
+```
+
+Use the plot to confirm that the $10^{th}$, $25^{th}$, $30^{th}$, $50^{th}$, $75^{th}$ and
+$90^{th}$ percentiles are $`r paste(quants, collapse = ', ')`$ respectively.
+
+The quartiles are just three of these percentiles, so the whole five number summary can be read
+off the same picture: the minimum is where the curve leaves 0 and the maximum is where it
+reaches 1.
+
+$$Q1 = `r quants[2]` \qquad Q2 = `r quants[4]` \qquad Q3 = `r quants[5]`
+\qquad IQR = `r quants[5]` - `r quants[2]` = `r quants[5] - quants[2]`$$
+
+These are the same three numbers you get by halving the ordered data, which is the point: the
+cumulative distribution is not a new definition of a quartile, only a faster way to read one
+off — and unlike the halving method it gives you *any* percentile, not just the quartiles. 
 
 
