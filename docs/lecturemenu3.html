@@ -488,6 +488,131 @@ $(document).ready(function () {
 class="section level1">
 <h1>NO CLASS — Labor Day (Monday, September 7, 2026)</h1>
 </div>
+<div id="a-note-on-quartiles-which-definition" class="section level1">
+<h1>A note on quartiles: which definition?</h1>
+<p>Before going any further, one thing worth settling, because it causes
+more confusion than almost anything else in this part of the course.</p>
+<p><strong>There are several accepted ways to calculate a
+quartile.</strong> The one we use in this class is the <strong>median of
+halves</strong> method: find the median first, and when <span
+class="math inline">\(n\)</span> is odd, <em>leave that median out</em>
+when forming the lower and upper halves. For example,</p>
+<p><span class="math display">\[ 2, \quad 4, \quad \boxed{5}, \quad 7,
+\quad 12 \]</span></p>
+<p>The median is 5, so we exclude it:</p>
+<p><span class="math display">\[ \underbrace{2, \ 4}_{\text{lower half}}
+\qquad \underbrace{7, \ 12}_{\text{upper half}} \]</span></p>
+<p>and therefore</p>
+<p><span class="math display">\[ Q1 = \frac{2+4}{2} = 3, \qquad Q2 = 5,
+\qquad Q3 = \frac{7+12}{2} = 9.5 \]</span></p>
+<p>You may notice that R gives different quartiles for this data. That
+is not a mistake by either of you — statistical software has to pick one
+of several mathematical definitions of a sample quartile, and R’s
+default <code>quantile()</code> interpolates between the ordered values
+rather than taking the median of each half. R’s <code>boxplot()</code>
+is different again: it draws its box at <strong>Tukey’s hinges</strong>,
+which <em>keep</em> the median inside both halves, so its lower hinge
+here is <span class="math inline">\(\text{median}(2,4,5) =
+4\)</span>.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Method
+</th>
+<th style="text-align:left;">
+Q1
+</th>
+<th style="text-align:left;">
+Median
+</th>
+<th style="text-align:left;">
+Q3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Median of halves – <strong>this class</strong>
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+9.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R <code>quantile()</code> default
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R <code>boxplot()</code> hinges
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+7
+</td>
+</tr>
+</tbody>
+</table>
+<p>For an <strong>even</strong> number of observations the
+median-of-halves rule and Tukey’s hinges agree — there is no middle
+value to argue about — which is why every other example in these notes
+matches what R’s <code>boxplot()</code> draws. The disagreement only
+appears when <span class="math inline">\(n\)</span> is odd.</p>
+<div id="which-definition-does-software-use" class="section level3">
+<h3>Which definition does software use?</h3>
+<p>There is no single answer, which is exactly why this is worth
+knowing. Broadly there are two families, and which one you meet depends
+on the tool:</p>
+<ul>
+<li><strong>Interpolation methods</strong> — walk to the position <span
+class="math inline">\(p(n-1)+1\)</span> in the ordered data and, if that
+position falls between two observations, interpolate between them. This
+is the more common default in statistical and numerical software: it is
+what R’s <code>quantile()</code> does unless you ask otherwise (R calls
+it <code>type = 7</code>), and the same rule is behind Excel’s
+<code>QUARTILE.INC</code> / <code>PERCENTILE.INC</code> and the default
+in Python’s NumPy and pandas. A quartile computed this way is often
+<strong>not</strong> one of your data values.</li>
+<li><strong>Median-of-halves methods</strong> — split the ordered data
+at the median and take the median of each half. These differ only in
+whether the median itself is kept in the halves: leaving it out is the
+rule we use (and the one built into TI graphing calculators); keeping it
+in gives <strong>Tukey’s hinges</strong>, which is what R’s
+<code>boxplot()</code> and <code>fivenum()</code> draw.</li>
+</ul>
+<p>R is unusual in shipping both — nine different definitions, in fact,
+selectable through <code>quantile(x, type = )</code> — which is why
+<code>quantile()</code> and <code>boxplot()</code> can disagree with
+each other on the same data, as they do on the five values above.</p>
+<p>So: if your hand calculation and R disagree, neither of you is
+necessarily wrong. You need to know which definition is being used.
+<strong>In this class, use the median of halves, and apply the same
+method consistently.</strong></p>
+</div>
+</div>
 <div id="describing-spread" class="section level1">
 <h1>Describing spread</h1>
 <p>A description of a distribution is not complete without a measure of
@@ -505,21 +630,40 @@ reason being that measures of center or location can be misleading if we
 do not consider how much the observations vary. Consider the following
 example which gives the distributions of the number of youtube video
 views of two content creators.</p>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-1-1.png" width="768" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-2-1.png" width="768" /></p>
 <p>From this example we can see that both distributions have
 approximately the same mean. However, Content Creator 2 has considerably
 more variability in the number of views and, on a good day, can
 potentially get up to double his normal number of views.</p>
 <p>In some sense giving several percentiles or the quartiles together
 tells us how different values are spread out across the distribution but
-there are other measures of spread that are preferred. One of the first
-and simplest measures we can use is the range. The
-<strong>range</strong> measures the distance between the largest and
-smallest observation and can be computed by subtracting the minimum
-value from the maximum value. Because the range uses the two most
-extreme points of the data it is extremely susceptible to outliers. For
-this reason, the range is not a measure of spread that gets used
-often.</p>
+there are other measures of spread that are preferred.</p>
+<div id="the-range" class="section level3">
+<h3>The range</h3>
+<p>The simplest measure of spread is the <strong>range</strong>: the
+distance between the largest and the smallest observation.</p>
+<p><span class="math display">\[ \text{range} = \text{maximum} -
+\text{minimum} \]</span></p>
+<p>For the five values we work through in class, <span
+class="math inline">\(x = \{2, 4, 5, 7, 12\}\)</span>, the range is
+<span class="math inline">\(12 - 2 = 10\)</span>.</p>
+<p>The range has one virtue — it takes two seconds to compute — and one
+serious flaw. It is built from the two most extreme points in the
+dataset and <em>nothing else</em>, so it is the least resistant measure
+we have: change a single observation at either end and the range moves
+by exactly that much. Look at the exam scores from Week 2:</p>
+<p><span
+class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
+<p>Their range is <span class="math inline">\(94 - 61 = 33\)</span>.
+Drop the single highest score and it falls to <span
+class="math inline">\(90 - 61 = 29\)</span>; replace that 94 with a 99
+and it climbs to 38 — all while the other fourteen students stay exactly
+where they were. That is why the range is reported as a quick
+descriptive fact but almost never used as <em>the</em> measure of
+spread.</p>
+</div>
+<div id="the-interquartile-range" class="section level3">
+<h3>The interquartile range</h3>
 <p>A better measure of spread that can be computed from the first and
 third quartiles is the interquartile range or IQR. The
 <strong>IQR</strong> tells us how dispersed the inner <span
@@ -547,6 +691,7 @@ another. Compare that with the range, <span class="math inline">\(94 -
 measuring the distance out to the two most extreme students rather than
 the bulk of the class.</p>
 </div>
+</div>
 <div id="deviations-variance-and-the-standard-deviation"
 class="section level2">
 <h2>Deviations, variance and the standard deviation</h2>
@@ -562,15 +707,13 @@ has a deviation of zero.</p>
 <ul>
 <li>A natural first instinct is to average the deviations. That does not
 work, and it fails for a reason worth understanding: <strong>the
-deviations always sum to zero</strong>. The mean is the balancing point
-of the data, so the positive deviations cancel the negative ones
-exactly, for every dataset. Averaging them would report the same spread
-— zero — for data that is tightly packed and data that is wildly
-scattered.</li>
+deviations always sum to zero</strong>. Averaging them would report the
+same spread — zero — for data that is tightly packed and data that is
+wildly scattered.</li>
 </ul>
-<p>Consider the ten die rolls <span class="math inline">\(X =
-\{1,2,3,3,4,4,4,5,6,6\}\)</span>, which have <span
-class="math inline">\(\bar{x} = 3.8\)</span>:</p>
+<p>Take our running example <span class="math inline">\(x = \{2, 4, 5,
+7, 12\}\)</span>, which has <span class="math inline">\(\bar{x} = 30/5 =
+6\)</span>:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -588,46 +731,13 @@ class="math inline">\(\bar{x} = 3.8\)</span>:</p>
 <tbody>
 <tr>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
--2.8
-</td>
-<td style="text-align:right;">
-7.84
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
--1.8
+-4
 </td>
 <td style="text-align:right;">
-3.24
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
--0.8
-</td>
-<td style="text-align:right;">
-0.64
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
--0.8
-</td>
-<td style="text-align:right;">
-0.64
+16
 </td>
 </tr>
 <tr>
@@ -635,32 +745,10 @@ class="math inline">\(\bar{x} = 3.8\)</span>:</p>
 4
 </td>
 <td style="text-align:right;">
-0.2
+-2
 </td>
-<td style="text-align:right;">
-0.04
-</td>
-</tr>
-<tr>
 <td style="text-align:right;">
 4
-</td>
-<td style="text-align:right;">
-0.2
-</td>
-<td style="text-align:right;">
-0.04
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0.2
-</td>
-<td style="text-align:right;">
-0.04
 </td>
 </tr>
 <tr>
@@ -668,46 +756,56 @@ class="math inline">\(\bar{x} = 3.8\)</span>:</p>
 5
 </td>
 <td style="text-align:right;">
-1.2
+-1
 </td>
 <td style="text-align:right;">
-1.44
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-2.2
-</td>
-<td style="text-align:right;">
-4.84
+1
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
 6
 </td>
 <td style="text-align:right;">
-2.2
-</td>
-<td style="text-align:right;">
-4.84
+36
 </td>
 </tr>
 </tbody>
 </table>
-<p>The deviation column sums to 0, as it must (R reports a value like
-1.8e-15 rather than an exact 0 here, which is rounding error in the
-arithmetic, not a real difference). The fix is to remove the signs
-before averaging, and the standard choice is to <strong>square</strong>
-them. That gives the <strong>variance</strong>, written <span
+<p>The deviation column sums to <span class="math inline">\(-4 - 2 - 1 +
+1 + 6 = 0\)</span>. That is not a property of these particular five
+numbers — it holds for every dataset, and the algebra is two lines:</p>
+<p><span class="math display">\[\sum_{i=1}^{n}(x_i - \bar{x}) \;=\;
+\sum_{i=1}^{n} x_i \;-\; n\bar{x}\]</span></p>
+<p>and since <span class="math inline">\(\bar{x} =
+\frac{1}{n}\sum_{i=1}^{n} x_i\)</span> we have <span
+class="math inline">\(n\bar{x} = \sum_{i=1}^{n} x_i\)</span>, so the two
+terms are the same thing and</p>
+<p><span class="math display">\[\sum_{i=1}^{n}(x_i - \bar{x}) \;=\;
+\sum_{i=1}^{n} x_i - \sum_{i=1}^{n} x_i \;=\; 0\]</span></p>
+<p>The fix is to remove the signs before averaging, and the standard
+choice is to <strong>square</strong> them. That gives the
+<strong>variance</strong>, written <span
 class="math inline">\(s^2\)</span> for a sample:</p>
 <p><span class="math display">\[ s^2 = \frac{\sum_{i=1}^{n}(x_i -
 \bar{x})^2}{n-1} \]</span></p>
-<p>For the die rolls the squared deviations sum to 23.6, so <span
-class="math inline">\(s^2 = 23.6 / 9 = 2.622\)</span>.</p>
+<p>For our example the squared deviations sum to <span
+class="math inline">\(16 + 4 + 1 + 1 + 36 = 58\)</span>, so <span
+class="math inline">\(s^2 = 58 / (5 - 1) = 14.5\)</span>.</p>
 <ul>
 <li>Squaring has a side effect: the variance is in <strong>squared
 units</strong>. If the data are waiting times in minutes, the variance
@@ -717,17 +815,19 @@ scale. That is the <strong>standard deviation</strong>:</li>
 </ul>
 <p><span class="math display">\[ s = \sqrt{s^2} =
 \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}} \]</span></p>
-<p>For the die rolls, <span class="math inline">\(s = 1.619\)</span> —
-back in “number of pips” rather than pips squared. Roughly speaking,
-<span class="math inline">\(s\)</span> is the typical distance of an
-observation from the mean.</p>
-<pre class="r"><code>x &lt;- c(1,2,3,3,4,4,4,5,6,6)
+<p>For our example, <span class="math inline">\(s = \sqrt{14.5} =
+3.808\)</span> — back in the units of <span
+class="math inline">\(x\)</span> rather than those units squared.
+Roughly speaking, <span class="math inline">\(s\)</span> is the typical
+distance of an observation from the mean, and here that is about 3.8
+against a mean of 6.</p>
+<pre class="r"><code>x &lt;- c(2, 4, 5, 7, 12)
 mean(x)</code></pre>
-<pre><code>## [1] 3.8</code></pre>
+<pre><code>## [1] 6</code></pre>
 <pre class="r"><code>var(x)   # s^2</code></pre>
-<pre><code>## [1] 2.622222</code></pre>
+<pre><code>## [1] 14.5</code></pre>
 <pre class="r"><code>sd(x)    # s</code></pre>
-<pre><code>## [1] 1.619328</code></pre>
+<pre><code>## [1] 3.807887</code></pre>
 <div id="why-divide-by-n-1-rather-than-n" class="section level3">
 <h3>Why divide by <span class="math inline">\(n-1\)</span> rather than
 <span class="math inline">\(n\)</span>?</h3>
@@ -754,6 +854,127 @@ identical.</li>
 distribution is skewed or has outliers, the IQR is the more honest
 description of spread.</li>
 </ul>
+</div>
+<div id="your-s-is-itself-an-estimate" class="section level3">
+<h3>Your <span class="math inline">\(s\)</span> is itself an
+estimate</h3>
+<p><em>This subsection is a look ahead. It is not on Exam 1 — it is here
+because the question comes up naturally the moment you compute an <span
+class="math inline">\(s\)</span>, and because it is the idea behind the
+margin of error we meet in a few weeks.</em></p>
+<p>Everything above describes <strong>the one sample you happened to
+collect</strong>. Collect another and every number changes — a different
+mean, a different <span class="math inline">\(s\)</span>, a different
+median.</p>
+<p>To see that you need something you can actually repeat, so this one
+example steps away from our five values and rolls a die instead. Here
+are ten rolls, five separate times over:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+ten rolls
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(s\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+first roll
+</td>
+<td style="text-align:left;">
+1 2 3 3 4 4 4 5 6 6
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.62
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sample 2
+</td>
+<td style="text-align:left;">
+2 2 3 3 3 3 4 4 6 6
+</td>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:right;">
+1.43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sample 3
+</td>
+<td style="text-align:left;">
+1 2 2 3 3 4 4 4 5 6
+</td>
+<td style="text-align:right;">
+3.4
+</td>
+<td style="text-align:right;">
+1.51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sample 4
+</td>
+<td style="text-align:left;">
+1 1 3 4 4 4 5 6 6 6
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sample 5
+</td>
+<td style="text-align:left;">
+1 1 2 3 4 4 6 6 6 6
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+2.08
+</td>
+</tr>
+</tbody>
+</table>
+<p>That movement from one sample to the next is called <strong>sampling
+variation</strong>. A statistic has a distribution of its own, and its
+standard deviation across repeated samples is called its
+<strong>standard error</strong>. For the sample mean,</p>
+<p><span class="math display">\[ SE(\bar{x}) = \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>so for those ten die rolls, <span class="math inline">\(SE = 1.619 /
+\sqrt{10} = 0.512\)</span>. Back on our five values, where <span
+class="math inline">\(s = 3.808\)</span> and <span
+class="math inline">\(n = 5\)</span>, it would be <span
+class="math inline">\(3.808 / \sqrt{5} = 1.703\)</span>.</p>
+<p>Notice the <span class="math inline">\(\sqrt{n}\)</span>: the larger
+the sample, the smaller the standard error, and the steadier the
+estimate. It is the reason a poll of 2000 people pins down an opinion
+far better than a poll of 20 — and it is why “how big was the sample?”
+is usually the first question worth asking about any statistic you are
+shown.</p>
 </div>
 <div id="which-measures-should-you-report" class="section level3">
 <h3>Which measures should you report?</h3>
@@ -972,12 +1193,12 @@ the interesting case, where they do not.</p>
 exam scores</p>
 <p><span
 class="math display">\[\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}\]</span></p>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-7-1.png" width="576" /></p>
 <p>Example2: consider the boxplot constructed for variable <span
 class="math inline">\(X\)</span></p>
 <p><span class="math display">\[X = \{-5.7, -2.6, -1.5, -1.3, -0.4, 0.2,
 1.5, 2.2, 2.3, 2.6, 2.9, 10.4 \}\]</span></p>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-8-1.png" width="576" /></p>
 <p>Here the rule bites. With <span class="math inline">\(Q1 =
 -1.4\)</span>, <span class="math inline">\(Q3 = 2.45\)</span> and <span
 class="math inline">\(IQR = 3.85\)</span>, the fences are</p>
@@ -996,14 +1217,14 @@ is untouched by it.</p>
 Consider our example for comparing the youtube views of two content
 creators.</li>
 </ul>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-7-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-9-1.png" width="576" /></p>
 <ul>
 <li>Using the boxplots makes the disparity in spread between the two
 Content Creators much more apparent. Boxplots are also great for
 identifying skew in a distribution. Consider the plot below which shows
 how you can interpret skew in relation to a boxplot.</li>
 </ul>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-8-1.png" width="576" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-10-1.png" width="576" /></p>
 <ul>
 <li>Notice from the plot above that the boxplot will not show if the
 distribution has multiple peaks or gaps. For this reason, a boxplot
@@ -1434,7 +1655,7 @@ which is all the cumulative distribution needs.</p>
 class="math inline">\(y\)</span>-axis against the values of the variable
 on the <span class="math inline">\(x\)</span>-axis gives the cumulative
 distribution.</p>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-13-1.png" width="768" /></p>
 <div id="reading-percentiles-off-the-cumulative-distribution"
 class="section level2">
 <h2>Reading percentiles off the cumulative distribution</h2>
@@ -1466,7 +1687,7 @@ across at <span class="math inline">\(0.90\)</span> lands on the bar
 that runs from 15 to 16, so the <span
 class="math inline">\(90^{th}\)</span> percentile is <span
 class="math inline">\((15+16)/2 = 15.5\)</span> and not 15.</p>
-<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-14-1.png" width="768" /></p>
 <p>Use the plot to confirm that the <span
 class="math inline">\(10^{th}\)</span>, <span
 class="math inline">\(25^{th}\)</span>, <span

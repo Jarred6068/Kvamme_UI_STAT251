@@ -18,6 +18,89 @@ library(latex2exp)
 
 
 
+# A note on quartiles: which definition?
+
+Before going any further, one thing worth settling, because it causes more confusion than
+almost anything else in this part of the course.
+
+**There are several accepted ways to calculate a quartile.** The one we use in this class is
+the **median of halves** method: find the median first, and when $n$ is odd, *leave that
+median out* when forming the lower and upper halves. For example,
+
+$$ 2, \quad 4, \quad \boxed{5}, \quad 7, \quad 12 $$
+
+The median is 5, so we exclude it:
+
+$$ \underbrace{2, \ 4}_{\text{lower half}} \qquad \underbrace{7, \ 12}_{\text{upper half}} $$
+
+and therefore
+
+$$ Q1 = \frac{2+4}{2} = 3, \qquad Q2 = 5, \qquad Q3 = \frac{7+12}{2} = 9.5 $$
+
+You may notice that R gives different quartiles for this data. That is not a mistake by either
+of you — statistical software has to pick one of several mathematical definitions of a sample
+quartile, and R's default `quantile()` interpolates between the ordered values rather than
+taking the median of each half. R's `boxplot()` is different again: it draws its box at
+**Tukey's hinges**, which *keep* the median inside both halves, so its lower hinge here is
+$\text{median}(2,4,5) = 4$.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+qx <- c(2, 4, 5, 7, 12)
+
+# The three conventions, computed rather than typed, so the table cannot drift.
+xs <- sort(qx); n <- length(xs); half <- n %/% 2
+q_halves <- c(median(xs[1:half]), median(xs), median(xs[(n - half + 1):n]))
+q_r7     <- unname(quantile(qx, c(.25, .50, .75)))
+q_hinges <- fivenum(qx)[2:4]
+stopifnot(identical(q_halves, c(3, 5, 9.5)), identical(q_r7, c(4, 5, 7)),
+          identical(q_hinges, c(4, 5, 7)),
+          identical(boxplot(qx, plot = FALSE)$stats[c(2, 3, 4), 1], q_hinges))
+
+# Formatted as text: left numeric, kable pads the column to a common number of
+# decimals and prints Tukey's Q3 as "7.0" beside our "9.5", which reads as a
+# precision difference that is not there.
+g <- function(v) vapply(v, function(x) formatC(x, format = 'g'), character(1))
+kable(data.frame(
+        Method = c('Median of halves &ndash; **this class**',
+                   'R `quantile()` default',
+                   'R `boxplot()` hinges'),
+        Q1     = g(c(q_halves[1], q_r7[1], q_hinges[1])),
+        Median = g(c(q_halves[2], q_r7[2], q_hinges[2])),
+        Q3     = g(c(q_halves[3], q_r7[3], q_hinges[3]))),
+      format = 'html', row.names = FALSE, booktabs = TRUE, escape = FALSE,
+      col.names = c('Method', 'Q1', 'Median', 'Q3')) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = 'striped')
+```
+
+For an **even** number of observations the median-of-halves rule and Tukey's hinges agree —
+there is no middle value to argue about — which is why every other example in these notes
+matches what R's `boxplot()` draws. The disagreement only appears when $n$ is odd.
+
+### Which definition does software use?
+
+There is no single answer, which is exactly why this is worth knowing. Broadly there are two
+families, and which one you meet depends on the tool:
+
+* **Interpolation methods** — walk to the position $p(n-1)+1$ in the ordered data and, if that
+  position falls between two observations, interpolate between them. This is the more common
+  default in statistical and numerical software: it is what R's `quantile()` does unless you
+  ask otherwise (R calls it `type = 7`), and the same rule is behind Excel's
+  `QUARTILE.INC` / `PERCENTILE.INC` and the default in Python's NumPy and pandas. A quartile
+  computed this way is often **not** one of your data values.
+* **Median-of-halves methods** — split the ordered data at the median and take the median of
+  each half. These differ only in whether the median itself is kept in the halves: leaving it
+  out is the rule we use (and the one built into TI graphing calculators); keeping it in gives
+  **Tukey's hinges**, which is what R's `boxplot()` and `fivenum()` draw.
+
+R is unusual in shipping both — nine different definitions, in fact, selectable through
+`quantile(x, type = )` — which is why `quantile()` and `boxplot()` can disagree with each other
+on the same data, as they do on the five values above.
+
+So: if your hand calculation and R disagree, neither of you is necessarily wrong. You need to
+know which definition is being used. **In this class, use the median of halves, and apply the
+same method consistently.**
+
 # Describing spread
 
 A description of a distribution is not complete without a measure of **spread** to sit alongside its center. Week 2 covered the measures of location and position — the mean, median and mode, and the percentiles and quartiles. This week asks a different question: how far do the observations fall from one another, and from the center? As with the measures of center, everything below applies to quantitative variables only.
@@ -46,9 +129,33 @@ ggplot(data = ytv, aes(x = Views, fill = `Content Creator`))+
 
 From this example we can see that both distributions have approximately the same mean. However, Content Creator 2 has considerably more variability in the number of views and, on a good day, can potentially get up to double his normal number of views.  
 
-In some sense giving several percentiles or the quartiles together tells us how different values are spread out across the distribution but there are other measures of spread that are preferred. One of the first and simplest measures we can use is the range. The **range** measures the distance between the largest and smallest observation and can be computed by subtracting the minimum value from the maximum value. Because the range uses the two most extreme points of the data it is extremely susceptible to outliers. For this reason, the range is not a measure of spread that gets used often.
+In some sense giving several percentiles or the quartiles together tells us how different values are spread out across the distribution but there are other measures of spread that are preferred.
 
-A better measure of spread that can be computed from the first and third quartiles is the interquartile range or IQR. The **IQR** tells us how dispersed the inner $50\%$ of the data. 
+### The range
+
+The simplest measure of spread is the **range**: the distance between the largest and the
+smallest observation.
+
+$$ \text{range} = \text{maximum} - \text{minimum} $$
+
+For the five values we work through in class, $x = \{2, 4, 5, 7, 12\}$, the range is
+$12 - 2 = 10$.
+
+The range has one virtue — it takes two seconds to compute — and one serious flaw. It is
+built from the two most extreme points in the dataset and *nothing else*, so it is the least
+resistant measure we have: change a single observation at either end and the range moves by
+exactly that much. Look at the exam scores from Week 2:
+
+$$\{61,61,65,65,66,68,69,73,74,75,76,78,79,90,94\}$$
+
+Their range is $94 - 61 = 33$. Drop the single highest score and it falls to $90 - 61 = 29$;
+replace that 94 with a 99 and it climbs to 38 — all while the other fourteen students stay
+exactly where they were. That is why the range is reported as a quick descriptive fact but
+almost never used as *the* measure of spread.
+
+### The interquartile range
+
+A better measure of spread that can be computed from the first and third quartiles is the interquartile range or IQR. The **IQR** tells us how dispersed the inner $50\%$ of the data.
 
 * The IQR is defined as
 
@@ -82,16 +189,19 @@ An observation above the mean has a positive deviation, one below it has a negat
 deviation, and an observation sitting exactly at the mean has a deviation of zero.
 
 * A natural first instinct is to average the deviations. That does not work, and it
-  fails for a reason worth understanding: **the deviations always sum to zero**. The
-  mean is the balancing point of the data, so the positive deviations cancel the
-  negative ones exactly, for every dataset. Averaging them would report the same
-  spread — zero — for data that is tightly packed and data that is wildly scattered.
+  fails for a reason worth understanding: **the deviations always sum to zero**.
+  Averaging them would report the same spread — zero — for data that is tightly
+  packed and data that is wildly scattered.
 
-Consider the ten die rolls $X = \{1,2,3,3,4,4,4,5,6,6\}$, which have $\bar{x} = 3.8$:
+Take our running example $x = \{2, 4, 5, 7, 12\}$, which has
+$\bar{x} = 30/5 = 6$:
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
-x <- c(1,2,3,3,4,4,4,5,6,6)
+x <- c(2, 4, 5, 7, 12)
 dev <- x - mean(x)
+stopifnot(mean(x) == 6, sum(dev) == 0, sum(dev^2) == 58,
+          sum(dev^2) / (length(x) - 1) == 14.5)
+
 tab <- data.frame(x = x, deviation = dev, squared = dev^2)
 kable(tab, format = 'html', digits = 2, row.names = FALSE, booktabs = TRUE,
       col.names = c('$x_i$', '$x_i - \\bar{x}$', '$(x_i - \\bar{x})^2$'),
@@ -100,14 +210,23 @@ kable(tab, format = 'html', digits = 2, row.names = FALSE, booktabs = TRUE,
   kable_styling(bootstrap_options = 'striped')
 ```
 
-The deviation column sums to `r round(sum(dev), 10)`, as it must (R reports a value like 1.8e-15 rather than an exact 0 here, which is rounding error in the arithmetic, not a real difference). The fix is to remove the signs
-before averaging, and the standard choice is to **square** them. That gives the
-**variance**, written $s^2$ for a sample:
+The deviation column sums to $-4 - 2 - 1 + 1 + 6 = 0$. That is not a property of these
+particular five numbers — it holds for every dataset, and the algebra is two lines:
+
+$$\sum_{i=1}^{n}(x_i - \bar{x}) \;=\; \sum_{i=1}^{n} x_i \;-\; n\bar{x}$$
+
+and since $\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$ we have $n\bar{x} = \sum_{i=1}^{n} x_i$,
+so the two terms are the same thing and
+
+$$\sum_{i=1}^{n}(x_i - \bar{x}) \;=\; \sum_{i=1}^{n} x_i - \sum_{i=1}^{n} x_i \;=\; 0$$
+
+The fix is to remove the signs before averaging, and the standard choice is to **square**
+them. That gives the **variance**, written $s^2$ for a sample:
 
 $$ s^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1} $$
 
-For the die rolls the squared deviations sum to `r sum(dev^2)`, so
-$s^2 = `r round(sum(dev^2), 2)` / 9 = `r round(var(x), 3)`$.
+For our example the squared deviations sum to $16 + 4 + 1 + 1 + 36 = `r sum(dev^2)`$, so
+$s^2 = `r sum(dev^2)` / (5 - 1) = `r sum(dev^2)/(length(x)-1)`$.
 
 * Squaring has a side effect: the variance is in **squared units**. If the data are
   waiting times in minutes, the variance is in minutes squared, which is not a
@@ -116,12 +235,12 @@ $s^2 = `r round(sum(dev^2), 2)` / 9 = `r round(var(x), 3)`$.
 
 $$ s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}} $$
 
-For the die rolls, $s = `r round(sd(x), 3)`$ — back in "number of pips" rather than
-pips squared. Roughly speaking, $s$ is the typical distance of an observation from
-the mean.
+For our example, $s = \sqrt{14.5} = `r round(sd(x), 3)`$ — back in the units of $x$ rather
+than those units squared. Roughly speaking, $s$ is the typical distance of an observation
+from the mean, and here that is about 3.8 against a mean of 6.
 
 ```{r}
-x <- c(1,2,3,3,4,4,4,5,6,6)
+x <- c(2, 4, 5, 7, 12)
 mean(x)
 var(x)   # s^2
 sd(x)    # s
@@ -141,6 +260,49 @@ variance $\sigma^2$. Dividing by $n$ would systematically underestimate it.
 * Like the mean, both use every observation, so like the mean, **both are strongly
   influenced by outliers**. When a distribution is skewed or has outliers, the IQR is
   the more honest description of spread.
+
+### Your $s$ is itself an estimate
+
+*This subsection is a look ahead. It is not on Exam 1 — it is here because the question comes
+up naturally the moment you compute an $s$, and because it is the idea behind the margin of
+error we meet in a few weeks.*
+
+Everything above describes **the one sample you happened to collect**. Collect another and
+every number changes — a different mean, a different $s$, a different median.
+
+To see that you need something you can actually repeat, so this one example steps away from
+our five values and rolls a die instead. Here are ten rolls, five separate times over:
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+set.seed(251)
+ours <- c(1,2,3,3,4,4,4,5,6,6)
+samples <- c(list(ours), replicate(4, sort(sample(1:6, 10, replace = TRUE)), simplify = FALSE))
+
+kable(data.frame(
+        Sample = c('first roll', paste('sample', 2:5)),
+        Rolls  = vapply(samples, function(s) paste(s, collapse = ' '), character(1)),
+        Mean   = vapply(samples, mean, numeric(1)),
+        s      = vapply(samples, sd, numeric(1))),
+      format = 'html', digits = 2, row.names = FALSE, booktabs = TRUE, escape = FALSE,
+      col.names = c('', 'ten rolls', 'mean', '$s$')) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = 'striped')
+```
+
+That movement from one sample to the next is called **sampling variation**. A statistic has a
+distribution of its own, and its standard deviation across repeated samples is called its
+**standard error**. For the sample mean,
+
+$$ SE(\bar{x}) = \frac{s}{\sqrt{n}} $$
+
+so for those ten die rolls, $SE = `r round(sd(ours), 3)` / \sqrt{10} = `r round(sd(ours)/sqrt(10), 3)`$.
+Back on our five values, where $s = 3.808$ and $n = 5$, it would be
+$3.808 / \sqrt{5} = `r round(sd(c(2,4,5,7,12))/sqrt(5), 3)`$.
+
+Notice the $\sqrt{n}$: the larger the sample, the smaller the standard error, and the steadier
+the estimate. It is the reason a poll of 2000 people pins down an opinion far better than a
+poll of 20 — and it is why "how big was the sample?" is usually the first question worth
+asking about any statistic you are shown.
 
 ### Which measures should you report?
 
