@@ -505,15 +505,15 @@ when forming the lower and upper halves. For example,</p>
 <p>and therefore</p>
 <p><span class="math display">\[ Q1 = \frac{2+4}{2} = 3, \qquad Q2 = 5,
 \qquad Q3 = \frac{7+12}{2} = 9.5 \]</span></p>
-<p>You may notice that R gives different quartiles for this data. That
-is not a mistake by either of you — statistical software has to pick one
-of several mathematical definitions of a sample quartile, and R’s
-default <code>quantile()</code> interpolates between the ordered values
-rather than taking the median of each half. R’s <code>boxplot()</code>
-is different again: it draws its box at <strong>Tukey’s hinges</strong>,
-which <em>keep</em> the median inside both halves, so its lower hinge
-here is <span class="math inline">\(\text{median}(2,4,5) =
-4\)</span>.</p>
+<p>You may notice that statistical software gives different quartiles
+for this data. That is not a mistake by either of you — a sample
+quartile has several accepted mathematical definitions, and any piece of
+software has to pick one. The most common choice is to
+<strong>interpolate</strong> between the ordered values rather than take
+the median of each half. Routines that <em>draw boxplots</em> are
+different again: many of them use <strong>Tukey’s hinges</strong>, which
+<em>keep</em> the median inside both halves, so the lower hinge here is
+<span class="math inline">\(\text{median}(2,4,5) = 4\)</span>.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -548,7 +548,7 @@ Median of halves – <strong>this class</strong>
 </tr>
 <tr>
 <td style="text-align:left;">
-R <code>quantile()</code> default
+Interpolation – the usual software default
 </td>
 <td style="text-align:left;">
 4
@@ -562,7 +562,7 @@ R <code>quantile()</code> default
 </tr>
 <tr>
 <td style="text-align:left;">
-R <code>boxplot()</code> hinges
+Tukey’s hinges – used by many boxplot routines
 </td>
 <td style="text-align:left;">
 4
@@ -579,7 +579,7 @@ R <code>boxplot()</code> hinges
 <p>For an <strong>even</strong> number of observations the
 median-of-halves rule and Tukey’s hinges agree — there is no middle
 value to argue about — which is why every other example in these notes
-matches what R’s <code>boxplot()</code> draws. The disagreement only
+matches the box a typical boxplot routine draws. The disagreement only
 appears when <span class="math inline">\(n\)</span> is odd.</p>
 <div id="which-definition-does-software-use" class="section level3">
 <h3>Which definition does software use?</h3>
@@ -590,27 +590,27 @@ on the tool:</p>
 <li><strong>Interpolation methods</strong> — walk to the position <span
 class="math inline">\(p(n-1)+1\)</span> in the ordered data and, if that
 position falls between two observations, interpolate between them. This
-is the more common default in statistical and numerical software: it is
-what R’s <code>quantile()</code> does unless you ask otherwise (R calls
-it <code>type = 7</code>), and the same rule is behind Excel’s
-<code>QUARTILE.INC</code> / <code>PERCENTILE.INC</code> and the default
-in Python’s NumPy and pandas. A quartile computed this way is often
-<strong>not</strong> one of your data values.</li>
+is the more common default: it is what most statistical packages and
+spreadsheet percentile functions do unless you ask for something else. A
+quartile computed this way is often <strong>not</strong> one of your
+data values.</li>
 <li><strong>Median-of-halves methods</strong> — split the ordered data
 at the median and take the median of each half. These differ only in
-whether the median itself is kept in the halves: leaving it out is the
-rule we use (and the one built into TI graphing calculators); keeping it
-in gives <strong>Tukey’s hinges</strong>, which is what R’s
-<code>boxplot()</code> and <code>fivenum()</code> draw.</li>
+whether the median itself is kept in the halves. Leaving it out is the
+rule we use, and the one built into most graphing calculators; keeping
+it in gives <strong>Tukey’s hinges</strong>, which is what many boxplot
+routines draw.</li>
 </ul>
-<p>R is unusual in shipping both — nine different definitions, in fact,
-selectable through <code>quantile(x, type = )</code> — which is why
-<code>quantile()</code> and <code>boxplot()</code> can disagree with
-each other on the same data, as they do on the five values above.</p>
-<p>So: if your hand calculation and R disagree, neither of you is
-necessarily wrong. You need to know which definition is being used.
-<strong>In this class, use the median of halves, and apply the same
-method consistently.</strong></p>
+<p>A single package will often use <em>both</em>, in different places —
+an interpolation method in its percentile function and Tukey’s hinges in
+its boxplot — which is why two commands in the same program can disagree
+with each other on the same data, as they do on the five values above.
+Some packages let you choose explicitly; the more thorough ones offer
+half a dozen or more definitions.</p>
+<p>So: if your hand calculation and the software disagree, neither of
+you is necessarily wrong. You need to know which definition is being
+used. <strong>In this class, use the median of halves, and apply the
+same method consistently.</strong></p>
 </div>
 </div>
 <div id="describing-spread" class="section level1">

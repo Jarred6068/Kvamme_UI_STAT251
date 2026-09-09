@@ -37,12 +37,12 @@ and therefore
 
 $$ Q1 = \frac{2+4}{2} = 3, \qquad Q2 = 5, \qquad Q3 = \frac{7+12}{2} = 9.5 $$
 
-You may notice that R gives different quartiles for this data. That is not a mistake by either
-of you — statistical software has to pick one of several mathematical definitions of a sample
-quartile, and R's default `quantile()` interpolates between the ordered values rather than
-taking the median of each half. R's `boxplot()` is different again: it draws its box at
-**Tukey's hinges**, which *keep* the median inside both halves, so its lower hinge here is
-$\text{median}(2,4,5) = 4$.
+You may notice that statistical software gives different quartiles for this data. That is not
+a mistake by either of you — a sample quartile has several accepted mathematical definitions,
+and any piece of software has to pick one. The most common choice is to **interpolate**
+between the ordered values rather than take the median of each half. Routines that *draw
+boxplots* are different again: many of them use **Tukey's hinges**, which *keep* the median
+inside both halves, so the lower hinge here is $\text{median}(2,4,5) = 4$.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 qx <- c(2, 4, 5, 7, 12)
@@ -62,8 +62,8 @@ stopifnot(identical(q_halves, c(3, 5, 9.5)), identical(q_r7, c(4, 5, 7)),
 g <- function(v) vapply(v, function(x) formatC(x, format = 'g'), character(1))
 kable(data.frame(
         Method = c('Median of halves &ndash; **this class**',
-                   'R `quantile()` default',
-                   'R `boxplot()` hinges'),
+                   'Interpolation &ndash; the usual software default',
+                   "Tukey's hinges &ndash; used by many boxplot routines"),
         Q1     = g(c(q_halves[1], q_r7[1], q_hinges[1])),
         Median = g(c(q_halves[2], q_r7[2], q_hinges[2])),
         Q3     = g(c(q_halves[3], q_r7[3], q_hinges[3]))),
@@ -75,7 +75,7 @@ kable(data.frame(
 
 For an **even** number of observations the median-of-halves rule and Tukey's hinges agree —
 there is no middle value to argue about — which is why every other example in these notes
-matches what R's `boxplot()` draws. The disagreement only appears when $n$ is odd.
+matches the box a typical boxplot routine draws. The disagreement only appears when $n$ is odd.
 
 ### Which definition does software use?
 
@@ -84,22 +84,23 @@ families, and which one you meet depends on the tool:
 
 * **Interpolation methods** — walk to the position $p(n-1)+1$ in the ordered data and, if that
   position falls between two observations, interpolate between them. This is the more common
-  default in statistical and numerical software: it is what R's `quantile()` does unless you
-  ask otherwise (R calls it `type = 7`), and the same rule is behind Excel's
-  `QUARTILE.INC` / `PERCENTILE.INC` and the default in Python's NumPy and pandas. A quartile
-  computed this way is often **not** one of your data values.
+  default: it is what most statistical packages and spreadsheet percentile functions do unless
+  you ask for something else. A quartile computed this way is often **not** one of your data
+  values.
 * **Median-of-halves methods** — split the ordered data at the median and take the median of
-  each half. These differ only in whether the median itself is kept in the halves: leaving it
-  out is the rule we use (and the one built into TI graphing calculators); keeping it in gives
-  **Tukey's hinges**, which is what R's `boxplot()` and `fivenum()` draw.
+  each half. These differ only in whether the median itself is kept in the halves. Leaving it
+  out is the rule we use, and the one built into most graphing calculators; keeping it in gives
+  **Tukey's hinges**, which is what many boxplot routines draw.
 
-R is unusual in shipping both — nine different definitions, in fact, selectable through
-`quantile(x, type = )` — which is why `quantile()` and `boxplot()` can disagree with each other
-on the same data, as they do on the five values above.
+A single package will often use *both*, in different places — an interpolation method in its
+percentile function and Tukey's hinges in its boxplot — which is why two commands in the same
+program can disagree with each other on the same data, as they do on the five values above.
+Some packages let you choose explicitly; the more thorough ones offer half a dozen or more
+definitions.
 
-So: if your hand calculation and R disagree, neither of you is necessarily wrong. You need to
-know which definition is being used. **In this class, use the median of halves, and apply the
-same method consistently.**
+So: if your hand calculation and the software disagree, neither of you is necessarily wrong.
+You need to know which definition is being used. **In this class, use the median of halves,
+and apply the same method consistently.**
 
 # Describing spread
 
