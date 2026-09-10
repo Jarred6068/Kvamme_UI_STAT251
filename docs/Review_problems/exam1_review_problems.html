@@ -647,6 +647,22 @@ display: none;
   answer from the same vector the question prints, and stopifnot() anything you
   also state in prose.
 -->
+<style type="text/css">
+
+.soln { color: #c00000; }
+
+@media print {
+
+.soln {
+color: #c00000 !important;
+-webkit-print-color-adjust: exact;
+print-color-adjust: exact;
+}
+
+h2 { break-after: avoid; page-break-after: avoid; }
+table, div.figure, p > img { break-inside: avoid; page-break-inside: avoid; }
+}
+</style>
 <p>These problems cover everything on Exam 1: Weeks 1 through 3, up to
 and including cumulative distributions. They are <strong>more
 computational than the exam</strong> by design. The exam asks you to
@@ -1054,9 +1070,11 @@ observations of a quantitative variable <span class="math inline">\(X\)</span>:<
 <p><strong>(d)</strong> Now consider the following sample of ten
 observations of a qualitative variable <span class="math inline">\(Y\)</span>, the way each of ten students travelled
 to campus:</p>
-<p><span class="math display">\[Y = \{ \text{Bus}, \ \text{Walk}, \
-\text{Bike}, \ \text{Bus}, \ \text{Walk}, \ \text{Bus}, \ \text{Car}, \
-\text{Bus}, \ \text{Walk}, \ \text{Bike} \}\]</span></p>
+<p><span class="math display">\[\begin{gathered}
+Y = \{ \text{Bus}, \ \text{Walk}, \ \text{Bike}, \ \text{Bus}, \
+\text{Walk}, \ \text{Bus}, \\
+\text{Car}, \ \text{Bus}, \ \text{Walk}, \ \text{Bike} \}
+\end{gathered}\]</span></p>
 <p><strong>Show how to compute</strong> the proportion of observations
 in the category <strong>Bus</strong>.</p>
 <p><br> <br> <br> <br></p>
@@ -1066,12 +1084,15 @@ in the category <strong>Bus</strong>.</p>
 <h2>Problem 4 — The distribution of a qualitative variable</h2>
 <p>A campus coffee stand recorded the drink ordered by each of 20
 customers one morning:</p>
-<p><span class="math display">\[X = \{ \text{Latte}, \ \text{Drip}, \
-\text{Mocha}, \ \text{Latte}, \ \text{Drip}, \ \text{Espresso}, \
+<p><span class="math display">\[\begin{gathered}
+X = \{ \text{Latte}, \ \text{Drip}, \ \text{Mocha}, \ \text{Latte}, \
+\text{Drip}, \ \text{Espresso}, \\
 \text{Latte}, \ \text{Drip}, \ \text{Latte}, \ \text{Mocha}, \
-\text{Drip}, \ \text{Latte}, \ \text{Espresso}, \ \text{Drip}, \
-\text{Mocha}, \ \text{Latte}, \ \text{Drip}, \ \text{Latte}, \
-\text{Mocha}, \ \text{Latte} \}\]</span></p>
+\text{Drip}, \ \text{Latte}, \\
+\text{Espresso}, \ \text{Drip}, \ \text{Mocha}, \ \text{Latte}, \
+\text{Drip}, \ \text{Latte}, \\
+\text{Mocha}, \ \text{Latte} \}
+\end{gathered}\]</span></p>
 <p><strong>(a)</strong> Complete the frequency and relative frequency
 table.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1243,9 +1264,11 @@ fewer vehicles? Which column did you read that from?</p>
 <h2>Problem 6 — Binning a continuous variable</h2>
 <p>The following are the times, in seconds, that 16 users took to
 complete a task on a website.</p>
-<p><span class="math display">\[X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \
-17.5, \ 18.0, \ 18.3, \ 19.1, \ 20.2, \ 20.6, \ 21.7, \ 22.4, \ 23.9, \
-25.1, \ 26.8, \ 28.4 \}\]</span></p>
+<p><span class="math display">\[\begin{gathered}
+X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \ 17.5, \ 18.0, \ 18.3, \ 19.1, \
+20.2, \ 20.6, \\
+21.7, \ 22.4, \ 23.9, \ 25.1, \ 26.8, \ 28.4 \}
+\end{gathered}\]</span></p>
 <p><strong>(a)</strong> Using the <strong>square root rule</strong>, how
 many bins <span class="math inline">\(k\)</span> should you use for a
 histogram of these 16 observations?</p>
@@ -1321,8 +1344,10 @@ have determined from the raw data.</p>
 <h2>Problem 7 — Dot plots and stem-and-leaf plots</h2>
 <p>A biologist recorded the number of eggs in each of 15 birds’
 nests:</p>
-<p><span class="math display">\[X = \{ 21, \ 24, \ 24, \ 27, \ 28, \ 31,
-\ 33, \ 33, \ 33, \ 35, \ 38, \ 41, \ 42, \ 44, \ 47 \}\]</span></p>
+<p><span class="math display">\[\begin{gathered}
+X = \{ 21, \ 24, \ 24, \ 27, \ 28, \ 31, \ 33, \ 33, \ 33, \ 35, \\
+38, \ 41, \ 42, \ 44, \ 47 \}
+\end{gathered}\]</span></p>
 <p><strong>(a)</strong> Construct a <strong>stem-and-leaf plot</strong>,
 using the tens digit as the stem.</p>
 <pre>  2 |
@@ -1397,8 +1422,10 @@ Give a one-sentence definition of that word.</p>
 <h2>Problem 9 — Percentiles and quartiles</h2>
 <p>The following are the ages of the 11 members of a community board,
 sorted:</p>
-<p><span class="math display">\[X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49,
-\ 52, \ 56, \ 61, \ 67, \ 73 \}\]</span></p>
+<p><span class="math display">\[\begin{gathered}
+X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49, \ 52, \ 56, \ 61, \ 67, \\
+73 \}
+\end{gathered}\]</span></p>
 <p><strong>(a)</strong> Find the median, <span class="math inline">\(Q2\)</span>.</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><strong>(b)</strong> Find <span class="math inline">\(Q1\)</span> and
@@ -1548,8 +1575,10 @@ deviation, and why?</p>
 <h2>Problem 11 — Five-number summary, boxplots and outliers</h2>
 <p>A clinic recorded the number of days between a referral and an
 appointment for 12 patients:</p>
-<p><span class="math display">\[X = \{ 3, \ 5, \ 6, \ 8, \ 9, \ 11, \
-12, \ 14, \ 15, \ 17, \ 19, \ 58 \}\]</span></p>
+<p><span class="math display">\[\begin{gathered}
+X = \{ 3, \ 5, \ 6, \ 8, \ 9, \ 11, \ 12, \ 14, \ 15, \ 17, \\
+19, \ 58 \}
+\end{gathered}\]</span></p>
 <p><strong>(a)</strong> Give the five-number summary. Use the method of
 halves for the quartiles.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">

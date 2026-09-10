@@ -118,17 +118,13 @@ tryCatch({
   pdf_pages <- c("syllabus", "Course_Schedule", "sac_schedule", "university_resources",
                  paste0("lecturemenu", 1:16))
 
-  chrome <- Sys.getenv("CHROME_BIN")
-  if (!nzchar(chrome) || !file.exists(chrome)) {
-    candidates <- c(
-      "C:/Program Files/Google/Chrome/Application/chrome.exe",
-      "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
-      "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-      Sys.which(c("google-chrome", "chromium", "chromium-browser"))
-    )
-    candidates <- candidates[nzchar(candidates) & file.exists(candidates)]
-    chrome <- if (length(candidates)) candidates[[1]] else ""
-  }
+  #Chrome-finding and the print call itself live in _chrome.R, shared with
+  #build_review.R so the logic is written once. That file also carries the
+  #explanation of why these are PRINTED from HTML rather than rendered with
+  #pdf_document - short version: pandoc drops raw HTML on the way to LaTeX, so
+  #a pdf_document render would throw away every kableExtra table.
+  source("_chrome.R", local = TRUE)
+  chrome <- find_chrome()
 
   if (!nzchar(chrome)) {
     message("\nChrome not found - skipping PDF generation for: ",
@@ -136,39 +132,24 @@ tryCatch({
             "\n  (set CHROME_BIN to the chrome.exe path to enable it)")
   } else {
     message("\nPrinting PDFs with: ", chrome)
-
-    #Its own throwaway profile directory. Without this, headless Chrome can
-    #refuse to start or fight over the lock when the user already has Chrome
-    #open, which is the normal case on this machine.
     profile <- file.path(tempdir(), "build_site_chrome_profile")
 
     for (page in pdf_pages) {
-      html <- normalizePath(paste0(page, ".html"), winslash = "/",
-                            mustWork = TRUE)
-      pdf  <- normalizePath(paste0(page, ".pdf"), winslash = "/",
-                            mustWork = FALSE)
+      print_pdf(paste0(page, ".html"), paste0(page, ".pdf"),
+                chrome, label = paste0(page, ".pdf"), profile = profile)
+    }
 
-      status <- system2(chrome, c(
-        "--headless=new",
-        "--disable-gpu",
-        paste0("--user-data-dir=", shQuote(profile)),
-        #Drop Chrome's own URL/date/page-number furniture; the print CSS and
-        #the page itself supply everything that belongs in the output.
-        "--no-pdf-header-footer",
-        #The pages pull MathJax and Google Fonts. Give the network a moment
-        #to settle so the PDF is not typeset in a fallback face.
-        "--virtual-time-budget=15000",
-        paste0("--print-to-pdf=", shQuote(pdf)),
-        shQuote(paste0("file:///", html))
-      ), stdout = FALSE, stderr = FALSE)
-
-      if (status == 0 && file.exists(pdf)) {
-        message("  ", page, ".pdf (",
-                format(file.size(pdf) %/% 1024L, big.mark = ","), " KB)")
-      } else {
-        message("  FAILED: ", page, ".pdf (chrome exit status ", status,
-                ") - kept the previous file")
-      }
+    #The Exam 1 handouts. These are student-facing and get uploaded to Canvas
+    #as PDFs, so they need both formats: the .html is what the website links,
+    #the .pdf is what students download. Printed from inside each page's own
+    #directory so the relative asset paths in the HTML still resolve.
+    message("\nPrinting Exam 1 handout PDFs:")
+    for (entry in REVIEW_PAGES) {
+      here <- setwd(entry[[1]])
+      print_pdf(paste0(entry[[2]], ".html"), paste0(entry[[2]], ".pdf"),
+                chrome, label = file.path(entry[[1]], paste0(entry[[2]], ".pdf")),
+                profile = profile)
+      setwd(here)
     }
   }
 }, finally = setwd(old_wd))

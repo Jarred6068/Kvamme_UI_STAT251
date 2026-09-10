@@ -28,14 +28,19 @@ stopifnot(exists("SOLUTIONS"), is.logical(SOLUTIONS), length(SOLUTIONS) == 1L)
 
 ## Short inline answer. Renders a blank in the problems copy and red text in the
 ## solutions copy -- the same red the Spring 2024 solutions used.
+##
+## The red comes from a CLASS, not an inline style, so that one @media print rule
+## below can keep it red in the PDF. Chrome's default print-color-adjust is
+## "economy", which recolours body text to black to save ink -- inline styles do
+## not survive it either, so the class is what makes the fix possible.
 ans <- function(x, blank = "$\\_\\_\\_\\_\\_\\_\\_\\_$") {
-  if (SOLUTIONS) sprintf('<span style="color: red;">%s</span>', x) else blank
+  if (SOLUTIONS) sprintf('<span class="soln">%s</span>', x) else blank
 }
 
 ## A whole answer paragraph, for parts that want a sentence rather than a value.
 ## Emits nothing at all in the problems copy.
 why <- function(x) {
-  if (SOLUTIONS) cat(sprintf('\n\n<span style="color: red;">%s</span>\n\n', x))
+  if (SOLUTIONS) cat(sprintf('\n\n<span class="soln">%s</span>\n\n', x))
 }
 
 ## Vertical space for students to work in, on the problems copy only.
@@ -53,7 +58,7 @@ show_tbl <- function(d, ...) {
 ## A cell that is blank for students and filled in red for the key. Vectorised so
 ## a whole column can be built at once.
 cellv <- function(x) {
-  if (SOLUTIONS) sprintf('<span style="color: red;">%s</span>', x) else ""
+  if (SOLUTIONS) sprintf('<span class="soln">%s</span>', x) else ""
 }
 
 ## Print a set of observations in the notation used in the lecture notes:
@@ -61,9 +66,27 @@ cellv <- function(x) {
 ## Character values are wrapped in \text{} so they typeset upright rather than as
 ## italic maths variables. Every problem that hands students raw data uses this,
 ## so the review set reads the same way the notes do.
-show_set <- function(v, name = "X") {
+## Long sets have to be broken by hand: display maths does not wrap, so a set of
+## 20 categories on one line runs off the right edge of the page and is simply
+## cut off in the PDF. Anything longer than per_line values is split across a
+## `gathered` environment instead. Character values get fewer per line because
+## the words are much wider than digits.
+show_set <- function(v, name = "X",
+                     per_line = if (is.character(v)) 6L else 10L) {
   vals <- if (is.character(v)) sprintf("\\text{%s}", v) else format(v, trim = TRUE)
-  cat(sprintf("\n\n$$%s = \\{ %s \\}$$\n\n", name, paste(vals, collapse = ", \\ ")))
+
+  if (length(vals) <= per_line) {
+    cat(sprintf("\n\n$$%s = \\{ %s \\}$$\n\n", name, paste(vals, collapse = ", \\ ")))
+    return(invisible(NULL))
+  }
+
+  rows  <- split(vals, ceiling(seq_along(vals) / per_line))
+  lines <- vapply(rows, paste, character(1), collapse = ", \\ ")
+  ## Trailing comma on every line but the last, so the break reads as a
+  ## continuation rather than the end of the set.
+  lines[-length(lines)] <- paste0(lines[-length(lines)], ",")
+  cat(sprintf("\n\n$$\\begin{gathered}\n%s = \\{ %s \\}\n\\end{gathered}$$\n\n",
+              name, paste(lines, collapse = " \\\\\n")))
 }
 
 ## The class's quartile rule: median of halves, dropping the median itself when n
@@ -72,6 +95,29 @@ show_set <- function(v, name = "X") {
 q_halves <- function(x) {
   x <- sort(x); n <- length(x); h <- n %/% 2
   c(Q1 = median(x[1:h]), Q2 = median(x), Q3 = median(x[(n - h + 1):n]))
+}
+```
+
+```{css, echo=FALSE}
+/* Answers in the solutions copy. */
+.soln { color: #c00000; }
+
+/* These pages are published as HTML for the website AND printed to PDF for
+   Canvas (see docs/build_review.R). Everything below is for the PDF. */
+@media print {
+  /* Chrome's default print-color-adjust is "economy", which recolours body text
+     to black to save ink -- so without this the red answers print black and the
+     solutions copy becomes indistinguishable from the problems copy. */
+  .soln {
+    color: #c00000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Keep a problem's heading with the problem, and never split a table or a
+     figure across a page break. */
+  h2 { break-after: avoid; page-break-after: avoid; }
+  table, div.figure, p > img { break-inside: avoid; page-break-inside: avoid; }
 }
 ```
 

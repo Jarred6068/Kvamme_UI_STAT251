@@ -70,7 +70,7 @@ computational than the exam by design.
 *  Understand what it means to say that a summary measure is resistant to outliers, and which summary measures we have discussed that are resistant and which are not.
 
 
-*  Be able to interpret a percentile in the context of the data ("the $90^{th}$ percentile is 15.5 grams" means what, exactly?), and know that the $50^{th}$ percentile is the median and the $25^{th}$ and $75^{th}$ are $Q1$ and $Q3$.
+*  Understand the definition of a percentile and be able to interpret percentiles from a cumulative distribution plot or frequency table, and know that the $50^{th}$ percentile is the median and the $25^{th}$ and $75^{th}$ are $Q1$ and $Q3$.
 
 *  Be sure you understand the notation (i.e., symbols) we have used so far (e.g., $n,N,s,s^2,\bar{x}, \mu,\sigma,\sigma^2, \hat{p}, p$).
 
