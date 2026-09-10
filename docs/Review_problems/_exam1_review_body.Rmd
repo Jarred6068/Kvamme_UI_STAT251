@@ -147,7 +147,7 @@ workspace(3)
 
 ---
 
-## Problem 2 — Statistics, parameters, and what you are claiming
+## Problem 2 — Statistics, parameters, and inference
 
 A city has 8,500 registered bicycles. A researcher takes a random sample of 200 of them and
 finds that 46 have no working lights. She also measures the age of each sampled bicycle and
@@ -258,29 +258,60 @@ show_tbl(data.frame(
   check.names = FALSE))
 ```
 
-**(c)** Now use the notation. Consider the following sample of five observations of a
-quantitative variable $X$:
+**(c)** Consider the following sample of five observations of a quantitative variable $X$:
 
 ```{r p03-data, results='asis'}
 x3 <- c(2, 5, 6, 9, 13)
 xbar3 <- mean(x3)
+dev3  <- x3 - xbar3
+ss3   <- sum(dev3^2)
+var3  <- ss3 / (length(x3) - 1)
+sd3   <- sqrt(var3)
 stopifnot(length(x3) == 5, sum(x3) == 35, xbar3 == 7,
-          abs(sum(x3 - xbar3)) < 1e-12)
+          abs(sum(dev3)) < 1e-12, ss3 == 70, var3 == 17.5,
+          abs(sd3 - 4.1833) < 1e-4)
 show_set(x3)
 ```
 
-Find $\sum_{i=1}^{n} x_i$, then $\bar{x}$, and then $\sum_{i=1}^{n} (x_i - \bar{x})$.
+**Show how to compute** the mean $\bar{x}$ and the standard deviation $s$.
 
 ```{r p03-c, results='asis'}
-why(paste("$\\sum_{i=1}^{n} x_i = 2 + 5 + 6 + 9 + 13 = 35$, so",
-          "$\\bar{x} = 35/5 = 7$.",
-          "<br><br>The deviations are $-5, -2, -1, 2, 6$, and",
-          "$\\sum_{i=1}^{n}(x_i - \\bar{x}) = 0$.",
-          "<br><br>That last result is not a coincidence about these five numbers --",
-          "<b>the deviations from the mean always sum to zero</b>, for every dataset,",
-          "because the mean is the balancing point. It is the reason we cannot simply",
-          "average the deviations to measure spread, and the reason the variance squares",
-          "them first."))
+why(paste("<b>Mean.</b>",
+          "$\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i",
+          "= \\frac{2 + 5 + 6 + 9 + 13}{5} = \\frac{35}{5} = 7$",
+          "<br><br><b>Standard deviation.</b> Take the deviation of each observation from",
+          "the mean, square it, and add:",
+          "<br><br>$\\sum_{i=1}^{n}(x_i - \\bar{x})^{2}",
+          "= (-5)^2 + (-2)^2 + (-1)^2 + 2^2 + 6^2",
+          "= 25 + 4 + 1 + 4 + 36 = 70$",
+          "<br><br>Divide by $n - 1$ to get the variance, then take the square root:",
+          "<br><br>$s^{2} = \\frac{70}{5 - 1} = \\frac{70}{4} = 17.5",
+          "\\qquad s = \\sqrt{17.5} \\approx 4.18$",
+          "<br><br>Note the deviations themselves -- $-5, -2, -1, 2, 6$ -- add to $0$.",
+          "That happens for <b>every</b> dataset, because the mean is the balancing",
+          "point, and it is why the deviations must be squared before they are added."))
+workspace(6)
+```
+
+**(d)** Now consider the following sample of ten observations of a qualitative variable
+$Y$, the way each of ten students travelled to campus:
+
+```{r p03-qual, results='asis'}
+y3 <- c("Bus", "Walk", "Bike", "Bus", "Walk", "Bus", "Car", "Bus", "Walk", "Bike")
+phat3 <- sum(y3 == "Bus") / length(y3)
+stopifnot(length(y3) == 10, sum(y3 == "Bus") == 4, phat3 == 0.4)
+show_set(y3, "Y")
+```
+
+**Show how to compute** the proportion of observations in the category **Bus**.
+
+```{r p03-d, results='asis'}
+why(paste("Count the observations in the category, then divide by the sample size:",
+          "<br><br>$\\hat{p} = \\frac{\\text{number of observations in the category}}{n}",
+          "= \\frac{4}{10} = 0.4$",
+          "<br><br>So 40% of the sample travelled by bus. Note that a proportion is the",
+          "one summary here that <i>can</i> be computed for a qualitative variable -- a",
+          "mean and a standard deviation cannot, because the categories are not numbers."))
 workspace(4)
 ```
 

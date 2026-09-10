@@ -857,8 +857,8 @@ population. Here it is not given – and unlike most populations we will
 meet, this one is finite and could actually be counted.</span></p>
 <hr />
 </div>
-<div id="problem-2-statistics-parameters-and-what-you-are-claiming" class="section level2">
-<h2>Problem 2 — Statistics, parameters, and what you are claiming</h2>
+<div id="problem-2-statistics-parameters-and-inference" class="section level2">
+<h2>Problem 2 — Statistics, parameters, and inference</h2>
 <p>A city has 8,500 registered bicycles. A researcher takes a random
 sample of 200 of them and finds that 46 have no working lights. She also
 measures the age of each sampled bicycle and finds a mean age of 6.2
@@ -1113,21 +1113,38 @@ add up to the <span class="math inline">\(n^{th}\)</span></span>
 </tr>
 </tbody>
 </table>
-<p><strong>(c)</strong> Now use the notation. Consider the following
-sample of five observations of a quantitative variable <span class="math inline">\(X\)</span>:</p>
+<p><strong>(c)</strong> Consider the following sample of five
+observations of a quantitative variable <span class="math inline">\(X\)</span>:</p>
 <p><span class="math display">\[X = \{ 2, \ 5, \ 6, \ 9, \ 13
 \}\]</span></p>
-<p>Find <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>, then
-<span class="math inline">\(\bar{x}\)</span>, and then <span class="math inline">\(\sum_{i=1}^{n} (x_i - \bar{x})\)</span>.</p>
-<p><span style="color: red;"><span class="math inline">\(\sum_{i=1}^{n}
-x_i = 2 + 5 + 6 + 9 + 13 = 35\)</span>, so <span class="math inline">\(\bar{x} = 35/5 = 7\)</span>. <br><br>The
-deviations are <span class="math inline">\(-5, -2, -1, 2, 6\)</span>,
-and <span class="math inline">\(\sum_{i=1}^{n}(x_i - \bar{x}) =
-0\)</span>. <br><br>That last result is not a coincidence about these
-five numbers – <b>the deviations from the mean always sum to zero</b>,
-for every dataset, because the mean is the balancing point. It is the
-reason we cannot simply average the deviations to measure spread, and
-the reason the variance squares them first.</span></p>
+<p><strong>Show how to compute</strong> the mean <span class="math inline">\(\bar{x}\)</span> and the standard deviation <span class="math inline">\(s\)</span>.</p>
+<p><span style="color: red;"><b>Mean.</b> <span class="math inline">\(\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i = \frac{2
++ 5 + 6 + 9 + 13}{5} = \frac{35}{5} = 7\)</span> <br><br><b>Standard
+deviation.</b> Take the deviation of each observation from the mean,
+square it, and add: <br><br><span class="math inline">\(\sum_{i=1}^{n}(x_i - \bar{x})^{2} = (-5)^2 +
+(-2)^2 + (-1)^2 + 2^2 + 6^2 = 25 + 4 + 1 + 4 + 36 = 70\)</span>
+<br><br>Divide by <span class="math inline">\(n - 1\)</span> to get the
+variance, then take the square root: <br><br><span class="math inline">\(s^{2} = \frac{70}{5 - 1} = \frac{70}{4} = 17.5
+\qquad s = \sqrt{17.5} \approx 4.18\)</span> <br><br>Note the deviations
+themselves – <span class="math inline">\(-5, -2, -1, 2, 6\)</span> – add
+to <span class="math inline">\(0\)</span>. That happens for <b>every</b>
+dataset, because the mean is the balancing point, and it is why the
+deviations must be squared before they are added.</span></p>
+<p><strong>(d)</strong> Now consider the following sample of ten
+observations of a qualitative variable <span class="math inline">\(Y\)</span>, the way each of ten students travelled
+to campus:</p>
+<p><span class="math display">\[Y = \{ \text{Bus}, \ \text{Walk}, \
+\text{Bike}, \ \text{Bus}, \ \text{Walk}, \ \text{Bus}, \ \text{Car}, \
+\text{Bus}, \ \text{Walk}, \ \text{Bike} \}\]</span></p>
+<p><strong>Show how to compute</strong> the proportion of observations
+in the category <strong>Bus</strong>.</p>
+<p><span style="color: red;">Count the observations in the category,
+then divide by the sample size: <br><br><span class="math inline">\(\hat{p} = \frac{\text{number of observations in
+the category}}{n} = \frac{4}{10} = 0.4\)</span> <br><br>So 40% of the
+sample travelled by bus. Note that a proportion is the one summary here
+that <i>can</i> be computed for a qualitative variable – a mean and a
+standard deviation cannot, because the categories are not
+numbers.</span></p>
 <hr />
 </div>
 <div id="problem-4-the-distribution-of-a-qualitative-variable" class="section level2">
