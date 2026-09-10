@@ -1034,16 +1034,25 @@ A librarian recorded the number of books checked out by each of 20 patrons in on
 
 ```{r p12-data}
 x12 <- 0:5
-f12 <- c(2, 5, 6, 4, 2, 1)
+## Deliberately, visibly right skewed: a tall pile at 0 and 1 and a thin tail out
+## to 5. Part (e) asks for the shape and for mean vs median, so the skew has to be
+## strong enough that "roughly symmetric" is not an equally good answer -- here the
+## mean sits 0.4 books above the median, which is plain both in the frequencies
+## and in how quickly the step plot flattens out after x = 1.
+f12 <- c(6, 7, 3, 2, 1, 1)
 rf12 <- f12 / sum(f12)
 crf12 <- cumsum(rf12)
 tab12 <- data.frame(x = x12, crf = crf12)
 raw12 <- rep(x12, f12)
 q12 <- q_halves(raw12)
+## No CRF may land exactly on 0.25, 0.50 or 0.75: part (c) is read off the plot,
+## and a step that ends ON the line has no unambiguous reading.
 stopifnot(sum(f12) == 20, length(raw12) == 20,
-          abs(crf12[3] - 0.65) < 1e-12,
-          q12[["Q1"]] == 1, q12[["Q2"]] == 2, q12[["Q3"]] == 3,
-          sum(x12 * f12) == 42, mean(raw12) == 2.1)
+          abs(crf12[3] - 0.80) < 1e-12,
+          !any(abs(outer(crf12, c(0.25, 0.5, 0.75), "-")) < 1e-12),
+          q12[["Q1"]] == 0, q12[["Q2"]] == 1, q12[["Q3"]] == 2,
+          sum(x12 * f12) == 28, mean(raw12) == 1.4,
+          mean(raw12) > q12[["Q2"]])
 ```
 
 **(a)** Complete the table.
@@ -1082,7 +1091,7 @@ if (SOLUTIONS) {
 ```{r p12-c, results='asis'}
 why(paste("Read across from $0.25$, $0.50$ and $0.75$ on the $y$-axis to the curve, then",
           "drop to the $x$-axis. Each of the three readings crosses a jump:",
-          "<br><br>$Q1 = 1$ book, $Q2 = 2$ books, $Q3 = 3$ books.",
+          "<br><br>$Q1 = 0$ books, $Q2 = 1$ book, $Q3 = 2$ books.",
           "<br><br>Check them against halving the ordered data -- they agree. The",
           "cumulative distribution is not a new definition of a quartile, just a faster",
           "way to read one off, and unlike halving it gives you <i>any</i> percentile."))
@@ -1091,17 +1100,22 @@ workspace(4)
 
 **(d)** What proportion of patrons checked out 2 or fewer books?
 
-`r ans("$0.65$, read straight off the $CRF$ column at $x = 2$")`
+`r ans("$0.80$, read straight off the $CRF$ column at $x = 2$")`
 
 **(e)** Describe the shape of this distribution, and say whether the mean will be greater
 than, less than, or equal to the median.
 
 ```{r p12-e, results='asis'}
-why(paste("The distribution is <b>skewed right</b>: the frequencies rise to a peak at",
-          "2 books and then trail off toward the larger values.",
+why(paste("The distribution is <b>skewed right</b>: most of the patrons are piled up at",
+          "0 and 1 book -- $13$ of the $20$, so nearly two thirds of them -- and the",
+          "frequencies then fall away to a thin tail of $3, 2, 1, 1$ stretching out to 5",
+          "books. On the cumulative plot the same thing shows up as a curve that climbs",
+          "steeply over the first two jumps and is almost flat after that.",
           "<br><br>A right skew pulls the mean toward the long tail while leaving the",
           "median where it is, so the <b>mean is greater than the median</b>. Here the",
-          "mean is $42/20 = 2.1$ books against a median of 2."))
+          "mean is $28/20 = 1.4$ books against a median of 1 -- the handful of patrons",
+          "checking out 4 and 5 books drags the mean up, but they move the middle value",
+          "not at all."))
 workspace(3)
 ```
 
