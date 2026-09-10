@@ -60,7 +60,7 @@ the [solutions](../Review_problems/exam1_review_problems_solns.html).
 
 *  Know how to compute the five-number summary of a variable.
 
-*  Quartiles on this exam use the **median of halves** method we use in class: find the median first, and when $n$ is odd leave that median out of both the lower and the upper half. R's `quantile()` and `boxplot()` each use a different definition and may give you slightly different numbers -- that is not an error, but the exam expects the class method.
+*  Quartiles on this exam use the **median of halves** method we use in class: find the median first, and when $n$ is odd leave that median out of both the lower and the upper half.
 
 *  Understand how to plot a cumulative distribution and use it to find the percentiles or quartiles of a distribution.
 
