@@ -647,17 +647,13 @@ display: none;
   answer from the same vector the question prints, and stopifnot() anything you
   also state in prose.
 -->
-<p>Work these by hand – that is the point of them.</p>
 <p>These problems cover everything on Exam 1: Weeks 1 through 3, up to
-and including cumulative distributions. They are deliberately
-<strong>more computational than the exam</strong>. The exam is delivered
-through Canvas and asks you to interpret values, recognize equations and
-read plots rather than to grind through arithmetic; these problems ask
-you to grind through the arithmetic, because doing that is how the ideas
-stick. If you can work all twelve of these, the exam questions will look
-straightforward.</p>
-<p>Every dataset below is small enough to do on paper. A calculator is
-fine.</p>
+and including cumulative distributions. They are <strong>more
+computational than the exam</strong> by design. The exam asks you to
+interpret values, identify equations and read plots; these ask you to
+work the arithmetic behind them.</p>
+<p>Work them by hand. Every dataset is small enough to do on paper, and
+a calculator is fine.</p>
 <hr />
 <div id="problem-1-the-anatomy-of-data" class="section level2">
 <h2>Problem 1 — The anatomy of data</h2>
@@ -918,61 +914,99 @@ inferential? Explain what makes the difference.</p>
 <p><br> <br> <br> <br></p>
 <hr />
 </div>
-<div id="problem-3-summation-notation" class="section level2">
-<h2>Problem 3 — Summation notation</h2>
-<p>Consider the following sample of five observations of a quantitative
-variable <span class="math inline">\(x\)</span>:</p>
+<div id="problem-3-reading-the-formulas" class="section level2">
+<h2>Problem 3 — Reading the formulas</h2>
+<p>On the exam the formulas are provided <strong>unlabeled</strong> —
+the equations only, with no names. This problem is practice at telling
+them apart.</p>
+<p><strong>(a)</strong> Each equation below computes one of the
+quantities in the list. Write the name of the quantity next to its
+equation.</p>
+<blockquote>
+<p>sample mean  ·  population mean  ·  sample proportion  ·  sample
+variance  ·  sample standard deviation  ·  interquartile range</p>
+</blockquote>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:right;">
-<span class="math inline">\(x_1\)</span>
+<th style="text-align:left;">
+Equation
 </th>
-<th style="text-align:right;">
-<span class="math inline">\(x_2\)</span>
+<th style="text-align:left;">
+What it computes
 </th>
-<th style="text-align:right;">
-<span class="math inline">\(x_3\)</span>
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(x_4\)</span>
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(x_5\)</span>
+<th style="text-align:left;">
+Symbol
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
-2
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{n}\sum_{i=1}^{n} x_i\)</span>
 </td>
-<td style="text-align:right;">
-5
+<td style="text-align:left;">
 </td>
-<td style="text-align:right;">
-6
+<td style="text-align:left;">
 </td>
-<td style="text-align:right;">
-9
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\sqrt{\dfrac{1}{n-1}\sum_{i=1}^{n}(x_i -
+\bar{x})^{2}}\)</span>
 </td>
-<td style="text-align:right;">
-13
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(Q3 - Q1\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{N}\sum_{i=1}^{N} x_i\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{\text{number of observations in the
+category}}{n}\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{n-1}\sum_{i=1}^{n}(x_i -
+\bar{x})^{2}\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
 </td>
 </tr>
 </tbody>
 </table>
-<p>Evaluate each of the following. Parts (c) and (d) are
-<strong>not</strong> the same quantity — that is the point of putting
-them next to each other.</p>
+<p><strong>(b)</strong> <em>(notation)</em> Answer each in a few
+words.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Part
-</th>
-<th style="text-align:left;">
-Expression
+Question
 </th>
 <th style="text-align:left;">
 Your answer
@@ -982,73 +1016,41 @@ Your answer
 <tbody>
 <tr>
 <td style="text-align:left;">
-<ol style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(n\)</span>
+What does <span class="math inline">\(n\)</span> stand for?
 </td>
 <td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<ol start="2" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>
+What does <span class="math inline">\(N\)</span> stand for?
 </td>
 <td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<ol start="3" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}\)</span>
+What does the <em>hat</em> on <span class="math inline">\(\hat{p}\)</span> tell you?
 </td>
 <td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<ol start="4" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^{n} x_i^{2}\)</span>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<ol start="5" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\left( \sum_{i=1}^{n} x_i
-\right)^{2}\)</span>
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<ol start="6" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^{n} (x_i - \bar{x})\)</span>
+In <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>, what does
+the <span class="math inline">\(i=1\)</span> below the <span class="math inline">\(\Sigma\)</span> mean?
 </td>
 <td style="text-align:left;">
 </td>
 </tr>
 </tbody>
-</table></li>
-</ol></li>
-</ol></li>
-</ol></li>
-</ol></li>
-</ol></li>
-</ol>
+</table>
+<p><strong>(c)</strong> Now use the notation. Consider the following
+sample of five observations of a quantitative variable <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[X = \{ 2, \ 5, \ 6, \ 9, \ 13
+\}\]</span></p>
+<p>Find <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>, then
+<span class="math inline">\(\bar{x}\)</span>, and then <span class="math inline">\(\sum_{i=1}^{n} (x_i - \bar{x})\)</span>.</p>
 <p><br> <br> <br> <br></p>
 <hr />
 </div>
@@ -1056,7 +1058,12 @@ Your answer
 <h2>Problem 4 — The distribution of a qualitative variable</h2>
 <p>A campus coffee stand recorded the drink ordered by each of 20
 customers one morning:</p>
-<pre><code>## Latte, Drip, Mocha, Latte, Drip, Espresso, Latte, Drip, Latte, Mocha, Drip, Latte, Espresso, Drip, Mocha, Latte, Drip, Latte, Mocha, Latte</code></pre>
+<p><span class="math display">\[X = \{ \text{Latte}, \ \text{Drip}, \
+\text{Mocha}, \ \text{Latte}, \ \text{Drip}, \ \text{Espresso}, \
+\text{Latte}, \ \text{Drip}, \ \text{Latte}, \ \text{Mocha}, \
+\text{Drip}, \ \text{Latte}, \ \text{Espresso}, \ \text{Drip}, \
+\text{Mocha}, \ \text{Latte}, \ \text{Drip}, \ \text{Latte}, \
+\text{Mocha}, \ \text{Latte} \}\]</span></p>
 <p><strong>(a)</strong> Complete the frequency and relative frequency
 table.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1228,7 +1235,9 @@ fewer vehicles? Which column did you read that from?</p>
 <h2>Problem 6 — Binning a continuous variable</h2>
 <p>The following are the times, in seconds, that 16 users took to
 complete a task on a website.</p>
-<pre><code>## 12.4, 14.1, 15.8, 16.2, 17.5, 18, 18.3, 19.1, 20.2, 20.6, 21.7, 22.4, 23.9, 25.1, 26.8, 28.4</code></pre>
+<p><span class="math display">\[X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \
+17.5, \ 18.0, \ 18.3, \ 19.1, \ 20.2, \ 20.6, \ 21.7, \ 22.4, \ 23.9, \
+25.1, \ 26.8, \ 28.4 \}\]</span></p>
 <p><strong>(a)</strong> Using the <strong>square root rule</strong>, how
 many bins <span class="math inline">\(k\)</span> should you use for a
 histogram of these 16 observations?</p>
@@ -1304,7 +1313,8 @@ have determined from the raw data.</p>
 <h2>Problem 7 — Dot plots and stem-and-leaf plots</h2>
 <p>A biologist recorded the number of eggs in each of 15 birds’
 nests:</p>
-<pre><code>## 21, 24, 24, 27, 28, 31, 33, 33, 33, 35, 38, 41, 42, 44, 47</code></pre>
+<p><span class="math display">\[X = \{ 21, \ 24, \ 24, \ 27, \ 28, \ 31,
+\ 33, \ 33, \ 33, \ 35, \ 38, \ 41, \ 42, \ 44, \ 47 \}\]</span></p>
 <p><strong>(a)</strong> Construct a <strong>stem-and-leaf plot</strong>,
 using the tens digit as the stem.</p>
 <pre>  2 |
@@ -1325,7 +1335,8 @@ distribution? Explain.</p>
 <h2>Problem 8 — Center, and what an outlier does to it</h2>
 <p>Consider the following eight observations of a variable <span class="math inline">\(X\)</span>, the number of minutes eight customers
 spent in a shop:</p>
-<pre><code>## 4, 6, 6, 9, 11, 12, 14, 16</code></pre>
+<p><span class="math display">\[X = \{ 4, \ 6, \ 6, \ 9, \ 11, \ 12, \
+14, \ 16 \}\]</span></p>
 <p><strong>(a)</strong> Compute the mean, the median and the mode.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1378,7 +1389,8 @@ Give a one-sentence definition of that word.</p>
 <h2>Problem 9 — Percentiles and quartiles</h2>
 <p>The following are the ages of the 11 members of a community board,
 sorted:</p>
-<pre><code>## 29, 34, 38, 41, 45, 49, 52, 56, 61, 67, 73</code></pre>
+<p><span class="math display">\[X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49,
+\ 52, \ 56, \ 61, \ 67, \ 73 \}\]</span></p>
 <p><strong>(a)</strong> Find the median, <span class="math inline">\(Q2\)</span>.</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><strong>(b)</strong> Find <span class="math inline">\(Q1\)</span> and
@@ -1386,10 +1398,8 @@ sorted:</p>
 halves</strong> we use in this class. Remember that when <span class="math inline">\(n\)</span> is odd the median is <strong>left
 out</strong> of both halves.</p>
 <p><br> <br> <br> <br></p>
-<p><strong>(c)</strong> A classmate uses a graphing calculator and gets
-<span class="math inline">\(Q1 = 39.5\)</span> and <span class="math inline">\(Q3 = 58.5\)</span>. Is the calculator wrong?
-Explain.</p>
-<p><br> <br> <br> <br></p>
+<p><strong>(c)</strong> A twelfth member, aged <span class="math inline">\(58\)</span>, joins the board. Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q2\)</span> and <span class="math inline">\(Q3\)</span> for the new set of 12 ages.</p>
+<p><br> <br> <br> <br> <br></p>
 <p><strong>(d)</strong> What is the <span class="math inline">\(IQR\)</span>, and what does it measure?</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><br> <br></p>
@@ -1402,7 +1412,8 @@ percentile? Answer in a sentence that says what that means.</p>
 <h2>Problem 10 — Deviations, variance and standard deviation</h2>
 <p>A quality inspector measured the weight, in grams, of six packets
 from a filling machine:</p>
-<pre><code>## 48, 51, 52, 55, 57, 59</code></pre>
+<p><span class="math display">\[X = \{ 48, \ 51, \ 52, \ 55, \ 57, \ 59
+\}\]</span></p>
 <p><strong>(a)</strong> Compute the sample mean <span class="math inline">\(\bar{x}\)</span>.</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><strong>(b)</strong> Complete the deviation table below, then add up
@@ -1529,7 +1540,8 @@ deviation, and why?</p>
 <h2>Problem 11 — Five-number summary, boxplots and outliers</h2>
 <p>A clinic recorded the number of days between a referral and an
 appointment for 12 patients:</p>
-<pre><code>## 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 19, 58</code></pre>
+<p><span class="math display">\[X = \{ 3, \ 5, \ 6, \ 8, \ 9, \ 11, \
+12, \ 14, \ 15, \ 17, \ 19, \ 58 \}\]</span></p>
 <p><strong>(a)</strong> Give the five-number summary. Use the method of
 halves for the quartiles.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1700,12 +1712,12 @@ should the librarian report, and why?</p>
 </div>
 <div id="check-your-work" class="section level2">
 <h2>Check your work</h2>
-<p>Full worked solutions are posted alongside these problems under
-<strong>Exam Study Guides → Exam 1 Review → Solutions</strong>. Work
-every problem through before you look at them – reading a solution feels
-like understanding in a way that doing the problem does not.</p>
-<p>If a quartile you compute disagrees with what your calculator says,
-re-read problem 9(c) before assuming you made a mistake.</p>
+<p>Worked solutions are posted under <strong>Exam Study Guides → Exam 1
+Review → Solutions</strong>. Work each problem through before looking at
+them.</p>
+<p>Every quartile on this exam uses the method of halves. Problem 9
+works it both ways: with an odd <span class="math inline">\(n\)</span>,
+where the median is dropped, and with an even <span class="math inline">\(n\)</span>, where it is not.</p>
 </div>
 
 <!--

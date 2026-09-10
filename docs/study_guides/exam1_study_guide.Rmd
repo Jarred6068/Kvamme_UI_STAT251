@@ -20,17 +20,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # How to prepare
 
-The exam asks you to **interpret** values, **identify** the right equation, and **choose**
-the right summary for a distribution -- not to grind through long calculations. Where a
-number is needed it will be given to you, or the arithmetic will be simple enough to do in
-your head.
+The exam asks you to **interpret** values, **identify** the correct equation, and **choose**
+the right summary for a distribution. Long calculations are not required: where a number is
+needed it is given, or the arithmetic is simple enough to do in your head.
 
-That does **not** mean you can skip the computation while studying. Working the mechanics
-by hand is how you learn what these quantities actually are, and you cannot interpret a
-standard deviation you have never computed. Work the
-[Exam 1 Review Problems](../Review_problems/exam1_review_problems.html) all the way through
--- they are deliberately more computational than the exam -- and then check yourself against
-the [solutions](../Review_problems/exam1_review_problems_solns.html).
+Study by computing anyway. Work the
+[Exam 1 Review Problems](../Review_problems/exam1_review_problems.html) through, then check
+the [solutions](../Review_problems/exam1_review_problems_solns.html). They are more
+computational than the exam by design.
 
 # Content To Study
 
@@ -80,15 +77,11 @@ the [solutions](../Review_problems/exam1_review_problems_solns.html).
 
 # Formulas on the exam
 
-Notes are not permitted, so the formulas below **will be displayed on the projector during
-the exam**. There is one catch, and it matters:
+Notes are not permitted. The formulas below will be displayed on the projector during the
+exam, **unlabeled** -- the equations only, with no names or descriptions.
 
-> **They will be shown unlabeled.** No names, no descriptions -- just the equations.
-
-Having a formula in front of you is not the same as knowing which one it is. You still need
-to be able to look at an expression and recognize it as the population mean rather than the
-sample mean, or the variance rather than the standard deviation. Several questions turn on
-exactly that. Practice reading these until you can tell them apart at a glance:
+You must be able to identify each one: the population mean from the sample mean, the
+variance from the standard deviation. Several questions depend on it.
 
 \[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \mu = \frac{1}{N} \sum_{i=1}^N x_i\]
 
@@ -102,5 +95,4 @@ exactly that. Practice reading these until you can tell them apart at a glance:
 
 \[x < Q1 - 1.5 \times (Q3 - Q1), \ \  x > Q3 + 1.5\times(Q3-Q1)\]
 
-A good self-test: cover the left-hand side of each line above and see whether you can still
-name what is on the right.
+Self-test: cover the left-hand side of each line above and name what is on the right.

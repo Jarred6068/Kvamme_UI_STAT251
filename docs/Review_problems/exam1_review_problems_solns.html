@@ -647,17 +647,15 @@ display: none;
   answer from the same vector the question prints, and stopifnot() anything you
   also state in prose.
 -->
-<p>These are the worked solutions. Answers are shown <span style="color: red;">in red</span>.</p>
+<p>Worked solutions. Answers are shown <span style="color: red;">in
+red</span>.</p>
 <p>These problems cover everything on Exam 1: Weeks 1 through 3, up to
-and including cumulative distributions. They are deliberately
-<strong>more computational than the exam</strong>. The exam is delivered
-through Canvas and asks you to interpret values, recognize equations and
-read plots rather than to grind through arithmetic; these problems ask
-you to grind through the arithmetic, because doing that is how the ideas
-stick. If you can work all twelve of these, the exam questions will look
-straightforward.</p>
-<p>Every dataset below is small enough to do on paper. A calculator is
-fine.</p>
+and including cumulative distributions. They are <strong>more
+computational than the exam</strong> by design. The exam asks you to
+interpret values, identify equations and read plots; these ask you to
+work the arithmetic behind them.</p>
+<p>Work them by hand. Every dataset is small enough to do on paper, and
+a calculator is fine.</p>
 <hr />
 <div id="problem-1-the-anatomy-of-data" class="section level2">
 <h2>Problem 1 — The anatomy of data</h2>
@@ -956,61 +954,119 @@ you are claiming</i>: whether the conclusion stops at the sample or
 extends beyond it.</span></p>
 <hr />
 </div>
-<div id="problem-3-summation-notation" class="section level2">
-<h2>Problem 3 — Summation notation</h2>
-<p>Consider the following sample of five observations of a quantitative
-variable <span class="math inline">\(x\)</span>:</p>
+<div id="problem-3-reading-the-formulas" class="section level2">
+<h2>Problem 3 — Reading the formulas</h2>
+<p>On the exam the formulas are provided <strong>unlabeled</strong> —
+the equations only, with no names. This problem is practice at telling
+them apart.</p>
+<p><strong>(a)</strong> Each equation below computes one of the
+quantities in the list. Write the name of the quantity next to its
+equation.</p>
+<blockquote>
+<p>sample mean  ·  population mean  ·  sample proportion  ·  sample
+variance  ·  sample standard deviation  ·  interquartile range</p>
+</blockquote>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:right;">
-<span class="math inline">\(x_1\)</span>
+<th style="text-align:left;">
+Equation
 </th>
-<th style="text-align:right;">
-<span class="math inline">\(x_2\)</span>
+<th style="text-align:left;">
+What it computes
 </th>
-<th style="text-align:right;">
-<span class="math inline">\(x_3\)</span>
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(x_4\)</span>
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(x_5\)</span>
+<th style="text-align:left;">
+Symbol
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
-2
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{n}\sum_{i=1}^{n} x_i\)</span>
 </td>
-<td style="text-align:right;">
-5
+<td style="text-align:left;">
+<span style="color: red;">sample mean</span>
 </td>
-<td style="text-align:right;">
-6
+<td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(\bar{x}\)</span></span>
 </td>
-<td style="text-align:right;">
-9
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\sqrt{\dfrac{1}{n-1}\sum_{i=1}^{n}(x_i -
+\bar{x})^{2}}\)</span>
 </td>
-<td style="text-align:right;">
-13
+<td style="text-align:left;">
+<span style="color: red;">sample standard deviation</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(s\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(Q3 - Q1\)</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;">interquartile range</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(IQR\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{N}\sum_{i=1}^{N} x_i\)</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;">population mean</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(\mu\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{\text{number of observations in the
+category}}{n}\)</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;">sample proportion</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(\hat{p}\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{n-1}\sum_{i=1}^{n}(x_i -
+\bar{x})^{2}\)</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;">sample variance</span>
+</td>
+<td style="text-align:left;">
+<span style="color: red;"><span class="math inline">\(s^2\)</span></span>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Evaluate each of the following. Parts (c) and (d) are
-<strong>not</strong> the same quantity — that is the point of putting
-them next to each other.</p>
+<p><span style="color: red;">Three things give each one away. The
+<b>divisor</b>: <span class="math inline">\(n\)</span> for a sample
+mean, <span class="math inline">\(N\)</span> for a population mean,
+<span class="math inline">\(n-1\)</span> for a variance. The <b>square
+root</b>, which is the only difference between <span class="math inline">\(s^2\)</span> and <span class="math inline">\(s\)</span>. And whether the deviations are
+<b>squared</b> at all. <br><br>The two that get confused most often are
+the middle pair: <span class="math inline">\(s^2\)</span> and <span class="math inline">\(s\)</span> are the same expression apart from the
+root, so check for it every time.</span></p>
+<p><strong>(b)</strong> <em>(notation)</em> Answer each in a few
+words.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Part
-</th>
-<th style="text-align:left;">
-Expression
+Question
 </th>
 <th style="text-align:left;">
 Your answer
@@ -1020,96 +1076,70 @@ Your answer
 <tbody>
 <tr>
 <td style="text-align:left;">
-<ol style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(n\)</span>
+What does <span class="math inline">\(n\)</span> stand for?
 </td>
 <td style="text-align:left;">
-<span style="color: red;">5</span>
+<span style="color: red;">the number of observations in the
+<strong>sample</strong></span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<ol start="2" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>
+What does <span class="math inline">\(N\)</span> stand for?
 </td>
 <td style="text-align:left;">
-<span style="color: red;">35</span>
+<span style="color: red;">the number of observations in the
+<strong>population</strong></span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<ol start="3" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}\)</span>
+What does the <em>hat</em> on <span class="math inline">\(\hat{p}\)</span> tell you?
 </td>
 <td style="text-align:left;">
-<span style="color: red;">7</span>
+<span style="color: red;">that it is computed from a sample, and
+estimates the parameter <span class="math inline">\(p\)</span></span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<ol start="4" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^{n} x_i^{2}\)</span>
+In <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>, what does
+the <span class="math inline">\(i=1\)</span> below the <span class="math inline">\(\Sigma\)</span> mean?
 </td>
 <td style="text-align:left;">
-<span style="color: red;">315</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<ol start="5" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\left( \sum_{i=1}^{n} x_i
-\right)^{2}\)</span>
-</td>
-<td style="text-align:left;">
-<span style="color: red;">1225</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<ol start="6" style="list-style-type: lower-alpha">
-<li></td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^{n} (x_i - \bar{x})\)</span>
-</td>
-<td style="text-align:left;">
-<span style="color: red;">0</span>
+<span style="color: red;">start the count at the first observation and
+add up to the <span class="math inline">\(n^{th}\)</span></span>
 </td>
 </tr>
 </tbody>
-</table></li>
-</ol></li>
-</ol></li>
-</ol></li>
-</ol></li>
-</ol></li>
-</ol>
-<p><span style="color: red;">For (d), square each observation first and
-then add: <span class="math inline">\(4 + 25 + 36 + 81 + 169 =
-315\)</span>. For (e), add first and then square the single total: <span class="math inline">\(35^2 = 1225\)</span>. The exponent inside the sum
-and the exponent outside it do completely different things. <br><br>For
-(f), the deviations are <span class="math inline">\(-5, -2, -1, 2,
-6\)</span>, which sum to <span class="math inline">\(0\)</span>. This is
-not a coincidence about these five numbers – <b>the deviations from the
-mean always sum to zero</b>, for every dataset. It is the reason we
-cannot simply average the deviations to measure spread, and the reason
-the variance squares them first.</span></p>
+</table>
+<p><strong>(c)</strong> Now use the notation. Consider the following
+sample of five observations of a quantitative variable <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[X = \{ 2, \ 5, \ 6, \ 9, \ 13
+\}\]</span></p>
+<p>Find <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>, then
+<span class="math inline">\(\bar{x}\)</span>, and then <span class="math inline">\(\sum_{i=1}^{n} (x_i - \bar{x})\)</span>.</p>
+<p><span style="color: red;"><span class="math inline">\(\sum_{i=1}^{n}
+x_i = 2 + 5 + 6 + 9 + 13 = 35\)</span>, so <span class="math inline">\(\bar{x} = 35/5 = 7\)</span>. <br><br>The
+deviations are <span class="math inline">\(-5, -2, -1, 2, 6\)</span>,
+and <span class="math inline">\(\sum_{i=1}^{n}(x_i - \bar{x}) =
+0\)</span>. <br><br>That last result is not a coincidence about these
+five numbers – <b>the deviations from the mean always sum to zero</b>,
+for every dataset, because the mean is the balancing point. It is the
+reason we cannot simply average the deviations to measure spread, and
+the reason the variance squares them first.</span></p>
 <hr />
 </div>
 <div id="problem-4-the-distribution-of-a-qualitative-variable" class="section level2">
 <h2>Problem 4 — The distribution of a qualitative variable</h2>
 <p>A campus coffee stand recorded the drink ordered by each of 20
 customers one morning:</p>
-<pre><code>## Latte, Drip, Mocha, Latte, Drip, Espresso, Latte, Drip, Latte, Mocha, Drip, Latte, Espresso, Drip, Mocha, Latte, Drip, Latte, Mocha, Latte</code></pre>
+<p><span class="math display">\[X = \{ \text{Latte}, \ \text{Drip}, \
+\text{Mocha}, \ \text{Latte}, \ \text{Drip}, \ \text{Espresso}, \
+\text{Latte}, \ \text{Drip}, \ \text{Latte}, \ \text{Mocha}, \
+\text{Drip}, \ \text{Latte}, \ \text{Espresso}, \ \text{Drip}, \
+\text{Mocha}, \ \text{Latte}, \ \text{Drip}, \ \text{Latte}, \
+\text{Mocha}, \ \text{Latte} \}\]</span></p>
 <p><strong>(a)</strong> Complete the frequency and relative frequency
 table.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1322,7 +1352,9 @@ through 20 are all 2s.</span></p>
 <h2>Problem 6 — Binning a continuous variable</h2>
 <p>The following are the times, in seconds, that 16 users took to
 complete a task on a website.</p>
-<pre><code>## 12.4, 14.1, 15.8, 16.2, 17.5, 18, 18.3, 19.1, 20.2, 20.6, 21.7, 22.4, 23.9, 25.1, 26.8, 28.4</code></pre>
+<p><span class="math display">\[X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \
+17.5, \ 18.0, \ 18.3, \ 19.1, \ 20.2, \ 20.6, \ 21.7, \ 22.4, \ 23.9, \
+25.1, \ 26.8, \ 28.4 \}\]</span></p>
 <p><strong>(a)</strong> Using the <strong>square root rule</strong>, how
 many bins <span class="math inline">\(k\)</span> should you use for a
 histogram of these 16 observations?</p>
@@ -1419,7 +1451,8 @@ give you.</span></p>
 <h2>Problem 7 — Dot plots and stem-and-leaf plots</h2>
 <p>A biologist recorded the number of eggs in each of 15 birds’
 nests:</p>
-<pre><code>## 21, 24, 24, 27, 28, 31, 33, 33, 33, 35, 38, 41, 42, 44, 47</code></pre>
+<p><span class="math display">\[X = \{ 21, \ 24, \ 24, \ 27, \ 28, \ 31,
+\ 33, \ 33, \ 33, \ 35, \ 38, \ 41, \ 42, \ 44, \ 47 \}\]</span></p>
 <p><strong>(a)</strong> Construct a <strong>stem-and-leaf plot</strong>,
 using the tens digit as the stem.</p>
 <pre style="color: red;">
@@ -1449,7 +1482,8 @@ falling in the gap between them, where the data are sparsest.</span></p>
 <h2>Problem 8 — Center, and what an outlier does to it</h2>
 <p>Consider the following eight observations of a variable <span class="math inline">\(X\)</span>, the number of minutes eight customers
 spent in a shop:</p>
-<pre><code>## 4, 6, 6, 9, 11, 12, 14, 16</code></pre>
+<p><span class="math display">\[X = \{ 4, \ 6, \ 6, \ 9, \ 11, \ 12, \
+14, \ 16 \}\]</span></p>
 <p><strong>(a)</strong> Compute the mean, the median and the mode.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1522,7 +1556,8 @@ observation, or only positions in the ordered data.</span></p>
 <h2>Problem 9 — Percentiles and quartiles</h2>
 <p>The following are the ages of the 11 members of a community board,
 sorted:</p>
-<pre><code>## 29, 34, 38, 41, 45, 49, 52, 56, 61, 67, 73</code></pre>
+<p><span class="math display">\[X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49,
+\ 52, \ 56, \ 61, \ 67, \ 73 \}\]</span></p>
 <p><strong>(a)</strong> Find the median, <span class="math inline">\(Q2\)</span>.</p>
 <p><span style="color: red;"><span class="math inline">\(Q2 =
 49\)</span>, the <span class="math inline">\(6^{th}\)</span> of 11
@@ -1536,21 +1571,20 @@ out</strong> of both halves.</p>
 upper half is <span class="math inline">\(\{52, 56, 61, 67,
 73\}\)</span>. Each has five values, so each median is its middle value:
 <br><br><span class="math inline">\(Q1 = 38\)</span> years and <span class="math inline">\(Q3 = 61\)</span> years.</span></p>
-<p><strong>(c)</strong> A classmate uses a graphing calculator and gets
-<span class="math inline">\(Q1 = 39.5\)</span> and <span class="math inline">\(Q3 = 58.5\)</span>. Is the calculator wrong?
-Explain.</p>
-<p><span style="color: red;">No – it is using a <b>different
-definition</b>. A sample quartile has several accepted mathematical
-definitions and every piece of software has to pick one. The two common
-families are interpolation methods, which walk to a position in the
-ordered data and interpolate between neighbouring values, and
-median-of-halves methods, which differ only in whether the median is
-kept in the halves. Keeping it in gives <b>Tukey’s hinges</b>, which is
-what many boxplot routines draw. <br><br>The disagreement <i>only</i>
-appears when <span class="math inline">\(n\)</span> is odd, because that
-is the only time there is a middle value to argue about. On this exam,
-use the method of halves with the median excluded, and apply it
-consistently.</span></p>
+<p><strong>(c)</strong> A twelfth member, aged <span class="math inline">\(58\)</span>, joins the board. Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q2\)</span> and <span class="math inline">\(Q3\)</span> for the new set of 12 ages.</p>
+<p><span style="color: red;">The ordered ages are now <span class="math inline">\(\{29, 34, 38, 41, 45, 49, 52, 56, 58, 61, 67,
+73\}\)</span>. <br><br>With <span class="math inline">\(n = 12\)</span>
+there is no single middle value, so the median is the average of the
+<span class="math inline">\(6^{th}\)</span> and <span class="math inline">\(7^{th}\)</span> ages: <span class="math inline">\(Q2 = (49 + 52)/2 = 50.5\)</span> years. Because
+<span class="math inline">\(n\)</span> is even there is nothing to leave
+out – the data splits cleanly into two halves of six. <br><br>The lower
+half is <span class="math inline">\(\{29, 34, 38, 41, 45, 49\}\)</span>,
+so <span class="math inline">\(Q1 = (38 + 41)/2 = 39.5\)</span> years.
+<br>The upper half is <span class="math inline">\(\{52, 56, 58, 61, 67,
+73\}\)</span>, so <span class="math inline">\(Q3 = (58 + 61)/2 =
+59.5\)</span> years. <br><br>Compare this with part (b): the method is
+the same both times. The only thing that changes is that an odd <span class="math inline">\(n\)</span> leaves you a middle value to drop, and
+an even <span class="math inline">\(n\)</span> does not.</span></p>
 <p><strong>(d)</strong> What is the <span class="math inline">\(IQR\)</span>, and what does it measure?</p>
 <p><span style="color: red;"><span class="math inline">\(IQR = 61 - 38 =
 23\)</span> years</span></p>
@@ -1570,7 +1604,8 @@ below that age, and only one member is older.</span></p>
 <h2>Problem 10 — Deviations, variance and standard deviation</h2>
 <p>A quality inspector measured the weight, in grams, of six packets
 from a filling machine:</p>
-<pre><code>## 48, 51, 52, 55, 57, 59</code></pre>
+<p><span class="math display">\[X = \{ 48, \ 51, \ 52, \ 55, \ 57, \ 59
+\}\]</span></p>
 <p><strong>(a)</strong> Compute the sample mean <span class="math inline">\(\bar{x}\)</span>.</p>
 <p><span style="color: red;"><span class="math inline">\(\bar{x} = 322/6
 \approx 53.67\)</span> grams</span></p>
@@ -1733,7 +1768,8 @@ never used as <i>the</i> measure of spread.</span></p>
 <h2>Problem 11 — Five-number summary, boxplots and outliers</h2>
 <p>A clinic recorded the number of days between a referral and an
 appointment for 12 patients:</p>
-<pre><code>## 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 19, 58</code></pre>
+<p><span class="math display">\[X = \{ 3, \ 5, \ 6, \ 8, \ 9, \ 11, \
+12, \ 14, \ 15, \ 17, \ 19, \ 58 \}\]</span></p>
 <p><strong>(a)</strong> Give the five-number summary. Use the method of
 halves for the quartiles.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1966,12 +2002,10 @@ describes it well.</span></p>
 </div>
 <div id="a-note-on-the-exam" class="section level2">
 <h2>A note on the exam</h2>
-<p>These solutions do far more arithmetic than the exam will ask of you.
-Exam 1 is delivered through Canvas and asks you to <em>interpret</em>
-values, <em>recognize</em> equations and <em>read</em> plots. The
-formulas will be shown during the exam, but <strong>unlabeled</strong> –
-so knowing which formula is which is on you, and that is what working
-these problems by hand builds.</p>
+<p>These solutions do more arithmetic than the exam requires. Exam 1
+asks you to interpret values, identify equations and read plots. The
+formulas are shown during the exam, but <strong>unlabeled</strong> –
+identifying which is which is on you.</p>
 </div>
 
 <!--
