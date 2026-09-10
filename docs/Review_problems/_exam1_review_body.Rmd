@@ -924,7 +924,7 @@ workspace(4)
 
 ---
 
-## Problem 12 — Cumulative distributions, and choosing what to report
+## Problem 12 — Cumulative distributions
 
 A librarian recorded the number of books checked out by each of 20 patrons in one hour.
 
@@ -938,7 +938,8 @@ raw12 <- rep(x12, f12)
 q12 <- q_halves(raw12)
 stopifnot(sum(f12) == 20, length(raw12) == 20,
           abs(crf12[3] - 0.65) < 1e-12,
-          q12[["Q1"]] == 1, q12[["Q2"]] == 2, q12[["Q3"]] == 3)
+          q12[["Q1"]] == 1, q12[["Q2"]] == 2, q12[["Q3"]] == 3,
+          sum(x12 * f12) == 42, mean(raw12) == 2.1)
 ```
 
 **(a)** Complete the table.
@@ -988,20 +989,16 @@ workspace(4)
 
 `r ans("$0.65$, read straight off the $CRF$ column at $x = 2$")`
 
-**(e)** This distribution is skewed right. Which measure of **center** and which measure of
-**spread** should the librarian report, and why?
+**(e)** Describe the shape of this distribution, and say whether the mean will be greater
+than, less than, or equal to the median.
 
 ```{r p12-e, results='asis'}
-why(paste("The <b>median</b> and the <b>IQR</b>. Both are resistant -- they depend on",
-          "positions in the ordered data rather than on the value of every observation --",
-          "so the patrons at the high end do not distort them. The mean and standard",
-          "deviation would both be pulled upward by the right tail.",
-          "<br><br>The important part is that these measures come in <b>matched pairs</b>:",
-          "mean with $s$, median with IQR. Reporting a mean next to an IQR describes the",
-          "center with a summary the extreme values have inflated and the spread with one",
-          "they have not touched, so the two numbers describe different pictures of the",
-          "same variable and neither describes it well."))
-workspace(4)
+why(paste("The distribution is <b>skewed right</b>: the frequencies rise to a peak at",
+          "2 books and then trail off toward the larger values.",
+          "<br><br>A right skew pulls the mean toward the long tail while leaving the",
+          "median where it is, so the <b>mean is greater than the median</b>. Here the",
+          "mean is $42/20 = 2.1$ books against a median of 2."))
+workspace(3)
 ```
 
 ---
