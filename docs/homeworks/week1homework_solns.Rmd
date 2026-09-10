@@ -435,11 +435,16 @@ $$3.3, 3.8, 4.0, 4.8, 4.8, 5.1, 5.2, 5.6, 5.7, 6.9$$
 Use the data to answer parts a-b
 
 * **(a)** Given the data, compute the $40^{th}$ percentile of $X$
-<span class="soln">With $n = 10$ observations, the $40^{th}$ percentile falls at position $0.40 \times 10 = 4$. Because this lands exactly on a data position, we average the $4^{th}$ and $5^{th}$ values - both of which are $4.8$:
-$$P_{40} = \frac{4.8+4.8}{2} = 4.8$$
-(Counting the $4^{th}$ value directly gives the same answer here.)</span>
+<span class="soln">The $p^{th}$ percentile is the value with $p\%$ of the observations **at or below** it, so build up the cumulative relative frequency and find where it passes $0.40$: $CRF(3.3) = 0.10$, $CRF(3.8) = 0.20$, $CRF(4.0) = 0.30$, then $CRF(4.8) = 0.50$ because $4.8$ occurs twice.
+No value has a cumulative relative frequency of exactly $0.40$ - it jumps straight from $0.30$ at $4.0$ to $0.50$ at $4.8$ - so the $40^{th}$ percentile is the value at that jump:
+$$P_{40} = 4.8$$
+Checking against the definition: only $3$ of the $10$ observations ($30\%$) are at or below $4.0$, while $5$ of them ($50\%$) are at or below $4.8$, so $4.8$ is the smallest value with at least $40\%$ of the data at or below it.</span>
 * **(b)** Compute Interquartile Range (IQR) range of $X$
-<span class="soln">$$IQR = 5.6 - 4.0 = 1.6$$</span>
+<span class="soln">Use the **method of halves**. Here $n = 10$ is even, so there is no middle value to leave out - the data splits straight down the middle into two halves of five:
+$$\underbrace{3.3, \ 3.8, \ 4.0, \ 4.8, \ 4.8}_{\text{lower half}} \qquad \underbrace{5.1, \ 5.2, \ 5.6, \ 5.7, \ 6.9}_{\text{upper half}}$$
+$Q1$ is the median of the lower half and $Q3$ is the median of the upper half. Each half has five values, so each median is just its middle (third) value:
+$$Q1 = 4.0 \qquad Q3 = 5.6$$
+$$IQR = Q3 - Q1 = 5.6 - 4.0 = 1.6$$</span>
 
 
 ${\bf (15)}$ Consider the following $n = 20$ observations of several popular cereal brands and answer questions a - g about the variable "Sugar (g)":

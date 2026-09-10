@@ -863,8 +863,8 @@ measures the age of each sampled bicycle and finds a mean age of 6.2
 years.</p>
 <p><strong>(a)</strong> Give the values of <span class="math inline">\(N\)</span> and <span class="math inline">\(n\)</span>.</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
-<p><strong>(b)</strong> Compute the sample proportion of bicycles with
-no working lights. Which symbol denotes it?</p>
+<p><strong>(b)</strong> Show how to compute the sample proportion of
+bicycles with no working lights. Which symbol denotes it?</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><br> <br></p>
 <p><strong>(c)</strong> For each quantity, say whether it is a
@@ -1053,8 +1053,7 @@ What does the <em>hat</em> on <span class="math inline">\(\hat{p}\)</span> tell 
 </tr>
 <tr>
 <td style="text-align:left;">
-In <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>, what does
-the <span class="math inline">\(i=1\)</span> below the <span class="math inline">\(\Sigma\)</span> mean?
+What does <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span> mean?
 </td>
 <td style="text-align:left;">
 </td>
@@ -1168,7 +1167,7 @@ responses are summarized below.</p>
 <th style="text-align:right;">
 Vehicles <span class="math inline">\(x\)</span>
 </th>
-<th style="text-align:right;">
+<th style="text-align:left;">
 Frequency <span class="math inline">\(F(x)\)</span>
 </th>
 <th style="text-align:left;">
@@ -1184,34 +1183,38 @@ Cumulative relative frequency <span class="math inline">\(CRF(x)\)</span>
 <td style="text-align:right;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 3
 </td>
 <td style="text-align:left;">
+0.12
 </td>
 <td style="text-align:left;">
+0.12
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 9
 </td>
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
+0.48
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 8
 </td>
 <td style="text-align:left;">
+0.32
 </td>
 <td style="text-align:left;">
 </td>
@@ -1220,19 +1223,19 @@ Cumulative relative frequency <span class="math inline">\(CRF(x)\)</span>
 <td style="text-align:right;">
 3
 </td>
-<td style="text-align:right;">
-4
-</td>
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+0.96
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 4
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 1
 </td>
 <td style="text-align:left;">
@@ -1242,26 +1245,28 @@ Cumulative relative frequency <span class="math inline">\(CRF(x)\)</span>
 </tr>
 </tbody>
 </table>
-<p><strong>(a)</strong> Complete the relative frequency and cumulative
-relative frequency columns.</p>
-<p><strong>(b)</strong> Compute the mean number of vehicles using the
-<strong>frequency</strong> formula, <span class="math inline">\(\bar{x}
-= \frac{1}{n}\sum_{x} x\,F(x)\)</span>.</p>
+<p><strong>(a)</strong> Fill in the blank entries in the table. Remember
+that the frequencies must add to <span class="math inline">\(n\)</span>,
+the relative frequencies must add to <span class="math inline">\(1\)</span>, and each cumulative relative frequency
+is the running total of the relative frequencies above it.</p>
 <p><br> <br> <br></p>
-<p><strong>(c)</strong> Now compute it again using the <strong>relative
-frequency</strong> formula, <span class="math inline">\(\bar{x} =
-\sum_{x} x\,RF(x)\)</span>, and confirm you get the same answer.</p>
+<p><strong>(b)</strong> Show how to compute the mean number of vehicles
+using the <strong>frequency</strong> from the table above.</p>
+<p><br> <br> <br></p>
+<p><strong>(c)</strong> Now show how to compute the mean again using the
+<strong>relative frequency</strong> from the table above, and confirm
+you get the same answer.</p>
 <p><br> <br> <br></p>
 <p><strong>(d)</strong> What proportion of these households own 2 or
-fewer vehicles? Which column did you read that from?</p>
+fewer vehicles?</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
-<p><strong>(e)</strong> What is the median number of vehicles owned?
-(You can read this off the cumulative relative frequency column.)</p>
+<p><strong>(e)</strong> Use the table to find the median number of
+vehicles owned.</p>
 <p><br> <br> <br></p>
 <hr />
 </div>
-<div id="problem-6-binning-a-continuous-variable" class="section level2">
-<h2>Problem 6 — Binning a continuous variable</h2>
+<div id="problem-6-binned-frequency-tables-and-histograms" class="section level2">
+<h2>Problem 6 — Binned frequency tables and histograms</h2>
 <p>The following are the times, in seconds, that 16 users took to
 complete a task on a website.</p>
 <p><span class="math display">\[\begin{gathered}
@@ -1269,13 +1274,7 @@ X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \ 17.5, \ 18.0, \ 18.3, \ 19.1, \
 20.2, \ 20.6, \\
 21.7, \ 22.4, \ 23.9, \ 25.1, \ 26.8, \ 28.4 \}
 \end{gathered}\]</span></p>
-<p><strong>(a)</strong> Using the <strong>square root rule</strong>, how
-many bins <span class="math inline">\(k\)</span> should you use for a
-histogram of these 16 observations?</p>
-<p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
-<p><strong>(b)</strong> Compute the bin width <span class="math inline">\(w\)</span> implied by that choice, using <span class="math inline">\(w = \frac{\max x - \min x}{k}\)</span>.</p>
-<p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
-<p><strong>(c)</strong> Complete the frequency table using the intervals
+<p><strong>(a)</strong> Complete the frequency table using the intervals
 given.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1330,13 +1329,19 @@ Relative frequency <span class="math inline">\(RF(x)\)</span>
 </tr>
 </tbody>
 </table>
-<p><strong>(d)</strong> Draw the histogram on the axes below.</p>
+<p><strong>(b)</strong> Draw the histogram on the axes below.</p>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABCAAAALZCAMAAABRf6C8AAABVlBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrYzMzM6AAA6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kJA6kLY6kNtNTU1NTW5NTY5Nbm5Nbo5NbqtNjshmAABmADpmOgBmOjpmZjpmZmZmZpBmkGZmkJBmkLZmkNtmtttmtv9uTU1ubk1ubm5ubo5ujqtujshuq+SOTU2Obk2Obm6Oq6uOq8iOq+SOyOSOyP+QOgCQOjqQZjqQZmaQkDqQkGaQkLaQtraQttuQ2/+rbk2rbm6rjm6ryOSr5P+zs7O2ZgC2Zjq2kDq2kGa2tra2ttu229u22/+2///Ijk3Ijm7Iq27IyKvI5P/I///bkDrbkGbbtmbbtpDbtrbb27bb29vb2//b///kq27kyI7kyKvk5Mjk///r6+v/tmb/yI7/25D/27b/29v/5Kv/5Mj/5OT//7b//8j//9v//+T///9OL4fKAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO2d/WMc5Xmu19g5IMzBnHhE/REI7SFBbbBNek4gcNpSl4AJJCBa40IIFtSyDHZtSf//L2c/ZndnZufRvuvnfe7RDNf9A0ba0XvNrdV7ab41OiaEECOjrleAEHJ6gyAIIWYQBCHEDIIghJhBEIQQMwiCEGIGQRBCzCAIQogZBEEIMYMgCCFmEAQhxAyCIISYQRCEEDNZBfEcIaTniRRE8pL7+zm5a1gyEKV8KB1J+E7VuB1hN+AiiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMJKFkEcfbFTFH/zu9XBk0dgLnlZMhCCyMjtCCsWxKMbxTTXVgZPHoK55GXJQAgiI7cjrFYQRzeLS7ePj/692P6wOXjyGMwlL0sGQhAZuR1htYI4KF7+cvLvXnGlOXjyGMwlL0sGQhAZuR1hpYIYb0C8bQ2ePAhzycuSgRBERm5HWKkgntyYbUC0DZ48CHPJy5KBEERGbkdYqSAe7ly+993fF8WlP1QGLfNRavb3kxftTyjVlwyylJ1N6mYRxAezsxjXEUQtlOpLBlnKjlYQB5MTnPeOj77gLEYTRCkfSkdiF8NKFkHMNh12OYvRAFHKh9KREISVHLsY5ZbD5GBEY/DkQZhLXpYMhCAycjvCigVRnsVY/M9y8ORBmEtelgyEIDJyO8KKr4MotyAOCrYg6iBK+VA6EoKwkuFKyvmxh93laYz54MljMJe8LBkIQWTkdoTVCuLhTvHm7WPOYqyCKOVD6UgIwkqOuzkPdqaXQWyvXHGNIGQZYikEEYVVPw/i0QdjRfzm9urgySMwl7wsGQhBZOR2hFULwhw8eUnmkpclAyGIjNyOsAjiRJYMRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsBIriH1CSJ/DFkQgiFI+lI7EFoQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwkoOQTy5UUzz8pfNwZOHYC55WTIQgsjI7QgrFsTDHQTRCqKUD6UjIQgrOQRxUFwxBk8egrnkZclACCIjtyOsWBC7xdvG4MlDMJe8LBkIQWTkdoTVCuLo5vaHxuDJYzCXvCwZCEFk5HaE1QriyY1L//FWUfzm9urgyWMwl7wsGQhBZOR2hNUKYn6Mcrmj8dw8H6Vmfz950f6EUn3JIEvZ2aRuBkEcFMW1e8f//UGx2NNAENNQqi8ZZCk7YkHslScxdovrjVfYxZBliKXYxYjCdnMl5UFx+V5j8OSvZS55WTIQgsjI7QjbjSAe7jSvlEIQsgyxFIKIwnYlCLYg6iBK+VA6EoKw4hfE0c3y9MXqBZUIQpYhlkIQUVjtFsTuTAwLUVQGTx6DueRlyUAIIiO3I6z8Oohr944fvbVyjBJBqEjDLIUgorDiYxB75c2cK5dSIghZhlgKQURh1QcpH/22KLavNbcfEASlfCgdCUFY4YlSgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCuxgtgnhPQ5bEEEgijlQ+lIbEFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKxkE8TDncv3VgZP/mrmkpclAyGIjNyOsB0I4uhmgSCaIEr5UDoSgrCSSxB7BYJYAVHKh9KREISVTIJ4uIMgVkGU8qF0JARhJY8gxjsY/8gxiBUQpXwoHQlBWMkjiN3iCgcpV0GU8qF0JARhJYsgDsa7F1VBPDfPR6nZ309etD+hVF8yyFJ2NqmbQxBPbmx/eIwgVkKpvmSQpeyoBbFbXOc6iDYQpXwoHYldDCsZBLE3PX+BIFZBlPKhdCQEYcUviIc74x0MBNEGopQPpSMhCCt+QewVi7z8ZWPw5EGYS16WDIQgMnI7wiKIE1kyEKV8KB0JQVjhZq1AEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKT5QKBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCElTRBPP7FS98+xYogCFmGWApBRGHzC+LqaHT29bubrgiCkGWIpRBEFDa7IA4/Hk1y7v3NHIEgZBliKQQRhY04BvHNq1NHvPD+BiuCIGQZYikEEYUNOkj59cwRFz5LHjx5NZhLXpYMhCAycjvChp3FOPz6lYkizryedsgSQcgyxFIIIgobeZrzx3e3prsaKZsRCEKWIZZCEFHYuC2IT54fzfNSwuDJq8Fc8rJkIASRkdsRNkYQ5f7F9FzGjx+PRhfXD568GswlL0sGQhAZuR1hAwQxt8Piaoj7o5+tPeeJIGQZYikEEYXNfx3E70fNg5OPrz7z+drBk1eDueRlyUAIIiO3I2zIlZRn6qc3H19lC2IdiFI+lI6EIKykCuLCnxufOvzT+lOdCEKWIZZCEFFY7uY8kSUDUcqH0pEQhBUEEQiilA+lIyEIK5sK4q+brAiCkGWIpRBEFDZCEIefvPD59Ghl+q0YCEJFGmYpBBGFDRDE/a3RM5+XpzPeSB48eTWYS16WDIQgMnI7wuYXxIOt0ezCqL+8uzU686+pgyevBnPJy5KBEERGbkfY/IK4NTo337M4fGf0bOrgyavBXPKyZCAEkZHbETbgOojKVsODrfXXUJaDJ68Gc8nLkoEQREZuR9gAQVSckHKRdTn4PiGkz2ELIhBEKR9KR2ILwkryMYhnW/9/zeDJq8Fc8rJkIASRkdsRNr8g7o9GF2b3XkyeBJF6nhNByDLEUggiChtwHcStyd3e58+fnzxvLnUDAkGoSMMshSCisAGCOPzj/FFzZ36VPnjykswlL0sGQhAZuR1hQ+7FOPz6l+MtiBf/eYO/nYMgZBliKQQRheVuzhNZMhClfCgdCUFYQRCBIEr5UDoSgrCyiSD+Ok/qX/pGELIMsRSCiMIGCOKHd0fLcKFUGohSPpSOhCCsJApicps3gtgURCkfSkdCEFYSBXFnNDr3vz+d50+JZzIQhCxDLIUgorDZBbHBLd61wZOXZC55WTIQgsjI7Qgbe7v3BoMnL8lc8rJkIASRkdsRNvZ27w0GT16SueRlyUAIIiO3I2zALgZbEE8BopQPpSMhCCvJBynX/y3vlsGTl2QueVkyEILIyO0Im18Q402IX2++IghCliGWQhBR2Py7GO/9cjQ68+JrZf6W05xJIEr5UDoSgrCS/te9uVBqYxClfCgdCUFYQRCBIEr5UDoSgrDC3ZyBIEr5UDoSgrCCIAJBlPKhdCQEYWUjQRym3uc9Hzx5SeaSlyUDIYiM3I6wIYL4+tXJwYfHv3g9/ZlzCEKWIZZCEFHYAEEcfjw7Ovn46uhc8lXXCEKWIZZCEFHYAEHcGo3O/d3WM58f/r78M99JgyevBnPJy5KBEERGbkfY/IK4Pxr9urxl66st/nBOIohSPpSOhCCsJP/pvYuLezrv8Kf3EkGU8qF0JARhZZO7OUtB8Md7U0GU8qF0JARhZZPnQZSCSH84BIKQZYilEEQUFkGcyJKBKOVD6UgIwkryMynfWJjhfvJpDAQhyxBLIYgobP6DlNMDkzNBbPAAWwQhyxBLIYgobH5BPNgavXR3KogfXhklP34OQcgyxFIIIgobcKHUndFodH7rzIvPj/9NfvocgpBliKUQRBQ24l6M/9yaPw0i/emUCEKWIZZCEFHYkJu1fvzk/NgOZy98tsHgyUsyl7wsGQhBZOR2hA0RxFMEQcgyxFIIIgqrFsT3bxXF9v+5tzp48gjMJS9LBkIQGbkdYfML4se/VtN4bsxeMc2lL1cGT14N5pKXJQMhiIzcjrABV1Ke8NDahzvbvzs+fvRWcWVl8OTVYC55WTIQgsjI7QirFcRucX3yz8Odl5ubEAhCliGWQhBR2PyXWv/l0zL/9MrozL/8qe1S6yc3EEQDRCkfSkdCEFY2P0j5YKv9VoyHO5ebhykRhCxDLIUgorCxZzHa/5DvdzvF28tBy3yUmv395EX7E0r1JYMsZWeTuk8hiLZNiN2i2P7D4iMEMQ2l+pJBlrITLIiW50Ec/ds/7BTb/7e5JLsYsgyxFLsYUdjYXQzjkXPfV/Yx5oMnrwZzycuSgRBERm5H2FBBHN4yHhhzUDSPUiIIWYZYCkFEYfOf5nzvtXl+uWXdz7l6GgNByDLEUggiCht8oVR9A+LoZrlrgSCaIEr5UDoSgrCyuSDONv845255jfXuyrXWCEKWIZZCEFFY7d2cD3eKa/eOj74otj9sDp48BnPJy5KBEERGbkdY8e3eB7O7ObebJzEQhIo0zFIIIgqrfh7Eo9+O9fDm7dXBk0dgLnlZMhCCyMjtCBv9PIjWp0K0DZ68GswlL0sGQhAZuR1ho2/3brvpu3Xw5NVgLnlZMhCCyMjtCIsgTmTJQJTyoXQkBGEl9XkQn2yNzlz4l08//afnR6MLs0dDtD4Voj548mowl7wsGQhBZOR2hM1/DOLwndHPSx98xV/WSgVRyofSkRCElU3+NmfL/68ZPHk1mEtelgyEIDJyO8Lm38V4p7LVYNzN2TZ48mowl7wsGQhBZOR2hA04SFlxQsvzIKzBk1eDueRlyUAIIiO3I2yAIGpbEO23e7cMnrwazCUvSwZCEBm5HWEDdjEqxx1ucQwiEUQpH0pHQhBWEg9S3h+NXpptNhx+zFmMVBClfCgdCUFYSb0X49ZoNHrhtddee35kPS+mbfDk1WAueVkyEILIyO0IGyCI8YZDmTO/Sh88eUnmkpclAyGIjNyOsCF3c/7w7mTr4XzzcTEnDp68JHPJy5KBEERGbkfYEEE8RRCELEMshSCisFGCOFx/h3d98OQlmUtelgyEIDJyO8KGCOLrVyc3cD7+xQb7GAhCliGWQhBR2LCDlGNBXB2dS7yOEkFQyofSkRCElQ1Oc577u61nPj/8ffOx9ycNnrwazCUvSwZCEBm5HWFDLpT6dXkTxldbozdSB09eDeaSlyUDIYiM3I6w+QVxa3J1VHmXFrd7p4Io5UPpSAjCyia3e5eC4HbvVBClfCgdCUFY2eR271IQ3O6dCqKUD6UjIQgrCCIQRCkfSkdCEFaSb/d+Y2GG+8mnMRCELEMshSCisPkPUk4PTM4EUXs2xJrBk1eDueRlyUAIIiO3I2x+QTzYGr10dyqIH17heRCpIEr5UDoSgrCSeqHUncmdnFtnXuR5EBuAKOVD6UgIwkryvRj/uTV/IESyHxCEijTMUggiChtys9aPn5wf2+Hshc82GDx5SeaSlyUDIYiM3I6wIYJ4iiAIWYZYCkFEYQMutd5kw2E5ePKSzCUvSwZCEBm5HWEDLpRKvkGrNnjykswlL0sGQhAZuR1hg66k3DgIQpYhlkIQUdigm7U2DoKQZYilEEQUNuJKyp89xUEIBCHLEEshiChsfkH8+MfR6OyLr5X5W+7FSAJRyofSkRCEleSDlNVwN2caiFI+lI6EIKzECmKfENLncKFUIIhSPpSOxBaEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFbWCeLwL5/+aYM/19sYPHlJ5pKXJQMhiIzcjrAZBfH4avIhyZbBk5dkLnlZMhCCyMjtCBsgiMevnn9hY1EgCFmGWApBRGEjBPE0WxIIQpYhlkIQUVgEcSJLBqKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREISVBEGshgfGpIEo5UPpSAjCCoIIBFHKh9KREISVtXdzvvfaangmZRqIUj6UjoQgrPA8iEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhJUsgvj+t0Wx/ebt1cGTR2AueVkyEILIyO0IKxbEF8U02x+uDJ48BHPJy5KBEERGbkdYrSAOiu3fHR8/ulm8/GVz8OQxmEtelgyEIDJyO8JKBXF0s3h78u+TG7N/q4MnD8Jc8rJkIASRkdsRViqIJzfKLYfd4npz8ORBmEtelgyEIDJyO8J2cxYDQTRBlPKhdCQEYSWfIJ7cWBylfG6ej1Kzv5+8aH9Cqb5kkKXsbFI3nyD2iivz/0UQ01CqLxlkKTudCOKA05wrIEr5UDoSuxhWcgniYGe7eQ4DQVDKh9KREISVTILYa9l+QBCU8qF0JARhJY8gvmj1A4JQkYZZCkFEYcWCONotLjUvopwNnjwEc8nLkoEQREZuR1ixIHaLy/faB08egrnkZclACCIjtyOsVhB7lh8QhIo0zFIIIgorvtS6mOdK4yUEIcsQSyGIKKxUEAcFgjBAlPKhdCQEYYUnSgWCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQViJFcQ+IaTPYQsiEEQpH0pHYgvCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEllyCe3LjSMnjylzOXvCwZCEFk5HaE7UAQuwWCWAFRyofSkRCElTyCONotEMQqiFI+lI6EIKxkEcT3bxUIogVEKR9KR0IQVnIIYq8orn2HIFZBlPKhdCQEYSWLIC794fgAQayCKOVD6UgIwkqug5Q1QTw3z0ep2d9PXrQ/oVRfMshSdjapiyDiQqm+ZJCl7HQuiIUokr+crXEvSwZiFyMjtyNs17sYi8GTv5y55GXJQAgiI7cjLII4kSUDUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGGFJ0oFgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVBWWVsAAA/QSURBVFhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrMQKYp8Q0uewBREIopQPpSOxBWEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCEFQQRCKKUD6UjIQgrCCIQRCkfSkdCEFYQRCCIUj6UjoQgrCCIQBClfCgdCUFYQRCBIEr5UDoSgrCCIAJBlPKhdCQEYQVBBIIo5UPpSAjCCoIIBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsJJFEEcf7BTFm7dXB08egbnkZclACCIjtyOsWBBPbhSTvPzlyuDJQzCXvCwZCEFk5HaEFQtit7h8+/jRzeLyvebgyUMwl7wsGQhBZOR2hNUK4uHOdNvhyY3tD5uDJ4/BXPKyZCAEkZHbEVYriL3iSvnv9ebgyWMwl7wsGQhBZOR2hNUKYrd4e/rvQSmKyuDJYzCXvCwZCEFk5HaElQri6Ga5a/FwZ34Q4rl5PkrN/n7yov0JpfqSQZays0ldBBEXSvUlgyxlpzNBNE90soshyxBLsYsRhe16F2MxePIgzCUvSwZCEBm5HWERxIksGYhSPpSOhCCscBYjEEQpH0pHQhBWslwHcb32b2Xw5DGYS16WDIQgMnI7wnIl5YksGYhSPpSOhCCsZBDE0c3iEvditIEo5UPpSAjCSo6btR5xN2c7iFI+lI6EIKxkeR7Eow/Gfnizuf2AICjlQ+lICMIKT5QKBFHKh9KREIQVBBEIopQPpSMhCCsIIhBEKR9KR0IQVhBEIIhSPpSOhCCsIIhAEKV8KB0JQVhBEIEgSvlQOhKCsIIgAkGU8qF0JARhBUEEgijlQ+lICMIKgggEUcqH0pEQhBUEEQiilA+lIyEIKwgiEEQpH0pHQhBWEEQgiFI+lI6EIKwgiEAQpXwoHQlBWEEQgSBK+VA6EoKwgiACQZTyoXQkBGEFQQSCKOVD6UgIwgqCCARRyofSkRCElVhBEEJ6HgRBCDETKIhNVNINNzSU6ksGWcqOpy6CyBdK9SWDLGUHQZyOUKovGWQpOwjidIRSfckgS9lBEKcjlOpLBlnKDoI4HaFUXzLIUnYQxOkIpfqSQZay00NBEEL6EARBCDGDIAghZhAEIcQMgiCEmEEQhBAzCIIQYgZBEELMiATx5MaV8v++/21RbL95u/ri0Qc7RVH/VC+yLHX0xbjB3/yu+mIvS9XenJYG/S81ycOdy/cqr/eylJ1a3UfjD+rdntwopnn5y7ThRILYLcq59MVs9bY/XL5WrnLqGp+eLEo9Kr/p15av9bJU7c1padD/UpMc3SyqguhlKTu1ug93VmZb+anTJYij3aKcSwfF9vj37KOb1fXbLS7fnnyqpvXTn2Wp8U/cpdvHR/9efSP6WKr+5rQ06H+pSfaKWoE+lrJTqztRYbPbwfy3WmIUgvj+raKcS+M1fnvy79jab89ffbgzfeue3Kh67vRnWWr8PZ/98O0tv/d9LFV/c1oa9L/UJJNfoZUJ08dSdta+h2Mfvm19cWsEghgb+9p3s7nz5Ebp8d3i+vLlK+W/19u++pSmUmr+ptRf7l+p+pvT0qD/pY6n79Y/Vo9B9LGUnXrdg9Uf0KObG4pQIYhLf1jZsKkIYq60Tbd9uk2l1OJNqaSfpcpM35yWBv0vNf33Su0gZa9L2ZnWbdmCeHLj0n+Mt31/k3xMVnSQsvHtr6zyQmmNY8s9SFlqsuLf/X1RjJUxT49LlW9OS4P+lzqevGeX71XXv9el7MzqLo5BLCff/Bhl8o5GN4Ko7K33+B1aCuKD2Td9sVXU41LlmzM0QezNt/bGHX4CgijrHs3OaVyrHqOcfPTfHxSpexqdCOKgdtJp8Q717UxTWepg9haM34y2zaK+lSrfnJYG/S+12PJuFUTvStmZ13341lQQl5Y7FPNfzbuph1y6EMTBzvZyA6fHCl8KYrF7W77S51KzN2dYWxDzn7i96fmLwW9BzOuO9ycav7mWi6Se1u1AEHu19e3xO7TYxRjQXJq/OYMSxN7iuqHpv0MXxGKC7a785lokeYNJL4imz/p7GHkhiPJ7Xfmm97XU8s0Z0FmMRam9YpHev1N2FnVPkl+yD9WCONotLtXVNT8B3b8T0YvTzOX7UNls62ep6pvT0qD3pdoE0c9Sdip1W7cCN/WhWhC7K/s+/b2U7WBxwGflwE8/S1XfnIFcSdn+EzfYKynrdVt2MXbti/vaIxbE3uqxkdmdDH28GH5e6uHO5Ia52rGgXpaqvTktDfpfapaaIHpZys5e/b6LlYOUs+OWj95KrqsVxPxe09ltDOUxo0d9vZ1usVl0UN40N5Fyf0vV35xag8GUmqYURH9L2WnUne9TTTYkyrrlp15OvZRSK4iDorr+88P/jybXGb3ZP4Ev9+MeTR4pMLt8tb+l6m9OrcFwSk1SF0QPS9lp1v2vyfMgGj+Yk+dFXEuuyxOlCCFmEAQhxAyCIISYQRCEEDMIghBiBkEQQswgCEKIGQRBCDGDIAghZhAEIcQMgiCEmEEQhBAzCIIQYgZBxOXWqJ6L08/97G7X63VSQtfvwdb0e9D+0rNh2OM7o2c+X/nk4TstnyTNIIi4ZBXEV/9TIhZr/dbhk1bPFsTjq5GztVUQ47U53a4+HUEQcckpCNWWh8FZh09bPVsQt8xNixxpF0QwdCBBENE5fGeUYet52III/mVuCOLBFjsZa4MgooMgFrEEMf4WvZG0dk8ZQxDjtQ488DGQIIjoIIhFLEHcNyZwrliCeLB15l8juUMIgohOXRCzmTT93NevjEZnXhp/9PWro9HowmflEj+8uzX+/OLDae4sD2K0vr74/AvvH7cNY/IeXx1dPPxkvOS596vr1/j6dfjq699MXh+df/1uZTXmqzUXxP0xrzpjl7/Ja4u30E4qOevy/Gh0dg6fNh1XnguiOfr428JRiDVBENExBPE/ykOYz3z+8ex/yl9md+aHNF+qjFGZgfPXz/yqjrlT/7L6YiZvPKl+/s7s45kY5oKorUYL3li9w4/nr88M8FXtw1IQ97fqfhh/utzDqC++Sjux5LjL/3ql+uWHZbNn3p0Jojn6ZABOZKwJgoiOIYjxT/nd6Xw6O7rw7fHhH8sZemf2u/3Hj+tTsDpxz/15/Ht6PBNqu+3jz//ss+l4F1sWM3njSTWafjx+4dkKp7kaFfy61Ztso/zwymy48dQfr9WUVn54cfrfmh+WexiNxVdoJ5ecdDnzq7vHP7xTvn5r0XkKaI4+JbOPsSYIIjqWIKY/w5Mf6mfLF8of4nLhO/Wf3XIGjpefzcTxCNX96vnny083FzN51Y+nvBlnZTVKfMLqPVtdn8XO/6LdxVU/LHdrVhev0daUnHR5o/y4LHGx/Orp643Ry9VkH+PkIIjoGIJY/LAudi0m/7M8nNY4trn4zT6fl/UDfvfnGxT3y2Hqi5m88QwpXyjn9q36xJ6vxgJ/8uotfiOXwIZGJiuz6oflUI3Fm7Q1JRfCKA1wq1KtZWVaWpDVIIjoGIKo/Swflz/01WXrJwbKj2q//CrDNo7TNxezeNVRZoTpf1dXo3Js9aTVa67B/ckhxD8vPjmeyBeu1tf0uPprvL74Cm1NyWWX6YKVL29dmRLBQYiTgyCiY57FKD+uTtjpIYFFqtOhKZbGz3Z9gq4sZvGq29jzX7vjxVdX49byiMUJqzfLj998+t7z5cuzY5ZnX/92+sqDrcXBzkoq61BbfIW2puRynKkgKu6707YyLd83shoEEZ3Mgmj/Fb4yd+qLnSSI+bHOO1kE8dXz9Zenp1RH5WnUiSDObTU3IaoHAqqLrxdEveSqIObD3mlbmZbvG1kNgojOhoIw9onVWxCN1VgI4sTVK08snn/tn79dbv8ff/PeVBpvzM4j3L0zagzSOFK4WHyF5t2CqK9My5BkNQgiOpsIwt4nXnMMYvH52cgtxyASBFE9BrFySKHhp/bVK89y1lZ0ulazs6rTg4kTidTO0K6eSpgtvkJbU7IhiJVjEI2VKQdCECcHQURnE0EsTzI0f3aXM7CcXPdHrWcxZhcdNRc7SRAlpZxec000VmPhpxNXb/nJ2YmD5hxdXAdR28lYLNVcvElbU7IhiOV2w+yUSpswOIuxNggiOhsJYroRXn5c+z2beB3E8vKG5nUQpiDKWdW8DqK+GsvrIE5avaUgFpceLE97zrcgpi/WpmXlOojm4jXampJNQSwuo2hfmfLbxnUQJwdBRGcjQUyvDny/thk8y+Sn+/Db2tWDtR/t++ZFhheP1whi9PO7xz+8u7j6cL6lUluNKv6E1St3MSbY+fBnfj25svKd+TGIcm1qVyQsrp5oLL5CO7lkUxDlhZiLKymbo1fJxAqCiM5mgljeflDfOb4/+dSzldc3vRfDFMSLs3OPiw2JxTXT1dVYwbev3uPyXojRhT/OJmF5YrMcvnKzVvXLl6dS6ouv0tbdi1EXRHlec3Tu/80+bo7OvRgJQRDR2VAQ41/mk+Psy1sOy3w1/ul+9u7x/A7Gl75tvN5+o2O52IkHKSdbD4ubSSt3c9ZWo4I/afWmd1NOLkeaH0M9/OT8ePGzs/VYXP15q779s7ybs7Z4C+2kkquCOP6mfjdnc3Tu5lwfBPGTzunYCY9+HoQVHim1PgjiJ53TIYiufpPzUMr1QRA/6ZwOQXT0q5wNiIQgiJ90TokguvldzgZEQhDETzqnRRCxfxejPfxdjJQgiJ90TosgYv+yVmv4y1pJQRCEEDMIghBiBkEQQswgCEKIGQRBCDGDIAghZhAEIcQMgiCEmEEQhBAzCIIQYgZBEELMIAhCiBkEQQgxgyAIIWb+P5GkF1usYCktAAAAAElFTkSuQmCC" width="528" /></p>
-<p><strong>(e)</strong> Describe the shape of this distribution.</p>
+<p><strong>(c)</strong> Describe the shape of this distribution.</p>
 <p><br> <br> <br></p>
-<p><strong>(f)</strong> Give one thing you can determine from the table
-in part (c), and one thing you <strong>cannot</strong>, that you could
-have determined from the raw data.</p>
+<p><strong>(d)</strong> A frequency table reports only how many
+observations fall in each interval.</p>
+<ol style="list-style-type: lower-roman">
+<li><p>Using <strong>only</strong> the table from part (a), what
+proportion of users finished the task in 20 seconds or less?</p></li>
+<li><p>Name one quantity you could compute from the raw times listed
+above but <strong>not</strong> from the table alone, and say why the
+table cannot give it to you.</p></li>
+</ol>
 <p><br> <br> <br></p>
 <hr />
 </div>
@@ -1366,11 +1371,12 @@ distribution? Explain.</p>
 </div>
 <div id="problem-8-center-and-what-an-outlier-does-to-it" class="section level2">
 <h2>Problem 8 — Center, and what an outlier does to it</h2>
-<p>Consider the following eight observations of a variable <span class="math inline">\(X\)</span>, the number of minutes eight customers
+<p>Consider the following five observations of a variable <span class="math inline">\(X\)</span>, the number of minutes five customers
 spent in a shop:</p>
-<p><span class="math display">\[X = \{ 4, \ 6, \ 6, \ 9, \ 11, \ 12, \
-14, \ 16 \}\]</span></p>
-<p><strong>(a)</strong> Compute the mean, the median and the mode.</p>
+<p><span class="math display">\[X = \{ 6, \ 6, \ 9, \ 12, \ 17
+\}\]</span></p>
+<p><strong>(a)</strong> Show how to compute the mean, the median and the
+mode.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1387,32 +1393,39 @@ Your answer
 <td style="text-align:left;">
 Mean <span class="math inline">\(\bar{x}\)</span>
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 4.5in; ">
+<div style="min-height:1.1in">
+
+</div>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Median
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 4.5in; ">
+<div style="min-height:1.1in">
+
+</div>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Mode
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 4.5in; ">
+<div style="min-height:1.1in">
+
+</div>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>(b)</strong> A ninth customer stays for <strong>78
+<p><strong>(b)</strong> A sixth customer stays for <strong>70
 minutes</strong>. Recompute the mean and the median with that
-observation included.</p>
-<p><br> <br> <br></p>
-<p><strong>(c)</strong> Which statistic moved more, and why?</p>
-<p><br> <br> <br> <br></p>
-<p><strong>(d)</strong> Which of the two is <strong>resistant</strong>?
+observation included. Which of the two moved more, and why?</p>
+<p><br> <br> <br> <br> <br></p>
+<p><strong>(c)</strong> Which of the two is <strong>resistant</strong>?
 Give a one-sentence definition of that word.</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><br> <br></p>
@@ -1420,38 +1433,36 @@ Give a one-sentence definition of that word.</p>
 </div>
 <div id="problem-9-percentiles-and-quartiles" class="section level2">
 <h2>Problem 9 — Percentiles and quartiles</h2>
-<p>The following are the ages of the 11 members of a community board,
+<p>The following are the ages of the 10 members of a community board,
 sorted:</p>
-<p><span class="math display">\[\begin{gathered}
-X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49, \ 52, \ 56, \ 61, \ 67, \\
-73 \}
-\end{gathered}\]</span></p>
+<p><span class="math display">\[X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49,
+\ 52, \ 56, \ 61, \ 67 \}\]</span></p>
 <p><strong>(a)</strong> Find the median, <span class="math inline">\(Q2\)</span>.</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><strong>(b)</strong> Find <span class="math inline">\(Q1\)</span> and
 <span class="math inline">\(Q3\)</span> using the <strong>method of
-halves</strong> we use in this class. Remember that when <span class="math inline">\(n\)</span> is odd the median is <strong>left
-out</strong> of both halves.</p>
+halves</strong> we use in this class.</p>
 <p><br> <br> <br> <br></p>
-<p><strong>(c)</strong> A twelfth member, aged <span class="math inline">\(58\)</span>, joins the board. Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q2\)</span> and <span class="math inline">\(Q3\)</span> for the new set of 12 ages.</p>
+<p><strong>(c)</strong> An eleventh member, aged <span class="math inline">\(58\)</span>, joins the board. Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q2\)</span> and <span class="math inline">\(Q3\)</span> for the new set of 11 ages. Remember
+that when <span class="math inline">\(n\)</span> is odd the median is
+<strong>left out</strong> of both halves.</p>
 <p><br> <br> <br> <br> <br></p>
-<p><strong>(d)</strong> What is the <span class="math inline">\(IQR\)</span>, and what does it measure?</p>
+<p><strong>(d)</strong> Using the original 10 ages, what is the <span class="math inline">\(IQR\)</span>, and what does it measure?</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><br> <br></p>
-<p><strong>(e)</strong> The board member aged 67 is at roughly what
-percentile? Answer in a sentence that says what that means.</p>
+<p><strong>(e)</strong> In the original 10 ages, the board member aged
+61 is at roughly what percentile? Answer in a sentence that says what
+that means.</p>
 <p><br> <br> <br></p>
 <hr />
 </div>
 <div id="problem-10-deviations-variance-and-standard-deviation" class="section level2">
 <h2>Problem 10 — Deviations, variance and standard deviation</h2>
-<p>A quality inspector measured the weight, in grams, of six packets
-from a filling machine:</p>
-<p><span class="math display">\[X = \{ 48, \ 51, \ 52, \ 55, \ 57, \ 59
-\}\]</span></p>
-<p><strong>(a)</strong> Compute the sample mean <span class="math inline">\(\bar{x}\)</span>.</p>
-<p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
-<p><strong>(b)</strong> Complete the deviation table below, then add up
+<p>A quality inspector took three packets of ground coffee off a filling
+machine and weighed each one, in grams:</p>
+<p><span class="math display">\[X = \{ 48, \ 54, \ 57 \}\]</span></p>
+<p>The sample mean of these three packets is <span class="math inline">\(\bar{x} = \dfrac{159}{3} = 53\)</span> grams.</p>
+<p><strong>(a)</strong> Complete the deviation table below, then add up
 the deviation column.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1469,64 +1480,61 @@ the deviation column.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.6in; ">
 48
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 1.6in; ">
+<div style="min-height:0.7in">
+
+</div>
 </td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 1.6in; ">
+<div style="min-height:0.7in">
+
+</div>
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
-52
+<td style="text-align:right;width: 1.6in; ">
+54
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 1.6in; ">
+<div style="min-height:0.7in">
+
+</div>
 </td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-55
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 1.6in; ">
+<div style="min-height:0.7in">
+
+</div>
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.6in; ">
 57
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 1.6in; ">
+<div style="min-height:0.7in">
+
+</div>
 </td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-59
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;width: 1.6in; ">
+<div style="min-height:0.7in">
+
+</div>
 </td>
 </tr>
 </tbody>
 </table>
 <p><br> <br> <br></p>
-<p><strong>(c)</strong> Compute the sample variance <span class="math inline">\(s^2\)</span> and the sample standard deviation
-<span class="math inline">\(s\)</span>.</p>
+<p><strong>(b)</strong> A fourth packet comes off the machine weighing
+<strong>63 grams</strong>. Using the sample mean <span class="math inline">\(\bar{x} = 53\)</span> grams from the three packets
+above, compute this packet’s deviation from the mean and interpret what
+that number tells you.</p>
+<p><br> <br> <br></p>
+<p><strong>(c)</strong> Show or explain how to compute the sample
+variance <span class="math inline">\(s^2\)</span> from the table you
+filled in above, and then the sample standard deviation <span class="math inline">\(s\)</span>.</p>
 <p><br> <br> <br></p>
 <p><strong>(d)</strong> State the units of <span class="math inline">\(\bar{x}\)</span>, of <span class="math inline">\(s^2\)</span> and of <span class="math inline">\(s\)</span>.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1565,8 +1573,8 @@ Units
 </tbody>
 </table>
 <p><br> <br></p>
-<p><strong>(e)</strong> Compute the range. Which is the better
-description of the spread of this data, the range or the standard
+<p><strong>(e)</strong> Show how to compute the range. Which is the
+better description of the spread of this data, the range or the standard
 deviation, and why?</p>
 <p><br> <br> <br></p>
 <hr />
@@ -1617,7 +1625,7 @@ Maximum
 </tbody>
 </table>
 <p><br> <br> <br></p>
-<p><strong>(b)</strong> Compute the <span class="math inline">\(IQR\)</span> and both outlier boundaries.</p>
+<p><strong>(b)</strong> Show how to compute the <span class="math inline">\(IQR\)</span> and both outlier boundaries.</p>
 <p><br> <br> <br></p>
 <p><strong>(c)</strong> Which observations, if any, does the <span class="math inline">\(1.5 \times IQR\)</span> rule flag as outliers?</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>

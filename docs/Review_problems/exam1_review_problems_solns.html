@@ -882,9 +882,10 @@ years.</p>
 <p><strong>(a)</strong> Give the values of <span class="math inline">\(N\)</span> and <span class="math inline">\(n\)</span>.</p>
 <p><span class="soln"><span class="math inline">\(N = 8{,}500\)</span>
 and <span class="math inline">\(n = 200\)</span></span></p>
-<p><strong>(b)</strong> Compute the sample proportion of bicycles with
-no working lights. Which symbol denotes it?</p>
-<p><span class="soln"><span class="math inline">\(\hat{p} = 46/200 =
+<p><strong>(b)</strong> Show how to compute the sample proportion of
+bicycles with no working lights. Which symbol denotes it?</p>
+<p><span class="soln"><span class="math inline">\(\hat{p} =
+\frac{\text{number with no working lights}}{n} = \frac{46}{200} =
 0.23\)</span></span></p>
 <p><span class="soln">The <b>sample</b> proportion is written <span class="math inline">\(\hat{p}\)</span>. The hat marks it as a quantity
 computed from a sample. The corresponding population proportion – the
@@ -1116,12 +1117,11 @@ parameter <span class="math inline">\(p\)</span></span>
 </tr>
 <tr>
 <td style="text-align:left;">
-In <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span>, what does
-the <span class="math inline">\(i=1\)</span> below the <span class="math inline">\(\Sigma\)</span> mean?
+What does <span class="math inline">\(\sum_{i=1}^{n} x_i\)</span> mean?
 </td>
 <td style="text-align:left;">
-<span class="soln">start the count at the first observation and add up
-to the <span class="math inline">\(n^{th}\)</span></span>
+<span class="soln">add up the observations, starting at the first and
+running through the <span class="math inline">\(n^{th}\)</span>: <span class="math inline">\(x_1 + x_2 + \cdots + x_n\)</span></span>
 </td>
 </tr>
 </tbody>
@@ -1131,19 +1131,12 @@ observations of a quantitative variable <span class="math inline">\(X\)</span>:<
 <p><span class="math display">\[X = \{ 2, \ 5, \ 6, \ 9, \ 13
 \}\]</span></p>
 <p><strong>Show how to compute</strong> the mean <span class="math inline">\(\bar{x}\)</span> and the standard deviation <span class="math inline">\(s\)</span>.</p>
-<p><span class="soln"><b>Mean.</b> <span class="math inline">\(\bar{x} =
-\frac{1}{n}\sum_{i=1}^{n} x_i = \frac{2 + 5 + 6 + 9 + 13}{5} =
-\frac{35}{5} = 7\)</span> <br><br><b>Standard deviation.</b> Take the
-deviation of each observation from the mean, square it, and add:
-<br><br><span class="math inline">\(\sum_{i=1}^{n}(x_i - \bar{x})^{2} =
-(-5)^2 + (-2)^2 + (-1)^2 + 2^2 + 6^2 = 25 + 4 + 1 + 4 + 36 = 70\)</span>
-<br><br>Divide by <span class="math inline">\(n - 1\)</span> to get the
-variance, then take the square root: <br><br><span class="math inline">\(s^{2} = \frac{70}{5 - 1} = \frac{70}{4} = 17.5
-\qquad s = \sqrt{17.5} \approx 4.18\)</span> <br><br>Note the deviations
-themselves – <span class="math inline">\(-5, -2, -1, 2, 6\)</span> – add
-to <span class="math inline">\(0\)</span>. That happens for <b>every</b>
-dataset, because the mean is the balancing point, and it is why the
-deviations must be squared before they are added.</span></p>
+<p><span class="soln"><span class="math inline">\(\bar{x} =
+\dfrac{1}{n}\sum_{i=1}^{n} x_i = \dfrac{2 + 5 + 6 + 9 + 13}{5} =
+\dfrac{35}{5} = 7\)</span> <br><br><span class="math inline">\(s =
+\sqrt{\dfrac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^{2}} =
+\sqrt{\dfrac{(2-7)^2 + (5-7)^2 + \cdots + (13-7)^2}{5-1}} =
+\sqrt{\dfrac{70}{4}} = \sqrt{17.5} \approx 4.18\)</span></span></p>
 <p><strong>(d)</strong> Now consider the following sample of ten
 observations of a qualitative variable <span class="math inline">\(Y\)</span>, the way each of ten students travelled
 to campus:</p>
@@ -1154,13 +1147,9 @@ Y = \{ \text{Bus}, \ \text{Walk}, \ \text{Bike}, \ \text{Bus}, \
 \end{gathered}\]</span></p>
 <p><strong>Show how to compute</strong> the proportion of observations
 in the category <strong>Bus</strong>.</p>
-<p><span class="soln">Count the observations in the category, then
-divide by the sample size: <br><br><span class="math inline">\(\hat{p} =
-\frac{\text{number of observations in the category}}{n} = \frac{4}{10} =
-0.4\)</span> <br><br>So 40% of the sample travelled by bus. Note that a
-proportion is the one summary here that <i>can</i> be computed for a
-qualitative variable – a mean and a standard deviation cannot, because
-the categories are not numbers.</span></p>
+<p><span class="soln"><span class="math inline">\(\hat{p} =
+\dfrac{\text{number of observations in the category}}{n} = \dfrac{4}{10}
+= 0.4\)</span> <br><br>So 40% of the sample travelled by bus.</span></p>
 <hr />
 </div>
 <div id="problem-4-the-distribution-of-a-qualitative-variable" class="section level2">
@@ -1266,7 +1255,7 @@ responses are summarized below.</p>
 <th style="text-align:right;">
 Vehicles <span class="math inline">\(x\)</span>
 </th>
-<th style="text-align:right;">
+<th style="text-align:left;">
 Frequency <span class="math inline">\(F(x)\)</span>
 </th>
 <th style="text-align:left;">
@@ -1282,39 +1271,39 @@ Cumulative relative frequency <span class="math inline">\(CRF(x)\)</span>
 <td style="text-align:right;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 3
 </td>
 <td style="text-align:left;">
-<span class="soln">0.12</span>
+0.12
 </td>
 <td style="text-align:left;">
-<span class="soln">0.12</span>
+0.12
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 9
 </td>
 <td style="text-align:left;">
 <span class="soln">0.36</span>
 </td>
 <td style="text-align:left;">
-<span class="soln">0.48</span>
+0.48
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 8
 </td>
 <td style="text-align:left;">
-<span class="soln">0.32</span>
+0.32
 </td>
 <td style="text-align:left;">
 <span class="soln">0.80</span>
@@ -1324,21 +1313,21 @@ Cumulative relative frequency <span class="math inline">\(CRF(x)\)</span>
 <td style="text-align:right;">
 3
 </td>
-<td style="text-align:right;">
-4
+<td style="text-align:left;">
+<span class="soln">4</span>
 </td>
 <td style="text-align:left;">
 <span class="soln">0.16</span>
 </td>
 <td style="text-align:left;">
-<span class="soln">0.96</span>
+0.96
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 4
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
 1
 </td>
 <td style="text-align:left;">
@@ -1350,42 +1339,53 @@ Cumulative relative frequency <span class="math inline">\(CRF(x)\)</span>
 </tr>
 </tbody>
 </table>
-<p><strong>(a)</strong> Complete the relative frequency and cumulative
-relative frequency columns.</p>
-<p><strong>(b)</strong> Compute the mean number of vehicles using the
-<strong>frequency</strong> formula, <span class="math inline">\(\bar{x}
-= \frac{1}{n}\sum_{x} x\,F(x)\)</span>.</p>
-<p><span class="soln"><span class="math inline">\(\bar{x} = \frac{0(3) +
-1(9) + 2(8) + 3(4) + 4(1)}{25} = \frac{0 + 9 + 16 + 12 + 4}{25} =
-\frac{41}{25} = 1.64\)</span> vehicles.</span></p>
-<p><strong>(c)</strong> Now compute it again using the <strong>relative
-frequency</strong> formula, <span class="math inline">\(\bar{x} =
-\sum_{x} x\,RF(x)\)</span>, and confirm you get the same answer.</p>
-<p><span class="soln"><span class="math inline">\(\bar{x} = 0(0.12) +
-1(0.36) + 2(0.32) + 3(0.16) + 4(0.04) = 0 + 0.36 + 0.64 + 0.48 + 0.16 =
-1.64\)</span> vehicles. <br><br>The two formulas are the same
-calculation. Dividing by <span class="math inline">\(n\)</span> at the
-end (the frequency version) and dividing by <span class="math inline">\(n\)</span> at the start to build the relative
-frequencies (this version) get you to the same place. This is also why
-you must not divide by <span class="math inline">\(n\)</span>
-<i>again</i> in the relative frequency version.</span></p>
+<p><strong>(a)</strong> Fill in the blank entries in the table. Remember
+that the frequencies must add to <span class="math inline">\(n\)</span>,
+the relative frequencies must add to <span class="math inline">\(1\)</span>, and each cumulative relative frequency
+is the running total of the relative frequencies above it.</p>
+<p><span class="soln"><b>The missing frequency.</b> The frequencies have
+to add to <span class="math inline">\(n = 25\)</span>, and the four that
+are given add to <span class="math inline">\(3 + 9 + 8 + 1 =
+21\)</span>, so <span class="math inline">\(F(3) = 25 - 21 = 4\)</span>.
+<br><br><b>The missing relative frequencies.</b> <span class="math inline">\(RF(x) = F(x)/n\)</span>: <span class="math inline">\(RF(1) = 9/25 = 0.36\)</span>, <span class="math inline">\(RF(3) = 4/25 = 0.16\)</span>, <span class="math inline">\(RF(4) = 1/25 = 0.04\)</span>. As a check, the
+column now adds to <span class="math inline">\(0.12 + 0.36 + 0.32 + 0.16
++ 0.04 = 1.00\)</span>. <br><br><b>The missing cumulative relative
+frequencies.</b> Each one is the previous <span class="math inline">\(CRF\)</span> plus the current <span class="math inline">\(RF\)</span>: <span class="math inline">\(CRF(2) =
+0.48 + 0.32 = 0.80\)</span> and <span class="math inline">\(CRF(4) =
+0.96 + 0.04 = 1.00\)</span>. The last <span class="math inline">\(CRF\)</span> is always <span class="math inline">\(1.00\)</span> – if yours is not, something above
+it is wrong.</span></p>
+<p><strong>(b)</strong> Show how to compute the mean number of vehicles
+using the <strong>frequency</strong> from the table above.</p>
+<p><span class="soln"><span class="math inline">\(\bar{x} =
+\dfrac{1}{n}\sum_{x} x\,F(x) = \dfrac{0(3) + 1(9) + 2(8) + 3(4) +
+4(1)}{25} = \dfrac{0 + 9 + 16 + 12 + 4}{25} = \dfrac{41}{25} =
+1.64\)</span> vehicles.</span></p>
+<p><strong>(c)</strong> Now show how to compute the mean again using the
+<strong>relative frequency</strong> from the table above, and confirm
+you get the same answer.</p>
+<p><span class="soln"><span class="math inline">\(\bar{x} = \sum_{x}
+x\,RF(x) = 0(0.12) + 1(0.36) + 2(0.32) + 3(0.16) + 4(0.04) = 0 + 0.36 +
+0.64 + 0.48 + 0.16 = 1.64\)</span> vehicles. <br><br>The two formulas
+are the same calculation. Dividing by <span class="math inline">\(n\)</span> at the end (the frequency version) and
+dividing by <span class="math inline">\(n\)</span> at the start to build
+the relative frequencies (this version) get you to the same place. This
+is also why you must not divide by <span class="math inline">\(n\)</span> <i>again</i> in the relative frequency
+version.</span></p>
 <p><strong>(d)</strong> What proportion of these households own 2 or
-fewer vehicles? Which column did you read that from?</p>
-<p><span class="soln"><span class="math inline">\(0.80\)</span>, read
-from the cumulative relative frequency column at <span class="math inline">\(x = 2\)</span></span></p>
-<p><strong>(e)</strong> What is the median number of vehicles owned?
-(You can read this off the cumulative relative frequency column.)</p>
-<p><span class="soln">The median is the <span class="math inline">\(50^{th}\)</span> percentile. Reading down the
-<span class="math inline">\(CRF\)</span> column, it passes <span class="math inline">\(0.50\)</span> at <span class="math inline">\(x =
-2\)</span> (the <span class="math inline">\(CRF\)</span> is <span class="math inline">\(0.48\)</span> at <span class="math inline">\(x =
-1\)</span> and <span class="math inline">\(0.80\)</span> at <span class="math inline">\(x = 2\)</span>), so the <b>median is 2
-vehicles</b>. <br><br>Check it against the raw data if you like: with
-<span class="math inline">\(n = 25\)</span> the median is the <span class="math inline">\(13^{th}\)</span> value in order, and values 13
-through 20 are all 2s.</span></p>
+fewer vehicles?</p>
+<p><span class="soln"><span class="math inline">\(0.80\)</span></span></p>
+<p><strong>(e)</strong> Use the table to find the median number of
+vehicles owned.</p>
+<p><span class="soln"><b>Median is 2 vehicles.</b> There are two ways to
+get there. <br><br><b>From the frequencies.</b> With <span class="math inline">\(n = 25\)</span> the median is the <span class="math inline">\(13^{th}\)</span> value once the data is put in
+order. The first <span class="math inline">\(3\)</span> values are <span class="math inline">\(0\)</span>s and the next <span class="math inline">\(9\)</span> are <span class="math inline">\(1\)</span>s, which takes you through the <span class="math inline">\(12^{th}\)</span> value, so the <span class="math inline">\(13^{th}\)</span> value is a <span class="math inline">\(2\)</span>. <br><br><b>From the <span class="math inline">\(CRF\)</span> column.</b> The median is the <span class="math inline">\(50^{th}\)</span> percentile, so read down the
+<span class="math inline">\(CRF\)</span> column for where it first
+reaches <span class="math inline">\(0.50\)</span>: it is <span class="math inline">\(0.48\)</span> at <span class="math inline">\(x =
+1\)</span> and <span class="math inline">\(0.80\)</span> at <span class="math inline">\(x = 2\)</span>, so the median is <span class="math inline">\(2\)</span>.</span></p>
 <hr />
 </div>
-<div id="problem-6-binning-a-continuous-variable" class="section level2">
-<h2>Problem 6 — Binning a continuous variable</h2>
+<div id="problem-6-binned-frequency-tables-and-histograms" class="section level2">
+<h2>Problem 6 — Binned frequency tables and histograms</h2>
 <p>The following are the times, in seconds, that 16 users took to
 complete a task on a website.</p>
 <p><span class="math display">\[\begin{gathered}
@@ -1393,15 +1393,7 @@ X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \ 17.5, \ 18.0, \ 18.3, \ 19.1, \
 20.2, \ 20.6, \\
 21.7, \ 22.4, \ 23.9, \ 25.1, \ 26.8, \ 28.4 \}
 \end{gathered}\]</span></p>
-<p><strong>(a)</strong> Using the <strong>square root rule</strong>, how
-many bins <span class="math inline">\(k\)</span> should you use for a
-histogram of these 16 observations?</p>
-<p><span class="soln"><span class="math inline">\(k =
-\text{round}(\sqrt{16}) = 4\)</span> bins</span></p>
-<p><strong>(b)</strong> Compute the bin width <span class="math inline">\(w\)</span> implied by that choice, using <span class="math inline">\(w = \frac{\max x - \min x}{k}\)</span>.</p>
-<p><span class="soln"><span class="math inline">\(w = (28.4 - 12.4)/4 =
-16/4 = 4.0\)</span> seconds</span></p>
-<p><strong>(c)</strong> Complete the frequency table using the intervals
+<p><strong>(a)</strong> Complete the frequency table using the intervals
 given.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1464,23 +1456,32 @@ Relative frequency <span class="math inline">\(RF(x)\)</span>
 </tr>
 </tbody>
 </table>
-<p><strong>(d)</strong> Draw the histogram on the axes below.</p>
+<p><strong>(b)</strong> Draw the histogram on the axes below.</p>
 <p><img src="data:image/png;base64,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" width="528" /></p>
-<p><strong>(e)</strong> Describe the shape of this distribution.</p>
+<p><strong>(c)</strong> Describe the shape of this distribution.</p>
 <p><span class="soln">Roughly <b>symmetric and unimodal</b>, with the
 bulk of the observations in the two middle bins and the counts tapering
 off evenly at both ends. There is no long tail in either direction and
 no obvious gap, so nothing here looks like an outlier.</span></p>
-<p><strong>(f)</strong> Give one thing you can determine from the table
-in part (c), and one thing you <strong>cannot</strong>, that you could
-have determined from the raw data.</p>
-<p><span class="soln"><b>Can:</b> the proportion of users finishing in
-20 seconds or less (<span class="math inline">\(8/16 = 0.5\)</span>), or
-the number in any one interval. <b>Cannot:</b> the fastest or slowest
-individual time, the exact mean, or the median – once the values are
-grouped, the individual measurements are gone. <br><br>That loss of
-precision is the cost of binning. It buys a readable summary of the
-shape, which the raw list of 16 numbers does not give you.</span></p>
+<p><strong>(d)</strong> A frequency table reports only how many
+observations fall in each interval.</p>
+<ol style="list-style-type: lower-roman">
+<li><p>Using <strong>only</strong> the table from part (a), what
+proportion of users finished the task in 20 seconds or less?</p></li>
+<li><p>Name one quantity you could compute from the raw times listed
+above but <strong>not</strong> from the table alone, and say why the
+table cannot give it to you.</p></li>
+</ol>
+<p><span class="soln"><b>(i)</b> The first two intervals cover
+everything up to 20 seconds, and they hold <span class="math inline">\(3
++ 5 = 8\)</span> of the 16 users, so the proportion is <span class="math inline">\(8/16 = 0.5\)</span>. <br><br><b>(ii)</b> The
+fastest or slowest individual time, or the exact mean or median. The
+table keeps only the <i>counts</i> per interval – it says five users
+finished between 16 and 20 seconds, but not what any one of those five
+times was, so there is nothing left to take a maximum or an average of.
+<br><br>That loss of precision is the cost of binning. It buys a
+readable summary of the shape, which the raw list of 16 numbers does not
+give you.</span></p>
 <hr />
 </div>
 <div id="problem-7-dot-plots-and-stem-and-leaf-plots" class="section level2">
@@ -1517,11 +1518,12 @@ between them, where the data are sparsest.</span></p>
 </div>
 <div id="problem-8-center-and-what-an-outlier-does-to-it" class="section level2">
 <h2>Problem 8 — Center, and what an outlier does to it</h2>
-<p>Consider the following eight observations of a variable <span class="math inline">\(X\)</span>, the number of minutes eight customers
+<p>Consider the following five observations of a variable <span class="math inline">\(X\)</span>, the number of minutes five customers
 spent in a shop:</p>
-<p><span class="math display">\[X = \{ 4, \ 6, \ 6, \ 9, \ 11, \ 12, \
-14, \ 16 \}\]</span></p>
-<p><strong>(a)</strong> Compute the mean, the median and the mode.</p>
+<p><span class="math display">\[X = \{ 6, \ 6, \ 9, \ 12, \ 17
+\}\]</span></p>
+<p><strong>(a)</strong> Show how to compute the mean, the median and the
+mode.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1538,48 +1540,49 @@ Your answer
 <td style="text-align:left;">
 Mean <span class="math inline">\(\bar{x}\)</span>
 </td>
-<td style="text-align:left;">
-<span class="soln"><span class="math inline">\(78/8 = 9.75\)</span>
-minutes</span>
+<td style="text-align:left;width: 4.5in; ">
+<span class="soln"><span class="math inline">\(\bar{x} =
+\frac{1}{n}\sum_{i=1}^{n} x_i = \frac{6 + 6 + 9 + 12 + 17}{5} =
+\frac{50}{5} = 10\)</span> minutes</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Median
 </td>
-<td style="text-align:left;">
-<span class="soln"><span class="math inline">\((9+11)/2 = 10\)</span>
-minutes</span>
+<td style="text-align:left;width: 4.5in; ">
+<span class="soln">the <span class="math inline">\(3^{rd}\)</span> of 5
+ordered values: 9 minutes</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Mode
 </td>
-<td style="text-align:left;">
-<span class="soln">6 minutes</span>
+<td style="text-align:left;width: 4.5in; ">
+<span class="soln">the most frequent value: 6 minutes</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>(b)</strong> A ninth customer stays for <strong>78
+<p><strong>(b)</strong> A sixth customer stays for <strong>70
 minutes</strong>. Recompute the mean and the median with that
-observation included.</p>
-<p><span class="soln"><span class="math inline">\(\bar{x} = (78 + 78)/9
-= 156/9 \approx 17.33\)</span> minutes. <br>The median is now the <span class="math inline">\(5^{th}\)</span> of 9 ordered values, which is
-<b>11 minutes</b>.</span></p>
-<p><strong>(c)</strong> Which statistic moved more, and why?</p>
-<p><span class="soln">The <b>mean</b> moved far more – from 9.75 up to
-about 17.33, an increase of roughly 7.6 minutes – while the median moved
-from 10 to 11, just one minute. <br><br>The mean uses the <i>value</i>
-of every observation, so a single very large value pulls it upward in
-proportion to how extreme it is. The median depends only on
-<i>position</i> in the ordered data; adding one more value at the top
-shifts the middle position over by one place and nothing more.
-<br><br>Notice too that after the outlier the mean of 17.33 is larger
-than <i>every observation except the outlier itself</i>. It is no longer
-describing a typical customer at all.</span></p>
-<p><strong>(d)</strong> Which of the two is <strong>resistant</strong>?
+observation included. Which of the two moved more, and why?</p>
+<p><span class="soln"><span class="math inline">\(\bar{x} =
+\frac{1}{n}\sum_{i=1}^{n} x_i = \frac{6 + 6 + 9 + 12 + 17 + 70}{6} =
+\frac{120}{6} = 20\)</span> minutes. <br><br>With <span class="math inline">\(n = 6\)</span> there is no single middle value, so
+the median is the average of the <span class="math inline">\(3^{rd}\)</span> and <span class="math inline">\(4^{th}\)</span> ordered values: <span class="math inline">\(\frac{9 + 12}{2} = 10.5\)</span> minutes.
+<br><br>The <b>mean</b> moved far more – it doubled, from 10 up to 20
+minutes – while the median moved from 9 to 10.5, a shift of a minute and
+a half. <br><br>The mean uses the <i>value</i> of every observation, so
+a single very large value pulls it upward in proportion to how extreme
+it is. The median depends only on <i>position</i> in the ordered data;
+adding one more value at the top shifts the middle position over by half
+a place and nothing more. <br><br>Notice too that after the outlier the
+mean of 20 minutes is larger than <i>every observation except the
+outlier itself</i>. It is no longer describing a typical customer at
+all.</span></p>
+<p><strong>(c)</strong> Which of the two is <strong>resistant</strong>?
 Give a one-sentence definition of that word.</p>
 <p><span class="soln">The median is resistant.</span></p>
 <p><span class="soln">A summary measure is <b>resistant</b> when a
@@ -1590,62 +1593,57 @@ observation, or only positions in the ordered data.</span></p>
 </div>
 <div id="problem-9-percentiles-and-quartiles" class="section level2">
 <h2>Problem 9 — Percentiles and quartiles</h2>
-<p>The following are the ages of the 11 members of a community board,
+<p>The following are the ages of the 10 members of a community board,
 sorted:</p>
-<p><span class="math display">\[\begin{gathered}
-X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49, \ 52, \ 56, \ 61, \ 67, \\
-73 \}
-\end{gathered}\]</span></p>
+<p><span class="math display">\[X = \{ 29, \ 34, \ 38, \ 41, \ 45, \ 49,
+\ 52, \ 56, \ 61, \ 67 \}\]</span></p>
 <p><strong>(a)</strong> Find the median, <span class="math inline">\(Q2\)</span>.</p>
-<p><span class="soln"><span class="math inline">\(Q2 = 49\)</span>, the
-<span class="math inline">\(6^{th}\)</span> of 11 ordered
-values</span></p>
+<p><span class="soln"><span class="math inline">\(Q2 = (45 + 49)/2 =
+47\)</span>, the average of the <span class="math inline">\(5^{th}\)</span> and <span class="math inline">\(6^{th}\)</span> of 10 ordered values</span></p>
 <p><strong>(b)</strong> Find <span class="math inline">\(Q1\)</span> and
 <span class="math inline">\(Q3\)</span> using the <strong>method of
-halves</strong> we use in this class. Remember that when <span class="math inline">\(n\)</span> is odd the median is <strong>left
-out</strong> of both halves.</p>
-<p><span class="soln">Dropping the median, the lower half is <span class="math inline">\(\{29, 34, 38, 41, 45\}\)</span> and the upper half
-is <span class="math inline">\(\{52, 56, 61, 67, 73\}\)</span>. Each has
-five values, so each median is its middle value: <br><br><span class="math inline">\(Q1 = 38\)</span> years and <span class="math inline">\(Q3 = 61\)</span> years.</span></p>
-<p><strong>(c)</strong> A twelfth member, aged <span class="math inline">\(58\)</span>, joins the board. Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q2\)</span> and <span class="math inline">\(Q3\)</span> for the new set of 12 ages.</p>
-<p><span class="soln">The ordered ages are now <span class="math inline">\(\{29, 34, 38, 41, 45, 49, 52, 56, 58, 61, 67,
-73\}\)</span>. <br><br>With <span class="math inline">\(n = 12\)</span>
-there is no single middle value, so the median is the average of the
-<span class="math inline">\(6^{th}\)</span> and <span class="math inline">\(7^{th}\)</span> ages: <span class="math inline">\(Q2 = (49 + 52)/2 = 50.5\)</span> years. Because
-<span class="math inline">\(n\)</span> is even there is nothing to leave
-out – the data splits cleanly into two halves of six. <br><br>The lower
-half is <span class="math inline">\(\{29, 34, 38, 41, 45, 49\}\)</span>,
-so <span class="math inline">\(Q1 = (38 + 41)/2 = 39.5\)</span> years.
-<br>The upper half is <span class="math inline">\(\{52, 56, 58, 61, 67,
-73\}\)</span>, so <span class="math inline">\(Q3 = (58 + 61)/2 =
-59.5\)</span> years. <br><br>Compare this with part (b): the method is
-the same both times. The only thing that changes is that an odd <span class="math inline">\(n\)</span> leaves you a middle value to drop, and
-an even <span class="math inline">\(n\)</span> does not.</span></p>
-<p><strong>(d)</strong> What is the <span class="math inline">\(IQR\)</span>, and what does it measure?</p>
-<p><span class="soln"><span class="math inline">\(IQR = 61 - 38 =
-23\)</span> years</span></p>
+halves</strong> we use in this class.</p>
+<p><span class="soln">Because <span class="math inline">\(n =
+10\)</span> is even there is no middle value to set aside – the data
+splits cleanly into two halves of five. The lower half is <span class="math inline">\(\{29, 34, 38, 41, 45\}\)</span> and the upper half
+is <span class="math inline">\(\{49, 52, 56, 61, 67\}\)</span>, so each
+quartile is just the middle value of its half: <br><br><span class="math inline">\(Q1 = 38\)</span> years and <span class="math inline">\(Q3 = 56\)</span> years.</span></p>
+<p><strong>(c)</strong> An eleventh member, aged <span class="math inline">\(58\)</span>, joins the board. Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q2\)</span> and <span class="math inline">\(Q3\)</span> for the new set of 11 ages. Remember
+that when <span class="math inline">\(n\)</span> is odd the median is
+<strong>left out</strong> of both halves.</p>
+<p><span class="soln">The ordered ages are now <span class="math inline">\(\{29, 34, 38, 41, 45, 49, 52, 56, 58, 61,
+67\}\)</span>. <br><br>With <span class="math inline">\(n = 11\)</span>
+the median is the single middle value, the <span class="math inline">\(6^{th}\)</span> age: <span class="math inline">\(Q2 = 49\)</span> years. Because <span class="math inline">\(n\)</span> is odd, that value is now dropped from
+both halves. <br><br>The lower half is <span class="math inline">\(\{29,
+34, 38, 41, 45\}\)</span>, so <span class="math inline">\(Q1 =
+38\)</span> years. <br>The upper half is <span class="math inline">\(\{52, 56, 58, 61, 67\}\)</span>, so <span class="math inline">\(Q3 = 58\)</span> years. <br><br>Compare this with
+part (b): the method is the same both times. The only thing that changes
+is that an odd <span class="math inline">\(n\)</span> leaves you a
+middle value to drop, and an even <span class="math inline">\(n\)</span>
+does not.</span></p>
+<p><strong>(d)</strong> Using the original 10 ages, what is the <span class="math inline">\(IQR\)</span>, and what does it measure?</p>
+<p><span class="soln"><span class="math inline">\(IQR = Q3 - Q1 = 56 -
+38 = 18\)</span> years</span></p>
 <p><span class="soln">The IQR is the distance between <span class="math inline">\(Q1\)</span> and <span class="math inline">\(Q3\)</span>, so it describes how spread out the
 <b>middle 50%</b> of the data are. Because it ignores the extreme ends
 of the distribution entirely, it is highly resistant to
 outliers.</span></p>
-<p><strong>(e)</strong> The board member aged 67 is at roughly what
-percentile? Answer in a sentence that says what that means.</p>
-<p><span class="soln">Ten of the 11 members are aged 67 or younger, so
-67 sits at about the <span class="math inline">\(10/11 \approx
-91^{st}\)</span> percentile: roughly 91% of the board is at or below
-that age, and only one member is older.</span></p>
+<p><strong>(e)</strong> In the original 10 ages, the board member aged
+61 is at roughly what percentile? Answer in a sentence that says what
+that means.</p>
+<p><span class="soln">Nine of the 10 members are aged 61 or younger, so
+61 sits at about the <span class="math inline">\(9/10 = 90^{th}\)</span>
+percentile: roughly 90% of the board is at or below that age, and only
+one member is older.</span></p>
 <hr />
 </div>
 <div id="problem-10-deviations-variance-and-standard-deviation" class="section level2">
 <h2>Problem 10 — Deviations, variance and standard deviation</h2>
-<p>A quality inspector measured the weight, in grams, of six packets
-from a filling machine:</p>
-<p><span class="math display">\[X = \{ 48, \ 51, \ 52, \ 55, \ 57, \ 59
-\}\]</span></p>
-<p><strong>(a)</strong> Compute the sample mean <span class="math inline">\(\bar{x}\)</span>.</p>
-<p><span class="soln"><span class="math inline">\(\bar{x} = 322/6
-\approx 53.67\)</span> grams</span></p>
-<p><strong>(b)</strong> Complete the deviation table below, then add up
+<p>A quality inspector took three packets of ground coffee off a filling
+machine and weighed each one, in grams:</p>
+<p><span class="math display">\[X = \{ 48, \ 54, \ 57 \}\]</span></p>
+<p>The sample mean of these three packets is <span class="math inline">\(\bar{x} = \dfrac{159}{3} = 53\)</span> grams.</p>
+<p><strong>(a)</strong> Complete the deviation table below, then add up
 the deviation column.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1663,85 +1661,70 @@ the deviation column.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.6in; ">
 48
 </td>
-<td style="text-align:left;">
-<span class="soln">-5.67</span>
+<td style="text-align:left;width: 1.6in; ">
+<span class="soln">-5</span>
 </td>
-<td style="text-align:left;">
-<span class="soln">32.11</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:left;">
-<span class="soln">-2.67</span>
-</td>
-<td style="text-align:left;">
-<span class="soln">7.11</span>
+<td style="text-align:left;width: 1.6in; ">
+<span class="soln">25</span>
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
-52
+<td style="text-align:right;width: 1.6in; ">
+54
 </td>
-<td style="text-align:left;">
-<span class="soln">-1.67</span>
+<td style="text-align:left;width: 1.6in; ">
+<span class="soln">1</span>
 </td>
-<td style="text-align:left;">
-<span class="soln">2.78</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-55
-</td>
-<td style="text-align:left;">
-<span class="soln">1.33</span>
-</td>
-<td style="text-align:left;">
-<span class="soln">1.78</span>
+<td style="text-align:left;width: 1.6in; ">
+<span class="soln">1</span>
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.6in; ">
 57
 </td>
-<td style="text-align:left;">
-<span class="soln">3.33</span>
+<td style="text-align:left;width: 1.6in; ">
+<span class="soln">4</span>
 </td>
-<td style="text-align:left;">
-<span class="soln">11.11</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-59
-</td>
-<td style="text-align:left;">
-<span class="soln">5.33</span>
-</td>
-<td style="text-align:left;">
-<span class="soln">28.44</span>
+<td style="text-align:left;width: 1.6in; ">
+<span class="soln">16</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p><span class="soln">The deviation column sums to <b>0</b> (up to
-rounding), and the squared deviation column sums to about <b>83.33</b>.
-<br><br>The deviations summing to zero is not a property of these six
-numbers – it happens for every dataset, because the mean is the
-balancing point. That is exactly why the variance squares the deviations
-before adding them: without squaring, the positives and negatives always
-cancel and you learn nothing.</span></p>
-<p><strong>(c)</strong> Compute the sample variance <span class="math inline">\(s^2\)</span> and the sample standard deviation
-<span class="math inline">\(s\)</span>.</p>
-<p><span class="soln"><span class="math inline">\(s^2 = \frac{83.33}{6 -
-1} = \frac{83.33}{5} \approx 16.67\)</span> <br><br><span class="math inline">\(s = \sqrt{16.67} \approx 4.08\)</span>
-grams</span></p>
+<p><span class="soln">The deviations are <span class="math inline">\(48
+- 53 = -5\)</span>, <span class="math inline">\(54 - 53 = 1\)</span> and
+<span class="math inline">\(57 - 53 = 4\)</span> grams, and their
+squares are <span class="math inline">\(25\)</span>, <span class="math inline">\(1\)</span> and <span class="math inline">\(16\)</span>. <br><br>The deviation column sums to
+<b>0</b>, and the squared deviation column sums to <span class="math inline">\(25 + 1 + 16 = 42\)</span>. <br><br>The deviations
+summing to zero is not a property of these three numbers – it happens
+for every dataset, because the mean is the balancing point. That is
+exactly why the variance squares the deviations before adding them:
+without squaring, the positives and negatives always cancel and you
+learn nothing.</span></p>
+<p><strong>(b)</strong> A fourth packet comes off the machine weighing
+<strong>63 grams</strong>. Using the sample mean <span class="math inline">\(\bar{x} = 53\)</span> grams from the three packets
+above, compute this packet’s deviation from the mean and interpret what
+that number tells you.</p>
+<p><span class="soln"><span class="math inline">\(x - \bar{x} = 63 - 53
+= +10\)</span> grams. <br><br>This packet weighs 10 grams <i>more</i>
+than the average of the three packets already measured. A deviation
+carries both a size and a sign: the size is how far the observation sits
+from the mean in the units of the data (grams here), and the positive
+sign says it sits <i>above</i> the mean. A packet weighing 43 grams
+would have deviation <span class="math inline">\(-10\)</span> grams –
+the same distance from the mean, on the other side.</span></p>
+<p><strong>(c)</strong> Show or explain how to compute the sample
+variance <span class="math inline">\(s^2\)</span> from the table you
+filled in above, and then the sample standard deviation <span class="math inline">\(s\)</span>.</p>
+<p><span class="soln">The squared deviation column is the sum the
+variance formula needs. Add that column up and divide by <span class="math inline">\(n - 1\)</span>: <br><br><span class="math inline">\(s^{2} = \dfrac{1}{n-1}\sum_{i=1}^{n}(x_i -
+\bar{x})^{2} = \dfrac{25 + 1 + 16}{3 - 1} = \dfrac{42}{2} = 21\)</span>
+grams squared <br><br><span class="math inline">\(s = \sqrt{s^{2}} =
+\sqrt{21} \approx 4.58\)</span> grams</span></p>
 <p><strong>(d)</strong> State the units of <span class="math inline">\(\bar{x}\)</span>, of <span class="math inline">\(s^2\)</span> and of <span class="math inline">\(s\)</span>.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1786,17 +1769,18 @@ which is why the variance is in grams squared – a quantity nobody can
 picture. Taking the square root undoes it and puts <span class="math inline">\(s\)</span> back on the scale of the original data,
 where it reads as roughly the typical distance of a packet from the mean
 weight.</span></p>
-<p><strong>(e)</strong> Compute the range. Which is the better
-description of the spread of this data, the range or the standard
+<p><strong>(e)</strong> Show how to compute the range. Which is the
+better description of the spread of this data, the range or the standard
 deviation, and why?</p>
-<p><span class="soln">Range <span class="math inline">\(= 59 - 48 =
-11\)</span> grams. <br><br>The <b>standard deviation</b> is the better
-description here. The range is built from the two most extreme
-observations and <i>nothing else</i>, so it throws away the other four
-measurements entirely and moves by the full amount if either endpoint
-changes. The standard deviation uses every observation. <br><br>The
-range is worth reporting as a quick descriptive fact, but it is almost
-never used as <i>the</i> measure of spread.</span></p>
+<p><span class="soln">Range <span class="math inline">\(= \max x - \min
+x = 57 - 48 = 9\)</span> grams. <br><br>The <b>standard deviation</b> is
+the better description here. The range is built from the two most
+extreme observations and <i>nothing else</i>: here it ignores the middle
+packet entirely, and in a larger sample it would ignore almost all of
+the data. It also moves by the full amount if either endpoint changes.
+The standard deviation uses every observation. <br><br>The range is
+worth reporting as a quick descriptive fact, but it is almost never used
+as <i>the</i> measure of spread.</span></p>
 <hr />
 </div>
 <div id="problem-11-five-number-summary-boxplots-and-outliers" class="section level2">
@@ -1853,13 +1837,13 @@ Maximum
 even, so there is no middle value to leave out: the median is the
 average of the <span class="math inline">\(6^{th}\)</span> and <span class="math inline">\(7^{th}\)</span> values, <span class="math inline">\(Q2 = (11+12)/2 = 11.5\)</span> days, and the data
 splits cleanly into two halves of six. <br><br>The lower half is <span class="math inline">\(\{3,5,6,8,9,11\}\)</span> with median <span class="math inline">\(Q1 = (6+8)/2 = 7\)</span>; the upper half is <span class="math inline">\(\{12,14,15,17,19,58\}\)</span> with median <span class="math inline">\(Q3 = (15+17)/2 = 16\)</span>.</span></p>
-<p><strong>(b)</strong> Compute the <span class="math inline">\(IQR\)</span> and both outlier boundaries.</p>
-<p><span class="soln"><span class="math inline">\(IQR = 16 - 7 =
-9\)</span> days, so <span class="math inline">\(1.5 \times IQR =
-13.5\)</span>. <br><br>Lower boundary <span class="math inline">\(= 7 -
-13.5 = -6.5\)</span> days. <br>Upper boundary <span class="math inline">\(= 16 + 13.5 = 29.5\)</span> days. <br><br>Nothing
-can fall below <span class="math inline">\(-6.5\)</span> days, so only
-the upper boundary can flag anything here.</span></p>
+<p><strong>(b)</strong> Show how to compute the <span class="math inline">\(IQR\)</span> and both outlier boundaries.</p>
+<p><span class="soln"><span class="math inline">\(IQR = Q3 - Q1 = 16 - 7
+= 9\)</span> days, so <span class="math inline">\(1.5 \times IQR =
+13.5\)</span>. <br><br>Lower boundary <span class="math inline">\(= Q1 -
+1.5 \times IQR = 7 - 13.5 = -6.5\)</span> days. <br>Upper boundary <span class="math inline">\(= Q3 + 1.5 \times IQR = 16 + 13.5 = 29.5\)</span>
+days. <br><br>Nothing can fall below <span class="math inline">\(-6.5\)</span> days, so only the upper boundary can
+flag anything here.</span></p>
 <p><strong>(c)</strong> Which observations, if any, does the <span class="math inline">\(1.5 \times IQR\)</span> rule flag as outliers?</p>
 <p><span class="soln">Just one: the 58-day wait, which is above the
 upper boundary of 29.5</span></p>

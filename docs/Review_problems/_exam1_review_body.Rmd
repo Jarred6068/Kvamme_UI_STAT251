@@ -61,6 +61,27 @@ cellv <- function(x) {
   if (SOLUTIONS) sprintf('<span class="soln">%s</span>', x) else ""
 }
 
+## A blank cell that reserves room to WRITE IN, for the tables whose whole point
+## is that the student works the formula out in the cell. An empty <td> collapses
+## to a single line of height, which leaves nowhere to put a fraction; the div
+## props the row open instead. Solutions copy is unaffected -- the answer fills
+## the cell there.
+cellbox <- function(x, height = "1.1in") {
+  if (SOLUTIONS) sprintf('<span class="soln">%s</span>', x)
+  else sprintf('<div style="min-height:%s"></div>', height)
+}
+
+## A column that is only PARTLY blank: the entries at `blanks` are left for the
+## student (and shown in red in the key), every other entry is printed in both
+## copies. Used where the point of the exercise is that the student recovers the
+## missing entries from the ones that are there -- the frequencies sum to n, the
+## relative frequencies sum to 1, and each CRF is the running total of the RFs.
+cellsome <- function(x, blanks) {
+  out <- as.character(x)
+  out[blanks] <- cellv(out[blanks])
+  out
+}
+
 ## Print a set of observations in the notation used in the lecture notes:
 ##   X = {2, 5, 6, 9, 13}
 ## Character values are wrapped in \text{} so they typeset upright rather than as
@@ -209,10 +230,10 @@ stopifnot(phat == 0.23)
 
 `r ans("$N = 8{,}500$ and $n = 200$")`
 
-**(b)** Compute the sample proportion of bicycles with no working lights. Which symbol
+**(b)** Show how to compute the sample proportion of bicycles with no working lights. Which symbol
 denotes it?
 
-`r ans("$\\hat{p} = 46/200 = 0.23$")`
+`r ans("$\\hat{p} = \\frac{\\text{number with no working lights}}{n} = \\frac{46}{200} = 0.23$")`
 
 ```{r p02-b, results='asis'}
 why(paste("The <b>sample</b> proportion is written $\\hat{p}$. The hat marks it as a",
@@ -296,11 +317,11 @@ show_tbl(data.frame(
   Question = c("What does $n$ stand for?",
                "What does $N$ stand for?",
                "What does the *hat* on $\\hat{p}$ tell you?",
-               "In $\\sum_{i=1}^{n} x_i$, what does the $i=1$ below the $\\Sigma$ mean?"),
+               "What does $\\sum_{i=1}^{n} x_i$ mean?"),
   `Your answer` = cellv(c("the number of observations in the **sample**",
                           "the number of observations in the **population**",
                           "that it is computed from a sample, and estimates the parameter $p$",
-                          "start the count at the first observation and add up to the $n^{th}$")),
+                          "add up the observations, starting at the first and running through the $n^{th}$: $x_1 + x_2 + \\cdots + x_n$")),
   check.names = FALSE))
 ```
 
@@ -322,20 +343,11 @@ show_set(x3)
 **Show how to compute** the mean $\bar{x}$ and the standard deviation $s$.
 
 ```{r p03-c, results='asis'}
-why(paste("<b>Mean.</b>",
-          "$\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i",
-          "= \\frac{2 + 5 + 6 + 9 + 13}{5} = \\frac{35}{5} = 7$",
-          "<br><br><b>Standard deviation.</b> Take the deviation of each observation from",
-          "the mean, square it, and add:",
-          "<br><br>$\\sum_{i=1}^{n}(x_i - \\bar{x})^{2}",
-          "= (-5)^2 + (-2)^2 + (-1)^2 + 2^2 + 6^2",
-          "= 25 + 4 + 1 + 4 + 36 = 70$",
-          "<br><br>Divide by $n - 1$ to get the variance, then take the square root:",
-          "<br><br>$s^{2} = \\frac{70}{5 - 1} = \\frac{70}{4} = 17.5",
-          "\\qquad s = \\sqrt{17.5} \\approx 4.18$",
-          "<br><br>Note the deviations themselves -- $-5, -2, -1, 2, 6$ -- add to $0$.",
-          "That happens for <b>every</b> dataset, because the mean is the balancing",
-          "point, and it is why the deviations must be squared before they are added."))
+why(paste("$\\bar{x} = \\dfrac{1}{n}\\sum_{i=1}^{n} x_i",
+          "= \\dfrac{2 + 5 + 6 + 9 + 13}{5} = \\dfrac{35}{5} = 7$",
+          "<br><br>$s = \\sqrt{\\dfrac{1}{n-1}\\sum_{i=1}^{n}(x_i - \\bar{x})^{2}}",
+          "= \\sqrt{\\dfrac{(2-7)^2 + (5-7)^2 + \\cdots + (13-7)^2}{5-1}}",
+          "= \\sqrt{\\dfrac{70}{4}} = \\sqrt{17.5} \\approx 4.18$"))
 workspace(6)
 ```
 
@@ -352,12 +364,9 @@ show_set(y3, "Y")
 **Show how to compute** the proportion of observations in the category **Bus**.
 
 ```{r p03-d, results='asis'}
-why(paste("Count the observations in the category, then divide by the sample size:",
-          "<br><br>$\\hat{p} = \\frac{\\text{number of observations in the category}}{n}",
-          "= \\frac{4}{10} = 0.4$",
-          "<br><br>So 40% of the sample travelled by bus. Note that a proportion is the",
-          "one summary here that <i>can</i> be computed for a qualitative variable -- a",
-          "mean and a standard deviation cannot, because the categories are not numbers."))
+why(paste("$\\hat{p} = \\dfrac{\\text{number of observations in the category}}{n}",
+          "= \\dfrac{4}{10} = 0.4$",
+          "<br><br>So 40% of the sample travelled by bus."))
 workspace(4)
 ```
 
@@ -443,30 +452,59 @@ mean5 <- sum(v5 * f5) / sum(f5)
 stopifnot(sum(f5) == 25, mean5 == 1.64,
           abs(crf5[3] - 0.80) < 1e-12,
           abs(sum(v5 * rf5) - mean5) < 1e-12)
+
+## Which entries are left blank. The table is deliberately solvable: the missing
+## frequency comes from the fact that the frequencies sum to n = 25 (or from
+## CRF(3) - CRF(1) - RF(2), which is a second, independent route to it), and the
+## missing CRF at x = 2 has to be filled in before part (e) can be read off it.
+f_blank5   <- 4       # x = 3
+rf_blank5  <- c(2, 4, 5)   # x = 1, 3, 4
+crf_blank5 <- c(3, 5)      # x = 2, 4
+stopifnot(sum(f5[-f_blank5]) == 21, f5[f_blank5] == 25 - 21,
+          length(rf_blank5) == 3, length(crf_blank5) == 2)
+
 show_tbl(data.frame(
   `Vehicles $x$` = v5,
-  `Frequency $F(x)$` = f5,
-  `Relative frequency $RF(x)$` = cellv(sprintf("%.2f", rf5)),
-  `Cumulative relative frequency $CRF(x)$` = cellv(sprintf("%.2f", crf5)),
+  `Frequency $F(x)$` = cellsome(f5, f_blank5),
+  `Relative frequency $RF(x)$` = cellsome(sprintf("%.2f", rf5), rf_blank5),
+  `Cumulative relative frequency $CRF(x)$` = cellsome(sprintf("%.2f", crf5), crf_blank5),
   check.names = FALSE))
 ```
 
-**(a)** Complete the relative frequency and cumulative relative frequency columns.
+**(a)** Fill in the blank entries in the table. Remember that the frequencies must add to
+$n$, the relative frequencies must add to $1$, and each cumulative relative frequency is
+the running total of the relative frequencies above it.
 
-**(b)** Compute the mean number of vehicles using the **frequency** formula,
-$\bar{x} = \frac{1}{n}\sum_{x} x\,F(x)$.
-
-```{r p05-b, results='asis'}
-why(paste("$\\bar{x} = \\frac{0(3) + 1(9) + 2(8) + 3(4) + 4(1)}{25}",
-          "= \\frac{0 + 9 + 16 + 12 + 4}{25} = \\frac{41}{25} = 1.64$ vehicles."))
+```{r p05-a, results='asis'}
+why(paste("<b>The missing frequency.</b> The frequencies have to add to $n = 25$, and the",
+          "four that are given add to $3 + 9 + 8 + 1 = 21$, so $F(3) = 25 - 21 = 4$.",
+          "<br><br><b>The missing relative frequencies.</b> $RF(x) = F(x)/n$:",
+          "$RF(1) = 9/25 = 0.36$, $RF(3) = 4/25 = 0.16$, $RF(4) = 1/25 = 0.04$.",
+          "As a check, the column now adds to",
+          "$0.12 + 0.36 + 0.32 + 0.16 + 0.04 = 1.00$.",
+          "<br><br><b>The missing cumulative relative frequencies.</b> Each one is the",
+          "previous $CRF$ plus the current $RF$: $CRF(2) = 0.48 + 0.32 = 0.80$ and",
+          "$CRF(4) = 0.96 + 0.04 = 1.00$. The last $CRF$ is always $1.00$ -- if yours",
+          "is not, something above it is wrong."))
 workspace(3)
 ```
 
-**(c)** Now compute it again using the **relative frequency** formula,
-$\bar{x} = \sum_{x} x\,RF(x)$, and confirm you get the same answer.
+**(b)** Show how to compute the mean number of vehicles using the **frequency** from the table
+above.
+
+```{r p05-b, results='asis'}
+why(paste("$\\bar{x} = \\dfrac{1}{n}\\sum_{x} x\\,F(x)",
+          "= \\dfrac{0(3) + 1(9) + 2(8) + 3(4) + 4(1)}{25}",
+          "= \\dfrac{0 + 9 + 16 + 12 + 4}{25} = \\dfrac{41}{25} = 1.64$ vehicles."))
+workspace(3)
+```
+
+**(c)** Now show how to compute the mean again using the **relative frequency** from the table
+above, and confirm you get the same answer.
 
 ```{r p05-c, results='asis'}
-why(paste("$\\bar{x} = 0(0.12) + 1(0.36) + 2(0.32) + 3(0.16) + 4(0.04)",
+why(paste("$\\bar{x} = \\sum_{x} x\\,RF(x)",
+          "= 0(0.12) + 1(0.36) + 2(0.32) + 3(0.16) + 4(0.04)",
           "= 0 + 0.36 + 0.64 + 0.48 + 0.16 = 1.64$ vehicles.",
           "<br><br>The two formulas are the same calculation. Dividing by $n$ at the end",
           "(the frequency version) and dividing by $n$ at the start to build the relative",
@@ -475,52 +513,41 @@ why(paste("$\\bar{x} = 0(0.12) + 1(0.36) + 2(0.32) + 3(0.16) + 4(0.04)",
 workspace(3)
 ```
 
-**(d)** What proportion of these households own 2 or fewer vehicles? Which column did you
-read that from?
+**(d)** What proportion of these households own 2 or fewer vehicles?
 
-`r ans("$0.80$, read from the cumulative relative frequency column at $x = 2$")`
+`r ans("$0.80$")`
 
-**(e)** What is the median number of vehicles owned? (You can read this off the cumulative
-relative frequency column.)
+**(e)** Use the table to find the median number of vehicles owned.
 
 ```{r p05-e, results='asis'}
-why(paste("The median is the $50^{th}$ percentile. Reading down the $CRF$ column, it",
-          "passes $0.50$ at $x = 2$ (the $CRF$ is $0.48$ at $x = 1$ and $0.80$ at",
-          "$x = 2$), so the <b>median is 2 vehicles</b>.",
-          "<br><br>Check it against the raw data if you like: with $n = 25$ the median is",
-          "the $13^{th}$ value in order, and values 13 through 20 are all 2s."))
+why(paste("<b>Median is 2 vehicles.</b> There are two ways to get there.",
+          "<br><br><b>From the frequencies.</b> With $n = 25$ the median is the",
+          "$13^{th}$ value once the data is put in order. The first $3$ values are $0$s",
+          "and the next $9$ are $1$s, which takes you through the $12^{th}$ value, so the",
+          "$13^{th}$ value is a $2$.",
+          "<br><br><b>From the $CRF$ column.</b> The median is the $50^{th}$ percentile,",
+          "so read down the $CRF$ column for where it first reaches $0.50$: it is $0.48$",
+          "at $x = 1$ and $0.80$ at $x = 2$, so the median is $2$."))
 workspace(3)
 ```
 
 ---
 
-## Problem 6 — Binning a continuous variable
+## Problem 6 — Binned frequency tables and histograms
 
 The following are the times, in seconds, that 16 users took to complete a task on a website.
 
 ```{r p06-data, results='asis'}
 t6 <- c(12.4, 14.1, 15.8, 16.2, 17.5, 18.0, 18.3, 19.1,
         20.2, 20.6, 21.7, 22.4, 23.9, 25.1, 26.8, 28.4)
-k6 <- round(sqrt(length(t6)))
-w6 <- (max(t6) - min(t6)) / k6
 brk6 <- c(12, 16, 20, 24, 28.5)
 f6 <- as.integer(table(cut(t6, breaks = brk6, right = TRUE)))
-stopifnot(length(t6) == 16, k6 == 4, sum(f6) == 16,
-          identical(f6, c(3L, 5L, 5L, 3L)), abs(w6 - 4.0) < 0.01)
+stopifnot(length(t6) == 16, sum(f6) == 16,
+          identical(f6, c(3L, 5L, 5L, 3L)))
 show_set(t6)
 ```
 
-**(a)** Using the **square root rule**, how many bins $k$ should you use for a histogram of
-these 16 observations?
-
-`r ans("$k = \\text{round}(\\sqrt{16}) = 4$ bins")`
-
-**(b)** Compute the bin width $w$ implied by that choice, using
-$w = \frac{\max x - \min x}{k}$.
-
-`r ans("$w = (28.4 - 12.4)/4 = 16/4 = 4.0$ seconds")`
-
-**(c)** Complete the frequency table using the intervals given.
+**(a)** Complete the frequency table using the intervals given.
 
 ```{r p06-table}
 show_tbl(data.frame(
@@ -531,7 +558,7 @@ show_tbl(data.frame(
   check.names = FALSE))
 ```
 
-**(d)** Draw the histogram on the axes below.
+**(b)** Draw the histogram on the axes below.
 
 ```{r p06-hist, fig.height=3.8, fig.width=5.5}
 hist_df <- data.frame(mid = c(14, 18, 22, 26.25), f = f6,
@@ -548,9 +575,9 @@ if (SOLUTIONS) {
 }
 ```
 
-**(e)** Describe the shape of this distribution.
+**(c)** Describe the shape of this distribution.
 
-```{r p06-e, results='asis'}
+```{r p06-c, results="asis"}
 why(paste("Roughly <b>symmetric and unimodal</b>, with the bulk of the observations in",
           "the two middle bins and the counts tapering off evenly at both ends. There is",
           "no long tail in either direction and no obvious gap, so nothing here looks",
@@ -558,14 +585,21 @@ why(paste("Roughly <b>symmetric and unimodal</b>, with the bulk of the observati
 workspace(3)
 ```
 
-**(f)** Give one thing you can determine from the table in part (c), and one thing you
-**cannot**, that you could have determined from the raw data.
+**(d)** A frequency table reports only how many observations fall in each interval.
 
-```{r p06-f, results='asis'}
-why(paste("<b>Can:</b> the proportion of users finishing in 20 seconds or less",
-          "($8/16 = 0.5$), or the number in any one interval.",
-          "<b>Cannot:</b> the fastest or slowest individual time, the exact mean, or the",
-          "median -- once the values are grouped, the individual measurements are gone.",
+  (i) Using **only** the table from part (a), what proportion of users finished the task in
+  20 seconds or less?
+
+  (ii) Name one quantity you could compute from the raw times listed above but **not** from
+  the table alone, and say why the table cannot give it to you.
+
+```{r p06-d, results="asis"}
+why(paste("<b>(i)</b> The first two intervals cover everything up to 20 seconds, and they",
+          "hold $3 + 5 = 8$ of the 16 users, so the proportion is $8/16 = 0.5$.",
+          "<br><br><b>(ii)</b> The fastest or slowest individual time, or the exact mean or",
+          "median. The table keeps only the <i>counts</i> per interval -- it says five users",
+          "finished between 16 and 20 seconds, but not what any one of those five times was,",
+          "so there is nothing left to take a maximum or an average of.",
           "<br><br>That loss of precision is the cost of binning. It buys a readable",
           "summary of the shape, which the raw list of 16 numbers does not give you."))
 workspace(3)
@@ -635,58 +669,60 @@ workspace(3)
 
 ## Problem 8 — Center, and what an outlier does to it
 
-Consider the following eight observations of a variable $X$, the number of minutes eight
+Consider the following five observations of a variable $X$, the number of minutes five
 customers spent in a shop:
 
 ```{r p08-data, results='asis'}
-x8 <- c(4, 6, 6, 9, 11, 12, 14, 16)
+x8 <- c(6, 6, 9, 12, 17)
 mean8 <- mean(x8); med8 <- median(x8)
-x8b <- c(x8, 78)
+mode8 <- as.integer(names(sort(table(x8), decreasing = TRUE))[1])
+x8b <- c(x8, 70)
 mean8b <- mean(x8b); med8b <- median(x8b)
-stopifnot(mean8 == 9.75, med8 == 10, mean8b == 17.333 | abs(mean8b - 156/9) < 1e-9,
-          med8b == 11, sum(x8) == 78)
+stopifnot(length(x8) == 5, sum(x8) == 50, mean8 == 10, med8 == 9, mode8 == 6,
+          length(x8b) == 6, sum(x8b) == 120, mean8b == 20, med8b == 10.5,
+          mean8b > max(x8))
 show_set(x8)
 ```
 
-**(a)** Compute the mean, the median and the mode.
+**(a)** Show how to compute the mean, the median and the mode.
 
 ```{r p08-a}
 show_tbl(data.frame(
   Statistic = c("Mean $\\bar{x}$", "Median", "Mode"),
-  `Your answer` = cellv(c("$78/8 = 9.75$ minutes", "$(9+11)/2 = 10$ minutes", "6 minutes")),
-  check.names = FALSE))
+  `Your answer` = cellbox(c(
+    "$\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i = \\frac{6 + 6 + 9 + 12 + 17}{5} = \\frac{50}{5} = 10$ minutes",
+    "the $3^{rd}$ of 5 ordered values: 9 minutes",
+    "the most frequent value: 6 minutes")),
+  check.names = FALSE)) %>%
+  column_spec(2, width = "4.5in")
 ```
 
-**(b)** A ninth customer stays for **78 minutes**. Recompute the mean and the median with
-that observation included.
+**(b)** A sixth customer stays for **70 minutes**. Recompute the mean and the median with that
+observation included. Which of the two moved more, and why?
 
 ```{r p08-b, results='asis'}
-why(paste("$\\bar{x} = (78 + 78)/9 = 156/9 \\approx 17.33$ minutes.",
-          "<br>The median is now the $5^{th}$ of 9 ordered values, which is",
-          "<b>11 minutes</b>."))
-workspace(3)
-```
-
-**(c)** Which statistic moved more, and why?
-
-```{r p08-c, results='asis'}
-why(paste("The <b>mean</b> moved far more -- from 9.75 up to about 17.33, an increase of",
-          "roughly 7.6 minutes -- while the median moved from 10 to 11, just one minute.",
+why(paste("$\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i",
+          "= \\frac{6 + 6 + 9 + 12 + 17 + 70}{6} = \\frac{120}{6} = 20$ minutes.",
+          "<br><br>With $n = 6$ there is no single middle value, so the median is the",
+          "average of the $3^{rd}$ and $4^{th}$ ordered values:",
+          "$\\frac{9 + 12}{2} = 10.5$ minutes.",
+          "<br><br>The <b>mean</b> moved far more -- it doubled, from 10 up to 20 minutes",
+          "-- while the median moved from 9 to 10.5, a shift of a minute and a half.",
           "<br><br>The mean uses the <i>value</i> of every observation, so a single very",
           "large value pulls it upward in proportion to how extreme it is. The median",
           "depends only on <i>position</i> in the ordered data; adding one more value at",
-          "the top shifts the middle position over by one place and nothing more.",
-          "<br><br>Notice too that after the outlier the mean of 17.33 is larger than",
+          "the top shifts the middle position over by half a place and nothing more.",
+          "<br><br>Notice too that after the outlier the mean of 20 minutes is larger than",
           "<i>every observation except the outlier itself</i>. It is no longer describing",
           "a typical customer at all."))
-workspace(4)
+workspace(5)
 ```
 
-**(d)** Which of the two is **resistant**? Give a one-sentence definition of that word.
+**(c)** Which of the two is **resistant**? Give a one-sentence definition of that word.
 
 `r ans("The median is resistant.")`
 
-```{r p08-d, results='asis'}
+```{r p08-c, results='asis'}
 why(paste("A summary measure is <b>resistant</b> when a single extreme observation barely",
           "moves it. Whether a measure is resistant comes down to one thing: whether it",
           "uses the values of every observation, or only positions in the ordered data."))
@@ -697,61 +733,59 @@ workspace(2)
 
 ## Problem 9 — Percentiles and quartiles
 
-The following are the ages of the 11 members of a community board, sorted:
+The following are the ages of the 10 members of a community board, sorted:
 
 ```{r p09-data, results='asis'}
-a9 <- c(29, 34, 38, 41, 45, 49, 52, 56, 61, 67, 73)
+a9 <- c(29, 34, 38, 41, 45, 49, 52, 56, 61, 67)
 q9 <- q_halves(a9)
-## Part (c) adds a 12th member, so the same data is worked once with n odd (drop
-## the median) and once with n even (no median to drop) -- the two halves of the
+iqr9 <- q9[["Q3"]] - q9[["Q1"]]
+## Part (c) adds an 11th member, so the same data is worked once with n even (no
+## median to drop) and once with n odd (drop the median) -- the two halves of the
 ## rule, on one dataset.
 a9b <- sort(c(a9, 58))
 q9b <- q_halves(a9b)
-stopifnot(length(a9) == 11, identical(a9, sort(a9)),
-          q9[["Q1"]] == 38, q9[["Q2"]] == 49, q9[["Q3"]] == 61,
-          length(a9b) == 12,
-          q9b[["Q1"]] == 39.5, q9b[["Q2"]] == 50.5, q9b[["Q3"]] == 59.5)
+stopifnot(length(a9) == 10, identical(a9, sort(a9)),
+          q9[["Q1"]] == 38, q9[["Q2"]] == 47, q9[["Q3"]] == 56, iqr9 == 18,
+          length(a9b) == 11,
+          q9b[["Q1"]] == 38, q9b[["Q2"]] == 49, q9b[["Q3"]] == 58,
+          sum(a9 <= 61) == 9)
 show_set(a9)
 ```
 
 **(a)** Find the median, $Q2$.
 
-`r ans("$Q2 = 49$, the $6^{th}$ of 11 ordered values")`
+`r ans("$Q2 = (45 + 49)/2 = 47$, the average of the $5^{th}$ and $6^{th}$ of 10 ordered values")`
 
-**(b)** Find $Q1$ and $Q3$ using the **method of halves** we use in this class. Remember
-that when $n$ is odd the median is **left out** of both halves.
+**(b)** Find $Q1$ and $Q3$ using the **method of halves** we use in this class.
 
 ```{r p09-b, results='asis'}
-why(paste("Dropping the median, the lower half is $\\{29, 34, 38, 41, 45\\}$ and the",
-          "upper half is $\\{52, 56, 61, 67, 73\\}$. Each has five values, so each",
-          "median is its middle value:",
-          "<br><br>$Q1 = 38$ years and $Q3 = 61$ years."))
+why(paste("Because $n = 10$ is even there is no middle value to set aside -- the data",
+          "splits cleanly into two halves of five. The lower half is",
+          "$\\{29, 34, 38, 41, 45\\}$ and the upper half is $\\{49, 52, 56, 61, 67\\}$, so",
+          "each quartile is just the middle value of its half:",
+          "<br><br>$Q1 = 38$ years and $Q3 = 56$ years."))
 workspace(4)
 ```
 
-**(c)** A twelfth member, aged $58$, joins the board. Find $Q1$, $Q2$ and $Q3$ for the
-new set of 12 ages.
+**(c)** An eleventh member, aged $58$, joins the board. Find $Q1$, $Q2$ and $Q3$ for the
+new set of 11 ages. Remember that when $n$ is odd the median is **left out** of both halves.
 
 ```{r p09-c, results='asis'}
 why(paste("The ordered ages are now",
-          "$\\{29, 34, 38, 41, 45, 49, 52, 56, 58, 61, 67, 73\\}$.",
-          "<br><br>With $n = 12$ there is no single middle value, so the median is the",
-          "average of the $6^{th}$ and $7^{th}$ ages: $Q2 = (49 + 52)/2 = 50.5$ years.",
-          "Because $n$ is even there is nothing to leave out -- the data splits cleanly",
-          "into two halves of six.",
-          "<br><br>The lower half is $\\{29, 34, 38, 41, 45, 49\\}$, so",
-          "$Q1 = (38 + 41)/2 = 39.5$ years.",
-          "<br>The upper half is $\\{52, 56, 58, 61, 67, 73\\}$, so",
-          "$Q3 = (58 + 61)/2 = 59.5$ years.",
+          "$\\{29, 34, 38, 41, 45, 49, 52, 56, 58, 61, 67\\}$.",
+          "<br><br>With $n = 11$ the median is the single middle value, the $6^{th}$ age:",
+          "$Q2 = 49$ years. Because $n$ is odd, that value is now dropped from both halves.",
+          "<br><br>The lower half is $\\{29, 34, 38, 41, 45\\}$, so $Q1 = 38$ years.",
+          "<br>The upper half is $\\{52, 56, 58, 61, 67\\}$, so $Q3 = 58$ years.",
           "<br><br>Compare this with part (b): the method is the same both times. The",
           "only thing that changes is that an odd $n$ leaves you a middle value to drop,",
           "and an even $n$ does not."))
 workspace(5)
 ```
 
-**(d)** What is the $IQR$, and what does it measure?
+**(d)** Using the original 10 ages, what is the $IQR$, and what does it measure?
 
-`r ans("$IQR = 61 - 38 = 23$ years")`
+`r ans("$IQR = Q3 - Q1 = 56 - 38 = 18$ years")`
 
 ```{r p09-d, results='asis'}
 why(paste("The IQR is the distance between $Q1$ and $Q3$, so it describes how spread out",
@@ -760,13 +794,13 @@ why(paste("The IQR is the distance between $Q1$ and $Q3$, so it describes how sp
 workspace(2)
 ```
 
-**(e)** The board member aged 67 is at roughly what percentile? Answer in a sentence that
-says what that means.
+**(e)** In the original 10 ages, the board member aged 61 is at roughly what percentile?
+Answer in a sentence that says what that means.
 
 ```{r p09-e, results='asis'}
-why(paste("Ten of the 11 members are aged 67 or younger, so 67 sits at about the",
-          "$10/11 \\approx 91^{st}$ percentile: roughly 91% of the board is at or below",
-          "that age, and only one member is older."))
+why(paste("Nine of the 10 members are aged 61 or younger, so 61 sits at about the",
+          "$9/10 = 90^{th}$ percentile: roughly 90% of the board is at or below that age,",
+          "and only one member is older."))
 workspace(3)
 ```
 
@@ -774,50 +808,73 @@ workspace(3)
 
 ## Problem 10 — Deviations, variance and standard deviation
 
-A quality inspector measured the weight, in grams, of six packets from a filling machine:
+A quality inspector took three packets of ground coffee off a filling machine and weighed
+each one, in grams:
 
 ```{r p10-data, results='asis'}
-w10 <- c(48, 51, 52, 55, 57, 59)
+w10 <- c(48, 54, 57)
 m10 <- mean(w10)
 dev10 <- w10 - m10
 ss10 <- sum(dev10^2)
 var10 <- ss10 / (length(w10) - 1)
 sd10 <- sqrt(var10)
-stopifnot(abs(m10 - 322/6) < 1e-9, sum(w10) == 322,
-          abs(sum(dev10)) < 1e-12, abs(ss10 - 83.3333) < 1e-3,
-          abs(var10 - 16.6667) < 1e-3, abs(sd10 - 4.0825) < 1e-3)
+new10 <- 63                      # the fourth packet, in part (b)
+stopifnot(length(w10) == 3, sum(w10) == 159, m10 == 53,
+          abs(sum(dev10)) < 1e-12, ss10 == 42, var10 == 21,
+          abs(sd10 - 4.5826) < 1e-3,
+          new10 - m10 == 10, diff(range(w10)) == 9)
 show_set(w10)
 ```
 
-**(a)** Compute the sample mean $\bar{x}$.
+The sample mean of these three packets is $\bar{x} = \dfrac{159}{3} = 53$ grams.
 
-`r ans("$\\bar{x} = 322/6 \\approx 53.67$ grams")`
-
-**(b)** Complete the deviation table below, then add up the deviation column.
+**(a)** Complete the deviation table below, then add up the deviation column.
 
 ```{r p10-table}
 show_tbl(data.frame(
   `$x_i$` = w10,
-  `$x_i - \\bar{x}$` = cellv(sprintf("%.2f", dev10)),
-  `$(x_i - \\bar{x})^2$` = cellv(sprintf("%.2f", dev10^2)),
-  check.names = FALSE))
+  `$x_i - \\bar{x}$` = cellbox(sprintf("%.0f", dev10), height = "0.7in"),
+  `$(x_i - \\bar{x})^2$` = cellbox(sprintf("%.0f", dev10^2), height = "0.7in"),
+  check.names = FALSE)) %>%
+  column_spec(1:3, width = "1.6in")
 ```
 
-```{r p10-b, results='asis'}
-why(paste("The deviation column sums to <b>0</b> (up to rounding), and the squared",
-          "deviation column sums to about <b>83.33</b>.",
-          "<br><br>The deviations summing to zero is not a property of these six numbers",
+```{r p10-a, results='asis'}
+why(paste("The deviations are $48 - 53 = -5$, $54 - 53 = 1$ and $57 - 53 = 4$ grams, and",
+          "their squares are $25$, $1$ and $16$.",
+          "<br><br>The deviation column sums to <b>0</b>, and the squared deviation column",
+          "sums to $25 + 1 + 16 = 42$.",
+          "<br><br>The deviations summing to zero is not a property of these three numbers",
           "-- it happens for every dataset, because the mean is the balancing point. That",
           "is exactly why the variance squares the deviations before adding them: without",
           "squaring, the positives and negatives always cancel and you learn nothing."))
 workspace(3)
 ```
 
-**(c)** Compute the sample variance $s^2$ and the sample standard deviation $s$.
+**(b)** A fourth packet comes off the machine weighing **63 grams**. Using the sample mean
+$\bar{x} = 53$ grams from the three packets above, compute this packet's deviation from the
+mean and interpret what that number tells you.
+
+```{r p10-b, results='asis'}
+why(paste("$x - \\bar{x} = 63 - 53 = +10$ grams.",
+          "<br><br>This packet weighs 10 grams <i>more</i> than the average of the three",
+          "packets already measured. A deviation carries both a size and a sign: the size",
+          "is how far the observation sits from the mean in the units of the data (grams",
+          "here), and the positive sign says it sits <i>above</i> the mean. A packet",
+          "weighing 43 grams would have deviation $-10$ grams -- the same distance from",
+          "the mean, on the other side."))
+workspace(3)
+```
+
+**(c)** Show or explain how to compute the sample variance $s^2$ from the table you filled in
+above, and then the sample standard deviation $s$.
 
 ```{r p10-c, results='asis'}
-why(paste("$s^2 = \\frac{83.33}{6 - 1} = \\frac{83.33}{5} \\approx 16.67$",
-          "<br><br>$s = \\sqrt{16.67} \\approx 4.08$ grams"))
+why(paste("The squared deviation column is the sum the variance formula needs. Add that",
+          "column up and divide by $n - 1$:",
+          "<br><br>$s^{2} = \\dfrac{1}{n-1}\\sum_{i=1}^{n}(x_i - \\bar{x})^{2}",
+          "= \\dfrac{25 + 1 + 16}{3 - 1} = \\dfrac{42}{2} = 21$ grams squared",
+          "<br><br>$s = \\sqrt{s^{2}} = \\sqrt{21} \\approx 4.58$ grams"))
 workspace(3)
 ```
 
@@ -838,15 +895,16 @@ why(paste("Squaring the deviations squares their units too, which is why the var
 workspace(2)
 ```
 
-**(e)** Compute the range. Which is the better description of the spread of this data, the
+**(e)** Show how to compute the range. Which is the better description of the spread of this data, the
 range or the standard deviation, and why?
 
 ```{r p10-e, results='asis'}
-why(paste("Range $= 59 - 48 = 11$ grams.",
+why(paste("Range $= \\max x - \\min x = 57 - 48 = 9$ grams.",
           "<br><br>The <b>standard deviation</b> is the better description here. The range",
-          "is built from the two most extreme observations and <i>nothing else</i>, so it",
-          "throws away the other four measurements entirely and moves by the full amount",
-          "if either endpoint changes. The standard deviation uses every observation.",
+          "is built from the two most extreme observations and <i>nothing else</i>: here it",
+          "ignores the middle packet entirely, and in a larger sample it would ignore almost",
+          "all of the data. It also moves by the full amount if either endpoint changes.",
+          "The standard deviation uses every observation.",
           "<br><br>The range is worth reporting as a quick descriptive fact, but it is",
           "almost never used as <i>the</i> measure of spread."))
 workspace(3)
@@ -899,12 +957,12 @@ why(paste("$n = 12$ is even, so there is no middle value to leave out: the media
 workspace(3)
 ```
 
-**(b)** Compute the $IQR$ and both outlier boundaries.
+**(b)** Show how to compute the $IQR$ and both outlier boundaries.
 
 ```{r p11-b, results='asis'}
-why(paste("$IQR = 16 - 7 = 9$ days, so $1.5 \\times IQR = 13.5$.",
-          "<br><br>Lower boundary $= 7 - 13.5 = -6.5$ days.",
-          "<br>Upper boundary $= 16 + 13.5 = 29.5$ days.",
+why(paste("$IQR = Q3 - Q1 = 16 - 7 = 9$ days, so $1.5 \\times IQR = 13.5$.",
+          "<br><br>Lower boundary $= Q1 - 1.5 \\times IQR = 7 - 13.5 = -6.5$ days.",
+          "<br>Upper boundary $= Q3 + 1.5 \\times IQR = 16 + 13.5 = 29.5$ days.",
           "<br><br>Nothing can fall below $-6.5$ days, so only the upper boundary can",
           "flag anything here."))
 workspace(3)

@@ -1269,13 +1269,27 @@ have been sorted in increasing order. Match datasets <span class="math inline">\
 following set of 10 observations of a variable <span class="math inline">\(X\)</span> sorted from least to greatest: <span class="math display">\[3.3, 3.8, 4.0, 4.8, 4.8, 5.1, 5.2, 5.6, 5.7,
 6.9\]</span> Use the data to answer parts a-b</p>
 <ul>
-<li><strong>(a)</strong> Given the data, compute the <span class="math inline">\(40^{th}\)</span> percentile of <span class="math inline">\(X\)</span> <span class="soln">With <span class="math inline">\(n = 10\)</span> observations, the <span class="math inline">\(40^{th}\)</span> percentile falls at position
-<span class="math inline">\(0.40 \times 10 = 4\)</span>. Because this
-lands exactly on a data position, we average the <span class="math inline">\(4^{th}\)</span> and <span class="math inline">\(5^{th}\)</span> values - both of which are <span class="math inline">\(4.8\)</span>: <span class="math display">\[P_{40}
-= \frac{4.8+4.8}{2} = 4.8\]</span> (Counting the <span class="math inline">\(4^{th}\)</span> value directly gives the same
-answer here.)</span></li>
+<li><strong>(a)</strong> Given the data, compute the <span class="math inline">\(40^{th}\)</span> percentile of <span class="math inline">\(X\)</span> <span class="soln">The <span class="math inline">\(p^{th}\)</span> percentile is the value with <span class="math inline">\(p\%\)</span> of the observations <strong>at or
+below</strong> it, so build up the cumulative relative frequency and
+find where it passes <span class="math inline">\(0.40\)</span>: <span class="math inline">\(CRF(3.3) = 0.10\)</span>, <span class="math inline">\(CRF(3.8) = 0.20\)</span>, <span class="math inline">\(CRF(4.0) = 0.30\)</span>, then <span class="math inline">\(CRF(4.8) = 0.50\)</span> because <span class="math inline">\(4.8\)</span> occurs twice. No value has a
+cumulative relative frequency of exactly <span class="math inline">\(0.40\)</span> - it jumps straight from <span class="math inline">\(0.30\)</span> at <span class="math inline">\(4.0\)</span> to <span class="math inline">\(0.50\)</span> at <span class="math inline">\(4.8\)</span> - so the <span class="math inline">\(40^{th}\)</span> percentile is the value at that
+jump: <span class="math display">\[P_{40} = 4.8\]</span> Checking
+against the definition: only <span class="math inline">\(3\)</span> of
+the <span class="math inline">\(10\)</span> observations (<span class="math inline">\(30\%\)</span>) are at or below <span class="math inline">\(4.0\)</span>, while <span class="math inline">\(5\)</span> of them (<span class="math inline">\(50\%\)</span>) are at or below <span class="math inline">\(4.8\)</span>, so <span class="math inline">\(4.8\)</span> is the smallest value with at least
+<span class="math inline">\(40\%\)</span> of the data at or below
+it.</span></li>
 <li><strong>(b)</strong> Compute Interquartile Range (IQR) range of
-<span class="math inline">\(X\)</span> <span class="soln"><span class="math display">\[IQR = 5.6 - 4.0 = 1.6\]</span></span></li>
+<span class="math inline">\(X\)</span> <span class="soln">Use the
+<strong>method of halves</strong>. Here <span class="math inline">\(n =
+10\)</span> is even, so there is no middle value to leave out - the data
+splits straight down the middle into two halves of five: <span class="math display">\[\underbrace{3.3, \ 3.8, \ 4.0, \ 4.8, \
+4.8}_{\text{lower half}} \qquad \underbrace{5.1, \ 5.2, \ 5.6, \ 5.7, \
+6.9}_{\text{upper half}}\]</span> <span class="math inline">\(Q1\)</span> is the median of the lower half and
+<span class="math inline">\(Q3\)</span> is the median of the upper half.
+Each half has five values, so each median is just its middle (third)
+value: <span class="math display">\[Q1 = 4.0 \qquad Q3 = 5.6\]</span>
+<span class="math display">\[IQR = Q3 - Q1 = 5.6 - 4.0 =
+1.6\]</span></span></li>
 </ul>
 <p><span class="math inline">\({\bf (15)}\)</span> Consider the
 following <span class="math inline">\(n = 20\)</span> observations of
