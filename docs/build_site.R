@@ -53,7 +53,15 @@ tryCatch({
     #meaning what it says.
     here <- setwd(subdir)
 
-    for (page in list.files(pattern = "\\.Rmd$")) {
+    #Underscore-prefixed .Rmd files are CHILD documents, included by another
+    #page via a `child =` chunk - they are not pages in their own right and do
+    #not stand up on their own (they read variables the parent defines). Skip
+    #them, the same way render_site() already ignores files starting with `_`.
+    #Review_problems/_exam1_review_body.Rmd is the one that matters: it holds
+    #the exam 1 review problems once, and the problems and solutions pages both
+    #include it with a SOLUTIONS flag set, so the answers cannot drift away from
+    #the questions they belong to.
+    for (page in list.files(pattern = "^[^_].*\\.Rmd$")) {
       #This one source has spaces in its filename but the navbar links the
       #hyphenated name, so it was renamed by hand at some point. Rendering it
       #normally would quietly produce a NEW spaced-name file and leave the

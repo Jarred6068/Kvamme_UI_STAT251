@@ -18,6 +18,20 @@ knitr::opts_chunk$set(echo = TRUE)
   * The exam is proctored in class but delivered through **Canvas**, so you must bring a fully charged laptop. **Notes are not permitted.** A calculator is permitted, but it must not be capable of wireless communication
   * The exam will be about 20 - 25 questions long, with at least one bonus question. Questions are mostly multiple choice, short answer, or labeling problems, with the possibility of one or two short essay / longer explanation problems
 
+# How to prepare
+
+The exam asks you to **interpret** values, **identify** the right equation, and **choose**
+the right summary for a distribution -- not to grind through long calculations. Where a
+number is needed it will be given to you, or the arithmetic will be simple enough to do in
+your head.
+
+That does **not** mean you can skip the computation while studying. Working the mechanics
+by hand is how you learn what these quantities actually are, and you cannot interpret a
+standard deviation you have never computed. Work the
+[Exam 1 Review Problems](../Review_problems/exam1_review_problems.html) all the way through
+-- they are deliberately more computational than the exam -- and then check yourself against
+the [solutions](../Review_problems/exam1_review_problems_solns.html).
+
 # Content To Study
 
 *  Know the “anatomy” of data (i.e., observations and variables, quantitative and categorical variables).
@@ -58,14 +72,35 @@ knitr::opts_chunk$set(echo = TRUE)
 
 *  Understand what it means to say that a summary measure is resistant to outliers, and which summary measures we have discussed that are resistant and which are not.
 
-*  Be sure you understand the notation (i.e., symbols) we have used so far (e.g., $n,N,s,s^2,\bar{x}, \mu,\sigma,\sigma^2$).
+*  Know that the measures come in **matched pairs**: report the mean with the standard deviation, and the median with the IQR. Be able to say which pair suits a given distribution, and why mixing them is a mistake.
 
+*  Be able to interpret a percentile in the context of the data ("the $90^{th}$ percentile is 15.5 grams" means what, exactly?), and know that the $50^{th}$ percentile is the median and the $25^{th}$ and $75^{th}$ are $Q1$ and $Q3$.
 
-The following formulas will be provided on the exam
-\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(x)\]
+*  Be sure you understand the notation (i.e., symbols) we have used so far (e.g., $n,N,s,s^2,\bar{x}, \mu,\sigma,\sigma^2, \hat{p}, p$).
+
+# Formulas on the exam
+
+Notes are not permitted, so the formulas below **will be displayed on the projector during
+the exam**. There is one catch, and it matters:
+
+> **They will be shown unlabeled.** No names, no descriptions -- just the equations.
+
+Having a formula in front of you is not the same as knowing which one it is. You still need
+to be able to look at an expression and recognize it as the population mean rather than the
+sample mean, or the variance rather than the standard deviation. Several questions turn on
+exactly that. Practice reading these until you can tell them apart at a glance:
+
+\[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \mu = \frac{1}{N} \sum_{i=1}^N x_i\]
+
+\[\bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(x)\]
+
+\[\hat{p} = \frac{\text{number of observations in the category}}{n}\]
 
 \[s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \ \ s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}\]
 
 \[ \text{range}(x) = \text{max}(x) - \text{min}(x), \ \ IQR = Q3 - Q1 \]
 
 \[x < Q1 - 1.5 \times (Q3 - Q1), \ \  x > Q3 + 1.5\times(Q3-Q1)\]
+
+A good self-test: cover the left-hand side of each line above and see whether you can still
+name what is on the right.

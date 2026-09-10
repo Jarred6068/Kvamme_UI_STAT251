@@ -1,0 +1,948 @@
+<!--
+  SHARED BODY for the Exam 1 review problems.
+
+  This file is NOT a page. It is included as a child document by both
+  exam1_review_problems.Rmd and exam1_review_problems_solns.Rmd, each of which
+  sets the SOLUTIONS flag before including it. Writing the questions once means
+  an answer can never drift away from the question it belongs to -- the two
+  pages were previously ~300 lines of hand-synced near-duplicate.
+
+  The leading underscore keeps docs/build_site.R from rendering it as a page of
+  its own (see the `^[^_]` pattern in its subdirectory loop).
+
+  To add a problem: write the question once, and wrap every answer in ans() for
+  short fill-ins, or an `eval = SOLUTIONS` chunk for worked steps. Compute the
+  answer from the same vector the question prints, and stopifnot() anything you
+  also state in prose.
+-->
+
+```{r review-setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(ggthemes)
+library(ggpubr)
+
+stopifnot(exists("SOLUTIONS"), is.logical(SOLUTIONS), length(SOLUTIONS) == 1L)
+
+## Short inline answer. Renders a blank in the problems copy and red text in the
+## solutions copy -- the same red the Spring 2024 solutions used.
+ans <- function(x, blank = "$\\_\\_\\_\\_\\_\\_\\_\\_$") {
+  if (SOLUTIONS) sprintf('<span style="color: red;">%s</span>', x) else blank
+}
+
+## A whole answer paragraph, for parts that want a sentence rather than a value.
+## Emits nothing at all in the problems copy.
+why <- function(x) {
+  if (SOLUTIONS) cat(sprintf('\n\n<span style="color: red;">%s</span>\n\n', x))
+}
+
+## Vertical space for students to work in, on the problems copy only.
+workspace <- function(lines = 4) {
+  if (!SOLUTIONS) cat(strrep("<br>\n", lines))
+}
+
+## Standard table look, matching the rest of the site.
+show_tbl <- function(d, ...) {
+  kable(d, format = "html", row.names = FALSE, escape = FALSE, ...) %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+    kable_styling(bootstrap_options = "striped")
+}
+
+## A cell that is blank for students and filled in red for the key. Vectorised so
+## a whole column can be built at once.
+cellv <- function(x) {
+  if (SOLUTIONS) sprintf('<span style="color: red;">%s</span>', x) else ""
+}
+
+## The class's quartile rule: median of halves, dropping the median itself when n
+## is odd. Used by every problem that needs a quartile, so no problem can quietly
+## disagree with Q15 of the exam or with the Week 3 notes.
+q_halves <- function(x) {
+  x <- sort(x); n <- length(x); h <- n %/% 2
+  c(Q1 = median(x[1:h]), Q2 = median(x), Q3 = median(x[(n - h + 1):n]))
+}
+```
+
+```{r review-intro, results='asis'}
+if (SOLUTIONS) {
+  cat('These are the worked solutions. Answers are shown <span style="color: red;">in red</span>.\n\n')
+} else {
+  cat("Work these by hand -- that is the point of them.\n\n")
+}
+```
+
+These problems cover everything on Exam 1: Weeks 1 through 3, up to and including
+cumulative distributions. They are deliberately **more computational than the exam**. The
+exam is delivered through Canvas and asks you to interpret values, recognize equations and
+read plots rather than to grind through arithmetic; these problems ask you to grind through
+the arithmetic, because doing that is how the ideas stick. If you can work all twelve of
+these, the exam questions will look straightforward.
+
+Every dataset below is small enough to do on paper. A calculator is fine.
+
+---
+
+## Problem 1 — The anatomy of data
+
+A researcher recorded the following information for each of six trees in a city park.
+
+```{r p01-data}
+trees <- data.frame(
+  `Tree ID`           = c("T-01", "T-02", "T-03", "T-04", "T-05", "T-06"),
+  `Species`           = c("Maple", "Oak", "Maple", "Pine", "Oak", "Maple"),
+  `Health rating`     = c("Good", "Fair", "Excellent", "Good", "Poor", "Good"),
+  `Branches removed`  = c(3, 0, 5, 1, 8, 2),
+  `Trunk width (cm)`  = sprintf("%.1f", c(31.4, 58.2, 22.7, 44.0, 61.9, 27.5)),
+  check.names = FALSE, stringsAsFactors = FALSE
+)
+show_tbl(trees)
+```
+
+**(a)** How many observations are in this data table, and how many variables?
+
+`r ans("6 observations and 5 variables")`
+
+**(b)** What is the value of $n$ for this sample?
+
+`r ans("$n = 6$")`
+
+**(c)** Classify each of the four measured variables as nominal, ordinal, discrete or
+continuous.
+
+```{r p01-types}
+show_tbl(data.frame(
+  Variable = c("Species", "Health rating", "Branches removed", "Trunk width (cm)"),
+  `Your answer` = cellv(c("nominal", "ordinal", "discrete", "continuous")),
+  check.names = FALSE))
+```
+
+```{r p01-why, results='asis'}
+why(paste("<b>Species</b> is a category with no natural ordering, so nominal.",
+          "<b>Health rating</b> is a category <i>with</i> an ordering -- poor, fair, good,",
+          "excellent -- so ordinal. <b>Branches removed</b> counts things, so it takes",
+          "whole-number values only: discrete. <b>Trunk width</b> is a measurement on a",
+          "scale, recorded to a tenth of a centimetre, so continuous.",
+          "<br><br>Note that <i>Tree ID</i> is a label, not a measured variable -- it",
+          "identifies the observation rather than describing it."))
+```
+
+**(d)** These six trees are a sample. Describe the population the researcher is presumably
+interested in, and say whether $N$ is known.
+
+```{r p01-pop, results='asis'}
+why(paste("The population is all of the trees in the city park (or, more broadly, all",
+          "trees the park service manages). $N$ is the number of trees in that",
+          "population. Here it is not given -- and unlike most populations we will meet,",
+          "this one is finite and could actually be counted."))
+workspace(3)
+```
+
+---
+
+## Problem 2 — Statistics, parameters, and what you are claiming
+
+A city has 8,500 registered bicycles. A researcher takes a random sample of 200 of them and
+finds that 46 have no working lights. She also measures the age of each sampled bicycle and
+finds a mean age of 6.2 years.
+
+```{r p02-calc}
+N_bikes <- 8500; n_bikes <- 200; no_lights <- 46
+phat <- no_lights / n_bikes
+stopifnot(phat == 0.23)
+```
+
+**(a)** Give the values of $N$ and $n$.
+
+`r ans("$N = 8{,}500$ and $n = 200$")`
+
+**(b)** Compute the sample proportion of bicycles with no working lights. Which symbol
+denotes it?
+
+`r ans("$\\hat{p} = 46/200 = 0.23$")`
+
+```{r p02-b, results='asis'}
+why(paste("The <b>sample</b> proportion is written $\\hat{p}$. The hat marks it as a",
+          "quantity computed from a sample. The corresponding population proportion --",
+          "the fraction of all 8,500 bicycles with no working lights -- is written $p$",
+          "and is unknown."))
+workspace(2)
+```
+
+**(c)** For each quantity, say whether it is a **statistic** or a **parameter**, and give
+the symbol that denotes it.
+
+```{r p02-symbols}
+show_tbl(data.frame(
+  Quantity = c("The mean age of the 200 sampled bicycles",
+               "The mean age of all 8,500 registered bicycles",
+               "The proportion of the 200 sampled with no lights",
+               "The proportion of all 8,500 with no lights"),
+  `Statistic or parameter` = cellv(c("statistic", "parameter", "statistic", "parameter")),
+  Symbol = cellv(c("$\\bar{x}$", "$\\mu$", "$\\hat{p}$", "$p$")),
+  check.names = FALSE))
+```
+
+**(d)** The researcher reports the mean age of the 200 bicycles she measured, then uses it
+to estimate the mean age of all 8,500. Which of those two acts is descriptive statistics
+and which is inferential? Explain what makes the difference.
+
+```{r p02-d, results='asis'}
+why(paste("Reporting the mean of the 200 measured bicycles is <b>descriptive</b>: it",
+          "summarizes the data in hand and claims nothing beyond it. Using that mean to",
+          "estimate the mean age of all 8,500 is <b>inferential</b>: it reaches past the",
+          "sample to a population that was never fully observed.",
+          "<br><br>The difference is not which data you have -- both acts use the same",
+          "200 bicycles. It is <i>what you are claiming</i>: whether the conclusion stops",
+          "at the sample or extends beyond it."))
+workspace(4)
+```
+
+---
+
+## Problem 3 — Summation notation
+
+Consider the following sample of five observations of a quantitative variable $x$:
+
+```{r p03-data}
+x3 <- c(2, 5, 6, 9, 13)
+xbar3 <- mean(x3)
+stopifnot(sum(x3) == 35, xbar3 == 7, sum(x3^2) == 315,
+          sum(x3)^2 == 1225, abs(sum(x3 - xbar3)) < 1e-12)
+show_tbl(data.frame(`$x_1$` = x3[1], `$x_2$` = x3[2], `$x_3$` = x3[3],
+                    `$x_4$` = x3[4], `$x_5$` = x3[5], check.names = FALSE))
+```
+
+Evaluate each of the following. Parts (c) and (d) are **not** the same quantity — that is
+the point of putting them next to each other.
+
+```{r p03-table}
+show_tbl(data.frame(
+  Expression = c("$n$",
+                 "$\\sum_{i=1}^{n} x_i$",
+                 "$\\bar{x}$",
+                 "$\\sum_{i=1}^{n} x_i^{2}$",
+                 "$\\left( \\sum_{i=1}^{n} x_i \\right)^{2}$",
+                 "$\\sum_{i=1}^{n} (x_i - \\bar{x})$"),
+  Part = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)"),
+  `Your answer` = cellv(c("5", "35", "7", "315", "1225", "0")),
+  check.names = FALSE)[, c("Part", "Expression", "Your answer")])
+```
+
+```{r p03-why, results='asis'}
+why(paste("For (d), square each observation first and then add:",
+          "$4 + 25 + 36 + 81 + 169 = 315$. For (e), add first and then square the single",
+          "total: $35^2 = 1225$. The exponent inside the sum and the exponent outside it",
+          "do completely different things.",
+          "<br><br>For (f), the deviations are",
+          "$-5, -2, -1, 2, 6$, which sum to $0$. This is not a coincidence about these",
+          "five numbers -- <b>the deviations from the mean always sum to zero</b>, for",
+          "every dataset. It is the reason we cannot simply average the deviations to",
+          "measure spread, and the reason the variance squares them first."))
+workspace(4)
+```
+
+---
+
+## Problem 4 — The distribution of a qualitative variable
+
+A campus coffee stand recorded the drink ordered by each of 20 customers one morning:
+
+```{r p04-data}
+## Listed in the order they were served, NOT grouped by type -- students should
+## have to tally them. Hard-coded rather than shuffled so the page renders the
+## same list every time.
+drinks <- c("Latte", "Drip", "Mocha", "Latte", "Drip", "Espresso", "Latte",
+            "Drip", "Latte", "Mocha", "Drip", "Latte", "Espresso", "Drip",
+            "Mocha", "Latte", "Drip", "Latte", "Mocha", "Latte")
+d_tab <- table(factor(drinks, levels = c("Drip", "Espresso", "Latte", "Mocha")))
+d_f   <- as.integer(d_tab)
+d_rf  <- d_f / sum(d_f)
+stopifnot(length(drinks) == 20, sum(d_f) == 20,
+          identical(d_f, c(6L, 2L, 8L, 4L)),
+          names(d_tab)[which.max(d_f)] == "Latte",
+          abs(d_rf[3] - 0.40) < 1e-12)
+cat(paste(drinks, collapse = ", "))
+```
+
+**(a)** Complete the frequency and relative frequency table.
+
+```{r p04-table}
+show_tbl(data.frame(
+  Drink = names(d_tab),
+  `Frequency $F(x)$` = cellv(d_f),
+  `Relative frequency $RF(x)$` = cellv(sprintf("%.2f", d_rf)),
+  check.names = FALSE))
+```
+
+**(b)** What is the modal category?
+
+`r ans("Latte, with a frequency of 8")`
+
+**(c)** Draw a bar graph of the distribution on the axes below.
+
+```{r p04-bar, fig.height=3.6, fig.width=5.5}
+bar_df <- data.frame(Drink = names(d_tab), Frequency = d_f)
+p <- ggplot(bar_df, aes(x = Drink, y = Frequency)) +
+  scale_y_continuous(limits = c(0, 9), breaks = 0:9) +
+  theme_bw() + xlab("Drink") + ylab("Frequency") +
+  theme(panel.grid.major.y = element_line(colour = "grey70"))
+if (SOLUTIONS) {
+  p + geom_col(fill = "lightblue", colour = "black", width = 0.65)
+} else {
+  p + geom_blank()
+}
+```
+
+**(d)** Would it make sense to add a *cumulative relative frequency* column to the table in
+part (a)? Explain.
+
+```{r p04-d, results='asis'}
+why(paste("No. Cumulative relative frequency is the proportion of observations",
+          "<i>less than or equal to</i> a given value, and that phrase only means",
+          "something if the values can be put in order. Drink type is a <b>nominal</b>",
+          "variable -- there is no sense in which a mocha is 'less than' a latte -- so",
+          "there is no meaningful order to accumulate along.",
+          "<br><br>Had the variable been ordinal, say drink size (small, medium, large),",
+          "a cumulative relative frequency column would be perfectly sensible."))
+workspace(3)
+```
+
+---
+
+## Problem 5 — Frequency tables and the mean from a table
+
+Twenty-five households were asked how many vehicles they own. The responses are summarized
+below.
+
+```{r p05-data}
+v5 <- 0:4
+f5 <- c(3, 9, 8, 4, 1)
+rf5 <- f5 / sum(f5)
+crf5 <- cumsum(rf5)
+mean5 <- sum(v5 * f5) / sum(f5)
+stopifnot(sum(f5) == 25, mean5 == 1.64,
+          abs(crf5[3] - 0.80) < 1e-12,
+          abs(sum(v5 * rf5) - mean5) < 1e-12)
+show_tbl(data.frame(
+  `Vehicles $x$` = v5,
+  `Frequency $F(x)$` = f5,
+  `Relative frequency $RF(x)$` = cellv(sprintf("%.2f", rf5)),
+  `Cumulative relative frequency $CRF(x)$` = cellv(sprintf("%.2f", crf5)),
+  check.names = FALSE))
+```
+
+**(a)** Complete the relative frequency and cumulative relative frequency columns.
+
+**(b)** Compute the mean number of vehicles using the **frequency** formula,
+$\bar{x} = \frac{1}{n}\sum_{x} x\,F(x)$.
+
+```{r p05-b, results='asis'}
+why(paste("$\\bar{x} = \\frac{0(3) + 1(9) + 2(8) + 3(4) + 4(1)}{25}",
+          "= \\frac{0 + 9 + 16 + 12 + 4}{25} = \\frac{41}{25} = 1.64$ vehicles."))
+workspace(3)
+```
+
+**(c)** Now compute it again using the **relative frequency** formula,
+$\bar{x} = \sum_{x} x\,RF(x)$, and confirm you get the same answer.
+
+```{r p05-c, results='asis'}
+why(paste("$\\bar{x} = 0(0.12) + 1(0.36) + 2(0.32) + 3(0.16) + 4(0.04)",
+          "= 0 + 0.36 + 0.64 + 0.48 + 0.16 = 1.64$ vehicles.",
+          "<br><br>The two formulas are the same calculation. Dividing by $n$ at the end",
+          "(the frequency version) and dividing by $n$ at the start to build the relative",
+          "frequencies (this version) get you to the same place. This is also why you",
+          "must not divide by $n$ <i>again</i> in the relative frequency version."))
+workspace(3)
+```
+
+**(d)** What proportion of these households own 2 or fewer vehicles? Which column did you
+read that from?
+
+`r ans("$0.80$, read from the cumulative relative frequency column at $x = 2$")`
+
+**(e)** What is the median number of vehicles owned? (You can read this off the cumulative
+relative frequency column.)
+
+```{r p05-e, results='asis'}
+why(paste("The median is the $50^{th}$ percentile. Reading down the $CRF$ column, it",
+          "passes $0.50$ at $x = 2$ (the $CRF$ is $0.48$ at $x = 1$ and $0.80$ at",
+          "$x = 2$), so the <b>median is 2 vehicles</b>.",
+          "<br><br>Check it against the raw data if you like: with $n = 25$ the median is",
+          "the $13^{th}$ value in order, and values 13 through 20 are all 2s."))
+workspace(3)
+```
+
+---
+
+## Problem 6 — Binning a continuous variable
+
+The following are the times, in seconds, that 16 users took to complete a task on a website.
+
+```{r p06-data}
+t6 <- c(12.4, 14.1, 15.8, 16.2, 17.5, 18.0, 18.3, 19.1,
+        20.2, 20.6, 21.7, 22.4, 23.9, 25.1, 26.8, 28.4)
+k6 <- round(sqrt(length(t6)))
+w6 <- (max(t6) - min(t6)) / k6
+brk6 <- c(12, 16, 20, 24, 28.5)
+f6 <- as.integer(table(cut(t6, breaks = brk6, right = TRUE)))
+stopifnot(length(t6) == 16, k6 == 4, sum(f6) == 16,
+          identical(f6, c(3L, 5L, 5L, 3L)), abs(w6 - 4.0) < 0.01)
+cat(paste(t6, collapse = ", "))
+```
+
+**(a)** Using the **square root rule**, how many bins $k$ should you use for a histogram of
+these 16 observations?
+
+`r ans("$k = \\text{round}(\\sqrt{16}) = 4$ bins")`
+
+**(b)** Compute the bin width $w$ implied by that choice, using
+$w = \frac{\max x - \min x}{k}$.
+
+`r ans("$w = (28.4 - 12.4)/4 = 16/4 = 4.0$ seconds")`
+
+**(c)** Complete the frequency table using the intervals given.
+
+```{r p06-table}
+show_tbl(data.frame(
+  `Time (seconds)` = c("$12 < x \\leq 16$", "$16 < x \\leq 20$",
+                       "$20 < x \\leq 24$", "$24 < x \\leq 28.5$"),
+  `Frequency $F(x)$` = cellv(f6),
+  `Relative frequency $RF(x)$` = cellv(sprintf("%.4f", f6 / sum(f6))),
+  check.names = FALSE))
+```
+
+**(d)** Draw the histogram on the axes below.
+
+```{r p06-hist, fig.height=3.8, fig.width=5.5}
+hist_df <- data.frame(mid = c(14, 18, 22, 26.25), f = f6,
+                      wid = diff(brk6))
+p <- ggplot(hist_df, aes(x = mid, y = f, width = wid)) +
+  scale_x_continuous(limits = c(12, 28.5), breaks = c(12, 16, 20, 24, 28.5)) +
+  scale_y_continuous(limits = c(0, 6), breaks = 0:6) +
+  theme_bw() + xlab("Time to complete task (seconds)") + ylab("Frequency") +
+  theme(panel.grid.major.y = element_line(colour = "grey70"))
+if (SOLUTIONS) {
+  p + geom_col(fill = "lightblue", colour = "black")
+} else {
+  p + geom_blank()
+}
+```
+
+**(e)** Describe the shape of this distribution.
+
+```{r p06-e, results='asis'}
+why(paste("Roughly <b>symmetric and unimodal</b>, with the bulk of the observations in",
+          "the two middle bins and the counts tapering off evenly at both ends. There is",
+          "no long tail in either direction and no obvious gap, so nothing here looks",
+          "like an outlier."))
+workspace(3)
+```
+
+**(f)** Give one thing you can determine from the table in part (c), and one thing you
+**cannot**, that you could have determined from the raw data.
+
+```{r p06-f, results='asis'}
+why(paste("<b>Can:</b> the proportion of users finishing in 20 seconds or less",
+          "($8/16 = 0.5$), or the number in any one interval.",
+          "<b>Cannot:</b> the fastest or slowest individual time, the exact mean, or the",
+          "median -- once the values are grouped, the individual measurements are gone.",
+          "<br><br>That loss of precision is the cost of binning. It buys a readable",
+          "summary of the shape, which the raw list of 16 numbers does not give you."))
+workspace(3)
+```
+
+---
+
+## Problem 7 — Dot plots and stem-and-leaf plots
+
+A biologist recorded the number of eggs in each of 15 birds' nests:
+
+```{r p07-data}
+e7 <- c(21, 24, 24, 27, 28, 31, 33, 33, 33, 35, 38, 41, 42, 44, 47)
+mode7 <- as.integer(names(sort(table(e7), decreasing = TRUE))[1])
+stopifnot(length(e7) == 15, mode7 == 33, identical(e7, sort(e7)))
+cat(paste(e7, collapse = ", "))
+```
+
+**(a)** Construct a **stem-and-leaf plot**, using the tens digit as the stem.
+
+```{r p07-stem, results='asis'}
+if (SOLUTIONS) {
+  stems <- 2:4
+  rows <- vapply(stems, function(s) {
+    leaves <- e7[e7 %/% 10 == s] %% 10
+    sprintf("  %d | %s", s, paste(leaves, collapse = " "))
+  }, character(1))
+  cat('<pre style="color: red;">', paste(rows, collapse = "\n"), "</pre>", sep = "\n")
+} else {
+  cat('<pre>  2 |\n  3 |\n  4 |\n</pre>')
+}
+```
+
+**(b)** Construct a **dot plot** on the number line below.
+
+```{r p07-dot, fig.height=2.6, fig.width=6.5}
+dot_df <- data.frame(x = e7)
+dot_df$y <- ave(dot_df$x, dot_df$x, FUN = seq_along)
+p <- ggplot(dot_df, aes(x = x, y = y)) +
+  scale_x_continuous(limits = c(20, 48), breaks = seq(20, 48, 2)) +
+  scale_y_continuous(limits = c(0.5, 4)) +
+  theme_classic() + xlab("Eggs per nest") +
+  theme(axis.title.y = element_blank(), axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(), axis.line.y = element_blank())
+if (SOLUTIONS) p + geom_point(size = 2.6) else p + geom_blank()
+```
+
+**(c)** What is the mode of this variable?
+
+`r ans("33 eggs, which occurs three times")`
+
+**(d)** Is the mode a measure of the center of this distribution? Explain.
+
+```{r p07-d, results='asis'}
+why(paste("No -- the mode is a measure of <b>location</b>. It tells you where the peak",
+          "is, i.e. the most frequent value, not where the center is. Here the",
+          "distribution happens to be roughly symmetric so the mode of 33 does land near",
+          "the middle, but that is a coincidence of this data rather than a property of",
+          "the mode.",
+          "<br><br>For a skewed distribution the mode can sit well away from the center,",
+          "and a bimodal distribution has two modes with the center usually falling in",
+          "the gap between them, where the data are sparsest."))
+workspace(3)
+```
+
+---
+
+## Problem 8 — Center, and what an outlier does to it
+
+Consider the following eight observations of a variable $X$, the number of minutes eight
+customers spent in a shop:
+
+```{r p08-data}
+x8 <- c(4, 6, 6, 9, 11, 12, 14, 16)
+mean8 <- mean(x8); med8 <- median(x8)
+x8b <- c(x8, 78)
+mean8b <- mean(x8b); med8b <- median(x8b)
+stopifnot(mean8 == 9.75, med8 == 10, mean8b == 17.333 | abs(mean8b - 156/9) < 1e-9,
+          med8b == 11, sum(x8) == 78)
+cat(paste(x8, collapse = ", "))
+```
+
+**(a)** Compute the mean, the median and the mode.
+
+```{r p08-a}
+show_tbl(data.frame(
+  Statistic = c("Mean $\\bar{x}$", "Median", "Mode"),
+  `Your answer` = cellv(c("$78/8 = 9.75$ minutes", "$(9+11)/2 = 10$ minutes", "6 minutes")),
+  check.names = FALSE))
+```
+
+**(b)** A ninth customer stays for **78 minutes**. Recompute the mean and the median with
+that observation included.
+
+```{r p08-b, results='asis'}
+why(paste("$\\bar{x} = (78 + 78)/9 = 156/9 \\approx 17.33$ minutes.",
+          "<br>The median is now the $5^{th}$ of 9 ordered values, which is",
+          "<b>11 minutes</b>."))
+workspace(3)
+```
+
+**(c)** Which statistic moved more, and why?
+
+```{r p08-c, results='asis'}
+why(paste("The <b>mean</b> moved far more -- from 9.75 up to about 17.33, an increase of",
+          "roughly 7.6 minutes -- while the median moved from 10 to 11, just one minute.",
+          "<br><br>The mean uses the <i>value</i> of every observation, so a single very",
+          "large value pulls it upward in proportion to how extreme it is. The median",
+          "depends only on <i>position</i> in the ordered data; adding one more value at",
+          "the top shifts the middle position over by one place and nothing more.",
+          "<br><br>Notice too that after the outlier the mean of 17.33 is larger than",
+          "<i>every observation except the outlier itself</i>. It is no longer describing",
+          "a typical customer at all."))
+workspace(4)
+```
+
+**(d)** Which of the two is **resistant**? Give a one-sentence definition of that word.
+
+`r ans("The median is resistant.")`
+
+```{r p08-d, results='asis'}
+why(paste("A summary measure is <b>resistant</b> when a single extreme observation barely",
+          "moves it. Whether a measure is resistant comes down to one thing: whether it",
+          "uses the values of every observation, or only positions in the ordered data."))
+workspace(2)
+```
+
+---
+
+## Problem 9 — Percentiles and quartiles
+
+The following are the ages of the 11 members of a community board, sorted:
+
+```{r p09-data}
+a9 <- c(29, 34, 38, 41, 45, 49, 52, 56, 61, 67, 73)
+q9 <- q_halves(a9)
+tukey9 <- fivenum(a9)
+stopifnot(length(a9) == 11, identical(a9, sort(a9)),
+          q9[["Q1"]] == 38, q9[["Q2"]] == 49, q9[["Q3"]] == 61,
+          tukey9[2] == 39.5, tukey9[4] == 58.5)
+cat(paste(a9, collapse = ", "))
+```
+
+**(a)** Find the median, $Q2$.
+
+`r ans("$Q2 = 49$, the $6^{th}$ of 11 ordered values")`
+
+**(b)** Find $Q1$ and $Q3$ using the **method of halves** we use in this class. Remember
+that when $n$ is odd the median is **left out** of both halves.
+
+```{r p09-b, results='asis'}
+why(paste("Dropping the median, the lower half is $\\{29, 34, 38, 41, 45\\}$ and the",
+          "upper half is $\\{52, 56, 61, 67, 73\\}$. Each has five values, so each",
+          "median is its middle value:",
+          "<br><br>$Q1 = 38$ years and $Q3 = 61$ years."))
+workspace(4)
+```
+
+**(c)** A classmate uses a graphing calculator and gets $Q1 = 39.5$ and $Q3 = 58.5$. Is the
+calculator wrong? Explain.
+
+```{r p09-c, results='asis'}
+why(paste("No -- it is using a <b>different definition</b>. A sample quartile has several",
+          "accepted mathematical definitions and every piece of software has to pick one.",
+          "The two common families are interpolation methods, which walk to a position in",
+          "the ordered data and interpolate between neighbouring values, and",
+          "median-of-halves methods, which differ only in whether the median is kept in",
+          "the halves. Keeping it in gives <b>Tukey's hinges</b>, which is what many",
+          "boxplot routines draw.",
+          "<br><br>The disagreement <i>only</i> appears when $n$ is odd, because that is",
+          "the only time there is a middle value to argue about. On this exam, use the",
+          "method of halves with the median excluded, and apply it consistently."))
+workspace(4)
+```
+
+**(d)** What is the $IQR$, and what does it measure?
+
+`r ans("$IQR = 61 - 38 = 23$ years")`
+
+```{r p09-d, results='asis'}
+why(paste("The IQR is the distance between $Q1$ and $Q3$, so it describes how spread out",
+          "the <b>middle 50%</b> of the data are. Because it ignores the extreme ends of",
+          "the distribution entirely, it is highly resistant to outliers."))
+workspace(2)
+```
+
+**(e)** The board member aged 67 is at roughly what percentile? Answer in a sentence that
+says what that means.
+
+```{r p09-e, results='asis'}
+why(paste("Ten of the 11 members are aged 67 or younger, so 67 sits at about the",
+          "$10/11 \\approx 91^{st}$ percentile: roughly 91% of the board is at or below",
+          "that age, and only one member is older."))
+workspace(3)
+```
+
+---
+
+## Problem 10 — Deviations, variance and standard deviation
+
+A quality inspector measured the weight, in grams, of six packets from a filling machine:
+
+```{r p10-data}
+w10 <- c(48, 51, 52, 55, 57, 59)
+m10 <- mean(w10)
+dev10 <- w10 - m10
+ss10 <- sum(dev10^2)
+var10 <- ss10 / (length(w10) - 1)
+sd10 <- sqrt(var10)
+stopifnot(abs(m10 - 322/6) < 1e-9, sum(w10) == 322,
+          abs(sum(dev10)) < 1e-12, abs(ss10 - 83.3333) < 1e-3,
+          abs(var10 - 16.6667) < 1e-3, abs(sd10 - 4.0825) < 1e-3)
+cat(paste(w10, collapse = ", "))
+```
+
+**(a)** Compute the sample mean $\bar{x}$.
+
+`r ans("$\\bar{x} = 322/6 \\approx 53.67$ grams")`
+
+**(b)** Complete the deviation table below, then add up the deviation column.
+
+```{r p10-table}
+show_tbl(data.frame(
+  `$x_i$` = w10,
+  `$x_i - \\bar{x}$` = cellv(sprintf("%.2f", dev10)),
+  `$(x_i - \\bar{x})^2$` = cellv(sprintf("%.2f", dev10^2)),
+  check.names = FALSE))
+```
+
+```{r p10-b, results='asis'}
+why(paste("The deviation column sums to <b>0</b> (up to rounding), and the squared",
+          "deviation column sums to about <b>83.33</b>.",
+          "<br><br>The deviations summing to zero is not a property of these six numbers",
+          "-- it happens for every dataset, because the mean is the balancing point. That",
+          "is exactly why the variance squares the deviations before adding them: without",
+          "squaring, the positives and negatives always cancel and you learn nothing."))
+workspace(3)
+```
+
+**(c)** Compute the sample variance $s^2$ and the sample standard deviation $s$.
+
+```{r p10-c, results='asis'}
+why(paste("$s^2 = \\frac{83.33}{6 - 1} = \\frac{83.33}{5} \\approx 16.67$",
+          "<br><br>$s = \\sqrt{16.67} \\approx 4.08$ grams"))
+workspace(3)
+```
+
+**(d)** State the units of $\bar{x}$, of $s^2$ and of $s$.
+
+```{r p10-d}
+show_tbl(data.frame(
+  Quantity = c("$\\bar{x}$", "$s^2$", "$s$"),
+  Units = cellv(c("grams", "grams squared", "grams")),
+  check.names = FALSE))
+```
+
+```{r p10-d2, results='asis'}
+why(paste("Squaring the deviations squares their units too, which is why the variance is",
+          "in grams squared -- a quantity nobody can picture. Taking the square root",
+          "undoes it and puts $s$ back on the scale of the original data, where it reads",
+          "as roughly the typical distance of a packet from the mean weight."))
+workspace(2)
+```
+
+**(e)** Compute the range. Which is the better description of the spread of this data, the
+range or the standard deviation, and why?
+
+```{r p10-e, results='asis'}
+why(paste("Range $= 59 - 48 = 11$ grams.",
+          "<br><br>The <b>standard deviation</b> is the better description here. The range",
+          "is built from the two most extreme observations and <i>nothing else</i>, so it",
+          "throws away the other four measurements entirely and moves by the full amount",
+          "if either endpoint changes. The standard deviation uses every observation.",
+          "<br><br>The range is worth reporting as a quick descriptive fact, but it is",
+          "almost never used as <i>the</i> measure of spread."))
+workspace(3)
+```
+
+---
+
+## Problem 11 — Five-number summary, boxplots and outliers
+
+A clinic recorded the number of days between a referral and an appointment for 12 patients:
+
+```{r p11-data}
+d11 <- c(3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 19, 58)
+q11 <- q_halves(d11)
+iqr11 <- q11[["Q3"]] - q11[["Q1"]]
+lo11 <- q11[["Q1"]] - 1.5 * iqr11
+hi11 <- q11[["Q3"]] + 1.5 * iqr11
+out11 <- d11[d11 < lo11 | d11 > hi11]
+whisk_hi <- max(d11[d11 <= hi11])
+
+## n is EVEN on purpose. base boxplot() draws Tukey's hinges, which agree with
+## the class's median-of-halves rule only when n is even -- with an odd n the
+## drawn box would contradict the five-number summary in part (a). Asserted
+## rather than trusted.
+stopifnot(length(d11) == 12, identical(d11, sort(d11)),
+          all.equal(as.numeric(fivenum(d11)[c(2, 4)]),
+                    c(q11[["Q1"]], q11[["Q3"]])),
+          q11[["Q1"]] == 7, q11[["Q2"]] == 11.5, q11[["Q3"]] == 16,
+          iqr11 == 9, lo11 == -6.5, hi11 == 29.5,
+          identical(out11, 58), whisk_hi == 19,
+          abs(mean(d11) - 14.75) < 1e-9)
+cat(paste(d11, collapse = ", "))
+```
+
+**(a)** Give the five-number summary. Use the method of halves for the quartiles.
+
+```{r p11-a}
+show_tbl(data.frame(
+  Minimum = cellv("3"), Q1 = cellv("7"), Median = cellv("11.5"),
+  Q3 = cellv("16"), Maximum = cellv("58"), check.names = FALSE))
+```
+
+```{r p11-a2, results='asis'}
+why(paste("$n = 12$ is even, so there is no middle value to leave out: the median is the",
+          "average of the $6^{th}$ and $7^{th}$ values, $Q2 = (11+12)/2 = 11.5$ days, and",
+          "the data splits cleanly into two halves of six.",
+          "<br><br>The lower half is $\\{3,5,6,8,9,11\\}$ with median",
+          "$Q1 = (6+8)/2 = 7$; the upper half is $\\{12,14,15,17,19,58\\}$ with median",
+          "$Q3 = (15+17)/2 = 16$."))
+workspace(3)
+```
+
+**(b)** Compute the $IQR$ and both outlier boundaries.
+
+```{r p11-b, results='asis'}
+why(paste("$IQR = 16 - 7 = 9$ days, so $1.5 \\times IQR = 13.5$.",
+          "<br><br>Lower boundary $= 7 - 13.5 = -6.5$ days.",
+          "<br>Upper boundary $= 16 + 13.5 = 29.5$ days.",
+          "<br><br>Nothing can fall below $-6.5$ days, so only the upper boundary can",
+          "flag anything here."))
+workspace(3)
+```
+
+**(c)** Which observations, if any, does the $1.5 \times IQR$ rule flag as outliers?
+
+`r ans("Just one: the 58-day wait, which is above the upper boundary of 29.5")`
+
+**(d)** Draw the boxplot on the axis below. Be careful about where the right whisker ends.
+
+```{r p11-box, fig.height=2.8, fig.width=6.5}
+if (SOLUTIONS) {
+  par(mar = c(4, 1, 1, 1))
+  boxplot(d11, horizontal = TRUE, axes = FALSE, staplewex = 1, col = "lightgrey",
+          ylim = c(0, 60))
+  axis(1, at = seq(0, 60, 5))
+  mtext("Days from referral to appointment", side = 1, line = 2.5)
+} else {
+  par(mar = c(4, 1, 1, 1))
+  plot(NA, xlim = c(0, 60), ylim = c(0.5, 1.5), axes = FALSE, xlab = "", ylab = "")
+  axis(1, at = seq(0, 60, 5))
+  mtext("Days from referral to appointment", side = 1, line = 2.5)
+}
+```
+
+```{r p11-d, results='asis'}
+why(paste("The right whisker stops at <b>19</b>, the largest observation that is still at",
+          "or below the upper boundary of 29.5 -- <i>not</i> at the maximum of 58, and",
+          "not at the boundary itself. A whisker always ends on an actual data value. The",
+          "58 is drawn as its own point beyond the whisker.",
+          "<br><br>The left whisker runs all the way out to the minimum of 3, because",
+          "nothing is flagged at the low end."))
+workspace(3)
+```
+
+**(e)** Describe the shape of this distribution from the boxplot, and say what that implies
+about the mean relative to the median.
+
+```{r p11-e, results='asis'}
+why(paste("The distribution is <b>skewed right</b>: the median sits left of centre in the",
+          "box, the right whisker is longer than the left, and there is a high outlier.",
+          "<br><br>A right skew pulls the mean toward the long tail, so the",
+          "<b>mean will be greater than the median</b>. The mean here is 14.75 days",
+          "against a median of 11.5."))
+workspace(3)
+```
+
+**(f)** The clinic manager wants to delete the 58-day wait because it is "clearly a
+mistake." What would you tell her?
+
+```{r p11-f, results='asis'}
+why(paste("That being flagged by the $1.5 \\times IQR$ rule is an <b>arithmetic result,",
+          "not a verdict</b>. The rule reports only that a value sits unusually far from",
+          "the middle half of the data; it cannot distinguish a recording error from a",
+          "genuinely unusual case, and it marks the observation as worth a second look",
+          "rather than as wrong.",
+          "<br><br>A 58-day wait is entirely plausible -- it may be the single most",
+          "important number in the dataset for a manager trying to improve scheduling.",
+          "Deleting it because a rule flagged it would throw away real information."))
+workspace(4)
+```
+
+---
+
+## Problem 12 — Cumulative distributions, and choosing what to report
+
+A librarian recorded the number of books checked out by each of 20 patrons in one hour.
+
+```{r p12-data}
+x12 <- 0:5
+f12 <- c(2, 5, 6, 4, 2, 1)
+rf12 <- f12 / sum(f12)
+crf12 <- cumsum(rf12)
+tab12 <- data.frame(x = x12, crf = crf12)
+raw12 <- rep(x12, f12)
+q12 <- q_halves(raw12)
+stopifnot(sum(f12) == 20, length(raw12) == 20,
+          abs(crf12[3] - 0.65) < 1e-12,
+          q12[["Q1"]] == 1, q12[["Q2"]] == 2, q12[["Q3"]] == 3)
+```
+
+**(a)** Complete the table.
+
+```{r p12-table}
+show_tbl(data.frame(
+  `Books $x$` = x12,
+  `Frequency $F(x)$` = f12,
+  `Relative frequency $RF(x)$` = cellv(sprintf("%.2f", rf12)),
+  `Cumulative relative frequency $CRF(x)$` = cellv(sprintf("%.2f", crf12)),
+  check.names = FALSE))
+```
+
+**(b)** Plot the cumulative distribution on the axes below. Remember it is a **step
+function**: flat between observed values, jumping at each one.
+
+```{r p12-cumdist, fig.height=4.6, fig.width=7}
+lead12 <- data.frame(x = -1, crf = 0)
+p <- ggplot() +
+  scale_x_continuous(limits = c(-1, 6), breaks = 0:6) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.05)) +
+  theme_bw() + xlab("Books checked out") + ylab("Cumulative Relative Frequency") +
+  theme(panel.grid.major.y = element_line(colour = "grey70"))
+if (SOLUTIONS) {
+  p +
+    geom_step(data = rbind(lead12, tab12), aes(x = x, y = crf),
+              direction = "hv", linewidth = 1) +
+    geom_point(data = tab12, aes(x = x, y = crf), size = 3)
+} else {
+  p + geom_blank()
+}
+```
+
+**(c)** Use the plot to find $Q1$, the median, and $Q3$.
+
+```{r p12-c, results='asis'}
+why(paste("Read across from $0.25$, $0.50$ and $0.75$ on the $y$-axis to the curve, then",
+          "drop to the $x$-axis. Each of the three readings crosses a jump:",
+          "<br><br>$Q1 = 1$ book, $Q2 = 2$ books, $Q3 = 3$ books.",
+          "<br><br>Check them against halving the ordered data -- they agree. The",
+          "cumulative distribution is not a new definition of a quartile, just a faster",
+          "way to read one off, and unlike halving it gives you <i>any</i> percentile."))
+workspace(4)
+```
+
+**(d)** What proportion of patrons checked out 2 or fewer books?
+
+`r ans("$0.65$, read straight off the $CRF$ column at $x = 2$")`
+
+**(e)** This distribution is skewed right. Which measure of **center** and which measure of
+**spread** should the librarian report, and why?
+
+```{r p12-e, results='asis'}
+why(paste("The <b>median</b> and the <b>IQR</b>. Both are resistant -- they depend on",
+          "positions in the ordered data rather than on the value of every observation --",
+          "so the patrons at the high end do not distort them. The mean and standard",
+          "deviation would both be pulled upward by the right tail.",
+          "<br><br>The important part is that these measures come in <b>matched pairs</b>:",
+          "mean with $s$, median with IQR. Reporting a mean next to an IQR describes the",
+          "center with a summary the extreme values have inflated and the spread with one",
+          "they have not touched, so the two numbers describe different pictures of the",
+          "same variable and neither describes it well."))
+workspace(4)
+```
+
+---
+
+```{r review-outro, results='asis'}
+if (!SOLUTIONS) {
+  cat(paste(
+    "## Check your work\n\n",
+    "Full worked solutions are posted alongside these problems under",
+    "**Exam Study Guides &rarr; Exam 1 Review &rarr; Solutions**. Work every problem",
+    "through before you look at them -- reading a solution feels like understanding in a",
+    "way that doing the problem does not.\n\n",
+    "If a quartile you compute disagrees with what your calculator says, re-read",
+    "problem 9(c) before assuming you made a mistake.\n"))
+} else {
+  cat(paste(
+    "## A note on the exam\n\n",
+    "These solutions do far more arithmetic than the exam will ask of you. Exam 1 is",
+    "delivered through Canvas and asks you to *interpret* values, *recognize* equations",
+    "and *read* plots. The formulas will be shown during the exam, but **unlabeled** --",
+    "so knowing which formula is which is on you, and that is what working these",
+    "problems by hand builds.\n"))
+}
+```
