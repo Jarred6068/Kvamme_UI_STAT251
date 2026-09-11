@@ -1708,6 +1708,42 @@ of a quartile, only a faster way to read one off — and unlike the
 halving method it gives you <em>any</em> percentile, not just the
 quartiles.</p>
 </div>
+<div id="what-the-shape-of-the-step-plot-tells-you"
+class="section level2">
+<h2>What the shape of the step plot tells you</h2>
+<p>The cumulative distribution is built for reading positions, but its
+shape still carries everything the histogram carries — just in a
+different form. One rule does all the work:</p>
+<ul>
+<li>a <strong>steep</strong> run means a lot of the data sits there (a
+tall bar in the histogram);</li>
+<li>a <strong>flat</strong> run means little or no data sits there (a
+gap, or a tail).</li>
+</ul>
+<p>Here are the same four shapes from the boxplot section, drawn twice:
+the histogram on top and the cumulative distribution of the
+<em>same</em> sample underneath.</p>
+<p><img src="lecturemenu3_files/figure-html/unnamed-chunk-15-1.png" width="1248" /></p>
+<p>Reading left to right:</p>
+<ul>
+<li><strong>Symmetric</strong> — an S-curve. The climb is steepest in
+the middle, where the peak is, and it flattens off symmetrically at both
+ends.</li>
+<li><strong>Skew right</strong> — the curve shoots up early, because
+most of the data is bunched at the low end, then drags slowly across the
+long right tail.</li>
+<li><strong>Skew left</strong> — the mirror image. A long flat start
+across the sparse left tail, then a steep climb at the right where the
+bulk of the data sits.</li>
+<li><strong>Bimodal</strong> — two steep climbs with a <strong>flat
+shelf</strong> between them. That shelf is the gap between the two
+peaks, and it is exactly the feature the boxplot could not show.</li>
+</ul>
+<p>Two more worth knowing: a distribution with no shape at all — values
+spread evenly across the range — gives a nearly straight diagonal line,
+and an outlier shows up as a long flat run followed by one last small
+jump out at the end.</p>
+</div>
 </div>
 
 <!--

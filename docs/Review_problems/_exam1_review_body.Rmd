@@ -173,9 +173,22 @@ trees <- data.frame(
 show_tbl(trees)
 ```
 
-**(a)** How many observations are in this data table, and how many variables?
+**(a)** How many observations are in this data table, and how many variables? Which way round
+does a data table store them — one observation per row or one variable per row?
 
-`r ans("6 observations and 5 variables")`
+`r ans("6 observations and 5 variables; one observation per row")`
+
+```{r p01-a, results='asis'}
+why(paste("A data table stores <b>one observation per row and one variable per column</b>.",
+          "Each row here is a single tree -- everything recorded about that one tree --",
+          "and each column is one characteristic recorded for every tree. So counting",
+          "rows counts observations and counting columns counts variables: 6 rows and",
+          "5 columns.",
+          "<br><br>Say it to yourself the right way round before you count. A table with",
+          "200 rows and 6 columns holds 6 variables measured on 200 observations, not the",
+          "other way about."))
+workspace(2)
+```
 
 **(b)** What is the value of $n$ for this sample?
 
@@ -251,10 +264,28 @@ show_tbl(data.frame(
   Quantity = c("The mean age of the 200 sampled bicycles",
                "The mean age of all 8,500 registered bicycles",
                "The proportion of the 200 sampled with no lights",
-               "The proportion of all 8,500 with no lights"),
-  `Statistic or parameter` = cellv(c("statistic", "parameter", "statistic", "parameter")),
-  Symbol = cellv(c("$\\bar{x}$", "$\\mu$", "$\\hat{p}$", "$p$")),
+               "The proportion of all 8,500 with no lights",
+               "The standard deviation of the ages of the 200 sampled",
+               "The standard deviation of the ages of all 8,500"),
+  `Statistic or parameter` = cellv(c("statistic", "parameter", "statistic", "parameter",
+                                     "statistic", "parameter")),
+  Symbol = cellv(c("$\\bar{x}$", "$\\mu$", "$\\hat{p}$", "$p$", "$s$", "$\\sigma$")),
   check.names = FALSE))
+```
+
+```{r p02-c, results='asis'}
+why(paste("Every row comes down to the same question: does the number describe the <b>200",
+          "bicycles measured</b> (a statistic) or <b>all 8,500</b> (a parameter)?",
+          "<br><br>The symbols come in pairs, one for each. Roman letters are the",
+          "statistics and Greek letters the parameters -- $\\bar{x}$ against $\\mu$, $s$",
+          "against $\\sigma$, and $s^{2}$ against $\\sigma^{2}$ for the variances. The",
+          "proportions are the exception to the Roman-and-Greek pattern: the sample",
+          "proportion wears a <i>hat</i>, $\\hat{p}$, and the population proportion is the",
+          "bare $p$.",
+          "<br><br>Note also that whether a number was measured directly has nothing to do",
+          "with it. All 8,500 bicycles are registered, so $\\mu$ and $p$ <i>could</i> be",
+          "measured -- they are still parameters, because they describe the population."))
+workspace(3)
 ```
 
 **(d)** The researcher reports the mean age of the 200 bicycles she measured, then uses it
@@ -280,26 +311,42 @@ On the exam the formulas are provided **unlabeled** — the equations only, with
 This problem is practice at telling them apart.
 
 **(a)** Each equation below computes one of the quantities in the list. Write the name of
-the quantity next to its equation.
+the quantity next to its equation, and give the symbol it is denoted by.
 
-> sample mean &nbsp;&middot;&nbsp; population mean &nbsp;&middot;&nbsp; sample proportion
+> sample mean, from raw observations &nbsp;&middot;&nbsp; sample mean, from a frequency
+> table &nbsp;&middot;&nbsp; sample mean, from a relative frequency table
+> &nbsp;&middot;&nbsp; population mean &nbsp;&middot;&nbsp; sample proportion
 > &nbsp;&middot;&nbsp; population proportion &nbsp;&middot;&nbsp; sample variance
-> &nbsp;&middot;&nbsp; sample standard deviation &nbsp;&middot;&nbsp; interquartile range
+> &nbsp;&middot;&nbsp; sample standard deviation &nbsp;&middot;&nbsp; range
+> &nbsp;&middot;&nbsp; interquartile range
 
 ```{r p03-match}
+## Every equation on the exam's formula sheet appears here, in a scrambled order.
+## The three means and the two proportions are the point of the exercise: on the
+## exam the sheet is shown UNLABELED, so telling them apart is the whole skill.
 show_tbl(data.frame(
   Equation = c("$\\dfrac{1}{n}\\sum_{i=1}^{n} x_i$",
                "$\\sqrt{\\dfrac{1}{n-1}\\sum_{i=1}^{n}(x_i - \\bar{x})^{2}}$",
                "$Q3 - Q1$",
+               "$\\sum_{x} x\\,RF(x)$",
                "$\\dfrac{1}{N}\\sum_{i=1}^{N} x_i$",
                "$\\dfrac{\\text{number of observations in the category}}{n}$",
+               "$\\max x - \\min x$",
                "$\\dfrac{\\text{number of observations in the category}}{N}$",
+               "$\\dfrac{1}{n}\\sum_{x} x\\,F(x)$",
                "$\\dfrac{1}{n-1}\\sum_{i=1}^{n}(x_i - \\bar{x})^{2}$"),
-  `What it computes` = cellv(c("sample mean", "sample standard deviation",
-                               "interquartile range", "population mean",
-                               "sample proportion", "population proportion",
+  `What it computes` = cellv(c("sample mean, from raw observations",
+                               "sample standard deviation",
+                               "interquartile range",
+                               "sample mean, from a relative frequency table",
+                               "population mean",
+                               "sample proportion",
+                               "range",
+                               "population proportion",
+                               "sample mean, from a frequency table",
                                "sample variance")),
-  Symbol = cellv(c("$\\bar{x}$", "$s$", "$IQR$", "$\\mu$", "$\\hat{p}$", "$p$", "$s^2$")),
+  Symbol = cellv(c("$\\bar{x}$", "$s$", "$IQR$", "$\\bar{x}$", "$\\mu$", "$\\hat{p}$",
+                   "$\\text{range}$", "$p$", "$\\bar{x}$", "$s^2$")),
   check.names = FALSE))
 ```
 
@@ -314,7 +361,14 @@ why(paste("Three things give each one away. The <b>divisor</b>: $n$ for a sample
           "population mean are the same sum, divided by $n$ or by $N$; a sample proportion",
           "and a population proportion are the same count, divided by $n$ or by $N$. When",
           "the equation is handed to you without a label, the bottom of the fraction is",
-          "what tells you whether you are looking at a statistic or a parameter."))
+          "what tells you whether you are looking at a statistic or a parameter.",
+          "<br><br><b>The three means.</b> All three are $\\bar{x}$ -- the same number,",
+          "computed from whatever you happen to have been given. Tell them apart by what",
+          "goes into the sum: raw observations $x_i$, or a value times its frequency",
+          "$x\\,F(x)$, or a value times its <i>relative</i> frequency $x\\,RF(x)$. The",
+          "frequency version still has to be divided by $n$ at the end; the relative",
+          "frequency version <b>must not be</b>, because $RF(x) = F(x)/n$ has already done",
+          "that division. Dividing by $n$ twice is the single most common error here."))
 ```
 
 **(b)** *(notation)* Answer each in a few words.
@@ -429,7 +483,40 @@ if (SOLUTIONS) {
 }
 ```
 
-**(d)** Would it make sense to add a *cumulative relative frequency* column to the table in
+**(d)** A classmate suggests drawing a **histogram** of the drinks instead. Why will that not
+work? Of the displays we have met — bar graph, pie chart, Pareto chart, histogram,
+stem-and-leaf plot, dot plot, boxplot — say which are for qualitative data and which
+require a quantitative variable.
+
+```{r p04-d-graph}
+show_tbl(data.frame(
+  Display = c("Bar graph", "Pie chart", "Pareto chart", "Histogram",
+              "Stem-and-leaf plot", "Dot plot", "Boxplot"),
+  `Qualitative or quantitative?` = cellv(c("qualitative", "qualitative", "qualitative",
+                                           "quantitative", "quantitative",
+                                           "quantitative", "quantitative")),
+  check.names = FALSE))
+```
+
+```{r p04-d2, results='asis'}
+why(paste("A histogram needs a <b>number line</b> to bin values along, and drink type has",
+          "no numeric axis to put one on -- there is no distance between a latte and a",
+          "mocha to divide into intervals. The right display for a qualitative variable is",
+          "a <b>bar graph</b>: one separated bar per category, in no meaningful order.",
+          "<br><br>The separation matters. A histogram's bars touch, because the bins are",
+          "adjacent pieces of a continuous scale; a bar graph's bars are drawn apart,",
+          "because the categories are not next to each other in any sense at all.",
+          "<br><br>The other two qualitative displays are variations on the bar graph: a",
+          "<b>pie chart</b> shows each category's share of the whole, and a <b>Pareto",
+          "chart</b> is a bar graph with the categories sorted by decreasing frequency.",
+          "The four quantitative displays all need numeric values -- a stem-and-leaf plot",
+          "splits digits into stems and leaves, a dot plot stacks points on a number line,",
+          "and a boxplot is built from quartiles, which cannot be computed for categories",
+          "that cannot be put in order."))
+workspace(3)
+```
+
+**(e)** Would it make sense to add a *cumulative relative frequency* column to the table in
 part (a)? Explain.
 
 ```{r p04-d, results='asis'}
@@ -554,7 +641,9 @@ stopifnot(length(t6) == 16, sum(f6) == 16,
 show_set(t6)
 ```
 
-**(a)** Complete the frequency table using the intervals given.
+**(a)** Complete the frequency table using the intervals given. (The bins are always handed
+to you — here, on the exam, and in the homework. Choosing the number of bins or the bin
+width yourself is never asked for.)
 
 ```{r p06-table}
 show_tbl(data.frame(
@@ -751,11 +840,23 @@ iqr9 <- q9[["Q3"]] - q9[["Q1"]]
 ## rule, on one dataset.
 a9b <- sort(c(a9, 58))
 q9b <- q_halves(a9b)
+
+## Tukey's hinges on both versions of the data. These are the numbers a boxplot
+## routine or a calculator is most likely to report, and they are quoted in the
+## "if your calculator disagrees" note under part (c). The note claims the hinges
+## DISAGREE with the class rule when n is odd and AGREE when it is even, so assert
+## exactly that -- if either half ever stopped being true the note would be wrong
+## and the render fails instead.
+hinge_a <- fivenum(a9)      # n = 10, even
+hinge_b <- fivenum(a9b)     # n = 11, odd
 stopifnot(length(a9) == 10, identical(a9, sort(a9)),
           q9[["Q1"]] == 38, q9[["Q2"]] == 47, q9[["Q3"]] == 56, iqr9 == 18,
           length(a9b) == 11,
           q9b[["Q1"]] == 38, q9b[["Q2"]] == 49, q9b[["Q3"]] == 58,
-          sum(a9 <= 61) == 9)
+          sum(a9 <= 61) == 9,
+          hinge_a[2] == q9[["Q1"]],  hinge_a[4] == q9[["Q3"]],
+          hinge_b[2] != q9b[["Q1"]], hinge_b[4] != q9b[["Q3"]],
+          hinge_b[2] == 39.5, hinge_b[4] == 57)
 show_set(a9)
 ```
 
@@ -786,7 +887,28 @@ why(paste("The ordered ages are now",
           "<br>The upper half is $\\{52, 56, 58, 61, 67\\}$, so $Q3 = 58$ years.",
           "<br><br>Compare this with part (b): the method is the same both times. The",
           "only thing that changes is that an odd $n$ leaves you a middle value to drop,",
-          "and an even $n$ does not."))
+          "and an even $n$ does not.",
+          sprintf(paste(
+            "<br><br><b>If your calculator disagrees, read this.</b> Put these 11 ages",
+            "into a calculator, a spreadsheet or R and you will very likely get",
+            "$Q1 = %s$ and $Q3 = %s$ instead of the $%s$ and $%s$ above. Those answers are",
+            "<i>not wrong</i> -- they are a <b>different definition</b>, and there are",
+            "several in circulation.",
+            "<br><br><b>Tukey's hinges</b>, which most boxplot routines draw, <i>keep</i>",
+            "the median in both halves instead of dropping it. That is the one difference,",
+            "and it is why the hinges here are",
+            "$\\text{median}(29,34,38,41,45,49) = %s$ and",
+            "$\\text{median}(49,52,56,58,61,67) = %s$. <b>Interpolating</b> methods, the",
+            "default in most software, do something different again: they slide between",
+            "the two neighbouring observations rather than landing on a data value at all.",
+            "<br><br>So: the hinges agree with this class whenever $n$ is <b>even</b> --",
+            "check part (b), where both give $Q1 = %s$ and $Q3 = %s$ -- and part ways only",
+            "when $n$ is odd, because only then is there a median to drop. Interpolating",
+            "methods can disagree either way. This class uses the <b>method of halves with",
+            "the median excluded</b>, and that is the answer the exam wants whenever it",
+            "says so."),
+            hinge_b[2], hinge_b[4], q9b[["Q1"]], q9b[["Q3"]],
+            hinge_b[2], hinge_b[4], q9[["Q1"]], q9[["Q3"]])))
 workspace(5)
 ```
 
@@ -835,7 +957,8 @@ show_set(w10)
 
 The sample mean of these three packets is $\bar{x} = \dfrac{159}{3} = 53$ grams.
 
-**(a)** Complete the deviation table below, then add up the deviation column.
+**(a)** Complete the deviation table below, then add up **each** of the two columns you
+filled in. You will need the second of those totals again in part (c).
 
 ```{r p10-table}
 show_tbl(data.frame(
@@ -885,16 +1008,66 @@ why(paste("The squared deviation column is the sum the variance formula needs. A
 workspace(3)
 ```
 
-**(d)** State the units of $\bar{x}$, of $s^2$ and of $s$.
+**(d)** Two students propose simpler measures of spread. Explain what is wrong with each.
 
-```{r p10-d}
+  (i) *"Just average the deviations:"* $\;\dfrac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})$
+
+  (ii) *"Fine — square them first, then just add them up:"* $\;\sum_{i=1}^{n}(x_i - \bar{x})^{2}$
+  &nbsp; Consider two samples that are equally spread out, one with $n = 3$ packets and one
+  with $n = 300$.
+
+```{r p10-d0, results='asis'}
+why(paste("<b>(i)</b> The deviations <b>always sum to zero</b>, for every dataset -- that",
+          "is what part (a) showed, and it is not a coincidence of these three packets.",
+          "So this proposal returns $0/n = 0$ for tightly packed data and for wildly",
+          "scattered data alike. It carries no information about spread at all. Squaring",
+          "is what fixes it: it strips the signs, so nothing cancels and every observation",
+          "contributes something positive.",
+          "<br><br><b>(ii)</b> Squaring fixes the cancelling, but this proposal is a",
+          "<b>total</b> rather than a typical amount, so it grows simply by adding more",
+          "observations. Every packet contributes a positive squared deviation, so the",
+          "sample of 300 would return a far larger value than the sample of 3 even though",
+          "the two are equally spread out. A measure of spread has to be comparable across",
+          "samples of different sizes, and a running total is not.",
+          "<br><br>Dividing by something that grows with the sample size is what turns the",
+          "total into an <i>average</i> squared deviation. That is the whole job of the",
+          "divisor -- and the sample variance is exactly these two repairs applied at once:",
+          "square the deviations, then divide."))
+workspace(5)
+```
+
+**(e)** The sample variance divides by $n - 1$, but the sample mean divides by $n$. Why the
+difference?
+
+```{r p10-e0, results='asis'}
+why(paste("The $n$ deviations are <b>not $n$ independent pieces of information</b>. They",
+          "are measured from $\\bar{x}$, which was itself computed from the very same data,",
+          "and that forces them to sum to zero. So once you know any $n - 1$ of them the",
+          "last one is determined -- it has to be whatever value makes the total zero.",
+          "<br><br>Here that is easy to see. The three deviations are $-5$, $1$ and $4$.",
+          "Tell me the first two and I can tell you the third without looking at the data:",
+          "it must be $+4$, because nothing else sums to zero. Only <b>two</b> of the three",
+          "were ever free to vary.",
+          "<br><br>That count -- $n - 1$ -- is the <b>degrees of freedom</b>, and it is what",
+          "the variance divides by: the number of independent pieces of information the",
+          "deviations actually carry, not how many numbers were written down. Dividing by",
+          "$n$ instead would systematically <i>under</i>estimate the population variance",
+          "$\\sigma^{2}$; dividing by $n - 1$ is what makes $s^{2}$ unbiased.",
+          "<br><br>The sample mean has no such constraint -- the $n$ observations are",
+          "genuinely $n$ free values -- so it divides by $n$."))
+workspace(5)
+```
+
+**(f)** State the units of $\bar{x}$, of $s^2$ and of $s$.
+
+```{r p10-f}
 show_tbl(data.frame(
   Quantity = c("$\\bar{x}$", "$s^2$", "$s$"),
   Units = cellv(c("grams", "grams squared", "grams")),
   check.names = FALSE))
 ```
 
-```{r p10-d2, results='asis'}
+```{r p10-f2, results='asis'}
 why(paste("Squaring the deviations squares their units too, which is why the variance is",
           "in grams squared -- a quantity nobody can picture. Taking the square root",
           "undoes it and puts $s$ back on the scale of the original data, where it reads",
@@ -902,10 +1075,10 @@ why(paste("Squaring the deviations squares their units too, which is why the var
 workspace(2)
 ```
 
-**(e)** Show how to compute the range. Which is the better description of the spread of this data, the
+**(g)** Show how to compute the range. Which is the better description of the spread of this data, the
 range or the standard deviation, and why?
 
-```{r p10-e, results='asis'}
+```{r p10-g, results='asis'}
 why(paste("Range $= \\max x - \\min x = 57 - 48 = 9$ grams.",
           "<br><br>The <b>standard deviation</b> is the better description here. The range",
           "is built from the two most extreme observations and <i>nothing else</i>: here it",
@@ -971,7 +1144,13 @@ why(paste("$IQR = Q3 - Q1 = 16 - 7 = 9$ days, so $1.5 \\times IQR = 13.5$.",
           "<br><br>Lower boundary $= Q1 - 1.5 \\times IQR = 7 - 13.5 = -6.5$ days.",
           "<br>Upper boundary $= Q3 + 1.5 \\times IQR = 16 + 13.5 = 29.5$ days.",
           "<br><br>Nothing can fall below $-6.5$ days, so only the upper boundary can",
-          "flag anything here."))
+          "flag anything <i>in this particular dataset</i>. That is a fact about these 12",
+          "waits, not a rule -- always work out both boundaries and check against both.",
+          "Part (g) is a case where the flagged value is at the low end.",
+          "<br><br><b>Two names, one thing.</b> These two positions are called the",
+          "<b>lower boundary</b> and <b>upper boundary</b> here and on the exam. The Week 3",
+          "lecture notes call them the lower and upper <b>fences</b>. The words are",
+          "interchangeable -- same formula, same two numbers."))
 workspace(3)
 ```
 
@@ -1030,6 +1209,70 @@ why(paste("That being flagged by the $1.5 \\times IQR$ rule is an <b>arithmetic 
           "<br><br>A 58-day wait is entirely plausible -- it may be the single most",
           "important number in the dataset for a manager trying to improve scheduling.",
           "Deleting it because a rule flagged it would throw away real information."))
+workspace(4)
+```
+
+**(g)** A second clinic reports its own referral waits, for 7 patients:
+
+```{r p11-g-data, results='asis'}
+## Deliberately built the OTHER way round from the 12 waits above: the outlier is
+## at the LOW end, and the largest value is a near miss that sits just inside the
+## upper boundary. A student who glances at the most extreme-looking value, or who
+## checks only one boundary, gets this wrong -- which is the point. n is odd, so
+## the median is also dropped from both halves here.
+d11g <- c(1, 14, 16, 18, 21, 22, 33)
+q11g <- q_halves(d11g)
+iqr11g <- q11g[["Q3"]] - q11g[["Q1"]]
+lo11g <- q11g[["Q1"]] - 1.5 * iqr11g
+hi11g <- q11g[["Q3"]] + 1.5 * iqr11g
+stopifnot(length(d11g) == 7, identical(d11g, sort(d11g)),
+          q11g[["Q1"]] == 14, q11g[["Q2"]] == 18, q11g[["Q3"]] == 22,
+          iqr11g == 8, 1.5 * iqr11g == 12, lo11g == 2, hi11g == 34,
+          identical(d11g[d11g < lo11g | d11g > hi11g], 1),
+          max(d11g) == 33, max(d11g) < hi11g)   # the near miss
+show_set(d11g, "W")
+```
+
+Find $Q1$, $Q3$ and both boundaries, and say which observations the $1.5 \times IQR$ rule
+flags. Check **both** boundaries before you answer.
+
+```{r p11-g, results='asis'}
+why(paste("$n = 7$ is odd, so the median -- the $4^{th}$ value, $18$ days -- is",
+          "<b>dropped from both halves</b>. The lower half is $\\{1, 14, 16\\}$, so",
+          "$Q1 = 14$; the upper half is $\\{21, 22, 33\\}$, so $Q3 = 22$.",
+          "<br><br>$IQR = 22 - 14 = 8$ days, so $1.5 \\times IQR = 12$.",
+          "<br>Lower boundary $= 14 - 12 = 2$ days.",
+          "<br>Upper boundary $= 22 + 12 = 34$ days.",
+          "<br><br><b>One outlier: the 1-day wait</b>, which falls below the lower",
+          "boundary of 2.",
+          "<br><br>Two traps here, and the exam is fond of both. First, the flagged value",
+          "is the <i>smallest</i> one -- check the low boundary as well as the high one,",
+          "every time, or you will report no outliers at all. Second, the 33-day wait",
+          "<b>is not an outlier</b>: it is the largest value, and it looks extreme next to",
+          "the rest, but $33 < 34$, so it sits inside the boundary. It is where the right",
+          "whisker would stop.",
+          "<br><br>And as in part (f), a 1-day wait is not an error to be deleted. It is",
+          "most likely an urgent case seen straight away."))
+workspace(5)
+```
+
+**(h)** Why is it worth drawing a histogram or dot plot alongside a boxplot, rather than
+relying on the boxplot alone?
+
+```{r p11-h, results='asis'}
+why(paste("A boxplot is drawn from just <b>five numbers</b> plus whatever the outlier rule",
+          "flags. That is enough to show center, spread, skew and outliers -- but it says",
+          "nothing at all about how the observations are arranged <i>between</i> those five",
+          "positions. In particular a boxplot <b>cannot show multiple peaks or gaps</b>.",
+          "<br><br>So two variables with very different shapes can draw nearly the same",
+          "box. A <b>bimodal</b> variable, piled into two separate clusters, and a roughly",
+          "<b>uniform</b> one, spread evenly across the same range, can share all five",
+          "numbers and therefore share a boxplot. The Old Faithful waiting times are the",
+          "standing example: the boxplot gives no hint of the two clusters that the",
+          "histogram makes obvious at a glance.",
+          "<br><br>A histogram or dot plot recovers exactly the information the",
+          "five-number summary throws away -- <b>modality and gaps</b>, where the data are",
+          "dense and where they are sparse. Read the two together."))
 workspace(4)
 ```
 

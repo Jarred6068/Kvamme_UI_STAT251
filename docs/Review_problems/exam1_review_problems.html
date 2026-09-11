@@ -801,8 +801,10 @@ Good
 </tbody>
 </table>
 <p><strong>(a)</strong> How many observations are in this data table,
-and how many variables?</p>
+and how many variables? Which way round does a data table store them —
+one observation per row or one variable per row?</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
+<p><br> <br></p>
 <p><strong>(b)</strong> What is the value of <span class="math inline">\(n\)</span> for this sample?</p>
 <p><span class="math inline">\(\_\_\_\_\_\_\_\_\)</span></p>
 <p><strong>(c)</strong> Classify each of the four measured variables as
@@ -921,8 +923,27 @@ The proportion of all 8,500 with no lights
 <td style="text-align:left;">
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+The standard deviation of the ages of the 200 sampled
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The standard deviation of the ages of all 8,500
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
 </tbody>
 </table>
+<p><br> <br> <br></p>
 <p><strong>(d)</strong> The researcher reports the mean age of the 200
 bicycles she measured, then uses it to estimate the mean age of all
 8,500. Which of those two acts is descriptive statistics and which is
@@ -937,11 +958,12 @@ the equations only, with no names. This problem is practice at telling
 them apart.</p>
 <p><strong>(a)</strong> Each equation below computes one of the
 quantities in the list. Write the name of the quantity next to its
-equation.</p>
+equation, and give the symbol it is denoted by.</p>
 <blockquote>
-<p>sample mean  ·  population mean  ·  sample proportion  ·  population
-proportion  ·  sample variance  ·  sample standard deviation  · 
-interquartile range</p>
+<p>sample mean, from raw observations  ·  sample mean, from a frequency
+table  ·  sample mean, from a relative frequency table  ·  population
+mean  ·  sample proportion  ·  population proportion  ·  sample variance
+ ·  sample standard deviation  ·  range  ·  interquartile range</p>
 </blockquote>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -988,6 +1010,15 @@ Symbol
 </tr>
 <tr>
 <td style="text-align:left;">
+<span class="math inline">\(\sum_{x} x\,RF(x)\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <span class="math inline">\(\dfrac{1}{N}\sum_{i=1}^{N} x_i\)</span>
 </td>
 <td style="text-align:left;">
@@ -1007,8 +1038,26 @@ category}}{n}\)</span>
 </tr>
 <tr>
 <td style="text-align:left;">
+<span class="math inline">\(\max x - \min x\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <span class="math inline">\(\dfrac{\text{number of observations in the
 category}}{N}\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{n}\sum_{x} x\,F(x)\)</span>
 </td>
 <td style="text-align:left;">
 </td>
@@ -1163,7 +1212,76 @@ Mocha
 <p><strong>(c)</strong> Draw a bar graph of the distribution on the axes
 below.</p>
 <p><img src="data:image/png;base64,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" width="528" /></p>
-<p><strong>(d)</strong> Would it make sense to add a <em>cumulative
+<p><strong>(d)</strong> A classmate suggests drawing a
+<strong>histogram</strong> of the drinks instead. Why will that not
+work? Of the displays we have met — bar graph, pie chart, Pareto chart,
+histogram, stem-and-leaf plot, dot plot, boxplot — say which are for
+qualitative data and which require a quantitative variable.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Display
+</th>
+<th style="text-align:left;">
+Qualitative or quantitative?
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Bar graph
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pie chart
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pareto chart
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Histogram
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stem-and-leaf plot
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dot plot
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Boxplot
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p><br> <br> <br></p>
+<p><strong>(e)</strong> Would it make sense to add a <em>cumulative
 relative frequency</em> column to the table in part (a)? Explain.</p>
 <p><br> <br> <br></p>
 <hr />
@@ -1286,7 +1404,9 @@ X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \ 17.5, \ 18.0, \ 18.3, \ 19.1, \
 21.7, \ 22.4, \ 23.9, \ 25.1, \ 26.8, \ 28.4 \}
 \end{gathered}\]</span></p>
 <p><strong>(a)</strong> Complete the frequency table using the intervals
-given.</p>
+given. (The bins are always handed to you — here, on the exam, and in
+the homework. Choosing the number of bins or the bin width yourself is
+never asked for.)</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1474,7 +1594,8 @@ machine and weighed each one, in grams:</p>
 <p><span class="math display">\[X = \{ 48, \ 54, \ 57 \}\]</span></p>
 <p>The sample mean of these three packets is <span class="math inline">\(\bar{x} = \dfrac{159}{3} = 53\)</span> grams.</p>
 <p><strong>(a)</strong> Complete the deviation table below, then add up
-the deviation column.</p>
+<strong>each</strong> of the two columns you filled in. You will need
+the second of those totals again in part (c).</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1547,7 +1668,19 @@ that number tells you.</p>
 variance <span class="math inline">\(s^2\)</span> from the table you
 filled in above, and then the sample standard deviation <span class="math inline">\(s\)</span>.</p>
 <p><br> <br> <br></p>
-<p><strong>(d)</strong> State the units of <span class="math inline">\(\bar{x}\)</span>, of <span class="math inline">\(s^2\)</span> and of <span class="math inline">\(s\)</span>.</p>
+<p><strong>(d)</strong> Two students propose simpler measures of spread.
+Explain what is wrong with each.</p>
+<ol style="list-style-type: lower-roman">
+<li><p><em>“Just average the deviations:”</em> <span class="math inline">\(\;\dfrac{1}{n}\sum_{i=1}^{n}(x_i -
+\bar{x})\)</span></p></li>
+<li><p><em>“Fine — square them first, then just add them up:”</em> <span class="math inline">\(\;\sum_{i=1}^{n}(x_i - \bar{x})^{2}\)</span>  
+Consider two samples that are equally spread out, one with <span class="math inline">\(n = 3\)</span> packets and one with <span class="math inline">\(n = 300\)</span>.</p></li>
+</ol>
+<p><br> <br> <br> <br> <br></p>
+<p><strong>(e)</strong> The sample variance divides by <span class="math inline">\(n - 1\)</span>, but the sample mean divides by
+<span class="math inline">\(n\)</span>. Why the difference?</p>
+<p><br> <br> <br> <br> <br></p>
+<p><strong>(f)</strong> State the units of <span class="math inline">\(\bar{x}\)</span>, of <span class="math inline">\(s^2\)</span> and of <span class="math inline">\(s\)</span>.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1584,7 +1717,7 @@ Units
 </tbody>
 </table>
 <p><br> <br></p>
-<p><strong>(e)</strong> Show how to compute the range. Which is the
+<p><strong>(g)</strong> Show how to compute the range. Which is the
 better description of the spread of this data, the range or the standard
 deviation, and why?</p>
 <p><br> <br> <br></p>
@@ -1650,6 +1783,18 @@ median.</p>
 <p><br> <br> <br></p>
 <p><strong>(f)</strong> The clinic manager wants to delete the 58-day
 wait because it is “clearly a mistake.” What would you tell her?</p>
+<p><br> <br> <br> <br></p>
+<p><strong>(g)</strong> A second clinic reports its own referral waits,
+for 7 patients:</p>
+<p><span class="math display">\[W = \{ 1, \ 14, \ 16, \ 18, \ 21, \ 22,
+\ 33 \}\]</span></p>
+<p>Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q3\)</span> and both boundaries, and say which
+observations the <span class="math inline">\(1.5 \times IQR\)</span>
+rule flags. Check <strong>both</strong> boundaries before you
+answer.</p>
+<p><br> <br> <br> <br> <br></p>
+<p><strong>(h)</strong> Why is it worth drawing a histogram or dot plot
+alongside a boxplot, rather than relying on the boxplot alone?</p>
 <p><br> <br> <br> <br></p>
 <hr />
 </div>

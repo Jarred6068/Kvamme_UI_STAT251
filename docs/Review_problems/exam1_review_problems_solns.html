@@ -803,8 +803,18 @@ Good
 </tbody>
 </table>
 <p><strong>(a)</strong> How many observations are in this data table,
-and how many variables?</p>
-<p><span class="soln">6 observations and 5 variables</span></p>
+and how many variables? Which way round does a data table store them —
+one observation per row or one variable per row?</p>
+<p><span class="soln">6 observations and 5 variables; one observation
+per row</span></p>
+<p><span class="soln">A data table stores <b>one observation per row and
+one variable per column</b>. Each row here is a single tree – everything
+recorded about that one tree – and each column is one characteristic
+recorded for every tree. So counting rows counts observations and
+counting columns counts variables: 6 rows and 5 columns. <br><br>Say it
+to yourself the right way round before you count. A table with 200 rows
+and 6 columns holds 6 variables measured on 200 observations, not the
+other way about.</span></p>
 <p><strong>(b)</strong> What is the value of <span class="math inline">\(n\)</span> for this sample?</p>
 <p><span class="soln"><span class="math inline">\(n =
 6\)</span></span></p>
@@ -952,8 +962,41 @@ The proportion of all 8,500 with no lights
 <span class="soln"><span class="math inline">\(p\)</span></span>
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+The standard deviation of the ages of the 200 sampled
+</td>
+<td style="text-align:left;">
+<span class="soln">statistic</span>
+</td>
+<td style="text-align:left;">
+<span class="soln"><span class="math inline">\(s\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The standard deviation of the ages of all 8,500
+</td>
+<td style="text-align:left;">
+<span class="soln">parameter</span>
+</td>
+<td style="text-align:left;">
+<span class="soln"><span class="math inline">\(\sigma\)</span></span>
+</td>
+</tr>
 </tbody>
 </table>
+<p><span class="soln">Every row comes down to the same question: does
+the number describe the <b>200 bicycles measured</b> (a statistic) or
+<b>all 8,500</b> (a parameter)? <br><br>The symbols come in pairs, one
+for each. Roman letters are the statistics and Greek letters the
+parameters – <span class="math inline">\(\bar{x}\)</span> against <span class="math inline">\(\mu\)</span>, <span class="math inline">\(s\)</span> against <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(s^{2}\)</span> against <span class="math inline">\(\sigma^{2}\)</span> for the variances. The
+proportions are the exception to the Roman-and-Greek pattern: the sample
+proportion wears a <i>hat</i>, <span class="math inline">\(\hat{p}\)</span>, and the population proportion is
+the bare <span class="math inline">\(p\)</span>. <br><br>Note also that
+whether a number was measured directly has nothing to do with it. All
+8,500 bicycles are registered, so <span class="math inline">\(\mu\)</span> and <span class="math inline">\(p\)</span> <i>could</i> be measured – they are
+still parameters, because they describe the population.</span></p>
 <p><strong>(d)</strong> The researcher reports the mean age of the 200
 bicycles she measured, then uses it to estimate the mean age of all
 8,500. Which of those two acts is descriptive statistics and which is
@@ -975,11 +1018,12 @@ the equations only, with no names. This problem is practice at telling
 them apart.</p>
 <p><strong>(a)</strong> Each equation below computes one of the
 quantities in the list. Write the name of the quantity next to its
-equation.</p>
+equation, and give the symbol it is denoted by.</p>
 <blockquote>
-<p>sample mean  ·  population mean  ·  sample proportion  ·  population
-proportion  ·  sample variance  ·  sample standard deviation  · 
-interquartile range</p>
+<p>sample mean, from raw observations  ·  sample mean, from a frequency
+table  ·  sample mean, from a relative frequency table  ·  population
+mean  ·  sample proportion  ·  population proportion  ·  sample variance
+ ·  sample standard deviation  ·  range  ·  interquartile range</p>
 </blockquote>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1001,7 +1045,7 @@ Symbol
 <span class="math inline">\(\dfrac{1}{n}\sum_{i=1}^{n} x_i\)</span>
 </td>
 <td style="text-align:left;">
-<span class="soln">sample mean</span>
+<span class="soln">sample mean, from raw observations</span>
 </td>
 <td style="text-align:left;">
 <span class="soln"><span class="math inline">\(\bar{x}\)</span></span>
@@ -1032,6 +1076,17 @@ Symbol
 </tr>
 <tr>
 <td style="text-align:left;">
+<span class="math inline">\(\sum_{x} x\,RF(x)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="soln">sample mean, from a relative frequency table</span>
+</td>
+<td style="text-align:left;">
+<span class="soln"><span class="math inline">\(\bar{x}\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <span class="math inline">\(\dfrac{1}{N}\sum_{i=1}^{N} x_i\)</span>
 </td>
 <td style="text-align:left;">
@@ -1055,6 +1110,17 @@ category}}{n}\)</span>
 </tr>
 <tr>
 <td style="text-align:left;">
+<span class="math inline">\(\max x - \min x\)</span>
+</td>
+<td style="text-align:left;">
+<span class="soln">range</span>
+</td>
+<td style="text-align:left;">
+<span class="soln"><span class="math inline">\(\text{range}\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <span class="math inline">\(\dfrac{\text{number of observations in the
 category}}{N}\)</span>
 </td>
@@ -1063,6 +1129,17 @@ category}}{N}\)</span>
 </td>
 <td style="text-align:left;">
 <span class="soln"><span class="math inline">\(p\)</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{1}{n}\sum_{x} x\,F(x)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="soln">sample mean, from a frequency table</span>
+</td>
+<td style="text-align:left;">
+<span class="soln"><span class="math inline">\(\bar{x}\)</span></span>
 </td>
 </tr>
 <tr>
@@ -1092,7 +1169,15 @@ the same sum, divided by <span class="math inline">\(n\)</span> or by
 <span class="math inline">\(N\)</span>; a sample proportion and a
 population proportion are the same count, divided by <span class="math inline">\(n\)</span> or by <span class="math inline">\(N\)</span>. When the equation is handed to you
 without a label, the bottom of the fraction is what tells you whether
-you are looking at a statistic or a parameter.</span></p>
+you are looking at a statistic or a parameter. <br><br><b>The three
+means.</b> All three are <span class="math inline">\(\bar{x}\)</span> –
+the same number, computed from whatever you happen to have been given.
+Tell them apart by what goes into the sum: raw observations <span class="math inline">\(x_i\)</span>, or a value times its frequency <span class="math inline">\(x\,F(x)\)</span>, or a value times its
+<i>relative</i> frequency <span class="math inline">\(x\,RF(x)\)</span>.
+The frequency version still has to be divided by <span class="math inline">\(n\)</span> at the end; the relative frequency
+version <b>must not be</b>, because <span class="math inline">\(RF(x) =
+F(x)/n\)</span> has already done that division. Dividing by <span class="math inline">\(n\)</span> twice is the single most common error
+here.</span></p>
 <p><strong>(b)</strong> <em>(notation)</em> Answer each in a few
 words.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1252,7 +1337,98 @@ Mocha
 <p><strong>(c)</strong> Draw a bar graph of the distribution on the axes
 below.</p>
 <p><img src="data:image/png;base64,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" width="528" /></p>
-<p><strong>(d)</strong> Would it make sense to add a <em>cumulative
+<p><strong>(d)</strong> A classmate suggests drawing a
+<strong>histogram</strong> of the drinks instead. Why will that not
+work? Of the displays we have met — bar graph, pie chart, Pareto chart,
+histogram, stem-and-leaf plot, dot plot, boxplot — say which are for
+qualitative data and which require a quantitative variable.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Display
+</th>
+<th style="text-align:left;">
+Qualitative or quantitative?
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Bar graph
+</td>
+<td style="text-align:left;">
+<span class="soln">qualitative</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pie chart
+</td>
+<td style="text-align:left;">
+<span class="soln">qualitative</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pareto chart
+</td>
+<td style="text-align:left;">
+<span class="soln">qualitative</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Histogram
+</td>
+<td style="text-align:left;">
+<span class="soln">quantitative</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stem-and-leaf plot
+</td>
+<td style="text-align:left;">
+<span class="soln">quantitative</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dot plot
+</td>
+<td style="text-align:left;">
+<span class="soln">quantitative</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Boxplot
+</td>
+<td style="text-align:left;">
+<span class="soln">quantitative</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="soln">A histogram needs a <b>number line</b> to bin
+values along, and drink type has no numeric axis to put one on – there
+is no distance between a latte and a mocha to divide into intervals. The
+right display for a qualitative variable is a <b>bar graph</b>: one
+separated bar per category, in no meaningful order. <br><br>The
+separation matters. A histogram’s bars touch, because the bins are
+adjacent pieces of a continuous scale; a bar graph’s bars are drawn
+apart, because the categories are not next to each other in any sense at
+all. <br><br>The other two qualitative displays are variations on the
+bar graph: a <b>pie chart</b> shows each category’s share of the whole,
+and a <b>Pareto chart</b> is a bar graph with the categories sorted by
+decreasing frequency. The four quantitative displays all need numeric
+values – a stem-and-leaf plot splits digits into stems and leaves, a dot
+plot stacks points on a number line, and a boxplot is built from
+quartiles, which cannot be computed for categories that cannot be put in
+order.</span></p>
+<p><strong>(e)</strong> Would it make sense to add a <em>cumulative
 relative frequency</em> column to the table in part (a)? Explain.</p>
 <p><span class="soln">No. Cumulative relative frequency is the
 proportion of observations <i>less than or equal to</i> a given value,
@@ -1413,7 +1589,9 @@ X = \{ 12.4, \ 14.1, \ 15.8, \ 16.2, \ 17.5, \ 18.0, \ 18.3, \ 19.1, \
 21.7, \ 22.4, \ 23.9, \ 25.1, \ 26.8, \ 28.4 \}
 \end{gathered}\]</span></p>
 <p><strong>(a)</strong> Complete the frequency table using the intervals
-given.</p>
+given. (The bins are always handed to you — here, on the exam, and in
+the homework. Choosing the number of bins or the bin width yourself is
+never asked for.)</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1639,7 +1817,23 @@ both halves. <br><br>The lower half is <span class="math inline">\(\{29,
 part (b): the method is the same both times. The only thing that changes
 is that an odd <span class="math inline">\(n\)</span> leaves you a
 middle value to drop, and an even <span class="math inline">\(n\)</span>
-does not.</span></p>
+does not. <br><br><b>If your calculator disagrees, read this.</b> Put
+these 11 ages into a calculator, a spreadsheet or R and you will very
+likely get <span class="math inline">\(Q1 = 39.5\)</span> and <span class="math inline">\(Q3 = 57\)</span> instead of the <span class="math inline">\(38\)</span> and <span class="math inline">\(58\)</span> above. Those answers are <i>not
+wrong</i> – they are a <b>different definition</b>, and there are
+several in circulation. <br><br><b>Tukey’s hinges</b>, which most
+boxplot routines draw, <i>keep</i> the median in both halves instead of
+dropping it. That is the one difference, and it is why the hinges here
+are <span class="math inline">\(\text{median}(29,34,38,41,45,49) =
+39.5\)</span> and <span class="math inline">\(\text{median}(49,52,56,58,61,67) = 57\)</span>.
+<b>Interpolating</b> methods, the default in most software, do something
+different again: they slide between the two neighbouring observations
+rather than landing on a data value at all. <br><br>So: the hinges agree
+with this class whenever <span class="math inline">\(n\)</span> is
+<b>even</b> – check part (b), where both give <span class="math inline">\(Q1 = 38\)</span> and <span class="math inline">\(Q3 = 56\)</span> – and part ways only when <span class="math inline">\(n\)</span> is odd, because only then is there a
+median to drop. Interpolating methods can disagree either way. This
+class uses the <b>method of halves with the median excluded</b>, and
+that is the answer the exam wants whenever it says so.</span></p>
 <p><strong>(d)</strong> Using the original 10 ages, what is the <span class="math inline">\(IQR\)</span>, and what does it measure?</p>
 <p><span class="soln"><span class="math inline">\(IQR = Q3 - Q1 = 56 -
 38 = 18\)</span> years</span></p>
@@ -1663,7 +1857,8 @@ machine and weighed each one, in grams:</p>
 <p><span class="math display">\[X = \{ 48, \ 54, \ 57 \}\]</span></p>
 <p>The sample mean of these three packets is <span class="math inline">\(\bar{x} = \dfrac{159}{3} = 53\)</span> grams.</p>
 <p><strong>(a)</strong> Complete the deviation table below, then add up
-the deviation column.</p>
+<strong>each</strong> of the two columns you filled in. You will need
+the second of those totals again in part (c).</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1744,7 +1939,51 @@ variance formula needs. Add that column up and divide by <span class="math inlin
 \bar{x})^{2} = \dfrac{25 + 1 + 16}{3 - 1} = \dfrac{42}{2} = 21\)</span>
 grams squared <br><br><span class="math inline">\(s = \sqrt{s^{2}} =
 \sqrt{21} \approx 4.58\)</span> grams</span></p>
-<p><strong>(d)</strong> State the units of <span class="math inline">\(\bar{x}\)</span>, of <span class="math inline">\(s^2\)</span> and of <span class="math inline">\(s\)</span>.</p>
+<p><strong>(d)</strong> Two students propose simpler measures of spread.
+Explain what is wrong with each.</p>
+<ol style="list-style-type: lower-roman">
+<li><p><em>“Just average the deviations:”</em> <span class="math inline">\(\;\dfrac{1}{n}\sum_{i=1}^{n}(x_i -
+\bar{x})\)</span></p></li>
+<li><p><em>“Fine — square them first, then just add them up:”</em> <span class="math inline">\(\;\sum_{i=1}^{n}(x_i - \bar{x})^{2}\)</span>  
+Consider two samples that are equally spread out, one with <span class="math inline">\(n = 3\)</span> packets and one with <span class="math inline">\(n = 300\)</span>.</p></li>
+</ol>
+<p><span class="soln"><b>(i)</b> The deviations <b>always sum to
+zero</b>, for every dataset – that is what part (a) showed, and it is
+not a coincidence of these three packets. So this proposal returns <span class="math inline">\(0/n = 0\)</span> for tightly packed data and for
+wildly scattered data alike. It carries no information about spread at
+all. Squaring is what fixes it: it strips the signs, so nothing cancels
+and every observation contributes something positive.
+<br><br><b>(ii)</b> Squaring fixes the cancelling, but this proposal is
+a <b>total</b> rather than a typical amount, so it grows simply by
+adding more observations. Every packet contributes a positive squared
+deviation, so the sample of 300 would return a far larger value than the
+sample of 3 even though the two are equally spread out. A measure of
+spread has to be comparable across samples of different sizes, and a
+running total is not. <br><br>Dividing by something that grows with the
+sample size is what turns the total into an <i>average</i> squared
+deviation. That is the whole job of the divisor – and the sample
+variance is exactly these two repairs applied at once: square the
+deviations, then divide.</span></p>
+<p><strong>(e)</strong> The sample variance divides by <span class="math inline">\(n - 1\)</span>, but the sample mean divides by
+<span class="math inline">\(n\)</span>. Why the difference?</p>
+<p><span class="soln">The <span class="math inline">\(n\)</span>
+deviations are <b>not <span class="math inline">\(n\)</span> independent
+pieces of information</b>. They are measured from <span class="math inline">\(\bar{x}\)</span>, which was itself computed from
+the very same data, and that forces them to sum to zero. So once you
+know any <span class="math inline">\(n - 1\)</span> of them the last one
+is determined – it has to be whatever value makes the total zero.
+<br><br>Here that is easy to see. The three deviations are <span class="math inline">\(-5\)</span>, <span class="math inline">\(1\)</span> and <span class="math inline">\(4\)</span>. Tell me the first two and I can tell
+you the third without looking at the data: it must be <span class="math inline">\(+4\)</span>, because nothing else sums to zero.
+Only <b>two</b> of the three were ever free to vary. <br><br>That count
+– <span class="math inline">\(n - 1\)</span> – is the <b>degrees of
+freedom</b>, and it is what the variance divides by: the number of
+independent pieces of information the deviations actually carry, not how
+many numbers were written down. Dividing by <span class="math inline">\(n\)</span> instead would systematically
+<i>under</i>estimate the population variance <span class="math inline">\(\sigma^{2}\)</span>; dividing by <span class="math inline">\(n - 1\)</span> is what makes <span class="math inline">\(s^{2}\)</span> unbiased. <br><br>The sample mean
+has no such constraint – the <span class="math inline">\(n\)</span>
+observations are genuinely <span class="math inline">\(n\)</span> free
+values – so it divides by <span class="math inline">\(n\)</span>.</span></p>
+<p><strong>(f)</strong> State the units of <span class="math inline">\(\bar{x}\)</span>, of <span class="math inline">\(s^2\)</span> and of <span class="math inline">\(s\)</span>.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1788,7 +2027,7 @@ which is why the variance is in grams squared – a quantity nobody can
 picture. Taking the square root undoes it and puts <span class="math inline">\(s\)</span> back on the scale of the original data,
 where it reads as roughly the typical distance of a packet from the mean
 weight.</span></p>
-<p><strong>(e)</strong> Show how to compute the range. Which is the
+<p><strong>(g)</strong> Show how to compute the range. Which is the
 better description of the spread of this data, the range or the standard
 deviation, and why?</p>
 <p><span class="soln">Range <span class="math inline">\(= \max x - \min
@@ -1862,7 +2101,14 @@ splits cleanly into two halves of six. <br><br>The lower half is <span class="ma
 13.5\)</span>. <br><br>Lower boundary <span class="math inline">\(= Q1 -
 1.5 \times IQR = 7 - 13.5 = -6.5\)</span> days. <br>Upper boundary <span class="math inline">\(= Q3 + 1.5 \times IQR = 16 + 13.5 = 29.5\)</span>
 days. <br><br>Nothing can fall below <span class="math inline">\(-6.5\)</span> days, so only the upper boundary can
-flag anything here.</span></p>
+flag anything <i>in this particular dataset</i>. That is a fact about
+these 12 waits, not a rule – always work out both boundaries and check
+against both. Part (g) is a case where the flagged value is at the low
+end. <br><br><b>Two names, one thing.</b> These two positions are called
+the <b>lower boundary</b> and <b>upper boundary</b> here and on the
+exam. The Week 3 lecture notes call them the lower and upper
+<b>fences</b>. The words are interchangeable – same formula, same two
+numbers.</span></p>
 <p><strong>(c)</strong> Which observations, if any, does the <span class="math inline">\(1.5 \times IQR\)</span> rule flag as outliers?</p>
 <p><span class="soln">Just one: the 58-day wait, which is above the
 upper boundary of 29.5</span></p>
@@ -1896,6 +2142,49 @@ observation as worth a second look rather than as wrong. <br><br>A
 number in the dataset for a manager trying to improve scheduling.
 Deleting it because a rule flagged it would throw away real
 information.</span></p>
+<p><strong>(g)</strong> A second clinic reports its own referral waits,
+for 7 patients:</p>
+<p><span class="math display">\[W = \{ 1, \ 14, \ 16, \ 18, \ 21, \ 22,
+\ 33 \}\]</span></p>
+<p>Find <span class="math inline">\(Q1\)</span>, <span class="math inline">\(Q3\)</span> and both boundaries, and say which
+observations the <span class="math inline">\(1.5 \times IQR\)</span>
+rule flags. Check <strong>both</strong> boundaries before you
+answer.</p>
+<p><span class="soln"><span class="math inline">\(n = 7\)</span> is odd,
+so the median – the <span class="math inline">\(4^{th}\)</span> value,
+<span class="math inline">\(18\)</span> days – is <b>dropped from both
+halves</b>. The lower half is <span class="math inline">\(\{1, 14,
+16\}\)</span>, so <span class="math inline">\(Q1 = 14\)</span>; the
+upper half is <span class="math inline">\(\{21, 22, 33\}\)</span>, so
+<span class="math inline">\(Q3 = 22\)</span>. <br><br><span class="math inline">\(IQR = 22 - 14 = 8\)</span> days, so <span class="math inline">\(1.5 \times IQR = 12\)</span>. <br>Lower boundary
+<span class="math inline">\(= 14 - 12 = 2\)</span> days. <br>Upper
+boundary <span class="math inline">\(= 22 + 12 = 34\)</span> days.
+<br><br><b>One outlier: the 1-day wait</b>, which falls below the lower
+boundary of 2. <br><br>Two traps here, and the exam is fond of both.
+First, the flagged value is the <i>smallest</i> one – check the low
+boundary as well as the high one, every time, or you will report no
+outliers at all. Second, the 33-day wait <b>is not an outlier</b>: it is
+the largest value, and it looks extreme next to the rest, but <span class="math inline">\(33 &lt; 34\)</span>, so it sits inside the
+boundary. It is where the right whisker would stop. <br><br>And as in
+part (f), a 1-day wait is not an error to be deleted. It is most likely
+an urgent case seen straight away.</span></p>
+<p><strong>(h)</strong> Why is it worth drawing a histogram or dot plot
+alongside a boxplot, rather than relying on the boxplot alone?</p>
+<p><span class="soln">A boxplot is drawn from just <b>five numbers</b>
+plus whatever the outlier rule flags. That is enough to show center,
+spread, skew and outliers – but it says nothing at all about how the
+observations are arranged <i>between</i> those five positions. In
+particular a boxplot <b>cannot show multiple peaks or gaps</b>.
+<br><br>So two variables with very different shapes can draw nearly the
+same box. A <b>bimodal</b> variable, piled into two separate clusters,
+and a roughly <b>uniform</b> one, spread evenly across the same range,
+can share all five numbers and therefore share a boxplot. The Old
+Faithful waiting times are the standing example: the boxplot gives no
+hint of the two clusters that the histogram makes obvious at a glance.
+<br><br>A histogram or dot plot recovers exactly the information the
+five-number summary throws away – <b>modality and gaps</b>, where the
+data are dense and where they are sparse. Read the two
+together.</span></p>
 <hr />
 </div>
 <div id="problem-12-cumulative-distributions" class="section level2">

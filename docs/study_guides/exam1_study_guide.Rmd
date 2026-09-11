@@ -45,7 +45,7 @@ computational than the exam by design.
 
 *  Be able to construct a frequency table from a small set of observations and know how to find the frequency, relative frequency, and cumulative relative frequency.
 
-*  Know how to construct a dot plot, stem plot, and a histogram given a small set of observations.
+*  Know how to construct a dot plot, stem plot, and a histogram given a small set of observations. Where a histogram or a binned frequency table is involved, **the bins will always be given to you** -- you will never be asked to choose the number of bins or the bin width yourself.
 
 *  Be able to compute a mean, median, and mode given a small set of observations. Note that you should also know how to compute a mean using a frequency table.
 

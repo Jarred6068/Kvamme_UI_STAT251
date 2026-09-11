@@ -668,3 +668,83 @@ cumulative distribution is not a new definition of a quartile, only a faster way
 off — and unlike the halving method it gives you *any* percentile, not just the quartiles. 
 
 
+
+## What the shape of the step plot tells you
+
+The cumulative distribution is built for reading positions, but its shape still carries
+everything the histogram carries — just in a different form. One rule does all the work:
+
+* a **steep** run means a lot of the data sits there (a tall bar in the histogram);
+* a **flat** run means little or no data sits there (a gap, or a tail).
+
+Here are the same four shapes from the boxplot section, drawn twice: the histogram on top and
+the cumulative distribution of the *same* sample underneath.
+
+```{r, echo=F, message=F, warning=F, fig.height=5.5, fig.width=13}
+set.seed(251)
+
+# Squash each sample onto a 13-point grid so all four panels share one x-axis and
+# the steps are wide enough to see. Beta rather than Normal for the first three:
+# the grid stretches to whatever range it is handed, so a single Normal outlier
+# would push the bulk of the sample into the middle few columns.
+to_grid <- function(v, k = 13) {
+  r <- range(v)
+  as.integer(round((v - r[1]) / (r[2] - r[1]) * (k - 1)) + 1)
+}
+
+N <- 600
+shapes <- list(
+  list(v = to_grid(rbeta(N, 4, 4)),   title = 'Symmetric',  note = 'steepest in the middle'),
+  list(v = to_grid(rbeta(N, 1.6, 7)), title = 'Skew right', note = 'steep, then a long drag'),
+  list(v = to_grid(rbeta(N, 7, 1.6)), title = 'Skew left',  note = 'a long drag, then steep'),
+  list(v = to_grid(c(rnorm(N / 2, 0, 0.5), rnorm(N / 2, 6, 0.5))),
+       title = 'Bimodal', note = 'two climbs, a flat shelf'))
+
+crf_tab <- function(x) {
+  tb <- table(x)
+  data.frame(x = as.numeric(names(tb)), f = as.integer(tb),
+             crf = cumsum(as.integer(tb)) / length(x))
+}
+tabs <- lapply(shapes, function(s) crf_tab(s$v))
+
+xlim <- c(0.3, 13.7)
+hist_panel <- function(tb, title) {
+  ggplot(tb, aes(x = x, y = f)) +
+    geom_col(fill = '#D9E5F7', colour = '#1F3864', linewidth = 0.35, width = 0.95) +
+    scale_x_continuous(limits = xlim) +
+    labs(title = title, y = 'Frequency') +
+    theme_bw(base_size = 12) +
+    theme(plot.title = element_text(hjust = 0.5), axis.title.x = element_blank(),
+          axis.text.x = element_blank(), axis.text.y = element_blank())
+}
+step_panel <- function(tb, note) {
+  ggplot() +
+    geom_step(data = rbind(data.frame(x = xlim[1], crf = 0), tb[, c('x', 'crf')]),
+              aes(x = x, y = crf), direction = 'hv', colour = '#1F3864', linewidth = 0.8) +
+    scale_x_continuous(limits = xlim) +
+    scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+    labs(x = note, y = 'crf(x)') +
+    theme_bw(base_size = 12) +
+    theme(axis.title.x = element_text(face = 'italic'), axis.text.x = element_blank())
+}
+
+ggarrange(plotlist = c(
+  lapply(seq_along(shapes), function(i) hist_panel(tabs[[i]], shapes[[i]]$title)),
+  lapply(seq_along(shapes), function(i) step_panel(tabs[[i]], shapes[[i]]$note))),
+  nrow = 2, ncol = 4)
+```
+
+Reading left to right:
+
+* **Symmetric** — an S-curve. The climb is steepest in the middle, where the peak is, and it
+  flattens off symmetrically at both ends.
+* **Skew right** — the curve shoots up early, because most of the data is bunched at the low
+  end, then drags slowly across the long right tail.
+* **Skew left** — the mirror image. A long flat start across the sparse left tail, then a
+  steep climb at the right where the bulk of the data sits.
+* **Bimodal** — two steep climbs with a **flat shelf** between them. That shelf is the gap
+  between the two peaks, and it is exactly the feature the boxplot could not show.
+
+Two more worth knowing: a distribution with no shape at all — values spread evenly across the
+range — gives a nearly straight diagonal line, and an outlier shows up as a long flat run
+followed by one last small jump out at the end.
