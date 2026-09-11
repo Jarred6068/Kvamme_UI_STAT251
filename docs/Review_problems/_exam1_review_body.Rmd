@@ -283,8 +283,8 @@ This problem is practice at telling them apart.
 the quantity next to its equation.
 
 > sample mean &nbsp;&middot;&nbsp; population mean &nbsp;&middot;&nbsp; sample proportion
-> &nbsp;&middot;&nbsp; sample variance &nbsp;&middot;&nbsp; sample standard deviation
-> &nbsp;&middot;&nbsp; interquartile range
+> &nbsp;&middot;&nbsp; population proportion &nbsp;&middot;&nbsp; sample variance
+> &nbsp;&middot;&nbsp; sample standard deviation &nbsp;&middot;&nbsp; interquartile range
 
 ```{r p03-match}
 show_tbl(data.frame(
@@ -293,11 +293,13 @@ show_tbl(data.frame(
                "$Q3 - Q1$",
                "$\\dfrac{1}{N}\\sum_{i=1}^{N} x_i$",
                "$\\dfrac{\\text{number of observations in the category}}{n}$",
+               "$\\dfrac{\\text{number of observations in the category}}{N}$",
                "$\\dfrac{1}{n-1}\\sum_{i=1}^{n}(x_i - \\bar{x})^{2}$"),
   `What it computes` = cellv(c("sample mean", "sample standard deviation",
                                "interquartile range", "population mean",
-                               "sample proportion", "sample variance")),
-  Symbol = cellv(c("$\\bar{x}$", "$s$", "$IQR$", "$\\mu$", "$\\hat{p}$", "$s^2$")),
+                               "sample proportion", "population proportion",
+                               "sample variance")),
+  Symbol = cellv(c("$\\bar{x}$", "$s$", "$IQR$", "$\\mu$", "$\\hat{p}$", "$p$", "$s^2$")),
   check.names = FALSE))
 ```
 
@@ -307,7 +309,12 @@ why(paste("Three things give each one away. The <b>divisor</b>: $n$ for a sample
           "is the only difference between $s^2$ and $s$. And whether the deviations are",
           "<b>squared</b> at all.",
           "<br><br>The two that get confused most often are the middle pair: $s^2$ and",
-          "$s$ are the same expression apart from the root, so check for it every time."))
+          "$s$ are the same expression apart from the root, so check for it every time.",
+          "<br><br>Notice that the two <i>pairs</i> work the same way. A sample mean and a",
+          "population mean are the same sum, divided by $n$ or by $N$; a sample proportion",
+          "and a population proportion are the same count, divided by $n$ or by $N$. When",
+          "the equation is handed to you without a label, the bottom of the fraction is",
+          "what tells you whether you are looking at a statistic or a parameter."))
 ```
 
 **(b)** *(notation)* Answer each in a few words.

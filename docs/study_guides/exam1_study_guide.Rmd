@@ -80,13 +80,20 @@ Notes are not permitted. The formulas below will be displayed on the projector d
 exam, **unlabeled** -- the equations only, with no names or descriptions.
 
 You must be able to identify each one: the population mean from the sample mean, the
-variance from the standard deviation. Several questions depend on it.
+population proportion from the sample proportion, the variance from the standard deviation.
+Several questions depend on it.
+
+Look closely at the statistic/parameter pairs below. In each pair the *arithmetic is
+identical* and only two things change: the symbol on the left, and whether the count on the
+bottom is $n$ (a sample) or $N$ (a whole population).
 
 \[\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i, \ \ \mu = \frac{1}{N} \sum_{i=1}^N x_i\]
 
 \[\bar{x} = \frac{1}{n}\sum_{x} xF(x), \ \  \bar{x} = \sum_{x} xRF(x)\]
 
 \[\hat{p} = \frac{\text{number of observations in the category}}{n}\]
+
+\[p = \frac{\text{number of observations in the category}}{N}\]
 
 \[s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2, \ \ s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}\]
 
