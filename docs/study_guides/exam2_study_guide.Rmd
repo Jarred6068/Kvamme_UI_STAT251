@@ -28,25 +28,15 @@ library(plyr)
 
 # Content To Study
 
-Exam 2 will cover material beginning on **Week 5** through **Week 8**. This includes the following topics:
+Exam 2 will cover material beginning on **Monday of Week 4 (September 14)** through **Week 8**. This includes the following topics:
 
-* The normal distribution - Lecture 7
+* Sampling and experimental designs - September 14 and 21
 
-* Experimental and sampling designs - Lectures 8 - 10
+* The normal distribution - September 23
 
-* Probability Theory - Lectures 11 - 15
+* Probability Theory - September 28 - October 2
 
-* The Central Limit Theorem - Lecture 16
-
-### The Normal Distribution
-
-  1. Know how the mean and standard deviation affect the shape and location of a normal distribution
-  
-  2. Know the empirical rule and how it relates to the standard deviation of the normal distribution
-  
-  3. Know how to compute and interpret a $z$-score and how it relates to the **standard normal distribution**
-  
-  \[ z = \frac{x-\mu}{\sigma} \]
+* The Central Limit Theorem - October 5
 
 ### Experimental and Sampling Designs
 
@@ -62,6 +52,29 @@ Exam 2 will cover material beginning on **Week 5** through **Week 8**. This incl
 
   6. Know the difference between **statistical association** and **causation**
 
+  7. Know the sources of bias in a sample survey: **undercoverage**, **nonresponse** and **response bias**, and why a larger sample does not remove bias
+
+  8. Know how **two-stage cluster sampling** works, and the difference between a **stratum** (alike within) and a **cluster** (a mini-population)
+
+  9. Know the language of experiments: **experimental units / subjects**, **factors**, **levels**, **treatments**, **control group**, **placebo**, **blinding** and **double blinding**
+
+  10. Know what a **lurking** or **confounding** variable is, and what **random sampling** (generalizing to a population) and **random assignment** (concluding cause) each allow you to conclude
+
+  11. Know the basic ethical requirements for research on human subjects: **informed consent**, **confidentiality** and **IRB** review
+
+  12. Know the difference between **sampling error**, **nonsampling error** and **sampling bias**, and what makes a **representative sample** (textbook Sections 1.2 and 1.4)
+
+  13. Recognize unethical data practices, such as fabricating data or quietly leaving out people who were hard to reach (textbook Section 1.4)
+
+### The Normal Distribution
+
+  1. Know how the mean and standard deviation affect the shape and location of a normal distribution
+
+  2. Know the empirical rule and how it relates to the standard deviation of the normal distribution
+
+  3. Know how to compute and interpret a $z$-score and how it relates to the **standard normal distribution**
+
+  \[ z = \frac{x-\mu}{\sigma} \]
 
 
 ## Probability Theory

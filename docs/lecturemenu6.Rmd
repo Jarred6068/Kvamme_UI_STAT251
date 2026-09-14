@@ -27,90 +27,15 @@ path = 'Data/'
 ```
 
 
-# Sources of Bias In Surveys
+<!--
+  SCOPE OF THIS PAGE.
 
-Last Friday, we introduced the idea of <i>randomization</i> as a means of selecting a sample from the population through a sampling design called **Simple random sampling**. Using random numbers to select individuals ensures that those selected to be in the sample are representative of the true population. However, large surveys of the human population require more than just sampling design with randomization. 
-
-A good survey needs an accurate sampling frame for the population, which is rarely the case in surveys of large human populations. As a result, most surveys suffer from **undercoverage** - bias that is introduced from having an inaccurate sampling frame. For example, consider a survey of American households. Such a survey will not include homeless individuals, college students, or incarcerated persons. Thus population surveys usually have some degree of bias introduced by the individuals not included by the sampling frame.
-
-Other sources of bias in surveys include:
-
-**Nonresponse bias** - this is a more serious form of bias that occurs when individuals selected to be in the sample cannot be contacted or refuse to participate. 
-  
-  * For many sample surveys, nonresponse bias is a considerable issue reaching $50\%$ or more of selected individuals.
-    
-  * nonresponse bias is typically higher in urban areas
-    
-  * An important thing to keep in mind is that nearly all political and opinion polls reported in the news fail to report their nonresponse rates.  
-
-**Response bias** - response bias occurs when the interview portion of a survey influences how individuals respond to the survey questions. Response bias can include:
-
-  * Poorly worded questions which may confuse respondents and influence how they select their answer. 
-    
-  * Questions about sensitive topics, such as illicit drug use, in which respondents may lie about their behavior.
-    
-  * The race or sex of the interviewer can influence responses related to questions about race relations or feminism. 
-
-### More Complicated Sampling Designs
-
-**Systematic sampling** – A random sampling method in which the researcher selects every $k^{th}$ subject from an ordered sampling frame
- 
-  * This method of sampling is useful when there is no complete list of the population available, but subjects can be encountered or ordered in some natural sequence.
-
-  * Estimates obtained under this sampling design often have a margin of error similar to simple random sampling, provided there is no periodic pattern in the ordering of the subjects.
-
- 
-**Cluster sampling** – A type of sampling method in which the population is divided in a set of clusters and the researcher selects a simple random sample of the clusters. The sample then comprises all subjects in the selected clusters.
- 
-  * The advantages of cluster sampling are that (a) it can be less expensive than simple or stratified random sampling and (b) it can be used when a sampling frame is unavailable 
-
-  * A disadvantage of cluster sampling is that the margin of error is often larger than what it would be for simple random sampling or stratified random sampling
-
-
-**Stratified random sampling** – A type of sampling method in which the population is separated into groups, called strata, based on some characteristic about the subjects. A simple random sample is then taken from each stratum. 
-
-  * Administrative convenience - It may be easier to conduct several smaller simple random sampling designs than coordinate one larger simple random sampling design.
-
-  * Interest in individual strata - The design ensures samples from all strata. A simple random sampling design might sample few or no elements from a stratum of interest.
-
-  * Smaller margin of error - By assuring samples from each stratum, the combined sample tends to be more representative of the population, resulting in a smaller margin of error
-
-
-
-
-![**Figure 1** - visual depiction of sampling designs](misc/Sampling_designs.png)
-
-<br>
-<br>
-**Two – stage cluster sampling** - A type of sampling method in which the population is divided into a set of clusters and the researcher selects a simple random sample of the clusters. A simple random sample is then applied to each cluster
- 
-  * Same advantages as cluster sampling
-    
-  * Usually has a smaller margin of error, because we can control two sample sizes: the number of clusters to sample, and the number of elements to sample from each sampled cluster
-
-
-![**Figure 2** - visual depiction of two-stage cluster sampling](misc/two_stage_cs.png)
-
-
-<br>
-<br>
-
-### Ethical studies
-
-Producing and using data to answer statistical questions may not seem like a big deal, but, like all human endeavors, it raises ethical concerns. The most prominent ethical issues arise when we collect data about people. Ethical considerations must be closely contemplated when we conduct experiments using human subjects. While an experiment may have potentially life saving benefits, it can also come with considerable risks that are borne solely by the participating subjects. Some ethical considerations that apply to any study are:
-
-* Informed consent - subjects participating in a survey or experiment are usually required to provide legal consent before data can be collected
-
-* Confidentiality - many studies on human subjects require that the data gathered be kept confidential with proper security infrastructure in place to protect it. 
-
-    * Can you think of some examples of areas of study that may require confidentiality or informed consent?
-
-The University of Idaho, like all colleges and universities engaged in research, has a review board that is responsible for establishing ethics guidelines for conducting research and review studies which may require ethical considerations. The University of Idaho's Office of Research Assurances website can be found [here](https://www.uidaho.edu/research/faculty/research-assurances)
-
-
-The following [link](https://www.esri.com/arcgis-blog/products/survey123/constituent-engagement/ethics/) from the Environmental Systems Research Institute, inc website provides a great overview of the survey ethics, design and implementation. 
-
-Similarly, this [link](https://www.nih.gov/health-information/nih-clinical-research-trials-you/guiding-principles-ethical-research) from the National Institutes of Health provides a brief overview of the guiding principles of ethical research. 
+  The 2024 "Sources of Bias In Surveys", "More Complicated Sampling Designs"
+  and "Ethical studies" sections that used to open this page were replaced by
+  the Lecture 8 write-up in the Week 4 notes (Mondays Sept 14 and 21). Do not
+  re-add them here. The rest of this page is still 2024 material awaiting its
+  Fall 2026 revision.
+-->
 
 ### Connection with statistical inference
 

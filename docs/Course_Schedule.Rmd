@@ -176,7 +176,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 14, 2026</td>
-  <td>The normal distribution, z-scores, transformations</td>
+  <td>Sampling designs: simple random, stratified, and cluster sampling</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
@@ -196,17 +196,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 21, 2026</td>
-  <td>Identifying outliers, margin of error, statistical significance</td>
+  <td>Sampling designs continued; basics of experimental design, association vs. causation -- **Course project Steps 1--4 can be started**</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 23, 2026</td>
-  <td>Study and sampling designs</td>
+  <td>The normal distribution, z-scores, transformations</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>September 25, 2026</td>
-  <td>Introduction to probability, random variables, discrete probability distributions</td>
+  <td>Identifying outliers, margin of error, statistical significance</td>
 </tr>
 </tbody>
 <tbody>
@@ -216,17 +216,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 28, 2026</td>
-  <td>Discrete probability distributions</td>
+  <td>Introduction to probability, random variables, discrete probability distributions</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 30, 2026</td>
-  <td>Continuous probability distributions</td>
+  <td>Discrete probability distributions</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October  2, 2026</td>
-  <td>Sampling distributions and the central limit theorem</td>
+  <td>Continuous probability distributions</td>
 </tr>
 </tbody>
 <tbody>
@@ -236,17 +236,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October  5, 2026</td>
-  <td>More on sampling distributions, Introduction to confidence intervals</td>
+  <td>Sampling distributions and the central limit theorem</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>October  7, 2026</td>
-  <td>Confidence Intervals for a population proportion</td>
+  <td>More on sampling distributions, Introduction to confidence intervals</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>October  9, 2026</td>
-  <td>Confidence Intervals for a population mean -- **Homework 2 due Sunday at 11:59PM**</td>
+  <td>Confidence Intervals for a population proportion -- **Homework 2 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -256,7 +256,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>October 12, 2026</td>
-  <td>Bootstrap confidence intervals</td>
+  <td>Confidence Intervals for a population mean</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
