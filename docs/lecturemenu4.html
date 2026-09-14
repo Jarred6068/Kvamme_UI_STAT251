@@ -513,335 +513,369 @@ $(document).ready(function () {
     * "Percentiles and the Cumulative Distribution"  -> Week 3, Friday Sept 11
     * "Variance and standard deviation"               -> Week 3, Wednesday Sept 9
 -->
-<p>Week 3 finished our tour of <strong>descriptive statistics</strong>:
-we can now describe the shape of a distribution, its center, its spread,
-and the position of any individual value within it. Everything on Exam 1
-comes from that material.</p>
-<p>This week starts a different question, and it is one that logically
-comes <em>first</em>: before we trust any of those summaries to tell us
-something beyond the numbers in front of us, how were the data
-collected? Two questions decide what a set of data is allowed to tell
-us:</p>
+<p>Last week we wrapped up <strong>descriptive statistics</strong>. We
+can now describe the shape, center, and spread of a distribution, as
+well as the position of any individual value within it. All of that
+material is fair game for Exam 1.</p>
+<p>This week we take a step back and ask a question that really should
+come first: how were the data collected in the first place? How a set of
+data is collected determines what we are allowed to conclude from it. In
+particular, there are two questions we want to be able to answer about
+any study:</p>
 <ul>
-<li><strong>Can we generalize from the sample to a whole
-population?</strong> That depends on the <strong>sampling
-design</strong> — the first half of this lecture.</li>
-<li><strong>Can we say that one variable causes a change in
-another?</strong> That depends on the <strong>experimental
-design</strong> — the second half.</li>
+<li><strong>Can we generalize the results from the sample to the whole
+population?</strong> This depends on the <strong>sampling
+design</strong>, which is the topic of the first half of this
+lecture.</li>
+<li><strong>Can we conclude that one variable causes a change in
+another?</strong> This depends on the <strong>experimental
+design</strong>, which we will cover in the second half.</li>
 </ul>
 <div id="sampling-designs" class="section level1">
 <h1>Sampling designs</h1>
-<div id="a-question-to-start" class="section level2">
-<h2>A question to start</h2>
-<p><em>How many hours a week does a typical University of Idaho student
-spend exercising?</em> We cannot ask every student. So how would you get
-the data — who would you ask, and how would you choose them? Keep your
-answer in mind; the rest of this section is about what makes one answer
-better than another.</p>
-</div>
-<div id="the-language-of-sampling" class="section level2">
-<h2>The language of sampling</h2>
+<div id="starting-with-a-question" class="section level2">
+<h2>Starting with a question</h2>
+<p>Suppose we wanted to know how many hours a week a typical University
+of Idaho student spends exercising. We obviously can’t ask every
+student, so how would we go about getting the data? Who would we ask,
+and how would we choose them?</p>
 <ul>
-<li>The <strong>population</strong> is the entire group we want to learn
-about — here, every UI student.</li>
+<li>Take a minute and think about how you would do it. We will come back
+to your answer throughout this section.</li>
+</ul>
+</div>
+<div id="some-terminology" class="section level2">
+<h2>Some terminology</h2>
+<p>Before we go any further, let’s start with some terminology:</p>
+<ul>
+<li>The <strong>population</strong> is the entire group of individuals
+we want to learn about. In our example, the population is every UI
+student.</li>
 <li>A <strong>parameter</strong> is a number that describes the
 population, such as the population mean <span
-class="math inline">\(\mu\)</span> or proportion <span
-class="math inline">\(p\)</span> — here, the mean weekly exercise hours
-of <em>all</em> UI students.</li>
-<li>The <strong>sample</strong> is the part of the population we
-actually observe — the students we end up asking.</li>
+class="math inline">\(\mu\)</span> or the population proportion <span
+class="math inline">\(p\)</span>. Here, the parameter is the mean weekly
+exercise hours of <i>all</i> UI students.</li>
+<li>The <strong>sample</strong> is the part of the population that we
+actually observe, i.e., the students we end up asking.</li>
 <li>A <strong>statistic</strong> is a number computed from the sample,
 such as <span class="math inline">\(\bar{x}\)</span> or <span
-class="math inline">\(\hat{p}\)</span> — the mean hours of the students
-we asked.</li>
+class="math inline">\(\hat{p}\)</span>. Here, that would be the mean
+hours for the students we asked.</li>
 <li>A <strong>census</strong> collects data on every member of the
-population. It is usually slow, expensive, or impossible.</li>
+population. A census is usually slow and expensive, and often
+impossible.</li>
 <li>The <strong>sampling frame</strong> is the list of units we actually
-draw the sample from — for example, the registrar’s list of enrolled
-students. It is rarely a perfect copy of the population.</li>
-<li>The <strong>sampling design</strong> is the rule used to choose the
-sample from the frame.</li>
-<li>A <strong>representative sample</strong> has the same
-characteristics as the population it comes from. Producing one is the
-goal of every sampling design.</li>
-<li><strong>Sampling error</strong> is the gap between a statistic and
-the parameter it estimates that comes purely from which units happened
-to be chosen. A different sample would give a slightly different
-answer.</li>
+draw the sample from, for example the registrar’s list of enrolled
+students. The sampling frame is rarely a perfect copy of the
+population.</li>
+<li>The <strong>sampling design</strong> is the method we use to choose
+the sample from the sampling frame.</li>
+<li>A <strong>representative sample</strong> is a sample that has the
+same characteristics as the population it came from. Getting a
+representative sample is the goal of every sampling design.</li>
+<li><strong>Sampling error</strong> is the difference between a
+statistic and the parameter it estimates that comes purely from which
+units happened to be chosen. If we took a different sample, we would get
+a slightly different answer.</li>
 </ul>
 <div id="example-census-frame-and-sampling-error"
 class="section level3">
 <h3>Example: census, frame and sampling error</h3>
-<p>Picture a small school of 100 students, and the question “how many
-hours did you exercise last week?” A <strong>census</strong> asks all
-100 of them; their mean, 4.6 hours, is the <strong>parameter</strong>.
-The registrar’s list is the <strong>sampling frame</strong>, and it
-holds only 90 students — the 10 who enrolled late (grey) cannot be
-chosen. A simple random sample of 10 from the list (red) has a mean of
-4.4 hours; that is the <strong>statistic</strong>. The <strong>sampling
-error</strong> is 4.4 − 4.6 = -0.2 hours, and a new random sample would
-give a different one.</p>
+<p>Consider a small school with 100 students, and suppose we ask them
+“how many hours did you exercise last week?” If we ask all 100 students,
+that is a <strong>census</strong>, and their mean of 4.6 hours is the
+<strong>parameter</strong>. Now suppose the registrar’s list, which is
+our <strong>sampling frame</strong>, only has 90 students on it. The 10
+students who enrolled late (shown in grey) have no chance of being
+chosen. A simple random sample of 10 students from the list (shown in
+red) has a mean of 4.4 hours, which is our <strong>statistic</strong>.
+The <strong>sampling error</strong> is then 4.4 - 4.6 = -0.2 hours. If
+we took another random sample, we would get a different sampling
+error.</p>
 <p><img src="assets/l8_frame_example.png" width="55%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="practice-find-the-sampling-frame" class="section level3">
 <h3>Practice: find the sampling frame</h3>
+<p><strong>Practice:</strong> For each of the following, what is the
+sampling frame? Does it match the population well?</p>
 <ol style="list-style-type: decimal">
-<li>Student government wants to know how students feel about a
-parking-fee increase. It emails a survey to 500 students picked at
-random from the university email directory. <em>Frame: the email
-directory — it lists nearly every enrolled student, so it matches the
-population well.</em></li>
+<li>Student government wants to know how students feel about raising the
+parking fee. They email a survey to 500 students picked at random from
+the university email directory. <em>Frame: the email directory. It lists
+nearly every enrolled student, so it matches the population pretty
+well.</em></li>
 <li>A Moscow coffee shop wants its customers’ opinions on a new menu. It
 surveys 100 people picked at random from its loyalty-app members.
-<em>Frame: the loyalty-app member list — customers who never joined the
-app cannot be chosen.</em></li>
+<em>Frame: the loyalty-app member list. Customers who never signed up
+for the app can’t be chosen.</em></li>
 <li>A city council wants residents’ views on a new bike lane. It calls
 numbers picked at random from a printed phone directory. <em>Frame: the
-phone directory — it misses everyone without a listed landline, a group
-that skews young.</em></li>
+phone directory. It misses everyone without a listed landline, and those
+people tend to be younger.</em></li>
 </ol>
 </div>
 </div>
-<div id="be-skeptical" class="section level2">
-<h2>Be skeptical</h2>
-<p>Before trusting any study, ask the questions from the textbook’s
-<em>Critical Evaluation</em> list (Section 1.2):</p>
+<div id="thinking-critically-about-studies" class="section level2">
+<h2>Thinking critically about studies</h2>
+<p>Whenever we read about a study, there are some questions we should
+ask ourselves before we trust the results. Section 1.2 of the textbook
+gives a nice list of things to look out for (the <em>Critical
+Evaluation</em> list):</p>
 <ul>
-<li><strong>Problems with samples.</strong> Is the sample representative
-of the population? A biased sample gives results that are inaccurate and
-not valid.</li>
-<li><strong>Self-selected samples.</strong> Responses only from people
-who chose to respond, such as call-in or online polls, are often
+<li><strong>Problems with samples</strong> - is the sample
+representative of the population? A biased sample will give results that
+are inaccurate and not valid.</li>
+<li><strong>Self-selected samples</strong> - responses only from people
+who chose to respond, like call-in or online polls, are often
 unreliable.</li>
-<li><strong>Sample size.</strong> Samples that are too small may be
-unreliable. Larger samples are better when possible, though sometimes a
-small sample is unavoidable (crash tests, rare conditions).</li>
-<li><strong>Undue influence.</strong> Were the data collected, or the
-questions asked, in a way that pushes people toward an answer?</li>
-<li><strong>Nonresponse.</strong> If many people refused, the responses
-may not represent the population; people with strong opinions are the
-most likely to answer.</li>
-<li><strong>Causality.</strong> A relationship between two variables
+<li><strong>Sample size</strong> - samples that are too small may be
+unreliable. Larger samples are better when possible, but sometimes a
+small sample can’t be avoided (e.g., crash tests or rare
+conditions).</li>
+<li><strong>Undue influence</strong> - were the data collected, or the
+questions asked, in a way that pushes people toward a certain
+answer?</li>
+<li><strong>Nonresponse</strong> - if a lot of people refused to
+participate, the responses we did get may not represent the population.
+People with strong opinions tend to be the most likely to respond.</li>
+<li><strong>Causality</strong> - just because two variables are related
 does not mean one causes the other.</li>
-<li><strong>Self-funded or self-interest studies.</strong> A study paid
-for by someone who wants a particular answer deserves careful reading —
-but judge it on its merits, not only on who paid.</li>
-<li><strong>Misleading use of data.</strong> Watch for badly displayed
-graphs, incomplete data, or numbers without context.</li>
-<li><strong>Confounding.</strong> When the effects of several factors on
-the response cannot be separated, it is hard or impossible to draw
+<li><strong>Self-funded or self-interest studies</strong> - a study paid
+for by someone who wants a particular answer should be read carefully.
+That said, we should judge a study on its merits and not just on who
+paid for it.</li>
+<li><strong>Misleading use of data</strong> - watch out for poorly
+displayed graphs, incomplete data, or numbers reported without any
+context.</li>
+<li><strong>Confounding</strong> - when the effects of several factors
+on the response can’t be separated, it is hard (or impossible) to draw
 conclusions about any one of them.</li>
 </ul>
-<p>The rest of this lecture fills in most of these: bias and
-self-selection next, nonresponse and question wording later, then
-causality and confounding in the second half.</p>
+<p>We will spend most of this lecture on these issues. We start with
+bias and self-selected samples, then nonresponse and question wording,
+and finally causality and confounding in the second half.</p>
 <div id="examples-misleading-graphs" class="section level3">
 <h3>Examples: misleading graphs</h3>
 <p><strong>OxyContin.</strong> Purdue promoted OxyContin, a 12-hour
-opioid painkiller, with a chart of blood levels over time captioned
-“Fewer ‘peaks and valleys’ than with immediate-release oxycodone” —
-drawn on a logarithmic y-axis (<a
+opioid painkiller, using a chart of blood levels over time with the
+caption “Fewer ‘peaks and valleys’ than with immediate-release
+oxycodone.” The catch is that the chart was drawn on a logarithmic
+y-axis (<a
 href="https://www.cbsnews.com/news/how-purdue-used-misleading-charts-to-hide-oxycontins-addictive-power/">CBS
-News, 2011</a>). On a log axis, equal distances mean equal
-<em>ratios</em>, so a steep fall can look gentle. The figure below is an
-illustration, not Purdue’s data: one curve matched to the 2008 FDA
-label’s values for a 10 mg dose (a peak of 10.6 ng/mL at about 2.7
-hours, and a 4.5-hour half-life), drawn on both kinds of axis.</p>
+News, 2011</a>). On a log axis, equal distances represent equal
+<i>ratios</i> rather than equal differences, so a steep drop can look
+pretty gentle. The figure below is only an illustration and is not
+Purdue’s actual data. It shows a single curve matched to the values in
+the 2008 FDA label for a 10 mg dose (a peak of 10.6 ng/mL at about 2.7
+hours and a half-life of 4.5 hours), drawn on both types of axis.</p>
 <p><img src="assets/l8_oxycontin_axes.png" width="55%" style="display: block; margin: auto;" /></p>
-<p>On the linear axis the level falls from 10.6 to 3.2 ng/mL — about 70%
-— over the 12 hours. In 2007 The Purdue Frederick Company pleaded guilty
-to misbranding OxyContin “with the intent to defraud and mislead”; the
-government’s statement of facts says sales staff used “graphs that
-exaggerated the differences between blood plasma levels” of OxyContin
-and other pain medications. The company paid about $600 million (<a
+<p>On the linear axis, the blood level drops from 10.6 to 3.2 ng/mL over
+the 12 hours, which is a drop of about 70%. In 2007, The Purdue
+Frederick Company pleaded guilty to misbranding OxyContin “with the
+intent to defraud and mislead.” The government’s statement of facts says
+sales staff used “graphs that exaggerated the differences between blood
+plasma levels” of OxyContin and other pain medications, and the company
+paid about $600 million (<a
 href="https://web.archive.org/web/2017/https://media.defense.gov/2007/May/10/2001711223/-1/-1/1/purduefrederick1.pdf">U.S.
-Attorney, Western District of Virginia, 2007</a>). A log axis is not
-wrong in itself — scientists use them all the time. The problem is using
-one to support a claim that a reader cannot check.</p>
-<p><strong>ExxonMobil.</strong> A company’s own report deserves the same
-scrutiny as anyone else’s, especially when it has a financial stake in
-the answer. ExxonMobil’s <em>2024 Advancing Climate Solutions</em>
-report charts a roadmap for cutting its <em>emissions intensity</em>
-(emissions per unit produced) as bars with no numbers on the y-axis, and
-its abatement curve has no axis numbers either, so a reader cannot tell
-how big the planned cut is or how much of it rests on “CCS, hydrogen,
-and/or future advancements” (<a
+Attorney, Western District of Virginia, 2007</a>). To be clear, there is
+nothing wrong with a log axis by itself, and scientists use them all the
+time. The problem is using one to back up a claim that the reader has no
+way to check.</p>
+<p><strong>ExxonMobil.</strong> We should read a company’s own report
+just as carefully as anyone else’s, especially when the company has a
+financial stake in the answer. ExxonMobil’s <em>2024 Advancing Climate
+Solutions</em> report shows its plan for cutting its <em>emissions
+intensity</em> (emissions per unit produced) as a bar chart with no
+numbers on the y-axis. Its abatement curve has no axis numbers either.
+So a reader can’t tell how big the planned cut actually is, or how much
+of it depends on “CCS, hydrogen, and/or future advancements” (<a
 href="https://blog.ucs.org/carly-phillips/greenwashing-in-graphs-an-exxonmobil-story/">Union
-of Concerned Scientists, 2024</a>). Intensity can fall while total
-emissions rise, if output grows. In this case the report’s own table
-shows both falling: intensity from 26.4 to 23.3 tonnes per 100 tonnes of
-throughput or production, and emissions from its operations (Scope 1 and
-2) from 117 to 98 million tonnes, 2016 to 2023. What neither number
-covers is the emissions from burning the oil and gas the company
-produces — about 540 million tonnes in 2023, roughly 85% of its
-footprint, for which it sets no target (<a
+of Concerned Scientists, 2024</a>).</p>
+<p>Keep in mind that intensity can go down while total emissions go up,
+if the company produces more. In this case, the report’s own table shows
+both going down from 2016 to 2023. Intensity fell from 26.4 to 23.3
+tonnes per 100 tonnes of throughput or production, and emissions from
+its operations (Scope 1 and 2) fell from 117 to 98 million tonnes. What
+neither number includes is the emissions from burning the oil and gas
+the company produces. That was about 540 million tonnes in 2023, roughly
+85% of its footprint, and the company sets no target for it (<a
 href="https://corporate.exxonmobil.com/-/media/global/files/advancing-climate-solutions/2024/2024-advancing-climate-solutions-report.pdf">ExxonMobil,
 2024</a>).</p>
 </div>
 </div>
-<div id="two-easy-ways-to-get-a-sample" class="section level2">
-<h2>Two easy ways to get a sample</h2>
-<p>Two designs are tempting because they are quick, cheap and easy:</p>
+<div id="convenience-and-voluntary-response-samples"
+class="section level2">
+<h2>Convenience and voluntary response samples</h2>
+<p>There are two ways of getting a sample that are tempting because they
+are quick, cheap, and easy:</p>
 <ul>
-<li>A <strong>convenience sample</strong> asks whoever is easiest to
-reach — for instance, standing outside the Student Recreation Center and
-asking the first 50 people who walk by.</li>
-<li>A <strong>voluntary response sample</strong> puts out a call and
-lets people choose whether to answer — for instance, posting a poll on a
-UI student Instagram account and counting the replies. The textbook
-calls these <em>self-selected samples</em>.</li>
+<li><p>A <strong>convenience sample</strong> is made up of whoever is
+easiest to reach. For example, we could stand outside the Student
+Recreation Center and ask the first 50 people who walk by.</p></li>
+<li><p>A <strong>voluntary response sample</strong> is one where we put
+out a call and let people decide whether or not to respond. For example,
+we could post a poll on a UI student Instagram account and count the
+replies. The textbook calls these <i>self-selected samples</i>.</p></li>
+<li><p>What could go wrong with each of these?</p></li>
 </ul>
-<p>What could go wrong?</p>
-<ul>
-<li>The Rec Center survey’s average will be <strong>too high</strong>:
-the people at the Rec Center are the ones who exercise, and students who
-never go there cannot be chosen at all.</li>
-<li>The Instagram poll hears only from followers who see the post
-<em>and</em> choose to reply — often the proudest gym-goers, or people
-with strong feelings either way.</li>
-<li>Asking 2,000 people instead of 50 fixes neither problem. More of the
-same kind of people gives the same wrong answer, just more
-confidently.</li>
-</ul>
-<p>What the two designs have in common is that <strong>a person decides
-who is in the sample</strong>: the researcher picks whoever is handy, or
-the respondents pick themselves. A design like that is
-<strong>biased</strong> — it systematically favors some outcomes over
-others.</p>
+<p>Consider the Rec Center survey first. Its average will be <strong>too
+high</strong>, since the people at the Rec Center are the ones who
+exercise, and students who never go there have no chance of being
+chosen. The Instagram poll only hears from followers who happen to see
+the post <i>and</i> decide to reply, which will often be the proudest
+gym-goers or people who feel strongly one way or the other. Also notice
+that asking 2,000 people instead of 50 does not fix either problem. More
+of the same kind of people just gives us the same wrong answer with more
+confidence.</p>
+<p>What these two designs have in common is that <strong>a person
+decides who ends up in the sample</strong>. Either the researcher picks
+whoever is handy, or the respondents pick themselves. A design like this
+is called <strong>biased</strong>, meaning it systematically favors
+certain outcomes over others.</p>
 <div id="practice-convenience-or-voluntary-response"
 class="section level3">
 <h3>Practice: convenience or voluntary response?</h3>
-<p>For each story, name the kind of sample and what could go wrong.</p>
+<p><strong>Practice:</strong> For each scenario below, identify the type
+of sample and what could go wrong.</p>
 <ol style="list-style-type: decimal">
 <li>A nutrition club wants to know how many servings of vegetables UI
 students eat a day. Members ask the first 60 students who walk out of
-the campus dining hall at lunch. <em>Convenience sample. Only lunchtime
-dining-hall eaters can be chosen — off-campus students and students who
-cook for themselves are missed.</em></li>
+the campus dining hall at lunch. <em>Convenience sample. Only students
+who eat lunch at the dining hall can be chosen, so off-campus students
+and students who cook for themselves are left out.</em></li>
 <li>The campus paper wants to know whether students favor moving 8 a.m.
 classes later. It posts a “Vote now!” link on social media; 1,200
 students vote and 85% say yes. <em>Voluntary response sample. Students
-who dread 8 a.m. classes are the most eager to vote, so 85% likely
-overstates support — and 1,200 votes do not fix that.</em></li>
+who dread 8 a.m. classes are the most eager to vote, so 85% probably
+overstates support. Having 1,200 votes doesn’t fix that.</em></li>
 <li>A professor wants to know how many hours a week the 300 students in
 her lecture study. She asks the 25 students who come to her office hours
-that week. <em>Convenience sample — just whoever was there. Students who
-come to office hours probably study more than the class as a whole, so
-the estimate is likely too high.</em></li>
+that week. <em>Convenience sample, since it’s just whoever showed up.
+Students who come to office hours probably study more than the class as
+a whole, so the estimate is likely too high.</em></li>
 </ol>
 </div>
-<div id="example-17.5-million-votes" class="section level3">
-<h3>Example: 17.5 million votes</h3>
-<p>On December 18, 2022, Elon Musk posted a poll on Twitter: <em>“Should
-I step down as head of Twitter? I will abide by the results of this
-poll.”</em> In 12 hours it drew more than 17.5 million votes, and 57.5%
-said yes (<a
+<div id="example-the-twitter-poll" class="section level3">
+<h3>Example: the Twitter poll</h3>
+<p>On December 18, 2022, Elon Musk posted a poll on Twitter asking
+<em>“Should I step down as head of Twitter? I will abide by the results
+of this poll.”</em> In 12 hours the poll got more than 17.5 million
+votes, and 57.5% of them said yes (<a
 href="https://www.nbcnews.com/tech/social-media/twitter-users-vote-elon-musk-quit-ceo-poll-rcna62332">NBC
 News</a>; <a
 href="https://www.pbs.org/newshour/nation/twitter-poll-closes-majority-of-users-vote-for-musk-to-step-down-as-ceo">Associated
-Press</a>). The only people who could vote were those who saw the post
-and chose to — mostly Musk’s own followers — and nothing prevented fake
-accounts from voting. It is a voluntary response sample, and 17.5
-million self-selected votes describe only the people who chose to vote.
-The size of the sample does not fix that.</p>
+Press</a>). But the only people who could vote were those who saw the
+post and chose to vote, which was mostly Musk’s own followers, and there
+was nothing stopping fake accounts from voting. This is a voluntary
+response sample. The 17.5 million votes only tell us about the people
+who chose to vote, and the huge sample size doesn’t change that.</p>
 </div>
 <div id="example-online-opt-in-polls" class="section level3">
 <h3>Example: online opt-in polls</h3>
-<p>Many online polls draw on <em>opt-in panels</em>: anyone can sign up
-to take surveys, and they are paid for each one they complete. In opt-in
-samples, 12% of adults under 30 — and 24% of Hispanic respondents — said
-they were licensed to operate a nuclear submarine. An opt-in poll in
-December 2023 found that 20% of adults under 30 agreed that “the
-Holocaust is a myth”; when Pew Research Center asked the same question
-of a probability-based (random) sample, the figure was 3% (<a
+<p>Many online polls use what are called <i>opt-in panels</i>. Anyone
+can sign up to take surveys, and they get paid for each survey they
+complete. In opt-in samples, 12% of adults under 30 (and 24% of Hispanic
+respondents) said they were licensed to operate a nuclear submarine. In
+December 2023, an opt-in poll found that 20% of adults under 30 agreed
+that “the Holocaust is a myth.” When Pew Research Center asked the same
+question to a probability-based (i.e., random) sample, the figure was 3%
+(<a
 href="https://www.pewresearch.org/short-reads/2024/03/05/online-opt-in-polls-can-produce-misleading-results-especially-for-young-people-and-hispanic-adults/">Mercer,
-Kennedy and Keeter, 2024</a>). Bogus and careless respondents answering
-for the money, not real opinions, produced most of the difference. A
-shocking number about a subgroup can be a fact about who signed up,
-rather than about what people think.</p>
+Kennedy and Keeter, 2024</a>). Most of this difference came from bogus
+and careless respondents who were answering for the money rather than
+giving their real opinions. So when you see a shocking number about some
+subgroup, keep in mind that it may say more about who signed up for the
+poll than about what people actually think.</p>
 </div>
 </div>
-<div id="bias-and-standard-error-shots-at-a-target"
-class="section level2">
-<h2>Bias and standard error: shots at a target</h2>
-<p>Think of the parameter as the bullseye of a target, and of each
-estimate as one shot: take a sample, compute the statistic, and see
-where it lands. Take a new sample and you take a new shot. Two different
-things can go wrong.</p>
+<div id="bias-vs.-standard-error" class="section level2">
+<h2>Bias vs. standard error</h2>
+<p>A helpful way to think about bias is to picture a target. The
+parameter is the bullseye, and each estimate is one shot at the target.
+Every time we take a sample and compute the statistic, we take a shot
+and see where it lands. If we take a new sample, we take a new shot.
+There are two different things that can go wrong:</p>
 <p><img src="assets/l8_bullseye.png" width="55%" style="display: block; margin: auto;" /></p>
 <ul>
-<li><strong>Bias</strong> is an <em>accuracy</em> problem: the shots are
-centered away from the bullseye, missing in the same direction every
-time. It comes from the design — from who gets into the sample — and it
-does not average out.</li>
-<li><strong>Standard error</strong> is a <em>precision</em> problem: how
-spread out the shots are from one sample to the next. You met it in the
-Week 3 notes as <span class="math inline">\(SE(\bar{x}) =
-s/\sqrt{n}\)</span>, and it shrinks as the sample gets bigger.</li>
+<li><strong>Bias</strong> is a problem with <i>accuracy</i>. The shots
+are centered away from the bullseye and miss in the same direction every
+time. Bias comes from the design (i.e., who gets into the sample), and
+it does not average out.</li>
+<li><strong>Standard error</strong> is a problem with <i>precision</i>.
+It measures how spread out the shots are from one sample to the next.
+Recall from the Week 3 notes that <span
+class="math inline">\(SE(\bar{x}) = s/\sqrt{n}\)</span>, which gets
+smaller as the sample size gets bigger.</li>
 </ul>
-<p>Convenience and voluntary response samples are biased: however
-carefully they are carried out, they are aimed at the wrong spot.</p>
+<p>Convenience and voluntary response samples are biased. No matter how
+carefully we carry them out, they are aimed at the wrong spot.</p>
 <div id="a-bigger-sample-does-not-fix-bias" class="section level3">
 <h3>A bigger sample does not fix bias</h3>
-<p>The simulation below makes the point. Suppose 40% of UI students
-exercise at least three times a week. One survey asks <span
+<p>To see this, consider the simulation below. Suppose that 40% of UI
+students exercise at least three times a week. One survey asks <span
 class="math inline">\(n = 2000\)</span> people at the Student Recreation
-Center, where 75% do; the other is a simple random sample of just <span
-class="math inline">\(n = 200\)</span> students. Each survey is repeated
-5000 times.</p>
+Center, where 75% of the people exercise that often. The other survey is
+a simple random sample of only <span class="math inline">\(n =
+200\)</span> students. We repeat each survey 5000 times.</p>
 <p><img src="assets/l8_bias_vs_n.png" width="75%" style="display: block; margin: auto;" /></p>
-<p>The Rec Center survey is far more <em>precise</em> — its estimates
-barely move from one repeat to the next — and every one of its 5000
-estimates misses the truth by about 35 percentage points. More data buys
-precision; only a better design buys accuracy.</p>
+<p>Notice that the Rec Center survey is much more <i>precise</i>, since
+its estimates barely change from one repeat to the next. But every
+single one of its 5000 estimates misses the true value by about 35
+percentage points. Simply put, collecting more data gets us more
+precision, but only a better design gets us accuracy.</p>
 </div>
 </div>
-<div id="the-fix-let-chance-choose" class="section level2">
-<h2>The fix: let chance choose</h2>
+<div id="random-sampling" class="section level2">
+<h2>Random sampling</h2>
 <p>Convenience and voluntary response samples go wrong because a person
-decides who gets in, so the fix is to take the person out of it.
-<strong>Random sampling</strong> uses chance to choose the sample, so
-that neither the researcher nor the respondents decide who is in it.
-Because no one is doing the choosing, the selection itself cannot
-systematically favor anyone. Chance still moves the estimate from sample
-to sample — but by rules we understand, so we can measure how much. That
-is exactly what the standard error does.</p>
+gets to decide who is in the sample, so the solution is to take the
+person out of the decision. <strong>Random sampling</strong> uses chance
+to choose the sample, so neither the researcher nor the respondents
+decide who gets in. Since nobody is doing the choosing, the selection
+process can’t systematically favor anyone. Of course, chance will still
+cause our estimate to change from sample to sample. However, it changes
+according to rules we understand, which means we can measure how much it
+changes. This is exactly what the standard error does.</p>
 </div>
 <div id="simple-random-sampling" class="section level2">
 <h2>Simple random sampling</h2>
 <p>A <strong>simple random sample (SRS)</strong> of size <span
-class="math inline">\(n\)</span> is chosen so that <em>every possible
+class="math inline">\(n\)</span> is chosen so that <u>every possible
 group of <span class="math inline">\(n\)</span> units has the same
-chance of being the sample</em>. As a consequence, every unit in a
-population of size <span class="math inline">\(N\)</span> has the same
-chance, <span class="math inline">\(n/N\)</span>, of being included.</p>
-<p>The grid pictures on this page all use the same population: <span
-class="math inline">\(N = 100\)</span> students on a <span
+chance of being the sample</u>. As a result, every unit in a population
+of size <span class="math inline">\(N\)</span> has the same chance,
+<span class="math inline">\(n/N\)</span>, of being included in the
+sample.</p>
+<p>All of the grid pictures in these notes use the same population:
+<span class="math inline">\(N = 100\)</span> students on a <span
 class="math inline">\(10 \times 10\)</span> grid, where each row is a
-class year (40 first-years, 30 sophomores, 20 juniors, 10 seniors).
-Every design draws <span class="math inline">\(n = 20\)</span>, so each
-student in the SRS below had a <span class="math inline">\(20/100 =
-1\)</span> in 5 chance of being chosen.</p>
+class year (40 first-years, 30 sophomores, 20 juniors, and 10 seniors).
+Every design draws a sample of <span class="math inline">\(n =
+20\)</span> students, so each student in the SRS below had a <span
+class="math inline">\(20/100\)</span>, or 1 in 5, chance of being
+selected.</p>
 <p><img src="assets/l8_design_srs.png" width="45%" style="display: block; margin: auto;" /></p>
-<p>Look at the class years of the red students: this SRS happened to
-draw 4 seniors but only 2 juniors, even though there are twice as many
-juniors. That is not a flaw. An SRS is fair <em>on average</em> over all
-the samples it could have produced, not balanced every time.</p>
-<div id="drawing-an-srs-in-practice" class="section level3">
-<h3>Drawing an SRS in practice</h3>
+<p>Take a look at the class years of the students in red. This SRS
+happened to pick 4 seniors but only 2 juniors, even though there are
+twice as many juniors as seniors. This isn’t a problem with the method.
+An SRS is fair <i>on average</i> across all of the samples it could have
+produced, but that doesn’t mean every individual sample will be
+balanced.</p>
+<div id="how-to-draw-an-srs" class="section level3">
+<h3>How to draw an SRS</h3>
+<p>In practice, drawing an SRS comes down to three steps:</p>
 <ol style="list-style-type: decimal">
-<li>Get a sampling frame and number its units <span
+<li>Get a sampling frame and number its units from <span
 class="math inline">\(1\)</span> to <span
 class="math inline">\(N\)</span>.</li>
-<li>Let a random number generator choose <span
+<li>Use a random number generator to choose <span
 class="math inline">\(n\)</span> different numbers.</li>
-<li>The units with those numbers are the sample.</li>
+<li>The units with those numbers make up the sample.</li>
 </ol>
-<p>In R, <code>sample()</code> does step 2. For the
-<code>heights.csv</code> data on the course Data page (<span
-class="math inline">\(N = 379\)</span>):</p>
+<p>In R, the <code>sample()</code> function takes care of step 2. For
+example, using the <code>heights.csv</code> data from the course Data
+page (<span class="math inline">\(N = 379\)</span>):</p>
 <pre class="r"><code>heights &lt;- read.csv(&#39;Data/heights.csv&#39;)
 set.seed(251)                              # makes the draw repeatable
 srs_rows &lt;- sample(1:nrow(heights), 30)    # 30 of the 379 row numbers
@@ -853,43 +887,47 @@ head(heights[srs_rows, ])</code></pre>
 ## 339     72   Male
 ## 238     69 Female
 ## 59      63 Female</code></pre>
-<p><code>sample()</code> draws <strong>without replacement</strong> by
-default: a unit that has been picked cannot be picked again, which is
-the usual choice for surveys. Sampling <strong>with replacement</strong>
-puts every unit back after it is drawn, so the same unit could appear
-twice (<code>sample(..., replace = TRUE)</code>). When <span
+<p>By default, <code>sample()</code> draws <strong>without
+replacement</strong>, meaning once a unit has been picked it can’t be
+picked again. This is the usual choice for surveys. When we sample
+<strong>with replacement</strong>, every unit is put back after it is
+drawn, so the same unit could show up in the sample more than once
+(<code>sample(..., replace = TRUE)</code>). When <span
 class="math inline">\(N\)</span> is much larger than <span
-class="math inline">\(n\)</span> the two are practically the same,
-because the chance of drawing the same unit twice is tiny.</p>
+class="math inline">\(n\)</span>, the two methods are practically the
+same, because the chance of drawing the same unit twice is very
+small.</p>
 <p><img src="assets/l8_replacement.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Above: without replacement, each ball that is drawn leaves the bag,
-so the sample 3, 1, 5 can have no repeats. With replacement, every ball
-goes back before the next draw, so 3 can be drawn twice.</p>
+<p>In the figure above, when we sample without replacement each ball
+that is drawn is removed from the bag, so the sample 3, 1, 5 can’t have
+any repeats. When we sample with replacement, every ball goes back in
+the bag before the next draw, so 3 can be drawn twice.</p>
 </div>
 </div>
 <div id="systematic-sampling" class="section level2">
 <h2>Systematic sampling</h2>
-<p>A <strong>systematic sample</strong> takes every <span
-class="math inline">\(k\)</span>th unit from an ordered list, starting
-at a <em>randomly chosen</em> point among the first <span
-class="math inline">\(k\)</span>. With <span class="math inline">\(N =
-100\)</span> and <span class="math inline">\(n = 20\)</span>, <span
-class="math inline">\(k = N/n = 5\)</span>. Below, the 100 students are
-numbered in list order; the random start was 2, so the sample is
-positions 2, 7, 12, 17, …, 97.</p>
+<p>A <strong>systematic sample</strong> selects every <span
+class="math inline">\(k^{th}\)</span> unit from an ordered list,
+starting at a <i>randomly chosen</i> point among the first <span
+class="math inline">\(k\)</span> units. With <span
+class="math inline">\(N = 100\)</span> and <span class="math inline">\(n
+= 20\)</span>, we have <span class="math inline">\(k = N/n = 5\)</span>.
+In the figure below, the 100 students are numbered in list order. The
+random starting point was 2, so the sample is made up of positions 2, 7,
+12, 17, …, 97.</p>
 <p><img src="assets/l8_design_systematic.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Systematic sampling is easy to carry out in the field, where there is
-often no list at all until units arrive. It behaves like an SRS as long
-as the order of the list has nothing to do with what is being measured.
-The danger is a list with a repeating pattern that lines up with <span
-class="math inline">\(k\)</span>: on our seating grid of rows of 10,
-counting every 5th seat would select the <em>same two columns</em> every
-time.</p>
-<p>For a project dataset of <span class="math inline">\(N = 379\)</span>
-rows and <span class="math inline">\(n = 30\)</span>: <span
-class="math inline">\(379/30 = 12.6\)</span>, so take <span
-class="math inline">\(k = 12\)</span> and a random start between 1 and
-12.</p>
+<p>Systematic sampling is easy to carry out in the field, where there
+often isn’t a list at all until the units show up. As long as the order
+of the list has nothing to do with what we are measuring, a systematic
+sample behaves like an SRS. The danger is when the list has a repeating
+pattern that lines up with <span class="math inline">\(k\)</span>. For
+example, on our seating grid with rows of 10, counting every 5th seat
+would select the <i>same two columns</i> every time.</p>
+<p>For a project dataset with <span class="math inline">\(N =
+379\)</span> rows and <span class="math inline">\(n = 30\)</span>, we
+have <span class="math inline">\(379/30 = 12.6\)</span>, so we would
+take <span class="math inline">\(k = 12\)</span> and pick a random
+starting point between 1 and 12:</p>
 <pre class="r"><code>set.seed(251)
 k &lt;- 12
 start &lt;- sample(1:k, 1)
@@ -900,32 +938,36 @@ sys_rows</code></pre>
 </div>
 <div id="stratified-random-sampling" class="section level2">
 <h2>Stratified random sampling</h2>
-<p><strong>Strata</strong> are groups of units that are alike in some
-way, formed <em>before</em> sampling: class year, region, age group,
-sex. A <strong>stratified random sample</strong> takes a separate SRS
-inside every stratum and combines them.</p>
+<p><strong>Strata</strong> are groups of units that are similar in some
+way, and they are formed <i>before</i> we take the sample. Examples
+include class year, region, age group, or sex. A <strong>stratified
+random sample</strong> takes a separate SRS within each stratum and then
+combines them.</p>
 <p>Under <strong>proportional allocation</strong>, each stratum gets its
-share of <span class="math inline">\(n\)</span>. Our population is 40%
-first-years, 30% sophomores, 20% juniors and 10% seniors, so a sample of
-20 takes 8, 6, 4 and 2.</p>
+share of the total sample size <span class="math inline">\(n\)</span>.
+Our population is 40% first-years, 30% sophomores, 20% juniors, and 10%
+seniors, so a sample of 20 students would take 8, 6, 4, and 2 students
+from each class year, respectively.</p>
 <p><img src="assets/l8_design_stratified.png" width="45%" style="display: block; margin: auto;" /></p>
-<p>Stratifying guarantees that every group is represented — no more 2
-juniors by bad luck. It also gives more precise estimates than an SRS of
-the same size <em>when units are alike within strata and differ between
-them</em>, because the stratum-to-stratum variation is removed from the
-sampling error. Strata that are no more alike inside than the population
-as a whole buy nothing.</p>
-<div id="allocation-with-real-data" class="section level3">
-<h3>Allocation with real data</h3>
-<p><code>heights.csv</code> has <span class="math inline">\(N =
+<p>Stratifying guarantees that every group is represented in the sample,
+so we can’t end up with only 2 juniors by bad luck. It also gives more
+precise estimates than an SRS of the same size, <u>as long as units are
+similar within strata and different between strata</u>. This is because
+the variation from stratum to stratum is removed from the sampling
+error. If the strata are no more alike inside than the population as a
+whole, stratifying doesn’t buy us anything.</p>
+<div id="example-proportional-allocation-with-the-heights-data"
+class="section level3">
+<h3>Example: proportional allocation with the heights data</h3>
+<p>The <code>heights.csv</code> data has <span class="math inline">\(N =
 379\)</span> people: 262 female and 117 male. For a stratified sample of
-<span class="math inline">\(n = 30\)</span>:</p>
+<span class="math inline">\(n = 30\)</span> we would take</p>
 <p><span class="math display">\[\text{female: } 30 \times
 \frac{262}{379} = 20.74 \approx 21, \qquad
 \text{male: } 30 \times \frac{117}{379} = 9.26 \approx 9\]</span></p>
 <p><img src="assets/l8_heights_allocation.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Then draw an SRS of 21 of the women and a separate SRS of 9 of the
-men:</p>
+<p>We would then draw an SRS of 21 of the women and a separate SRS of 9
+of the men:</p>
 <pre class="r"><code>set.seed(251)
 women &lt;- which(heights$GENDER == &#39;Female&#39;)
 men   &lt;- which(heights$GENDER == &#39;Male&#39;)
@@ -934,55 +976,61 @@ table(heights$GENDER[strat_rows])</code></pre>
 <pre><code>## 
 ## Female   Male 
 ##     21      9</code></pre>
-<p>Large national surveys are stratified. The Current Population Survey,
-which produces the U.S. unemployment rate, groups areas into strata “as
-homogeneous as possible with respect to labor force and other social and
-economic characteristics” before sampling within each (<a
+<p>Large national surveys use stratification. For example, the Current
+Population Survey, which is used to produce the U.S. unemployment rate,
+groups areas into strata that are “as homogeneous as possible with
+respect to labor force and other social and economic characteristics”
+and then samples within each stratum (<a
 href="https://www2.census.gov/programs-surveys/cps/methodology/CPS-Tech-Paper-77.pdf">Census
 Bureau and BLS, Technical Paper 77</a>).</p>
 </div>
 </div>
 <div id="cluster-sampling" class="section level2">
 <h2>Cluster sampling</h2>
-<p>A <strong>cluster</strong> is a group of units that occurs naturally:
-a dorm, a classroom, a city block, a village. A <strong>cluster
-sample</strong> takes an SRS of clusters and then measures
-<em>every</em> unit in the clusters chosen. Below, each column is a
-cluster; two columns were chosen at random.</p>
+<p>A <strong>cluster</strong> is a group of units that occurs naturally,
+such as a dorm, a classroom, a city block, or a village. A
+<strong>cluster sample</strong> takes an SRS of clusters and then
+measures <i>every</i> unit in the clusters that were chosen. In the
+figure below, each column is a cluster, and two columns were chosen at
+random.</p>
 <p><img src="assets/l8_design_cluster.png" width="45%" style="display: block; margin: auto;" /></p>
-<p>The appeal is practical. We need a list of the clusters, not of every
-individual, and visiting a few clusters is far cheaper than travelling
-to units scattered across a whole region. Cluster sampling works best
-when each cluster is a <em>mini-population</em> — mixed inside, the way
-every column above contains all four class years. When units within a
-cluster resemble each other (students in the same dorm, households on
-the same street), a cluster sample carries less information than an SRS
-of the same size, and its estimates are less precise.</p>
+<p>The main appeal of cluster sampling is practical. We only need a list
+of the clusters rather than a list of every individual, and visiting a
+few clusters is much cheaper than traveling to units spread out across a
+whole region. Cluster sampling works best when each cluster is like a
+<i>mini-population</i>, meaning it is mixed inside, the same way every
+column above contains all four class years. When units in the same
+cluster tend to be similar to each other (e.g., students in the same
+dorm or households on the same street), a cluster sample carries less
+information than an SRS of the same size, and its estimates are less
+precise.</p>
 <div id="two-stage-cluster-sampling" class="section level3">
 <h3>Two-stage cluster sampling</h3>
-<p>A <strong>two-stage cluster sample</strong> takes an SRS of clusters
-(stage 1) and then an SRS of units inside each chosen cluster (stage 2).
-Below: 4 of the 10 columns, then 5 students in each.</p>
+<p>A <strong>two-stage cluster sample</strong> first takes an SRS of
+clusters (stage 1) and then takes an SRS of units within each chosen
+cluster (stage 2). In the figure below, 4 of the 10 columns were chosen,
+and then 5 students were chosen from each of those columns.</p>
 <p><img src="assets/l8_design_two_stage.png" width="45%" style="display: block; margin: auto;" /></p>
-<p>Election exit polls combine several designs. For the 2024 election,
-the National Election Pool drew a stratified probability sample of 279
-polling places, and within each one an interviewer approached every
-<span class="math inline">\(n\)</span>th voter leaving — a systematic
-sample inside each cluster (<a
+<p>Election exit polls are a good example of combining several of these
+designs. For the 2024 election, the National Election Pool drew a
+stratified probability sample of 279 polling places. Within each polling
+place, an interviewer approached every <span
+class="math inline">\(n^{th}\)</span> voter leaving, which is a
+systematic sample within each cluster (<a
 href="https://s.abcnews.com/assets/dtci/elections/NEPExitPollMethodologyStatement.pdf">National
-Election Pool methods statement, 2024</a>). NHANES, the U.S. health and
-nutrition survey, uses “a complex, multistage, probability sampling
-design”: counties, then segments within counties, then households, then
-individuals (<a
+Election Pool methods statement, 2024</a>). Similarly, NHANES, the U.S.
+health and nutrition survey, uses “a complex, multistage, probability
+sampling design,” which samples counties, then segments within counties,
+then households, and finally individuals (<a
 href="https://wwwn.cdc.gov/nchs/nhanes/tutorials/sampledesign.aspx">CDC,
 NHANES sample design</a>).</p>
 </div>
 </div>
-<div id="strata-versus-clusters" class="section level2">
-<h2>Strata versus clusters</h2>
-<p>The two are easy to confuse, because both divide the population into
-groups. The difference is what the groups look like inside, and so how
-many of them you sample:</p>
+<div id="strata-vs.-clusters" class="section level2">
+<h2>Strata vs. clusters</h2>
+<p>Strata and clusters are easy to mix up, since both involve dividing
+the population into groups. The difference is in what the groups look
+like inside, and as a result, how many of the groups we sample:</p>
 <p><img src="assets/l8_three_designs.png" width="100%" style="display: block; margin: auto;" /></p>
 <table>
 <colgroup>
@@ -1026,259 +1074,273 @@ many of them you sample:</p>
 </tbody>
 </table>
 </div>
-<div id="two-kinds-of-error" class="section level2">
-<h2>Two kinds of error</h2>
-<p>No sample matches its population exactly, and it helps to separate
-two reasons why:</p>
+<div id="sampling-and-nonsampling-error" class="section level2">
+<h2>Sampling and nonsampling error</h2>
+<p>No sample will match its population exactly. It helps to separate the
+reasons why into two types of error:</p>
 <ul>
-<li><strong>Sampling error</strong> is the natural gap between a sample
-and the population, caused by which units happened to be chosen. Every
-sample has some, and a larger sample makes it smaller.</li>
-<li><strong>Nonsampling error</strong> is error that does not come from
-chance: biased sampling methods, badly worded questions, data-entry
-mistakes, a faulty measuring instrument. A larger sample does not make
+<li><strong>Sampling error</strong> is the natural difference between a
+sample and the population that comes from which units happened to be
+chosen. Every sample has some sampling error, and a larger sample makes
 it smaller.</li>
+<li><strong>Nonsampling error</strong> is error that does not come from
+chance. This includes biased sampling methods, poorly worded questions,
+data entry mistakes, or a faulty measuring instrument. A larger sample
+does not make nonsampling error any smaller.</li>
 <li><strong>Sampling bias</strong> occurs when some members of the
-population are less likely to be chosen than others — convenience and
-voluntary response samples, or a sampling frame that leaves people
-out.</li>
+population are less likely to be chosen than others, for example in
+convenience and voluntary response samples, or when the sampling frame
+leaves people out.</li>
 </ul>
 </div>
-<div id="three-common-nonsampling-errors" class="section level2">
-<h2>Three common nonsampling errors</h2>
-<p>Even a perfectly random design can produce a biased sample:</p>
+<div id="common-sources-of-nonsampling-error" class="section level2">
+<h2>Common sources of nonsampling error</h2>
+<p>Even if we use a perfectly random design, we can still end up with a
+biased sample. Three common culprits are:</p>
 <ul>
-<li><strong>Undercoverage</strong>: the frame leaves part of the
-population out — students who are not on the list you sampled from,
-people with no phone or no fixed address.</li>
-<li><strong>Nonresponse</strong>: people who are chosen cannot be
-reached, or refuse to answer.</li>
-<li><strong>Response bias</strong>: the answers themselves are wrong,
-because of leading or confusing questions, sensitive topics, or
-respondents wanting to please the interviewer.</li>
+<li><strong>Undercoverage</strong> - the sampling frame leaves out part
+of the population. For example, students who aren’t on the list you
+sampled from, or people who don’t have a phone or a fixed address.</li>
+<li><strong>Nonresponse</strong> - people who are selected for the
+sample can’t be reached or refuse to answer.</li>
+<li><strong>Response bias</strong> - the answers themselves are wrong.
+This can be caused by leading or confusing questions, sensitive topics,
+or respondents wanting to please the interviewer.</li>
 </ul>
-<p>A larger sample fixes none of these.</p>
+<p>Just like before, a larger sample doesn’t fix any of these.</p>
 <div id="example-nonresponse" class="section level3">
 <h3>Example: nonresponse</h3>
 <p>Pew Research Center’s telephone surveys reached 36% of the people
-they called in 1997, and only 6% in 2018 (<a
+they called in 1997, but only 6% in 2018 (<a
 href="https://www.pewresearch.org/short-reads/2019/02/27/response-rates-in-telephone-surveys-have-resumed-their-decline/">Kennedy
-and Hartig, 2019</a>). A low response rate does not by itself make a
-survey biased; it causes bias only when the people who answer differ
-from the people who do not — and that is usually impossible to check,
-because we have no data on the people who did not answer.</p>
-<p>In the 2020 presidential election, national polls in the final two
-weeks overstated Joe Biden’s margin by 3.9 points on average, the
-largest polling error for the national popular vote in 40 years. The
-American Association for Public Opinion Research’s task force ruled out
-several explanations, such as late-deciding voters, and concluded that
-“at least some of the polling error in 2020 was caused by unit
-nonresponse” — but that without knowing how the people who did not
-respond compare with those who did, the primary source cannot be pinned
-down (<a
+and Hartig, 2019</a>). A low response rate by itself doesn’t make a
+survey biased. It only causes bias when the people who respond are
+different from the people who don’t. Unfortunately, this is usually
+impossible to check, because we have no data on the people who didn’t
+respond.</p>
+<p>Nonresponse also came up after the 2020 presidential election.
+National polls in the final two weeks overstated Joe Biden’s margin by
+3.9 points on average, which was the largest polling error for the
+national popular vote in 40 years. The American Association for Public
+Opinion Research’s task force ruled out several explanations, like
+late-deciding voters, and concluded that “at least some of the polling
+error in 2020 was caused by unit nonresponse.” However, without knowing
+how the people who didn’t respond compare with the people who did, they
+could not pin down the primary source of the error (<a
 href="https://aapor.org/wp-content/uploads/2022/11/Task-Force-on-2020-Pre-Election-Polling_Executive-Summary.pdf">AAPOR
 Task Force on 2020 Pre-Election Polling</a>).</p>
 </div>
 <div id="example-question-wording" class="section level3">
 <h3>Example: question wording</h3>
-<p>In September 2013, CNBC asked half of its poll respondents about
-“Obamacare” and the other half about “the Affordable Care Act” — the
-same law. Opposition was 46% for “Obamacare” and 37% for “the Affordable
-Care Act.” Support was <em>also</em> higher for “Obamacare,” 29% versus
-22%, because far fewer people chose “don’t know”: 12% for “Obamacare”
-against 30% for the Affordable Care Act (<a
+<p>In September 2013, CNBC asked half of the people in its poll about
+“Obamacare” and the other half about “the Affordable Care Act.” These
+are the same law! Opposition was 46% when it was called “Obamacare” and
+37% when it was called “the Affordable Care Act.” Interestingly, support
+was <i>also</i> higher for “Obamacare” (29% vs. 22%). This is because
+far fewer people chose “don’t know” for “Obamacare” (12%) than for the
+Affordable Care Act (30%) (<a
 href="https://www.nbcnews.com/news/amp/wbna53122899">NBC News, 2013</a>;
 <a
 href="https://harvardpolitics.com/aca-vs-obamacare-american-people/">Harvard
-Political Review</a>). The words in a question change the answers.</p>
-<p>Wording can also change what a question measures. In January 2003,
-68% of Americans favored “taking military action in Iraq to end Saddam
-Hussein’s rule”; when the question added “even if it meant that U.S.
-forces might suffer thousands of casualties,” support fell to 43% (<a
+Political Review</a>). So the words we use in a question can change the
+answers we get.</p>
+<p>The wording of a question can also change what the question is
+actually measuring. In January 2003, 68% of Americans favored “taking
+military action in Iraq to end Saddam Hussein’s rule.” But when the
+question added “even if it meant that U.S. forces might suffer thousands
+of casualties,” support dropped to 43% (<a
 href="https://www.pewresearch.org/our-methods/u-s-surveys/writing-survey-questions/">Pew
 Research Center, Writing Survey Questions</a>).</p>
 </div>
 </div>
-<div id="choosing-a-design-for-your-course-project"
-class="section level2">
-<h2>Choosing a design for your course project</h2>
+<div id="sampling-for-your-course-project" class="section level2">
+<h2>Sampling for your course project</h2>
 <p>Part 3 of the <a href="project.html">course project</a> asks you to
 draw a sample of 20 to 30 observations from your dataset. When you write
-it up:</p>
+this part up, you should:</p>
 <ul>
-<li>choose a design — simple random, systematic, stratified or cluster
-sampling;</li>
-<li>say exactly how you drew it (the method, <span
-class="math inline">\(n\)</span>, and the tool, such as the R code
-above) so that someone else could repeat it;</li>
-<li>justify the choice for <em>your</em> data: is there a natural group
-worth stratifying on? are there natural clusters?</li>
-<li>name any bias your method could introduce.</li>
+<li>choose a sampling design (simple random, systematic, stratified, or
+cluster sampling)</li>
+<li>explain exactly how you drew the sample (the method, <span
+class="math inline">\(n\)</span>, and the tool you used, such as the R
+code above) so that someone else could repeat it</li>
+<li>justify why you chose that design for <i>your</i> data. Is there a
+natural group worth stratifying on? Are there natural clusters?</li>
+<li>describe any bias your method might introduce</li>
 </ul>
-<p>Steps 1 to 4 of the project can be started once this lecture is
-finished.</p>
-<p>For practice before the project, try the textbook’s <strong>Sampling
-Experiment</strong> lab (Section 1.6): it lists restaurants by city and
-by entree cost and asks you to draw a simple random, a systematic, two
-stratified, and a cluster sample from the same list. The textbook’s
-Section 1.2 examples (Examples 1.11 to 1.13) are good practice at naming
-sampling designs.</p>
+<p>You can start on Steps 1 through 4 of the project once we finish this
+lecture.</p>
+<p>If you want some practice before starting the project, try the
+textbook’s <strong>Sampling Experiment</strong> lab (Section 1.6). It
+lists restaurants by city and by entree cost, and asks you to draw a
+simple random sample, a systematic sample, two stratified samples, and a
+cluster sample from the same list. The examples in Section 1.2 (Examples
+1.11 to 1.13) are also good practice for identifying sampling
+designs.</p>
 </div>
 </div>
 <div id="experiments-and-causation" class="section level1">
 <h1>Experiments and causation</h1>
 <div id="observational-studies-and-experiments" class="section level2">
 <h2>Observational studies and experiments</h2>
+<p>Most studies are interested in the relationship between two or more
+variables. Again, let’s start with some terminology:</p>
 <ul>
 <li>The <strong>response variable</strong> is the outcome we
 measure.</li>
 <li>The <strong>explanatory variable</strong> is the variable we think
 explains or influences the response.</li>
 <li>An <strong>observational study</strong> observes individuals and
-measures variables of interest <em>without influencing
-anything</em>.</li>
-<li>An <strong>experiment</strong> <em>deliberately assigns</em>
-treatments to the units, then measures the response.</li>
+measures variables of interest <u>without trying to influence
+anything</u>.</li>
+<li>An <strong>experiment</strong> <u>deliberately assigns</u>
+treatments to the units and then measures the response.</li>
 </ul>
-<p>The question that tells them apart is <strong>who decided which group
-each unit ended up in?</strong> If the units themselves (or
-circumstance) decided, it is an observational study. If the researcher
-decided, it is an experiment. Note that this has nothing to do with how
-the units were <em>sampled</em>: an experiment on volunteers is still an
-experiment, and an observational study on a random sample is still
-observational.</p>
+<p>The key question for telling these apart is: <strong>who decided
+which group each unit ended up in?</strong> If the units themselves (or
+circumstance) decided, then it is an observational study. If the
+researcher decided, it is an experiment. Note that this has nothing to
+do with how the units were <i>sampled</i>. An experiment on volunteers
+is still an experiment, and an observational study on a random sample is
+still an observational study.</p>
 </div>
-<div id="association-is-not-causation" class="section level2">
-<h2>Association is not causation</h2>
+<div id="association-vs.-causation" class="section level2">
+<h2>Association vs. causation</h2>
 <ul>
-<li>Two variables are <strong>associated</strong> when they move
+<li>Two variables are <strong>associated</strong> when they tend to move
 together in the data.</li>
-<li>One <strong>causes</strong> the other when changing it would change
-the other.</li>
-<li>A <strong>lurking variable</strong> is a variable not included in
-the study that influences both the explanatory and the response
-variable.</li>
-<li>Two variables are <strong>confounded</strong> when their effects on
-the response cannot be separated from each other.</li>
+<li>One variable <strong>causes</strong> another when changing the first
+would change the second.</li>
+<li>A <strong>lurking variable</strong> is a variable that isn’t
+included in the study but influences both the explanatory and response
+variables.</li>
+<li>Two variables are <strong>confounded</strong> when we can’t separate
+their effects on the response.</li>
 </ul>
 <p><img src="assets/l8_confounding.png" width="65%" style="display: block; margin: auto;" /></p>
-<p>Towns that sell more ice cream have more drownings. The association
-is real — it shows up in the data every year — but the causal story is
-wrong: hot weather drives both. A lurking variable does not create an
-<em>illusion</em> of association; it creates a real association that has
-the wrong explanation. An observational study alone cannot rule this
-out, because the groups being compared may differ in ways nobody
+<p>For example, towns that sell more ice cream also have more drownings.
+This association is real (it shows up in the data every year), but the
+causal story is wrong. Hot weather is a lurking variable that drives
+both. It is important to note that a lurking variable doesn’t create a
+fake association. The association is real, it just has the wrong
+explanation. An observational study by itself can’t rule this out,
+because the groups being compared may differ in ways that nobody
 measured.</p>
 <div id="example-hormone-therapy" class="section level3">
 <h3>Example: hormone therapy</h3>
-<p>For years, large observational studies found that women who took
+<p>For many years, large observational studies found that women who took
 hormone therapy after menopause had much less heart disease. In the
 Nurses’ Health Study, which followed 59,337 women, current users of
 estrogen plus progestin had a relative risk of major coronary heart
-disease of 0.39 compared with non-users (<a
+disease of 0.39 compared to non-users (<a
 href="https://europepmc.org/article/MED/8672166">Grodstein et al.,
-1996</a>). Millions of women were prescribed hormones, in part to
-protect their hearts.</p>
-<p>The Women’s Health Initiative then <em>randomly assigned</em> 16,608
-women aged 50 to 79 to estrogen plus progestin or a placebo. In 2002 the
-trial was stopped early, after an average of 5.2 years, because the
-risks outweighed the benefits: invasive breast cancer had crossed its
-stopping boundary, and the hormone group had <em>more</em> coronary
-heart disease, not less (hazard ratio 1.29) (<a
+1996</a>). Millions of women were prescribed hormones, partly to protect
+their hearts.</p>
+<p>Then the Women’s Health Initiative <i>randomly assigned</i> 16,608
+women aged 50 to 79 to take either estrogen plus progestin or a placebo.
+In 2002, after an average of 5.2 years, the trial was stopped early
+because the risks outweighed the benefits. Invasive breast cancer had
+crossed its stopping boundary, and the hormone group actually had
+<i>more</i> coronary heart disease, not less (hazard ratio 1.29) (<a
 href="https://doi.org/10.1001/jama.288.3.321">Writing Group for the WHI
 Investigators, 2002</a>).</p>
-<p>Why did the observational studies point the wrong way? Women who
-chose hormone therapy tended to be wealthier, better educated and
-healthier to begin with. When the observational studies were pooled with
-adjustment for socioeconomic status, the apparent benefit disappeared
-(<a href="https://europepmc.org/article/MED/12186518">Humphrey, Chan and
-Sox, 2002</a>). Random assignment balanced those lurking variables
-between the two groups automatically.</p>
+<p>So why did the observational studies point in the wrong direction? It
+turns out that women who chose to take hormone therapy tended to be
+wealthier, better educated, and healthier to begin with. When the
+observational studies were pooled and adjusted for socioeconomic status,
+the apparent benefit went away (<a
+href="https://europepmc.org/article/MED/12186518">Humphrey, Chan and
+Sox, 2002</a>). In the randomized trial, random assignment balanced
+these lurking variables between the two groups automatically.</p>
 </div>
 <div id="can-we-claim-cause-without-an-experiment"
 class="section level3">
 <h3>Can we claim cause without an experiment?</h3>
-<p>Sometimes an experiment is impossible or unethical — nobody can
-randomly assign people to smoke for thirty years. Yet we are confident
-that smoking causes lung cancer. The evidence was built from decades of
-observational studies, and it was persuasive because it had many
-features at once (<a
+<p>Sometimes an experiment is impossible or unethical. For example,
+nobody can randomly assign people to smoke for thirty years. And yet we
+are confident that smoking causes lung cancer. How? The evidence was
+built up over decades of observational studies, and it was convincing
+because it had many features at once (<a
 href="https://europepmc.org/article/MED/14283879">Hill, 1965</a>):</p>
 <ul>
-<li>a <strong>strong</strong> association, found
-<strong>consistently</strong> in different populations and study
-designs;</li>
-<li>a <strong>dose-response</strong> pattern — the more cigarettes, the
-higher the risk;</li>
-<li>the right order in <strong>time</strong> — smoking comes before the
-cancer;</li>
-<li>a <strong>plausible</strong> biological explanation, supported by
-laboratory evidence.</li>
+<li>a <strong>strong</strong> association that was found
+<strong>consistently</strong> across different populations and study
+designs</li>
+<li>a <strong>dose-response</strong> pattern, i.e., the more cigarettes
+someone smokes, the higher their risk</li>
+<li>the right order in <strong>time</strong>, i.e., smoking comes before
+the cancer</li>
+<li>a <strong>plausible</strong> biological explanation that is
+supported by laboratory evidence</li>
 </ul>
-<p>The 2014 Surgeon General’s report, marking fifty years since the
-first federal report on smoking, concluded that cigarette smoking and
-secondhand smoke cause at least 480,000 premature deaths a year in the
-United States, including about 127,700 lung-cancer deaths (<a
+<p>In 2014, fifty years after the first federal report on smoking, the
+Surgeon General’s report concluded that cigarette smoking and secondhand
+smoke cause at least 480,000 premature deaths a year in the United
+States, including about 127,700 deaths from lung cancer (<a
 href="https://www.ncbi.nlm.nih.gov/books/NBK294316/">U.S. Department of
-Health and Human Services, 2014</a>). Without an experiment, a causal
-claim needs this much evidence. A single observational study is never
-enough.</p>
+Health and Human Services, 2014</a>). The point is that without an
+experiment, a causal claim needs this much evidence behind it. A single
+observational study is never enough.</p>
 </div>
 </div>
-<div id="the-language-of-experiments" class="section level2">
-<h2>The language of experiments</h2>
+<div id="experimental-design-terminology" class="section level2">
+<h2>Experimental design terminology</h2>
 <ul>
-<li><strong>Experimental units</strong> are what the treatments are
-applied to; when they are people they are called
-<strong>subjects</strong>.</li>
-<li>A <strong>factor</strong> is an explanatory variable the researcher
-controls. Its <strong>levels</strong> are the specific values it is set
-to.</li>
-<li>A <strong>treatment</strong> is one combination of factor
+<li><strong>Experimental units</strong> are the individuals the
+treatments are applied to. When the experimental units are people, we
+call them <strong>subjects</strong>.</li>
+<li>A <strong>factor</strong> is an explanatory variable that the
+researcher controls. The specific values the factor is set to are called
+its <strong>levels</strong>.</li>
+<li>A <strong>treatment</strong> is a specific combination of factor
 levels.</li>
 </ul>
-<p><strong>Example.</strong> The VITAL trial randomly assigned 25,871
-U.S. adults in a placebo-controlled trial with <strong>two
-factors</strong>: vitamin D (2,000 IU a day, or a placebo) and marine
-omega-3 fatty acids (1 g a day, or a placebo). Each factor has 2 levels,
+<p><strong>Example:</strong> The VITAL trial was a placebo-controlled
+trial that randomly assigned 25,871 U.S. adults using <strong>two
+factors</strong>: vitamin D (2,000 IU a day or a placebo) and marine
+omega-3 fatty acids (1 g a day or a placebo). Each factor has 2 levels,
 so there are <span class="math inline">\(2 \times 2 = 4\)</span>
-treatments, and each participant received one of them — two questions
-answered in one trial. Over a median of 5.3 years, neither vitamin D nor
-omega-3 lowered the rate of invasive cancer or of major cardiovascular
-events (<a href="https://doi.org/10.1056/NEJMoa1809944">Manson et al.,
-2019a</a>; <a href="https://doi.org/10.1056/NEJMoa1811403">Manson et
-al., 2019b</a>).</p>
+treatments, and each participant received one of them. This let the
+researchers answer two questions with one trial. Over a median of 5.3
+years, neither vitamin D nor omega-3 lowered the rate of invasive cancer
+or of major cardiovascular events (<a
+href="https://doi.org/10.1056/NEJMoa1809944">Manson et al., 2019a</a>;
+<a href="https://doi.org/10.1056/NEJMoa1811403">Manson et al.,
+2019b</a>).</p>
 </div>
 <div id="principles-of-experimental-design" class="section level2">
 <h2>Principles of experimental design</h2>
+<p>A good experiment is built on three principles:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Control.</strong> Compare the treatment against a
+<li><strong>Control</strong> - compare the treatment to a
 <strong>control group</strong>, so that the treatment is the only
 systematic difference between the groups.</li>
-<li><strong>Randomize.</strong> Use chance to assign units to
-treatments. Randomization balances the lurking variables we know about
-<em>and the ones we don’t</em> — something no amount of careful matching
-can promise.</li>
-<li><strong>Replicate.</strong> Put enough units in each group that
-chance differences between the groups average out.</li>
+<li><strong>Randomization</strong> - use chance to assign units to
+treatments. Randomization balances out the lurking variables we know
+about <u>and the ones we don’t</u>, which is something no amount of
+careful matching can promise.</li>
+<li><strong>Replication</strong> - put enough units in each group so
+that chance differences between the groups average out.</li>
 </ol>
 <p>A <strong>placebo</strong> is a fake treatment that looks exactly
-like the real one — a sugar pill, or a saline injection. It exists
-because of the <strong>placebo effect</strong>: people often improve
-simply because they believe they are being treated. In one study of a
-performance-enhancing drug, believing one had taken the substance
-improved performance almost as much as actually taking it (McClung and
-Collins, 2007, quoted in Section 1.4 of the textbook). In a
-<strong>blind</strong> experiment the subjects do not know which
-treatment they received; in a <strong>double-blind</strong> experiment,
-neither do the people who measure the response.</p>
-<div id="example-the-pfizerbiontech-covid-19-vaccine-trial"
+like the real one, like a sugar pill or a saline injection. We use
+placebos because of the <strong>placebo effect</strong>, which is when
+people improve simply because they believe they are being treated. For
+example, in one study of a performance-enhancing drug, just believing
+they had taken the substance improved people’s performance almost as
+much as actually taking it (McClung and Collins, 2007, quoted in Section
+1.4 of the textbook). In a <strong>blind</strong> experiment, the
+subjects don’t know which treatment they received. In a
+<strong>double-blind</strong> experiment, the people who measure the
+response don’t know either.</p>
+<div id="example-the-pfizer-biontech-covid-19-vaccine-trial"
 class="section level3">
-<h3>Example: the Pfizer–BioNTech COVID-19 vaccine trial</h3>
+<h3>Example: the Pfizer-BioNTech COVID-19 vaccine trial</h3>
 <p>In 2020, 43,548 people aged 16 and older were randomly assigned, in
-equal numbers, to two doses of the Pfizer–BioNTech COVID-19 vaccine or
-two injections of a saline placebo. Participants and the staff who
-assessed them did not know who had received which.</p>
+equal numbers, to receive either two doses of the Pfizer-BioNTech
+COVID-19 vaccine or two injections of a saline placebo. Neither the
+participants nor the staff who assessed them knew who had received
+which.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1313,187 +1375,206 @@ Placebo
 Source: <a
 href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7745181/">Polack et
 al. (2020)</a>.</em></p>
-<p>The design is why that comparison means something. The saline
+<p>The design is what makes this comparison meaningful. The saline
 injection gives the control group the same experience as the vaccine
-group, so the difference in cases cannot come from people’s
-expectations. Randomization means the people who got the vaccine were
-not, say, the more cautious people who would have chosen it — a lurking
-variable that would otherwise be confounded with the vaccine. With both
-in place, a vaccine efficacy of about 95% can be credited to the
-vaccine.</p>
+group, so the difference in cases can’t be explained by people’s
+expectations. Randomization means the people who got the vaccine
+weren’t, for example, the more cautious people who would have chosen to
+get it on their own, which would be a lurking variable confounded with
+the vaccine. With both of these in place, we can credit the vaccine
+efficacy of about 95% to the vaccine itself.</p>
 </div>
-<div id="example-a-placebo-surgery" class="section level3">
-<h3>Example: a placebo surgery</h3>
-<p>Arthroscopic knee surgery for osteoarthritis was common, and patients
-reported that it helped. Moseley and colleagues randomly assigned 180
-patients to one of three groups: two real arthroscopic procedures
-(debridement or lavage), or <em>placebo surgery</em> — skin incisions
-and a simulated procedure, with no arthroscope inserted. Patients and
-the staff who assessed their outcomes were blinded. Over two years of
-follow-up, at no point did either surgery group report less pain or
-better function than the placebo group (<a
+<div id="example-placebo-surgery" class="section level3">
+<h3>Example: placebo surgery</h3>
+<p>Arthroscopic knee surgery for osteoarthritis was a common procedure,
+and patients reported that it helped. Moseley and colleagues randomly
+assigned 180 patients to one of three groups. Two of the groups received
+real arthroscopic procedures (debridement or lavage), and the third
+received <i>placebo surgery</i>, which consisted of skin incisions and a
+simulated procedure without inserting an arthroscope. Both the patients
+and the staff who assessed their outcomes were blinded. Over two years
+of follow-up, neither surgery group ever reported less pain or better
+function than the placebo group (<a
 href="https://doi.org/10.1056/NEJMoa013259">Moseley et al., 2002</a>).
-The benefit patients felt came from believing they had been treated —
-and without a placebo group and blinding, nobody would have known.</p>
+In other words, the benefit patients felt came from believing they had
+been treated, and without a placebo group and blinding, nobody would
+have known.</p>
 </div>
 </div>
-<div id="three-experimental-designs" class="section level2">
-<h2>Three experimental designs</h2>
+<div id="types-of-experimental-designs" class="section level2">
+<h2>Types of experimental designs</h2>
 <div id="completely-randomized-design" class="section level3">
 <h3>Completely randomized design</h3>
-<p>In a <strong>completely randomized design</strong>, every unit is
-assigned to a treatment completely at random. It is the simplest design;
-the COVID-19 vaccine trial above was a completely randomized design with
-two groups.</p>
+<p>The simplest type of experimental design is the <strong>completely
+randomized design</strong>, where every unit is assigned to a treatment
+completely at random. The COVID-19 vaccine trial above was a completely
+randomized design with two groups.</p>
 <p><img src="assets/l8_crd.png" width="85%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="randomized-block-design" class="section level3">
 <h3>Randomized block design</h3>
-<p>A <strong>block</strong> is a group of units that are alike in a way
-expected to affect the response, formed <em>before</em> treatments are
-assigned. In a <strong>randomized block design</strong>, the random
-assignment is carried out separately inside each block, and treatments
-are compared within blocks.</p>
+<p>A <strong>block</strong> is a group of units that are similar in a
+way that we expect to affect the response. Blocks are formed
+<i>before</i> the treatments are assigned. In a <strong>randomized block
+design</strong>, the random assignment is done separately within each
+block, and the treatments are compared within blocks.</p>
 <p><img src="assets/l8_rcbd.png" width="85%" style="display: block; margin: auto;" /></p>
-<p>If men and women respond differently to a treatment, a completely
-randomized design lets that difference inflate the variation within each
-treatment group. Blocking on sex removes it, so a real treatment effect
-is easier to see. Blocking is to experiments what stratifying is to
-sampling.</p>
+<p>For example, suppose men and women respond differently to a
+treatment. In a completely randomized design, that difference would add
+to the variation within each treatment group. Blocking on sex removes
+this extra variation, which makes a real treatment effect easier to
+detect. You can think of blocking as the experimental design version of
+stratifying in sampling.</p>
 </div>
 <div id="matched-pairs-design" class="section level3">
 <h3>Matched pairs design</h3>
-<p>A <strong>matched pairs design</strong> is a block design in which
-every block is a pair of very similar units — twins, or two plots of
-land side by side. Within each pair, a coin flip decides which member
-gets which treatment. Alternatively, each subject can serve as their own
-pair, receiving both treatments in a random order.</p>
+<p>A <strong>matched pairs design</strong> is a special kind of block
+design where each block is a pair of very similar units, such as twins
+or two plots of land side by side. Within each pair, we flip a coin to
+decide which unit gets which treatment. Another option is to have each
+subject serve as their own pair by receiving both treatments in a random
+order.</p>
 <p><img src="assets/l8_matched_pairs.png" width="85%" style="display: block; margin: auto;" /></p>
-<p>Before-and-after measurements on the same people — blood pressure
-before and after an exercise program, say — are paired data too. But
-with no random order and no control group, anything else that changed
-between the two measurements is confounded with the program, so they are
-much weaker evidence than a randomized matched pairs experiment.</p>
+<p>Measurements taken before and after on the same people (for example,
+blood pressure before and after an exercise program) also give us paired
+data. However, there is no random order and no control group, so
+anything else that changed between the two measurements is confounded
+with the program. This makes before-and-after measurements much weaker
+evidence than a randomized matched pairs experiment.</p>
 </div>
 <div id="practice-design-the-study" class="section level3">
 <h3>Practice: design the study</h3>
-<p><em>(Adapted from the textbook’s Try It 1.21.)</em> You want to know
-whether texting slows how quickly a driver reacts when the car ahead
-brakes.</p>
+<p><strong>Practice:</strong> <em>(Adapted from the textbook’s Try It
+1.21.)</em> Suppose you want to know whether texting slows down how
+quickly a driver reacts when the car ahead of them brakes.</p>
 <ul>
-<li>The explanatory variable is texting or not; the response variable is
-reaction time; the treatments are driving while texting and driving
-only.</li>
-<li>Splitting drivers at random into a texting group and a driving-only
-group would work, but reaction times vary a lot from person to person. A
-<strong>matched pairs</strong> design is better: each driver does both,
-in a random order, and is compared with themselves.</li>
-<li>The drivers cannot be blinded — they know when they are texting —
+<li>What are the explanatory variable, the response variable, and the
+treatments?</li>
+<li>What design would you use?</li>
+<li>Can the experiment be blinded?</li>
+</ul>
+<p>Here is one way to think about it:</p>
+<ul>
+<li>The explanatory variable is whether or not the driver is texting,
+the response variable is reaction time, and the treatments are driving
+while texting and driving only.</li>
+<li>We could randomly split drivers into a texting group and a
+driving-only group, but reaction times vary a lot from person to person.
+A <strong>matched pairs</strong> design is better here. Each driver does
+both, in a random order, and is compared with themselves.</li>
+<li>The drivers can’t be blinded since they know when they are texting,
 but the person measuring reaction times can be.</li>
 </ul>
 </div>
 </div>
-<div id="what-randomization-buys-you" class="section level2">
-<h2>What randomization buys you</h2>
-<p>Chance plays two different roles in a study, and they buy two
-different conclusions:</p>
+<div id="random-sampling-vs.-random-assignment" class="section level2">
+<h2>Random sampling vs. random assignment</h2>
+<p>Chance plays two different roles in a study, and each one lets us
+draw a different kind of conclusion:</p>
 <p><img src="assets/l8_sampling_vs_assignment.png" width="80%" style="display: block; margin: auto;" /></p>
 <ul>
-<li><strong>Random sampling</strong> lets us <strong>generalize</strong>
-from the sample to the population it was drawn from.</li>
-<li><strong>Random assignment</strong> lets us conclude <strong>cause
-and effect</strong>.</li>
+<li><strong>Random sampling</strong> allows us to
+<strong>generalize</strong> from the sample to the population it was
+drawn from.</li>
+<li><strong>Random assignment</strong> allows us to conclude
+<strong>cause and effect</strong>.</li>
 </ul>
-<p>Most studies have only one of the two. A clinical trial of volunteers
-can establish that a vaccine works — but strictly, for people like those
-volunteers. A random-sample survey can describe a whole population — but
-not explain why its variables are related.</p>
+<p>Most studies only have one of the two. For example, a clinical trial
+of volunteers can establish that a vaccine works, but strictly speaking
+only for people similar to those volunteers. On the other hand, a survey
+based on a random sample can describe a whole population, but it can’t
+explain why its variables are related.</p>
 </div>
 <div id="ethics" class="section level2">
 <h2>Ethics</h2>
+<p>Collecting and using data may not seem like something that raises
+ethical concerns, but like any human endeavor it does, especially when
+the data are about people.</p>
 <div id="example-the-facebook-emotional-contagion-experiment"
 class="section level3">
 <h3>Example: the Facebook emotional contagion experiment</h3>
-<p>For one week in January 2012, Facebook altered the News Feeds of
-689,003 users: for some, posts with positive emotional content were less
-likely to appear; for others, posts with negative content were. The
-study was published in 2014. The paper stated that the research “was
-consistent with Facebook’s Data Use Policy, to which all users agree
-prior to creating an account on Facebook, constituting informed consent
-for this research” (<a
+<p>For one week in January 2012, Facebook changed the News Feeds of
+689,003 users. For some users, posts with positive emotional content
+were less likely to show up, and for others, posts with negative content
+were less likely to show up. The study was published in 2014, and the
+paper stated that the research “was consistent with Facebook’s Data Use
+Policy, to which all users agree prior to creating an account on
+Facebook, constituting informed consent for this research” (<a
 href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4066473/">Kramer,
 Guillory and Hancock, 2014</a>).</p>
-<p>The journal disagreed. Its Editorial Expression of Concern called it
-“a matter of concern that the collection of the data by Facebook may
+<p>The journal had concerns. Its Editorial Expression of Concern said it
+was “a matter of concern that the collection of the data by Facebook may
 have involved practices that were not fully consistent with the
 principles of obtaining informed consent and allowing participants to
-opt out.” As a private company, Facebook was not bound by the federal
-rules for human-subjects research, and Cornell University’s review board
-decided that its researcher, who saw only results, was not directly
-engaged in human research, so no review was required (<a
+opt out.” Because Facebook is a private company, it was not bound by the
+federal rules for human-subjects research. Cornell University’s review
+board decided that its researcher, who only saw the results, was not
+directly engaged in human research, so no review was required (<a
 href="https://retractionwatch.com/2014/07/03/rapid-mood-swing-pnas-issues-expression-of-concern-for-controversial-facebook-study/">PNAS
-Expression of Concern, via Retraction Watch</a>). Clicking “I agree” on
-a terms-of-service page is not informed consent — even for a
-well-designed experiment.</p>
+Expression of Concern, via Retraction Watch</a>). The takeaway is that
+clicking “I agree” on a terms-of-service page is not informed consent,
+even for a well-designed experiment.</p>
 </div>
 <div id="honest-data" class="section level3">
 <h3>Honest data</h3>
-<p>Ethics also means honest data. An investigation of the social
-psychologist Diederik Stapel found that he had created and altered
-datasets; falsified data tainted more than 55 papers he authored and 10
-Ph.D. dissertations he supervised (Section 1.4 of the textbook).
-Problems can be much smaller and still matter. The textbook’s Example
-1.22 describes a researcher surveying households in a community who:</p>
+<p>Ethics also means being honest with data. An investigation of the
+social psychologist Diederik Stapel found that he had created and
+altered datasets, and the falsified data tainted more than 55 papers he
+authored and 10 Ph.D. dissertations he supervised (Section 1.4 of the
+textbook). But problems don’t have to be that big to matter. Example
+1.22 in the textbook describes a researcher surveying households in a
+community who:</p>
 <ul>
-<li>picks a block where they already know many of the neighbors — a
-convenience sample that is biased, and misleading to present as
-representative;</li>
-<li>skips four houses where nobody was home and never returns —
-nonresponse that may leave out, for example, working families;</li>
-<li>fills in four forms with answers copied from neighbors — fabricated
-data, which is never acceptable.</li>
+<li>picks a block where they already know a lot of the neighbors. This
+is a convenience sample, which is biased, and it is misleading to
+present it as representative.</li>
+<li>skips four houses where nobody was home and never goes back. This is
+nonresponse, which may leave out groups like working families.</li>
+<li>fills in four forms with answers copied from the neighbors. This is
+fabricated data, which is never acceptable.</li>
 </ul>
 </div>
 <div id="why-the-rules-exist" class="section level3">
 <h3>Why the rules exist</h3>
-<p>The modern rules grew out of abuses. In the U.S. Public Health
-Service’s Untreated Syphilis Study at Tuskegee (1932–1972), 399 Black
-men with syphilis were followed for decades without being told the
-study’s true purpose and without being offered penicillin once it became
-the treatment of choice (<a
+<p>Many of the rules we have today came about because of past abuses. In
+the U.S. Public Health Service’s Untreated Syphilis Study at Tuskegee
+(1932-1972), 399 Black men with syphilis were followed for decades
+without being told the true purpose of the study, and without being
+offered penicillin once it became the treatment of choice (<a
 href="https://www.cdc.gov/tuskegee/about/index.html">CDC</a>). The
 public response led to the National Research Act of 1974 and the 1979
-<strong>Belmont Report</strong>, which set out three principles (<a
+<strong>Belmont Report</strong>, which lays out three principles (<a
 href="https://ori.hhs.gov/content/chapter-3-The-Protection-of-Human-Subjects-belmont-report-1979">HHS
 Office of Research Integrity</a>):</p>
 <ul>
-<li><strong>Respect for persons</strong> — people decide for themselves
-whether to take part.</li>
-<li><strong>Beneficence</strong> — do no harm; maximize possible
-benefits and minimize possible risks.</li>
-<li><strong>Justice</strong> — the burdens and benefits of research are
-shared fairly.</li>
+<li><strong>Respect for persons</strong> - people get to decide for
+themselves whether to take part in research.</li>
+<li><strong>Beneficence</strong> - do no harm, maximize the possible
+benefits, and minimize the possible risks.</li>
+<li><strong>Justice</strong> - the burdens and benefits of research
+should be shared fairly.</li>
 </ul>
 </div>
 <div id="research-ethics-today" class="section level3">
 <h3>Research ethics today</h3>
+<p>Some of the ethical requirements that apply to studies today are:</p>
 <ul>
-<li><strong>Informed consent</strong>: subjects are told the purpose,
-procedures and risks of a study in advance, and can refuse or withdraw
-at any time.</li>
-<li><strong>Confidentiality</strong>: information about individuals is
-protected and never released in a form that identifies them.</li>
-<li><strong>Institutional Review Boards (IRBs)</strong> review studies
-involving human subjects before they begin. At the University of Idaho
-the IRB is overseen by the <a
+<li><strong>Informed consent</strong> - subjects are told the purpose,
+procedures, and risks of the study ahead of time, and they can refuse or
+withdraw at any time.</li>
+<li><strong>Confidentiality</strong> - information about individuals is
+protected and is never released in a way that could identify them.</li>
+<li><strong>Institutional Review Boards (IRBs)</strong> - these boards
+review studies involving human subjects before they begin. At the
+University of Idaho, the IRB is overseen by the <a
 href="https://www.uidaho.edu/research/our-people#res-assurance">Office
 of Research Assurances</a>, under <a
 href="https://www.uidaho.edu/policies/fsh/5/5200">FSH 5200, Human
 Subject Research</a>.</li>
 </ul>
-<p>Ethics applies to data you did not collect yourself, too. When you
-use a public dataset for your project, check that it contains no
-information that could identify individuals.</p>
+<p>Keep in mind that ethics also applies to data you didn’t collect
+yourself. If you use a public dataset for your project, make sure it
+doesn’t contain any information that could identify individuals.</p>
 </div>
 </div>
 <div id="sources" class="section level2">
