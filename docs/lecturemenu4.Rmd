@@ -141,6 +141,48 @@ Before trusting any study, ask the questions from the textbook's *Critical Evalu
 The rest of this lecture fills in most of these: bias and self-selection next, nonresponse and
 question wording later, then causality and confounding in the second half.
 
+### Examples: misleading graphs
+
+**OxyContin.** Purdue promoted OxyContin, a 12-hour opioid painkiller, with a chart of blood
+levels over time captioned "Fewer 'peaks and valleys' than with immediate-release oxycodone" —
+drawn on a logarithmic y-axis ([CBS News, 2011](https://www.cbsnews.com/news/how-purdue-used-misleading-charts-to-hide-oxycontins-addictive-power/)).
+On a log axis, equal distances mean equal *ratios*, so a steep fall can look gentle. The figure
+below is an illustration, not Purdue's data: one curve matched to the 2008 FDA label's values
+for a 10 mg dose (a peak of 10.6 ng/mL at about 2.7 hours, and a 4.5-hour half-life), drawn on
+both kinds of axis.
+
+```{r, include=FALSE}
+ox <- read.csv('assets/l8_oxy_example.csv')
+```
+
+```{r, echo=FALSE, out.width='55%', fig.align='center'}
+knitr::include_graphics('assets/l8_oxycontin_axes.png')
+```
+
+On the linear axis the level falls from 10.6 to `r sprintf("%.1f", ox$c12)` ng/mL — about
+`r ox$drop`% — over the 12 hours. In 2007 The Purdue Frederick Company pleaded guilty to
+misbranding OxyContin "with the intent to defraud and mislead"; the government's statement of
+facts says sales staff used "graphs that exaggerated the differences between blood plasma levels"
+of OxyContin and other pain medications. The company paid about $600 million
+([U.S. Attorney, Western District of Virginia, 2007](https://web.archive.org/web/2017/https://media.defense.gov/2007/May/10/2001711223/-1/-1/1/purduefrederick1.pdf)).
+A log axis is not wrong in itself — scientists use them all the time. The problem is using one to
+support a claim that a reader cannot check.
+
+**ExxonMobil.** A company's own report deserves the same scrutiny as anyone else's, especially
+when it has a financial stake in the answer. ExxonMobil's *2024 Advancing Climate Solutions* report
+charts a roadmap for cutting its *emissions intensity* (emissions per unit produced) as bars
+with no numbers on the y-axis, and its abatement curve has no axis numbers either, so a reader
+cannot tell how big the planned cut is or how much of it rests on "CCS, hydrogen, and/or future
+advancements"
+([Union of Concerned Scientists, 2024](https://blog.ucs.org/carly-phillips/greenwashing-in-graphs-an-exxonmobil-story/)).
+Intensity can fall while total emissions rise, if output grows. In this case the report's own
+table shows both falling: intensity from 26.4 to 23.3 tonnes per 100 tonnes of throughput or
+production, and emissions from its operations (Scope 1 and 2) from 117 to 98 million tonnes,
+2016 to 2023. What neither number covers is the emissions from burning the oil and gas the
+company produces — about 540 million tonnes in 2023, roughly 85% of its footprint, for which it
+sets no target
+([ExxonMobil, 2024](https://corporate.exxonmobil.com/-/media/global/files/advancing-climate-solutions/2024/2024-advancing-climate-solutions-report.pdf)).
+
 ## Two easy ways to get a sample
 
 Two designs are tempting because they are quick, cheap and easy:

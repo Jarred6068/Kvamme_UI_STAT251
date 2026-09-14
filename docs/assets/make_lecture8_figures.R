@@ -559,10 +559,52 @@ p_repl <- canvas(c(
 ), RW, RH)
 save_fig(p_repl, "l8_replacement.png", RW, RH)
 
+#17. the same drug-concentration curve on a log axis and a linear axis
+#
+#   ILLUSTRATIVE, not Purdue's data (no published series exists). A one-compartment
+#   absorption/elimination curve matched to two values in the 2008 FDA OxyContin
+#   label: a 10 mg dose peaks at 10.6 ng/mL at about 2.7 hours, and the elimination
+#   half-life is 4.5 hours. The log panel uses a 1-100 axis, as the label figure did.
+
+ke <- log(2) / 4.5
+ka <- uniroot(function(k) log(k / ke) / (k - ke) - 2.7, c(ke + 1e-3, 20))$root
+oxy_t <- seq(0.05, 12, by = 0.05)
+oxy_shape <- exp(-ke * oxy_t) - exp(-ka * oxy_t)
+oxy_c <- oxy_shape / max(oxy_shape) * 10.6
+oxy_peak_t <- oxy_t[which.max(oxy_c)]
+oxy_c12 <- oxy_c[length(oxy_c)]
+oxy_drop <- round(100 * (1 - oxy_c12 / 10.6))
+stopifnot(abs(oxy_peak_t - 2.7) < 0.1, oxy_c12 > 2, oxy_c12 < 3.5)
+write.csv(data.frame(peak = "10.6", c12 = sprintf("%.1f", oxy_c12), drop = oxy_drop),
+          file.path(assets_dir, "l8_oxy_example.csv"), row.names = FALSE)
+
+oxy_df <- data.frame(t = oxy_t, conc = oxy_c)
+oxy_panel <- function(logy) {
+  d <- if (logy) oxy_df[oxy_df$conc >= 1, ] else oxy_df
+  p <- ggplot(d, aes(x = t, y = conc)) +
+    geom_line(colour = NAVY, linewidth = 1.3) +
+    annotate("point", x = c(oxy_peak_t, 12), y = c(10.6, oxy_c12), colour = RED, size = 3) +
+    scale_x_continuous(breaks = c(0, 4, 8, 12), limits = c(0, 12.3)) +
+    labs(x = NULL, y = NULL, title = if (logy) "ng/mL, log axis" else "ng/mL, linear axis") +
+    theme_minimal() +
+    theme(axis.text = el(16), panel.grid.minor = element_blank(),
+          plot.title = el(16, colour = if (logy) RED else NAVY, face = "bold"),
+          plot.margin = margin(2, 10, 2, 2))
+  if (logy) p + scale_y_log10(limits = c(1, 100), breaks = c(1, 10, 100))
+  else p + scale_y_continuous(limits = c(0, 12), breaks = c(0, 5, 10))
+}
+p_oxy <- ggpubr::ggarrange(
+  oxy_panel(TRUE) + theme(axis.text.x = element_blank()),
+  oxy_panel(FALSE) + labs(x = "hours after one 10 mg dose") + theme(axis.title.x = el(16)),
+  ncol = 1, heights = c(1, 1.2), align = "v")
+save_fig(p_oxy, "l8_oxycontin_axes.png", 450, 320)
+
 #----------------------------------------------------------------------------
 sizes_file <- file.path(assets_dir, "l8_figure_sizes.csv")
 write.csv(sizes, sizes_file, row.names = FALSE)
-stopifnot(nrow(sizes) == 17)
+stopifnot(nrow(sizes) == 18)
+message(sprintf("  oxycontin illustration: peak 10.6 at %.2f h, %.1f at 12 h, drop %d%%",
+                oxy_peak_t, oxy_c12, oxy_drop))
 message(sprintf("  frame example: census mean %.1f, sample mean %.1f, sampling error %.1f",
                 mu_hours, xbar_hours, err_hours))
 
