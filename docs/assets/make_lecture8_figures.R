@@ -1,6 +1,7 @@
-#Builds the figures for the Week 4 Lecture 8 deck and notes, which run across two
-#Mondays (9/14/2026 and 9/21/2026): sampling designs, then experimental design
-#and causation.
+#Builds the figures for the Week 4 notes and for the Lecture 8 (9/14/2026) and
+#Lecture 9 (9/21/2026) decks: sampling designs, then experimental design and
+#causation. Lecture 9 carries over the Lecture 8 slides not reached on 9/14, so
+#most of these figures now appear in the Lecture 9 deck.
 #
 #  l8_design_srs.png             simple random sample, n = 20 of N = 100
 #  l8_design_systematic.png      every 5th entry of a numbered list, random start

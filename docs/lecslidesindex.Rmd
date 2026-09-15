@@ -8,8 +8,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <!--
-  STAGED RELEASE - only the Week 2 through Week 4 slides are live. Every other
-  week is wrapped in an HTML comment below and does not render.
+  STAGED RELEASE - only the Week 2 through Week 4 slides and the Fall 2026 Week 5
+  Lecture 9 deck are live. Every other week is wrapped in an HTML comment below
+  and does not render.
 
   To reveal a week, delete the two marker lines around it: the opening line
   that reads "HIDDEN - Week N" and the closing marker on its own line just
@@ -96,8 +97,20 @@ as .pdf
 <a href="./lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx">Download File</a>
 as powerpoint
 
+# Week 5
+
+### Lecture 9
+<a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx">Download File</a>
+as powerpoint
+
 <!--
   HIDDEN - Weeks 5 through 14.
+
+  Week 5 Lecture 9 (Fall 2026) is live above; the 2024 Week 5 links below stay
+  hidden.
 
   The old Week3_Lecture4/5_*_2024 and Week4_Lecture6_*_2024 links that used to
   sit here are gone. Those decks are still on disk as source material, but they

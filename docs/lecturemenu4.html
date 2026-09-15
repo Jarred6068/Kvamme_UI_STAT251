@@ -491,10 +491,12 @@ $(document).ready(function () {
   SCOPE OF THIS PAGE.
 
   Week 4 is Monday Sept 14 (Lecture 8: sampling designs), Wednesday Sept 16
-  (Exam 1 review) and Friday Sept 18 (Exam 1). Lecture 8 runs over into
-  Monday Sept 21 (experiments and causation), so the whole lecture is written
-  up here as one piece, matching the single Lecture 8 deck
-  (lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx).
+  (Exam 1 review) and Friday Sept 18 (Exam 1). On Sept 14 Lecture 8 reached
+  slide 22 (stratified sampling), skipping slide 17. Everything after that moved
+  into Lecture 9 on Monday Sept 21 (Week 5), along with a review and the light at
+  night example. The material is still written up here as one piece:
+    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx   slides 1-22
+    lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx   the rest
 
   Examples are deliberately from this century, and every figure quoted was
   checked against the sources listed at the bottom of the page. Figures come
@@ -1282,6 +1284,54 @@ Health and Human Services, 2014</a>). The point is that without an
 experiment, a causal claim needs this much evidence behind it. A single
 observational study is never enough.</p>
 </div>
+<div id="example-light-at-night-and-the-heart" class="section level3">
+<h3>Example: light at night and the heart</h3>
+<p>In September 2026, the <em>European Heart Journal</em> published a
+study of 11,071 adults from the UK Biobank. Each participant wore a
+light sensor on their wrist for 7 days between 2013 and 2015, and about
+3 years later each one had an MRI of their heart. Compared with
+participants who had no light above 3 lux during the least active part
+of their night, the participants with the most light above 3 lux had
+2.4% more left ventricular mass (adjusted for height), heart walls that
+were 1.5% thicker, and a 1.9% lower myocardial contraction fraction,
+which is one measure of how well the heart muscle pumps. These
+differences grew steadily as the amount of night light went up, i.e., a
+dose-response pattern (<a
+href="https://doi.org/10.1093/eurheartj/ehag563">Dai et al., 2026</a>).
+The European Society of Cardiology’s press release about the study was
+titled “Too much light at night changes the shape and working of the
+heart” (<a
+href="https://www.escardio.org/news/press/press-releases/too-much-light-at-night-changes-the-shape-and-working-of-the-heart/">ESC,
+2026</a>).</p>
+<ul>
+<li>Is this an observational study or an experiment? Does it show that
+light at night <i>causes</i> changes in the heart?</li>
+</ul>
+<p>Nobody was assigned to sleep in a bright room or a dark room. The
+researchers simply measured the light people already had at night, so
+this is an <strong>observational study</strong>. The authors adjusted
+for a long list of variables, including age, smoking, physical activity,
+BMI, air pollution, and neighborhood deprivation, and they state
+themselves that the observational design does not allow them to conclude
+cause and effect. Keep in mind that adjusting for a variable only helps
+if that variable was measured. In the editorial published alongside the
+study, Münzel, Kuntic and Daiber point out that traffic noise was not
+measured and could still be confounding the results, that the
+participants were mostly White and healthier than average, and that
+“causation cannot be firmly established” (<a
+href="https://doi.org/10.1093/eurheartj/ehag650">Münzel, Kuntic and
+Daiber, 2026</a>). They call for randomized trials.</p>
+<p>Now compare this study with the smoking evidence above. The night
+light study has the right order in <strong>time</strong> (the light was
+measured before the MRI), a <strong>dose-response</strong> pattern, and
+a <strong>plausible</strong> explanation, since shorter sleep
+statistically accounted for part of the association. What it does not
+have yet is the same result found <strong>consistently</strong> by many
+studies in different populations. So a headline that says light at night
+“changes” the heart goes further than the study can. A fair summary is
+that more light at night is <i>associated</i> with these changes in the
+heart, and that it is worth testing with an experiment.</p>
+</div>
 </div>
 <div id="experimental-design-terminology" class="section level2">
 <h2>Experimental design terminology</h2>
@@ -1582,6 +1632,12 @@ doesn’t contain any information that could identify individuals.</p>
 <ul>
 <li>AAPOR Task Force on 2020 Pre-Election Polling (2021). <em>Executive
 Summary</em>. American Association for Public Opinion Research.</li>
+<li>Dai, J., Dai, W., Heianza, Y. and Qi, L. (2026). Nighttime light
+exposure and cardiac structure and function. <em>European Heart
+Journal</em>. <a href="https://doi.org/10.1093/eurheartj/ehag563"
+class="uri">https://doi.org/10.1093/eurheartj/ehag563</a></li>
+<li>European Society of Cardiology (2026, September 10). Too much light
+at night changes the shape and working of the heart. Press release.</li>
 <li>Illowsky, B. and Dean, S. (2023). <em>Introductory Statistics
 2e</em>, Sections 1.2 and 1.4–1.6. OpenStax. <a
 href="https://openstax.org/details/books/introductory-statistics-2e"
@@ -1620,6 +1676,11 @@ surgery for osteoarthritis of the knee. <em>New England Journal of
 Medicine</em>, 347(2), 81–88. <a
 href="https://doi.org/10.1056/NEJMoa013259"
 class="uri">https://doi.org/10.1056/NEJMoa013259</a></li>
+<li>Münzel, T., Kuntic, M. and Daiber, A. (2026). The dark night as a
+cardiovascular vital sign: personal light exposure, subclinical cardiac
+remodelling, and the urban exposome. <em>European Heart Journal</em>,
+ehag650. <a href="https://doi.org/10.1093/eurheartj/ehag650"
+class="uri">https://doi.org/10.1093/eurheartj/ehag650</a></li>
 <li>Polack, F. P. et al. (2020). Safety and efficacy of the BNT162b2
 mRNA Covid-19 vaccine. <em>New England Journal of Medicine</em>,
 383(27), 2603–2615. <a href="https://doi.org/10.1056/NEJMoa2034577"
