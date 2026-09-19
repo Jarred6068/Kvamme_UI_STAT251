@@ -1185,8 +1185,12 @@ table.dataTable thead td {
   color: var(--site-text);
 }
 
-/* MathJax inherits currentColor, so it follows the theme automatically. */
-.MathJax, .MathJax_Display { color: var(--site-text); }
+/* MathJax inherits currentColor, so it follows the theme automatically. The SVG
+   renderer (forced in assets/brand/theme-init.html, because HTML-CSS prints
+   square-root bars too wide) wraps its output in its own container classes, so
+   both sets are listed here. */
+.MathJax, .MathJax_Display,
+.MathJax_SVG, .MathJax_SVG_Display { color: var(--site-text); }
 
 
 /* 19. Focus ==========================================================

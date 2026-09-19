@@ -57,6 +57,29 @@
 })();
 </script>
 
+<!--
+  MathJax: render with SVG rather than the default HTML-CSS output.
+
+  HTML-CSS builds a square root's overline out of stretched glyph pieces, and
+  headless Chrome prints the result too wide: on the Exam 1 study guide the bar
+  over sqrt( (1/(n-1)) sum (x_i - xbar)^2 ) ran well past the expression and
+  collided with the line above it. The same overshoot showed up wherever a tall
+  \sqrt was printed, including the Exam 1 review problems.
+
+  Checked by printing the identical formula three ways before changing anything:
+  HTML-CSS overshoots, MathJax 3 (CHTML) overshoots more, and the v2 SVG
+  renderer draws the rule to exactly the right width. It is not a timing
+  problem - reprinting with a 90-second budget produced the same bad bar.
+
+  This has to live in <head>: rmarkdown injects the MathJax <script> at the end
+  of <body>, and MathJax applies any text/x-mathjax-config block it finds in the
+  document when it starts. SVG output inherits currentColor, so both themes are
+  unaffected (see the MathJax rule in assets/brand/site.css).
+-->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({ menuSettings: { renderer: "SVG" } });
+</script>
+
 <style type="text/css">
   code{white-space: pre-wrap;}
   span.smallcaps{font-variant: small-caps;}
