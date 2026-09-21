@@ -33,13 +33,13 @@ path = 'Data/'
 
   Week 5 is Monday Sept 21 (Lecture 9: sampling designs continued, basics of
   experimental design and causality - the Lecture 8 slides not reached on Sept 14,
-  written up with Lecture 8 in the Week 4 notes), Wednesday Sept 23 (normal distribution, z-scores, transformations)
+  written up with Lecture 8 in the Weeks 4-5 notes), Wednesday Sept 23 (normal distribution, z-scores, transformations)
   and Friday Sept 25 (identifying outliers, margin of error, statistical
   significance).
 
   The 2024 "Study Design", "Causation vs Association", "Experimental Design"
   and "Surveys" sections that used to sit at the bottom of this page were
-  replaced by the Lecture 8 write-up in the Week 4 notes. Do not re-add them
+  replaced by the Lecture 8 write-up in the Weeks 4-5 notes. Do not re-add them
   here; two copies drift apart the first time one is corrected.
 -->
 

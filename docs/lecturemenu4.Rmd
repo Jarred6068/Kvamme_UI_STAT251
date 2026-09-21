@@ -1,5 +1,5 @@
 ---
-title: "Week 4 Notes"
+title: "Weeks 4-5 Notes"
 author: "STAT 251 Section 01"
 output: html_document
 ---
@@ -18,11 +18,14 @@ library(latex2exp)
   SCOPE OF THIS PAGE.
 
   Week 4 is Monday Sept 14 (Lecture 8: sampling designs), Wednesday Sept 16
-  (Exam 1 review) and Friday Sept 18 (Exam 1). On Sept 14 Lecture 8 reached
-  slide 22 (stratified sampling), skipping slide 17. Everything after that moved
-  into Lecture 9 on Monday Sept 21 (Week 5), along with a review and the light at
-  night example. The material is still written up here as one piece:
-    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx   slides 1-22
+  (Exam 1 review) and Friday Sept 18 (Exam 1). On Sept 14 Lecture 8 got as far
+  as systematic sampling, skipping slide 17. The Lecture 8 deck was trimmed to
+  slides 1-20 (through "Drawing an SRS in practice"). Everything after that moved
+  into Lecture 9 on Monday Sept 21 (Week 5): a review, the skipped slide 17, two
+  "in the news" sampling-design slides (the AP-NORC poll and the UK Biobank
+  light-at-night study), then systematic sampling onward. The material is still
+  written up here as one piece:
+    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx   slides 1-20
     lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx   the rest
 
   Examples are deliberately from this century, and every figure quoted was
@@ -368,6 +371,37 @@ In the figure above, when we sample without replacement each ball that is drawn 
 bag, so the sample 3, 1, 5 can't have any repeats. When we sample with replacement, every ball goes
 back in the bag before the next draw, so 3 can be drawn twice.
 
+### Examples: two recent sampling designs
+
+**A national poll.** In *State of the Facts 2026*, the AP-NORC Center for Public Affairs Research
+and USAFacts asked U.S. adults how much they trust government information and AI. The poll
+interviewed 1,036 adults from July 29 to August 10, 2026: 1,017 online and 19 by phone, in English
+or Spanish. The margin of sampling error is $\pm 4.1$ percentage points
+([AP-NORC and USAFacts, 2026](https://apnorc.org/projects/state-of-the-facts-2026/)). The
+respondents came from AmeriSpeak, NORC's <i>probability-based</i> panel. NORC randomly selects U.S.
+addresses and then recruits those households by mail, by phone and in person. Nobody can sign
+themselves up, so chance decides who is invited
+([NORC, About AmeriSpeak](https://www.norc.org/services-solutions/amerispeak/about.html)). That is
+the opposite of the opt-in panels above. Random selection doesn't solve everything, though. Only
+10.3% of the invited panel members completed this survey (AAPOR response rate 3), so nonresponse
+is still a concern. We come back to it under nonsampling error below. The methodology is on page 42
+of the [full report](https://apnorc.org/wp-content/uploads/2026/09/State_of_the_facts_2026.pdf).
+
+**A longitudinal study.** The UK Biobank is a cohort of about 500,000 UK adults aged 40–69 who
+agreed to join between 2006 and 2010. Researchers have followed them through their health records
+ever since. From 2013 to 2015, 103,615 of them wore a wrist sensor with a light meter for 7 days.
+A 2026 study then removed people with unreliable sensor data, 2,770 night-shift workers, anyone
+who already had heart disease, and anyone without a later heart MRI. That left 11,071 people, who
+had an MRI of their heart a median of 3.1 years after wearing the sensor. Hospital and death
+records were followed for 8 to 10 years
+([Dai et al., 2026](https://doi.org/10.1093/eurheartj/ehag563);
+[ESC, 2026](https://www.escardio.org/news/press/press-releases/too-much-light-at-night-changes-the-shape-and-working-of-the-heart/)).
+Because the same people are measured at more than one point in time, this is a **longitudinal**
+study: night light was measured first and the heart later. It is not a random sample of any
+population, however. The authors point out that the UK Biobank cohort is mostly White and
+healthier than the general population, so the results may not generalize to everyone. We return to
+this study under association vs. causation.
+
 ## Systematic sampling
 
 A **systematic sample** selects every $k^{th}$ unit from an ordered list, starting at a
@@ -677,7 +711,8 @@ observational study is never enough.
 ### Example: light at night and the heart
 
 In September 2026, the *European Heart Journal* published a study of 11,071 adults from the UK
-Biobank. Each participant wore a light sensor on their wrist for 7 days between 2013 and 2015, and
+Biobank (its sampling design is described under "Examples: two recent sampling designs" above).
+Each participant wore a light sensor on their wrist for 7 days between 2013 and 2015, and
 about 3 years later each one had an MRI of their heart. Compared with participants who had no light
 above 3 lux during the least active part of their night, the participants with the most light above
 3 lux had 2.4% more left ventricular mass (adjusted for height), heart walls that were 1.5% thicker,
@@ -941,18 +976,22 @@ individuals.
 
 * AAPOR Task Force on 2020 Pre-Election Polling (2021). *Executive Summary*. American Association
   for Public Opinion Research.
+* AP-NORC Center for Public Affairs Research and USAFacts (2026). *State of the Facts 2026*.
+  <https://apnorc.org/projects/state-of-the-facts-2026/> (report:
+  <https://apnorc.org/wp-content/uploads/2026/09/State_of_the_facts_2026.pdf>)
 * Dai, J., Dai, W., Heianza, Y. and Qi, L. (2026). Nighttime light exposure and cardiac structure
   and function. *European Heart Journal*. <https://doi.org/10.1093/eurheartj/ehag563>
 * European Society of Cardiology (2026, September 10). Too much light at night changes the shape and
   working of the heart. Press release.
-* Illowsky, B. and Dean, S. (2023). *Introductory Statistics 2e*, Sections 1.2 and 1.4–1.6.
-  OpenStax. <https://openstax.org/details/books/introductory-statistics-2e>
+  <https://www.escardio.org/news/press/press-releases/too-much-light-at-night-changes-the-shape-and-working-of-the-heart/>
 * Grodstein, F. et al. (1996). Postmenopausal estrogen and progestin use and the risk of
   cardiovascular disease. *New England Journal of Medicine*, 335, 453–461.
 * Hill, A. B. (1965). The environment and disease: association or causation? *Proceedings of the
   Royal Society of Medicine*, 58, 295–300.
 * Humphrey, L. L., Chan, B. K. and Sox, H. C. (2002). Postmenopausal hormone replacement therapy
   and the primary prevention of cardiovascular disease. *Annals of Internal Medicine*, 137, 273–284.
+* Illowsky, B. and Dean, S. (2023). *Introductory Statistics 2e*, Sections 1.2 and 1.4–1.6.
+  OpenStax. <https://openstax.org/details/books/introductory-statistics-2e>
 * Kennedy, C. and Hartig, H. (2019). Response rates in telephone surveys have resumed their
   decline. Pew Research Center.
 * Kramer, A. D. I., Guillory, J. E. and Hancock, J. T. (2014). Experimental evidence of
@@ -969,6 +1008,8 @@ individuals.
 * Münzel, T., Kuntic, M. and Daiber, A. (2026). The dark night as a cardiovascular vital sign:
   personal light exposure, subclinical cardiac remodelling, and the urban exposome. *European Heart
   Journal*, ehag650. <https://doi.org/10.1093/eurheartj/ehag650>
+* NORC at the University of Chicago (n.d.). About AmeriSpeak.
+  <https://www.norc.org/services-solutions/amerispeak/about.html>
 * Polack, F. P. et al. (2020). Safety and efficacy of the BNT162b2 mRNA Covid-19 vaccine. *New
   England Journal of Medicine*, 383(27), 2603–2615. <https://doi.org/10.1056/NEJMoa2034577>
 * U.S. Department of Health and Human Services (2014). *The Health Consequences of Smoking — 50

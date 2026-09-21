@@ -12,7 +12,7 @@
 <meta name="author" content="STAT 251 Section 01" />
 
 
-<title>Week 4 Notes</title>
+<title>Weeks 4-5 Notes</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -344,7 +344,7 @@ $(document).ready(function () {
           <a href="lecturemenu3.html">Week 3</a>
         </li>
         <li>
-          <a href="lecturemenu4.html">Week 4</a>
+          <a href="lecturemenu4.html">Weeks 4-5</a>
         </li>
       </ul>
     </li>
@@ -504,7 +504,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Week 4 Notes</h1>
+<h1 class="title toc-ignore">Weeks 4-5 Notes</h1>
 <h4 class="author">STAT 251 Section 01</h4>
 
 </div>
@@ -514,11 +514,14 @@ $(document).ready(function () {
   SCOPE OF THIS PAGE.
 
   Week 4 is Monday Sept 14 (Lecture 8: sampling designs), Wednesday Sept 16
-  (Exam 1 review) and Friday Sept 18 (Exam 1). On Sept 14 Lecture 8 reached
-  slide 22 (stratified sampling), skipping slide 17. Everything after that moved
-  into Lecture 9 on Monday Sept 21 (Week 5), along with a review and the light at
-  night example. The material is still written up here as one piece:
-    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx   slides 1-22
+  (Exam 1 review) and Friday Sept 18 (Exam 1). On Sept 14 Lecture 8 got as far
+  as systematic sampling, skipping slide 17. The Lecture 8 deck was trimmed to
+  slides 1-20 (through "Drawing an SRS in practice"). Everything after that moved
+  into Lecture 9 on Monday Sept 21 (Week 5): a review, the skipped slide 17, two
+  "in the news" sampling-design slides (the AP-NORC poll and the UK Biobank
+  light-at-night study), then systematic sampling onward. The material is still
+  written up here as one piece:
+    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx   slides 1-20
     lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx   the rest
 
   Examples are deliberately from this century, and every figure quoted was
@@ -928,6 +931,47 @@ that is drawn is removed from the bag, so the sample 3, 1, 5 can’t have
 any repeats. When we sample with replacement, every ball goes back in
 the bag before the next draw, so 3 can be drawn twice.</p>
 </div>
+<div id="examples-two-recent-sampling-designs" class="section level3">
+<h3>Examples: two recent sampling designs</h3>
+<p><strong>A national poll.</strong> In <em>State of the Facts
+2026</em>, the AP-NORC Center for Public Affairs Research and USAFacts
+asked U.S. adults how much they trust government information and AI. The
+poll interviewed 1,036 adults from July 29 to August 10, 2026: 1,017
+online and 19 by phone, in English or Spanish. The margin of sampling
+error is <span class="math inline">\(\pm 4.1\)</span> percentage points
+(<a href="https://apnorc.org/projects/state-of-the-facts-2026/">AP-NORC
+and USAFacts, 2026</a>). The respondents came from AmeriSpeak, NORC’s
+<i>probability-based</i> panel. NORC randomly selects U.S. addresses and
+then recruits those households by mail, by phone and in person. Nobody
+can sign themselves up, so chance decides who is invited (<a
+href="https://www.norc.org/services-solutions/amerispeak/about.html">NORC,
+About AmeriSpeak</a>). That is the opposite of the opt-in panels above.
+Random selection doesn’t solve everything, though. Only 10.3% of the
+invited panel members completed this survey (AAPOR response rate 3), so
+nonresponse is still a concern. We come back to it under nonsampling
+error below. The methodology is on page 42 of the <a
+href="https://apnorc.org/wp-content/uploads/2026/09/State_of_the_facts_2026.pdf">full
+report</a>.</p>
+<p><strong>A longitudinal study.</strong> The UK Biobank is a cohort of
+about 500,000 UK adults aged 40–69 who agreed to join between 2006 and
+2010. Researchers have followed them through their health records ever
+since. From 2013 to 2015, 103,615 of them wore a wrist sensor with a
+light meter for 7 days. A 2026 study then removed people with unreliable
+sensor data, 2,770 night-shift workers, anyone who already had heart
+disease, and anyone without a later heart MRI. That left 11,071 people,
+who had an MRI of their heart a median of 3.1 years after wearing the
+sensor. Hospital and death records were followed for 8 to 10 years (<a
+href="https://doi.org/10.1093/eurheartj/ehag563">Dai et al., 2026</a>;
+<a
+href="https://www.escardio.org/news/press/press-releases/too-much-light-at-night-changes-the-shape-and-working-of-the-heart/">ESC,
+2026</a>). Because the same people are measured at more than one point
+in time, this is a <strong>longitudinal</strong> study: night light was
+measured first and the heart later. It is not a random sample of any
+population, however. The authors point out that the UK Biobank cohort is
+mostly White and healthier than the general population, so the results
+may not generalize to everyone. We return to this study under
+association vs. causation.</p>
+</div>
 </div>
 <div id="systematic-sampling" class="section level2">
 <h2>Systematic sampling</h2>
@@ -1310,14 +1354,15 @@ observational study is never enough.</p>
 <div id="example-light-at-night-and-the-heart" class="section level3">
 <h3>Example: light at night and the heart</h3>
 <p>In September 2026, the <em>European Heart Journal</em> published a
-study of 11,071 adults from the UK Biobank. Each participant wore a
-light sensor on their wrist for 7 days between 2013 and 2015, and about
-3 years later each one had an MRI of their heart. Compared with
-participants who had no light above 3 lux during the least active part
-of their night, the participants with the most light above 3 lux had
-2.4% more left ventricular mass (adjusted for height), heart walls that
-were 1.5% thicker, and a 1.9% lower myocardial contraction fraction,
-which is one measure of how well the heart muscle pumps. These
+study of 11,071 adults from the UK Biobank (its sampling design is
+described under “Examples: two recent sampling designs” above). Each
+participant wore a light sensor on their wrist for 7 days between 2013
+and 2015, and about 3 years later each one had an MRI of their heart.
+Compared with participants who had no light above 3 lux during the least
+active part of their night, the participants with the most light above 3
+lux had 2.4% more left ventricular mass (adjusted for height), heart
+walls that were 1.5% thicker, and a 1.9% lower myocardial contraction
+fraction, which is one measure of how well the heart muscle pumps. These
 differences grew steadily as the amount of night light went up, i.e., a
 dose-response pattern (<a
 href="https://doi.org/10.1093/eurheartj/ehag563">Dai et al., 2026</a>).
@@ -1655,16 +1700,21 @@ doesn’t contain any information that could identify individuals.</p>
 <ul>
 <li>AAPOR Task Force on 2020 Pre-Election Polling (2021). <em>Executive
 Summary</em>. American Association for Public Opinion Research.</li>
+<li>AP-NORC Center for Public Affairs Research and USAFacts (2026).
+<em>State of the Facts 2026</em>. <a
+href="https://apnorc.org/projects/state-of-the-facts-2026/"
+class="uri">https://apnorc.org/projects/state-of-the-facts-2026/</a>
+(report: <a
+href="https://apnorc.org/wp-content/uploads/2026/09/State_of_the_facts_2026.pdf"
+class="uri">https://apnorc.org/wp-content/uploads/2026/09/State_of_the_facts_2026.pdf</a>)</li>
 <li>Dai, J., Dai, W., Heianza, Y. and Qi, L. (2026). Nighttime light
 exposure and cardiac structure and function. <em>European Heart
 Journal</em>. <a href="https://doi.org/10.1093/eurheartj/ehag563"
 class="uri">https://doi.org/10.1093/eurheartj/ehag563</a></li>
 <li>European Society of Cardiology (2026, September 10). Too much light
-at night changes the shape and working of the heart. Press release.</li>
-<li>Illowsky, B. and Dean, S. (2023). <em>Introductory Statistics
-2e</em>, Sections 1.2 and 1.4–1.6. OpenStax. <a
-href="https://openstax.org/details/books/introductory-statistics-2e"
-class="uri">https://openstax.org/details/books/introductory-statistics-2e</a></li>
+at night changes the shape and working of the heart. Press release. <a
+href="https://www.escardio.org/news/press/press-releases/too-much-light-at-night-changes-the-shape-and-working-of-the-heart/"
+class="uri">https://www.escardio.org/news/press/press-releases/too-much-light-at-night-changes-the-shape-and-working-of-the-heart/</a></li>
 <li>Grodstein, F. et al. (1996). Postmenopausal estrogen and progestin
 use and the risk of cardiovascular disease. <em>New England Journal of
 Medicine</em>, 335, 453–461.</li>
@@ -1674,6 +1724,10 @@ causation? <em>Proceedings of the Royal Society of Medicine</em>, 58,
 <li>Humphrey, L. L., Chan, B. K. and Sox, H. C. (2002). Postmenopausal
 hormone replacement therapy and the primary prevention of cardiovascular
 disease. <em>Annals of Internal Medicine</em>, 137, 273–284.</li>
+<li>Illowsky, B. and Dean, S. (2023). <em>Introductory Statistics
+2e</em>, Sections 1.2 and 1.4–1.6. OpenStax. <a
+href="https://openstax.org/details/books/introductory-statistics-2e"
+class="uri">https://openstax.org/details/books/introductory-statistics-2e</a></li>
 <li>Kennedy, C. and Hartig, H. (2019). Response rates in telephone
 surveys have resumed their decline. Pew Research Center.</li>
 <li>Kramer, A. D. I., Guillory, J. E. and Hancock, J. T. (2014).
@@ -1704,6 +1758,9 @@ cardiovascular vital sign: personal light exposure, subclinical cardiac
 remodelling, and the urban exposome. <em>European Heart Journal</em>,
 ehag650. <a href="https://doi.org/10.1093/eurheartj/ehag650"
 class="uri">https://doi.org/10.1093/eurheartj/ehag650</a></li>
+<li>NORC at the University of Chicago (n.d.). About AmeriSpeak. <a
+href="https://www.norc.org/services-solutions/amerispeak/about.html"
+class="uri">https://www.norc.org/services-solutions/amerispeak/about.html</a></li>
 <li>Polack, F. P. et al. (2020). Safety and efficacy of the BNT162b2
 mRNA Covid-19 vaccine. <em>New England Journal of Medicine</em>,
 383(27), 2603–2615. <a href="https://doi.org/10.1056/NEJMoa2034577"

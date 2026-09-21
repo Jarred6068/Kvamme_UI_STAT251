@@ -32,7 +32,7 @@ path = 'Data/'
 
   The 2024 "Sources of Bias In Surveys", "More Complicated Sampling Designs"
   and "Ethical studies" sections that used to open this page were replaced by
-  the Lecture 8 and 9 write-up in the Week 4 notes (Mondays Sept 14 and 21). Do not
+  the Lecture 8 and 9 write-up in the Weeks 4-5 notes (Mondays Sept 14 and 21). Do not
   re-add them here. The rest of this page is still 2024 material awaiting its
   Fall 2026 revision.
 -->
