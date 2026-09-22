@@ -106,6 +106,13 @@ as .pdf
 <a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx">Download File</a>
 as powerpoint
 
+### Lecture 10
+<a href="./lecture_slides/Week 5/Week5_Lecture10_Slides_9_23_2026.pdf">Download File</a>
+as .pdf
+
+<a href="./lecture_slides/Week 5/Week5_Lecture10_Slides_9_23_2026.pptx">Download File</a>
+as powerpoint
+
 <!--
   HIDDEN - Weeks 5 through 14.
 

@@ -23,10 +23,14 @@ library(latex2exp)
   slides 1-20 (through "Drawing an SRS in practice"). Everything after that moved
   into Lecture 9 on Monday Sept 21 (Week 5): a review, the skipped slide 17, two
   "in the news" sampling-design slides (the AP-NORC poll and the UK Biobank
-  light-at-night study), then systematic sampling onward. The material is still
-  written up here as one piece:
-    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx   slides 1-20
-    lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx   the rest
+  light-at-night study), then systematic sampling onward. Lecture 9 in turn only
+  reached its slide 14 ("Three common nonsampling errors"), so the nonsampling
+  examples, the sampling-design practice, the project Part 3 slide and all of
+  Experiments and Causation moved again, into Lecture 10 on Wednesday Sept 23.
+  The material is still written up here as one piece:
+    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx    slides 1-20
+    lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx    slides 1-14
+    lecture_slides/Week 5/Week5_Lecture10_Slides_9_23_2026.pptx   the rest
 
   Examples are deliberately from this century, and every figure quoted was
   checked against the sources listed at the bottom of the page. Figures come

@@ -31,11 +31,18 @@ path = 'Data/'
 <!--
   SCOPE OF THIS PAGE.
 
-  Week 5 is Monday Sept 21 (Lecture 9: sampling designs continued, basics of
-  experimental design and causality - the Lecture 8 slides not reached on Sept 14,
-  written up with Lecture 8 in the Weeks 4-5 notes), Wednesday Sept 23 (normal distribution, z-scores, transformations)
-  and Friday Sept 25 (identifying outliers, margin of error, statistical
-  significance).
+  Week 5 is Monday Sept 21 (Lecture 9: sampling designs continued through
+  nonsampling error - the Lecture 8 slides not reached on Sept 14, written up with
+  Lecture 8 in the Weeks 4-5 notes), Wednesday Sept 23 (Lecture 10: course project
+  discussion, then experimental design and causality - also written up in the
+  Weeks 4-5 notes) and Friday Sept 25 (normal distribution, z-scores,
+  transformations - the sections below).
+
+  Lecture 9 ran out of time at its slide 14, so the whole class slipped one
+  lecture: the normal distribution moved from Sept 23 to Sept 25, and identifying
+  outliers, margin of error and statistical significance moved to Monday Sept 28
+  (Week 6). Course_Schedule.Rmd was updated to match; it stays the date source of
+  truth. Exam 2 (Oct 16) now stops after confidence intervals for a proportion.
 
   The 2024 "Study Design", "Causation vs Association", "Experimental Design"
   and "Surveys" sections that used to sit at the bottom of this page were
