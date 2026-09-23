@@ -519,10 +519,14 @@ $(document).ready(function () {
   slides 1-20 (through "Drawing an SRS in practice"). Everything after that moved
   into Lecture 9 on Monday Sept 21 (Week 5): a review, the skipped slide 17, two
   "in the news" sampling-design slides (the AP-NORC poll and the UK Biobank
-  light-at-night study), then systematic sampling onward. The material is still
-  written up here as one piece:
-    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx   slides 1-20
-    lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx   the rest
+  light-at-night study), then systematic sampling onward. Lecture 9 in turn only
+  reached its slide 14 ("Three common nonsampling errors"), so the nonsampling
+  examples, the sampling-design practice, the project Part 3 slide and all of
+  Experiments and Causation moved again, into Lecture 10 on Wednesday Sept 23.
+  The material is still written up here as one piece:
+    lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx    slides 1-20
+    lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx    slides 1-14
+    lecture_slides/Week 5/Week5_Lecture10_Slides_9_23_2026.pptx   the rest
 
   Examples are deliberately from this century, and every figure quoted was
   checked against the sources listed at the bottom of the page. Figures come
@@ -1321,6 +1325,80 @@ the apparent benefit went away (<a
 href="https://europepmc.org/article/MED/12186518">Humphrey, Chan and
 Sox, 2002</a>). In the randomized trial, random assignment balanced
 these lurking variables between the two groups automatically.</p>
+<p>It is worth being precise about what that trial did and did not test,
+because the result was reported far more broadly than it was designed to
+support. The WHI estrogen-plus-progestin trial was a <strong>primary
+prevention</strong> trial: it enrolled postmenopausal women aged 50 to
+79 with an intact uterus, whose average age was about 63, more than a
+decade past the typical age of menopause. Every woman in the treatment
+group received the same fixed daily dose of one oral formulation, 0.625
+mg of conjugated equine estrogens plus 2.5 mg of medroxyprogesterone
+acetate in a single tablet. Its primary outcome was coronary heart
+disease, with invasive breast cancer as the primary adverse outcome. It
+was not asking whether hormone therapy relieves menopausal symptoms, it
+did not test transdermal patches or doses tailored to the patient, and
+it did not enroll perimenopausal women at all. Its conclusion was about
+<em>that</em> regimen, started <em>that</em> late, used for <em>chronic
+disease prevention</em>.</p>
+<p>The labeling has since caught up with those distinctions. In November
+2025 the FDA asked manufacturers to revise the labels of menopausal
+hormone therapy products, noting that the average WHI participant was 63
+and that the formulation tested is “no longer in common use” (<a
+href="https://www.fda.gov/drugs/drug-alerts-and-statements/fda-requests-labeling-changes-related-safety-information-clarify-benefitrisk-considerations">FDA,
+2025</a>). On February 12, 2026 the FDA approved the first batch of
+those changes, removing the statements about cardiovascular disease,
+breast cancer, and probable dementia from the <strong>boxed
+warning</strong> of six products (<a
+href="https://www.fda.gov/news-events/press-announcements/fda-approves-labeling-changes-menopausal-hormone-therapy-products">FDA,
+2026</a>). The boxed warning about endometrial cancer remains for
+estrogen-alone products, and information about cardiovascular and breast
+cancer risk remains elsewhere in the labeling; what changed is how
+prominently and how broadly the risks are stated. The FDA’s labeled
+recommendation is now to begin systemic therapy within 10 years of
+menopause, generally before age 60, with dose, route, and duration
+individualized.</p>
+<p>Current reviews make the same point: timing, formulation, and route
+of administration all matter, and transdermal estradiol appears to have
+a safer cardiovascular profile than the older oral preparations (<a
+href="https://doi.org/10.1093/ehjopen/oeag054">Blackburn and Kunadian,
+2026</a>). A 2025 analysis of more than 3,800 postmenopausal women,
+presented at The Menopause Society annual meeting, found less anxiety
+and depression with transdermal than with oral therapy and no difference
+in cardiovascular disease, concluding that the route “should be
+individualized” (<a
+href="https://menopause.org/press-releases/oral-or-transdermal-hormone-therapy-the-mental-health-risks-are-not-the-same">The
+Menopause Society, 2025</a>). That one is a conference presentation
+rather than a peer-reviewed paper, so treat it as preliminary.</p>
+<p>For our purposes, the interesting part is that the lurking-variable
+problem from 1996 has not gone away. Observational studies again report
+lower cardiovascular risk among women who start therapy early: in a 2026
+cohort of 83,670 matched pairs, women who began within a year of
+menopause had a cardiovascular disease hazard ratio of <span
+class="math inline">\(0.70\)</span>, about 30% lower than matched
+non-users (<a href="https://doi.org/10.1093/hropen/hoag072">Lu et al.,
+2026</a>). But the 2025 Cochrane review of the <em>randomized</em>
+trials still finds little to no difference in coronary events for women
+starting within 10 years of menopause (relative risk <span
+class="math inline">\(0.94\)</span>, 95% CI <span
+class="math inline">\(0.78\)</span> to <span
+class="math inline">\(1.13\)</span>), with increased stroke and venous
+thromboembolism (<a
+href="https://doi.org/10.1002/14651858.CD004143.pub6">Bofill Rodriguez
+et al., 2025</a>).</p>
+<ul>
+<li>Two study designs, two answers. Which one can tell us whether
+starting therapy early <em>prevents</em> heart disease?</li>
+</ul>
+<p>The randomized one. Women who choose hormone therapy are still
+healthier than women who do not, so the observational gap may once again
+be partly selection rather than effect. This is not a reason to dismiss
+the newer evidence, and it is not the 2002 story repeating itself: the
+case for early, individualized therapy in women with symptoms rests on
+strong evidence for <strong>symptom relief</strong>, on the mismatch
+between WHI’s population and the women actually being treated, and on
+the timing evidence. It does not yet rest on a demonstrated randomized
+cardiovascular benefit. Keeping those two claims separate is exactly the
+skill this section is about.</p>
 </div>
 <div id="example-coffee-and-the-risk-of-death" class="section level3">
 <h3>Example: coffee and the risk of death</h3>
@@ -1347,6 +1425,56 @@ for, the harmful-looking “coffee effect” disappeared. Keep in mind that
 this is still an observational study. The authors state that they cannot
 tell whether the lower risk after adjustment is caused by coffee or is
 just an association.</p>
+<p>Two decades of better-adjusted research have kept pointing the same
+way. A 2026 analysis of 354,957 UK Biobank participants, followed for a
+median of 13 years, found that people drinking 5 or more cups a day had
+a lower risk of cirrhosis (hazard ratio <span
+class="math inline">\(0.68\)</span>, 95% CI <span
+class="math inline">\(0.58\)</span> to <span
+class="math inline">\(0.79\)</span>), liver cancer (<span
+class="math inline">\(0.53\)</span>, <span
+class="math inline">\(0.34\)</span> to <span
+class="math inline">\(0.83\)</span>), and death from liver disease
+(<span class="math inline">\(0.58\)</span>, <span
+class="math inline">\(0.45\)</span> to <span
+class="math inline">\(0.74\)</span>) than non-drinkers, with less liver
+fat on MRI in the subgroup that was scanned (<a
+href="https://doi.org/10.1016/j.cgh.2026.04.035">Kim et al., 2026</a>).
+Notice the cohort: this is the same UK Biobank used in the
+light-at-night study, so the same caveat applies. The authors say
+plainly that “residual confounding and reverse causation cannot be
+excluded” and that their participants were mostly of European ancestry
+and relatively health-conscious.</p>
+<p>For the heart specifically, the American Heart Association reviewed
+this literature in a 2026 scientific statement and reported that
+caffeine, “studied primarily in the context of coffee, has been shown
+either to have no relationship or to be associated with a lower risk of
+coronary artery disease and heart failure”, with moderate consumption
+also associated with lower stroke risk (<a
+href="https://doi.org/10.1161/CIR.0000000000001454">Marcus et al.,
+2026</a>). The statement is careful about two things worth repeating in
+class. First, “the majority of human subject-based research is
+observational”. Second, coffee is not one exposure: unfiltered coffee
+raises LDL cholesterol, and high-dose caffeine in energy drinks looks
+harmful rather than helpful. There is even a little randomized evidence
+now, and it cuts both ways: in a trial among regular coffee drinkers,
+caffeinated coffee lowered the occurrence of atrial fibrillation but
+increased premature ventricular contractions.</p>
+<p>So the whole story runs the other way from the hormone therapy
+example, and that contrast is the point:</p>
+<ul>
+<li>With <strong>hormone therapy</strong>, observational studies
+suggested a benefit, and the randomized trial reversed it. Healthier
+women were choosing the treatment.</li>
+<li>With <strong>coffee</strong>, observational studies suggested harm,
+and that harm came from a lurking variable. Once smoking was accounted
+for, the association reversed, and it has held up as the evidence
+improved.</li>
+</ul>
+<p>A lurking variable does not push in a predictable direction. It
+pushed the estimate toward benefit in one case and toward harm in the
+other, which is why the fix is the study design rather than a correction
+applied afterwards.</p>
 </div>
 <div id="can-we-claim-cause-without-an-experiment"
 class="section level3">
@@ -1733,6 +1861,17 @@ class="uri">https://apnorc.org/projects/state-of-the-facts-2026/</a>
 (report: <a
 href="https://apnorc.org/wp-content/uploads/2026/09/State_of_the_facts_2026.pdf"
 class="uri">https://apnorc.org/wp-content/uploads/2026/09/State_of_the_facts_2026.pdf</a>)</li>
+<li>Blackburn, I. and Kunadian, V. (2026). Hormone replacement therapy
+and cardiovascular risk in postmenopausal women. <em>European Heart
+Journal Open</em>, 6(2), oeag054. <a
+href="https://doi.org/10.1093/ehjopen/oeag054"
+class="uri">https://doi.org/10.1093/ehjopen/oeag054</a></li>
+<li>Bofill Rodriguez, M., Yong, L. N., Mirkov, S., Bekos, C., Lethaby,
+A. and Farquhar, C. (2025). Long-term hormone therapy for perimenopausal
+and postmenopausal women. <em>Cochrane Database of Systematic
+Reviews</em>, 11, CD004143. <a
+href="https://doi.org/10.1002/14651858.CD004143.pub6"
+class="uri">https://doi.org/10.1002/14651858.CD004143.pub6</a></li>
 <li>Dai, J., Dai, W., Heianza, Y. and Qi, L. (2026). Nighttime light
 exposure and cardiac structure and function. <em>European Heart
 Journal</em>. <a href="https://doi.org/10.1093/eurheartj/ehag563"
@@ -1761,11 +1900,21 @@ href="https://openstax.org/details/books/introductory-statistics-2e"
 class="uri">https://openstax.org/details/books/introductory-statistics-2e</a></li>
 <li>Kennedy, C. and Hartig, H. (2019). Response rates in telephone
 surveys have resumed their decline. Pew Research Center.</li>
+<li>Kim, H.-S. et al. (2026). Coffee consumption and improved liver
+outcomes: clinical, imaging, and proteomic evidence from the UK Biobank.
+<em>Clinical Gastroenterology and Hepatology</em>. <a
+href="https://doi.org/10.1016/j.cgh.2026.04.035"
+class="uri">https://doi.org/10.1016/j.cgh.2026.04.035</a></li>
 <li>Kramer, A. D. I., Guillory, J. E. and Hancock, J. T. (2014).
 Experimental evidence of massive-scale emotional contagion through
 social networks. <em>PNAS</em>, 111(24), 8788–8790. <a
 href="https://doi.org/10.1073/pnas.1320040111"
 class="uri">https://doi.org/10.1073/pnas.1320040111</a></li>
+<li>Lu, T. F. et al. (2026). Long-term systemic outcomes of
+postmenopausal hormone replacement therapy by age at menopause: a
+real-world cohort study. <em>Human Reproduction Open</em>, 2026(3),
+hoag072. <a href="https://doi.org/10.1093/hropen/hoag072"
+class="uri">https://doi.org/10.1093/hropen/hoag072</a></li>
 <li>Manson, J. E. et al. (2019a). Vitamin D supplements and prevention
 of cancer and cardiovascular disease. <em>New England Journal of
 Medicine</em>, 380(1), 33–44. <a
@@ -1776,6 +1925,16 @@ of cardiovascular disease and cancer. <em>New England Journal of
 Medicine</em>, 380(1), 23–32. <a
 href="https://doi.org/10.1056/NEJMoa1811403"
 class="uri">https://doi.org/10.1056/NEJMoa1811403</a></li>
+<li>Marcus, G. M., Hu, F. B., van Dam, R. M. et al. (2026). Caffeine and
+cardiovascular disease: a scientific statement from the American Heart
+Association. <em>Circulation</em>, 154, e345–e355. <a
+href="https://doi.org/10.1161/CIR.0000000000001454"
+class="uri">https://doi.org/10.1161/CIR.0000000000001454</a></li>
+<li>The Menopause Society (2025, October 10). <em>Oral or transdermal
+hormone therapy? The mental health risks are not the same</em>. Press
+release. <a
+href="https://menopause.org/press-releases/oral-or-transdermal-hormone-therapy-the-mental-health-risks-are-not-the-same"
+class="uri">https://menopause.org/press-releases/oral-or-transdermal-hormone-therapy-the-mental-health-risks-are-not-the-same</a></li>
 <li>Mercer, A., Kennedy, C. and Keeter, S. (2024). Online opt-in polls
 can produce misleading results, especially for young people and Hispanic
 adults. Pew Research Center.</li>
@@ -1799,6 +1958,16 @@ class="uri">https://doi.org/10.1056/NEJMoa2034577</a></li>
 <li>U.S. Department of Health and Human Services (2014). <em>The Health
 Consequences of Smoking — 50 Years of Progress: A Report of the Surgeon
 General</em>.</li>
+<li>U.S. Food and Drug Administration (2025, November 10). <em>FDA
+requests labeling changes related to safety information to clarify the
+benefit/risk considerations for menopausal hormone therapies</em>. <a
+href="https://www.fda.gov/drugs/drug-alerts-and-statements/fda-requests-labeling-changes-related-safety-information-clarify-benefitrisk-considerations"
+class="uri">https://www.fda.gov/drugs/drug-alerts-and-statements/fda-requests-labeling-changes-related-safety-information-clarify-benefitrisk-considerations</a></li>
+<li>U.S. Food and Drug Administration (2026, February 12). <em>FDA
+approves labeling changes to menopausal hormone therapy products</em>.
+<a
+href="https://www.fda.gov/news-events/press-announcements/fda-approves-labeling-changes-menopausal-hormone-therapy-products"
+class="uri">https://www.fda.gov/news-events/press-announcements/fda-approves-labeling-changes-menopausal-hormone-therapy-products</a></li>
 <li>Writing Group for the Women’s Health Initiative Investigators
 (2002). Risks and benefits of estrogen plus progestin in healthy
 postmenopausal women. <em>JAMA</em>, 288(3), 321–333. <a

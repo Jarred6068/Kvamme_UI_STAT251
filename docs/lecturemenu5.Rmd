@@ -41,8 +41,11 @@ path = 'Data/'
   Lecture 9 ran out of time at its slide 14, so the whole class slipped one
   lecture: the normal distribution moved from Sept 23 to Sept 25, and identifying
   outliers, margin of error and statistical significance moved to Monday Sept 28
-  (Week 6). Course_Schedule.Rmd was updated to match; it stays the date source of
-  truth. Exam 2 (Oct 16) now stops after confidence intervals for a proportion.
+  (Week 6). Every later content lecture moved one class too; the slip is absorbed
+  at the end of the term by dropping "ANOVA continued" (was Dec 9), not by merging
+  topics mid-term. Course_Schedule.Rmd was updated to match; it stays the date
+  source of truth. Exam 2 (Oct 16) now stops after confidence intervals for a
+  proportion, and Exam 3 (Nov 20) after Cramer's V / McNemar / Fisher.
 
   The 2024 "Study Design", "Causation vs Association", "Experimental Design"
   and "Surveys" sections that used to sit at the bottom of this page were

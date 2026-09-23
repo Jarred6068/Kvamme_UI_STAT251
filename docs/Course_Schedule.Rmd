@@ -100,6 +100,29 @@ calendar, see the University of Idaho
 is tentative. The pace of the course may deviate from the exact schedule
 outlined below. Any changes will be announced in class and posted here.**
 
+<!--
+  REVISED Sept 22 2026. Lecture 9 (Mon Sept 21) ran out of time at its slide 14,
+  and Wednesday Sept 23 became the course project discussion plus the rest of
+  experimental design. Every content lecture from Sept 25 on therefore moved one
+  class later; exam days, exam review days, Fall Recess, the Jeopardy review and
+  the final all stayed put, so the shift hops over them.
+
+  The extra lecture is absorbed at the END of the term: "ANOVA continued:
+  multiple comparisons and checking assumptions" (previously Wed Dec 9) is
+  DROPPED, so Dec 9 is now the single ANOVA lecture and Dec 11 stays the Jeopardy
+  review. That material is still written up in the Week 16 notes (Tukey's HSD and
+  the assumption checks) as reading; it just has no class day of its own.
+
+  Knock-on effects to keep in mind:
+    * Exam 2 (Oct 16) now stops after confidence intervals for a PROPORTION;
+      confidence intervals for a mean land Oct 19, after the exam.
+    * Exam 3 (Nov 20) now stops after Cramer's V / McNemar / Fisher; measures of
+      association move to Nov 30, after the exam.
+  The Exam 2 and Exam 3 study guides and review problems were NOT re-scoped to
+  match - check them before those exams.
+-->
+
+
 <table class="schedule-table">
 <caption>Week-by-week topic schedule for Fall 2026. Tentative; changes are announced in class and posted here.</caption>
 <thead>

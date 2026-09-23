@@ -15,6 +15,15 @@ bibliography: misc/Week_16_bibs.bib
 urlcolor: blue
 ---
 
+<!--
+  SCOPE NOTE (Sept 22 2026). The Fall 2026 schedule lost a lecture when Lecture 9
+  ran short, and the slip is absorbed here: "ANOVA continued: multiple comparisons
+  and checking assumptions" no longer has a class day. Dec 9 is the single ANOVA
+  lecture and Dec 11 is the Jeopardy review. The multiple-comparisons (Tukey HSD)
+  and assumption-checking sections below stay on this page as reading. Decide how
+  much of them to cover on Dec 9 before writing that deck. See Course_Schedule.Rmd.
+-->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
