@@ -653,11 +653,13 @@ random sample is still an observational study.
 
 ## Association vs. causation
 
-* Two variables are **associated** when they tend to move together in the data.
-* One variable **causes** another when changing the first would change the second.
-* A **lurking variable** is a variable that isn't included in the study but influences both the
-  explanatory and response variables.
-* Two variables are **confounded** when we can't separate their effects on the response.
+* A **statistical association** between two variables is a numerical measure of their relatedness.
+* A **causal relationship** between two variables means that changing one variable causes a
+  proportional change in the other. This is also called a cause-and-effect relationship.
+* A **lurking variable** is a variable unknown to the researchers and not included in the study,
+  which is associated with <u>both</u> the explanatory and the response variable.
+* Two variables are **confounded** when their effects on the response cannot be separated, so
+  neither effect can be credited to one variable alone.
 
 ```{r, echo=FALSE, out.width='65%', fig.align='center'}
 knitr::include_graphics('assets/l8_confounding.png')
