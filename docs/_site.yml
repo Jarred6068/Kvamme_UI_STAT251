@@ -74,8 +74,8 @@ navbar:
           menu:
           - text: 'Homework 1'
             href: homeworks/week1homework.html
-#         - text: 'Homework 2'
-#           href: homeworks/week5homework.html
+          - text: 'Homework 2'
+            href: homeworks/week5homework.html
 #         - text: 'Homework 3'
 #           href: homeworks/week7homework.html
 #         - text: 'Homework 4'
@@ -98,11 +98,11 @@ navbar:
           menu:
           - text: 'Homework 1'
             href: homeworks/homework_downloads.html#hw1
-##        HIDDEN - Homework 2-5 anchors. NOTE: these are anchors into the single
+          - text: 'Homework 2'
+            href: homeworks/homework_downloads.html#hw2
+##        HIDDEN - Homework 3-5 anchors. NOTE: these are anchors into the single
 ##        homework_downloads.html page, which still lists ALL FIVE homeworks and
 ##        is still linked below as 'All downloads'.
-#         - text: 'Homework 2'
-#           href: homeworks/homework_downloads.html#hw2
 #         - text: 'Homework 3'
 #           href: homeworks/homework_downloads.html#hw3
 #         - text: 'Homework 4'

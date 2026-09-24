@@ -26,17 +26,33 @@ library(plyr)
   * The exam is proctored in class but delivered through **Canvas**, so you must bring a fully charged laptop. **Notes are not permitted.** A calculator is permitted, but it must not be capable of wireless communication
   * The exam will be about 20 - 25 questions long, with at least one bonus question. Questions are mostly multiple choice, short answer, or labeling problems, with the possibility of one or two short essay / longer explanation problems
 
+# How to prepare
+
+The exam asks you to **interpret** values, **identify** the correct equation, and **choose**
+the right method for a situation. Long calculations are not required: where a number is
+needed it is given, or the arithmetic is simple enough to do in your head.
+
+Study by computing anyway. Work the
+[Exam 2 Review Problems](../Review_problems/exam2_review_problems.html) through, then check
+the [solutions](../Review_problems/exam2_review_problems_solns.html). They are more
+computational than the exam by design. [Homework 2](../homeworks/week5homework.html) covers
+much of this material as well, and some exam problems are based on homework problems.
+
 # Content To Study
 
-Exam 2 will cover material beginning on **Monday of Week 4 (September 14)** through **Week 8**. This includes the following topics:
+Exam 2 will cover material beginning on **Monday of Week 4 (September 14)** through **Monday of Week 8 (October 12)**. This includes the following topics:
 
-* Sampling and experimental designs - September 14 and 21
+* Sampling designs - September 14 and 21
 
-* The normal distribution - September 23
+* Experimental design and causation - September 23
 
-* Probability Theory - September 28 - October 2
+* The normal distribution - September 25 and 28
 
-* The Central Limit Theorem - October 5
+* Probability Theory - September 30 - October 2
+
+* Continuous distributions, sampling distributions and the Central Limit Theorem - October 5 - 9
+
+* Confidence intervals for a population proportion - October 12
 
 ### Experimental and Sampling Designs
 
@@ -196,6 +212,20 @@ The probability of the intersection of two dependent events is equal to their co
 * the mean and variance are given by $E[X] = Var[X] = \lambda$
 
 \[ P(X \leq a) = \sum_{k = 0}^a \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
+
+### Confidence Intervals for a Population Proportion
+
+  1. Know what a **confidence interval** is, and what the **confidence level** (e.g. $95\%$) does and does not mean.
+
+  2. Know the form **point estimate $\pm$ margin of error**, and be able to identify each piece.
+
+  3. Know how the **margin of error** for $\hat{p}$ is built from the standard error $\sqrt{\hat{p}(1-\hat{p})/n}$ and a $z$ multiplier, and which $z$ goes with the common confidence levels.
+
+  4. Understand how the width of the interval responds to a change in the **confidence level** and to a change in the **sample size**.
+
+  5. Be able to interpret a given confidence interval for a proportion in the context of the problem.
+
+**Note:** confidence intervals for a **mean** are covered on October 19, *after* this exam, and are **not** on Exam 2.
 
 <br>
 <br>

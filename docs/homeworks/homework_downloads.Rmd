@@ -66,8 +66,9 @@ downloads(rbind(
 ```{r}
 downloads(rbind(
   c("week5homework.pdf",                                    "Assignment (printable PDF)"),
-  c("../Data/homework_tables/hw2_harp_seal_whiskers.csv",   "Problem 2 — whisker length and bead count for 20 Harp Seals"),
-  c("../assets/whiskerMaster.csv",                          "Problem 2 — full Pinniped whisker dataset (all species; optional)")
+  c("../Data/homework_tables/hw2_harp_seal_whiskers.csv",   "Problems 2 and 3 — whisker length and bead count for 20 Harp Seals"),
+  c("../Data/homework_tables/hw2_tree_volume_dist.csv",     "Problem 10 — probability distribution of tree volume"),
+  c("../assets/whiskerMaster.csv",                          "Problems 2 and 3 — full Pinniped whisker dataset (all species; optional)")
 ))
 ```
 
@@ -78,9 +79,9 @@ downloads(rbind(
 ```{r}
 downloads(rbind(
   c("week7homework.pdf",                                      "Assignment (printable PDF)"),
-  c("../Data/homework_tables/hw3_prob_dist_X.csv",            "Problem 6 — probability distribution of X"),
-  c("../Data/homework_tables/hw3_tree_volume_dist.csv",       "Problem 8 — probability distribution of tree volume"),
-  c("../Data/homework_tables/hw3_punt_distance_dist.csv",     "Problem 9 — sampling distribution of mean punt distance")
+  c("../Data/homework_tables/hw3_prob_dist_X.csv",            "Problem 1 — probability distribution of X"),
+  c("../Data/homework_tables/hw3_tree_volume_dist.csv",       "Problem 3 — probability distribution of tree volume"),
+  c("../Data/homework_tables/hw3_punt_distance_dist.csv",     "Problem 4 — sampling distribution of mean punt distance")
 ))
 ```
 

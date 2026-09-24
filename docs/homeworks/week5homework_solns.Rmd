@@ -39,6 +39,7 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
+library(ggvenn)   # Problem 9(b) answer figure
 mainpath = '../Data/'
 whiskpath = '../assets/whiskerMaster.csv'
 
@@ -46,43 +47,48 @@ datapath = '../Data/'
 ```
 
 
-$\bf (1)$ Rocket League is a popular online video game and E-sport that emerged in 2015. The game enjoys a healthy following of around 93 million players per month. The game features players from around the world who compete in sports like soccer (football), basketball and hockey while controlling RC-like vehicles. The most popular game-mode is doubles soccer in which teams of two players each try to outscore each other by hitting a soccer ball into the opposing goal. In the course of each match, the player-controlled vehicles often collide in what is commonly referred to as a "bump". The following histogram shows the distribution of the average number of "bumps" per match for a given player of Rocket League 
+$\bf (1)$ Rocket League is a popular online video game and E-sport that emerged in 2015. Players from around the world compete in sports like soccer (football), basketball and hockey while controlling RC-like vehicles. The most popular game-mode is doubles soccer, in which teams of two players each try to outscore each other by hitting a soccer ball into the opposing goal. Each car carries a limited supply of **boost**, which is spent to accelerate and to fly, and which refills by driving over boost pads on the field. A player's **boost used per minute (BPM)** measures how aggressively they spend boost over the course of a match. The histogram below shows the distribution of BPM for $n = 5{,}714$ player-match records collected from ranked matches.
 
 ```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=8}
 RL = read.table(paste0(datapath, 'RLData.txt'), sep = ',', header = T)
+m = mean(RL$bpm); s = sd(RL$bpm)   # 354.8 and 68.8, i.e. the 355 and 69 quoted below
 k = ceiling(sqrt(dim(RL)[1]))
 ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgrey', bins = k)+
   theme_classic2()+
-  scale_x_continuous(limits=round(c(min(RL$bpm), max(RL$bpm)),1), 
-                     breaks = seq(round(mean(RL$bpm)-4*sd(RL$bpm),1),
-                                  round(mean(RL$bpm)+4*sd(RL$bpm),1),
-                                  round(sd(RL$bpm), 1)))+
-  xlab('Average bumps per match')+
+  # breaks at the mean and at +/- 1, 2, 3 standard deviations, so the cut points
+  # used in parts (a)-(d) can be read straight off the axis.
+  scale_x_continuous(breaks = round(m + (-3:3) * s))+
+  xlab('Boost used per minute (BPM)')+
   theme(axis.text = element_text(size = 12),
         axis.title = element_text(size = 14))
 ```
 
-(a) Assuming a mean of $\bar{x} = 355$ and standard deviation of $s = 69$, in approximately what proportion of matches did the player have more than 423 bumps?
+(a) Assuming a mean of $\bar{x} = 355$ and standard deviation of $s = 69$, in approximately what proportion of matches was more than 424 BPM used?
 
-<span style="color: red;">\[ z = \frac{423 - 355}{69} \approx 1\]. Therefore we want to know what proportion of observations have a value $\geq \bar{x}+1s$ which is by the empirical rule is $13.5\%+2.5\% = 16\%$</span>
+<span style="color: red;">\[ z = \frac{424 - 355}{69} = 1\] Therefore we want the proportion of observations with a value greater than $\bar{x}+1s$. Under the empirical rule $68\%$ of observations fall within $1s$ of the mean, leaving $32\%$ split evenly between the two tails, so the upper tail is $13.5\%+2.5\% = 16\%$</span>
 
-(b) Approximately what proportion of matches did the player have more than 217 bumps but fewer than 493 bumps?
+(b) Approximately what proportion of matches had a BPM greater than 217 but less than 493?
 
-<span style="color: red;">approximately $95\%$</span>
+<span style="color: red;">$217 = \bar{x}-2s$ and $493 = \bar{x}+2s$, so by the empirical rule approximately $95\%$</span>
 
-(c) How many bumps would the player need to have in a match to be in the top $2.5\%$ of matches?
+(c) How much boost per minute would a player need to use in a match to be in the top $2.5\%$ of matches?
 
-<span style="color: red;">at least $355+2s = 493$ bumps</span>
+<span style="color: red;">The empirical rule puts $95\%$ of observations within $2s$ of the mean, so $2.5\%$ sit above $\bar{x}+2s$. The player would need at least $355 + 2(69) = 493$ BPM</span>
 
 
-(d) After playing a new match, the player logs 620 bumps. Calculate the $z$-score for this match and explain the meaning of the z-score in relation to the average number of bumps. How many standard deviations is the player's performance from the mean number of bumps?
+(d) In a new match a player records a BPM of 562. Calculate the $z$-score for this match and explain what the $z$-score means in relation to the average BPM. How many standard deviations from the mean is this performance?
 
-<span style="color: red;">\[ z = \frac{620 - 355}{69} = 3.84 \]
-The player's performance in this match is $3.84$ standard deviations **above** the mean number of bumps. A $z$-score this large means the match is extremely unusual for this player - under the empirical rule almost all matches fall within $3$ standard deviations of the mean, so 620 bumps is far beyond the player's typical performance.</span>
+<span style="color: red;">\[ z = \frac{562 - 355}{69} = 3.00 \]
+This match sits exactly $3$ standard deviations **above** the mean BPM. Under the empirical rule roughly $99.7\%$ of matches fall within $3$ standard deviations of the mean, so only about $0.15\%$ of matches use this much boost or more - an extremely aggressive game.</span>
 
-**Figure 1** Pinniped whisker morphology - Ginter et al. 2012           |  A juvenile Harp Seal
-:-------------------------:|:-------------------------:
-![](../assets/whisker_types.png)  |  ![](../assets/Harp_seal_whitecoat.jpg)
+```{r fig1, echo=FALSE, out.width='49%', fig.show='hold', fig.align='center', fig.cap='Pinniped whisker morphology - Ginter et al. 2012 (left), and a juvenile Harp Seal (right).'}
+# NOTE: this used to be a markdown pipe table holding the two images. Pandoc
+# turned that into a LaTeX longtable, which consumed table number 1 -- so the
+# whisker data below printed as "Table 2" while the text referred to it as
+# "Table 1". Emitting the pair as a real figure keeps the table counter correct.
+knitr::include_graphics(c('../assets/whisker_types.png',
+                          '../assets/Harp_seal_whitecoat.jpg'))
+```
 
 
 <!-- \begin{figure} -->
@@ -98,9 +104,6 @@ The player's performance in this match is $3.84$ standard deviations **above** t
 <!-- \end{figure} -->
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 whiskers = read.csv(whiskpath)
-teach = read.csv(paste0(mainpath, 'teacher_salary.csv'))
-ga = read.csv(paste0(mainpath, 'georgia_student_survey.csv'))
-
 ```
 
 
@@ -125,25 +128,26 @@ kable(cbind.data.frame(c(1:20), FS[ix,]), format = tbl_fmt, booktabs = T, escape
       col.names = c("Observation","Whisker Total Length (cm)", "Number of Beads"), digits = 2,
       row.names = F, caption = 'Whisker Length data for $n = 20$ Harp Seals')%>%
   kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
-
-print(paste0('comma separated values = ', paste0(round(FS[ix,]$total.length,2), collapse = ',')))
 ```
 
 
 
 \newpage
 
-(a) Compute the quartiles, interquartile range, mean, and standard deviation for the variable "Total Length (cm)" - (use the course website apps for help)
+(a) Compute the quartiles, interquartile range, mean, and standard deviation for the variable "Total Length (cm)". Use the values exactly as they appear in **Table 1**. Remember that we find the quartiles by the **median of halves** method used in class: find the median first, and when $n$ is odd leave that median out of both halves.
 
-<span style="color: red;">\begin{eqnarray} Q1 = \frac{4.33+4.34}{2} = 4.335 \approx 4.34 \\\nonumber
+<span style="color: red;">With $n = 20$ the median is the average of the $10^{th}$ and $11^{th}$ values, and each half has 10 values, so $Q1$ is the average of the $5^{th}$ and $6^{th}$ and $Q3$ the average of the $15^{th}$ and $16^{th}$.
+\begin{eqnarray} Q1 = \frac{4.33+4.34}{2} = 4.335 \\\nonumber
  median =  \frac{4.41+4.43}{2} = 4.42 \\\nonumber
- Q3 = \frac{4.48+4.51}{2} = 4.49 \\\nonumber
- IQR =  4.49 - 4.34 = 0.15 \\\nonumber
+ Q3 = \frac{4.48+4.51}{2} = 4.495 \\\nonumber
+ IQR =  4.495 - 4.335 = 0.16 \\\nonumber
  \bar{x} =  \frac{4.18 + 4.23 + \cdots + 5.08}{20} = 4.446 \\\nonumber
- s =  \sqrt{\frac{(4.18 - 4.45)^2 + (4.23 - 4.45)^2 + \cdots + (5.08 - 4.45)^2}{19}} = 0.189 \\\nonumber
+ s =  \sqrt{\frac{(4.18 - 4.446)^2 + (4.23 - 4.446)^2 + \cdots + (5.08 - 4.446)^2}{19}} = 0.189 \\\nonumber
 \end{eqnarray}</span>
 
-(b) Make a boxplot of the variable "Total Length" and make note of any outliers
+(b) Make a boxplot of the variable "Total Length" and make note of any outliers. Use the $1.5\times IQR$ rule to decide what counts as an outlier.
+
+<span style="color: red;">The fences are $Q1 - 1.5\times IQR = 4.335 - 0.24 = 4.095$ and $Q3 + 1.5\times IQR = 4.495 + 0.24 = 4.735$. Only observation 20 ($5.08$ cm) falls outside, so it is the single outlier.</span>
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10}
 X = FS[ix,]$total.length
@@ -169,8 +173,9 @@ text(x=locals[3], labels =paste("IQR", round(estims[4] - estims[2],2), sep = " =
 
 (c) Observation 20 has a total whisker length of 5.08 (cm), how many standard deviations is this observation from the mean whisker length? (hint compute the $z$-score for this observation)
 
-<span style="color: red;">The sample mean is $\bar{x} = 4.446$ and the sample standard deviation is $s = 0.189$ 
-\[ z = \frac{5.08 - \bar{x}}{s} = \frac{5.080 - 4.446}{0.189} = 3.372  \]</span>
+<span style="color: red;">The sample mean is $\bar{x} = 4.446$ and the sample standard deviation is $s = 0.189$
+\[ z = \frac{5.08 - \bar{x}}{s} = \frac{5.080 - 4.446}{0.189} = 3.35  \]
+Observation 20 lies about $3.35$ standard deviations above the mean whisker length.</span>
 
 
 
@@ -190,11 +195,14 @@ A = ggplot(data=FS, aes(x = total.length, fill = num.beads))+
   geom_boxplot(outlier.fill = 'red', outlier.color = 'black', alpha = 0.8,
                size = 1, outlier.size = 5,
                outlier.shape = 21)+
+  # NOTE: these summaries are printed to THREE decimals on purpose. At two
+  # decimals (4.39 / 0.12) a student who works from the figure gets z = -0.42
+  # for Seal 2, not the -0.43 the question asks them to confirm.
   geom_text(aes(x = max(bead3$total.length), y = 0.25), label = 'x = 5.08')+
-  geom_text(aes(x = mean(bead3$total.length), y = 0.45), label = TeX('$\\bar{x}_{3 beads} = 4.61$'))+
-  geom_text(aes(x = mean(bead2$total.length), y = 0.05), label = TeX('$\\bar{x}_{2 beads} = 4.39$'))+
-  geom_text(aes(x = mean(bead3$total.length), y = 0.4), label = TeX('$s_{3 beads} = 0.27$'))+
-  geom_text(aes(x = mean(bead2$total.length), y = 0.1), label = TeX('$s_{2 beads} = 0.12$'))+
+  geom_text(aes(x = mean(bead3$total.length), y = 0.45), label = TeX('$\\bar{x}_{3 beads} = 4.609$'))+
+  geom_text(aes(x = mean(bead2$total.length), y = 0.05), label = TeX('$\\bar{x}_{2 beads} = 4.392$'))+
+  geom_text(aes(x = mean(bead3$total.length), y = 0.4), label = TeX('$s_{3 beads} = 0.270$'))+
+  geom_text(aes(x = mean(bead2$total.length), y = 0.1), label = TeX('$s_{2 beads} = 0.121$'))+
   theme(axis.text.x = element_text(size = 12),
         axis.text.y = element_blank(),
         axis.title.y = element_text(size = 12),
@@ -206,30 +214,28 @@ A = ggplot(data=FS, aes(x = total.length, fill = num.beads))+
 
 plot(A)
 #ggarrange(A, B, nrow = 2)
-
-print('-----------------2 bead whisker lengths-----------------')
-paste('comma separated values = ', paste0(round(bead2$total.length, 1), collapse = ','))
-print('-----------------3 bead whisker lengths-----------------')
-paste('comma separated values = ', paste0(round(bead3$total.length, 1), collapse = ','))
 ```
 
-(a) Using the boxplot above, do the whisker lengths for 2 bead and 3 bead whiskers follow a normal distribution? why or why not? 
+(a) Using the boxplots above, do the whisker lengths for 2 bead and 3 bead whiskers follow a normal distribution? Why or why not? Answer separately for each group.
 
-<span style="color: red;">The boxplot for 2 bead whiskers is roughly symmetric, which is consistent with (though not proof of) an approximately normal distribution. The boxplot for 3 bead whiskers is clearly skewed, so those whisker lengths are not approximately normal</span>
+<span style="color: red;">The boxplot for 2 bead whiskers is roughly symmetric - the median sits near the middle of the box and the two whiskers are of similar length - which is consistent with (though not proof of) an approximately normal distribution. The boxplot for 3 bead whiskers is clearly right-skewed: the group has only $n = 5$ observations and one of them ($5.08$ cm) sits far above the rest, dragging the upper whisker out. Those lengths are **not** approximately normal.</span>
 
-(b) Suppose researchers observe two new Harp Seals (Denoted Seal 1 and Seal 2) and record their total whiskers lengths and the number of beads on the whiskers. Seal 1 has a total whisker length of 4.32 (cm) and the whisker has 3 beads. Seal 2 has a total whisker length of 4.34 (cm) but the whisker has only 2 beads. Suppose we want to know how they compare <i>relative</i> to the distribution of whiskers with the same number of beads. Confirm that the whisker length of seal 1 has a $z$-score of $-1.07$ while Seal 2 has a $z$-score of $-0.43$. Refer to the boxplot above
+(b) Suppose researchers observe two new Harp Seals (denoted Seal 1 and Seal 2) and record their total whisker lengths and the number of beads on the whiskers. Seal 1 has a total whisker length of $4.32$ (cm) and the whisker has 3 beads. Seal 2 has a total whisker length of $4.34$ (cm) but the whisker has only 2 beads. Suppose we want to know how they compare <i>relative</i> to the distribution of whiskers with the same number of beads. Confirm that the whisker length of Seal 1 has a $z$-score of $-1.07$ while Seal 2 has a $z$-score of $-0.43$. Use the group means and standard deviations printed on the boxplot above.
 
-<span style="color: red;">The mean length for whiskers with two beads and three beads is $\bar{x}_{2beads} = 4.39$ and $\bar{x}_{3beads} = 4.61$ respectively. The standard deviation in length for whiskers with 2 and 3 beads is $s_{2beads} = 0.121$ and $s_{3beads} = 0.270$ respectively. Seal 1 has a $z$-score of 
-\[z_1 = \frac{4.32 - \bar{x_3}}{s_3} = \frac{4.32 - 4.61}{0.27} = -1.07\]
-And Seal 2 has a $z$-score of
-\[z_2 = \frac{4.34 - \bar{x_2}}{s_2} = \frac{4.34 - 4.39}{0.12} = -0.43\] </span>
+<span style="color: red;">Each seal must be standardized against the group with the **same** number of beads. From the figure, $\bar{x}_{2beads} = 4.392$ with $s_{2beads} = 0.121$, and $\bar{x}_{3beads} = 4.609$ with $s_{3beads} = 0.270$. Seal 1 has 3 beads, so
+\[z_1 = \frac{4.32 - \bar{x}_3}{s_3} = \frac{4.32 - 4.609}{0.270} = -1.07\]
+Seal 2 has 2 beads, so
+\[z_2 = \frac{4.34 - \bar{x}_2}{s_2} = \frac{4.34 - 4.392}{0.121} = -0.43\]
+Note that although Seal 2's whisker is the **longer** of the two in centimetres, Seal 1 sits further below its own group's mean. Comparing raw lengths across the two groups would have given the opposite impression - that is exactly what the $z$-score is for.</span>
 
-(c) If the researchers were to observe the whisker length of a new seal and the whisker had 3 beads, how long or short would the whisker of this observation have to be for it to be considered an outlier? (assume the data is approximately normal)
+(c) Suppose the researchers observe a new whisker with 3 beads. Using the $\pm 2s$ rule, how long or how short would that whisker have to be before you would flag it as an outlier? Then look at the 3 bead group in **Table 1** and explain why the $\pm 2s$ rule should be treated with caution here. (hint: your answer to part (a) for the 3 bead group is the reason, and note that the $1.5\times IQR$ rule and the $\pm 2s$ rule do not always flag the same observations)
 
-<span style="color: red;">Since the data is approximately symmetric (normal) we can use the 2 standard deviations rule: an observation is flagged as an outlier when $x < \bar{x}-2s$ **or** $x > \bar{x}+2s$ - so the whisker would have to be greater than
-\[ \bar{x}_3 + 2s = 4.608 + 2\times 0.270 = 5.148 (cm) \]
-or less than 
-\[ \bar{x}_3 - 2s = 4.608 - 2\times 0.270 = 4.068 (cm)\]</span>
+<span style="color: red;">Under the $\pm 2s$ rule an observation is flagged when $x < \bar{x}-2s$ **or** $x > \bar{x}+2s$, so the whisker would have to be longer than
+\[ \bar{x}_3 + 2s_3 = 4.609 + 2\times 0.270 = 5.149 \ \text{(cm)} \]
+or shorter than
+\[ \bar{x}_3 - 2s_3 = 4.609 - 2\times 0.270 = 4.069 \ \text{(cm)}\]
+
+**Why to be cautious:** the $\pm 2s$ rule is built on the empirical rule, which assumes an approximately normal distribution - and in part (a) we decided the 3 bead group is not normal. Worse, $\bar{x}_3$ and $s_3$ are themselves computed from only five observations, one of which ($5.08$) is the extreme value we might want to detect. That single point inflates $s_3$ and pushes the upper cut-off out to $5.149$, so the rule does **not** flag $5.08$ at all - even though the $1.5\times IQR$ rule applied to the full sample in Problem 2(b) did flag it. The two rules can disagree, and neither should be applied mechanically to a small, skewed group.</span>
 
 
 
@@ -254,20 +260,20 @@ B = ggplot(dat, aes(x = x, y = `CRF(x)`))+geom_step()+
   scale_y_continuous(breaks = seq(0, 1, 0.1))+
   scale_x_continuous(breaks = seq(min(dat$x), max(dat$x), 1))
 plot(B)
-
-paste('Comma separated values = ', paste0(x, collapse = ','))
 ```
 
 
-(a) Assume that the mean and standard deviation of $X$ are $\bar{x} = 5$ and $s = 4$. Use these values to find the $2.5th$ and $97.5th$ percentiles of $X$. Compare your answer with the cumulative distribution plot above, why might the two answers differ? (hint: think about shape and how that relates to the empirical rule)
+(a) Assume the above cumulative distribution represents an approximately normal (symmetric, bell-shaped) distribution with mean $\bar{x} = 5$ and standard deviation $s = 4$. Under the empirical rule, write down the interval, in terms of $\bar{x}$ and $s$, that contains approximately $95\%$ of the observations, and then give its two endpoints as numbers.
 
-<span style="color: red;">approximately $-3$ and $13$. Using the plot above the answers are approximately -2.5 and 11.1. The percentiles differ because the distribution of $X$ is skewed to the left. The percentiles given by the empirical rule are only approximate for distributions with deviations from normality</span>
+<span style="color: red;">The empirical rule says approximately $95\%$ of the observations fall in the interval $\bar{x} \pm 2s$. Substituting $\bar{x} = 5$ and $s = 4$,
+\[ \bar{x} - 2s = 5 - 2(4) = -3 \qquad \bar{x} + 2s = 5 + 2(4) = 13 \]
+so the interval is $(-3,\ 13)$.</span>
 
-(b) Assume the above cumulative distribution represents an approximately normal distribution (symmetric, bell-shaped) with a standard deviation of $s = 4$ and a mean of $\bar{x} = 5$, Under the empirical rule, what percentage of the observations will have a value between $-3$ and $13$?
+(b) Your two endpoints from part (a) are the empirical rule's estimates of the $2.5th$ and $97.5th$ percentiles of $X$. Now read the $2.5th$ and $97.5th$ percentiles directly off the cumulative distribution plot above. Why do the two sets of answers differ? (hint: think about shape and how that relates to the empirical rule)
 
-<span style="color: red;">if the mean is $\bar{x} = 5$ then both $-3$ and $13$ are two standard deviations from the mean e.g $-3 = \bar{x}-2s$ and $13 = \bar{x}+2s$. Under the empirical rule, appoximately $95\%$ of the observations will fall in this interval </span>
+<span style="color: red;">Reading across from $CRF(x) = 0.025$ and $CRF(x) = 0.975$ on the plot gives approximately $-2.5$ and $11.1$, against the $-3$ and $13$ predicted by the empirical rule. They differ because the distribution of $X$ is skewed to the left rather than symmetric and bell-shaped, and the empirical rule only holds for approximately normal distributions. The further a distribution departs from normality, the worse the rule's percentile estimates become.</span>
 
-(c) Using the mean and standard deviation from part <i>a-b</i>, compute and interpret the z-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would these two observations be considered outliers under the $\pm 2s$ rule?
+(c) Using the mean and standard deviation from parts <i>a-b</i>, compute and interpret the $z$-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would these two observations be considered outliers under the $\pm 2s$ rule?
 
 <span style="color: red;">
 \[ z_1 = \frac{11.5 - 5}{4} \approx 1.63 \]
@@ -294,8 +300,14 @@ Define the following terms
 
 (e) survey - <span style="color: red;">A type of nonexperimental study in which subjects/observations are selected from a population for the purpose of making inferences about the population.</span>
 
+(f) lurking (confounding) variable - <span style="color: red;">A variable that is not among the explanatory or response variables being studied, but which is associated with both of them, and so can create the appearance of a relationship between them (or hide a real one).</span>
 
-$\bf (6)$ 
+(g) In one or two sentences, explain why a statistical **association** between two variables is not by itself evidence that one **causes** the other. Give an example of a lurking variable that could produce an association without a causal link.
+
+<span style="color: red;">An association only tells us that two variables move together; it does not tell us why. In an observational study a lurking variable may be driving both, and without random assignment we cannot rule that out. For example, ice cream sales and drownings rise together, but neither causes the other - summer heat is the lurking variable that drives both. (Any sensible example is acceptable here, provided the proposed lurking variable is plausibly associated with **both** the explanatory and the response variable.)</span>
+
+
+$\bf (6)$
 Name the sampling method used in each of the following situations: 
 
 
@@ -317,14 +329,203 @@ Name the sampling method used in each of the following situations:
 <span style="color: red;">systematic sampling</span>
 
 
-(e) A lumber company wishes to estimate the amount of usable lumber on a plot of land. The company randomly selects 100 trees and measures their diameter, height, and volume, in order to estimate the number of board feet of each tree. 
+(e) A lumber company wishes to estimate the amount of usable lumber on a plot of land. The company randomly selects 100 trees and measures their diameter, height, and volume, in order to estimate the number of board feet of each tree.
 
 <span style="color: red;">simple random sampling</span>
 
+(f) Explain the difference between **sampling error** and **nonsampling error**, and give one example of each.
+
+<span style="color: red;">**Sampling error** is the error that arises simply because we observed a sample rather than the whole population: even a perfectly executed random sample will not match the population exactly, and a different random sample would have given a slightly different estimate. It shrinks as the sample size grows. Example: a well-run poll of 1,000 voters reports $52\%$ support when the true population value is $54\%$.
+
+**Nonsampling error** is every other source of error - it comes from how the study was carried out, not from the act of sampling, and it does **not** shrink as the sample size grows. Examples: undercoverage (part of the population has no chance of being selected), nonresponse, response bias from a leading question, or data entry mistakes.</span>
+
+(g) A university emails a satisfaction survey to all 11,000 of its students and 600 respond. The students who reply are much more likely to be the ones with a strong complaint. Name the source of bias at work here, and explain why emailing 40,000 students instead of 11,000 would **not** fix the problem.
+
+<span style="color: red;">This is **nonresponse bias** (the sample is effectively a voluntary response sample: only those motivated to reply are represented). Increasing the number of students contacted does not help, because the same mechanism still decides who replies - the dissatisfied students remain over-represented among the respondents. A larger sample makes the estimate more **precise**, but it is precisely centred on the wrong value; a bigger sample does not remove bias. The fix is to improve the response rate or to follow up on a random subsample of the nonrespondents.</span>
+
+
+$\bf (7)$
+Name the experimental design used in each of the following situations. Choose from **completely randomized design**, **randomized block design**, and **matched pairs design**.
+
+(a) A nutritionist wants to compare three breakfast cereals. She recruits 90 volunteers and uses a random number generator to assign 30 of them to each cereal.
+
+<span style="color: red;">completely randomized design</span>
+
+(b) A dermatologist testing a new ointment applies the ointment to one arm of each patient and a placebo cream to the patient's other arm, deciding at random which arm gets which.
+
+<span style="color: red;">matched pairs design (each patient serves as their own control - this is the special case of a randomized block design where each block has size two)</span>
+
+(c) An agronomist testing four fertilizers suspects that soil drainage strongly affects yield. He sorts his 40 plots into "well-drained" and "poorly-drained" groups, then randomly assigns the four fertilizers within each group.
+
+<span style="color: red;">randomized block design (drainage is the blocking variable)</span>
+
+(d) A sleep researcher recruits 200 subjects, and a coin flip decides whether each one receives a new sleep medication or an identical-looking pill containing no medication.
+
+<span style="color: red;">completely randomized design</span>
+
+(e) For the study in part (d), identify the **experimental units**, the **factor**, the **levels** of that factor, the **treatments**, and the **control group**. Was this study **blinded**? What additional information would you need to know whether it was **double blinded**?
+
+<span style="color: red;">**Experimental units (subjects):** the 200 recruited people. **Factor:** the sleep medication. **Levels:** two - active medication, and no medication. **Treatments:** the new sleep medication, and the placebo pill. **Control group:** the subjects who receive the identical-looking placebo pill.
+
+The study is **blinded**, because the placebo is identical in appearance, so subjects cannot tell which treatment they received. To know whether it is **double blinded** we would also need to know whether the researchers who interact with the subjects and measure the outcome are themselves unaware of who got which treatment.</span>
+
+(f) A study finds that students who attend more review sessions earn higher exam scores. The review sessions were optional. Explain what **random assignment** would have let the researchers conclude that this study cannot, and why **random sampling** alone is not enough to establish cause.
+
+<span style="color: red;">Because attendance was optional, the students who chose to attend may differ systematically from those who did not - they may be more motivated, or have more free time, and either would raise exam scores on its own. Motivation is a lurking variable, so this observational study can establish only an **association**.
+
+**Random assignment** - deciding by chance which students attend - would balance those lurking variables across the two groups on average, so any difference in exam scores could be attributed to the review sessions themselves. That is what licenses a **causal** conclusion.
+
+**Random sampling** does something different: it makes the sample representative, so results **generalize** to the population. It says nothing about why the two groups differ, so it cannot establish cause on its own.</span>
+
+
+$\bf (8)$
+Define the following terms/concepts
+
+(a) Sample space - <span style="color: red;">The set of all possible outcomes of a random trial.</span>
+
+(b) Event - <span style="color: red;">A subset of the sample space; a collection of one or more possible outcomes.</span>
+
+(c) Random trial - <span style="color: red;">A process or experiment whose individual outcome cannot be predicted in advance, but for which the set of possible outcomes is known.</span>
+
+(d) Union of two events - <span style="color: red;">The event $A \cup B$ that $A$ occurs, or $B$ occurs, or both.</span>
+
+(e) Intersection of two events - <span style="color: red;">The event $A \cap B$ that $A$ **and** $B$ both occur.</span>
+
+(f) Disjoint (mutually exclusive) events - <span style="color: red;">Two events that cannot both occur on the same trial, so $P(A \cap B) = 0$.</span>
+
+(g) Random variable - <span style="color: red;">A variable whose numerical value is determined by the outcome of a random trial.</span>
+
+(h) Discrete random variable - <span style="color: red;">A random variable that can take on only a countable set of values (often whole numbers), such as the number of heads in three coin flips.</span>
+
+(i) Continuous random variable - <span style="color: red;">A random variable that can take on any value in an interval, such as a height or a waiting time.</span>
+
+(j) Probability distribution - <span style="color: red;">A listing or rule that gives every possible value of a random variable together with its probability. The probabilities are each between 0 and 1 and sum to 1.</span>
+
+(k) The Law of Large Numbers - <span style="color: red;">As the number of trials increases, the relative frequency with which an event occurs converges to the true probability of that event.</span>
+
+
+$\bf (9)$
+Answer the following probability questions. Show your work.
+
+(a) A fair coin is thrown 3 times. What is the probability that <u>at least</u> one heads is observed? (hint: it is easier to find the probability of the complement first)
+
+<span style="color: red;">The complement of "at least one heads" is "no heads at all", i.e. three tails:
+\[ P(\text{no heads}) = 0.5 \times 0.5 \times 0.5 = 0.125 \]
+By the complement rule,
+\[ P(\text{at least one heads}) = 1 - 0.125 = 0.875 \]</span>
+
+(b) Suppose that in a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Draw a Venn diagram that models this situation, filling in the number of students in each region. What is the probability that a student is in the band **or** plays a sport?
+
+<span style="color: red;">The Venn diagram has $8 - 5 = 3$ students in band only, $5$ in the overlap, $15 - 5 = 10$ in sport only, and $30 - (3+5+10) = 12$ outside both circles.</span>
+
+```{r, eval = T, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+class = list(Band = c(1:8),
+             Sport = c(1:5, 10:19))
+ggvenn(
+  class,
+  fill_color = c("#0073C2FF", "#EFC000FF", "#868686FF"),
+  stroke_size = 0.5, set_name_size = 8,
+  text_size = 6
+  )
+```
+
+<span style="color: red;">Because the two events are **not** disjoint (5 students are in both), we must subtract the overlap so it is not counted twice - this is the addition rule:
+\[ P(A \cup B) = P(A)+P(B)-P(A\cap B) = \frac{8}{30}+\frac{15}{30}-\frac{5}{30} = \frac{18}{30} = 0.60 \]</span>
+
+(c) A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards: 9 numbered cards, 3 face cards, and an Ace. A single card is drawn at random. What is the probability that it is a numbered card? What is the probability that it is the Ace of Spades?
+
+<span style="color: red;">There are $4 \times 9 = 36$ numbered cards, so
+\[ P(\text{numbered}) = \frac{36}{52} = 0.692 \]
+There is exactly one Ace of Spades, so
+\[ P(\text{Ace of Spades}) = \frac{1}{52} = 0.019 \]</span>
+
+(d) An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random **with replacement**. What is the probability that the first ball is yellow and the second ball is red?
+
+<span style="color: red;">There are $5+7+4 = 16$ balls. With replacement the two draws are independent, so by the multiplication rule
+\[ P(\text{yellow, then red}) = \frac{4}{16}\times\frac{7}{16} = \frac{28}{256} = 0.109 \]</span>
+
+(e) Repeat part (d), but now assume the two balls are selected **without replacement**. Explain why your answer changed.
+
+<span style="color: red;">Without replacement the first ball is not returned, so only 15 balls remain for the second draw (and all 7 red balls are still among them):
+\[ P(\text{yellow, then red}) = \frac{4}{16}\times\frac{7}{15} = \frac{28}{240} = 0.117 \]
+The answer changed because the draws are no longer independent - the outcome of the first draw changes the composition of the urn, and therefore the probability of the second. Here removing a yellow ball leaves red slightly more likely, so the probability rises.</span>
+
+(f) The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume these three weather events are independent. What is the probability that a given day is rainy, cloudy, **and** windy?
+
+<span style="color: red;">For independent events the multiplication rule extends to all three:
+\[ P(R \cap C \cap W) = 0.1 \times 0.7 \times 0.2 = 0.014 \]</span>
+
+
+$\bf (10)$
+Consider a survey of tree volume. Suppose that in the population of trees $10\%$ have a volume of 10 cubic feet, $20\%$ have a volume of 20 cubic feet, $30\%$ have a volume of 30 cubic feet, and $40\%$ have a volume of 40 cubic feet. Let $X$ denote the volume of a randomly selected tree, assuming every tree has an equal chance of being selected. The probability distribution of $X$ is given in **Table 2** below.
+
+```{r, echo=FALSE, warning=F, message=F}
+
+df = cbind.data.frame(X = c(10,20,30,40),
+                      `P(X)` = c(0.1, 0.2, 0.3, 0.4))
+
+kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
+      col.names = c('Tree Volume (cubic feet)', '$P(X)$'),
+      caption = 'Probability distribution of tree volume $X$')%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
+
+```
+
+(a) Verify that the four probabilities in **Table 2** form a valid probability distribution.
+
+<span style="color: red;">Each probability lies between 0 and 1, and they sum to one: $0.1+0.2+0.3+0.4 = 1.0$. Both conditions hold, so this is a valid probability distribution.</span>
+
+(b) Confirm that $X$ has a mean of $\mu = 30$ cubic feet by computing $\mu = \sum_x x\cdot P(x)$ yourself.
+
+<span style="color: red;">\[ \mu = 10(0.1)+20(0.2)+30(0.3)+40(0.4) = 1+4+9+16 = 30 \ \text{cubic feet} \]</span>
+
+(c) Confirm that $X$ has a standard deviation of $\sigma = 10$ cubic feet by computing $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$ and then taking the square root.
+
+<span style="color: red;">\begin{eqnarray}
+\sigma^2 &=& (10-30)^2(0.1)+(20-30)^2(0.2)+(30-30)^2(0.3)+(40-30)^2(0.4) \\\nonumber
+&=& 400(0.1)+100(0.2)+0(0.3)+100(0.4) \\\nonumber
+&=& 40+20+0+40 \ = \ 100 \\\nonumber
+\end{eqnarray}
+\[ \sigma = \sqrt{100} = 10 \ \text{cubic feet} \]</span>
+
+(d) Is $X$ as described here a discrete or a continuous random variable? Explain.
+
+<span style="color: red;">As described here $X$ is **discrete**: it takes only the four listed values, and each has its own probability. (Tree volume measured in the real world would be continuous - any value in an interval is possible - but this population has been simplified to four volume categories.)</span>
+
+
+$\bf (11)$
+Answer the following, showing the formula you used and the numbers you substituted into it.
+
+(a) An angler has a $40\%$ chance of catching a fish on every cast, and each cast is independent of the others. Using the binomial probability mass function
+\[ P(X = k) = \frac{n!}{k!(n-k)!}\cdot p^k \cdot (1-p)^{n-k} \]
+show how to compute the probability that she catches exactly $2$ fish in her next $5$ casts.
+
+<span style="color: red;">Here $n = 5$, $k = 2$ and $p = 0.4$:
+\[ P(X = 2) = \frac{5!}{2!(5-2)!}(0.4)^2(0.6)^{3} = 10 \times 0.16 \times 0.216 = 0.3456 \]
+So there is about a $34.6\%$ chance she catches exactly two fish.</span>
+
+(b) For the angler in part (a), what is the mean number of fish she expects to catch in 5 casts, and what is the variance? (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
+
+<span style="color: red;">\[ E[X] = np = 5(0.4) = 2 \ \text{fish} \qquad Var[X] = np(1-p) = 5(0.4)(0.6) = 1.2 \]</span>
+
+(c) A small campus coffee stand serves on average $3$ customers per 10-minute period. Let $X$ be the number of customers in a 10-minute period, and assume $X$ follows a Poisson distribution with $\lambda = 3$. Using
+\[ P(X = k) = \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
+compute the probability that **no** customers arrive in a given 10-minute period.
+
+<span style="color: red;">With $\lambda = 3$ and $k = 0$, and recalling that $0! = 1$ and $3^0 = 1$:
+\[ P(X = 0) = \frac{3^0 e^{-3}}{0!} = e^{-3} = 0.0498 \]
+So about a $5\%$ chance of no customers.</span>
+
+(d) For the coffee stand in part (c), compute the probability that **at most one** customer arrives in a given 10-minute period.
+
+<span style="color: red;">"At most one" means $k = 0$ or $k = 1$, so add the two probabilities:
+\[ P(X = 1) = \frac{3^1 e^{-3}}{1!} = 3e^{-3} = 0.1494 \]
+\[ P(X \leq 1) = P(X=0)+P(X=1) = 0.0498 + 0.1494 = 0.1992 \]
+So about a $20\%$ chance of one customer or fewer.</span>
 
 
 \newpage
-# References 
+# References
 
 
 
