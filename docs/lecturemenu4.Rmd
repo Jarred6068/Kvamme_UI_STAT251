@@ -1089,6 +1089,79 @@ Keep in mind that ethics also applies to data you didn't collect yourself. If yo
 dataset for your project, make sure it doesn't contain any information that could identify
 individuals.
 
+# Conclusion: what you should take away
+
+These two weeks were about where data come from, and they divide neatly in two. The first half was
+about **how we choose who to look at** — the sampling design. The second half was about **whether we
+can say one thing caused another** — the study design. The two questions are separate, and the rest
+of the course rests on both.
+
+## The three kinds of study
+
+We have been using these three terms throughout, so here they are in one place.
+
+* An **experimental study** (often just called an **experiment**) assigns the units to treatments
+  and then measures the response. The researcher decides who gets what.
+* An **observational study** measures the explanatory and response variables for each unit
+  <u>without trying to influence anything</u>. The units, or circumstance, decide who ends up in
+  which group.
+* A **survey** is a particular kind of observational study in which units are selected from a
+  population and asked questions, in order to describe that population. Nothing is assigned; a
+  survey only records what is already there.
+
+The question that separates the first from the other two is always the same: **who decided which
+group each unit ended up in?** If the researcher decided, it is an experiment. If not, it is
+observational. And remember that this has nothing to do with how the units were *sampled* — an
+experiment run on volunteers is still an experiment, and a survey of a perfect random sample is
+still observational.
+
+## The sampling designs
+
+The five random designs, and the two non-random ones to recognize and avoid:
+
+* **Simple random sample (SRS).** Every possible sample of size $n$ is equally likely. The
+  benchmark all the others are measured against.
+* **Systematic sample.** Choose a random starting point, then take every $k$th unit from the
+  sampling frame.
+* **Stratified random sample.** Split the population into **strata** that are alike within, then
+  draw an independent SRS from each stratum.
+* **Cluster sample.** Split the population into **clusters**, each a mini-population, then randomly
+  select whole clusters and measure everyone in them. In a **two-stage cluster sample**, sample
+  units within the selected clusters instead of taking all of them.
+* **Convenience sample** and **voluntary response sample** are *not* random. They let the easiest to
+  reach, or the most motivated, select themselves, and both are biased in ways no amount of extra
+  sample size will fix.
+
+The distinction students most often lose: a **stratum** is a group whose members are alike, and we
+sample from *every* stratum; a **cluster** is a small copy of the whole population, and we sample
+*some* clusters and take everyone inside.
+
+## The experimental designs
+
+* **Completely randomized design.** Every unit is assigned to a treatment completely at random.
+* **Randomized block design.** Units are first grouped into **blocks** that are alike in some way
+  expected to affect the response, and the random assignment is then carried out separately within
+  each block. Blocking is to experiments what stratifying is to sampling.
+* **Matched pairs design.** A block design in which each block is a pair of very similar units, or a
+  single subject receiving both treatments in a random order.
+
+## Error, bias, and what randomness buys you
+
+* **Sampling error** is the difference between a statistic and the parameter that comes purely from
+  which units happened to be chosen. It shrinks as the sample grows.
+* **Nonsampling error** comes from how the study was run — undercoverage, nonresponse, response
+  bias, bad question wording, recording mistakes. It does **not** shrink as the sample grows.
+* **Bias** is a systematic tendency to miss the parameter in the same direction. A bigger sample
+  makes a biased estimate more precisely wrong, which is the single most important idea in this
+  half of the course.
+* **Random sampling** is what lets you **generalize** from the sample to the population.
+  **Random assignment** is what lets you conclude **cause**. Most studies have one or the other,
+  rarely both, and each buys you exactly one of those two things.
+
+Finally, keep the causation rule in front of you: a **statistical association** between two
+variables is never on its own evidence that one causes the other, because a **lurking variable**
+associated with both can produce that association with no causal link anywhere in sight.
+
 ## Sources
 
 * AAPOR Task Force on 2020 Pre-Election Polling (2021). *Executive Summary*. American Association
