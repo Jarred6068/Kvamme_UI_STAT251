@@ -796,7 +796,11 @@ So the whole story runs the other way from the hormone therapy example, and that
 point:
 
 * With **hormone therapy**, observational studies suggested a benefit, and the randomized trial
-  reversed it. Healthier women were choosing the treatment.
+  reversed it. Healthier women were choosing the treatment. Later work on timing, dose, and
+  formulation then reversed the broad conclusion again: the WHI harms belonged to one fixed oral
+  regimen started a decade past menopause, and the FDA now recommends individualized therapy
+  started within 10 years of menopause. The heart benefit for early starters, though, still rests
+  mostly on observational studies.
 * With **coffee**, observational studies suggested harm, and that harm came from a lurking
   variable. Once smoking was accounted for, the association reversed, and it has held up as the
   evidence improved.
