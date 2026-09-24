@@ -214,7 +214,6 @@ Because attendance was optional, the students who chose to attend may differ sys
 `r RZ`
 
 
-\newpage
 
 # Part II: The Normal Distribution, $z$-scores, and Outliers
 
@@ -277,7 +276,6 @@ $\bf (5)$
 Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals, and their vibrissal hair shafts show a diversity of shapes (see **Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals drawn from 9 species of seals and sea lions, with the goal of better characterizing whisker morphology and evolution. **Table 1** gives the recorded whisker lengths of 20 Harp Seals. The data have been sorted by increasing "Total Length (cm)" for your convenience. Use the table to answer the following questions.
 
 
-\newpage
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
@@ -296,7 +294,6 @@ kable(cbind.data.frame(c(1:20), FS[ix,]), format = tbl_fmt, booktabs = T, escape
 ```
 
 
-\newpage
 
 (a) Compute the quartiles, the interquartile range, the mean, and the standard deviation of the variable "Total Length (cm)". Use the values exactly as they appear in **Table 1**. Remember that we find the quartiles by the **median of halves** method used in class: find the median first, and when $n$ is odd, leave that median out of both halves.
 
@@ -462,7 +459,6 @@ The observation $x_2 = -4.7$ sits 2.43 standard deviations below the mean. It **
 `r RZ`
 
 
-\newpage
 
 # Part III: Probability and Discrete Random Variables
 

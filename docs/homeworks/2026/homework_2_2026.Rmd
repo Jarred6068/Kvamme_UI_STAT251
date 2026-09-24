@@ -128,7 +128,6 @@ Name the experimental design used in each of the following situations. Choose fr
 (f) A study finds that students who attend more review sessions earn higher exam scores, but the review sessions were optional. Explain what **random assignment** would have allowed the researchers to conclude that this study cannot, and explain why **random sampling** alone is not enough to establish cause.
 
 
-\newpage
 
 # Part II: The Normal Distribution, $z$-scores, and Outliers
 
@@ -179,7 +178,6 @@ $\bf (5)$
 Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals, and their vibrissal hair shafts show a diversity of shapes (see **Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals drawn from 9 species of seals and sea lions, with the goal of better characterizing whisker morphology and evolution. **Table 1** gives the recorded whisker lengths of 20 Harp Seals. The data have been sorted by increasing "Total Length (cm)" for your convenience. Use the table to answer the following questions.
 
 
-\newpage
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
@@ -201,7 +199,6 @@ kable(export_tbl(cbind.data.frame(c(1:20), FS[ix,]),
 ```
 
 
-\newpage
 
 (a) Compute the quartiles, the interquartile range, the mean, and the standard deviation of the variable "Total Length (cm)". Use the values exactly as they appear in **Table 1**. Remember that we find the quartiles by the **median of halves** method used in class: find the median first, and when $n$ is odd, leave that median out of both halves.
 
@@ -283,7 +280,6 @@ plot(B)
 (c) Using the mean and standard deviation from parts (a) and (b), compute and interpret the $z$-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would either observation be considered an outlier under the $\pm 2s$ rule?
 
 
-\newpage
 
 # Part III: Probability and Discrete Random Variables
 
