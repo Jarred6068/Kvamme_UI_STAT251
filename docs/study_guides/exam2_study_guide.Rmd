@@ -44,15 +44,22 @@ Exam 2 will cover material beginning on **Monday of Week 4 (September 14)** thro
 
 * Sampling designs - September 14 and 21
 
-* Experimental design and causation - September 23
+* Experimental design and causation - September 23 and 25
 
 * The normal distribution - September 25 and 28
 
-* Probability Theory - September 30 - October 2
+* Identifying outliers, margin of error, statistical significance - September 30
 
-* Continuous distributions, sampling distributions and the Central Limit Theorem - October 5 - 9
+* Probability theory, random variables and discrete distributions - October 2 and 5
 
-* Confidence intervals for a population proportion - October 12
+* Continuous distributions - October 7
+
+* Sampling distributions and the Central Limit Theorem - October 9 and 12
+
+**Confidence intervals are not on this exam.** Confidence intervals for a
+proportion are introduced on October 12 and covered on October 19, after the
+exam, so you are responsible only for what a confidence interval *is*, not for
+computing one.
 
 ### Experimental and Sampling Designs
 
@@ -213,19 +220,16 @@ The probability of the intersection of two dependent events is equal to their co
 
 \[ P(X \leq a) = \sum_{k = 0}^a \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
 
-### Confidence Intervals for a Population Proportion
+### Confidence intervals: what is and is not on this exam
 
-  1. Know what a **confidence interval** is, and what the **confidence level** (e.g. $95\%$) does and does not mean.
+The October 12 lecture introduces the idea of a confidence interval. You should
+know **what a confidence interval is** and what the **confidence level** (e.g.
+$95\%$) does and does not mean, and recognize the form **point estimate $\pm$
+margin of error**.
 
-  2. Know the form **point estimate $\pm$ margin of error**, and be able to identify each piece.
-
-  3. Know how the **margin of error** for $\hat{p}$ is built from the standard error $\sqrt{\hat{p}(1-\hat{p})/n}$ and a $z$ multiplier, and which $z$ goes with the common confidence levels.
-
-  4. Understand how the width of the interval responds to a change in the **confidence level** and to a change in the **sample size**.
-
-  5. Be able to interpret a given confidence interval for a proportion in the context of the problem.
-
-**Note:** confidence intervals for a **mean** are covered on October 19, *after* this exam, and are **not** on Exam 2.
+Everything beyond that -- computing an interval for a proportion or a mean,
+choosing a sample size, the $z$ multipliers -- is covered on October 19 and
+later, **after** this exam, and is **not** on Exam 2.
 
 <br>
 <br>
