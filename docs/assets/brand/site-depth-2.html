@@ -1,0 +1,14 @@
+<!--
+  Depth marker for pages that sit TWO directories below docs/, e.g.
+  docs/homeworks/2026/ and docs/Examinations/Fall_2026/.
+
+  assets/brand/a11y.html adds a "Back to course site" link to every page that
+  has no navbar, and it has to know how far up docs/index.html is. It cannot
+  work that out for itself: the rendered pages are self-contained, so every
+  asset is inlined and no relative URL survives in the markup to measure.
+
+  Include this file in a directory's _output.yml after_body list BEFORE
+  a11y.html. Directories one level below docs/ include nothing and get the
+  default of 1.
+-->
+<script>window.__siteDepth = 2;</script>

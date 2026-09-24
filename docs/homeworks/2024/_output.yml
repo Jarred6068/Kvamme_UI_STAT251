@@ -30,4 +30,5 @@ html_document:
     before_body: ../../assets/brand/skip-link.html
     after_body:
       - ../../assets/brand/theme-toggle.html
+      - ../../assets/brand/site-depth-2.html
       - ../../assets/brand/a11y.html

@@ -1900,6 +1900,20 @@ less than or equal to 10 grams? <span class="soln"><span class="math display">\[
 })();
 </script>
 <!--
+  Depth marker for pages that sit TWO directories below docs/, e.g.
+  docs/homeworks/2026/ and docs/Examinations/Fall_2026/.
+
+  assets/brand/a11y.html adds a "Back to course site" link to every page that
+  has no navbar, and it has to know how far up docs/index.html is. It cannot
+  work that out for itself: the rendered pages are self-contained, so every
+  asset is inlined and no relative URL survives in the markup to measure.
+
+  Include this file in a directory's _output.yml after_body list BEFORE
+  a11y.html. Directories one level below docs/ include nothing and get the
+  default of 1.
+-->
+<script>window.__siteDepth = 2;</script>
+<!--
   Structural accessibility patches. Included via `includes: after_body:` AFTER
   theme-toggle.html.
 
@@ -1973,15 +1987,24 @@ less than or equal to 10 grams? <span class="soln"><span class="math display">\[
         no way back except the browser's Back button - and no way at all if
         they arrived from a bookmark or a direct link.
 
-        All 29 live exactly one directory below docs/, so '../index.html'
-        resolves for every one of them. This branch cannot run on a top-level
-        page: those all have a navbar. */
+        How far up docs/index.html is depends on the directory. Most pages sit
+        one level below docs/, but homeworks/<year>/ and Examinations/<term>/
+        are two levels down, and '../index.html' 404s from those. The page
+        cannot measure this for itself - it is rendered self-contained, so every
+        asset is inlined and no relative URL survives in the markup - so the
+        deeper directories declare it by including assets/brand/site-depth-2.html
+        ahead of this file in their _output.yml. Default is 1.
+
+        This branch cannot run on a top-level page: those all have a navbar. */
   if (!navbar && main) {
+    var depth = window.__siteDepth || 1;
+    var prefix = '';
+    for (var d = 0; d < depth; d++) { prefix += '../'; }
     var bar = document.createElement('div');
     bar.className = 'site-backlink-bar';
     var link = document.createElement('a');
     link.className = 'site-backlink';
-    link.href = '../index.html';
+    link.href = prefix + 'index.html';
     link.textContent = '\u2190 Back to course site';
     bar.appendChild(link);
     main.insertBefore(bar, main.firstChild);
