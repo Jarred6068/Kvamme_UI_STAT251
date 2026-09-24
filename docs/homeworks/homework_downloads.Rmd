@@ -66,9 +66,9 @@ downloads(rbind(
 ```{r}
 downloads(rbind(
   c("2026/homework_2_2026.pdf",                                    "Assignment (printable PDF)"),
-  c("../Data/homework_tables/hw2_harp_seal_whiskers.csv",   "Problems 2 and 3 — whisker length and bead count for 20 Harp Seals"),
+  c("../Data/homework_tables/hw2_harp_seal_whiskers.csv",   "Problems 5 and 6 — whisker length and bead count for 20 Harp Seals"),
   c("../Data/homework_tables/hw2_tree_volume_dist.csv",     "Problem 10 — probability distribution of tree volume"),
-  c("../assets/whiskerMaster.csv",                          "Problems 2 and 3 — full Pinniped whisker dataset (all species; optional)")
+  c("../assets/whiskerMaster.csv",                          "Problems 5 and 6 — full Pinniped whisker dataset (all species; optional)")
 ))
 ```
 

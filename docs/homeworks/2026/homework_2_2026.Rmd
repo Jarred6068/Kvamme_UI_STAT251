@@ -73,7 +73,68 @@ datapath = '../../Data/'
 ```
 
 
-$\bf (1)$ Rocket League is a popular online video game and E-sport that emerged in 2015. Players from around the world compete in sports like soccer (football), basketball and hockey while controlling RC-like vehicles. The most popular game-mode is doubles soccer, in which teams of two players each try to outscore each other by hitting a soccer ball into the opposing goal. Each car carries a limited supply of **boost**, which is spent to accelerate and to fly, and which refills by driving over boost pads on the field. A player's **boost used per minute (BPM)** measures how aggressively they spend boost over the course of a match. The histogram below shows the distribution of BPM for $n = 5{,}714$ player-match records collected from ranked matches.
+# Part I: Sampling and Experimental Design
+
+
+$\bf (1)$
+Define each of the following terms.
+
+(a) Explanatory variable
+
+(b) Response variable
+
+(c) Experimental study
+
+(d) Observational study
+
+(e) Survey
+
+(f) Lurking (confounding) variable
+
+(g) In one or two sentences, explain why a statistical **association** between two variables is not by itself evidence that one **causes** the other. Give an example of a lurking variable that could produce an association without a causal link.
+
+
+$\bf (2)$
+Name the sampling method used in each of the following situations.
+
+(a) A man stands outside a grocery store handing out questionnaires that ask shoppers to evaluate their shopping experience and the quality of the service. He does not approach shoppers whose hands are full of groceries; instead he asks every shopper who has only a few items or who has both hands free.
+
+(b) A gardener has planted 10 rows of corn in a garden box, and each row holds eight corn plants. The gardener wants to know the average height of the corn plants in the box, so he randomly selects rows 1, 5, and 9 and measures the height of every plant in those rows.
+
+(c) A company wants to know how its employees feel about compensation and benefits. Over the next few weeks, the company asks 30 employees from each of its branch locations to fill out a survey about compensation.
+
+(d) A polling company wants to know what proportion of the citizens of Moscow, Idaho, are voting for the Republican candidate in the mayoral race. The company records this information for every 5th voter who leaves the voting booth.
+
+(e) A lumber company wants to estimate the amount of usable lumber on a plot of land. The company randomly selects 100 trees and measures the diameter, height, and volume of each one in order to estimate its yield in board feet.
+
+(f) Explain the difference between **sampling error** and **nonsampling error**, and give one example of each.
+
+(g) A university emails a satisfaction survey to all 11,000 of its students, and 600 reply. The students who reply are far more likely to be the ones with a strong complaint. Name the source of bias at work here, and explain why emailing 40,000 students instead of 11,000 would **not** fix the problem.
+
+
+$\bf (3)$
+Name the experimental design used in each of the following situations. Choose from **completely randomized design**, **randomized block design**, and **matched pairs design**.
+
+(a) A nutritionist wants to compare three breakfast cereals. She recruits 90 volunteers and uses a random number generator to assign 30 of them to each cereal.
+
+(b) A dermatologist testing a new ointment applies the ointment to one arm of each patient and a placebo cream to that patient's other arm, deciding at random which arm receives which.
+
+(c) An agronomist testing four fertilizers suspects that soil drainage strongly affects yield. He sorts his 40 plots into a "well-drained" group and a "poorly-drained" group, then randomly assigns the four fertilizers within each group.
+
+(d) A sleep researcher recruits 200 subjects, and a coin flip decides whether each subject receives a new sleep medication or an identical-looking pill that contains no medication.
+
+(e) For the study in part (d), identify the **experimental units**, the **factor**, the **levels** of that factor, the **treatments**, and the **control group**. Was this study **blinded**? What additional information would you need in order to know whether it was **double blinded**?
+
+(f) A study finds that students who attend more review sessions earn higher exam scores, but the review sessions were optional. Explain what **random assignment** would have allowed the researchers to conclude that this study cannot, and explain why **random sampling** alone is not enough to establish cause.
+
+
+\newpage
+
+# Part II: The Normal Distribution, $z$-scores, and Outliers
+
+
+$\bf (4)$
+Rocket League is a popular online video game and E-sport that emerged in 2015. Players from around the world compete in sports such as soccer (football), basketball, and hockey while controlling RC-like vehicles. The most popular game mode is doubles soccer, in which two teams of two players each try to outscore the other by hitting a soccer ball into the opposing goal. Each car carries a limited supply of **boost**, which is spent to accelerate and to fly and which is replenished by driving over boost pads on the field. A player's **boost used per minute (BPM)** measures how aggressively that player spends boost over the course of a match. The histogram below shows the distribution of BPM for $n = 5{,}714$ player-match records collected from ranked matches.
 
 ```{r, echo=F, message=F, warning=F, fig.height=4, fig.width=8}
 RL = read.table(paste0(datapath, 'RLData.txt'), sep = ',', header = T)
@@ -91,14 +152,13 @@ ggplot(data = RL, aes(x = bpm))+geom_histogram(color = 'black', fill = 'lightgre
         axis.title = element_text(size = 14))
 ```
 
-(a) Assuming a mean of $\bar{x} = 355$ and standard deviation of $s = 69$, in approximately what proportion of matches was more than 424 BPM used?
+(a) Assume a mean of $\bar{x} = 355$ and a standard deviation of $s = 69$. In approximately what proportion of matches did a player use more than 424 BPM?
 
-(b) Approximately what proportion of matches had a BPM greater than 217 but less than 493?
+(b) In approximately what proportion of matches was the BPM greater than 217 but less than 493?
 
-(c) How much boost per minute would a player need to use in a match to be in the top $2.5\%$ of matches?
+(c) How much boost per minute would a player need to use in a match in order to be in the top $2.5\%$ of matches?
 
-(d) In a new match a player records a BPM of 562. Calculate the $z$-score for this match and explain what the $z$-score means in relation to the average BPM. How many standard deviations from the mean is this performance?
-
+(d) In a new match, a player records a BPM of 562. Compute the $z$-score for this match and explain what that $z$-score means in relation to the average BPM. How many standard deviations from the mean is this performance?
 
 
 ```{r fig1, echo=FALSE, out.width='49%', fig.show='hold', fig.align='center', fig.cap='Pinniped whisker morphology - Ginter et al. 2012 (left), and a juvenile Harp Seal (right).'}
@@ -110,28 +170,16 @@ knitr::include_graphics(c('../../assets/whisker_types.png',
                           '../../assets/Harp_seal_whitecoat.jpg'))
 ```
 
-<!-- \begin{figure} -->
-<!-- \centering -->
-<!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{../../assets/whisker_types.png} -->
-<!--       \caption{Pinniped whisker morphology - Ginter et al. 2012} -->
-<!--     \end{minipage}\hfill -->
-<!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{../../assets/Harp_seal_whitecoat.jpg} -->
-<!--       \caption{A juvenile Harp Seal} -->
-<!--     \end{minipage} -->
-<!-- \end{figure} -->
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 whiskers = read.csv(whiskpath)
 ```
 
 
-$\bf (2)$
-Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals and their vibrissal hair shafts demonstrate a diversity of shapes (**See Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals from 9 species of seals and sea lions. Their goal was to better characterize whisker morphology and evolution. The following data are the recorded whisker lengths of 20 Harp Seals (given in **Table 1**). Note that the data have been sorted according to increasing "Total Length (cm)" for your convenience - use the table to answer the following questions:
+$\bf (5)$
+Pinnipeds (seals and sea lions) possess the largest vibrissae (whiskers) among mammals, and their vibrissal hair shafts show a diversity of shapes (see **Figure 1**). In a study conducted by [@ginter2012fused], researchers measured 9 characteristics of Pinniped whiskers in individuals drawn from 9 species of seals and sea lions, with the goal of better characterizing whisker morphology and evolution. **Table 1** gives the recorded whisker lengths of 20 Harp Seals. The data have been sorted by increasing "Total Length (cm)" for your convenience. Use the table to answer the following questions.
 
 
 \newpage
-
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
@@ -153,20 +201,17 @@ kable(export_tbl(cbind.data.frame(c(1:20), FS[ix,]),
 ```
 
 
-
 \newpage
 
-(a) Compute the quartiles, interquartile range, mean, and standard deviation for the variable "Total Length (cm)". Use the values exactly as they appear in **Table 1**. Remember that we find the quartiles by the **median of halves** method used in class: find the median first, and when $n$ is odd leave that median out of both halves.
+(a) Compute the quartiles, the interquartile range, the mean, and the standard deviation of the variable "Total Length (cm)". Use the values exactly as they appear in **Table 1**. Remember that we find the quartiles by the **median of halves** method used in class: find the median first, and when $n$ is odd, leave that median out of both halves.
 
-(b) Make a boxplot of the variable "Total Length" and make note of any outliers. Use the $1.5\times IQR$ rule to decide what counts as an outlier.
+(b) Construct a boxplot of the variable "Total Length" and note any outliers. Use the $1.5\times IQR$ rule to decide what counts as an outlier.
 
-(c) Observation 20 has a total whisker length of 5.08 (cm), how many standard deviations is this observation from the mean whisker length? (hint compute the $z$-score for this observation)
-
-
+(c) Observation 20 has a total whisker length of 5.08 cm. How many standard deviations from the mean whisker length is this observation? (hint: compute the $z$-score for this observation)
 
 
-$\bf (3)$
-Use the following pair of boxplots constructed from the Pinniped whisker data in $\textbf{Table 1}$. The boxplots show the distribution of total whisker length (cm) for whiskers with 2 beads vs whiskers with three beads. Answer the following questions:
+$\bf (6)$
+The pair of boxplots below was constructed from the Pinniped whisker data in **Table 1**. The boxplots show the distribution of total whisker length (cm) for whiskers with 2 beads and for whiskers with 3 beads. Use them to answer the following questions.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
 FS$num.beads = as.factor(FS$num.beads)
@@ -202,18 +247,15 @@ plot(A)
 #ggarrange(A, B, nrow = 2)
 ```
 
-(a) Using the boxplots above, do the whisker lengths for 2 bead and 3 bead whiskers follow a normal distribution? Why or why not? Answer separately for each group.
+(a) Using the boxplots above, do the whisker lengths for 2 bead whiskers and for 3 bead whiskers follow a normal distribution? Why or why not? Answer separately for each group.
 
-(b) Suppose researchers observe two new Harp Seals (denoted Seal 1 and Seal 2) and record their total whisker lengths and the number of beads on the whiskers. Seal 1 has a total whisker length of $4.32$ (cm) and the whisker has 3 beads. Seal 2 has a total whisker length of $4.34$ (cm) but the whisker has only 2 beads. Suppose we want to know how they compare <i>relative</i> to the distribution of whiskers with the same number of beads. Confirm that the whisker length of Seal 1 has a $z$-score of $-1.07$ while Seal 2 has a $z$-score of $-0.43$. Use the group means and standard deviations printed on the boxplot above.
+(b) Suppose researchers observe two new Harp Seals, denoted Seal 1 and Seal 2, and record the total whisker length and the number of beads for each. Seal 1 has a total whisker length of 4.32 cm on a whisker with 3 beads. Seal 2 has a total whisker length of 4.34 cm, but its whisker has only 2 beads. We want to know how the two compare *relative* to the distribution of whiskers with the same number of beads. Confirm that the whisker of Seal 1 has a $z$-score of $-1.07$ while the whisker of Seal 2 has a $z$-score of $-0.43$. Use the group means and standard deviations printed on the boxplot above.
 
 (c) Suppose the researchers observe a new whisker with 3 beads. Using the $\pm 2s$ rule, how long or how short would that whisker have to be before you would flag it as an outlier? Then look at the 3 bead group in **Table 1** and explain why the $\pm 2s$ rule should be treated with caution here. (hint: your answer to part (a) for the 3 bead group is the reason, and note that the $1.5\times IQR$ rule and the $\pm 2s$ rule do not always flag the same observations)
 
 
-
-
-
-$\bf (4)$
-Use the following plot of the cumulative distribution of a quantitative variable $x$ to answer questions (a)-(c)
+$\bf (7)$
+Use the plot below of the cumulative distribution of a quantitative variable $X$ to answer parts (a) through (c).
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=8}
 
@@ -234,73 +276,20 @@ plot(B)
 ```
 
 
-(a) Assume the above cumulative distribution represents an approximately normal (symmetric, bell-shaped) distribution with mean $\bar{x} = 5$ and standard deviation $s = 4$. Under the empirical rule, write down the interval, in terms of $\bar{x}$ and $s$, that contains approximately $95\%$ of the observations, and then give its two endpoints as numbers.
+(a) Assume the cumulative distribution above represents an approximately normal (symmetric, bell-shaped) distribution with mean $\bar{x} = 5$ and standard deviation $s = 4$. Under the empirical rule, write down the interval, in terms of $\bar{x}$ and $s$, that contains approximately $95\%$ of the observations, and then give its two endpoints as numbers.
 
-(b) Your two endpoints from part (a) are the empirical rule's estimates of the $2.5th$ and $97.5th$ percentiles of $X$. Now read the $2.5th$ and $97.5th$ percentiles directly off the cumulative distribution plot above. Why do the two sets of answers differ? (hint: think about shape and how that relates to the empirical rule)
+(b) The two endpoints from part (a) are the empirical rule's estimates of the $2.5$th and $97.5$th percentiles of $X$. Now read the $2.5$th and $97.5$th percentiles directly off the cumulative distribution plot above. Why do the two sets of answers differ? (hint: think about shape and how it relates to the empirical rule)
 
-(c) Using the mean and standard deviation from parts <i>a-b</i>, compute and interpret the $z$-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would these two observations be considered outliers under the $\pm 2s$ rule?
-
-
+(c) Using the mean and standard deviation from parts (a) and (b), compute and interpret the $z$-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would either observation be considered an outlier under the $\pm 2s$ rule?
 
 
+\newpage
 
-$\bf (5)$
-Define the following terms
-
-(a) Explanatory variable
-
-(b) Response variable
-
-(c) experimental study
-
-(d) observational study
-
-(e) survey
-
-(f) lurking (confounding) variable
-
-(g) In one or two sentences, explain why a statistical **association** between two variables is not by itself evidence that one **causes** the other. Give an example of a lurking variable that could produce an association without a causal link.
-
-
-$\bf (6)$
-Name the sampling method used in each of the following situations:
-
-
-(a) A man is standing outside of a grocery store handing out questionnaires to shoppers asking them to evaluate their shopping experience and the quality of service. He does not ask shoppers who have their hands full carrying groceries, but instead asks all shoppers who have only a few items or have both hands free to fill out the questionnaire.
-
-(b) A gardener has a garden box in which he has planted 10 rows of corn. Each row consists of eight corn plants. The gardener wishes to know the average height of the corn plants in the garden box so he randomly selects rows 1, 5, and 9 and measures the height of all corn plants in those rows.
-
-(c) A company wishes to know how employees feel about compensation and benefits. Over the next few weeks, the company asks 30 employees from each of its branch locations to fill out a survey regarding compensation. 
-
-
-(d) A local polling company wishes to know what proportion of citizens in Moscow, Idaho are voting for the Republican candidate in the mayoral race. The polling company records this information for every 5th voter who leaves the voting booth.
-
-
-(e) A lumber company wishes to estimate the amount of usable lumber on a plot of land. The company randomly selects 100 trees and measures their diameter, height, and volume, in order to estimate the number of board feet of each tree.
-
-(f) Explain the difference between **sampling error** and **nonsampling error**, and give one example of each.
-
-(g) A university emails a satisfaction survey to all 11,000 of its students and 600 respond. The students who reply are much more likely to be the ones with a strong complaint. Name the source of bias at work here, and explain why emailing 40,000 students instead of 11,000 would **not** fix the problem.
-
-
-$\bf (7)$
-Name the experimental design used in each of the following situations. Choose from **completely randomized design**, **randomized block design**, and **matched pairs design**.
-
-(a) A nutritionist wants to compare three breakfast cereals. She recruits 90 volunteers and uses a random number generator to assign 30 of them to each cereal.
-
-(b) A dermatologist testing a new ointment applies the ointment to one arm of each patient and a placebo cream to the patient's other arm, deciding at random which arm gets which.
-
-(c) An agronomist testing four fertilizers suspects that soil drainage strongly affects yield. He sorts his 40 plots into "well-drained" and "poorly-drained" groups, then randomly assigns the four fertilizers within each group.
-
-(d) A sleep researcher recruits 200 subjects, and a coin flip decides whether each one receives a new sleep medication or an identical-looking pill containing no medication.
-
-(e) For the study in part (d), identify the **experimental units**, the **factor**, the **levels** of that factor, the **treatments**, and the **control group**. Was this study **blinded**? What additional information would you need to know whether it was **double blinded**?
-
-(f) A study finds that students who attend more review sessions earn higher exam scores. The review sessions were optional. Explain what **random assignment** would have let the researchers conclude that this study cannot, and why **random sampling** alone is not enough to establish cause.
+# Part III: Probability and Discrete Random Variables
 
 
 $\bf (8)$
-Define the following terms/concepts
+Define each of the following terms and concepts.
 
 (a) Sample space
 
@@ -326,11 +315,11 @@ Define the following terms/concepts
 
 
 $\bf (9)$
-Answer the following probability questions. Show your work.
+Answer the following probability questions, and show your work.
 
-(a) A fair coin is thrown 3 times. What is the probability that <u>at least</u> one heads is observed? (hint: it is easier to find the probability of the complement first)
+(a) A fair coin is flipped 3 times. What is the probability that <u>at least</u> one head is observed? (hint: it is easier to find the probability of the complement first)
 
-(b) Suppose that in a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Draw a Venn diagram that models this situation, filling in the number of students in each region. What is the probability that a student is in the band **or** plays a sport?
+(b) In a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Draw a Venn diagram that models this situation, filling in the number of students in each region. What is the probability that a student is in band **or** plays a sport?
 
 (c) A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards: 9 numbered cards, 3 face cards, and an Ace. A single card is drawn at random. What is the probability that it is a numbered card? What is the probability that it is the Ace of Spades?
 
@@ -338,11 +327,11 @@ Answer the following probability questions. Show your work.
 
 (e) Repeat part (d), but now assume the two balls are selected **without replacement**. Explain why your answer changed.
 
-(f) The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume these three weather events are independent. What is the probability that a given day is rainy, cloudy, **and** windy?
+(f) On a given day in Moscow, Idaho, the probability that it rains is $P(R) = 0.1$, the probability that it is windy is $P(W) = 0.2$, and the probability that it is cloudy is $P(C) = 0.7$. Assume these three weather events are independent. What is the probability that a given day is rainy, cloudy, **and** windy?
 
 
 $\bf (10)$
-Consider a survey of tree volume. Suppose that in the population of trees $10\%$ have a volume of 10 cubic feet, $20\%$ have a volume of 20 cubic feet, $30\%$ have a volume of 30 cubic feet, and $40\%$ have a volume of 40 cubic feet. Let $X$ denote the volume of a randomly selected tree, assuming every tree has an equal chance of being selected. The probability distribution of $X$ is given in **Table 2** below.
+Consider a survey of tree volume. Suppose that in the population of trees, $10\%$ have a volume of 10 cubic feet, $20\%$ have a volume of 20 cubic feet, $30\%$ have a volume of 30 cubic feet, and $40\%$ have a volume of 40 cubic feet. Let $X$ denote the volume of a randomly selected tree, and assume every tree has an equal chance of being selected. The probability distribution of $X$ is given in **Table 2** below.
 
 ```{r, echo=FALSE, warning=F, message=F}
 
@@ -364,7 +353,7 @@ kable(export_tbl(df, 'hw2_tree_volume_dist.csv', digits = 2,
 
 (c) Confirm that $X$ has a standard deviation of $\sigma = 10$ cubic feet by computing $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$ and then taking the square root.
 
-(d) Is $X$ as described here a discrete or a continuous random variable? Explain.
+(d) Is $X$, as described here, a discrete or a continuous random variable? Explain.
 
 
 $\bf (11)$
@@ -372,11 +361,11 @@ Answer the following, showing the formula you used and the numbers you substitut
 
 (a) An angler has a $40\%$ chance of catching a fish on every cast, and each cast is independent of the others. Using the binomial probability mass function
 \[ P(X = k) = \frac{n!}{k!(n-k)!}\cdot p^k \cdot (1-p)^{n-k} \]
-show how to compute the probability that she catches exactly $2$ fish in her next $5$ casts.
+show how to compute the probability that she catches exactly 2 fish in her next 5 casts.
 
 (b) For the angler in part (a), what is the mean number of fish she expects to catch in 5 casts, and what is the variance? (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
 
-(c) A small campus coffee stand serves on average $3$ customers per 10-minute period. Let $X$ be the number of customers in a 10-minute period, and assume $X$ follows a Poisson distribution with $\lambda = 3$. Using
+(c) A small campus coffee stand serves an average of 3 customers per 10-minute period. Let $X$ be the number of customers in a 10-minute period, and assume $X$ follows a Poisson distribution with $\lambda = 3$. Using
 \[ P(X = k) = \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
 compute the probability that **no** customers arrive in a given 10-minute period.
 
