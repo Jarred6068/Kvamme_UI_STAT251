@@ -44,7 +44,7 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-path = '../Data/'
+path = '../../Data/'
 set.seed(123)
 
 #<span class="soln">text</span>

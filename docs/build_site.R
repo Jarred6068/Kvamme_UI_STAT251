@@ -39,7 +39,15 @@ tryCatch({
   #missing package (these pages need kableExtra, latex2exp, gridExtra, ggpubr,
   #ggthemes, plyr, ggvenn and surveydata between them) should not cost you the
   #other 28 pages. Failures are collected and reported at the end instead.
-  subdirs <- c("homeworks", "misc", "Review_problems", "study_guides")
+  #Homeworks are filed by term under homeworks/, so the year directories are
+  #listed explicitly - this loop does not recurse. homeworks/ itself still holds
+  #the two cross-term index pages (the downloads page and the reading list).
+  #The year directories come BEFORE homeworks/ on purpose: rendering an
+  #assignment writes its data tables into Data/homework_tables, and
+  #homeworks/homework_downloads.Rmd stats those files to print their size. Build
+  #homeworks/ first and a newly added table shows up as MISSING for one build.
+  subdirs <- c("homeworks/2026", "homeworks/2024", "homeworks",
+               "misc", "Review_problems", "study_guides")
 
   failures <- list()
   rendered <- 0L

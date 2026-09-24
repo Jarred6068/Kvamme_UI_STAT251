@@ -35,7 +35,7 @@ needed it is given, or the arithmetic is simple enough to do in your head.
 Study by computing anyway. Work the
 [Exam 2 Review Problems](../Review_problems/exam2_review_problems.html) through, then check
 the [solutions](../Review_problems/exam2_review_problems_solns.html). They are more
-computational than the exam by design. [Homework 2](../homeworks/week5homework.html) covers
+computational than the exam by design. [Homework 2](../homeworks/2026/homework_2_2026.html) covers
 much of this material as well, and some exam problems are based on homework problems.
 
 # Content To Study

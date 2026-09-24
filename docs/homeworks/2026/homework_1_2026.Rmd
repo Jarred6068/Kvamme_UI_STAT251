@@ -51,7 +51,7 @@ export_tbl <- function(x, file, names = NULL, digits = NULL) {
     }
     cl
   })
-  dir <- '../Data/homework_tables'
+  dir <- '../../Data/homework_tables'
   dir.create(dir, showWarnings = FALSE, recursive = TRUE)
   write.csv(d, file.path(dir, file), row.names = FALSE)
   # invisible(), not a bare `x`: this helper is always called as a bare
@@ -65,7 +65,7 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-path = '../Data/'
+path = '../../Data/'
 set.seed(123)
 ```
 

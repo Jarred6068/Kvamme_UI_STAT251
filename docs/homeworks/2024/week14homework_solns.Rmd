@@ -18,7 +18,7 @@ header-includes:
   - \usepackage{threeparttablex}
   - \usepackage[normalem]{ulem}
   - \usepackage{makecell}
-bibliography: ../misc/home5bibs.bib
+bibliography: ../../misc/home5bibs.bib
 ---
 
 
@@ -46,11 +46,11 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-mainpath = '../Data/'
-whiskpath = '../assets/whiskerMaster.csv'
+mainpath = '../../Data/'
+whiskpath = '../../assets/whiskerMaster.csv'
 
-datapath = '../Data/'
-source('../misc/stat251_tools.R')
+datapath = '../../Data/'
+source('../../misc/stat251_tools.R')
 #<span style="color: red;"></span>
 ```
 

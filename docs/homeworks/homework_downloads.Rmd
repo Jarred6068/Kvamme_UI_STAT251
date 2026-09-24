@@ -50,7 +50,7 @@ answers.
 
 ```{r}
 downloads(rbind(
-  c("week1homework.pdf",                          "Assignment (printable PDF)"),
+  c("2026/homework_1_2026.pdf",                          "Assignment (printable PDF)"),
   c("../Data/homework_tables/hw1_coin_flips.csv", "Problem 6 — results of 15 coin flips"),
   c("../Data/homework_tables/hw1_age_distribution.csv", "Problem 7 — age distribution of survey respondents"),
   c("../Data/homework_tables/hw1_spam_types.csv", "Problem 8 — most common types of email spam"),
@@ -65,7 +65,7 @@ downloads(rbind(
 
 ```{r}
 downloads(rbind(
-  c("week5homework.pdf",                                    "Assignment (printable PDF)"),
+  c("2026/homework_2_2026.pdf",                                    "Assignment (printable PDF)"),
   c("../Data/homework_tables/hw2_harp_seal_whiskers.csv",   "Problems 2 and 3 — whisker length and bead count for 20 Harp Seals"),
   c("../Data/homework_tables/hw2_tree_volume_dist.csv",     "Problem 10 — probability distribution of tree volume"),
   c("../assets/whiskerMaster.csv",                          "Problems 2 and 3 — full Pinniped whisker dataset (all species; optional)")
@@ -78,10 +78,10 @@ downloads(rbind(
 
 ```{r}
 downloads(rbind(
-  c("week7homework.pdf",                                      "Assignment (printable PDF)"),
-  c("../Data/homework_tables/hw3_prob_dist_X.csv",            "Problem 1 — probability distribution of X"),
-  c("../Data/homework_tables/hw3_tree_volume_dist.csv",       "Problem 3 — probability distribution of tree volume"),
-  c("../Data/homework_tables/hw3_punt_distance_dist.csv",     "Problem 4 — sampling distribution of mean punt distance")
+  c("2026/homework_3_2026.pdf",                                      "Assignment (printable PDF)"),
+  c("../Data/homework_tables/hw3_2026_prob_dist_X.csv",            "Problem 1 — probability distribution of X"),
+  c("../Data/homework_tables/hw3_2026_tree_volume_dist.csv",       "Problem 3 — probability distribution of tree volume"),
+  c("../Data/homework_tables/hw3_2026_punt_distance_dist.csv",     "Problem 4 — sampling distribution of mean punt distance")
 ))
 ```
 
@@ -91,7 +91,7 @@ downloads(rbind(
 
 ```{r}
 downloads(rbind(
-  c("week12homework.pdf",                                              "Assignment (printable PDF)"),
+  c("2024/week12homework.pdf",                                              "Assignment (printable PDF)"),
   c("../Data/homework_tables/hw4_confidence_levels_proportion.csv",    "Problem 2 — confidence levels to fill in (proportion)"),
   c("../Data/homework_tables/hw4_confidence_levels_mean.csv",          "Problem 3 — confidence levels and sample sizes to fill in (mean)"),
   c("../Data/homework_tables/hw4_political_party.csv",                 "Problem 4 — political party affiliation of Georgia college students"),
@@ -106,7 +106,7 @@ downloads(rbind(
 
 ```{r}
 downloads(rbind(
-  c("week14homework.pdf",                                            "Assignment (printable PDF)"),
+  c("2024/week14homework.pdf",                                            "Assignment (printable PDF)"),
   c("../Data/homework_tables/hw5_acne_scores.csv",                   "Problem 2 — acne scores for 20 patients, before and after treatment"),
   c("../Data/homework_tables/hw5_herbivore_tracks.csv",              "Problem 3 — herbivore tracks in fertilized and control plots"),
   c("../Data/homework_tables/hw5_scotus_summary.csv",                "Problem 4 — current and historical SCOTUS approval polling summary"),

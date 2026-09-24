@@ -18,7 +18,7 @@ header-includes:
   - \usepackage{threeparttablex}
   - \usepackage[normalem]{ulem}
   - \usepackage{makecell}
-bibliography: ../misc/home2bibs.bib
+bibliography: ../../misc/home2bibs.bib
 ---
 
 
@@ -52,7 +52,7 @@ export_tbl <- function(x, file, names = NULL, digits = NULL) {
     }
     cl
   })
-  dir <- '../Data/homework_tables'
+  dir <- '../../Data/homework_tables'
   dir.create(dir, showWarnings = FALSE, recursive = TRUE)
   write.csv(d, file.path(dir, file), row.names = FALSE)
   # invisible(), not a bare `x`: this helper is always called as a bare
@@ -66,32 +66,77 @@ library(gridExtra)
 library(ggpubr)
 library(ggthemes)
 library(plyr)
-mainpath = '../Data/'
-whiskpath = '../assets/whiskerMaster.csv'
+mainpath = '../../Data/'
+whiskpath = '../../assets/whiskerMaster.csv'
 
-datapath = '../Data/'
+datapath = '../../Data/'
 #<span style="color: red;"></span>
 ```
 
 
 ### Definitions
+Define the following terms/concepts
 
-Define the following terms/concepts. (The language of probability - sample space, event,
-random trial, union, intersection, random variable, probability distribution and the Law of
-Large Numbers - was covered on **Homework 2**; review those definitions before starting.)
+* a.) Sampling Error
 
-* a.) Population distribution
+* b.) Law of Large Numbers
 
-* b.) Sampling distribution
+* c.) Sample Space
 
-* c.) Probability Mass Function
+* d.) Event
 
-* d.) Probability Density Function
+* e.) Union
 
+* f.) Intersection
+
+* g.) Random Trial
+
+* h.) Random Variable
+
+* i.) Probability distribution
+
+* j.) Population distribution
+
+* k.) Continuous random variable
+
+* l.) Discrete random variable 
+
+* m.) Probability Mass Function 
+
+* n.) Probability Density Function 
+
+
+## Simple probability
+
+$\bf (1)$ A fair coin is thrown 3 times. What is the probability that <u>at least</u> one heads is observed? 
+
+<br>
+
+$\bf (2)$ Suppose that in a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Create a Venn diagram that models this situation. What is the probability that a student is in the band or plays a sport?
+
+<br>
+
+$\bf (3)$ A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards (9 numbered cards and 3 face cards, and an Ace). 
+
+* Suppose a single card is drawn at random, what is the probability that it is a numbered card?
+
+<br>
+
+* What is the probability that the selected card is the Ace of Spades (assume independence where necessary)? 
+
+<br>
+
+$\bf (4)$ An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random with replacement. What is the probability that first ball is yellow and the second ball is red?
+
+<br>
+
+$\bf (5)$ The probability that it rains $R$ on a given day in Moscow, Idaho is $P(R) = 0.1$. The probability that it is Windy $W$ is $P(W) = 0.2$, and the probability that it is cloudy $C$ is $P(C) = 0.7$. Assume that these three types of weather events are independent. What is the probability that a given day is Rainy, Cloudy, and Windy?
+
+<br>
 
 ## Sampling Distributions, Means, and Variances
 
-$\bf (1)$ A random variable $X$ has the following probability distribution
+$\bf (6)$ A random variable $X$ has the following probability distribution
 
 ```{r, echo=FALSE, warning=F, message=F}
 
@@ -112,11 +157,11 @@ kable(export_tbl(df, 'hw3_prob_dist_X.csv', digits = 2, names = c('X', 'P(X)')),
 
 <br>
 
-$\bf (2)$ A random variable $Y$ has two possible outcomes. The outcome $Y = 1$ occurs with probability $p = 0.23$. Derive the sampling distribution for the proportion of outcomes with $Y = 1$ in a sample of $n = 3$ observations of $Y$.
+$\bf (7)$ A random variable $Y$ has two possible outcomes. The outcome $Y = 1$ occurs with probability $p = 0.23$. Derive the sampling distribution for the proportion of outcomes with $Y = 1$ in a sample of $n = 3$ observations of $Y$.
 
 <br>
 
-$\bf (3)$ Consider a survey of tree volume. Suppose that in the population of trees $10\%$ have a volume of 10 cubic feet, $20\%$ have a volume of 20 cubic feet, $30\%$ have a volume of 30 cubic feet, and $40\%$ have a volume of 40 cubic feet. Let $X$ denote the volume of a randomly selected tree, assuming that every tree has an equal chance of being selected. The probability distribution of $X$ is given in the table below.
+$\bf (8)$ Consider a survey of tree volume. Suppose that in the population of trees $10\%$ have a volume of 10 cubic feet, $20\%$ have a volume of 20 cubic feet, $30\%$ have a volume of 30 cubic feet, and $40\%$ have a volume of 40 cubic feet. Let $X$ denote the volume of a randomly selected tree, assuming that every tree has an equal chance of being selected. The probability distribution of $X$ is given in the table below.
 
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -131,15 +176,18 @@ kable(export_tbl(df, 'hw3_tree_volume_dist.csv', digits = 2,
 
 ```
 
-* On **Homework 2** you confirmed that $X$ has a mean of $\mu = 30$ cubic feet and a standard
-deviation of $\sigma = 10$ cubic feet. Derive the sampling distribution for the mean tree
-volume in a sample of $n = 2$ trees.
+* Confirm that $X$ has a mean of $\mu = 30$ cubic feet and a standard deviation of $\sigma = 10$ cubic
+feet by computing them yourself.
+
+<br>
+
+* Derive the sampling distribution for the mean tree volume in a sample of $n = 2$ trees.
 
 <br>
 
 ## Deriving Probabilities From Discrete Distributions
 
-$\bf (4)$ Michael Dickson, who plays for the Seattle Seahawks, is a punter in the NFL. The following sampling distribution gives the mean punting distance (in yards) for a sample of $n=4$ punts. Use this distribution to answer the following questions:
+$\bf (9)$ Michael Dickson, who plays for the Seattle Seahawks, is a punter in the NFL. The following sampling distribution gives the mean punting distance (in yards) for a sample of $n=4$ punts. Use this distribution to answer the following questions:
 
 ```{r, echo=FALSE, warning=F, message=F}
 
@@ -168,25 +216,25 @@ kable(export_tbl(df, 'hw3_punt_distance_dist.csv', digits = 2,
 
 <br>
 
-$\bf (5)$ A random variable $X$ follows a binomial distribution with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 successes, that is what is $P(X < 3)$?
+$\bf (10)$ A random variable $X$ follows a binomial distribution with probability of success $p = 0.43$ and number of trials $n = 8$. What is the probability of observing fewer than 3 successes, that is what is $P(X < 3)$?
 
 <br>
 
-$\bf (6)$ Tom Brady is a famous quarterback who recently retired from playing in the National Football League. During his career, the probability that Brady would complete a pass in a given play was $64.3\%$.  If a typical NFL team runs about $35$ offensive pass plays, what is the probability that Brady would complete exactly $28$ pass plays in a game?
+$\bf (11)$ Tom Brady is a famous quarterback who recently retired from playing in the National Football League. During his career, the probability that Brady would complete a pass in a given play was $64.3\%$.  If a typical NFL team runs about $35$ offensive pass plays, what is the probability that Brady would complete exactly $28$ pass plays in a game?
 
 <br>
 
-$\bf (7)$ A random variable $W$ follows a Poisson distribution with rate parameter $\lambda = 1.8$ events per hour. What is the probability of observing exactly four events in a given hour, that is what is $P(W = 4)$?
+$\bf (12)$ A random variable $W$ follows a Poisson distribution with rate parameter $\lambda = 1.8$ events per hour. What is the probability of observing exactly four events in a given hour, that is what is $P(W = 4)$?
 
 <br>
 
-$\bf (8)$ A factory experiences on average 3 equipment malfunctions per day, following a Poisson distribution with a rate parameter of 3. Calculate the probability that on a randomly selected day, the factory will <u>observe 3 or more</u> equipment malfunctions.
+$\bf (13)$ A factory experiences on average 3 equipment malfunctions per day, following a Poisson distribution with a rate parameter of 3. Calculate the probability that on a randomly selected day, the factory will <u>observe 3 or more</u> equipment malfunctions.
 
 <br>
 
 ## Deriving Probabilities From Continuous Distributions
 
-${\bf (9)}$ Use the plot below of the probability distribution of a continuous random variable $X$ to answer the following questions
+${\bf (14)}$ Use the plot below of the probability distribution of a continuous random variable $X$ to answer the following questions
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
 #C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/PMFplot1.pdf}
@@ -224,7 +272,7 @@ Use the plot to find the following probabilities:
 
 
 
-${\bf (10)}$ Use the plot below of the probability distribution of a continuous random variable $Y$ to answer the following questions
+${\bf (15)}$ Use the plot below of the probability distribution of a continuous random variable $Y$ to answer the following questions
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
 #C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/PMFplot2.pdf
@@ -260,7 +308,7 @@ Use the plot to find the following probabilities (recall that the area of a tria
 
 
 
-${\bf (11)}$ Use the plot below of the probability distribution of a continuous random variable $Z$ to answer the following questions
+${\bf (16)}$ Use the plot below of the probability distribution of a continuous random variable $Z$ to answer the following questions
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
 #C:/Users/Bruin/Desktop/GS Academia/TA/Teaching STAT 251/FALL/Week_5/PMF_triangular_plot1.pdf
@@ -300,7 +348,7 @@ Use the plot to find the following probabilities (recall that the area of a tria
 
 
 
-${\bf 12.)}$ Assume the continuous random variable $X$ follows a normal distribution with mean $\mu = 25$ and variance $\sigma^2 = 16$. 
+${\bf 17.)}$ Assume the continuous random variable $X$ follows a normal distribution with mean $\mu = 25$ and variance $\sigma^2 = 16$. 
 
 ```{r, echo=F, message=F, warning=FALSE, fig.height=6, fig.width=10}
 ggplot()+xlim(c(-40, 90))+
@@ -346,7 +394,7 @@ Using a $Z$-table, find the following (approximate) probabilities for $X$. You c
 <br>
 
 
-${\bf 13.)}$ Suppose that a random variable $X$ follows a normal distribution with mean $\mu = -5$ and standard deviation $\sigma = 1.8$. Using the plot of the $Z$-distribution below, shade in the area corresponding to the probability $P(-2< X <0.5)$
+${\bf 18.)}$ Suppose that a random variable $X$ follows a normal distribution with mean $\mu = -5$ and standard deviation $\sigma = 1.8$. Using the plot of the $Z$-distribution below, shade in the area corresponding to the probability $P(-2< X <0.5)$
 
 
 

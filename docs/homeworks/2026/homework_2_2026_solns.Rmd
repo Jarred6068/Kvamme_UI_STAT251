@@ -18,7 +18,7 @@ header-includes:
   - \usepackage{threeparttablex}
   - \usepackage[normalem]{ulem}
   - \usepackage{makecell}
-bibliography: ../misc/home2bibs.bib
+bibliography: ../../misc/home2bibs.bib
 ---
 
 
@@ -40,10 +40,10 @@ library(ggpubr)
 library(ggthemes)
 library(plyr)
 library(ggvenn)   # Problem 9(b) answer figure
-mainpath = '../Data/'
-whiskpath = '../assets/whiskerMaster.csv'
+mainpath = '../../Data/'
+whiskpath = '../../assets/whiskerMaster.csv'
 
-datapath = '../Data/'
+datapath = '../../Data/'
 ```
 
 
@@ -86,19 +86,19 @@ This match sits exactly $3$ standard deviations **above** the mean BPM. Under th
 # turned that into a LaTeX longtable, which consumed table number 1 -- so the
 # whisker data below printed as "Table 2" while the text referred to it as
 # "Table 1". Emitting the pair as a real figure keeps the table counter correct.
-knitr::include_graphics(c('../assets/whisker_types.png',
-                          '../assets/Harp_seal_whitecoat.jpg'))
+knitr::include_graphics(c('../../assets/whisker_types.png',
+                          '../../assets/Harp_seal_whitecoat.jpg'))
 ```
 
 
 <!-- \begin{figure} -->
 <!-- \centering -->
 <!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{../assets/whisker_types.png} -->
+<!--       \includegraphics{../../assets/whisker_types.png} -->
 <!--       \caption{Pinniped whisker morphology - Ginter et al. 2012} -->
 <!--     \end{minipage}\hfill -->
 <!--     \begin{minipage}{0.45\textwidth} -->
-<!--       \includegraphics{../assets/Harp_seal_whitecoat.jpg} -->
+<!--       \includegraphics{../../assets/Harp_seal_whitecoat.jpg} -->
 <!--       \caption{A juvenile Harp Seal} -->
 <!--     \end{minipage} -->
 <!-- \end{figure} -->
