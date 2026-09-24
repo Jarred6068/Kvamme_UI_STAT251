@@ -1085,11 +1085,17 @@ surveying households in a community who:
 ### Why the rules exist
 
 Many of the rules we have today came about because of past abuses. In the U.S. Public Health
-Service's Untreated Syphilis Study at Tuskegee (1932-1972), 399 Black men with syphilis were
-followed for decades without being told the true purpose of the study, and without being offered
-penicillin once it became the treatment of choice ([CDC](https://www.cdc.gov/tuskegee/about/index.html)).
-The public response led to the National Research Act of 1974 and the 1979 **Belmont Report**, which
-lays out three principles
+Service's Untreated Syphilis Study at Tuskegee (1932-1972), about 600 Black men in Macon County,
+Alabama were enrolled, 399 of them with syphilis. They were told they were being treated for "bad
+blood". They were never told their actual diagnosis, they were followed for decades without being
+told the true purpose of the study, and they were not offered penicillin once it became the
+treatment of choice in the late 1940s
+([CDC](https://www.cdc.gov/tuskegee/about/index.html)). The study ran for forty years and stopped
+only after the press exposed it in 1972.
+
+The public response led to the National Research Act of 1974, which created the commission that
+wrote the 1979 **Belmont Report**. Its three principles are the foundation of the review boards
+that approve human-subject research today
 ([HHS Office of Research Integrity](https://ori.hhs.gov/content/chapter-3-The-Protection-of-Human-Subjects-belmont-report-1979)):
 
 * **Respect for persons** - people get to decide for themselves whether to take part in research.
