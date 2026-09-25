@@ -102,6 +102,13 @@ Projects are scanned for original work. Undisclosed AI-generated material is tre
 
 Please read all instructions carefully
 
+## Example Projects:
+
+Two completed example projects show what a strong report looks like, step by step:
+[Example Project 1](example_project_categorical.html) analyzes a **categorical** variable with a $\chi^2$ goodness-of-fit test, and
+[Example Project 2](example_project_continuous.html) analyzes a **quantitative** variable with a one-sample $t$ test.
+Use them to see the level of detail expected, not as templates to copy - your project should be about a topic you choose.
+
 
 # Project Steps:
 

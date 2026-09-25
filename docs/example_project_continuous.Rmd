@@ -1,0 +1,286 @@
+---
+title: "Example Project 2: Have Recent Moscow Julys Been Hotter Than Normal?"
+author: "Example student report (quantitative variable), STAT 251 Section 01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "H")
+library(knitr)
+library(kableExtra)
+
+frame_jul  <- read.csv("example_projects/data/moscow_july_2021_2025.csv")
+sample_jul <- read.csv("example_projects/data/july_sample_seed251.csv")
+x <- sample_jul$tmax_f
+```
+
+::: {.callout}
+<div class="callout-title">Instructor note</div>
+This is a completed example of the course project. It shows what a strong report looks like when the
+variable being analyzed is **quantitative**. It follows the six steps on the
+[Project Description](project.html) page in order, so you can compare it against the rubric section by section.
+Use it to see the level of detail and explanation expected. **Do not copy its dataset, question, or wording.**
+Your project should be about a topic you choose.
+The example was prepared with the help of Claude (Anthropic), and every calculation in it was done with the
+course's [stat-tools](https://stat-tools.jmks-homelab.dev/) site. The screenshots come from those tools.
+:::
+
+## 1. Dataset Selection
+
+**(A) Citations.** I used two datasets from NOAA: the daily observations and, for the benchmark, the official
+climate normals for the same station.
+
+> Menne, M. J., Durre, I., Korzeniewski, B., McNeill, S., Thomas, K., Yin, X., Anthony, S., Ray, R., Vose, R. S.,
+> Gleason, B. E., & Houston, T. G. (2012). *Global Historical Climatology Network – Daily (GHCN-Daily),
+> Version 3* [Data set]. Station USC00106152, MOSCOW U OF I, ID US, daily maximum temperature (TMAX),
+> January 1, 2021 – January 31, 2026. NOAA National Climatic Data Center. <https://doi.org/10.7289/V5D21VHZ>.
+> Accessed September 24, 2026.
+
+> Palecki, M., Durre, I., Applequist, S., Arguez, A., & Lawrimore, J. (2021). *U.S. Climate Normals 2020:
+> U.S. Monthly Climate Normals (1991–2020)* [Data set]. Station USC00106152. NOAA National Centers for
+> Environmental Information. <https://doi.org/10.25921/wck8-er13>. Accessed September 24, 2026.
+
+Working links to the exact files I downloaded:
+
+* [Daily observations query (NCEI Access Data Service)](https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&stations=USC00106152&startDate=2021-01-01&endDate=2026-01-31&dataTypes=TMAX,TMIN,PRCP,SNOW&units=standard&format=csv&includeStationName=true)
+* [Monthly normals query for the same station](https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-monthly-1991-2020&stations=USC00106152&format=csv&dataTypes=MLY-TMAX-NORMAL,MLY-PRCP-AVGNDS-GE001HI)
+
+**(B) Background.**
+
+* **The station.** The data come from the weather station on the University of Idaho campus in Moscow. It is
+  a National Weather Service **Cooperative Observer (COOP)** station. Once a day a trained observer records
+  the highest and lowest temperature since the last reading. NOAA's National Centers for Environmental
+  Information (NCEI) quality-checks and archives these readings in the GHCN-Daily database.
+* **How the data were collected.** Nobody sampled anything: the station records *every* day, so the file is
+  a complete record for one location.
+* **The file.** The daily file I downloaded has one row per day from January 2021 through January 2026. I
+  kept only the July days of 2021–2025, which gives **`r nrow(frame_jul)` days**. None of them are missing a
+  high temperature.
+* **The benchmark.** NOAA's **1991–2020 Climate Normals** are 30-year averages computed from the same
+  station's records. For July, the normal daily maximum temperature (`MLY-TMAX-NORMAL`) is **84.4 °F**.
+
+## 2. Question and Hypothesis Formulation
+
+**(A) Question.** Were July afternoons in Moscow from 2021 to 2025 hotter, on average, than the official
+1991–2020 normal of 84.4 °F?
+
+I chose this because recent summers have felt hot. For example, the record-breaking Pacific Northwest heat
+wave was in late June 2021. I wanted to know whether the recent Julys are really hotter *on average*, or
+whether a few memorable hot spells just stand out.
+
+**(B) Variable.** **Daily maximum temperature** (`TMAX`, °F) is a **quantitative, continuous** variable,
+although the station records it to the nearest whole degree. Each observation is one July day's highest
+temperature. The average of this variable over July days is exactly what NOAA's July normal measures,
+so comparing my sample mean to 84.4 °F is a fair comparison.
+
+**(C) Hypothesis in words.** I expect the mean daily high temperature of July days in 2021–2025 to be
+**greater than** the 1991–2020 normal of 84.4 °F. I chose the direction *before* looking at any data,
+because the question is specifically about hotter Julys.
+
+## 3. Sampling
+
+**(A) and (B) Method.** My population is the **`r nrow(frame_jul)` July days from 2021 to 2025**. I drew a
+**simple random sample of n = 30 days** without replacement with the stat-tools **Simple Random Sample**
+tool. To repeat it:
+
+1. Save the July days as a CSV with the columns `day_id` (1–155), `date`, `tmax_f` and `tmin_f`.
+2. Open the **Simple Random Sample** tool and upload the CSV.
+3. Keep all variables, set **Sample size = 30** and **Seed = 251**, and press *Draw sample*.
+   The same seed always draws the same 30 days.
+
+```{r, fig.cap="**Figure 1.** The Simple Random Sample tool after the draw: 30 of 155 July days sampled with seed 251. The first rows of the sample are shown.", out.width="90%", fig.align="center"}
+include_graphics("example_projects/figs/p2_srs.png")
+```
+
+**(C) Justification.**
+
+* **Why SRS.** An SRS gives every July day in all five years the same chance of selection. That keeps me from
+  (even unconsciously) picking heat-wave days, and it lets the sample represent all five Julys.
+* **Why not a systematic sample.** A systematic sample, such as every 5th day, would be a poor choice here.
+  Weather comes in multi-day spells, so evenly spaced days could line up with a repeating pattern.
+* **Why not stratify.** I also considered stratifying by year (6 days from each July). That would guarantee
+  every year appears equally. The SRS does include all five years, but unevenly: 10 days are from 2021 and
+  only 3 from 2024 (see Appendix A). Because the 2021 heat wave might make 2021 unusually hot, I checked.
+  The 20 sampled days *outside* 2021 average 90.9 °F, essentially the same as the full sample, so the
+  uneven mix does not drive my result. In hindsight, stratifying by year would have been a slightly better
+  design.
+
+**Possible bias.**
+
+* **Dependence between nearby days.** Hot days cluster in heat waves, so days that are close together are not
+  fully independent. A few of my sampled days are only 1–2 days apart, for example July 27, 29 and 30, 2021.
+  If those days fall in the same hot spell, they give slightly less independent information than 30 truly
+  separate days would.
+* **One station.** Everything describes one station, at one location on campus.
+
+**(D) The sample** is listed in full in [Appendix A](#appendix-a-the-sample).
+
+## 4. Exploratory Statistical Description
+
+**(A) Descriptive statistics** from the stat-tools **Statistic Calculator**, which uses R's default quartile
+definition:
+
+```{r}
+q <- quantile(x, c(0.25, 0.5, 0.75), type = 7)
+desc <- data.frame(
+  Statistic = c("minimum", "Q1", "median", "mean", "Q3", "maximum", "interquartile range", "standard deviation"),
+  `Value (°F)` = c(sprintf("%.0f", min(x)), sprintf("%.2f", q[1]), sprintf("%.0f", q[2]), sprintf("%.4f", mean(x)),
+                   sprintf("%.2f", q[3]), sprintf("%.0f", max(x)), sprintf("%.2f", q[3] - q[1]), sprintf("%.4f", sd(x))),
+  check.names = FALSE)
+kable(desc, align = c("l", "r"),
+      caption = "**Table 1.** Descriptive statistics of the daily maximum temperature for the 30 sampled July days.") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "condensed"))
+```
+
+```{r, fig.cap="**Figure 2.** Statistic Calculator output and boxplot for the 30 sampled daily highs (°F). The red point is the low outlier (68 °F).", out.width="80%", fig.align="center"}
+include_graphics("example_projects/figs/p2_summary_boxplot.png")
+```
+
+**(B) Plots.** The boxplot is in Figure 2. The histogram below came from the **Make Graphs** tool, with its
+automatic bins, which are the same ones R's `hist()` uses:
+
+```{r, fig.cap="**Figure 3.** Histogram of the daily maximum temperature on 30 sampled July days in Moscow, 2021–2025. The bins are 5 °F wide.", out.width="85%", fig.align="center"}
+include_graphics("example_projects/figs/p2_histogram.png")
+```
+
+**(C) Shape, center and variability.**
+
+* **Shape.** The distribution is **unimodal** and peaks in the 90–95 °F bin. It is **slightly left-skewed**:
+  most days fall between 80 and 105 °F, with a short tail toward cooler days. The mean (90.87 °F) sits a
+  little below the median (92 °F), which fits a left skew.
+* **Center.** The median July high in the sample is **92 °F** and the mean is **90.87 °F**. Both are well
+  above the 84.4 °F normal. In fact, 27 of the 30 sampled days were hotter than 84.4 °F.
+* **Variability.** The standard deviation is **7.39 °F** and the IQR is **9.75 °F**, so the middle half of the
+  days ranged from 86 to 95.75 °F.
+* **Outliers.** The lower fence is $Q_1 - 1.5 \cdot IQR = 86 - 1.5(9.75) = 71.375$ °F. **July 4, 2022, at
+  68 °F**, falls below it and is an outlier. NOAA gives it no quality flag, and it came during a cool,
+  rainy spell (0.54 in of rain fell on July 3 and 0.06 in on July 4). So it is a real observation, not a
+  recording error, and I kept it. It pulls the mean *down*, which works *against* my alternative hypothesis. So if anything, keeping
+  it makes the test more cautious. I check its influence in Part 5.
+
+## 5. Hypothesis Testing
+
+**(A) Hypotheses.** Let $\mu$ be the mean daily maximum temperature of July days at the Moscow U of I station
+in 2021–2025.
+
+\[ H_0: \mu = 84.4 \text{ °F} \qquad\qquad H_a: \mu > 84.4 \text{ °F} \]
+
+In words, $H_0$ says recent July highs average the same as the 1991–2020 normal. $H_a$ says they average
+hotter. I use a significance level of **$\alpha = 0.05$**.
+
+**(B) Choice of test and assumptions.** I use a **one-sample $t$ test for a mean**. I have one quantitative
+variable and want to compare its mean with a fixed benchmark. The population standard deviation
+$\sigma$ is unknown, so I estimate it with $s$, which is why the test uses a $t$ distribution rather than $z$.
+
+The assumptions are:
+
+1. **Random sample.** Satisfied, because the days were chosen by SRS (Part 3).
+2. **Independent observations.** Mostly satisfied. The 30 days are spread over five summers, but a few are
+   close together (see Part 3), so this is the weakest assumption.
+3. **Approximately normal population, or a large enough sample.** The histogram is roughly bell-shaped with a
+   mild left skew and one low outlier. With $n = 30$ the Central Limit Theorem makes the sampling
+   distribution of $\bar{x}$ approximately normal, so the $t$ test is reasonable.
+
+**(C) Computations.**
+
+*Step 1: observed statistics* (Table 1): $n = 30$, $\bar{x} = 90.8667$ °F, $s = 7.3893$ °F.
+
+*Step 2: standard error.*
+\[ SE = \frac{s}{\sqrt{n}} = \frac{7.3893}{\sqrt{30}} = \frac{7.3893}{5.4772} = 1.3491 \text{ °F} \]
+
+*Step 3: test statistic.*
+\[ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{90.8667 - 84.4}{1.3491} = \frac{6.4667}{1.3491} = 4.793 \]
+
+*Step 4: degrees of freedom and critical value.* $df = n - 1 = 29$. For an upper-tail test at
+$\alpha = 0.05$ the critical value is $t_{29,\,0.95} = 1.699$, and we reject $H_0$ if $t_{obs} \geq 1.699$.
+
+*Step 5: p-value.* $p = P(t_{29} \geq 4.793) \approx 0.00002$, which the tool reports as $< 0.0001$.
+
+*Step 6: 95% confidence interval for $\mu$* ($t_{29,\,0.975} = 2.045$):
+\[ \bar{x} \pm t_{29,\,0.975}\, SE = 90.8667 \pm 2.045(1.3491) = 90.8667 \pm 2.759 = (88.11,\ 93.63) \text{ °F} \]
+
+I ran the test in the stat-tools **One Sample Tests** tool with these settings:
+
+* Mean, hypothesis test, upper tail, $\alpha = 0.05$, $\mu_0 = 84.4$.
+* Data: the sample CSV uploaded, with the `tmax_f` column chosen.
+
+It reproduces every value above:
+
+```{r, fig.cap="**Figure 4.** One Sample Tests tool output: SE = 1.3491, df = 29, t = 4.7933, critical value 1.6991, p < 0.0001, and 95% CI (88.1074, 93.6259). The plot shades the rejection region under the null t(29) distribution.", out.width="85%", fig.align="center"}
+include_graphics("example_projects/figs/p2_t_test.png")
+```
+
+| Quantity | Value |
+|:---|---:|
+| Sample mean $\bar{x}$ | 90.87 °F |
+| Standard error | 1.349 °F |
+| Degrees of freedom | 29 |
+| Test statistic $t_{obs}$ | 4.793 |
+| Critical value $t_{29,\,0.95}$ | 1.699 |
+| $p$-value | $< 0.0001$ |
+| 95% CI for $\mu$ | (88.11, 93.63) °F |
+
+*Effect of the outlier.* To check the outlier's influence, I removed the 68 °F day and reran the same
+$t$ test in R with `t.test()`. That gives $n = 29$, $\bar{x} = 91.66$, $s = 6.10$ and $t = 6.40$, so the
+conclusion does not change. The outlier does not drive the result. If anything, including it made the
+evidence look weaker.
+
+## 6. Conclusion
+
+**(A) Decision.** The test statistic $t_{obs} = 4.79$ is far beyond the critical value $1.699$, and
+$p < 0.0001 < \alpha = 0.05$. So I **reject $H_0$**.
+
+**(B) Interpretation.** There is strong evidence that July days in Moscow from 2021 to 2025 were hotter, on
+average, than the 1991–2020 normal. The 95% confidence interval says the average July high in those years was
+between about **88.1 and 93.6 °F**. That is roughly **4 to 9 degrees above** the 84.4 °F normal, which is
+a difference you would notice outdoors, not just a statistical technicality.
+
+**(C) Limitations.**
+
+* **Five summers is a short window.** This tells us about 2021–2025, not about a long-term trend. A few
+  unusually hot summers can happen by chance, and the 2021 heat dome is one example. My result does not
+  prove *why* these summers were hot. Separating a climate trend from year-to-year variation would need
+  many more years of data.
+* **Dependence between days.** Heat waves make nearby days similar. My few close-together sampled days
+  make my standard error a bit too small, so the true uncertainty is slightly larger than the interval
+  suggests. Still, the evidence is strong enough that this would not change the decision.
+* **Finite population.** I sampled 30 of only 155 days (19%). The formulas from class assume a very large
+  population, and here that works in the conservative direction.
+* **One station.** The result describes the campus station only. Other locations, or changes to this
+  station's instruments or surroundings over time, could give different numbers.
+
+## Appendix A: the sample
+
+```{r}
+app <- sample_jul[, c("sample_order", "day_id", "date", "tmax_f", "tmin_f")]
+names(app) <- c("Draw order", "day_id", "Date", "Daily high (°F)", "Daily low (°F)")
+kable(app, align = c("r", "r", "l", "r", "r"),
+      caption = "**Table A1.** The 30 July days drawn by the Simple Random Sample tool (seed 251), in the order they were drawn. Only the daily high is analyzed.") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "condensed"))
+```
+
+Days per year in the sample:
+`r paste(names(table(substr(sample_jul$date, 1, 4))), " (", table(substr(sample_jul$date, 1, 4)), ")", sep = "", collapse = ", ")`.
+
+## AI Use Disclosure
+
+::: {.callout}
+<div class="callout-title">What a disclosure looks like</div>
+The project requires you to disclose any AI use. This section is an **illustration of the format**. It is
+here so you can see what a complete disclosure contains. Write yours about what *you* actually did.
+:::
+
+* **Service provider:** Anthropic (Claude).
+* **Prompts I used:**
+  1. "Is it okay to keep an outlier that is a real measurement when running a one-sample t test? How can I
+     check whether it changes my result?"
+  2. "What R function runs a one-sample t test with a one-sided alternative?"
+* **How I used it.**
+  * Prompt 1 suggested rerunning the test without the outlier. I did that in Part 5 and wrote up the result
+    myself.
+  * Prompt 2 pointed me to `t.test(x, mu = 84.4, alternative = "greater")`, which I used only for that
+    outlier check.
+  * All other numbers come from the stat-tools site and my own hand calculations in Part 5(C). No
+    AI-generated numbers, figures or data appear in this report.
+* **Citation:** Anthropic. (2026). *Claude* [Large language model]. <https://claude.ai>. Responses to prompts 1
+  and 2 above, accessed September 2026.

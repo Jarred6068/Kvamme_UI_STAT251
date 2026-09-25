@@ -154,6 +154,10 @@ navbar:
         href: project.html
       - text: "Data"
         href: data.html
+      - text: "Example Project 1: Categorical"
+        href: example_project_categorical.html
+      - text: "Example Project 2: Quantitative"
+        href: example_project_continuous.html
     - text: 'Resources'
       menu:
         - text: 'Tools/Calculators'

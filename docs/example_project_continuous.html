@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Example student report (quantitative variable), STAT 251 Section 01" />
+
+
+<title>Example Project 2: Have Recent Moscow Julys Been Hotter Than Normal?</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<!--
+  Pre-paint theme resolution. Included via `includes: in_header:` so it lands in
+  <head> and runs synchronously before first paint - that is what prevents a
+  flash of the wrong theme on load.
+
+  We ALWAYS set data-theme (never leave it unset), which lets site.css express
+  dark mode as a plain `:root[data-theme="dark"]` block with no duplicated
+  @media (prefers-color-scheme) rules.
+-->
+<script>
+(function () {
+  var stored = null;
+  // localStorage THROWS (not returns null) in Safari private browsing and in
+  // some file:// contexts - which is exactly how these pages get previewed
+  // locally. An uncaught throw here would leave data-theme unset and kill
+  // every dark-mode rule on the page.
+  try { stored = window.localStorage.getItem('stat251-theme'); } catch (e) { stored = null; }
+
+  var theme = (stored === 'dark' || stored === 'light') ? stored :
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+
+<!--
+  MathJax: render with SVG rather than the default HTML-CSS output.
+
+  HTML-CSS builds a square root's overline out of stretched glyph pieces, and
+  headless Chrome prints the result too wide: on the Exam 1 study guide the bar
+  over sqrt( (1/(n-1)) sum (x_i - xbar)^2 ) ran well past the expression and
+  collided with the line above it. The same overshoot showed up wherever a tall
+  \sqrt was printed, including the Exam 1 review problems.
+
+  Checked by printing the identical formula three ways before changing anything:
+  HTML-CSS overshoots, MathJax 3 (CHTML) overshoots more, and the v2 SVG
+  renderer draws the rule to exactly the right width. It is not a timing
+  problem - reprinting with a 90-second budget produced the same bad bar.
+
+  This has to live in <head>: rmarkdown injects the MathJax <script> at the end
+  of <body>, and MathJax applies any text/x-mathjax-config block it finds in the
+  document when it starts. SVG output inherits currentColor, so both themes are
+  unaffected (see the MathJax rule in assets/brand/site.css).
+-->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({ menuSettings: { renderer: "SVG" } });
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/brand/uidaho-branding.css" type="text/css" />
+<link rel="stylesheet" href="assets/brand/site.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-01</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+    <li>
+      <a href="sac_schedule.html">SAC Schedule</a>
+    </li>
+    <li>
+      <a href="university_resources.html">University Resources</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lecture Notes</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="lecturemenu1.html">Week 1</a>
+        </li>
+        <li>
+          <a href="lecturemenu2.html">Week 2</a>
+        </li>
+        <li>
+          <a href="lecturemenu3.html">Week 3</a>
+        </li>
+        <li>
+          <a href="lecturemenu4.html">Weeks 4-5</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="lecslidesindex.html">Lecture Slides</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assignments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/2026/homework_1_2026.html">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_2_2026.html">Homework 2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/2026/homework_1_2026_solns.html">Hmwk 1 Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data &amp; PDF Downloads</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/homework_downloads.html#hw1">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html#hw2">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html">All downloads</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="homeworks/reading_and_book_problems.html">Reading &amp; Extra Problems</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="study_guides/exam1_study_guide.html">Exam 1 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 1 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam1_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam1_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+    <li>
+      <a href="example_project_categorical.html">Example Project 1: Categorical</a>
+    </li>
+    <li>
+      <a href="example_project_continuous.html">Example Project 2: Quantitative</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tables</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/Z_table.html">Z-table</a>
+        </li>
+        <li>
+          <a href="misc/t_table.html">t-table</a>
+        </li>
+        <li>
+          <a href="misc/chisq_table.html">Chi-square table</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">R code</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/rcode_examples.html">plotting in R</a>
+        </li>
+        <li>
+          <a href="misc/hp_r_code.html">Functions</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Extras</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric Tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="misc/R_download_instructions.html">Downloading R/Rstudio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<!--
+  Bypass block (WCAG 2.4.1). Included via `includes: before_body:` so it is the
+  very first thing inside <body> - ahead of the navbar, which is what it skips.
+
+  Every top-level page puts a ~25-link fixed navbar in front of the content, so
+  without this a keyboard or switch user tabs the entire menu on every single
+  page before reaching anything they came for.
+
+  .sr-only / .sr-only-focusable are Bootstrap 3's own classes (already in
+  site_libs/bootstrap-3.3.5) - visually hidden until focused, then revealed.
+  site.css only adds the on-brand painted state and the z-index needed to sit
+  above .navbar-fixed-top.
+
+  The #main-content target does not exist in pandoc's template; a11y.html
+  stamps it onto .main-container at parse time. Both files must ship together.
+-->
+<a href="#main-content" class="sr-only sr-only-focusable skip-link">Skip to main content</a>
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Example Project 2: Have Recent Moscow Julys
+Been Hotter Than Normal?</h1>
+<h4 class="author">Example student report (quantitative variable), STAT
+251 Section 01</h4>
+
+</div>
+
+
+<div class="callout">
+<div class="callout-title">
+Instructor note
+</div>
+<p>This is a completed example of the course project. It shows what a
+strong report looks like when the variable being analyzed is
+<strong>quantitative</strong>. It follows the six steps on the <a
+href="project.html">Project Description</a> page in order, so you can
+compare it against the rubric section by section. Use it to see the
+level of detail and explanation expected. <strong>Do not copy its
+dataset, question, or wording.</strong> Your project should be about a
+topic you choose. The example was prepared with the help of Claude
+(Anthropic), and every calculation in it was done with the course’s <a
+href="https://stat-tools.jmks-homelab.dev/">stat-tools</a> site. The
+screenshots come from those tools.</p>
+</div>
+<div id="dataset-selection" class="section level2">
+<h2>1. Dataset Selection</h2>
+<p><strong>(A) Citations.</strong> I used two datasets from NOAA: the
+daily observations and, for the benchmark, the official climate normals
+for the same station.</p>
+<blockquote>
+<p>Menne, M. J., Durre, I., Korzeniewski, B., McNeill, S., Thomas, K.,
+Yin, X., Anthony, S., Ray, R., Vose, R. S., Gleason, B. E., &amp;
+Houston, T. G. (2012). <em>Global Historical Climatology Network – Daily
+(GHCN-Daily), Version 3</em> [Data set]. Station USC00106152, MOSCOW U
+OF I, ID US, daily maximum temperature (TMAX), January 1, 2021 – January
+31, 2026. NOAA National Climatic Data Center. <a
+href="https://doi.org/10.7289/V5D21VHZ"
+class="uri">https://doi.org/10.7289/V5D21VHZ</a>. Accessed September 24,
+2026.</p>
+</blockquote>
+<blockquote>
+<p>Palecki, M., Durre, I., Applequist, S., Arguez, A., &amp; Lawrimore,
+J. (2021). <em>U.S. Climate Normals 2020: U.S. Monthly Climate Normals
+(1991–2020)</em> [Data set]. Station USC00106152. NOAA National Centers
+for Environmental Information. <a
+href="https://doi.org/10.25921/wck8-er13"
+class="uri">https://doi.org/10.25921/wck8-er13</a>. Accessed September
+24, 2026.</p>
+</blockquote>
+<p>Working links to the exact files I downloaded:</p>
+<ul>
+<li><a
+href="https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&amp;stations=USC00106152&amp;startDate=2021-01-01&amp;endDate=2026-01-31&amp;dataTypes=TMAX,TMIN,PRCP,SNOW&amp;units=standard&amp;format=csv&amp;includeStationName=true">Daily
+observations query (NCEI Access Data Service)</a></li>
+<li><a
+href="https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-monthly-1991-2020&amp;stations=USC00106152&amp;format=csv&amp;dataTypes=MLY-TMAX-NORMAL,MLY-PRCP-AVGNDS-GE001HI">Monthly
+normals query for the same station</a></li>
+</ul>
+<p><strong>(B) Background.</strong></p>
+<ul>
+<li><strong>The station.</strong> The data come from the weather station
+on the University of Idaho campus in Moscow. It is a National Weather
+Service <strong>Cooperative Observer (COOP)</strong> station. Once a day
+a trained observer records the highest and lowest temperature since the
+last reading. NOAA’s National Centers for Environmental Information
+(NCEI) quality-checks and archives these readings in the GHCN-Daily
+database.</li>
+<li><strong>How the data were collected.</strong> Nobody sampled
+anything: the station records <em>every</em> day, so the file is a
+complete record for one location.</li>
+<li><strong>The file.</strong> The daily file I downloaded has one row
+per day from January 2021 through January 2026. I kept only the July
+days of 2021–2025, which gives <strong>155 days</strong>. None of them
+are missing a high temperature.</li>
+<li><strong>The benchmark.</strong> NOAA’s <strong>1991–2020 Climate
+Normals</strong> are 30-year averages computed from the same station’s
+records. For July, the normal daily maximum temperature
+(<code>MLY-TMAX-NORMAL</code>) is <strong>84.4 °F</strong>.</li>
+</ul>
+</div>
+<div id="question-and-hypothesis-formulation" class="section level2">
+<h2>2. Question and Hypothesis Formulation</h2>
+<p><strong>(A) Question.</strong> Were July afternoons in Moscow from
+2021 to 2025 hotter, on average, than the official 1991–2020 normal of
+84.4 °F?</p>
+<p>I chose this because recent summers have felt hot. For example, the
+record-breaking Pacific Northwest heat wave was in late June 2021. I
+wanted to know whether the recent Julys are really hotter <em>on
+average</em>, or whether a few memorable hot spells just stand out.</p>
+<p><strong>(B) Variable.</strong> <strong>Daily maximum
+temperature</strong> (<code>TMAX</code>, °F) is a <strong>quantitative,
+continuous</strong> variable, although the station records it to the
+nearest whole degree. Each observation is one July day’s highest
+temperature. The average of this variable over July days is exactly what
+NOAA’s July normal measures, so comparing my sample mean to 84.4 °F is a
+fair comparison.</p>
+<p><strong>(C) Hypothesis in words.</strong> I expect the mean daily
+high temperature of July days in 2021–2025 to be <strong>greater
+than</strong> the 1991–2020 normal of 84.4 °F. I chose the direction
+<em>before</em> looking at any data, because the question is
+specifically about hotter Julys.</p>
+</div>
+<div id="sampling" class="section level2">
+<h2>3. Sampling</h2>
+<p><strong>(A) and (B) Method.</strong> My population is the <strong>155
+July days from 2021 to 2025</strong>. I drew a <strong>simple random
+sample of n = 30 days</strong> without replacement with the stat-tools
+<strong>Simple Random Sample</strong> tool. To repeat it:</p>
+<ol style="list-style-type: decimal">
+<li>Save the July days as a CSV with the columns <code>day_id</code>
+(1–155), <code>date</code>, <code>tmax_f</code> and
+<code>tmin_f</code>.</li>
+<li>Open the <strong>Simple Random Sample</strong> tool and upload the
+CSV.</li>
+<li>Keep all variables, set <strong>Sample size = 30</strong> and
+<strong>Seed = 251</strong>, and press <em>Draw sample</em>. The same
+seed always draws the same 30 days.</li>
+</ol>
+<div class="figure" style="text-align: center">
+<img src="example_projects/figs/p2_srs.png" alt="**Figure 1.** The Simple Random Sample tool after the draw: 30 of 155 July days sampled with seed 251. The first rows of the sample are shown." width="90%" />
+<p class="caption">
+<strong>Figure 1.</strong> The Simple Random Sample tool after the draw:
+30 of 155 July days sampled with seed 251. The first rows of the sample
+are shown.
+</p>
+</div>
+<p><strong>(C) Justification.</strong></p>
+<ul>
+<li><strong>Why SRS.</strong> An SRS gives every July day in all five
+years the same chance of selection. That keeps me from (even
+unconsciously) picking heat-wave days, and it lets the sample represent
+all five Julys.</li>
+<li><strong>Why not a systematic sample.</strong> A systematic sample,
+such as every 5th day, would be a poor choice here. Weather comes in
+multi-day spells, so evenly spaced days could line up with a repeating
+pattern.</li>
+<li><strong>Why not stratify.</strong> I also considered stratifying by
+year (6 days from each July). That would guarantee every year appears
+equally. The SRS does include all five years, but unevenly: 10 days are
+from 2021 and only 3 from 2024 (see Appendix A). Because the 2021 heat
+wave might make 2021 unusually hot, I checked. The 20 sampled days
+<em>outside</em> 2021 average 90.9 °F, essentially the same as the full
+sample, so the uneven mix does not drive my result. In hindsight,
+stratifying by year would have been a slightly better design.</li>
+</ul>
+<p><strong>Possible bias.</strong></p>
+<ul>
+<li><strong>Dependence between nearby days.</strong> Hot days cluster in
+heat waves, so days that are close together are not fully independent. A
+few of my sampled days are only 1–2 days apart, for example July 27, 29
+and 30, 2021. If those days fall in the same hot spell, they give
+slightly less independent information than 30 truly separate days
+would.</li>
+<li><strong>One station.</strong> Everything describes one station, at
+one location on campus.</li>
+</ul>
+<p><strong>(D) The sample</strong> is listed in full in <a
+href="#appendix-a-the-sample">Appendix A</a>.</p>
+</div>
+<div id="exploratory-statistical-description" class="section level2">
+<h2>4. Exploratory Statistical Description</h2>
+<p><strong>(A) Descriptive statistics</strong> from the stat-tools
+<strong>Statistic Calculator</strong>, which uses R’s default quartile
+definition:</p>
+<table class="table table-striped table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Table 1.</strong> Descriptive statistics of the daily maximum
+temperature for the 30 sampled July days.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Statistic
+</th>
+<th style="text-align:right;">
+Value (°F)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+minimum
+</td>
+<td style="text-align:right;">
+68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q1
+</td>
+<td style="text-align:right;">
+86.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+median
+</td>
+<td style="text-align:right;">
+92
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mean
+</td>
+<td style="text-align:right;">
+90.8667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q3
+</td>
+<td style="text-align:right;">
+95.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+maximum
+</td>
+<td style="text-align:right;">
+104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+interquartile range
+</td>
+<td style="text-align:right;">
+9.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+standard deviation
+</td>
+<td style="text-align:right;">
+7.3893
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center">
+<img src="example_projects/figs/p2_summary_boxplot.png" alt="**Figure 2.** Statistic Calculator output and boxplot for the 30 sampled daily highs (°F). The red point is the low outlier (68 °F)." width="80%" />
+<p class="caption">
+<strong>Figure 2.</strong> Statistic Calculator output and boxplot for
+the 30 sampled daily highs (°F). The red point is the low outlier (68
+°F).
+</p>
+</div>
+<p><strong>(B) Plots.</strong> The boxplot is in Figure 2. The histogram
+below came from the <strong>Make Graphs</strong> tool, with its
+automatic bins, which are the same ones R’s <code>hist()</code>
+uses:</p>
+<div class="figure" style="text-align: center">
+<img src="example_projects/figs/p2_histogram.png" alt="**Figure 3.** Histogram of the daily maximum temperature on 30 sampled July days in Moscow, 2021–2025. The bins are 5 °F wide." width="85%" />
+<p class="caption">
+<strong>Figure 3.</strong> Histogram of the daily maximum temperature on
+30 sampled July days in Moscow, 2021–2025. The bins are 5 °F wide.
+</p>
+</div>
+<p><strong>(C) Shape, center and variability.</strong></p>
+<ul>
+<li><strong>Shape.</strong> The distribution is
+<strong>unimodal</strong> and peaks in the 90–95 °F bin. It is
+<strong>slightly left-skewed</strong>: most days fall between 80 and 105
+°F, with a short tail toward cooler days. The mean (90.87 °F) sits a
+little below the median (92 °F), which fits a left skew.</li>
+<li><strong>Center.</strong> The median July high in the sample is
+<strong>92 °F</strong> and the mean is <strong>90.87 °F</strong>. Both
+are well above the 84.4 °F normal. In fact, 27 of the 30 sampled days
+were hotter than 84.4 °F.</li>
+<li><strong>Variability.</strong> The standard deviation is <strong>7.39
+°F</strong> and the IQR is <strong>9.75 °F</strong>, so the middle half
+of the days ranged from 86 to 95.75 °F.</li>
+<li><strong>Outliers.</strong> The lower fence is <span
+class="math inline">\(Q_1 - 1.5 \cdot IQR = 86 - 1.5(9.75) =
+71.375\)</span> °F. <strong>July 4, 2022, at 68 °F</strong>, falls below
+it and is an outlier. NOAA gives it no quality flag, and it came during
+a cool, rainy spell (0.54 in of rain fell on July 3 and 0.06 in on July
+4). So it is a real observation, not a recording error, and I kept it.
+It pulls the mean <em>down</em>, which works <em>against</em> my
+alternative hypothesis. So if anything, keeping it makes the test more
+cautious. I check its influence in Part 5.</li>
+</ul>
+</div>
+<div id="hypothesis-testing" class="section level2">
+<h2>5. Hypothesis Testing</h2>
+<p><strong>(A) Hypotheses.</strong> Let <span
+class="math inline">\(\mu\)</span> be the mean daily maximum temperature
+of July days at the Moscow U of I station in 2021–2025.</p>
+<p><span class="math display">\[ H_0: \mu = 84.4 \text{ °F} \qquad\qquad
+H_a: \mu &gt; 84.4 \text{ °F} \]</span></p>
+<p>In words, <span class="math inline">\(H_0\)</span> says recent July
+highs average the same as the 1991–2020 normal. <span
+class="math inline">\(H_a\)</span> says they average hotter. I use a
+significance level of <strong><span class="math inline">\(\alpha =
+0.05\)</span></strong>.</p>
+<p><strong>(B) Choice of test and assumptions.</strong> I use a
+<strong>one-sample <span class="math inline">\(t\)</span> test for a
+mean</strong>. I have one quantitative variable and want to compare its
+mean with a fixed benchmark. The population standard deviation <span
+class="math inline">\(\sigma\)</span> is unknown, so I estimate it with
+<span class="math inline">\(s\)</span>, which is why the test uses a
+<span class="math inline">\(t\)</span> distribution rather than <span
+class="math inline">\(z\)</span>.</p>
+<p>The assumptions are:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Random sample.</strong> Satisfied, because the days were
+chosen by SRS (Part 3).</li>
+<li><strong>Independent observations.</strong> Mostly satisfied. The 30
+days are spread over five summers, but a few are close together (see
+Part 3), so this is the weakest assumption.</li>
+<li><strong>Approximately normal population, or a large enough
+sample.</strong> The histogram is roughly bell-shaped with a mild left
+skew and one low outlier. With <span class="math inline">\(n =
+30\)</span> the Central Limit Theorem makes the sampling distribution of
+<span class="math inline">\(\bar{x}\)</span> approximately normal, so
+the <span class="math inline">\(t\)</span> test is reasonable.</li>
+</ol>
+<p><strong>(C) Computations.</strong></p>
+<p><em>Step 1: observed statistics</em> (Table 1): <span
+class="math inline">\(n = 30\)</span>, <span
+class="math inline">\(\bar{x} = 90.8667\)</span> °F, <span
+class="math inline">\(s = 7.3893\)</span> °F.</p>
+<p><em>Step 2: standard error.</em> <span class="math display">\[ SE =
+\frac{s}{\sqrt{n}} = \frac{7.3893}{\sqrt{30}} = \frac{7.3893}{5.4772} =
+1.3491 \text{ °F} \]</span></p>
+<p><em>Step 3: test statistic.</em> <span class="math display">\[
+t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{90.8667 -
+84.4}{1.3491} = \frac{6.4667}{1.3491} = 4.793 \]</span></p>
+<p><em>Step 4: degrees of freedom and critical value.</em> <span
+class="math inline">\(df = n - 1 = 29\)</span>. For an upper-tail test
+at <span class="math inline">\(\alpha = 0.05\)</span> the critical value
+is <span class="math inline">\(t_{29,\,0.95} = 1.699\)</span>, and we
+reject <span class="math inline">\(H_0\)</span> if <span
+class="math inline">\(t_{obs} \geq 1.699\)</span>.</p>
+<p><em>Step 5: p-value.</em> <span class="math inline">\(p = P(t_{29}
+\geq 4.793) \approx 0.00002\)</span>, which the tool reports as <span
+class="math inline">\(&lt; 0.0001\)</span>.</p>
+<p><em>Step 6: 95% confidence interval for <span
+class="math inline">\(\mu\)</span></em> (<span
+class="math inline">\(t_{29,\,0.975} = 2.045\)</span>): <span
+class="math display">\[ \bar{x} \pm t_{29,\,0.975}\, SE = 90.8667 \pm
+2.045(1.3491) = 90.8667 \pm 2.759 = (88.11,\ 93.63) \text{ °F}
+\]</span></p>
+<p>I ran the test in the stat-tools <strong>One Sample Tests</strong>
+tool with these settings:</p>
+<ul>
+<li>Mean, hypothesis test, upper tail, <span
+class="math inline">\(\alpha = 0.05\)</span>, <span
+class="math inline">\(\mu_0 = 84.4\)</span>.</li>
+<li>Data: the sample CSV uploaded, with the <code>tmax_f</code> column
+chosen.</li>
+</ul>
+<p>It reproduces every value above:</p>
+<div class="figure" style="text-align: center">
+<img src="example_projects/figs/p2_t_test.png" alt="**Figure 4.** One Sample Tests tool output: SE = 1.3491, df = 29, t = 4.7933, critical value 1.6991, p &lt; 0.0001, and 95% CI (88.1074, 93.6259). The plot shades the rejection region under the null t(29) distribution." width="85%" />
+<p class="caption">
+<strong>Figure 4.</strong> One Sample Tests tool output: SE = 1.3491, df
+= 29, t = 4.7933, critical value 1.6991, p &lt; 0.0001, and 95% CI
+(88.1074, 93.6259). The plot shades the rejection region under the null
+t(29) distribution.
+</p>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Quantity</th>
+<th align="right">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sample mean <span
+class="math inline">\(\bar{x}\)</span></td>
+<td align="right">90.87 °F</td>
+</tr>
+<tr class="even">
+<td align="left">Standard error</td>
+<td align="right">1.349 °F</td>
+</tr>
+<tr class="odd">
+<td align="left">Degrees of freedom</td>
+<td align="right">29</td>
+</tr>
+<tr class="even">
+<td align="left">Test statistic <span
+class="math inline">\(t_{obs}\)</span></td>
+<td align="right">4.793</td>
+</tr>
+<tr class="odd">
+<td align="left">Critical value <span
+class="math inline">\(t_{29,\,0.95}\)</span></td>
+<td align="right">1.699</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(p\)</span>-value</td>
+<td align="right"><span class="math inline">\(&lt; 0.0001\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">95% CI for <span
+class="math inline">\(\mu\)</span></td>
+<td align="right">(88.11, 93.63) °F</td>
+</tr>
+</tbody>
+</table>
+<p><em>Effect of the outlier.</em> To check the outlier’s influence, I
+removed the 68 °F day and reran the same <span
+class="math inline">\(t\)</span> test in R with <code>t.test()</code>.
+That gives <span class="math inline">\(n = 29\)</span>, <span
+class="math inline">\(\bar{x} = 91.66\)</span>, <span
+class="math inline">\(s = 6.10\)</span> and <span
+class="math inline">\(t = 6.40\)</span>, so the conclusion does not
+change. The outlier does not drive the result. If anything, including it
+made the evidence look weaker.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>6. Conclusion</h2>
+<p><strong>(A) Decision.</strong> The test statistic <span
+class="math inline">\(t_{obs} = 4.79\)</span> is far beyond the critical
+value <span class="math inline">\(1.699\)</span>, and <span
+class="math inline">\(p &lt; 0.0001 &lt; \alpha = 0.05\)</span>. So I
+<strong>reject <span class="math inline">\(H_0\)</span></strong>.</p>
+<p><strong>(B) Interpretation.</strong> There is strong evidence that
+July days in Moscow from 2021 to 2025 were hotter, on average, than the
+1991–2020 normal. The 95% confidence interval says the average July high
+in those years was between about <strong>88.1 and 93.6 °F</strong>. That
+is roughly <strong>4 to 9 degrees above</strong> the 84.4 °F normal,
+which is a difference you would notice outdoors, not just a statistical
+technicality.</p>
+<p><strong>(C) Limitations.</strong></p>
+<ul>
+<li><strong>Five summers is a short window.</strong> This tells us about
+2021–2025, not about a long-term trend. A few unusually hot summers can
+happen by chance, and the 2021 heat dome is one example. My result does
+not prove <em>why</em> these summers were hot. Separating a climate
+trend from year-to-year variation would need many more years of
+data.</li>
+<li><strong>Dependence between days.</strong> Heat waves make nearby
+days similar. My few close-together sampled days make my standard error
+a bit too small, so the true uncertainty is slightly larger than the
+interval suggests. Still, the evidence is strong enough that this would
+not change the decision.</li>
+<li><strong>Finite population.</strong> I sampled 30 of only 155 days
+(19%). The formulas from class assume a very large population, and here
+that works in the conservative direction.</li>
+<li><strong>One station.</strong> The result describes the campus
+station only. Other locations, or changes to this station’s instruments
+or surroundings over time, could give different numbers.</li>
+</ul>
+</div>
+<div id="appendix-a-the-sample" class="section level2">
+<h2>Appendix A: the sample</h2>
+<table class="table table-striped table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Table A1.</strong> The 30 July days drawn by the Simple Random
+Sample tool (seed 251), in the order they were drawn. Only the daily
+high is analyzed.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Draw order
+</th>
+<th style="text-align:right;">
+day_id
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:right;">
+Daily high (°F)
+</th>
+<th style="text-align:right;">
+Daily low (°F)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+142
+</td>
+<td style="text-align:left;">
+2025-07-18
+</td>
+<td style="text-align:right;">
+92
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:left;">
+2021-07-30
+</td>
+<td style="text-align:right;">
+104
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+2021-07-08
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+48
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+2021-07-27
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:left;">
+2023-07-20
+</td>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:right;">
+47
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:left;">
+2021-07-29
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+53
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2021-07-03
+</td>
+<td style="text-align:right;">
+92
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+2023-07-10
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+2022-07-30
+</td>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:right;">
+56
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+2021-07-21
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+102
+</td>
+<td style="text-align:left;">
+2024-07-09
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:left;">
+2023-07-03
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+154
+</td>
+<td style="text-align:left;">
+2025-07-30
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+56
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+2021-07-02
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:left;">
+2022-07-26
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+126
+</td>
+<td style="text-align:left;">
+2025-07-02
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+140
+</td>
+<td style="text-align:left;">
+2025-07-16
+</td>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+2023-07-06
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+2022-07-04
+</td>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:right;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+2023-07-26
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+2021-07-17
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+48
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+152
+</td>
+<td style="text-align:left;">
+2025-07-28
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+127
+</td>
+<td style="text-align:left;">
+2025-07-03
+</td>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+41
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:left;">
+2024-07-17
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:left;">
+2024-07-22
+</td>
+<td style="text-align:right;">
+102
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+137
+</td>
+<td style="text-align:left;">
+2025-07-13
+</td>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:left;">
+2022-07-19
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+2023-07-08
+</td>
+<td style="text-align:right;">
+92
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+2021-07-13
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:left;">
+2021-07-23
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+</tbody>
+</table>
+<p>Days per year in the sample: 2021 (10), 2022 (4), 2023 (6), 2024 (3),
+2025 (7).</p>
+</div>
+<div id="ai-use-disclosure" class="section level2">
+<h2>AI Use Disclosure</h2>
+<div class="callout">
+<div class="callout-title">
+What a disclosure looks like
+</div>
+<p>The project requires you to disclose any AI use. This section is an
+<strong>illustration of the format</strong>. It is here so you can see
+what a complete disclosure contains. Write yours about what <em>you</em>
+actually did.</p>
+</div>
+<ul>
+<li><strong>Service provider:</strong> Anthropic (Claude).</li>
+<li><strong>Prompts I used:</strong>
+<ol style="list-style-type: decimal">
+<li>“Is it okay to keep an outlier that is a real measurement when
+running a one-sample t test? How can I check whether it changes my
+result?”</li>
+<li>“What R function runs a one-sample t test with a one-sided
+alternative?”</li>
+</ol></li>
+<li><strong>How I used it.</strong>
+<ul>
+<li>Prompt 1 suggested rerunning the test without the outlier. I did
+that in Part 5 and wrote up the result myself.</li>
+<li>Prompt 2 pointed me to
+<code>t.test(x, mu = 84.4, alternative = "greater")</code>, which I used
+only for that outlier check.</li>
+<li>All other numbers come from the stat-tools site and my own hand
+calculations in Part 5(C). No AI-generated numbers, figures or data
+appear in this report.</li>
+</ul></li>
+<li><strong>Citation:</strong> Anthropic. (2026). <em>Claude</em> [Large
+language model]. <a href="https://claude.ai"
+class="uri">https://claude.ai</a>. Responses to prompts 1 and 2 above,
+accessed September 2026.</li>
+</ul>
+</div>
+
+<!--
+  Light/dark toggle. Included via `includes: after_body:`.
+
+  Two ordering constraints, both load-bearing - do not "modernise" this:
+
+  1. NOT wrapped in DOMContentLoaded / $(document).ready / defer.
+     An after_body <script> runs synchronously during parsing, so the button is
+     already in the DOM when rmarkdown's navbar script measures
+     `$(".navbar").first().height() + 15` at ready-time to set body padding-top.
+     Deferring would turn a guaranteed ordering into a race we'd lose - jQuery's
+     ready queue is FIFO and the template registered its handler first, in <head>.
+
+  2. A <button>, not an <a href="#">.
+     rmarkdown's active-link script queries `a[href="..."]`; an anchor would get
+     swept into that and would also jump the page to the top on click.
+
+  It injects into .navbar-header (NOT .navbar-right) so the control stays visible
+  at mobile widths - .navbar-right lives inside .navbar-collapse and is hidden
+  below 768px until the hamburger is opened. Pages with no navbar at all (the
+  homeworks/, misc/, study_guides/, Review_problems/ pages) get a floating button.
+-->
+<script>
+(function () {
+  var root = document.documentElement;
+  var KEY = 'stat251-theme';
+
+  var SUN = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4' +
+    'M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"/></svg>';
+
+  var MOON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" ' +
+    'aria-hidden="true" focusable="false">' +
+    '<path d="M20.7 14.6A8.6 8.6 0 0 1 9.4 3.3a8.6 8.6 0 1 0 11.3 11.3z"/></svg>';
+
+  function paint(theme) {
+    // Show the action, not the state: in dark mode the button offers "Light".
+    var goingTo = theme === 'dark' ? 'light' : 'dark';
+    btn.innerHTML = (theme === 'dark' ? SUN : MOON) +
+      '<span class="theme-toggle-label">' + (goingTo === 'dark' ? 'Dark' : 'Light') + '</span>';
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    btn.setAttribute('title', 'Switch to ' + goingTo + ' mode');
+  }
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'theme-toggle';
+  btn.setAttribute('aria-label', 'Toggle dark mode');
+  paint(root.getAttribute('data-theme') || 'light');
+
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    paint(next);
+    try { window.localStorage.setItem(KEY, next); } catch (e) { /* private mode; session-only */ }
+  });
+
+  var header = document.querySelector('.navbar .navbar-header');
+  if (header) {
+    btn.classList.add('theme-toggle-nav');
+    header.appendChild(btn);
+  } else {
+    btn.classList.add('theme-toggle-floating');
+    document.body.appendChild(btn);
+  }
+})();
+</script>
+<!--
+  Structural accessibility patches. Included via `includes: after_body:` AFTER
+  theme-toggle.html.
+
+  Why a script and not markup: everything below has to change elements that
+  pandoc's HTML template and rmarkdown's navbar generator emit. We do not own
+  either template, and the navbar is rebuilt from _site.yml on every render, so
+  a hand-edit would be overwritten. Patching the parsed DOM is the only place
+  these fixes survive a rebuild.
+
+  Why a SEPARATE file rather than appending to theme-toggle.html: that file's
+  header documents two load-bearing ordering constraints. Leave it alone.
+
+  Same synchronous-during-parsing guarantee that theme-toggle.html relies on -
+  no DOMContentLoaded, no defer. By the time an after_body script runs, the
+  navbar and .main-container are already in the DOM, and we are still ahead of
+  jQuery's ready queue.
+
+  EVERY lookup is null-guarded: 29 subdirectory pages (homeworks/, misc/,
+  study_guides/, Review_problems/) render without a navbar, and this file loads
+  on those too.
+-->
+<script>
+(function () {
+  /* 1. Main landmark + skip-link target (WCAG 1.3.1, 2.4.1).
+        pandoc emits no <main> at all; the content lives in a bare div.
+        tabindex="-1" is what makes the skip link MOVE FOCUS rather than merely
+        scroll - without it Chrome and Safari scroll and leave focus on <body>,
+        so the next Tab drops the user back at the top of the navbar. */
+  var main = document.querySelector('.main-container');
+  if (main) {
+    if (!main.id) main.id = 'main-content';
+    main.setAttribute('role', 'main');
+    main.setAttribute('tabindex', '-1');
+  }
+
+  var navbar = document.querySelector('.navbar');
+
+  /* 2. Name the hamburger (WCAG 4.1.2). rmarkdown emits the button with three
+        empty <span class="icon-bar"> and no text and no label, so screen
+        readers announce a bare "button". */
+  var toggle = document.querySelector('.navbar-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    var target = (toggle.getAttribute('data-target') || '').replace(/^#/, '');
+    if (target) toggle.setAttribute('aria-controls', target);
+  }
+
+  /* 3. Dropdown triggers advertise that they open something.
+        Bootstrap 3.3.5's own JS already maintains aria-expanded, so we only
+        add what it does not: aria-haspopup. */
+  var togglers = document.querySelectorAll('.navbar .dropdown-toggle');
+  for (var i = 0; i < togglers.length; i++) {
+    togglers[i].setAttribute('aria-haspopup', 'true');
+  }
+
+  /* 4. Drop the broken ARIA menu pattern (WCAG 4.1.2).
+        rmarkdown puts role="menu" on the dropdown <ul> but never gives the
+        children role="menuitem". A menu with no menuitems is announced as an
+        empty menu - strictly worse than no role, because it suppresses the
+        list semantics the plain <ul>/<a> markup would otherwise expose.
+        Removing the role is correct and far cheaper than implementing the
+        full APG menubar pattern (roving tabindex, arrow keys, Escape). */
+  var menus = document.querySelectorAll('.navbar [role="menu"]');
+  for (var j = 0; j < menus.length; j++) {
+    menus[j].removeAttribute('role');
+  }
+
+  /* 5. Escape hatch for the navbar-less pages (WCAG 2.4.5, 3.2.3).
+        The subdirectory pages are rendered outside render_site() and never see
+        the _site.yml navbar, so a reader who followed a menu link into one has
+        no way back except the browser's Back button - and no way at all if
+        they arrived from a bookmark or a direct link.
+
+        How far up docs/index.html is depends on the directory. Most pages sit
+        one level below docs/, but homeworks/<year>/ and Examinations/<term>/
+        are two levels down, and '../index.html' 404s from those. The page
+        cannot measure this for itself - it is rendered self-contained, so every
+        asset is inlined and no relative URL survives in the markup - so the
+        deeper directories declare it by including assets/brand/site-depth-2.html
+        ahead of this file in their _output.yml. Default is 1.
+
+        This branch cannot run on a top-level page: those all have a navbar. */
+  if (!navbar && main) {
+    var depth = window.__siteDepth || 1;
+    var prefix = '';
+    for (var d = 0; d < depth; d++) { prefix += '../'; }
+    var bar = document.createElement('div');
+    bar.className = 'site-backlink-bar';
+    var link = document.createElement('a');
+    link.className = 'site-backlink';
+    link.href = prefix + 'index.html';
+    link.textContent = '\u2190 Back to course site';
+    bar.appendChild(link);
+    main.insertBefore(bar, main.firstChild);
+  }
+})();
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
