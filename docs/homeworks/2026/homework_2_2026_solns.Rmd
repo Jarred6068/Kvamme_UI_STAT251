@@ -413,49 +413,60 @@ or shorter than
 
 
 $\bf (7)$
-Use the plot below of the cumulative distribution of a quantitative variable $X$ to answer parts (a) through (c).
+According to the World Health Organization, the heights of girls aged five years are
+approximately normal with a mean of $\mu = 109$ cm and a standard deviation of
+$\sigma = 4.5$ cm. Use the empirical rule to answer parts (a) through (e). No table or
+calculator is needed — every number below works out evenly.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=8}
-
-#set.seed(555)
-#x = sort(round(rnorm(50, 5, 4), 1))
-
-x = c(-4.7,-2.5,-2.3,-1.3,-1.3,-1.2,0.0,0.0,1.0,1.8,2.1, 2.3, 2.6, 2.8, 2.8, 2.9, 3.5, 3.6, 3.7, 3.7, 4.3, 4.8, 4.9, 5.2, 5.3, 5.5, 6.0, 6.5, 6.6, 7.1, 7.1, 7.2, 7.4, 7.7, 7.8, 8.1, 8.1, 8.1, 8.5, 8.7, 9.0, 9.0, 10.0, 10.2, 10.2, 11.0, 11.0, 11.1, 11.1, 11.5)
-xg = unique(x)
-crfxg = cumsum(summary(as.factor(x))/sum(summary(as.factor(x))))
-dat = cbind.data.frame(x = xg, `CRF(x)` = crfxg)
-
-B = ggplot(dat, aes(x = x, y = `CRF(x)`))+geom_step()+
-  geom_point(size = 3)+
-  theme_hc()+
-  scale_y_continuous(breaks = seq(0, 1, 0.1))+
-  scale_x_continuous(breaks = seq(min(dat$x), max(dat$x), 1))
-plot(B)
+```{r q7-guard, include=FALSE}
+## Every value stated in the answers below is derived here, so a changed mean or
+## standard deviation fails the render rather than leaving a wrong key in place.
+mu7 <- 109; sd7 <- 4.5
+band <- function(k) c(mu7 - k * sd7, mu7 + k * sd7)
+z7   <- function(x) (x - mu7) / sd7
+stopifnot(identical(band(1), c(104.5, 113.5)),
+          identical(band(2), c(100, 118)),
+          identical(band(3), c(95.5, 122.5)),
+          z7(100) == -2, z7(113.5) == 1)
 ```
 
-
-(a) Assume the cumulative distribution above represents an approximately normal (symmetric, bell-shaped) distribution with mean $\bar{x} = 5$ and standard deviation $s = 4$. Under the empirical rule, write down the interval, in terms of $\bar{x}$ and $s$, that contains approximately $95\%$ of the observations, and then give its two endpoints as numbers.
+(a) Give the interval, centred on the mean, that contains approximately $68\%$ of the heights. Then do the same for $95\%$ and for $99.7\%$.
 
 `r RA`
-The empirical rule says approximately $95\%$ of the observations fall in the interval $\bar{x} \pm 2s$. Substituting $\bar{x} = 5$ and $s = 4$,
-\[ \bar{x} - 2s = 5 - 2(4) = -3 \qquad \bar{x} + 2s = 5 + 2(4) = 13 \]
-so the interval is $(-3,\ 13)$.
+Each interval is the mean plus or minus a whole number of standard deviations.
+
+* $68\%$: $\mu \pm 1\sigma = 109 \pm 4.5$, which is **104.5 cm to 113.5 cm**.
+* $95\%$: $\mu \pm 2\sigma = 109 \pm 9$, which is **100 cm to 118 cm**.
+* $99.7\%$: $\mu \pm 3\sigma = 109 \pm 13.5$, which is **95.5 cm to 122.5 cm**.
 `r RZ`
 
-(b) The two endpoints from part (a) are the empirical rule's estimates of the $2.5$th and $97.5$th percentiles of $X$. Now read the $2.5$th and $97.5$th percentiles directly off the cumulative distribution plot above. Why do the two sets of answers differ? (hint: think about shape and how it relates to the empirical rule)
+(b) Approximately what percentage of five-year-old girls are between $95.5$ cm and $122.5$ cm tall?
 
 `r RA`
-Reading across from $CRF(x) = 0.025$ and $CRF(x) = 0.975$ on the plot gives approximately $-2.5$ and $11.1$, against the $-3$ and $13$ predicted by the empirical rule. They differ because the distribution of $X$ is skewed to the left rather than symmetric and bell-shaped, and the empirical rule only holds for approximately normal distributions. The further a distribution departs from normality, the worse the rule's percentile estimates become.
+Those are exactly the endpoints of the third interval in part (a): $95.5 = \mu - 3\sigma$ and $122.5 = \mu + 3\sigma$. By the empirical rule, approximately **$99.7\%$** of heights fall there — almost all of them.
 `r RZ`
 
-(c) Using the mean and standard deviation from parts (a) and (b), compute and interpret the $z$-scores for the observations $x_1 = 11.5$ and $x_2 = -4.7$. Would either observation be considered an outlier under the $\pm 2s$ rule?
+(c) A five-year-old girl is $100$ cm tall. Compute her $z$-score and interpret it in one sentence.
 
 `r RA`
-\[ z_1 = \frac{11.5 - 5}{4} \approx 1.63 \]
-The observation $x_1 = 11.5$ sits 1.63 standard deviations above the mean. It is **not** an outlier, because $1.63 < 2$.
+\[ z = \frac{100 - 109}{4.5} = \frac{-9}{4.5} = -2 \]
+She is **two standard deviations below** the mean height for her age. The negative sign is what says *below*; the size, 2, is measured in standard deviations rather than centimetres.
+`r RZ`
 
-\[ z_2 = \frac{-4.7 - 5}{4} \approx -2.43 \]
-The observation $x_2 = -4.7$ sits 2.43 standard deviations below the mean. It **would** be flagged as an outlier, because $-2.43 < -2$.
+(d) Approximately what percentage of five-year-old girls are **taller** than $113.5$ cm? (hint: start from your $68\%$ interval in part (a), and remember the distribution is symmetric)
+
+`r RA`
+$113.5 = \mu + 1\sigma$, so this is the upper tail beyond one standard deviation. The empirical rule puts $68\%$ *inside* $\mu \pm 1\sigma$, which leaves $100\% - 68\% = 32\%$ outside it. A normal distribution is symmetric, so that $32\%$ splits evenly between the two tails:
+\[ \frac{32\%}{2} = 16\% \]
+Approximately **$16\%$** of five-year-old girls are taller than 113.5 cm.
+`r RZ`
+
+(e) Would a height of $100$ cm be flagged as an outlier under the $\pm 2s$ rule? Explain.
+
+`r RA`
+It sits exactly **on** the boundary. From part (c) its $z$-score is $-2$, and the $\pm 2s$ rule flags observations **more than** two standard deviations from the mean, so a height of exactly 100 cm is not flagged — anything below 100 cm would be.
+
+It is worth seeing how unusual that still is: the $95\%$ interval from part (a) leaves $5\%$ outside, split evenly, so only about $2.5\%$ of five-year-old girls are shorter than 100 cm.
 `r RZ`
 
 
