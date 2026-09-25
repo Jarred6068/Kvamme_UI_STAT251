@@ -12,7 +12,7 @@
 <meta name="author" content="Example student report (quantitative variable), STAT 251 Section 01" />
 
 
-<title>Example Project 2: Have Recent Moscow Julys Been Hotter Than Normal?</title>
+<title>Example Project 2: Do Peer-to-Peer Borrowers Pay More Than Bank Borrowers?</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -516,14 +516,32 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Example Project 2: Have Recent Moscow Julys
-Been Hotter Than Normal?</h1>
+<h1 class="title toc-ignore">Example Project 2: Do Peer-to-Peer
+Borrowers Pay More Than Bank Borrowers?</h1>
 <h4 class="author">Example student report (quantitative variable), STAT
 251 Section 01</h4>
 
 </div>
 
 
+<!-- Print rules for the downloadable PDF (build_site.R prints this page with headless Chrome). -->
+<style>
+@media print {
+  .pdf-download { display: none; }
+  /* Bare URLs are already their own link text; don't print them twice. */
+  a.uri::after { content: none !important; }
+  h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
+  .callout, .figure, table, blockquote { break-inside: avoid; page-break-inside: avoid; }
+  /* Appendices and the AI disclosure start on a fresh page rather than stranding their heading. */
+  #appendix-a-the-sample, #appendix-b-the-historical-januaries, #ai-use-disclosure { break-before: page; page-break-before: always; }
+  /* ...but the long appendix tables may run across pages, or their heading is left alone. */
+  #appendix-a-the-sample table, #appendix-b-the-historical-januaries table { break-inside: auto; page-break-inside: auto; }
+}
+</style>
+<div class="pdf-download">
+<p><strong><a href="example_project_continuous.pdf">Download this report
+as a PDF</a></strong></p>
+</div>
 <div class="callout">
 <div class="callout-title">
 Instructor note
@@ -532,145 +550,166 @@ Instructor note
 strong report looks like when the variable being analyzed is
 <strong>quantitative</strong>. It follows the six steps on the <a
 href="project.html">Project Description</a> page in order, so you can
-compare it against the rubric section by section. Use it to see the
-level of detail and explanation expected. <strong>Do not copy its
-dataset, question, or wording.</strong> Your project should be about a
-topic you choose. The example was prepared with the help of Claude
-(Anthropic), and every calculation in it was done with the course’s <a
+compare it against the rubric section by section.</p>
+<p>The two example projects deliberately come from very different
+fields: <a href="example_project_categorical.html">Example Project 1</a>
+uses weather records, and this one uses consumer lending. Any topic
+works as long as the data can be cited and your question fits a method
+from class. Use these examples to see the level of detail and
+explanation expected. <strong>Do not copy their datasets, questions, or
+wording.</strong></p>
+<p>The example was prepared with the help of Claude (Anthropic), and
+every calculation in it was done with the course’s <a
 href="https://stat-tools.jmks-homelab.dev/">stat-tools</a> site. The
-screenshots come from those tools.</p>
+screenshots come from those tools. This example also shows that a
+well-run test that <strong>fails to reject</strong> <span
+class="math inline">\(H_0\)</span> is still a complete, strong
+project.</p>
 </div>
 <div id="dataset-selection" class="section level2">
 <h2>1. Dataset Selection</h2>
-<p><strong>(A) Citations.</strong> I used two datasets from NOAA: the
-daily observations and, for the benchmark, the official climate normals
-for the same station.</p>
+<p><strong>(A) Citations.</strong> I found the loan data on
+<strong>Kaggle</strong> and the benchmark on <strong>FRED</strong>. Both
+are data portals listed on the course project page.</p>
 <blockquote>
-<p>Menne, M. J., Durre, I., Korzeniewski, B., McNeill, S., Thomas, K.,
-Yin, X., Anthony, S., Ray, R., Vose, R. S., Gleason, B. E., &amp;
-Houston, T. G. (2012). <em>Global Historical Climatology Network – Daily
-(GHCN-Daily), Version 3</em> [Data set]. Station USC00106152, MOSCOW U
-OF I, ID US, daily maximum temperature (TMAX), January 1, 2021 – January
-31, 2026. NOAA National Climatic Data Center. <a
-href="https://doi.org/10.7289/V5D21VHZ"
-class="uri">https://doi.org/10.7289/V5D21VHZ</a>. Accessed September 24,
-2026.</p>
+<p>Singh, U. (2023). <em>Lending Club Loan Dataset</em> [Data set, file
+<code>loans_full_schema.csv</code>]. Kaggle. License CC0: Public Domain.
+<a
+href="https://www.kaggle.com/datasets/utkarshx27/lending-club-loan-dataset"
+class="uri">https://www.kaggle.com/datasets/utkarshx27/lending-club-loan-dataset</a>.
+Accessed September 25, 2026.</p>
 </blockquote>
 <blockquote>
-<p>Palecki, M., Durre, I., Applequist, S., Arguez, A., &amp; Lawrimore,
-J. (2021). <em>U.S. Climate Normals 2020: U.S. Monthly Climate Normals
-(1991–2020)</em> [Data set]. Station USC00106152. NOAA National Centers
-for Environmental Information. <a
-href="https://doi.org/10.25921/wck8-er13"
-class="uri">https://doi.org/10.25921/wck8-er13</a>. Accessed September
-24, 2026.</p>
+<p>Original source of the same file: OpenIntro. <em>loans_full_schema:
+Loan data from Lending Club</em> [Data set]. <a
+href="https://www.openintro.org/data/index.php?data=loans_full_schema"
+class="uri">https://www.openintro.org/data/index.php?data=loans_full_schema</a>.
+The data were originally published by LendingClub.</p>
 </blockquote>
-<p>Working links to the exact files I downloaded:</p>
-<ul>
-<li><a
-href="https://www.ncei.noaa.gov/access/services/data/v1?dataset=daily-summaries&amp;stations=USC00106152&amp;startDate=2021-01-01&amp;endDate=2026-01-31&amp;dataTypes=TMAX,TMIN,PRCP,SNOW&amp;units=standard&amp;format=csv&amp;includeStationName=true">Daily
-observations query (NCEI Access Data Service)</a></li>
-<li><a
-href="https://www.ncei.noaa.gov/access/services/data/v1?dataset=normals-monthly-1991-2020&amp;stations=USC00106152&amp;format=csv&amp;dataTypes=MLY-TMAX-NORMAL,MLY-PRCP-AVGNDS-GE001HI">Monthly
-normals query for the same station</a></li>
-</ul>
+<blockquote>
+<p>Board of Governors of the Federal Reserve System (US). <em>Finance
+Rate on Personal Loans at Commercial Banks, 24 Month Loan</em>
+[TERMCBPER24NS]. Retrieved from FRED, Federal Reserve Bank of St. Louis,
+<a href="https://fred.stlouisfed.org/series/TERMCBPER24NS"
+class="uri">https://fred.stlouisfed.org/series/TERMCBPER24NS</a>.
+Accessed September 25, 2026.</p>
+</blockquote>
+<p>I downloaded the Kaggle file and compared it with OpenIntro’s copy at
+<a href="https://www.openintro.org/data/csv/loans_full_schema.csv"
+class="uri">https://www.openintro.org/data/csv/loans_full_schema.csv</a>.
+They contain the same 10,000 loans and the same values; Kaggle adds only
+a row-number column.</p>
 <p><strong>(B) Background.</strong></p>
 <ul>
-<li><strong>The station.</strong> The data come from the weather station
-on the University of Idaho campus in Moscow. It is a National Weather
-Service <strong>Cooperative Observer (COOP)</strong> station. Once a day
-a trained observer records the highest and lowest temperature since the
-last reading. NOAA’s National Centers for Environmental Information
-(NCEI) quality-checks and archives these readings in the GHCN-Daily
-database.</li>
-<li><strong>How the data were collected.</strong> Nobody sampled
-anything: the station records <em>every</em> day, so the file is a
-complete record for one location.</li>
-<li><strong>The file.</strong> The daily file I downloaded has one row
-per day from January 2021 through January 2026. I kept only the July
-days of 2021–2025, which gives <strong>155 days</strong>. None of them
-are missing a high temperature.</li>
-<li><strong>The benchmark.</strong> NOAA’s <strong>1991–2020 Climate
-Normals</strong> are 30-year averages computed from the same station’s
-records. For July, the normal daily maximum temperature
-(<code>MLY-TMAX-NORMAL</code>) is <strong>84.4 °F</strong>.</li>
+<li><strong>The lender.</strong> LendingClub is a <em>peer-to-peer</em>
+lending platform: borrowers apply online, and the loans are funded by
+individual and institutional investors rather than by a bank’s
+deposits.</li>
+<li><strong>The rows and variables.</strong> Each row of the file is
+<strong>one loan that was actually issued</strong>, not an application.
+There are <strong>10,000 loans</strong>, all issued from January to
+March 2018, with <strong>55 variables</strong> about the borrower and
+the loan. These include:
+<ul>
+<li>the borrower’s income, employment and credit history</li>
+<li>the loan amount, term (36 or 60 months) and purpose</li>
+<li>the <strong>interest rate</strong></li>
+<li>a risk <strong>grade</strong> from A (lowest risk) to G (highest
+risk) that LendingClub assigned.</li>
+</ul></li>
+<li><strong>Who collected it.</strong> LendingClub recorded these data
+as part of its business and published loan-level data for the public.
+OpenIntro prepared this 10,000-loan file for teaching, and a Kaggle user
+re-posted it.</li>
+<li><strong>How the 10,000 loans were chosen.</strong> The documentation
+does not say, so I cannot claim they are a random sample of all
+LendingClub loans (see Limitations).</li>
+<li><strong>The benchmark (FRED).</strong> The Federal Reserve reports
+the average rate commercial banks charge on 24-month personal loans in
+its <em>G.19 Consumer Credit</em> release. FRED lists it as a monthly
+series, but values are published only for February, May, August and
+November. The <strong>February 2018</strong> value, from the same
+quarter these loans were issued, is <strong>10.22%</strong>. I saved the
+full series as a CSV.</li>
 </ul>
 </div>
 <div id="question-and-hypothesis-formulation" class="section level2">
 <h2>2. Question and Hypothesis Formulation</h2>
-<p><strong>(A) Question.</strong> Were July afternoons in Moscow from
-2021 to 2025 hotter, on average, than the official 1991–2020 normal of
-84.4 °F?</p>
-<p>I chose this because recent summers have felt hot. For example, the
-record-breaking Pacific Northwest heat wave was in late June 2021. I
-wanted to know whether the recent Julys are really hotter <em>on
-average</em>, or whether a few memorable hot spells just stand out.</p>
-<p><strong>(B) Variable.</strong> <strong>Daily maximum
-temperature</strong> (<code>TMAX</code>, °F) is a <strong>quantitative,
-continuous</strong> variable, although the station records it to the
-nearest whole degree. Each observation is one July day’s highest
-temperature. The average of this variable over July days is exactly what
-NOAA’s July normal measures, so comparing my sample mean to 84.4 °F is a
-fair comparison.</p>
-<p><strong>(C) Hypothesis in words.</strong> I expect the mean daily
-high temperature of July days in 2021–2025 to be <strong>greater
-than</strong> the 1991–2020 normal of 84.4 °F. I chose the direction
-<em>before</em> looking at any data, because the question is
-specifically about hotter Julys.</p>
+<p><strong>(A) Question.</strong> Peer-to-peer lenders advertise
+themselves as an alternative to banks. So did people who took out a
+3-year LendingClub loan in early 2018 pay a <strong>higher interest
+rate, on average, than the 10.22% banks were charging for personal
+loans</strong> at the same time?</p>
+<p><strong>(B) Variables.</strong></p>
+<ul>
+<li><strong>Interest rate</strong> (<code>interest_rate</code>, percent
+per year): <strong>quantitative, continuous</strong>, recorded to two
+decimal places. This is the variable I test: its mean is compared with
+the bank benchmark.</li>
+<li><strong>Grade</strong> (<code>grade</code>, A–G):
+<strong>categorical, ordinal</strong>. I do not test it, but I use it in
+Part 4 to explain the shape of the interest rates, because LendingClub
+sets the rate mainly from the grade.</li>
+</ul>
+<p><strong>(C) Hypothesis in words.</strong> I expect the mean interest
+rate on 36-month LendingClub loans to be <strong>greater than</strong>
+10.22%. I chose the direction before looking at any data, because the
+question is whether peer-to-peer borrowers pay <em>more</em>.</p>
 </div>
 <div id="sampling" class="section level2">
 <h2>3. Sampling</h2>
-<p><strong>(A) and (B) Method.</strong> My population is the <strong>155
-July days from 2021 to 2025</strong>. I drew a <strong>simple random
-sample of n = 30 days</strong> without replacement with the stat-tools
-<strong>Simple Random Sample</strong> tool. To repeat it:</p>
+<p><strong>(A) and (B) Method.</strong></p>
+<ul>
+<li><strong>Population (sampling frame).</strong> The <strong>6,970
+loans with a 36-month term</strong>. I left out the 60-month loans
+because their term is even further from the benchmark’s 24 months.</li>
+<li><strong>Sampling method.</strong> I drew a <strong>simple random
+sample of n = 30 loans</strong> without replacement, using the
+stat-tools <strong>Simple Random Sample</strong> tool.</li>
+</ul>
+<p>To repeat it:</p>
 <ol style="list-style-type: decimal">
-<li>Save the July days as a CSV with the columns <code>day_id</code>
-(1–155), <code>date</code>, <code>tmax_f</code> and
-<code>tmin_f</code>.</li>
+<li>Open <code>loans_full_schema.csv</code> in a spreadsheet. Add a
+column <code>loan_id</code> numbering the rows 1–10,000, keep only the
+rows with <code>term</code> = 36, and keep only the columns
+<code>loan_id</code>, <code>issue_month</code>, <code>term</code>,
+<code>grade</code>, <code>loan_amount</code> and
+<code>interest_rate</code>. Save it as a CSV (6,970 rows).</li>
 <li>Open the <strong>Simple Random Sample</strong> tool and upload the
 CSV.</li>
 <li>Keep all variables, set <strong>Sample size = 30</strong> and
 <strong>Seed = 251</strong>, and press <em>Draw sample</em>. The same
-seed always draws the same 30 days.</li>
+seed always draws the same 30 loans.</li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="example_projects/figs/p2_srs.png" alt="**Figure 1.** The Simple Random Sample tool after the draw: 30 of 155 July days sampled with seed 251. The first rows of the sample are shown." width="90%" />
+<img src="example_projects/figs/p2_srs.png" alt="**Figure 1.** The Simple Random Sample tool after the draw: 30 of 6,970 loans sampled with seed 251. The first rows of the sample are shown." width="90%" />
 <p class="caption">
 <strong>Figure 1.</strong> The Simple Random Sample tool after the draw:
-30 of 155 July days sampled with seed 251. The first rows of the sample
+30 of 6,970 loans sampled with seed 251. The first rows of the sample
 are shown.
 </p>
 </div>
 <p><strong>(C) Justification.</strong></p>
 <ul>
-<li><strong>Why SRS.</strong> An SRS gives every July day in all five
-years the same chance of selection. That keeps me from (even
-unconsciously) picking heat-wave days, and it lets the sample represent
-all five Julys.</li>
-<li><strong>Why not a systematic sample.</strong> A systematic sample,
-such as every 5th day, would be a poor choice here. Weather comes in
-multi-day spells, so evenly spaced days could line up with a repeating
-pattern.</li>
-<li><strong>Why not stratify.</strong> I also considered stratifying by
-year (6 days from each July). That would guarantee every year appears
-equally. The SRS does include all five years, but unevenly: 10 days are
-from 2021 and only 3 from 2024 (see Appendix A). Because the 2021 heat
-wave might make 2021 unusually hot, I checked. The 20 sampled days
-<em>outside</em> 2021 average 90.9 °F, essentially the same as the full
-sample, so the uneven mix does not drive my result. In hindsight,
-stratifying by year would have been a slightly better design.</li>
+<li><strong>Why SRS.</strong> Every 36-month loan has the same chance of
+being chosen, so the sample is not tilted toward any grade, month or
+loan size.</li>
+<li><strong>Why not stratify.</strong> Stratifying by grade would
+guarantee every grade appears. But the question is about the
+<em>overall</em> mean rate, and an SRS already represents the grades in
+proportion to how common they are.</li>
+<li><strong>Independence.</strong> The loans go to different borrowers,
+so they are close to independent. My sample is only 30 of 6,970 loans
+(0.4%), so sampling without replacement causes no problems.</li>
 </ul>
 <p><strong>Possible bias.</strong></p>
 <ul>
-<li><strong>Dependence between nearby days.</strong> Hot days cluster in
-heat waves, so days that are close together are not fully independent. A
-few of my sampled days are only 1–2 days apart, for example July 27, 29
-and 30, 2021. If those days fall in the same hot spell, they give
-slightly less independent information than 30 truly separate days
-would.</li>
-<li><strong>One station.</strong> Everything describes one station, at
-one location on campus.</li>
+<li><strong>The sampling itself.</strong> The SRS introduces none.</li>
+<li><strong>The file I sampled from.</strong> The file is a 10,000-loan
+subset prepared by OpenIntro, and I do not know how those loans were
+chosen. If they are not representative of all LendingClub loans from
+early 2018, my results describe this file more than LendingClub as a
+whole.</li>
 </ul>
 <p><strong>(D) The sample</strong> is listed in full in <a
 href="#appendix-a-the-sample">Appendix A</a>.</p>
@@ -678,12 +717,12 @@ href="#appendix-a-the-sample">Appendix A</a>.</p>
 <div id="exploratory-statistical-description" class="section level2">
 <h2>4. Exploratory Statistical Description</h2>
 <p><strong>(A) Descriptive statistics</strong> from the stat-tools
-<strong>Statistic Calculator</strong>, which uses R’s default quartile
-definition:</p>
+<strong>Statistic Calculator</strong> (R’s default quartile
+definition):</p>
 <table class="table table-striped table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<strong>Table 1.</strong> Descriptive statistics of the daily maximum
-temperature for the 30 sampled July days.
+<strong>Table 1.</strong> Descriptive statistics of the interest rate
+for the 30 sampled 36-month loans.
 </caption>
 <thead>
 <tr>
@@ -691,7 +730,7 @@ temperature for the 30 sampled July days.
 Statistic
 </th>
 <th style="text-align:right;">
-Value (°F)
+Value (%)
 </th>
 </tr>
 </thead>
@@ -701,7 +740,7 @@ Value (°F)
 minimum
 </td>
 <td style="text-align:right;">
-68
+5.3200
 </td>
 </tr>
 <tr>
@@ -709,7 +748,7 @@ minimum
 Q1
 </td>
 <td style="text-align:right;">
-86.00
+7.3500
 </td>
 </tr>
 <tr>
@@ -717,7 +756,7 @@ Q1
 median
 </td>
 <td style="text-align:right;">
-92
+9.4400
 </td>
 </tr>
 <tr>
@@ -725,7 +764,7 @@ median
 mean
 </td>
 <td style="text-align:right;">
-90.8667
+10.4187
 </td>
 </tr>
 <tr>
@@ -733,7 +772,7 @@ mean
 Q3
 </td>
 <td style="text-align:right;">
-95.75
+11.9900
 </td>
 </tr>
 <tr>
@@ -741,7 +780,7 @@ Q3
 maximum
 </td>
 <td style="text-align:right;">
-104
+26.3000
 </td>
 </tr>
 <tr>
@@ -749,7 +788,7 @@ maximum
 interquartile range
 </td>
 <td style="text-align:right;">
-9.75
+4.6400
 </td>
 </tr>
 <tr>
@@ -757,132 +796,239 @@ interquartile range
 standard deviation
 </td>
 <td style="text-align:right;">
-7.3893
+4.5963
 </td>
 </tr>
 </tbody>
 </table>
 <div class="figure" style="text-align: center">
-<img src="example_projects/figs/p2_summary_boxplot.png" alt="**Figure 2.** Statistic Calculator output and boxplot for the 30 sampled daily highs (°F). The red point is the low outlier (68 °F)." width="80%" />
+<img src="example_projects/figs/p2_summary_boxplot.png" alt="**Figure 2.** Statistic Calculator output and boxplot for the 30 sampled interest rates (%). The red point is the high outlier (26.30%)." width="80%" />
 <p class="caption">
 <strong>Figure 2.</strong> Statistic Calculator output and boxplot for
-the 30 sampled daily highs (°F). The red point is the low outlier (68
-°F).
+the 30 sampled interest rates (%). The red point is the high outlier
+(26.30%).
 </p>
 </div>
 <p><strong>(B) Plots.</strong> The boxplot is in Figure 2. The histogram
-below came from the <strong>Make Graphs</strong> tool, with its
-automatic bins, which are the same ones R’s <code>hist()</code>
-uses:</p>
+below came from the <strong>Make Graphs</strong> tool, using its
+automatic bins:</p>
 <div class="figure" style="text-align: center">
-<img src="example_projects/figs/p2_histogram.png" alt="**Figure 3.** Histogram of the daily maximum temperature on 30 sampled July days in Moscow, 2021–2025. The bins are 5 °F wide." width="85%" />
+<img src="example_projects/figs/p2_histogram.png" alt="**Figure 3.** Histogram of the interest rate on 30 sampled 36-month LendingClub loans issued January–March 2018. The bins are 5 percentage points wide." width="85%" />
 <p class="caption">
-<strong>Figure 3.</strong> Histogram of the daily maximum temperature on
-30 sampled July days in Moscow, 2021–2025. The bins are 5 °F wide.
+<strong>Figure 3.</strong> Histogram of the interest rate on 30 sampled
+36-month LendingClub loans issued January–March 2018. The bins are 5
+percentage points wide.
 </p>
 </div>
+<p>To understand the shape, I also counted the sampled loans by grade
+with the <strong>Frequency Tables</strong> tool:</p>
+<div class="figure" style="text-align: center">
+<img src="example_projects/figs/p2_grade_table.png" alt="**Figure 4.** Frequency table of the LendingClub grade for the 30 sampled loans." width="85%" />
+<p class="caption">
+<strong>Figure 4.</strong> Frequency table of the LendingClub grade for
+the 30 sampled loans.
+</p>
+</div>
+<table class="table table-striped table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Table 2.</strong> Interest-rate range within each grade in my
+sample.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Grade
+</th>
+<th style="text-align:right;">
+Loans
+</th>
+<th style="text-align:right;">
+Lowest rate (%)
+</th>
+<th style="text-align:right;">
+Highest rate (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+5.32
+</td>
+<td style="text-align:right;">
+7.97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+9.44
+</td>
+<td style="text-align:right;">
+11.99
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+13.58
+</td>
+<td style="text-align:right;">
+16.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+17.09
+</td>
+<td style="text-align:right;">
+17.09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+26.30
+</td>
+<td style="text-align:right;">
+26.30
+</td>
+</tr>
+</tbody>
+</table>
 <p><strong>(C) Shape, center and variability.</strong></p>
 <ul>
-<li><strong>Shape.</strong> The distribution is
-<strong>unimodal</strong> and peaks in the 90–95 °F bin. It is
-<strong>slightly left-skewed</strong>: most days fall between 80 and 105
-°F, with a short tail toward cooler days. The mean (90.87 °F) sits a
-little below the median (92 °F), which fits a left skew.</li>
-<li><strong>Center.</strong> The median July high in the sample is
-<strong>92 °F</strong> and the mean is <strong>90.87 °F</strong>. Both
-are well above the 84.4 °F normal. In fact, 27 of the 30 sampled days
-were hotter than 84.4 °F.</li>
-<li><strong>Variability.</strong> The standard deviation is <strong>7.39
-°F</strong> and the IQR is <strong>9.75 °F</strong>, so the middle half
-of the days ranged from 86 to 95.75 °F.</li>
-<li><strong>Outliers.</strong> The lower fence is <span
-class="math inline">\(Q_1 - 1.5 \cdot IQR = 86 - 1.5(9.75) =
-71.375\)</span> °F. <strong>July 4, 2022, at 68 °F</strong>, falls below
-it and is an outlier. NOAA gives it no quality flag, and it came during
-a cool, rainy spell (0.54 in of rain fell on July 3 and 0.06 in on July
-4). So it is a real observation, not a recording error, and I kept it.
-It pulls the mean <em>down</em>, which works <em>against</em> my
-alternative hypothesis. So if anything, keeping it makes the test more
-cautious. I check its influence in Part 5.</li>
+<li><strong>Shape.</strong> The distribution is <strong>clearly
+right-skewed</strong>. Most loans (19 of 30) carry rates between 5% and
+10%, and a few riskier loans stretch the tail out to 26%. The mean
+(10.42%) is about one percentage point above the median (9.44%), which
+fits the skew.</li>
+<li><strong>Why it is skewed.</strong> Table 2 shows where the skew
+comes from. LendingClub sets rates by grade, and 23 of my 30 loans are
+grade A or B, the low-risk, low-rate grades. The few C, D and E loans
+are the ones that stretch the right tail.</li>
+<li><strong>Center.</strong> The median rate is <strong>9.44%</strong>
+and the mean is <strong>10.42%</strong>. The benchmark (10.22%) falls
+between them.</li>
+<li><strong>Variability.</strong> The standard deviation is <strong>4.60
+percentage points</strong> and the IQR is <strong>4.64 points</strong>,
+so the middle half of the loans had rates from 7.35% to 11.99%.</li>
+<li><strong>Outliers.</strong> The upper fence is <span
+class="math inline">\(Q_3 + 1.5 \cdot IQR = 11.99 + 1.5(4.64) =
+18.95\%\)</span>. The single grade-E loan at <strong>26.30%</strong>
+lies above it, so it is an outlier. It is a real loan, not an error:
+grade-E rates in the full file run in the mid-20s. I kept it.
+<ul>
+<li>The outlier pulls the mean <em>up</em>, which works in favour of my
+alternative hypothesis.</li>
+<li>I check its influence in Part 5.</li>
+</ul></li>
 </ul>
 </div>
 <div id="hypothesis-testing" class="section level2">
 <h2>5. Hypothesis Testing</h2>
 <p><strong>(A) Hypotheses.</strong> Let <span
-class="math inline">\(\mu\)</span> be the mean daily maximum temperature
-of July days at the Moscow U of I station in 2021–2025.</p>
-<p><span class="math display">\[ H_0: \mu = 84.4 \text{ °F} \qquad\qquad
-H_a: \mu &gt; 84.4 \text{ °F} \]</span></p>
-<p>In words, <span class="math inline">\(H_0\)</span> says recent July
-highs average the same as the 1991–2020 normal. <span
-class="math inline">\(H_a\)</span> says they average hotter. I use a
-significance level of <strong><span class="math inline">\(\alpha =
-0.05\)</span></strong>.</p>
+class="math inline">\(\mu\)</span> be the mean interest rate of 36-month
+LendingClub loans issued January–March 2018.</p>
+<p><span class="math display">\[ H_0: \mu = 10.22\% \qquad\qquad H_a:
+\mu &gt; 10.22\% \]</span></p>
+<p>In words:</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: peer-to-peer borrowers
+paid the same average rate as the bank benchmark.</li>
+<li><span class="math inline">\(H_a\)</span>: they paid more on
+average.</li>
+</ul>
+<p>I use a significance level of <strong><span
+class="math inline">\(\alpha = 0.05\)</span></strong>.</p>
 <p><strong>(B) Choice of test and assumptions.</strong> I use a
 <strong>one-sample <span class="math inline">\(t\)</span> test for a
 mean</strong>. I have one quantitative variable and want to compare its
-mean with a fixed benchmark. The population standard deviation <span
-class="math inline">\(\sigma\)</span> is unknown, so I estimate it with
-<span class="math inline">\(s\)</span>, which is why the test uses a
-<span class="math inline">\(t\)</span> distribution rather than <span
-class="math inline">\(z\)</span>.</p>
+mean with a fixed benchmark. The population standard deviation is
+unknown, so the test uses <span class="math inline">\(s\)</span> and the
+<span class="math inline">\(t\)</span> distribution.</p>
 <p>The assumptions are:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Random sample.</strong> Satisfied, because the days were
+<li><strong>Random sample.</strong> Satisfied, because the loans were
 chosen by SRS (Part 3).</li>
-<li><strong>Independent observations.</strong> Mostly satisfied. The 30
-days are spread over five summers, but a few are close together (see
-Part 3), so this is the weakest assumption.</li>
+<li><strong>Independent observations.</strong> Satisfied: the loans go
+to different borrowers, and the sample is a tiny fraction of the
+frame.</li>
 <li><strong>Approximately normal population, or a large enough
-sample.</strong> The histogram is roughly bell-shaped with a mild left
-skew and one low outlier. With <span class="math inline">\(n =
-30\)</span> the Central Limit Theorem makes the sampling distribution of
-<span class="math inline">\(\bar{x}\)</span> approximately normal, so
-the <span class="math inline">\(t\)</span> test is reasonable.</li>
+sample.</strong> This is the assumption to watch. The rates are
+right-skewed, with one outlier. With <span class="math inline">\(n =
+30\)</span>, the Central Limit Theorem makes the sampling distribution
+of <span class="math inline">\(\bar{x}\)</span> approximately normal for
+moderate skew like this, so the <span class="math inline">\(t\)</span>
+test is reasonable. I also rerun it without the outlier below.</li>
 </ol>
 <p><strong>(C) Computations.</strong></p>
 <p><em>Step 1: observed statistics</em> (Table 1): <span
 class="math inline">\(n = 30\)</span>, <span
-class="math inline">\(\bar{x} = 90.8667\)</span> °F, <span
-class="math inline">\(s = 7.3893\)</span> °F.</p>
+class="math inline">\(\bar{x} = 10.4187\%\)</span>, <span
+class="math inline">\(s = 4.5963\%\)</span>.</p>
 <p><em>Step 2: standard error.</em> <span class="math display">\[ SE =
-\frac{s}{\sqrt{n}} = \frac{7.3893}{\sqrt{30}} = \frac{7.3893}{5.4772} =
-1.3491 \text{ °F} \]</span></p>
+\frac{s}{\sqrt{n}} = \frac{4.5963}{\sqrt{30}} = \frac{4.5963}{5.4772} =
+0.8392 \]</span></p>
 <p><em>Step 3: test statistic.</em> <span class="math display">\[
-t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{90.8667 -
-84.4}{1.3491} = \frac{6.4667}{1.3491} = 4.793 \]</span></p>
+t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{10.4187 -
+10.22}{0.8392} = \frac{0.1987}{0.8392} = 0.237 \]</span></p>
 <p><em>Step 4: degrees of freedom and critical value.</em> <span
 class="math inline">\(df = n - 1 = 29\)</span>. For an upper-tail test
 at <span class="math inline">\(\alpha = 0.05\)</span> the critical value
 is <span class="math inline">\(t_{29,\,0.95} = 1.699\)</span>, and we
-reject <span class="math inline">\(H_0\)</span> if <span
+reject <span class="math inline">\(H_0\)</span> only if <span
 class="math inline">\(t_{obs} \geq 1.699\)</span>.</p>
 <p><em>Step 5: p-value.</em> <span class="math inline">\(p = P(t_{29}
-\geq 4.793) \approx 0.00002\)</span>, which the tool reports as <span
-class="math inline">\(&lt; 0.0001\)</span>.</p>
+\geq 0.237) = 0.407\)</span>.</p>
 <p><em>Step 6: 95% confidence interval for <span
 class="math inline">\(\mu\)</span></em> (<span
 class="math inline">\(t_{29,\,0.975} = 2.045\)</span>): <span
-class="math display">\[ \bar{x} \pm t_{29,\,0.975}\, SE = 90.8667 \pm
-2.045(1.3491) = 90.8667 \pm 2.759 = (88.11,\ 93.63) \text{ °F}
-\]</span></p>
+class="math display">\[ \bar{x} \pm t_{29,\,0.975}\, SE = 10.4187 \pm
+2.045(0.8392) = 10.4187 \pm 1.716 = (8.70\%,\ 12.14\%) \]</span></p>
 <p>I ran the test in the stat-tools <strong>One Sample Tests</strong>
 tool with these settings:</p>
 <ul>
 <li>Mean, hypothesis test, upper tail, <span
 class="math inline">\(\alpha = 0.05\)</span>, <span
-class="math inline">\(\mu_0 = 84.4\)</span>.</li>
-<li>Data: the sample CSV uploaded, with the <code>tmax_f</code> column
-chosen.</li>
+class="math inline">\(\mu_0 = 10.22\)</span>.</li>
+<li>Data: the sample CSV uploaded, with the <code>interest_rate</code>
+column chosen.</li>
 </ul>
 <p>It reproduces every value above:</p>
 <div class="figure" style="text-align: center">
-<img src="example_projects/figs/p2_t_test.png" alt="**Figure 4.** One Sample Tests tool output: SE = 1.3491, df = 29, t = 4.7933, critical value 1.6991, p &lt; 0.0001, and 95% CI (88.1074, 93.6259). The plot shades the rejection region under the null t(29) distribution." width="85%" />
+<img src="example_projects/figs/p2_t_test.png" alt="**Figure 5.** One Sample Tests tool output: SE = 0.8392, df = 29, t = 0.2367, critical value 1.6991, p = 0.4073, and 95% CI (8.7024, 12.1350). The observed t falls far short of the shaded rejection region." width="85%" />
 <p class="caption">
-<strong>Figure 4.</strong> One Sample Tests tool output: SE = 1.3491, df
-= 29, t = 4.7933, critical value 1.6991, p &lt; 0.0001, and 95% CI
-(88.1074, 93.6259). The plot shades the rejection region under the null
-t(29) distribution.
+<strong>Figure 5.</strong> One Sample Tests tool output: SE = 0.8392, df
+= 29, t = 0.2367, critical value 1.6991, p = 0.4073, and 95% CI (8.7024,
+12.1350). The observed t falls far short of the shaded rejection region.
 </p>
 </div>
 <table>
@@ -896,11 +1042,11 @@ t(29) distribution.
 <tr class="odd">
 <td align="left">Sample mean <span
 class="math inline">\(\bar{x}\)</span></td>
-<td align="right">90.87 °F</td>
+<td align="right">10.42%</td>
 </tr>
 <tr class="even">
 <td align="left">Standard error</td>
-<td align="right">1.349 °F</td>
+<td align="right">0.839</td>
 </tr>
 <tr class="odd">
 <td align="left">Degrees of freedom</td>
@@ -909,7 +1055,7 @@ class="math inline">\(\bar{x}\)</span></td>
 <tr class="even">
 <td align="left">Test statistic <span
 class="math inline">\(t_{obs}\)</span></td>
-<td align="right">4.793</td>
+<td align="right">0.237</td>
 </tr>
 <tr class="odd">
 <td align="left">Critical value <span
@@ -918,67 +1064,104 @@ class="math inline">\(t_{29,\,0.95}\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(p\)</span>-value</td>
-<td align="right"><span class="math inline">\(&lt; 0.0001\)</span></td>
+<td align="right">0.407</td>
 </tr>
 <tr class="odd">
 <td align="left">95% CI for <span
 class="math inline">\(\mu\)</span></td>
-<td align="right">(88.11, 93.63) °F</td>
+<td align="right">(8.70%, 12.14%)</td>
 </tr>
 </tbody>
 </table>
-<p><em>Effect of the outlier.</em> To check the outlier’s influence, I
-removed the 68 °F day and reran the same <span
-class="math inline">\(t\)</span> test in R with <code>t.test()</code>.
-That gives <span class="math inline">\(n = 29\)</span>, <span
-class="math inline">\(\bar{x} = 91.66\)</span>, <span
-class="math inline">\(s = 6.10\)</span> and <span
-class="math inline">\(t = 6.40\)</span>, so the conclusion does not
-change. The outlier does not drive the result. If anything, including it
-made the evidence look weaker.</p>
+<p><em>Effect of the outlier.</em> I removed the 26.30% loan and reran
+the same <span class="math inline">\(t\)</span> test in R with
+<code>t.test()</code>. That gives <span class="math inline">\(n =
+29\)</span>, <span class="math inline">\(\bar{x} = 9.87\%\)</span>,
+<span class="math inline">\(s = 3.54\%\)</span> and <span
+class="math inline">\(t = -0.53\)</span>. The conclusion does not
+change, and without the outlier the sample mean even falls
+<em>below</em> the benchmark.</p>
 </div>
 <div id="conclusion" class="section level2">
 <h2>6. Conclusion</h2>
 <p><strong>(A) Decision.</strong> The test statistic <span
-class="math inline">\(t_{obs} = 4.79\)</span> is far beyond the critical
-value <span class="math inline">\(1.699\)</span>, and <span
-class="math inline">\(p &lt; 0.0001 &lt; \alpha = 0.05\)</span>. So I
-<strong>reject <span class="math inline">\(H_0\)</span></strong>.</p>
-<p><strong>(B) Interpretation.</strong> There is strong evidence that
-July days in Moscow from 2021 to 2025 were hotter, on average, than the
-1991–2020 normal. The 95% confidence interval says the average July high
-in those years was between about <strong>88.1 and 93.6 °F</strong>. That
-is roughly <strong>4 to 9 degrees above</strong> the 84.4 °F normal,
-which is a difference you would notice outdoors, not just a statistical
-technicality.</p>
+class="math inline">\(t_{obs} = 0.24\)</span> is well below the critical
+value 1.699, and <span class="math inline">\(p = 0.41 &gt; \alpha =
+0.05\)</span>. So I <strong>fail to reject <span
+class="math inline">\(H_0\)</span></strong>.</p>
+<p><strong>(B) Interpretation.</strong> My sample does
+<strong>not</strong> give convincing evidence that 3-year LendingClub
+borrowers in early 2018 paid more, on average, than the 10.22% banks
+were charging for personal loans.</p>
+<ul>
+<li><strong>Rates vary a lot.</strong> The sample’s average (10.42%) was
+only 0.2 points above the benchmark. Rates vary so much from loan to
+loan (SD about 4.6 points) that a difference that small could easily
+come from chance alone.</li>
+<li><strong>Plausible values.</strong> The 95% confidence interval says
+the true average rate is plausibly anywhere from about <strong>8.7% to
+12.1%</strong>. That range includes 10.22%.</li>
+<li><strong>This does not prove the rates are equal.</strong> “Fail to
+reject” means my data could not tell the two apart, not that they are
+the same.</li>
+<li><strong>The size of difference I could detect.</strong> To reject
+<span class="math inline">\(H_0\)</span>, my sample mean would have had
+to be at least <span class="math inline">\(10.22 + 1.699(0.8392) \approx
+11.65\%\)</span>. So with 30 loans this study could only have picked up
+a difference of roughly 1.4 percentage points or more. A real but
+smaller difference could easily go undetected.</li>
+</ul>
 <p><strong>(C) Limitations.</strong></p>
 <ul>
-<li><strong>Five summers is a short window.</strong> This tells us about
-2021–2025, not about a long-term trend. A few unusually hot summers can
-happen by chance, and the 2021 heat dome is one example. My result does
-not prove <em>why</em> these summers were hot. Separating a climate
-trend from year-to-year variation would need many more years of
-data.</li>
-<li><strong>Dependence between days.</strong> Heat waves make nearby
-days similar. My few close-together sampled days make my standard error
-a bit too small, so the true uncertainty is slightly larger than the
-interval suggests. Still, the evidence is strong enough that this would
-not change the decision.</li>
-<li><strong>Finite population.</strong> I sampled 30 of only 155 days
-(19%). The formulas from class assume a very large population, and here
-that works in the conservative direction.</li>
-<li><strong>One station.</strong> The result describes the campus
-station only. Other locations, or changes to this station’s instruments
-or surroundings over time, could give different numbers.</li>
+<li><strong>The benchmark is not a perfect match.</strong>
+<ul>
+<li>The bank rate is for <strong>24-month</strong> loans, and mine are
+36-month loans.</li>
+<li>More importantly, banks and LendingClub serve <strong>different
+borrowers</strong>. Banks turn away many riskier applicants, while
+LendingClub lends across grades A–G. So even if a difference were found,
+it would not show that LendingClub charges <em>the same borrower</em>
+more. The two groups of borrowers differ, which is a classic confounding
+problem.</li>
+</ul></li>
+<li><strong>Skew and small sample.</strong> The right skew and the
+outlier make <span class="math inline">\(n = 30\)</span> adequate but
+not generous for a <span class="math inline">\(t\)</span> test. A small
+sample also gives the test little power to detect modest differences
+(see above).</li>
+<li><strong>The data file.</strong> The 10,000 loans are a subset whose
+selection method is not documented. They cover only three months, and
+only loans that were actually issued. Applicants who were rejected, or
+who turned down a high-rate offer, are not in the data.</li>
 </ul>
+<div class="callout">
+<div class="callout-title">
+Instructor note: what the full dataset shows
+</div>
+<p>Because you have the whole data file, you can check a sample’s
+conclusion against it, which is rarely possible in real research. The
+mean rate over <strong>all 6,970</strong> 36-month loans in the file is
+<strong>11.24%</strong>, about one point <em>above</em> the benchmark.
+So in this file <span class="math inline">\(H_0\)</span> is actually
+false, and this sample’s test missed it. That is a <strong>Type II
+error</strong>.</p>
+<p>It was not bad luck so much as low power. With a true difference of
+about 1 point and an SD of about 4.4 points, a sample of 30 has only
+about a <strong>34%</strong> chance of rejecting <span
+class="math inline">\(H_0\)</span>. About 117 loans would be needed for
+an 80% chance. The student’s conclusion is still correct as written:
+they said the evidence was not convincing, not that the rates were
+equal. That is exactly the right way to report a non-significant
+result.</p>
+</div>
 </div>
 <div id="appendix-a-the-sample" class="section level2">
 <h2>Appendix A: the sample</h2>
 <table class="table table-striped table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<strong>Table A1.</strong> The 30 July days drawn by the Simple Random
-Sample tool (seed 251), in the order they were drawn. Only the daily
-high is analyzed.
+<strong>Table A1.</strong> The 30 loans drawn by the Simple Random
+Sample tool (seed 251), in the order they were drawn. All are 36-month
+loans. Only the interest rate is analyzed.
 </caption>
 <thead>
 <tr>
@@ -986,16 +1169,19 @@ high is analyzed.
 Draw order
 </th>
 <th style="text-align:right;">
-day_id
+loan_id
 </th>
 <th style="text-align:left;">
-Date
+Issued
+</th>
+<th style="text-align:left;">
+Grade
 </th>
 <th style="text-align:right;">
-Daily high (°F)
+Loan amount ($)
 </th>
 <th style="text-align:right;">
-Daily low (°F)
+Interest rate (%)
 </th>
 </tr>
 </thead>
@@ -1005,16 +1191,19 @@ Daily low (°F)
 1
 </td>
 <td style="text-align:right;">
-142
+94
 </td>
 <td style="text-align:left;">
-2025-07-18
+Jan-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-92
+20,000
 </td>
 <td style="text-align:right;">
-49
+7.97
 </td>
 </tr>
 <tr>
@@ -1022,16 +1211,19 @@ Daily low (°F)
 2
 </td>
 <td style="text-align:right;">
-30
+1981
 </td>
 <td style="text-align:left;">
-2021-07-30
+Mar-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-104
+13,000
 </td>
 <td style="text-align:right;">
-54
+7.97
 </td>
 </tr>
 <tr>
@@ -1039,16 +1231,19 @@ Daily low (°F)
 3
 </td>
 <td style="text-align:right;">
-8
+594
 </td>
 <td style="text-align:left;">
-2021-07-08
+Feb-2018
+</td>
+<td style="text-align:left;">
+C
 </td>
 <td style="text-align:right;">
-85
+9,525
 </td>
 <td style="text-align:right;">
-48
+15.05
 </td>
 </tr>
 <tr>
@@ -1056,16 +1251,19 @@ Daily low (°F)
 4
 </td>
 <td style="text-align:right;">
-27
+1924
 </td>
 <td style="text-align:left;">
-2021-07-27
+Feb-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-89
+6,000
 </td>
 <td style="text-align:right;">
-51
+7.35
 </td>
 </tr>
 <tr>
@@ -1073,16 +1271,19 @@ Daily low (°F)
 5
 </td>
 <td style="text-align:right;">
-82
+5976
 </td>
 <td style="text-align:left;">
-2023-07-20
+Feb-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-96
+40,000
 </td>
 <td style="text-align:right;">
-47
+9.93
 </td>
 </tr>
 <tr>
@@ -1090,16 +1291,19 @@ Daily low (°F)
 6
 </td>
 <td style="text-align:right;">
-29
+2158
 </td>
 <td style="text-align:left;">
-2021-07-29
+Feb-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-97
+20,000
 </td>
 <td style="text-align:right;">
-53
+6.72
 </td>
 </tr>
 <tr>
@@ -1107,16 +1311,19 @@ Daily low (°F)
 7
 </td>
 <td style="text-align:right;">
-3
+143
 </td>
 <td style="text-align:left;">
-2021-07-03
+Mar-2018
+</td>
+<td style="text-align:left;">
+C
 </td>
 <td style="text-align:right;">
-92
+4,800
 </td>
 <td style="text-align:right;">
-46
+16.01
 </td>
 </tr>
 <tr>
@@ -1124,16 +1331,19 @@ Daily low (°F)
 8
 </td>
 <td style="text-align:right;">
-72
+5381
 </td>
 <td style="text-align:left;">
-2023-07-10
+Jan-2018
+</td>
+<td style="text-align:left;">
+D
 </td>
 <td style="text-align:right;">
-93
+1,000
 </td>
 <td style="text-align:right;">
-54
+17.09
 </td>
 </tr>
 <tr>
@@ -1141,16 +1351,19 @@ Daily low (°F)
 9
 </td>
 <td style="text-align:right;">
-61
+3935
 </td>
 <td style="text-align:left;">
-2022-07-30
+Jan-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-98
+2,500
 </td>
 <td style="text-align:right;">
-56
+11.99
 </td>
 </tr>
 <tr>
@@ -1158,16 +1371,19 @@ Daily low (°F)
 10
 </td>
 <td style="text-align:right;">
-21
+1424
 </td>
 <td style="text-align:left;">
-2021-07-21
+Mar-2018
+</td>
+<td style="text-align:left;">
+C
 </td>
 <td style="text-align:right;">
-87
+5,525
 </td>
 <td style="text-align:right;">
-52
+16.01
 </td>
 </tr>
 <tr>
@@ -1175,16 +1391,19 @@ Daily low (°F)
 11
 </td>
 <td style="text-align:right;">
-102
+7377
 </td>
 <td style="text-align:left;">
-2024-07-09
+Mar-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-100
+7,600
 </td>
 <td style="text-align:right;">
-54
+7.96
 </td>
 </tr>
 <tr>
@@ -1192,16 +1411,19 @@ Daily low (°F)
 12
 </td>
 <td style="text-align:right;">
-65
+4470
 </td>
 <td style="text-align:left;">
-2023-07-03
+Jan-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-82
+3,600
 </td>
 <td style="text-align:right;">
-37
+11.99
 </td>
 </tr>
 <tr>
@@ -1209,16 +1431,19 @@ Daily low (°F)
 13
 </td>
 <td style="text-align:right;">
-154
+3609
 </td>
 <td style="text-align:left;">
-2025-07-30
+Feb-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-100
+34,425
 </td>
 <td style="text-align:right;">
-56
+10.41
 </td>
 </tr>
 <tr>
@@ -1226,16 +1451,19 @@ Daily low (°F)
 14
 </td>
 <td style="text-align:right;">
-2
+151
 </td>
 <td style="text-align:left;">
-2021-07-02
+Feb-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-89
+13,000
 </td>
 <td style="text-align:right;">
-54
+5.32
 </td>
 </tr>
 <tr>
@@ -1243,16 +1471,19 @@ Daily low (°F)
 15
 </td>
 <td style="text-align:right;">
-57
+3814
 </td>
 <td style="text-align:left;">
-2022-07-26
+Mar-2018
+</td>
+<td style="text-align:left;">
+C
 </td>
 <td style="text-align:right;">
-95
+3,200
 </td>
 <td style="text-align:right;">
-55
+13.58
 </td>
 </tr>
 <tr>
@@ -1260,16 +1491,19 @@ Daily low (°F)
 16
 </td>
 <td style="text-align:right;">
-126
+9729
 </td>
 <td style="text-align:left;">
-2025-07-02
+Jan-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-93
+4,000
 </td>
 <td style="text-align:right;">
-49
+11.99
 </td>
 </tr>
 <tr>
@@ -1277,16 +1511,19 @@ Daily low (°F)
 17
 </td>
 <td style="text-align:right;">
-140
+5731
 </td>
 <td style="text-align:left;">
-2025-07-16
+Feb-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-86
+23,100
 </td>
 <td style="text-align:right;">
-50
+9.44
 </td>
 </tr>
 <tr>
@@ -1294,16 +1531,19 @@ Daily low (°F)
 18
 </td>
 <td style="text-align:right;">
-68
+4641
 </td>
 <td style="text-align:left;">
-2023-07-06
+Mar-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-90
+8,900
 </td>
 <td style="text-align:right;">
-45
+9.92
 </td>
 </tr>
 <tr>
@@ -1311,16 +1551,19 @@ Daily low (°F)
 19
 </td>
 <td style="text-align:right;">
-35
+2468
 </td>
 <td style="text-align:left;">
-2022-07-04
+Jan-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-68
+10,000
 </td>
 <td style="text-align:right;">
-51
+6.08
 </td>
 </tr>
 <tr>
@@ -1328,16 +1571,19 @@ Daily low (°F)
 20
 </td>
 <td style="text-align:right;">
-88
+5821
 </td>
 <td style="text-align:left;">
-2023-07-26
+Jan-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-80
+22,000
 </td>
 <td style="text-align:right;">
-38
+5.32
 </td>
 </tr>
 <tr>
@@ -1345,16 +1591,19 @@ Daily low (°F)
 21
 </td>
 <td style="text-align:right;">
-17
+1115
 </td>
 <td style="text-align:left;">
-2021-07-17
+Jan-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-85
+10,000
 </td>
 <td style="text-align:right;">
-48
+7.35
 </td>
 </tr>
 <tr>
@@ -1362,16 +1611,19 @@ Daily low (°F)
 22
 </td>
 <td style="text-align:right;">
-152
+1727
 </td>
 <td style="text-align:left;">
-2025-07-28
+Feb-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-93
+20,000
 </td>
 <td style="text-align:right;">
-45
+7.96
 </td>
 </tr>
 <tr>
@@ -1379,16 +1631,19 @@ Daily low (°F)
 23
 </td>
 <td style="text-align:right;">
-127
+9154
 </td>
 <td style="text-align:left;">
-2025-07-03
+Mar-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-86
+20,000
 </td>
 <td style="text-align:right;">
-41
+7.34
 </td>
 </tr>
 <tr>
@@ -1396,16 +1651,19 @@ Daily low (°F)
 24
 </td>
 <td style="text-align:right;">
-110
+7390
 </td>
 <td style="text-align:left;">
-2024-07-17
+Feb-2018
+</td>
+<td style="text-align:left;">
+C
 </td>
 <td style="text-align:right;">
-91
+12,000
 </td>
 <td style="text-align:right;">
-55
+16.02
 </td>
 </tr>
 <tr>
@@ -1413,16 +1671,19 @@ Daily low (°F)
 25
 </td>
 <td style="text-align:right;">
-115
+8867
 </td>
 <td style="text-align:left;">
-2024-07-22
+Jan-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-102
+25,000
 </td>
 <td style="text-align:right;">
-55
+9.44
 </td>
 </tr>
 <tr>
@@ -1430,16 +1691,19 @@ Daily low (°F)
 26
 </td>
 <td style="text-align:right;">
-137
+9129
 </td>
 <td style="text-align:left;">
-2025-07-13
+Feb-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-96
+8,000
 </td>
 <td style="text-align:right;">
-46
+6.08
 </td>
 </tr>
 <tr>
@@ -1447,16 +1711,19 @@ Daily low (°F)
 27
 </td>
 <td style="text-align:right;">
-50
+3660
 </td>
 <td style="text-align:left;">
-2022-07-19
+Jan-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-85
+20,000
 </td>
 <td style="text-align:right;">
-49
+7.97
 </td>
 </tr>
 <tr>
@@ -1464,16 +1731,19 @@ Daily low (°F)
 28
 </td>
 <td style="text-align:right;">
-70
+5429
 </td>
 <td style="text-align:left;">
-2023-07-08
+Jan-2018
+</td>
+<td style="text-align:left;">
+E
 </td>
 <td style="text-align:right;">
-92
+30,150
 </td>
 <td style="text-align:right;">
-50
+26.30
 </td>
 </tr>
 <tr>
@@ -1481,16 +1751,19 @@ Daily low (°F)
 29
 </td>
 <td style="text-align:right;">
-13
+983
 </td>
 <td style="text-align:left;">
-2021-07-13
+Jan-2018
+</td>
+<td style="text-align:left;">
+A
 </td>
 <td style="text-align:right;">
-95
+24,725
 </td>
 <td style="text-align:right;">
-46
+6.08
 </td>
 </tr>
 <tr>
@@ -1498,22 +1771,23 @@ Daily low (°F)
 30
 </td>
 <td style="text-align:right;">
-23
+1470
 </td>
 <td style="text-align:left;">
-2021-07-23
+Mar-2018
+</td>
+<td style="text-align:left;">
+B
 </td>
 <td style="text-align:right;">
-85
+15,000
 </td>
 <td style="text-align:right;">
-38
+9.92
 </td>
 </tr>
 </tbody>
 </table>
-<p>Days per year in the sample: 2021 (10), 2022 (4), 2023 (6), 2024 (3),
-2025 (7).</p>
 </div>
 <div id="ai-use-disclosure" class="section level2">
 <h2>AI Use Disclosure</h2>
@@ -1530,22 +1804,22 @@ actually did.</p>
 <li><strong>Service provider:</strong> Anthropic (Claude).</li>
 <li><strong>Prompts I used:</strong>
 <ol style="list-style-type: decimal">
-<li>“Is it okay to keep an outlier that is a real measurement when
-running a one-sample t test? How can I check whether it changes my
-result?”</li>
-<li>“What R function runs a one-sample t test with a one-sided
-alternative?”</li>
+<li>“Where can I find the average interest rate banks charge on personal
+loans, month by month?”</li>
+<li>“My t test failed to reject. How do I explain that in plain language
+without saying the two means are equal?”</li>
 </ol></li>
 <li><strong>How I used it.</strong>
 <ul>
-<li>Prompt 1 suggested rerunning the test without the outlier. I did
-that in Part 5 and wrote up the result myself.</li>
-<li>Prompt 2 pointed me to
-<code>t.test(x, mu = 84.4, alternative = "greater")</code>, which I used
-only for that outlier check.</li>
-<li>All other numbers come from the stat-tools site and my own hand
-calculations in Part 5(C). No AI-generated numbers, figures or data
-appear in this report.</li>
+<li>Prompt 1 pointed me to FRED. I found the series, checked it on the
+Federal Reserve’s page, and chose the February 2018 value myself.</li>
+<li>Prompt 2 helped me word Part 6(B). I rewrote its suggestion in my
+own words and checked it against my lecture notes on significance
+tests.</li>
+<li>All calculations were done with the stat-tools site and my own hand
+calculations in Part 5(C). The one exception is the outlier check, which
+I ran in R with <code>t.test()</code>. No AI-generated numbers, figures
+or data appear in this report.</li>
 </ul></li>
 <li><strong>Citation:</strong> Anthropic. (2026). <em>Claude</em> [Large
 language model]. <a href="https://claude.ai"

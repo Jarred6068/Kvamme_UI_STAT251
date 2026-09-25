@@ -547,7 +547,7 @@ As the number of trials increases, the relative frequency with which an event oc
 $\bf (9)$
 Answer the following probability questions, and show your work.
 
-(a) A fair coin is flipped 3 times. What is the probability that <u>at least</u> one head is observed? (hint: it is easier to find the probability of the complement first)
+(a) A fair coin is flipped 3 times. Show how to compute the probability that <u>at least</u> one head is observed. (hint: it is easier to find the probability of the complement first)
 
 `r RA`
 The complement of "at least one head" is "no heads at all", that is, three tails:
@@ -556,7 +556,7 @@ By the complement rule,
 \[ P(\text{at least one head}) = 1 - 0.125 = 0.875 \]
 `r RZ`
 
-(b) In a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Draw a Venn diagram that models this situation, filling in the number of students in each region. What is the probability that a student is in band **or** plays a sport?
+(b) In a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Draw a Venn diagram that models this situation, filling in the number of students in each region, then show how to compute the probability that a student is in band **or** plays a sport.
 
 `r RA`
 The Venn diagram has $8 - 5 = 3$ students in band only, 5 in the overlap, $15 - 5 = 10$ in sport only, and $30 - (3+5+10) = 12$ outside both circles.
@@ -578,7 +578,7 @@ Because the two events are **not** disjoint - 5 students are in both - we must s
 \[ P(A \cup B) = P(A)+P(B)-P(A\cap B) = \frac{8}{30}+\frac{15}{30}-\frac{5}{30} = \frac{18}{30} = 0.60 \]
 `r RZ`
 
-(c) A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards: 9 numbered cards, 3 face cards, and an Ace. A single card is drawn at random. What is the probability that it is a numbered card? What is the probability that it is the Ace of Spades?
+(c) A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards: 9 numbered cards, 3 face cards, and an Ace. A single card is drawn at random. Show how to compute the probability that it is a numbered card, and the probability that it is the Ace of Spades.
 
 `r RA`
 There are $4 \times 9 = 36$ numbered cards, so
@@ -587,7 +587,7 @@ There is exactly one Ace of Spades, so
 \[ P(\text{Ace of Spades}) = \frac{1}{52} = 0.019 \]
 `r RZ`
 
-(d) An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random **with replacement**. What is the probability that the first ball is yellow and the second ball is red?
+(d) An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random **with replacement**. Show how to compute the probability that the first ball is yellow and the second ball is red.
 
 `r RA`
 There are $5+7+4 = 16$ balls. With replacement the two draws are independent, so by the multiplication rule
@@ -602,7 +602,7 @@ Without replacement the first ball is not returned, so only 15 balls remain for 
 The answer changed because the draws are no longer independent - the outcome of the first draw changes the composition of the urn, and therefore the probability of the second. Here, removing a yellow ball leaves red slightly more likely, so the probability rises.
 `r RZ`
 
-(f) On a given day in Moscow, Idaho, the probability that it rains is $P(R) = 0.1$, the probability that it is windy is $P(W) = 0.2$, and the probability that it is cloudy is $P(C) = 0.7$. Assume these three weather events are independent. What is the probability that a given day is rainy, cloudy, **and** windy?
+(f) On a given day in Moscow, Idaho, the probability that it rains is $P(R) = 0.1$, the probability that it is windy is $P(W) = 0.2$, and the probability that it is cloudy is $P(C) = 0.7$. Assume these three weather events are independent. Show how to compute the probability that a given day is rainy, cloudy, **and** windy.
 
 `r RA`
 For independent events the multiplication rule extends to all three:
@@ -611,6 +611,61 @@ For independent events the multiplication rule extends to all three:
 
 
 $\bf (10)$
+A single fair coin is flipped once. Let $X = 1$ if the flip comes up heads and $X = 0$ if it comes up tails. A random variable with only these two outcomes is called a **Bernoulli** random variable, and its probability of success is $p = P(X = 1)$.
+
+```{r q10-guard, include=FALSE}
+## Derive every value stated below, so a changed p fails the render.
+bern <- function(p) c(mean = p, var = p * (1 - p))
+stopifnot(bern(0.5)[["mean"]] == 0.5, bern(0.5)[["var"]] == 0.25,
+          bern(0.3)[["mean"]] == 0.3, abs(bern(0.3)[["var"]] - 0.21) < 1e-12,
+          10 * 0.5 == 5, 10 * 0.5 * 0.5 == 2.5)
+```
+
+(a) Write down the probability distribution of $X$ as a table of values and their probabilities.
+
+`r RA`
+For a fair coin $p = 0.5$, so
+
+| $x$ | $P(x)$ |
+|---|---|
+| 0 | 0.5 |
+| 1 | 0.5 |
+
+The two probabilities are each between 0 and 1 and sum to 1, so this is a valid probability distribution.
+`r RZ`
+
+(b) Show how to compute the mean of $X$ using $\mu = \sum_x x\cdot P(x)$, and confirm that it equals $p$.
+
+`r RA`
+\[ \mu = 0(0.5) + 1(0.5) = 0 + 0.5 = 0.5 \]
+which is exactly $p$. This is worth pausing on: the mean of a Bernoulli variable is **always** $p$, because the only term that survives the sum is the one where $x = 1$.
+`r RZ`
+
+(c) Show how to compute the variance of $X$ using $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$, and confirm that it equals $p(1-p)$.
+
+`r RA`
+\[ \sigma^2 = (0-0.5)^2(0.5) + (1-0.5)^2(0.5) = 0.25(0.5) + 0.25(0.5) = 0.125 + 0.125 = 0.25 \]
+and $p(1-p) = 0.5(0.5) = 0.25$, which agrees.
+`r RZ`
+
+(d) Now suppose the coin is bent so that it comes up heads only $30\%$ of the time. Show how to compute the mean and the variance of $X$ for this bent coin.
+
+`r RA`
+Now $p = 0.3$, so
+\[ \mu = 0(0.7) + 1(0.3) = 0.3 \qquad \sigma^2 = p(1-p) = 0.3(0.7) = 0.21 \]
+Note that the variance went **down** from 0.25. A Bernoulli variable is most variable when $p = 0.5$, because that is when the outcome is hardest to predict; a coin that almost always lands tails is much more predictable.
+`r RZ`
+
+(e) A **binomial** random variable counts the number of successes in $n$ independent Bernoulli trials. If the fair coin from parts (a)-(c) is flipped 10 times, show how to compute the mean and the variance of the number of heads. (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
+
+`r RA`
+With $n = 10$ and $p = 0.5$,
+\[ E[X] = np = 10(0.5) = 5 \ \text{heads} \qquad Var[X] = np(1-p) = 10(0.5)(0.5) = 2.5 \]
+Both are just the Bernoulli answers from (b) and (c) multiplied by $n$ — which is the whole point: a binomial variable is the sum of $n$ independent Bernoulli trials, so its mean and variance are $n$ times theirs.
+`r RZ`
+
+
+$\bf (11)$
 Consider a survey of tree volume. Suppose that in the population of trees, $10\%$ have a volume of 10 cubic feet, $20\%$ have a volume of 20 cubic feet, $30\%$ have a volume of 30 cubic feet, and $40\%$ have a volume of 40 cubic feet. Let $X$ denote the volume of a randomly selected tree, and assume every tree has an equal chance of being selected. The probability distribution of $X$ is given in **Table 2** below.
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -631,13 +686,13 @@ kable(df, format = tbl_fmt, digits = 2, row.names = F, booktabs = T, escape = F,
 Each probability lies between 0 and 1, and they sum to one: $0.1+0.2+0.3+0.4 = 1.0$. Both conditions hold, so this is a valid probability distribution.
 `r RZ`
 
-(b) Confirm that $X$ has a mean of $\mu = 30$ cubic feet by computing $\mu = \sum_x x\cdot P(x)$ yourself.
+(b) Show how to compute the mean of $X$ using $\mu = \sum_x x\cdot P(x)$, and confirm that it equals $\mu = 30$ cubic feet.
 
 `r RA`
 \[ \mu = 10(0.1)+20(0.2)+30(0.3)+40(0.4) = 1+4+9+16 = 30 \ \text{cubic feet} \]
 `r RZ`
 
-(c) Confirm that $X$ has a standard deviation of $\sigma = 10$ cubic feet by computing $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$ and then taking the square root.
+(c) Show how to compute the variance of $X$ using $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$, then take the square root and confirm that the standard deviation is $\sigma = 10$ cubic feet.
 
 `r RA`
 \begin{eqnarray}
@@ -655,7 +710,7 @@ As described here $X$ is **discrete**: it takes only the four listed values, and
 `r RZ`
 
 
-$\bf (11)$
+$\bf (12)$
 Answer the following, showing the formula you used and the numbers you substituted into it.
 
 (a) An angler has a $40\%$ chance of catching a fish on every cast, and each cast is independent of the others. Using the binomial probability mass function
@@ -668,7 +723,7 @@ Here $n = 5$, $k = 2$, and $p = 0.4$:
 So there is about a $34.6\%$ chance that she catches exactly two fish.
 `r RZ`
 
-(b) For the angler in part (a), what is the mean number of fish she expects to catch in 5 casts, and what is the variance? (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
+(b) For the angler in part (a), show how to compute the mean number of fish she expects to catch in 5 casts, and the variance. (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
 
 `r RA`
 \[ E[X] = np = 5(0.4) = 2 \ \text{fish} \qquad Var[X] = np(1-p) = 5(0.4)(0.6) = 1.2 \]
@@ -676,7 +731,7 @@ So there is about a $34.6\%$ chance that she catches exactly two fish.
 
 (c) A small campus coffee stand serves an average of 3 customers per 10-minute period. Let $X$ be the number of customers in a 10-minute period, and assume $X$ follows a Poisson distribution with $\lambda = 3$. Using
 \[ P(X = k) = \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
-compute the probability that **no** customers arrive in a given 10-minute period.
+show how to compute the probability that **no** customers arrive in a given 10-minute period.
 
 `r RA`
 With $\lambda = 3$ and $k = 0$, and recalling that $0! = 1$ and $3^0 = 1$:
@@ -684,13 +739,62 @@ With $\lambda = 3$ and $k = 0$, and recalling that $0! = 1$ and $3^0 = 1$:
 So there is about a $5\%$ chance of no customers.
 `r RZ`
 
-(d) For the coffee stand in part (c), compute the probability that **at most one** customer arrives in a given 10-minute period.
+(d) For the coffee stand in part (c), show how to compute the probability that **at most one** customer arrives in a given 10-minute period.
 
 `r RA`
 "At most one" means $k = 0$ or $k = 1$, so we add the two probabilities:
 \[ P(X = 1) = \frac{3^1 e^{-3}}{1!} = 3e^{-3} = 0.1494 \]
 \[ P(X \leq 1) = P(X=0)+P(X=1) = 0.0498 + 0.1494 = 0.1992 \]
 So there is about a $20\%$ chance of one customer or fewer.
+`r RZ`
+
+
+# Part IV: Standard Error and the Margin of Error
+
+
+$\bf (13)$
+A population has a mean of $\mu = 75$ and a standard deviation of $\sigma = 12$. You repeatedly draw random samples of $n = 36$ observations from this population, and each time you record the sample mean $\bar{x}$.
+
+```{r q13-guard, include=FALSE}
+## Every value stated below is derived here, so changing sigma or n fails the
+## render rather than leaving a stale answer in the key.
+sig13 <- 12
+se13  <- function(n) sig13 / sqrt(n)
+stopifnot(se13(36) == 2, se13(144) == 1,
+          2 * se13(36) == 4, 2 * se13(144) == 2,
+          75 - 2 * se13(36) == 71, 75 + 2 * se13(36) == 79)
+```
+
+(a) Show how to compute the **standard error** of the sample mean, $SE = \sigma/\sqrt{n}$.
+
+`r RA`
+\[ SE = \frac{\sigma}{\sqrt{n}} = \frac{12}{\sqrt{36}} = \frac{12}{6} = 2 \]
+`r RZ`
+
+(b) A classmate insists that the standard error should be 12, because that is the standard deviation of the population. Explain the mistake in their reasoning.
+
+`r RA`
+They have confused the spread of **individual observations** with the spread of the **sample mean**. The value $\sigma = 12$ describes how far a single observation typically falls from $\mu$. The standard error describes how far a whole sample's *average* typically falls from $\mu$ — and an average is far more stable than one observation, because high and low values within the sample cancel each other out.
+
+Dividing by $\sqrt{n}$ is exactly what accounts for that cancelling. The two are equal only when $n = 1$, where the "sample mean" is just a single observation.
+`r RZ`
+
+(c) Using the $\pm 2\cdot SE$ rule from class, show how to compute the **margin of error** for $\bar{x}$, and give the interval it defines around $\mu$.
+
+`r RA`
+\[ \text{margin of error} = 2 \cdot SE = 2(2) = 4 \]
+so the interval is
+\[ \mu \pm 4 = 75 \pm 4, \ \text{that is, from } 71 \text{ to } 79 \]
+About $95\%$ of the sample means we could draw will land in that interval.
+`r RZ`
+
+(d) Show how to compute the standard error if the sample size is increased to $n = 144$. What happens to the margin of error, and why?
+
+`r RA`
+\[ SE = \frac{12}{\sqrt{144}} = \frac{12}{12} = 1 \]
+so the margin of error becomes $2(1) = 2$, and the interval narrows to $75 \pm 2$, from 73 to 77.
+
+The sample size was multiplied by 4, and the margin of error was **halved**. That is because the standard error depends on $\sqrt{n}$, not on $n$: $\sqrt{4} = 2$, so quadrupling the sample size cuts the error in half. Buying twice the precision costs four times the data, which is why large surveys get expensive quickly.
 `r RZ`
 
 

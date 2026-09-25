@@ -105,9 +105,13 @@ Please read all instructions carefully
 
 ## Example Projects:
 
-Two completed example projects show what a strong report looks like, step by step:
-[Example Project 1](example_project_categorical.html) analyzes a **categorical** variable with a $\chi^2$ goodness-of-fit test, and
-[Example Project 2](example_project_continuous.html) analyzes a **quantitative** variable with a one-sample $t$ test.
+Two completed example projects show what a strong report looks like, step by step. They deliberately come from very different fields, to show how much freedom you have in choosing a dataset:
+
+* **Example Project 1: categorical variable.** Are Moscow's Januaries wetter than they used to be? It uses NOAA weather records and a $\chi^2$ goodness-of-fit test.
+  [View online](example_project_categorical.html) · [Download PDF](example_project_categorical.pdf)
+* **Example Project 2: quantitative variable.** Do peer-to-peer borrowers pay more than bank borrowers? It uses LendingClub loan data from Kaggle, a FRED benchmark, and a one-sample $t$ test.
+  [View online](example_project_continuous.html) · [Download PDF](example_project_continuous.pdf)
+
 Use them to see the level of detail expected, not as templates to copy - your project should be about a topic you choose.
 
 

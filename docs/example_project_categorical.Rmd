@@ -17,13 +17,35 @@ class_levels <- c("Very dry", "Dry", "Wet", "Very wet")
 sample_jan$jan_class <- factor(sample_jan$jan_class, levels = class_levels)
 ```
 
+<!-- Print rules for the downloadable PDF (build_site.R prints this page with headless Chrome). -->
+<style>
+@media print {
+  .pdf-download { display: none; }
+  /* Bare URLs are already their own link text; don't print them twice. */
+  a.uri::after { content: none !important; }
+  h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
+  .callout, .figure, table, blockquote { break-inside: avoid; page-break-inside: avoid; }
+  /* Appendices and the AI disclosure start on a fresh page rather than stranding their heading. */
+  #appendix-a-the-sample, #appendix-b-the-historical-januaries, #ai-use-disclosure { break-before: page; page-break-before: always; }
+  /* ...but the long appendix tables may run across pages, or their heading is left alone. */
+  #appendix-a-the-sample table, #appendix-b-the-historical-januaries table { break-inside: auto; page-break-inside: auto; }
+}
+</style>
+<div class="pdf-download">
+**[Download this report as a PDF](example_project_categorical.pdf)**
+</div>
+
 ::: {.callout}
 <div class="callout-title">Instructor note</div>
 This is a completed example of the course project. It shows what a strong report looks like when the
 variable being analyzed is **categorical**. It follows the six steps on the
 [Project Description](project.html) page in order, so you can compare it against the rubric section by section.
-Use it to see the level of detail and explanation expected. **Do not copy its dataset, question, or wording.**
-Your project should be about a topic you choose.
+
+The two example projects deliberately come from very different fields: this one uses weather records, and
+[Example Project 2](example_project_continuous.html) uses consumer lending. Any topic works as long as the
+data can be cited and your question fits a method from class. Use these examples to see the level of detail
+and explanation expected. **Do not copy their datasets, questions, or wording.**
+
 The example was prepared with the help of Claude (Anthropic), and every calculation in it was done with the
 course's [stat-tools](https://stat-tools.jmks-homelab.dev/) site. The screenshots come from those tools.
 :::
@@ -42,21 +64,69 @@ Working link to the exact data I downloaded (one row per month, standard units):
 The station's record page is
 [GHCND:USC00106152](https://www.ncei.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00106152/detail).
 
-**(B) Background.** The data come from the weather station on the University of Idaho campus in Moscow. It is
-a National Weather Service **Cooperative Observer (COOP)** station. A trained observer reads the rain gauge by
-hand once a day, and the station's record goes back to the 1890s. The daily readings are quality-checked and
-archived by NOAA's National Centers for Environmental Information (NCEI). They are part of the Global
-Historical Climatology Network–Daily (GHCN-Daily) database. The *Global Summary of the Month* adds each
-month's daily readings together to give a monthly total.
+**(B) Background.**
 
-The original collectors did not *sample* anything: the station records every day, so the file is a complete
-record of one location, not a random sample of places. The file has one row per month. I kept only the
-January rows, which gives **`r nrow(all_jan)` usable Januaries**:
+*Topic and station.* The data describe precipitation (rain plus melted snow) at the weather station of the
+**University of Idaho experiment station**, about 2 miles east of Moscow. NOAA's station records give its
+location as 46.728° N, 116.956° W, at an elevation of 2,634 ft (802.8 m). The station's daily record in NOAA's
+archive begins on November 7, 1893
+([station record](https://www.ncei.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USC00106152/detail);
+[station history](https://www.ncei.noaa.gov/access/homr/services/station/search?qid=COOP:106152&headersOnly=false)).
+
+*Who collects the data, and how.*
+
+* **The program.** This is a National Weather Service **Cooperative Observer Program (COOP)** station. The
+  COOP program was formally created in 1890, and today more than 8,700 volunteers record the daily
+  temperature and 24-hour precipitation
+  ([NWS COOP overview](https://www.weather.gov/coop/Overview)).
+* **The gauge.** Precipitation is measured in the **Standard 8-inch Rain Gauge**. Its funnel sends the water
+  into a narrow measuring tube whose cross-section is one-tenth the size of the funnel, so the water stands
+  10 times deeper than the rain that fell. That makes it possible to read the amount to the nearest
+  **0.01 inch** ([NWS: the 8-inch gauge](https://www.weather.gov/iwx/coop_8inch)).
+* **Snow.** In winter, the funnel and tube are removed and snow collects in the outer can. It is then
+  melted and measured as water, so a January total counts snow by its **water content**, not its depth.
+* **Daily recording.** The observer reads the gauge once a day at a fixed time (currently 5 PM at this
+  station) and records the 24-hour total:
+  * 0.00 if nothing fell
+  * "T" (trace) if there was too little to measure
+  * "M" for a missed day, with the accumulated amount recorded when the gauge is next read
+
+  ([NWS Co-op Quick Reference Guide](https://www.weather.gov/media/mrx/coop_pdf/CooperativeWeatherObservationQuickReferenceGuide.pdf)).
+
+*How the monthly file is produced.*
+
+* **Archiving and monthly totals.** The daily reports are quality-checked and archived by NOAA's National
+  Centers for Environmental Information (NCEI) in the Global Historical Climatology Network–Daily
+  (GHCN-Daily). The **Global Summary of the Month (GSOM)** adds up each month's daily values to give the
+  monthly total, `PRCP`
+  ([GSOM documentation](https://www.ncei.noaa.gov/pub/data/cdo/documentation/gsom_doc.pdf)).
+* **The attribute field.** Each total comes with a `PRCP_ATTRIBUTES` field. Its second entry is a
+  measurement flag:
+  * **`a`** means the month's total includes missing days, so it is probably too low.
+  * **`T`** means only a trace fell.
+
+  Its last entry says which archive the value came from:
+  * `0` means NOAA's Cooperative Summary of the Day dataset (DSI-3200), used for every month through 2010.
+  * `7` means WxCoder, the online system that COOP observers use to submit their reports, used from 2011 on.
+
+*What the file contains.* The file I downloaded has **1,574 rows**, one per month from December 1893 to
+February 2026, and five columns: `STATION`, `NAME`, `DATE`, `PRCP` (inches) and `PRCP_ATTRIBUTES`. In the
+whole file:
+
+* 3 months carry the `a` flag: December 1893, February 1894 and January 1963.
+* 18 carry `T`.
+* 1 has no value at all.
+
+*How the original collectors sampled.* They did not sample: the station records **every** day. So the file
+is a complete record of one location, not a random sample of places or days. I kept only the January rows,
+which gives **`r nrow(all_jan)` usable Januaries**:
 
 * `r nrow(hist_jan)` "historical" Januaries from 1895 to 1990.
 * `r sum(all_jan$era == "recent")` "recent" Januaries from 1991 to 2026.
-* I dropped 1894 (no value), 1927 (no record) and 1963. NOAA flags the 1963 total as including missing
-  days, so it would undercount that month.
+* I dropped:
+  * **1894**: no value.
+  * **1927**: no record in the file.
+  * **1963**: it carries the `a` flag, so its total is missing some days and would undercount that month.
 
 ## 2. Question and Hypothesis Formulation
 
@@ -74,7 +144,7 @@ it used to be?
   * **Wet:** between the median and Q3.
   * **Very wet:** above Q3.
 
-  By construction, one quarter of historical Januaries fall in each class. So if recent Januaries behave
+  By construction, about one quarter of historical Januaries fall in each class. So if recent Januaries behave
   like historical ones, about one quarter of them should land in each class too.
 * **January total precipitation** in inches (quantitative). This is the measurement the classes are built
   from. I describe it in Part 4, but I do not test it directly.
@@ -83,26 +153,76 @@ it used to be?
 proportions (25% each), the same as the historical record. The alternative is that at least one class is
 more or less common now than it used to be.
 
-### Building the classes
+### From a continuous measurement to ordered categories
 
-I entered the `r nrow(hist_jan)` historical January totals into the stat-tools **Statistic Calculator**. It
-computes quartiles with R's default (type 7) definition.
+A January's total precipitation is a **quantitative, continuous** measurement. My question, though, is
+about *how often* Januaries are dry or wet compared with the past, not about the average amount. To answer
+it, I turned each total into an **ordered category**.
+
+**Step 1: choose the reference period.** I set the cutoffs using only the **historical** Januaries
+(1895–1990) and never my sample. If I set the cutoffs from the same Januaries I am testing, they would split
+my sample evenly by construction, and the test could never find a difference.
+
+**Step 2: choose how many classes, and where to cut.** I used the historical **quartiles**, which gives four
+classes that each contain about a quarter of historical Januaries.
+
+* **Why equal-probability classes.** They make the null hypothesis simple ("25% in each class") and give
+  every class the same expected count (Part 5).
+* **Why four classes.** Four classes separate "very wet" from merely "wet", which is the difference my
+  question is about.
+* **The alternative.** NOAA's Climate Prediction Center uses **terciles** instead. It splits its 30-year
+  reference period into the driest third, the middle third and the wettest third, called "below",
+  "near" and "above" normal, each with a 1/3 chance
+  ([CPC outlook explanation](https://www.cpc.ncep.noaa.gov/products/predictions/erf_info.php?outlook=814&var=p)).
+  I chose quartiles over terciles because they give one more level of detail at the extremes. With my
+  sample size, the expected counts would still be large enough (24 × ¼ = 6 per class).
+
+I entered the `r nrow(hist_jan)` historical January totals into the stat-tools **Statistic Calculator**,
+which computes quartiles with R's default (type 7) definition:
 
 ```{r, fig.cap="**Figure 1.** Statistic Calculator summary and boxplot of the 94 historical January totals (inches), 1895–1990. The quartiles set the class cutoffs.", out.width="80%", fig.align="center"}
 include_graphics("example_projects/figs/p1_historical_summary.png")
 ```
 
-This gives the class cutoffs Q1 = 1.8425 in, median = 2.685 in, and Q3 = 3.65 in:
+This gives the cutoffs **Q1 = 1.8425 in**, **median = 2.685 in**, and **Q3 = 3.65 in**.
+
+**Step 3: fix the boundary rule.** Every total must land in exactly one class, so I made each class include
+its lower cutoff and exclude its upper cutoff. For example, a January with exactly 3.65 in counts as
+"Very wet". Two historical Januaries fall exactly on Q3, but none of my sampled Januaries sit on any cutoff.
 
 ```{r}
+h_counts <- table(cut(hist_jan$jan_prcp_in, c(-Inf, 1.8425, 2.685, 3.65, Inf), right = FALSE))
 cut_tab <- data.frame(
   Class = class_levels,
-  `January total (inches)` = c("less than 1.8425", "1.8425 to 2.685", "2.685 to 3.65", "more than 3.65"),
-  `Share of historical Januaries` = rep("25%", 4),
+  `January total (inches)` = c("less than 1.8425", "1.8425 up to (not including) 2.685",
+                               "2.685 up to (not including) 3.65", "3.65 or more"),
+  `Historical Januaries` = sprintf("%d (%.1f%%)", as.integer(h_counts), 100 * as.integer(h_counts) / sum(h_counts)),
   check.names = FALSE)
-kable(cut_tab, caption = "**Table 1.** Precipitation classes, defined from the 1895–1990 quartiles.") %>%
+kable(cut_tab, align = c("l", "l", "r"),
+      caption = "**Table 1.** Precipitation classes, defined from the 1895–1990 quartiles, and how many of the 94 historical Januaries fall in each.") %>%
   kable_styling(full_width = FALSE, bootstrap_options = c("striped", "condensed"))
 ```
+
+The historical classes are close to, but not exactly, 25% each. There are two reasons: 94 cannot be
+split into four equal groups, and two Januaries sit exactly on the Q3 cutoff. I still use 25% as the
+benchmark, because that is what "the historical quartiles" means. The small unevenness is one of the
+limitations in Part 6.
+
+**Step 4: classify each sampled January.** Here are three of my sampled years, classified step by step:
+
+| Year | January total | Comparison with the cutoffs | Class |
+|:---|---:|:---|:---|
+| 2023 | 1.45 in | 1.45 < 1.8425 (below Q1) | Very dry |
+| 2017 | 2.55 in | 1.8425 ≤ 2.55 < 2.685 (between Q1 and the median) | Dry |
+| 2003 | 6.47 in | 6.47 ≥ 3.65 (at or above Q3) | Very wet |
+
+**What kind of variable this creates, and what it costs.**
+
+* **An ordinal variable.** The result is **categorical and ordinal**: Very dry < Dry < Wet < Very wet.
+* **Information is lost.** A 3.66-inch January and a 6.87-inch January are both simply "Very wet". The
+  categories keep *where* each January falls relative to history, but not *how far* inside its class it is.
+* **Why that loss is acceptable here.** My question is about how often each kind of January happens, and I
+  still report the actual totals in Part 4.
 
 ## 3. Sampling
 
@@ -133,9 +253,12 @@ include_graphics("example_projects/figs/p1_srs.png")
   the *benchmark* that defines the classes, the way a published value would in a one-sample test.
 
 **Possible bias.** The SRS itself is unbiased. However, my population is small, so 24 of 36 is a large
-fraction (67%), and my conclusions only describe 1991–2026 at this one station. A bigger worry is the station
-record itself. Over 130 years the gauge or its exact location may have changed. If that happened, old and new
-measurements may not be perfectly comparable, and no sampling method can fix that.
+fraction (67%), and my conclusions only describe 1991–2026 at this one station.
+
+A bigger worry is the station record itself, and no sampling method can fix it. NOAA's station history shows the
+station **moved 3.2 miles east-southeast in December 1960**. That falls inside my historical reference period,
+so Januaries before and after the move were measured at slightly different spots. If the two sites catch
+different amounts of precipitation, old and new totals are not perfectly comparable.
 
 **(D) The sample** is listed in full in [Appendix A](#appendix-a-the-sample).
 
@@ -279,8 +402,8 @@ $p = 0.029 < \alpha = 0.05$. So I **reject $H_0$**.
 **(B) Interpretation.** In plain language, recent Moscow Januaries do not fall into the dry-to-wet classes the
 way Januaries did from 1895 to 1990. The contributions in Table 4 show *where* the difference comes from:
 
-* **"Very wet" contributes the most (4.17 of the 9.00).** Almost half of the sampled recent Januaries (11 of
-  24) were wetter than 75% of historical Januaries, when only about 6 would be expected.
+* **"Very wet" contributes the most (4.17 of the 9.00).** Almost half of the sampled recent Januaries
+  (11 of 24) were wetter than 75% of historical Januaries, when only about 6 would be expected.
 * **"Very dry" contributes the next most (2.67).** Only 2 of the 24 were drier than 75% of historical
   Januaries, instead of about 6.
 
@@ -296,10 +419,15 @@ from looking at the table. The test does not tell us *why* the pattern changed.
 * **Small sample and a fixed benchmark.** With only 24 Januaries, the result rests on a handful of years.
   Also, the cutoffs are quartiles *estimated* from 94 historical Januaries, but the test treats them as
   known exactly.
+* **Classes are only approximately 25%.** Historically the four classes held 24, 23, 22 and 25 Januaries
+  (Table 1), not exactly a quarter each. The difference is small next to what I observed (2, 8, 3 and 11
+  out of 24).
+* **A station move.** The station moved 3.2 miles in December 1960 (Part 3). If the new site is naturally a
+  little wetter or drier, part of the change I found could come from the move rather than from the weather.
+  A careful follow-up would redo the analysis using only Januaries after 1960 as the reference period.
 * **Scope.** The conclusion applies to this one station and to 1991–2026. It does not say how Idaho as a
-  whole has changed. It also cannot say whether the change comes from climate trends, from natural swings
-  (El Niño/La Niña from year to year, the Pacific Decadal Oscillation from decade to decade), or from changes
-  in how the station measured precipitation.
+  whole has changed. It also cannot say whether the change comes from climate trends or from natural swings
+  (El Niño/La Niña from year to year, the Pacific Decadal Oscillation from decade to decade).
 * **Large sampling fraction.** I sampled 24 of only 36 recent Januaries. The formulas in class assume a
   very large population, so my test is, if anything, slightly conservative.
 * **Class sizes.** The "Wet" class has a small observed count (3), and a couple of different sampled years
@@ -316,8 +444,9 @@ kable(app, align = c("r", "r", "r", "r", "l"),
   kable_styling(full_width = FALSE, bootstrap_options = c("striped", "condensed"))
 ```
 
-<details>
-<summary>**Appendix B: the 94 historical January totals used to set the class cutoffs** (click to expand)</summary>
+## Appendix B: the historical Januaries
+
+These are the 94 historical January totals I used to set the class cutoffs in Part 2.
 
 ```{r}
 h <- hist_jan[order(hist_jan$year), c("year", "jan_prcp_in")]
@@ -329,8 +458,6 @@ names(wide) <- rep("Year: inches", ncols)
 kable(wide, caption = "**Table B1.** January total precipitation (in), Moscow U of I station, 1895–1990 (1927 and 1963 not available).") %>%
   kable_styling(full_width = FALSE, bootstrap_options = c("condensed"), font_size = 13)
 ```
-
-</details>
 
 ## AI Use Disclosure
 

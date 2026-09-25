@@ -1123,26 +1123,26 @@ following terms and concepts.</p>
 <p><span class="math inline">\(\bf (9)\)</span> Answer the following
 probability questions, and show your work.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>A fair coin is flipped 3 times. What is the probability that
-<u>at least</u> one head is observed? (hint: it is easier to find the
-probability of the complement first)</p></li>
+<li><p>A fair coin is flipped 3 times. Show how to compute the
+probability that <u>at least</u> one head is observed. (hint: it is
+easier to find the probability of the complement first)</p></li>
 <li><p>In a class of 30 students, 8 students are in band, 15 students
 play a sport, and 5 students are both in band and play a sport. Let
 <span class="math inline">\(A\)</span> be the event that a student is in
 band and let <span class="math inline">\(B\)</span> be the event that a
 student plays a sport. Draw a Venn diagram that models this situation,
-filling in the number of students in each region. What is the
-probability that a student is in band <strong>or</strong> plays a
-sport?</p></li>
+filling in the number of students in each region, then show how to
+compute the probability that a student is in band <strong>or</strong>
+plays a sport.</p></li>
 <li><p>A standard deck of 52 cards contains four suits (Hearts,
 Diamonds, Clubs, and Spades). Each suit contains 13 cards: 9 numbered
-cards, 3 face cards, and an Ace. A single card is drawn at random. What
-is the probability that it is a numbered card? What is the probability
-that it is the Ace of Spades?</p></li>
+cards, 3 face cards, and an Ace. A single card is drawn at random. Show
+how to compute the probability that it is a numbered card, and the
+probability that it is the Ace of Spades.</p></li>
 <li><p>An urn contains 5 green balls, 7 red balls, and 4 yellow balls.
-Two balls are selected at random <strong>with replacement</strong>. What
-is the probability that the first ball is yellow and the second ball is
-red?</p></li>
+Two balls are selected at random <strong>with replacement</strong>. Show
+how to compute the probability that the first ball is yellow and the
+second ball is red.</p></li>
 <li><p>Repeat part (d), but now assume the two balls are selected
 <strong>without replacement</strong>. Explain why your answer
 changed.</p></li>
@@ -1150,11 +1150,33 @@ changed.</p></li>
 <span class="math inline">\(P(R) = 0.1\)</span>, the probability that it
 is windy is <span class="math inline">\(P(W) = 0.2\)</span>, and the
 probability that it is cloudy is <span class="math inline">\(P(C) =
-0.7\)</span>. Assume these three weather events are independent. What is
-the probability that a given day is rainy, cloudy, <strong>and</strong>
-windy?</p></li>
+0.7\)</span>. Assume these three weather events are independent. Show
+how to compute the probability that a given day is rainy, cloudy,
+<strong>and</strong> windy.</p></li>
 </ol>
-<p><span class="math inline">\(\bf (10)\)</span> Consider a survey of
+<p><span class="math inline">\(\bf (10)\)</span> A single fair coin is
+flipped once. Let <span class="math inline">\(X = 1\)</span> if the flip
+comes up heads and <span class="math inline">\(X = 0\)</span> if it
+comes up tails. A random variable with only these two outcomes is called
+a <strong>Bernoulli</strong> random variable, and its probability of
+success is <span class="math inline">\(p = P(X = 1)\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Write down the probability distribution of <span class="math inline">\(X\)</span> as a table of values and their
+probabilities.</p></li>
+<li><p>Show how to compute the mean of <span class="math inline">\(X\)</span> using <span class="math inline">\(\mu =
+\sum_x x\cdot P(x)\)</span>, and confirm that it equals <span class="math inline">\(p\)</span>.</p></li>
+<li><p>Show how to compute the variance of <span class="math inline">\(X\)</span> using <span class="math inline">\(\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)\)</span>,
+and confirm that it equals <span class="math inline">\(p(1-p)\)</span>.</p></li>
+<li><p>Now suppose the coin is bent so that it comes up heads only <span class="math inline">\(30\%\)</span> of the time. Show how to compute the
+mean and the variance of <span class="math inline">\(X\)</span> for this
+bent coin.</p></li>
+<li><p>A <strong>binomial</strong> random variable counts the number of
+successes in <span class="math inline">\(n\)</span> independent
+Bernoulli trials. If the fair coin from parts (a)-(c) is flipped 10
+times, show how to compute the mean and the variance of the number of
+heads. (hint: <span class="math inline">\(E[X] = np\)</span> and <span class="math inline">\(Var[X] = np(1-p)\)</span>)</p></li>
+</ol>
+<p><span class="math inline">\(\bf (11)\)</span> Consider a survey of
 tree volume. Suppose that in the population of trees, <span class="math inline">\(10\%\)</span> have a volume of 10 cubic feet,
 <span class="math inline">\(20\%\)</span> have a volume of 20 cubic
 feet, <span class="math inline">\(30\%\)</span> have a volume of 30
@@ -1215,18 +1237,15 @@ Tree Volume (cubic feet)
 <ol style="list-style-type: lower-alpha">
 <li><p>Verify that the four probabilities in <strong>Table 2</strong>
 form a valid probability distribution.</p></li>
-<li><p>Confirm that <span class="math inline">\(X\)</span> has a mean of
-<span class="math inline">\(\mu = 30\)</span> cubic feet by computing
-<span class="math inline">\(\mu = \sum_x x\cdot P(x)\)</span>
-yourself.</p></li>
-<li><p>Confirm that <span class="math inline">\(X\)</span> has a
-standard deviation of <span class="math inline">\(\sigma = 10\)</span>
-cubic feet by computing <span class="math inline">\(\sigma^2 = \sum_x
-(x-\mu)^2\cdot P(x)\)</span> and then taking the square root.</p></li>
+<li><p>Show how to compute the mean of <span class="math inline">\(X\)</span> using <span class="math inline">\(\mu =
+\sum_x x\cdot P(x)\)</span>, and confirm that it equals <span class="math inline">\(\mu = 30\)</span> cubic feet.</p></li>
+<li><p>Show how to compute the variance of <span class="math inline">\(X\)</span> using <span class="math inline">\(\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)\)</span>,
+then take the square root and confirm that the standard deviation is
+<span class="math inline">\(\sigma = 10\)</span> cubic feet.</p></li>
 <li><p>Is <span class="math inline">\(X\)</span>, as described here, a
 discrete or a continuous random variable? Explain.</p></li>
 </ol>
-<p><span class="math inline">\(\bf (11)\)</span> Answer the following,
+<p><span class="math inline">\(\bf (12)\)</span> Answer the following,
 showing the formula you used and the numbers you substituted into
 it.</p>
 <ol style="list-style-type: lower-alpha">
@@ -1235,18 +1254,42 @@ of catching a fish on every cast, and each cast is independent of the
 others. Using the binomial probability mass function <span class="math display">\[ P(X = k) = \frac{n!}{k!(n-k)!}\cdot p^k \cdot
 (1-p)^{n-k} \]</span> show how to compute the probability that she
 catches exactly 2 fish in her next 5 casts.</p></li>
-<li><p>For the angler in part (a), what is the mean number of fish she
-expects to catch in 5 casts, and what is the variance? (hint: <span class="math inline">\(E[X] = np\)</span> and <span class="math inline">\(Var[X] = np(1-p)\)</span>)</p></li>
+<li><p>For the angler in part (a), show how to compute the mean number
+of fish she expects to catch in 5 casts, and the variance. (hint: <span class="math inline">\(E[X] = np\)</span> and <span class="math inline">\(Var[X] = np(1-p)\)</span>)</p></li>
 <li><p>A small campus coffee stand serves an average of 3 customers per
 10-minute period. Let <span class="math inline">\(X\)</span> be the
 number of customers in a 10-minute period, and assume <span class="math inline">\(X\)</span> follows a Poisson distribution with
 <span class="math inline">\(\lambda = 3\)</span>. Using <span class="math display">\[ P(X = k) = \frac{\lambda^k\cdot
-e^{-\lambda}}{k!} \]</span> compute the probability that
+e^{-\lambda}}{k!} \]</span> show how to compute the probability that
 <strong>no</strong> customers arrive in a given 10-minute
 period.</p></li>
-<li><p>For the coffee stand in part (c), compute the probability that
-<strong>at most one</strong> customer arrives in a given 10-minute
-period.</p></li>
+<li><p>For the coffee stand in part (c), show how to compute the
+probability that <strong>at most one</strong> customer arrives in a
+given 10-minute period.</p></li>
+</ol>
+</div>
+<div id="part-iv-standard-error-and-the-margin-of-error" class="section level1">
+<h1>Part IV: Standard Error and the Margin of Error</h1>
+<p><span class="math inline">\(\bf (13)\)</span> A population has a mean
+of <span class="math inline">\(\mu = 75\)</span> and a standard
+deviation of <span class="math inline">\(\sigma = 12\)</span>. You
+repeatedly draw random samples of <span class="math inline">\(n =
+36\)</span> observations from this population, and each time you record
+the sample mean <span class="math inline">\(\bar{x}\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Show how to compute the <strong>standard error</strong> of the
+sample mean, <span class="math inline">\(SE =
+\sigma/\sqrt{n}\)</span>.</p></li>
+<li><p>A classmate insists that the standard error should be 12, because
+that is the standard deviation of the population. Explain the mistake in
+their reasoning.</p></li>
+<li><p>Using the <span class="math inline">\(\pm 2\cdot SE\)</span> rule
+from class, show how to compute the <strong>margin of error</strong> for
+<span class="math inline">\(\bar{x}\)</span>, and give the interval it
+defines around <span class="math inline">\(\mu\)</span>.</p></li>
+<li><p>Show how to compute the standard error if the sample size is
+increased to <span class="math inline">\(n = 144\)</span>. What happens
+to the margin of error, and why?</p></li>
 </ol>
 <div style="page-break-after: always;"></div>
 </div>

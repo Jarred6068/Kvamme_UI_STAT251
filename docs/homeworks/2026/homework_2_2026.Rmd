@@ -301,20 +301,34 @@ Define each of the following terms and concepts.
 $\bf (9)$
 Answer the following probability questions, and show your work.
 
-(a) A fair coin is flipped 3 times. What is the probability that <u>at least</u> one head is observed? (hint: it is easier to find the probability of the complement first)
+(a) A fair coin is flipped 3 times. Show how to compute the probability that <u>at least</u> one head is observed. (hint: it is easier to find the probability of the complement first)
 
-(b) In a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Draw a Venn diagram that models this situation, filling in the number of students in each region. What is the probability that a student is in band **or** plays a sport?
+(b) In a class of 30 students, 8 students are in band, 15 students play a sport, and 5 students are both in band and play a sport. Let $A$ be the event that a student is in band and let $B$ be the event that a student plays a sport. Draw a Venn diagram that models this situation, filling in the number of students in each region, then show how to compute the probability that a student is in band **or** plays a sport.
 
-(c) A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards: 9 numbered cards, 3 face cards, and an Ace. A single card is drawn at random. What is the probability that it is a numbered card? What is the probability that it is the Ace of Spades?
+(c) A standard deck of 52 cards contains four suits (Hearts, Diamonds, Clubs, and Spades). Each suit contains 13 cards: 9 numbered cards, 3 face cards, and an Ace. A single card is drawn at random. Show how to compute the probability that it is a numbered card, and the probability that it is the Ace of Spades.
 
-(d) An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random **with replacement**. What is the probability that the first ball is yellow and the second ball is red?
+(d) An urn contains 5 green balls, 7 red balls, and 4 yellow balls. Two balls are selected at random **with replacement**. Show how to compute the probability that the first ball is yellow and the second ball is red.
 
 (e) Repeat part (d), but now assume the two balls are selected **without replacement**. Explain why your answer changed.
 
-(f) On a given day in Moscow, Idaho, the probability that it rains is $P(R) = 0.1$, the probability that it is windy is $P(W) = 0.2$, and the probability that it is cloudy is $P(C) = 0.7$. Assume these three weather events are independent. What is the probability that a given day is rainy, cloudy, **and** windy?
+(f) On a given day in Moscow, Idaho, the probability that it rains is $P(R) = 0.1$, the probability that it is windy is $P(W) = 0.2$, and the probability that it is cloudy is $P(C) = 0.7$. Assume these three weather events are independent. Show how to compute the probability that a given day is rainy, cloudy, **and** windy.
 
 
 $\bf (10)$
+A single fair coin is flipped once. Let $X = 1$ if the flip comes up heads and $X = 0$ if it comes up tails. A random variable with only these two outcomes is called a **Bernoulli** random variable, and its probability of success is $p = P(X = 1)$.
+
+(a) Write down the probability distribution of $X$ as a table of values and their probabilities.
+
+(b) Show how to compute the mean of $X$ using $\mu = \sum_x x\cdot P(x)$, and confirm that it equals $p$.
+
+(c) Show how to compute the variance of $X$ using $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$, and confirm that it equals $p(1-p)$.
+
+(d) Now suppose the coin is bent so that it comes up heads only $30\%$ of the time. Show how to compute the mean and the variance of $X$ for this bent coin.
+
+(e) A **binomial** random variable counts the number of successes in $n$ independent Bernoulli trials. If the fair coin from parts (a)-(c) is flipped 10 times, show how to compute the mean and the variance of the number of heads. (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
+
+
+$\bf (11)$
 Consider a survey of tree volume. Suppose that in the population of trees, $10\%$ have a volume of 10 cubic feet, $20\%$ have a volume of 20 cubic feet, $30\%$ have a volume of 30 cubic feet, and $40\%$ have a volume of 40 cubic feet. Let $X$ denote the volume of a randomly selected tree, and assume every tree has an equal chance of being selected. The probability distribution of $X$ is given in **Table 2** below.
 
 ```{r, echo=FALSE, warning=F, message=F}
@@ -333,27 +347,42 @@ kable(export_tbl(df, 'hw2_tree_volume_dist.csv', digits = 2,
 
 (a) Verify that the four probabilities in **Table 2** form a valid probability distribution.
 
-(b) Confirm that $X$ has a mean of $\mu = 30$ cubic feet by computing $\mu = \sum_x x\cdot P(x)$ yourself.
+(b) Show how to compute the mean of $X$ using $\mu = \sum_x x\cdot P(x)$, and confirm that it equals $\mu = 30$ cubic feet.
 
-(c) Confirm that $X$ has a standard deviation of $\sigma = 10$ cubic feet by computing $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$ and then taking the square root.
+(c) Show how to compute the variance of $X$ using $\sigma^2 = \sum_x (x-\mu)^2\cdot P(x)$, then take the square root and confirm that the standard deviation is $\sigma = 10$ cubic feet.
 
 (d) Is $X$, as described here, a discrete or a continuous random variable? Explain.
 
 
-$\bf (11)$
+$\bf (12)$
 Answer the following, showing the formula you used and the numbers you substituted into it.
 
 (a) An angler has a $40\%$ chance of catching a fish on every cast, and each cast is independent of the others. Using the binomial probability mass function
 \[ P(X = k) = \frac{n!}{k!(n-k)!}\cdot p^k \cdot (1-p)^{n-k} \]
 show how to compute the probability that she catches exactly 2 fish in her next 5 casts.
 
-(b) For the angler in part (a), what is the mean number of fish she expects to catch in 5 casts, and what is the variance? (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
+(b) For the angler in part (a), show how to compute the mean number of fish she expects to catch in 5 casts, and the variance. (hint: $E[X] = np$ and $Var[X] = np(1-p)$)
 
 (c) A small campus coffee stand serves an average of 3 customers per 10-minute period. Let $X$ be the number of customers in a 10-minute period, and assume $X$ follows a Poisson distribution with $\lambda = 3$. Using
 \[ P(X = k) = \frac{\lambda^k\cdot e^{-\lambda}}{k!} \]
-compute the probability that **no** customers arrive in a given 10-minute period.
+show how to compute the probability that **no** customers arrive in a given 10-minute period.
 
-(d) For the coffee stand in part (c), compute the probability that **at most one** customer arrives in a given 10-minute period.
+(d) For the coffee stand in part (c), show how to compute the probability that **at most one** customer arrives in a given 10-minute period.
+
+
+# Part IV: Standard Error and the Margin of Error
+
+
+$\bf (13)$
+A population has a mean of $\mu = 75$ and a standard deviation of $\sigma = 12$. You repeatedly draw random samples of $n = 36$ observations from this population, and each time you record the sample mean $\bar{x}$.
+
+(a) Show how to compute the **standard error** of the sample mean, $SE = \sigma/\sqrt{n}$.
+
+(b) A classmate insists that the standard error should be 12, because that is the standard deviation of the population. Explain the mistake in their reasoning.
+
+(c) Using the $\pm 2\cdot SE$ rule from class, show how to compute the **margin of error** for $\bar{x}$, and give the interval it defines around $\mu$.
+
+(d) Show how to compute the standard error if the sample size is increased to $n = 144$. What happens to the margin of error, and why?
 
 
 \newpage
