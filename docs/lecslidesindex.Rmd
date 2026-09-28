@@ -1,5 +1,5 @@
 ---
-title: "Download lecture slides here"
+title: "Lecture Slides"
 output: html_document
 ---
 
@@ -8,269 +8,113 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <!--
-  STAGED RELEASE - only the Week 2 through Week 4 slides and the Fall 2026 Week 5
-  Lecture 9 deck are live. Every other week is wrapped in an HTML comment below
-  and does not render.
+  STAGED RELEASE, Fall 2026. One entry per lecture, added as each lecture is
+  delivered (or the day before). Dates and topics follow Course_Schedule.Rmd,
+  which is the source of truth; when the schedule shifts, update this page too.
 
-  To reveal a week, delete the two marker lines around it: the opening line
-  that reads "HIDDEN - Week N" and the closing marker on its own line just
-  after that week's last entry. Then re-render. To hide a week again, wrap it
-  back up the same way. Keep each week in its own block so they can be
-  released one at a time.
+  To add the next lecture: export its deck to
+      docs/lecture_slides/Week N/WeekN_LectureM_Slides_<month>_<day>_2026.pdf/.pptx
+  and copy the previous lecture's block below. Paths contain a space
+  ("Week 6"), so write it as %20 in the href.
 
-  This hides the LINKS only. The .pdf and .pptx files themselves still sit in
-  docs/lecture_slides/ and are still served by GitHub Pages, so anyone with a
-  direct URL (or an earlier deploy, or the git history) can still reach them.
-  If a deck must be genuinely unavailable, remove the file, not just the link.
+  The Week folders still hold the Spring 2024 decks (files ending _2024) as
+  source material. They do not match this term's lecture numbering - the 2024
+  "Lecture 12" is a different lecture from Fall 2026 Lecture 12 - so never link
+  them here. The Week 1-2 decks were rebuilt for Fall 2026 and renamed to their
+  2026 dates on Sept 27, 2026.
 
-  One trap: a comment ends at the FIRST closing marker, so never let two
-  hyphens followed by a right angle bracket appear inside a hidden block. It
-  would end the comment early and dump the rest of the page out as raw text.
-  The week sections below are plain links and headings, so none of them
-  contain that sequence today - check before pasting anything new in.
+  Only the links are staged: every file in docs/lecture_slides/ is still served
+  by GitHub Pages to anyone who has its URL.
 -->
 
-<!-- HIDDEN - Week 1
-## Week 1
+Slides for **Fall 2026, STAT 251 Section 01**, posted as each lecture is given. Each lecture has a PDF
+for viewing and printing, and the original PowerPoint file. Dates and topics follow the
+[Course Schedule](Course_Schedule.html).
 
-### Lecture 1
-<a href="./lecture_slides/Week 1/Week1_Lecture1_Slides_1_10_2024.pdf">Download File</a>
-as .pdf
+# Week 1
 
-<a href="./lecture_slides/Week 1/Week1_Lecture1_Slides_1_10_2024.pptx">Download File</a>
-as powerpoint
+### Lecture 1 &middot; Wednesday, August 26
+Introduction: the big picture
 
-### Lecture 2 
-<a href="./lecture_slides/Week 1/Week1_Lecture2_Slides_1_12_2024.pdf">Download File</a>
-as .pdf
+<a href="./lecture_slides/Week%201/Week1_Lecture1_Slides_8_26_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%201/Week1_Lecture1_Slides_8_26_2026.pptx">Slides (PowerPoint)</a>
 
-<a href="./lecture_slides/Week 1/Week1_Lecture2_Slides_1_12_2024.pptx">Download File</a>
-as powerpoint
+### Lecture 2 &middot; Friday, August 28
+Describing and visualizing distributions
 
--->
+<a href="./lecture_slides/Week%201/Week1_Lecture2_Slides_8_28_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%201/Week1_Lecture2_Slides_8_28_2026.pptx">Slides (PowerPoint)</a>
 
 # Week 2
 
-### Lecture 3
-<a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pdf">Download File</a>
-as .pdf
+### Lecture 3 &middot; Monday, August 31
+Distributions and frequency tables
 
-<a href="./lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pptx">Download File</a>
-as powerpoint
+<a href="./lecture_slides/Week%202/Week2_Lecture3_Slides_8_31_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%202/Week2_Lecture3_Slides_8_31_2026.pptx">Slides (PowerPoint)</a>
 
-### Lecture 4
-<a href="./lecture_slides/Week 2/Week2_Lecture4_slides_1_19_2024.pdf">Download File</a>
-as .pdf
+### Lecture 4 &middot; Wednesday, September 2
+Shape of a distribution; dot plots, stem-and-leaf plots, histograms
 
-<a href="./lecture_slides/Week 2/Week2_Lecture4_slides_1_19_2024.pptx">Download File</a>
-as powerpoint
+<a href="./lecture_slides/Week%202/Week2_Lecture4_Slides_9_2_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%202/Week2_Lecture4_Slides_9_2_2026.pptx">Slides (PowerPoint)</a>
 
-### Lecture 5
-<a href="./lecture_slides/Week 2/Week2_Lecture5_slides_1_19_2024.pdf">Download File</a>
-as .pdf
+### Lecture 5 &middot; Friday, September 4
+Measures of location and position
 
-<a href="./lecture_slides/Week 2/Week2_Lecture5_slides_1_19_2024.pptx">Download File</a>
-as powerpoint
+<a href="./lecture_slides/Week%202/Week2_Lecture5_Slides_9_4_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%202/Week2_Lecture5_Slides_9_4_2026.pptx">Slides (PowerPoint)</a>
 
 # Week 3
 
-### Lecture 6
-<a href="./lecture_slides/Week 3/Week3_Lecture6_Slides_9_9_2026.pdf">Download File</a>
-as .pdf
+*Monday, September 7: Labor Day, no class.*
 
-<a href="./lecture_slides/Week 3/Week3_Lecture6_Slides_9_9_2026.pptx">Download File</a>
-as powerpoint
+### Lecture 6 &middot; Wednesday, September 9
+Measures of spread, boxplot
 
-### Lecture 7
-<a href="./lecture_slides/Week 3/Week3_Lecture7_Slides_9_11_2026.pdf">Download File</a>
-as .pdf
+<a href="./lecture_slides/Week%203/Week3_Lecture6_Slides_9_9_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%203/Week3_Lecture6_Slides_9_9_2026.pptx">Slides (PowerPoint)</a>
 
-<a href="./lecture_slides/Week 3/Week3_Lecture7_Slides_9_11_2026.pptx">Download File</a>
-as powerpoint
+### Lecture 7 &middot; Friday, September 11
+Cumulative distributions
+
+<a href="./lecture_slides/Week%203/Week3_Lecture7_Slides_9_11_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%203/Week3_Lecture7_Slides_9_11_2026.pptx">Slides (PowerPoint)</a>
 
 # Week 4
 
-### Lecture 8
-<a href="./lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pdf">Download File</a>
-as .pdf
+### Lecture 8 &middot; Monday, September 14
+Sampling designs: simple random, stratified, and cluster sampling
 
-<a href="./lecture_slides/Week 4/Week4_Lecture8_Slides_9_14_2026.pptx">Download File</a>
-as powerpoint
+<a href="./lecture_slides/Week%204/Week4_Lecture8_Slides_9_14_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%204/Week4_Lecture8_Slides_9_14_2026.pptx">Slides (PowerPoint)</a>
 
-# Week 5
-
-### Lecture 9
-<a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_9_21_2026.pptx">Download File</a>
-as powerpoint
-
-### Lecture 10
-<a href="./lecture_slides/Week 5/Week5_Lecture10_Slides_9_23_2026.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 5/Week5_Lecture10_Slides_9_23_2026.pptx">Download File</a>
-as powerpoint
-
-### Lecture 11
-<a href="./lecture_slides/Week 5/Week5_Lecture11_Slides_9_25_2026.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 5/Week5_Lecture11_Slides_9_25_2026.pptx">Download File</a>
-as powerpoint
-
-<!--
-  HIDDEN - Weeks 5 through 14.
-
-  Week 5 Lecture 9 (Fall 2026) is live above; the 2024 Week 5 links below stay
-  hidden.
-
-  The old Week3_Lecture4/5_*_2024 and Week4_Lecture6_*_2024 links that used to
-  sit here are gone. Those decks are still on disk as source material, but they
-  are 2024 files that no longer match the lecture numbering, so nothing should
-  link them.
+*Wednesday, September 16: Exam 1 review. Friday, September 18: Exam 1.*
 
 # Week 5
 
-### Lecture 7
-<a href="./lecture_slides/Week 5/Week5_Lecture7_Slides_2_5_2024.pdf">Download File</a>
-as .pdf
+### Lecture 9 &middot; Monday, September 21
+Sampling designs continued: systematic, stratified, and cluster sampling; sampling and nonsampling error
 
-<a href="./lecture_slides/Week 5/Week5_Lecture7_Slides_2_5_2024.pptx">Download File</a>
-as powerpoint
+<a href="./lecture_slides/Week%205/Week5_Lecture9_Slides_9_21_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%205/Week5_Lecture9_Slides_9_21_2026.pptx">Slides (PowerPoint)</a>
 
-### Lecture 8
-<a href="./lecture_slides/Week 5/Week5_Lecture8_Slides_2_7_2024.pdf">Download File</a>
-as .pdf
+### Lecture 10 &middot; Wednesday, September 23
+Course project discussion; basics of experimental design, association vs. causation
 
-<a href="./lecture_slides/Week 5/Week5_Lecture8_Slides_2_7_2024.pptx">Download File</a>
-as powerpoint
+<a href="./lecture_slides/Week%205/Week5_Lecture10_Slides_9_23_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%205/Week5_Lecture10_Slides_9_23_2026.pptx">Slides (PowerPoint)</a>
 
-### Lecture 9
-<a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_2_9_2024.pdf">Download File</a>
-as .pdf
+### Lecture 11 &middot; Friday, September 25
+Experimental design concluded: the three designs, randomization and research ethics; introduction to the normal distribution
 
-<a href="./lecture_slides/Week 5/Week5_Lecture9_Slides_2_9_2024.pptx">Download File</a>
-as powerpoint
+<a href="./lecture_slides/Week%205/Week5_Lecture11_Slides_9_25_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%205/Week5_Lecture11_Slides_9_25_2026.pptx">Slides (PowerPoint)</a>
 
 # Week 6
 
-### Lecture 10
-<a href="./lecture_slides/Week 6/Week6_Lecture10_Slides_2_12_2024.pdf">Download File</a>
-as .pdf
+### Lecture 12 &middot; Monday, September 28
+The normal distribution, z-scores, identifying outliers, transformations
 
-<a href="./lecture_slides/Week 6/Week6_Lecture10_Slides_2_12_2024.pptx">Download File</a>
-as powerpoint
-
-### Lecture 11
-<a href="./lecture_slides/Week 6/Week6_Lecture11_Slides_2_14_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 6/Week6_Lecture11_Slides_2_14_2024.pptx">Download File</a>
-as powerpoint
-
-### Lecture 12
-<a href="./lecture_slides/Week 6/Week6_Lecture12_Slides_2_16_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 6/Week6_Lecture12_Slides_2_16_2024.pptx">Download File</a>
-as powerpoint
-
-# Week 7
-
-### Lecture 13
-<a href="./lecture_slides/Week 7/Week7_Lecture13_Slides_2_21_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 7/Week7_Lecture13_Slides_2_21_2024.pptx">Download File</a>
-as powerpoint
-
-### Lecture 14
-<a href="./lecture_slides/Week 7/Week7_Lecture14_Slides_2_23_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 7/Week7_Lecture14_Slides_2_23_2024.pptx">Download File</a>
-as powerpoint
-
-# Week 8
-
-### Lecture 15
-<a href="./lecture_slides/Week 8/Week8_Lecture15_Slides_2_26_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 8/Week8_Lecture15_Slides_2_26_2024.pptx">Download File</a>
-as powerpoint
-
-### Lecture 16
-<a href="./lecture_slides/Week 8/Week8_Lecture16_Slides_2_28_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 8/Week8_Lecture16_Slides_2_28_2024.pptx">Download File</a>
-as powerpoint
-
-
-### Lecture 17
-<a href="./lecture_slides/Week 8/Week8_Lecture17_Slides_3_1_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 8/Week8_Lecture17_Slides_3_1_2024.pptx">Download File</a>
-as powerpoint
-
-# Week 9
-
-### Lecture 18
-<a href="./lecture_slides/Week 9/Week9_Lecture18_Slides_3_4_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 9/Week9_Lecture18_Slides_3_4_2024.pptx">Download File</a>
-as powerpoint
-
-# Week 11 - 12
-
-### Lecture 20 - 21
-<a href="./lecture_slides/Week 11/Week11_Lecture20_Slides_3_20_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 11/Week11_Lecture20_Slides_3_20_2024.pptx">Download File</a>
-as powerpoint
-
-
-### Lecture 22
-
-<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_27_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 12/Week12_Lecture22_Slides_3_27_2024.pptx">Download File</a>
-as powerpoint
-
-### Lecture 23
-
-<a href="./lecture_slides/Week 12/Week12_Lecture23_Slides_3_29_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 12/Week12_Lecture23_Slides_3_29_2024.pptx">Download File</a>
-as powerpoint
-
-# Week 13
-
-### Lecture 24
-
-<a href="./lecture_slides/Week 13/Week13_Lecture24_Slides_4_1_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 13/Week13_Lecture24_Slides_4_1_2024.pptx">Download File</a>
-as powerpoint
-
-### Lecture 25
-
-<a href="./lecture_slides/Week 13/Week13_Lecture25_Slides_4_3_2024.pdf">Download File</a>
-as .pdf
-
-<a href="./lecture_slides/Week 13/Week13_Lecture25_Slides_4_3_2024.pptx">Download File</a>
-as powerpoint
-
-# Week 14
-### Lecture 26
-
--->
+<a href="./lecture_slides/Week%206/Week6_Lecture12_Slides_9_28_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%206/Week6_Lecture12_Slides_9_28_2026.pptx">Slides (PowerPoint)</a>

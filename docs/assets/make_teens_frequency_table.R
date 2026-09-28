@@ -1,5 +1,5 @@
 #Builds the teen cell-phone frequency table shown on slide 6 of the Week 2
-#Lecture 3 deck (docs/lecture_slides/Week 2/Week2_Lecture3_Slides_1_19_2024.pptx).
+#Lecture 3 deck (docs/lecture_slides/Week 2/Week2_Lecture3_Slides_8_31_2026.pptx).
 #
 #The slide used to carry a 757x295 px picture of this table with no total row,
 #stretched to 6.95 in wide (about 109 dpi, which is why it looked soft). This

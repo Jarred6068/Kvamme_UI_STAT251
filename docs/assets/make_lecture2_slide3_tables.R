@@ -1,5 +1,5 @@
 #Builds the two table images used on slide 3 of the Week 1 Lecture 2 deck
-#(docs/lecture_slides/Week 1/Week1_Lecture2_Slides_1_12_2024.pptx).
+#(docs/lecture_slides/Week 1/Week1_Lecture2_Slides_8_28_2026.pptx).
 #
 #Slide 3 illustrates the population/sample distinction with two pictures: the
 #whole population with the sampled rows marked, and those sampled rows on their
