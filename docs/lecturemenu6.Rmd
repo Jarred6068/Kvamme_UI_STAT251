@@ -639,6 +639,13 @@ ggarrange(pop_plot, samp_plot, nrow = 1)
 * The **sampling distribution** of a statistic is the distribution of its values over all possible
   samples of the same size $n$ from the same population.
 
+The name is new, but the idea is not. In Week 3 we saw that a sample mean moves from one sample to
+the next (**sampling variation**) and measured that movement with the **standard error**,
+$SE = s/\sqrt{n}$: the standard error is simply the standard deviation of the sampling distribution.
+And the histograms in "A bigger sample does not fix bias" in the Weeks 4-5 notes, 5,000 simple random
+samples against 5,000 Rec Center surveys, *were* sampling distributions: each bar counted how many of
+the repeated surveys gave a particular estimate.
+
 The two histograms are drawn on the same axis on purpose. Compare them:
 
 * **Center.** The sample means are centered at `r fmt(mean(xbar), 2)` inches, right on $\mu$ (the red

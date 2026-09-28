@@ -6,99 +6,180 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+<!--
+  READING LIST, Fall 2026 (rewritten Sept 28 2026).
+
+  Weeks follow Course_Schedule.Rmd, which is the date source of truth - if a
+  topic moves there, move its reading here. Page numbers are BOOK pages of
+  OpenStax Introductory Statistics 2e (the PDF in assets/, where PDF page = book
+  page + 12), taken from its table of contents. The 2024 list used page numbers
+  from an older edition that no longer match.
+
+  Topics with no textbook section (the sign test, Cramer's V, McNemar's test,
+  Fisher's exact test, measures of association) point to the lecture notes.
+  ANOVA (Chapter 13) lost its class day in the Sept 22/24 schedule revisions but
+  stays listed as optional reading.
+-->
+
 # Reading
 
-## Week 1-2
-Chapter 1: Sections 1.1 - 1.3 p. 5 - 34
+All reading is from the course textbook, [Illowsky and Dean, *Introductory Statistics 2e* (OpenStax)](https://openstax.org/details/books/introductory-statistics-2e).
+A copy of the PDF is also [here](../assets/introductory-statistics-2e_-_WEB.pdf). Page numbers are the
+printed page numbers of the book; in the PDF, add 12 to find the page.
 
-Chapter 2: Sections 2.1 - 2.2 p. 67 - 86
+## Week 1
+*Introduction; describing and visualizing distributions*
 
-## Week 2-4
-Chapter 2: Sections 2.3 - 2.8 p. 87 - 174
+Chapter 1: Sections 1.1 - 1.3, p. 5 - 33
 
-## Week 4 - 5
-Chapter 1: Sections 1.4 - 1.6 p. 35 - 66
+## Week 2
+*Distributions and frequency tables; shape; dot plots, stem-and-leaf plots and histograms; measures of location*
 
-Chapter 6: Section 6.1 p. 365 - 370
+Chapter 2: Sections 2.1 - 2.3, p. 66 - 93
+
+Chapter 2: Sections 2.5 - 2.6, p. 98 - 106
+
+## Week 3
+*Measures of spread, boxplots, cumulative distributions*
+
+Chapter 2: Section 2.4, p. 94 - 97
+
+Chapter 2: Sections 2.7 - 2.8, p. 107 - 119
+
+(Cumulative relative frequency is in Section 1.3, p. 26 - 33.)
+
+## Weeks 4 - 5
+*Sampling designs, sampling and nonsampling error, experimental design, research ethics*
+
+Chapter 1: Section 1.2, p. 10 - 25
+
+Chapter 1: Sections 1.4 - 1.6, p. 34 - 42
+
+## Week 6
+*The normal distribution, z-scores and outliers; sampling distributions and margin of error; introduction to probability and random variables*
+
+Chapter 6: Sections 6.1 - 6.2, p. 335 - 346
+
+Chapter 7: Section 7.1, p. 365 - 369 (the sampling distribution of the mean and its standard error)
+
+Chapter 3: Sections 3.1 - 3.5, p. 167 - 195
+
+Chapter 4: Sections 4.1 - 4.2, p. 227 - 236
+
+## Week 7
+*Discrete and continuous probability distributions; the central limit theorem*
+
+Chapter 4: Section 4.3 (binomial), p. 237 - 241, and Section 4.6 (Poisson), p. 250 - 254
+
+Chapter 5: Section 5.1, p. 291 - 294
+
+Chapter 7: Sections 7.1 - 7.3, p. 365 - 380
+
+## Week 8
+*More on sampling distributions; introduction to confidence intervals*
+
+Chapter 8: Section 8.1, p. 405 - 415
+
+## Week 9
+*Confidence intervals for a proportion and for a mean; choosing a sample size*
+
+Chapter 8: Sections 8.1 - 8.3, p. 405 - 426
+
+## Week 10
+*Significance tests and P-values; tests for a proportion and for a mean*
+
+Chapter 9: Sections 9.1 - 9.6, p. 461 - 485
+
+## Week 11
+*Composite hypotheses; confidence intervals and tests; types of error and power; introduction to two-sample tests*
+
+Chapter 9: Section 9.2 (Type I and Type II errors), p. 464 - 465
+
+Chapter 10: Introduction, p. 511
+
+The sign test is not in the textbook; see the lecture notes for that week.
+
+## Week 12
+*Comparing two independent proportions or means; dependent samples; introduction to categorical data*
+
+Chapter 10: Sections 10.1 - 10.5, p. 512 - 535
+
+Chapter 11: Section 11.1, p. 563 - 564
+
+## Week 13
+*Goodness-of-fit tests and tests of independence*
+
+Chapter 11: Sections 11.2 - 11.5, p. 565 - 583
+
+## Week 15
+*Cramer's V, McNemar's test, Fisher's exact test, measures of association; correlation and simple linear regression*
+
+Chapter 12: Sections 12.1 - 12.3, p. 617 - 630
+
+Cramer's V, McNemar's test, Fisher's exact test and measures of association are not in the textbook;
+see the lecture notes for that week.
+
+## Week 16
+*The coefficient of determination, tests for the slope, checking assumptions*
+
+Chapter 12: Sections 12.4 - 12.6, p. 631 - 643
+
+Optional: Chapter 13 (one-way ANOVA), Sections 13.1 - 13.3, p. 679 - 689. ANOVA no longer has a class
+day this term, but it is a natural next step after regression.
+
+# Extra Problems
+
+***These problems are not required, but they are recommended for practice.*** Answers to the
+odd-numbered problems are in the Solutions section at the end of each chapter.
+
+<!--
+  Problem numbers were checked against the 2e PDF on Sept 28 2026: every number in
+  the 2024 list lands on the same topic in 2e, so only the page numbers and the
+  weeks changed. Chapter 1 practice 12-15 and homework 71-79 were added because the
+  2024 picks (40-41, 87-90) are all experimental design, none sampling methods.
+  Chapters 8-12 are listed as "all problems", as the 2024 list did for 8-10.
+-->
+
+## Weeks 4 - 5
+
+* Practice problems chapter 1 (p. 45 - 49): problems 12 - 15 (sampling methods), 40 and 41
+  (experimental design)
+* Homework problems chapter 1 (p. 50 - 58): problems 71 - 79 (sampling methods), 87 - 90
 
 ## Week 6
 
-Chapter 3: All sections p. 175 - 244
+* Practice problems chapter 6 (p. 351 - 354): problems 1 - 59
+* Homework problems chapter 6 (p. 355 - 359): problems 60 - 61, 63 - 88
+* Practice problems chapter 3 (p. 201 - 205): problems 1 - 35, 36 - 37, 39, 44 - 45, 48 - 49,
+  51 - 53, 54 - 57
+* Homework problems chapter 3 (p. 206 - 214): problems 66 - 79, 81 - 84, 87 - 89, 91, 94 - 99,
+  101 - 110, 112
+* Review exercises, Appendix A (p. 719): the Chapter 3 review problems
 
-Chapter 4: Sections 4.1 - 4.3, 4.6 p.243 - 258 and p.266 - 270 
+## Week 7
 
-## Week 7 - 8
+* Practice problems chapter 4 (p. 264 - 269): problems 1 - 44, 56 - 68
+* Homework problems chapter 4 (p. 270 - 280): problems 69 - 103, 117 - 129
+* Practice problems chapter 5 (p. 316 - 323): problems 3 - 15
+* Homework problems chapter 5 (p. 324 - 328): problems 72 - 73
+* Practice problems chapter 7 (p. 389 - 391): all problems (1 - 60)
+* Homework problems chapter 7 (p. 392 - 398): all problems (61 - 97)
 
-Chapter 5: Section 5.1 p.311 - 315
+## Weeks 8 - 10
 
-Chapter 6: Sections 6.2 - 6.4, p.371 - 398
+* Practice problems chapter 8 (p. 434 - 439): all problems
+* Homework problems chapter 8 (p. 440 - 448): all problems
+* Practice problems chapter 9 (p. 488 - 490): all problems
+* Homework problems chapter 9 (p. 491 - 501): all problems
 
-Chapter 7: All Sections p. 399 - 442
+## Weeks 11 - 13
 
-## Week 9 - 12
+* Practice problems chapter 10 (p. 537 - 541): all problems
+* Homework problems chapter 10 (p. 542 - 551): all problems
+* Practice problems chapter 11 (p. 590 - 595): all problems
+* Homework problems chapter 11 (p. 596 - 607): all problems
 
-Chapter 8: All sections p. 443 - 504
+## Weeks 15 - 16
 
-Chapter 9: All sections p. 505 - 566
-
-## Week 13
-
-Chapter 10: All sections p. 567 - 620
- 
- 
-# Extra Problems
-
-***These problems are not required, but they are recommended for practice.***
-
-Week 1-4, Appendix A: Chapter 3 Review problems
- 
-Week 4 - 5:
-
-  * Practice problems chapter 1 p. 52 problems 40 and 41
-
-  * Homework problems chapter 1 p. 59 - 60 problems 87 - 90
-
-  * Practice problems chapter 6 p. 384 - 386. problems 1-42
-  
-Week 6: 
-
-  * Practice problems chapter 3 p. 215 - 219, problems 1-35, 36-37, 39, 44-45, 48-49,51-53, 54-57
-  
-  * Homework problems chapter 3, problems 66-79, 81-84, 87-89, 91, 94-99, 101-110, 112
-  
-Week 7:
-
-  * Practice problems chapter 4 p. 281 - 287, problems 1-44, 56-68
-  
-  * Homework problems chapter 4 p. 288 - 299, problems 69-103, 117-129
-  
-  * Practice problems chapter 5 p. 345 - 346, problems 3-15
-  
-  * Homework problems chapter 5 p. 352, problems 72-73
-
-  
-Week 8:
-
-  * Practice problems chapter 6 p. 386 - 388, problems 43 - 59
-
-  * Homework problems chapter 6, problems 60-61, 63-88
-  
-  * Practice problems chapter 7 p. 426 - 430, All problems
-
-  * Homework problems chapter 7 p. 430 - 438, All problems 
-  
-:
-
-  * Practice problems chapter 8 all problems
-
-  * Homework problems chapter 8 all problems
-  
-  * Practice problems chapter 9 all problems
-
-  * Homework problems chapter 9 all problems 
-  
-:
-
-  * Practice problems chapter 10 all problems
-
-  * Homework problems chapter 10 all problems
+* Practice problems chapter 12 (p. 651 - 657): all problems
+* Homework problems chapter 12 (p. 658 - 666): all problems
