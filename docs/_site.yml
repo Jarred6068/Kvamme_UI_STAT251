@@ -44,8 +44,8 @@ navbar:
             href: lecturemenu4.html
 #         - text: 'Week 5'
 #           href: lecturemenu5.html
-#         - text: 'Week 6'
-#           href: lecturemenu6.html
+          - text: 'Week 6'
+            href: lecturemenu6.html
 #         - text: 'Week 7'
 #           href: lecturemenu7.html
 #         - text: 'Week 8'

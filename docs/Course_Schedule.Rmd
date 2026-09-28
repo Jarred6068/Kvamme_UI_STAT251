@@ -131,6 +131,15 @@ outlined below. Any changes will be announced in class and posted here.**
       and measures of association to Dec 2.
   The Exam 3 study guide and the Exam 2 and Exam 3 review problems were NOT
   re-scoped - check them before those exams.
+
+  TOPIC MOVE, Sept 27 2026. No dates changed. Identifying outliers moved from
+  Wednesday Sept 30 back to Monday Sept 28, because the outlier rule is the
+  empirical rule applied once more and splitting it off left Lecture 12 without
+  its natural conclusion; Homework 2 also needs it before Sept 30. Sept 28 now
+  covers the normal distribution, z-scores, outliers and transformations, and
+  Sept 30 keeps sampling distributions, margin of error and statistical
+  significance. If Lecture 12 runs short, the transformation block (its slides
+  20-23) is the clean thing to carry into Sept 30 - not the outlier rule.
 -->
 
 
@@ -250,12 +259,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 28, 2026</td>
-  <td>The normal distribution, z-scores, transformations</td>
+  <td>The normal distribution, z-scores, identifying outliers, transformations</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 30, 2026</td>
-  <td>Identifying outliers, margin of error, statistical significance</td>
+  <td>Sampling distributions, margin of error, statistical significance</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

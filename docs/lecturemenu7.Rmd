@@ -277,3 +277,123 @@ where $b$ is the base length and $h$ is the height of the triangle. The base run
 * The mean $\mu$ and variance $\sigma^2$ of a continuous random variable cannot (usually) be defined or computed without calculus but their interpretations are the same as for discrete distributions
 
 
+
+<!--
+  MOVED HERE Sept 28 2026 from the 2024 Week 6 page, when that page was rewritten
+  for Fall 2026. It sets up the central limit theorem (Fri Oct 9), so it belongs in
+  Week 7. Still 2024 material awaiting its Fall 2026 revision.
+-->
+
+### Deriving sampling distributions
+
+Two important probability distributions we encounter often in the statistics are the population distribution of a random variable and the sampling distribution of a statistic
+
+* The **population distribution** is the probability distribution for the outcomes of a random variable
+
+* The **sampling distribution** is the probability distribution for a statistic
+
+For a discrete random variable, the sampling distribution of a statistic can be derived through the following steps:
+
+ 1. Enumerate all possible samples of size $n$ that can be drawn from the population. For each sample, calculate the sample mean, sample variance, or any other relevant statistic of interest.
+ 
+ 2. Determine the probability associated with each possible sample statistic. This involves using the population distribution to calculate the probability of obtaining each value of the sample statistic.
+ 
+ 3. Assemble the probabilities for each sample statistic to create the sampling distribution. This distribution describes the probabilities of observing different values of the sample statistic across all possible samples of size $n$.
+ 
+ 
+**Example**: Texas hold'em is a gambling game which starts with each player receiving two cards. Here is the population distribution for the number of aces dealt in a two-card hand
+
+\[X = \text{Number of aces in a hand of poker} \]
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(X = c("0", "1", "2"),
+                      Probability = c(0.559, 0.382, 0.059))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+Derive the sampling distribution for the number of aces in two consecutive hands of texas hold'em. To derive the sampling distribution we must define the sample space for the number of aces in two hands. The possibilities are given below (here we assume the two hands are independent, so the joint probabilities are the products of the individual-hand probabilities).
+
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Number of Aces in two hands` = c(0:4),
+                      `Outcomes giving result` = c('$(0,0) = \\color{red}{1}$', 
+                                                   '$(0,1), (1,0) = \\color{red}{2}$', 
+                                                   '$(0, 2), (2,0), (1,1) = \\color{red}{3}$',
+                                                   '$(1,2), (2,1) = \\color{red}{2}$', 
+                                                   '$(2,2) = \\color{red}{1}$'),
+                      Probability = c('$0.559\\times 0.559 = \\color{red}{0.312}$',
+                                      '$2(0.559\\times 0.382) = \\color{red}{0.427}$',
+                                      '$2(0.559\\times 0.059) + (0.382\\times 0.382) = \\color{red}{0.212}$',
+                                      '$2(0.382\\times 0.059) = \\color{red}{0.045}$',
+                                      '$0.059\\times 0.059 = \\color{red}{0.003}$'))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+Therefore we can summarize the sampling distribution of the number $Y$ of Aces in two hands of texas hold'em
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Number of Aces in two hands` = c(0:4),
+                      Probability = c(0.312, 0.427, 0.212, 0.045, 0.003))
+
+kable(df, format = 'html', col.names = c('$Y$', '$P(Y)$'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+**Example** Consider the probability distribution of the random variable $X$. Let $X$ represent the number of Coho salmon caught in an afternoon by a fly fisherman fishing the Clearwater river.
+
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(X = c("0", "1", "2"),
+                      Probability = c(0.589, 0.232, 0.179))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+Derive the sampling distribution for the mean number of fish caught from a random sample of $n = 3$ afternoons of fishing
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Mean Number of Salmon Caught` = c(0.00, 0.33, 0.67, 1.00, 1.33, 1.67, 2.00),
+                      `Outcomes giving result` = c('$(0,0,0) = \\color{red}{1}$', 
+                                                   '$(1,0,0), (0,1,0),(0,0,1) = \\color{red}{3}$',
+                                                   '$(1,1,0), (1,0,1), (0,1,1), (2,0,0), (0,2,0),(0,0,2) = \\color{red}{6}$',
+                                                   '$(1,1,1), (2,1,0), (2,0,1), (0,2,1), (1,2,0), (1,0,2), (0,1,2) = \\color{red}{7}$',
+                                                   '$(2,1,1), (1,2,1), (1,1,2), (2,2,0), (2,0,2),(0,2,2) = \\color{red}{6}$',
+                                                   '$(1,2,2), (2,1,2),(2,2,1) = \\color{red}{3}$',
+                                                   '$(2,2,2) = \\color{red}{1}$'),
+                      
+                      Probability = c('$0.589^3 = \\color{red}{0.204}$',
+                                      '$3(0.589^2\\times0.232) = \\color{red}{0.241}$',
+                                      '$3(0.232^2\\times0.589) + 3(0.589^2\\times 0.179) = \\color{red}{0.281}$',
+                                      '$0.232^3 + 6(0.589\\times 0.232\\times 0.179) = \\color{red}{0.159}$',
+                                      '$3(0.232^2\\times0.179) + 3(0.179^2\\times 0.589) = \\color{red}{0.085}$',
+                                      '$3(0.179^2\\times0.232) = \\color{red}{0.022}$',
+                                      '$0.179^3 = \\color{red}{0.006}$'))
+
+kable(df, format = 'html', digits = 2, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+Therefore we can summarize the sampling distribution of the mean number $\bar{X}$ of Coho salmon caught over a random sample of $n = 3$ afternoons of fishing
+
+```{r, echo=FALSE, warning=F, message=FALSE}
+df = cbind.data.frame(`Mean Number of Salmon Caught` = c(0.00, 0.33, 0.67, 1.00, 1.33, 1.67, 2.00),
+                      Probability = c(0.204, 0.241, 0.281, 0.159, 0.085, 0.022, 0.006))
+
+kable(df, format = 'html', col.names = c('$\\bar{X}$', '$P(\\bar{X})$'), digits = 3, row.names = F, booktabs = T, escape = F)%>%
+  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+```
+
+
+
+
+
+
+
+
