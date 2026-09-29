@@ -114,7 +114,13 @@ Experimental design concluded: the three designs, randomization and research eth
 # Week 6
 
 ### Lecture 12 &middot; Monday, September 28
-The normal distribution, z-scores, identifying outliers, transformations
+The normal distribution: density curves, the standard normal, z-scores, the empirical rule
 
 <a href="./lecture_slides/Week%206/Week6_Lecture12_Slides_9_28_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%206/Week6_Lecture12_Slides_9_28_2026.pptx">Slides (PowerPoint)</a>
+
+### Lecture 13 &middot; Wednesday, September 30
+The normal distribution continued: identifying outliers, normal quantiles, transformations; sampling distributions, margin of error, statistical significance
+
+<a href="./lecture_slides/Week%206/Week6_Lecture13_Slides_9_30_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%206/Week6_Lecture13_Slides_9_30_2026.pptx">Slides (PowerPoint)</a>

@@ -140,6 +140,17 @@ outlined below. Any changes will be announced in class and posted here.**
   Sept 30 keeps sampling distributions, margin of error and statistical
   significance. If Lecture 12 runs short, the transformation block (its slides
   20-23) is the clean thing to carry into Sept 30 - not the outlier rule.
+
+  CARRY-OVER, Sept 29 2026. No dates changed. Lecture 12 (Mon Sept 28) was
+  expanded to introduce the normal distribution properly and stopped after the
+  empirical rule. Everything after it - reading sigma off a curve, the exam
+  example, identifying outliers, normal quantiles / the z-table / pnorm, and
+  transformations - moved into Lecture 13 (Wed Sept 30), in front of the
+  sampling distributions, margin of error and statistical significance that
+  were already planned for that day (lecture_slides/Week 6/
+  Week6_Lecture13_Slides_9_30_2026.pptx). Friday Oct 2 is unchanged, so nothing
+  later shifts. If Lecture 13 runs short, the margin-of-error block (its last
+  five slides before the summary) is what carries into Oct 2.
 -->
 
 
@@ -259,12 +270,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>September 28, 2026</td>
-  <td>The normal distribution, z-scores, identifying outliers, transformations</td>
+  <td>The normal distribution: density curves, the standard normal, z-scores, the empirical rule</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>September 30, 2026</td>
-  <td>Sampling distributions, margin of error, statistical significance</td>
+  <td>The normal distribution continued: identifying outliers, normal quantiles, transformations; sampling distributions, margin of error, statistical significance</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

@@ -54,13 +54,15 @@ tab <- function(df, ...) kable(df, format = 'html', row.names = FALSE, escape = 
   SCOPE OF THIS PAGE (Fall 2026 rewrite, Sept 28 2026).
 
   Week 6 is three lectures (see Course_Schedule.Rmd, the date source of truth):
-    Mon Sept 28  Lecture 12  the normal distribution, the empirical rule, z-scores,
-                             identifying outliers, transformations
+    Mon Sept 28  Lecture 12  the normal distribution, density curves, the standard
+                             normal, z-scores, the empirical rule (delivered through
+                             "The empirical rule", its last slide after the Sept 29 trim)
                              lecture_slides/Week 6/Week6_Lecture12_Slides_9_28_2026.pptx
-                             (its first slides are the four normal-distribution slides
-                             Lecture 11 reached on Fri Sept 25)
-    Wed Sept 30  Lecture 13  sampling distributions, standard error, margin of error,
-                             statistical significance
+    Wed Sept 30  Lecture 13  the rest of Lecture 12 (reading sigma off a curve, the exam
+                             example, outliers, normal quantiles, transformations), then
+                             sampling distributions, standard error, margin of error,
+                             statistical significance; opens with a Q&A review
+                             lecture_slides/Week 6/Week6_Lecture13_Slides_9_30_2026.pptx
     Fri Oct 2    Lecture 14  introduction to probability, random variables, discrete
                              probability distributions
 
