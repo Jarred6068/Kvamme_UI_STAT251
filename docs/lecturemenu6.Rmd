@@ -659,6 +659,19 @@ The two histograms are drawn on the same axis on purpose. Compare them:
   a smooth, symmetric bell. That is not luck: it is the central limit theorem, which we meet in
   Week 7.
 
+> **A note on the center.** A sampling distribution is centered at the population parameter
+> **only if the statistic is unbiased**. A statistic is **unbiased** when the mean of its sampling
+> distribution equals the parameter it estimates. The sample mean $\bar{x}$ from a random sample is
+> unbiased, which is why the histogram above sits right on $\mu$. It is not automatic:
+>
+> * **a biased design** moves the whole sampling distribution. The Rec Center surveys in the
+>   Weeks 4-5 notes piled up around 75% when the truth was 40%, however many times they were repeated;
+> * **some statistics are biased even with random sampling.** Computing the sample variance by
+>   dividing by $n$ instead of $n - 1$ (Week 3) gives a sampling distribution centered slightly
+>   *below* $\sigma^2$.
+>
+> Bias moves the center of the sampling distribution; the standard error describes its spread.
+
 ## Standard error
 
 The spread of a sampling distribution gets its own name, because it is exactly the "how far off
@@ -1005,7 +1018,8 @@ theorem.
 
 * A statistic varies from sample to sample. Its **sampling distribution** is its distribution over
   all possible samples of size $n$.
-* The sampling distribution of $\bar{x}$ is centered at $\mu$ and has **standard error**
+* A sampling distribution is centered at the parameter only if the statistic is **unbiased**. For a
+  random sample, $\bar{x}$ is unbiased, so its sampling distribution is centered at $\mu$ and has **standard error**
   $SE = \sigma/\sqrt{n}$. Quadrupling $n$ halves the standard error.
 * **Margin of error** $= 2 \cdot SE$. A result more than 2 standard errors from what chance alone would
   give is **statistically significant**, which is not the same as important.
