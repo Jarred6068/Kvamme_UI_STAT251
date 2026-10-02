@@ -60,11 +60,17 @@ tab <- function(df, ...) kable(df, format = 'html', row.names = FALSE, escape = 
                              lecture_slides/Week 6/Week6_Lecture12_Slides_9_28_2026.pptx
     Wed Sept 30  Lecture 13  the rest of Lecture 12 (reading sigma off a curve, the exam
                              example, outliers, normal quantiles, transformations), then
-                             sampling distributions, standard error, margin of error,
-                             statistical significance; opens with a Q&A review
+                             sampling distributions, standard error, margin of error
+                             (delivered through the margin-of-error example); opens with
+                             a Q&A review and three review problems
                              lecture_slides/Week 6/Week6_Lecture13_Slides_9_30_2026.pptx
-    Fri Oct 2    Lecture 14  introduction to probability, random variables, discrete
-                             probability distributions
+    Fri Oct 2    Lecture 14  statistical significance (carried from Lecture 13), then
+                             probability: the rules, random variables, discrete
+                             probability distributions, expected value
+                             lecture_slides/Week 6/Week6_Lecture14_Slides_10_2_2026.pptx
+  From Lecture 13 on, the slides use all 379 students in heights.csv as the running
+  data set (x-bar 67.1, s 4.12); the notes below still use the 262 women for the
+  normal-distribution and sampling-distribution sections.
 
   Sources. This page rewrites the 2024 notes that used to be spread over two pages:
   "The normal distribution and z-scores", "Density Curves", the empirical rule,
@@ -757,101 +763,44 @@ variation chance alone would produce.
 
 # Introduction to probability
 
-Wednesday's argument rested on statements like "about 95% of sample means land within 2 standard
-errors". Those are statements about **chance**, and statistics needs a precise language for chance.
-That language is probability. When data are produced by random sampling or random assignment, the
-outcomes follow the laws of probability, and that is what lets us say how often a method would give
-the right answer if we used it many times.
+## Why probability?
 
-## Random phenomena and long-run frequency
+Look again at two statements from this week. On Wednesday: *about 95% of samples land within 2
+standard errors of $\mu$*. And in the significance example: *a sample that far out would be very
+unlikely to happen by chance*. But we only ever take **one** sample. So what do "95%" and "unlikely"
+actually mean?
 
-Tossing a coin, rolling a die and choosing a simple random sample are all **random** phenomena: the
-result of any one trial can't be predicted, but there is a predictable pattern over many trials.
+They describe what would happen if we repeated the random sampling many, many times. Statements
+about the long run of a chance process are statements of **probability**, and statistics needs a
+precise language for them.
 
-* The **probability** of an outcome is its long-run relative frequency: the proportion of times it
-  would occur if the process were repeated a very large number of times. A probability is always
-  between 0 and 1, inclusive.
+## Quantifying uncertainty
 
-This long-run pattern is guaranteed by the **law of large numbers**: as the number of independent
-repetitions grows, the relative frequency of an outcome gets closer and closer to its probability.
-The plot below follows the running proportion of heads over 5,000 simulated tosses of a fair coin.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=10, fig.cap='The running proportion of heads in 5,000 simulated fair-coin tosses. The red line is P(Heads) = 0.5.'}
-set.seed(432)
-flips <- rbinom(5000, 1, 0.5)
-lln <- data.frame(trial = 1:5000, prop = cumsum(flips) / (1:5000))
-ggplot(lln, aes(x = trial, y = prop)) +
-  geom_line(linewidth = 0.8) +
-  geom_hline(yintercept = 0.5, color = 'red', linewidth = 1) +
-  scale_x_log10(breaks = c(1, 10, 100, 1000, 5000), labels = c('1', '10', '100', '1,000', '5,000')) +
-  coord_cartesian(ylim = c(0, 1)) +
-  theme_classic2() +
-  labs(x = 'Number of tosses (log scale)', y = 'Proportion of heads') +
-  theme(axis.text = element_text(size = 12), axis.title = element_text(size = 14))
-```
-
-In the first few tosses the proportion jumps all over the place: after 4 tosses, 3 heads (75%) is
-not at all unusual. Over thousands of tosses it settles down to 0.5. The statistician Karl Pearson
-actually did this by hand, tossing a coin 24,000 times and getting 12,012 heads, a proportion of
-0.5005. Probability describes the long run; it says very little about any single toss.
+* **Randomization.** We use chance on purpose, by randomly sampling subjects from a population in a
+  survey or randomly assigning subjects to treatments in an experiment, to avoid bias.
+* **The price: uncertainty.** By chance, the statistics from a sample are not exactly the parameters
+  of the population.
+* **The payoff.** Because chance chose the sample, the results follow the laws of mathematical
+  probability, so we can measure how far off we are likely to be.
 
 ## The language of probability
 
-* A **chance experiment** (or trial) is any process with an uncertain result, such as rolling a die.
-* An **outcome** is one possible result.
-* The **sample space** $S$ is the set of all possible outcomes. For one roll of a six-sided die,
-  $S = \{1, 2, 3, 4, 5, 6\}$.
-* An **event** is any collection of outcomes, written with a capital letter. For example
-  $A = \{\text{roll an even number}\} = \{2, 4, 6\}$. Its probability is written $P(A)$.
+* A **random trial** is a process or experiment with a set of well-defined possible outcomes. What
+  makes it *random* is that more than one outcome is possible: rolling a die, flipping a coin, or
+  choosing a simple random sample.
+* The **sample space** $S$ is the collection of all possible outcomes. For one roll of a six-sided
+  die, $S = \{1, 2, 3, 4, 5, 6\}$.
+* An **event** is any possible outcome of a random trial, written with a capital letter. For example
+  $A$ = roll an even number $= \{2, 4, 6\}$.
+* The **probability** of an event $A$, written $P(A)$, is a number between 0 and 1 that measures how
+  likely $A$ is: the proportion of times $A$ occurs in a very long series of repetitions of the
+  random trial. A probability of 0 means $A$ never happens; 1 means it always does.
 
 When every outcome in the sample space is **equally likely**,
 
-$$P(A) = \frac{\text{number of outcomes in } A}{\text{total number of outcomes in } S}$$
+$$P(A) = \frac{\text{number of ways } A \text{ can happen}}{\text{total number of outcomes}}$$
 
-so for a fair die $P(\text{even}) = 3/6 = 0.5$.
-
-## The rules of probability
-
-Four rules hold for every probability model.
-
-1. **Probabilities are between 0 and 1:** $0 \leq P(A) \leq 1$. An event with probability 0 never
-   happens; one with probability 1 always does.
-2. **The whole sample space has probability 1:** the probabilities of all the outcomes add to 1.
-3. **The complement rule:** the complement $A'$ ("not $A$") is everything in $S$ that is not in $A$,
-   and $P(A') = 1 - P(A)$.
-4. **The addition rule:** the event $A \text{ OR } B$ happens if $A$ happens, $B$ happens, or both.
-   $$P(A \text{ OR } B) = P(A) + P(B) - P(A \text{ AND } B)$$
-   The subtraction stops the outcomes in both events from being counted twice. Two events are
-   **mutually exclusive** if they cannot happen together, so $P(A \text{ AND } B) = 0$ and the rule
-   becomes simply $P(A) + P(B)$.
-
-And one rule for events that don't influence each other:
-
-5. **The multiplication rule for independent events:** two events are **independent** if knowing
-   that one happened does not change the probability of the other. Then
-   $$P(A \text{ AND } B) = P(A) \cdot P(B)$$
-
-Mutually exclusive and independent are **not** the same thing. Mutually exclusive events can't both
-happen, so knowing one happened tells you the other *didn't*, and that makes them strongly dependent.
-
-### Example: one die, two dice
-
-Roll a fair six-sided die.
-
-* $P(\text{not a six}) = 1 - P(\text{six}) = 1 - 1/6 = 5/6$, by the complement rule.
-* "Roll a 1" and "roll a 6" are mutually exclusive, so $P(1 \text{ OR } 6) = 1/6 + 1/6 = 1/3$.
-* "Roll an even number" and "roll a number greater than 3" can happen together (on a 4 or a 6), so
-  $$P(\text{even OR} > 3) = \frac{3}{6} + \frac{3}{6} - \frac{2}{6} = \frac{4}{6}$$
-  Check it directly: the outcomes are $\{2, 4, 5, 6\}$, four of the six.
-
-Now roll the die twice. The two rolls don't influence each other, so they are independent:
-
-* $P(\text{six on both rolls}) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}$.
-* $P(\text{at least one six})$ is easiest through the complement. "At least one six" is the
-  complement of "no sixes at all":
-  $$P(\text{at least one six}) = 1 - P(\text{no six, no six}) = 1 - \frac{5}{6} \cdot \frac{5}{6} = \frac{11}{36} \approx 0.31$$
-
-"At least one" questions almost always go faster through the complement.
+so for a fair die $P(\text{even}) = 3/6 = 0.5$ and $P(\text{not a six}) = 5/6$.
 
 ### Example: probabilities from real data
 
@@ -873,83 +822,205 @@ stopifnot(N == 379, nF == 262, nT == 106, nFT == 19)
 ```
 
 Let $F$ be the event that the student is female and $T$ that the student is at least 70 inches tall.
+Then $P(T) = `r nT`/`r N` \approx `r fmt(nT / N, 2)`$ and $P(F) = `r nF`/`r N` \approx `r fmt(nF / N, 2)`$.
 
-* $P(F) = `r nF`/`r N` = `r fmt(nF / N, 3)`$ and $P(T) = `r nT`/`r N` = `r fmt(nT / N, 3)`$.
-* $P(F \text{ AND } T) = `r nFT`/`r N` = `r fmt(nFT / N, 3)`$: female **and** at least 70 inches.
-* By the addition rule,
-  $$P(F \text{ OR } T) = \frac{`r nF`}{`r N`} + \frac{`r nT`}{`r N`} - \frac{`r nFT`}{`r N`} = \frac{`r nF + nT - nFT`}{`r N`} = `r fmt((nF + nT - nFT) / N, 3)`$$
+## Where do probabilities come from?
+
+Flip a fair coin once. Intuition says $P(\text{heads}) = 1/2$. But suppose you flip it 4 times and get
+3 heads, 75%. Was 1/2 wrong?
+
+No. With random phenomena, the proportion of times an event happens can be quite unpredictable in the
+short run but very predictable in the long run.
+
+That is exactly the definition of probability from the start of this section: the **probability** of
+an event is the proportion of times it occurs in a very long series of repetitions, not in a handful.
+The law of large numbers is what makes that long-run proportion settle down to a single number.
+
+## The law of large numbers
+
+* The **law of large numbers** (LLN): as the number of independent trials $n$ increases, the relative
+  frequency of an event,
+  $$\frac{\text{number of times } A \text{ occurs}}{n},$$
+  gets closer and closer to its probability $P(A)$.
+* Trials are **independent trials** if the outcome of any one trial is not affected by the outcome of
+  any other.
+
+The plot below follows the running proportion of heads over 5,000 simulated tosses of a fair coin.
+
+```{r, echo=FALSE, out.width='90%', fig.align='center'}
+knitr::include_graphics('assets/l13_lln.png')
+```
+
+In the first few tosses the proportion jumps all over the place; over thousands of tosses it settles
+down to 0.5. The Swiss mathematician Jacob Bernoulli proved the first version of the law; it was
+published in 1713, after his death, in *Ars Conjectandi*. The statistician Karl Pearson checked it by
+hand, tossing a coin 24,000 times and getting 12,012 heads, a proportion of 0.5005.
+
+The LLN is also how probabilities are found when outcomes are not equally likely: the relative
+frequency over many trials is an *estimate* of the probability, and the estimate gets better as $n$
+gets larger. That is exactly what the heights table did: $P(T) \approx 0.28$ is a relative frequency.
+
+## The rules of probability
+
+1. $0 \leq P(A) \leq 1$: the probability of an event must be a value between 0 and 1.
+2. $\sum_i P(A_i) = 1$: the probabilities of all the outcomes in the sample space must add to 1.
+3. $P(A \cup B) = P(A) + P(B)$ when $A$ and $B$ are **disjoint**, that is, they have no outcomes in
+   common. This is the **addition rule for disjoint events**.
+4. $P(A') = 1 - P(A)$: the **complement rule**. $A'$ ("$A$-not") is every outcome in $S$ that is not
+   in $A$.
+
+## Combining two events
+
+* The **union** $A \cup B$ is all the outcomes in $A$ or in $B$ (or both). The key word is "or".
+* The **intersection** $A \cap B$ is the outcomes that $A$ and $B$ have in common. The key word is
+  "and".
+* $A$ and $B$ are **disjoint** (or **mutually exclusive**) if they have no outcomes in common:
+  $A \cap B = \emptyset$.
+
+```{r, echo=FALSE, out.width='45%', fig.align='center'}
+knitr::include_graphics('assets/l14_venn.png')
+```
+
+Two more rules for combining events:
+
+* The **general addition rule**, for events that may overlap:
+  $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+  The subtraction stops the outcomes in the overlap from being counted twice. For disjoint events
+  $P(A \cap B) = 0$, and this is just Rule 3.
+* The **multiplication rule for independent events.** Two events are **independent** if one occurring
+  does not change the probability of the other. Then
+  $$P(A \cap B) = P(A) \cdot P(B)$$
+* **Disjoint $\neq$ independent.** Disjoint events cannot happen together, so knowing one happened
+  tells you the other did not, and that makes them strongly dependent.
+
+### Example: one die
+
+Roll a fair six-sided die once.
+
+* $P(\text{not a six}) = 1 - 1/6 = 5/6$, by Rule 4.
+* "Roll a 1" and "roll a 6" are disjoint, so $P(1 \cup 6) = 1/6 + 1/6 = 1/3$, by Rule 3.
+* "Roll an even number" and "roll a number greater than 3" overlap (on a 4 or a 6), so by the general
+  addition rule
+  $$P(\text{even} \cup {>}3) = \frac{3}{6} + \frac{3}{6} - \frac{2}{6} = \frac{4}{6}$$
+  Check it directly: the outcomes are $\{2, 4, 5, 6\}$, four of the six.
+
+### Example: two dice
+
+Roll the die twice. The two rolls are independent.
+
+* $P(\text{six on both rolls}) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}$, by the multiplication
+  rule.
+* $P(\text{at least one six})$ is easiest through the complement, since "at least one six" is the
+  complement of "no sixes":
+  $$P(\text{at least one six}) = 1 - P(\text{no sixes}) = 1 - \frac{5}{6} \cdot \frac{5}{6} = \frac{11}{36} \approx 0.31$$
+
+### Example: unions and intersections
+
+Back to the heights table, with $F$ = female and $T$ = at least 70 inches.
+
+* $P(F \cap T) = `r nFT`/`r N` \approx `r fmt(nFT / N, 2)`$: female **and** at least 70 inches.
+* By the general addition rule,
+  $$P(F \cup T) = \frac{`r nF`}{`r N`} + \frac{`r nT`}{`r N`} - \frac{`r nFT`}{`r N`} = \frac{`r nF + nT - nFT`}{`r N`} \approx `r fmt((nF + nT - nFT) / N, 2)`$$
   Without the subtraction, the `r nFT` tall women would be counted twice.
-* $F$ and $T$ are **not** independent. Among all students, `r fmt(100 * nT / N, 0)`% are at least 70
-  inches, but among the women only $`r nFT`/`r nF` = `r fmt(100 * nFT / nF, 0)`\%$ are. Knowing the
-  student is female changes the probability a lot. The multiplication rule would predict
-  $P(F)\cdot P(T) = `r fmt(nF / N, 3)` \times `r fmt(nT / N, 3)` = `r fmt(nF * nT / N^2, 3)`$, far from
-  the actual `r fmt(nFT / N, 3)`, which is another way to see it.
+
+### Are $F$ and $T$ independent?
+
+No. Among all students `r fmt(100 * nT / N, 0)`% are at least 70 inches, but among the women only
+$`r nFT`/`r nF` \approx `r fmt(100 * nFT / nF, 0)`\%$ are, so knowing a student is female changes the
+probability a lot. The multiplication rule would predict
+$P(F) \cdot P(T) \approx `r fmt(nF / N, 2)` \cdot `r fmt(nT / N, 2)` \approx `r fmt(nF * nT / N^2, 2)`$,
+far from the actual $P(F \cap T) \approx `r fmt(nFT / N, 2)`$.
+
+## Sampling with and without replacement
+
+Recall the two ways of drawing a sample from the Weeks 4-5 notes. Here a sample of 3 balls is drawn
+from a bag of 5:
+
+```{r, echo=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics('assets/l8_replacement.png')
+```
+
+Are the draws independent?
+
+* **With replacement**, yes. Each ball goes back before the next draw, so the bag is the same on every
+  draw and what happened on one draw cannot change the next. The multiplication rule
+  $P(A \cap B) = P(A) \cdot P(B)$ applies.
+* **Without replacement**, no. Each draw removes a ball, so it changes what is left, and the
+  probabilities on the next draw depend on what was drawn before.
+
+Simple random samples are drawn without replacement, so strictly their draws are dependent. When the
+population is much larger than the sample, though, removing a few units barely changes what is left,
+and the draws behave almost exactly as if they were independent.
+
+### Example: drawing two aces
+
+A standard deck has 52 cards, 4 of them aces. Draw two cards. What is the probability that both are
+aces?
+
+* **With replacement:** the first card goes back, so the two draws are independent and
+  $$P(\text{two aces}) = \frac{4}{52} \cdot \frac{4}{52} = \frac{1}{169} \approx 0.0059$$
+* **Without replacement:** if the first card is an ace, only 3 aces are left among 51 cards, so
+  $$P(\text{two aces}) = \frac{4}{52} \cdot \frac{3}{51} = \frac{1}{221} \approx 0.0045$$
+
+```{r, include=FALSE}
+stopifnot(all.equal((4/52)^2, 1/169), all.equal(4/52 * 3/51, 1/221))
+```
+
+Not putting the card back makes two aces less likely, because the first ace used up one of the four.
 
 ## Random variables
 
-In statistics we usually care about a *number* attached to each outcome, not the outcome itself.
+In statistics we usually record the outcome of a random trial as a number.
 
-* A **random variable** is a numerical outcome of a chance experiment. Random variables are written
-  with capital letters such as $X$, and a particular value with a lower-case letter such as $x$.
+* A **random variable** is the outcome of a random trial recorded as a number, written with a capital
+  letter such as $X$; a particular value is written with a lower-case letter such as $x$.
+* It is **discrete** if its possible values can be listed, like a count of heads, and **continuous** if
+  it can take any value in an interval, like a height. The normal distribution is the most important
+  continuous distribution; this week we focus on discrete ones.
 
-For example, toss a coin four times. Each outcome is a sequence such as HHTH, and there are
-$2^4 = 16$ equally likely sequences. Let $X$ be the number of heads. HHTH gives $X = 3$, and TTTT gives
-$X = 0$. $X$ can take the values 0, 1, 2, 3 and 4.
+### Example: three coin tosses
 
-A random variable is **discrete** if we can list its possible values, like the count of heads, and
-**continuous** if it can take any value in an interval, like a height. The normal distribution from
-Monday is the most important continuous distribution; this week we focus on discrete ones.
+Toss a fair coin 3 times. There are $2 \times 2 \times 2 = 8$ equally likely outcomes:
+
+$$S = \{HHH, HHT, HTH, THH, HTT, THT, TTH, TTT\}$$
+
+Let $X$ be the number of heads. HTH gives $X = 2$ and TTT gives $X = 0$, so $X$ can be 0, 1, 2 or 3.
 
 ## Discrete probability distributions
 
-* The **probability distribution** of a discrete random variable lists its possible values and their
-  probabilities. (The textbook calls this a *probability distribution function*, or PDF.)
+* The **probability distribution** of a discrete random variable is a function that assigns a
+  probability to each possible value of $X$. Each probability is between 0 and 1, and they add to 1.
+  (The textbook calls this a *probability distribution function*, or PDF.)
 
-For the four coin tosses, counting the sequences that give each number of heads:
+For the three coin tosses, counting the outcomes that give each number of heads:
 
 ```{r, echo=FALSE}
-x4 <- 0:4; ways <- choose(4, x4)
-tab(data.frame(x = x4,
-               seqs = c('TTTT', 'HTTT, THTT, TTHT, TTTH', 'HHTT, HTHT, HTTH, THHT, THTH, TTHH',
-                        'HHHT, HHTH, HTHH, THHH', 'HHHH'),
-               ways = ways,
-               p = paste0(ways, '/16 = ', fmt(ways / 16, 4))),
-    col.names = c('$x$ (heads)', 'Sequences', 'Number of sequences', '$P(x)$'))
+x3 <- 0:3; ways <- choose(3, x3)
+stopifnot(identical(as.numeric(ways), c(1, 3, 3, 1)))
+tab(data.frame(x = x3, outs = c('TTT', 'HTT, THT, TTH', 'HHT, HTH, THH', 'HHH'),
+               ways = ways, p = paste0(ways, '/8')),
+    col.names = c('$x$ (heads)', 'Outcomes', 'Number of outcomes', '$P(x)$'))
 ```
 
-Every discrete probability distribution follows the same two rules as any probability model:
+Here $1 + 3 + 3 + 1 = 8$ outcomes, so the probabilities add to $8/8 = 1$.
 
-1. every probability is between 0 and 1, and
-2. the probabilities add to 1. Here $1 + 4 + 6 + 4 + 1 = 16$ sequences, so the probabilities sum to
-   $16/16 = 1$.
+```{r, echo=FALSE, out.width='65%', fig.align='center'}
+knitr::include_graphics('assets/l14_three_tosses.png')
+```
 
 To find the probability of an event, add the probabilities of the values that make it up:
 
-* $P(X \geq 3) = P(X = 3) + P(X = 4) = 4/16 + 1/16 = 5/16 = 0.3125$.
-* $P(X \geq 1) = 1 - P(X = 0) = 1 - 1/16 = 15/16$, by the complement rule.
-* $P(1 \leq X \leq 3) = (4 + 6 + 4)/16 = 14/16 = 0.875$.
-
-A probability distribution can be drawn as a bar chart (a probability histogram) whose bars add to
-1. Shading the bars that make up an event shows its probability as an area, the same idea as the area
-under a density curve.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3.5, fig.width=10}
-d4 <- data.frame(x = x4, p = ways / 16)
-base <- function(fill, title) ggplot(d4, aes(x = factor(x), y = p)) +
-  geom_col(fill = fill, color = 'black', width = 0.9) +
-  theme_classic2() + labs(x = 'Number of heads, x', y = 'P(x)', title = title) +
-  theme(axis.text = element_text(size = 12), axis.title = element_text(size = 14))
-ggarrange(base('lightgrey', 'Probability distribution of X'),
-          base(ifelse(x4 >= 3, 'lightblue', 'lightgrey'), TeX('Shaded: $P(X \\geq 3) = 5/16$')),
-          nrow = 1)
-```
+* $P(X \geq 2) = P(X = 2) + P(X = 3) = 3/8 + 1/8 = 4/8$.
+* $P(X \leq 1) = 1 - P(X \geq 2) = 1 - 4/8 = 4/8$, by the complement rule. In general
+  $P(X > a) = 1 - P(X \leq a)$.
+* $P(1 \leq X \leq 2) = 3/8 + 3/8 = 6/8$.
 
 ## Mean and standard deviation of a discrete random variable
 
 A probability distribution has a center and a spread, just like a distribution of data. The formulas
 weight each value by its probability instead of by how often it appeared in a sample.
 
-* The **mean**, or **expected value**, of a discrete random variable is
+* The **mean**, or **expected value**, of a discrete random variable is its long-run average:
   $$\mu = \sum x \cdot P(x)$$
 * The **variance** and **standard deviation** are
   $$\sigma^2 = \sum (x - \mu)^2 \cdot P(x) \qquad\qquad \sigma = \sqrt{\sigma^2}$$
@@ -958,20 +1029,21 @@ The expected value is the long-run average of $X$ over many repetitions, which i
 numbers again. It does not have to be a value $X$ can actually take, and it is not a prediction for
 any single trial.
 
-For the number of heads in four tosses, an expected value table lays the work out:
+For the number of heads in three tosses:
 
 ```{r, echo=FALSE}
-mu4 <- sum(x4 * ways / 16); v4 <- sum((x4 - mu4)^2 * ways / 16)
-stopifnot(mu4 == 2, v4 == 1)
-tab(data.frame(x = x4, p = paste0(ways, '/16'),
-               xp = paste0(x4, '(', ways, '/16) = ', fmt(x4 * ways / 16, 4)),
-               dev = paste0('(', x4, ' - 2)^2(', ways, '/16) = ', fmt((x4 - 2)^2 * ways / 16, 4))),
+mu3 <- sum(x3 * ways / 8); v3 <- sum((x3 - mu3)^2 * ways / 8)
+stopifnot(mu3 == 1.5, v3 == 0.75)
+tab(data.frame(x = x3, p = paste0(ways, '/8'),
+               xp = paste0(x3, '(', ways, '/8) = ', fmt(x3 * ways / 8, 3)),
+               dev = paste0('(', x3, ' - 1.5)^2(', ways, '/8) = ', fmt((x3 - 1.5)^2 * ways / 8, 3))),
     col.names = c('$x$', '$P(x)$', '$x \\cdot P(x)$', '$(x - \\mu)^2 \\cdot P(x)$'))
 ```
 
-Adding the columns, $\mu = 0 + 0.25 + 0.75 + 0.75 + 0.25 = 2$ heads, and
-$\sigma^2 = 0.25 + 0.25 + 0 + 0.25 + 0.25 = 1$, so $\sigma = 1$ head. Over many sets of four tosses the
-average number of heads is 2, and a typical set is about 1 head away from that.
+Adding the columns, $\mu = 0 + 0.375 + 0.75 + 0.375 = 1.5$ heads, and
+$\sigma^2 = 0.281 + 0.094 + 0.094 + 0.281 = 0.75$, so $\sigma = \sqrt{0.75} \approx 0.87$ heads. Over
+many sets of three tosses the average number of heads is 1.5, even though no single set can have 1.5
+heads.
 
 ### Example: grade points on an exam
 
@@ -1026,11 +1098,13 @@ theorem.
 
 ## Probability
 
-* Probability is long-run relative frequency, and the law of large numbers is why it works.
-* The rules: $0 \leq P(A) \leq 1$; everything adds to 1; $P(A') = 1 - P(A)$;
-  $P(A \text{ OR } B) = P(A) + P(B) - P(A \text{ AND } B)$; and for independent events
-  $P(A \text{ AND } B) = P(A)P(B)$.
-* A **random variable** is a numerical outcome of a chance experiment. A discrete one has a
+* Probability is the long-run relative frequency of an event, between 0 and 1. The **law of large
+  numbers** says the relative frequency over $n$ independent trials gets closer and closer to the
+  probability as $n$ grows.
+* The four rules: $0 \leq P(A) \leq 1$; $\sum_i P(A_i) = 1$; $P(A \cup B) = P(A) + P(B)$ for disjoint
+  events; $P(A') = 1 - P(A)$. In general $P(A \cup B) = P(A) + P(B) - P(A \cap B)$, and for independent
+  events $P(A \cap B) = P(A) \cdot P(B)$. Disjoint is not the same as independent.
+* A **random variable** is the outcome of a random trial recorded as a number. A discrete one has a
   probability distribution with mean $\mu = \sum x P(x)$ and standard deviation
   $\sigma = \sqrt{\sum (x - \mu)^2 P(x)}$.
 

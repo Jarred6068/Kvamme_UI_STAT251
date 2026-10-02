@@ -120,7 +120,13 @@ The normal distribution: density curves, the standard normal, z-scores, the empi
 <a href="./lecture_slides/Week%206/Week6_Lecture12_Slides_9_28_2026.pptx">Slides (PowerPoint)</a>
 
 ### Lecture 13 &middot; Wednesday, September 30
-The normal distribution continued: identifying outliers, normal quantiles, transformations; sampling distributions, margin of error, statistical significance
+The normal distribution continued: identifying outliers, normal quantiles, transformations; sampling distributions, margin of error
 
 <a href="./lecture_slides/Week%206/Week6_Lecture13_Slides_9_30_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%206/Week6_Lecture13_Slides_9_30_2026.pptx">Slides (PowerPoint)</a>
+
+### Lecture 14 &middot; Friday, October 2
+Statistical significance; introduction to probability, random variables, discrete probability distributions
+
+<a href="./lecture_slides/Week%206/Week6_Lecture14_Slides_10_2_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%206/Week6_Lecture14_Slides_10_2_2026.pptx">Slides (PowerPoint)</a>

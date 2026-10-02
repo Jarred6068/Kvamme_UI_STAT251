@@ -535,11 +535,17 @@ $(document).ready(function () {
                              lecture_slides/Week 6/Week6_Lecture12_Slides_9_28_2026.pptx
     Wed Sept 30  Lecture 13  the rest of Lecture 12 (reading sigma off a curve, the exam
                              example, outliers, normal quantiles, transformations), then
-                             sampling distributions, standard error, margin of error,
-                             statistical significance; opens with a Q&A review
+                             sampling distributions, standard error, margin of error
+                             (delivered through the margin-of-error example); opens with
+                             a Q&A review and three review problems
                              lecture_slides/Week 6/Week6_Lecture13_Slides_9_30_2026.pptx
-    Fri Oct 2    Lecture 14  introduction to probability, random variables, discrete
-                             probability distributions
+    Fri Oct 2    Lecture 14  statistical significance (carried from Lecture 13), then
+                             probability: the rules, random variables, discrete
+                             probability distributions, expected value
+                             lecture_slides/Week 6/Week6_Lecture14_Slides_10_2_2026.pptx
+  From Lecture 13 on, the slides use all 379 students in heights.csv as the running
+  data set (x-bar 67.1, s 4.12); the notes below still use the 262 women for the
+  normal-distribution and sampling-distribution sections.
 
   Sources. This page rewrites the 2024 notes that used to be spread over two pages:
   "The normal distribution and z-scores", "Density Curves", the empirical rule,
@@ -1834,6 +1840,29 @@ stray value at 92 inches. The sample means form a smooth, symmetric
 bell. That is not luck: it is the central limit theorem, which we meet
 in Week 7.</li>
 </ul>
+<blockquote>
+<p><strong>A note on the center.</strong> A sampling distribution is
+centered at the population parameter <strong>only if the statistic is
+unbiased</strong>. A statistic is <strong>unbiased</strong> when the
+mean of its sampling distribution equals the parameter it estimates. The
+sample mean <span class="math inline">\(\bar{x}\)</span> from a random
+sample is unbiased, which is why the histogram above sits right on <span
+class="math inline">\(\mu\)</span>. It is not automatic:</p>
+<ul>
+<li><strong>a biased design</strong> moves the whole sampling
+distribution. The Rec Center surveys in the Weeks 4-5 notes piled up
+around 75% when the truth was 40%, however many times they were
+repeated;</li>
+<li><strong>some statistics are biased even with random
+sampling.</strong> Computing the sample variance by dividing by <span
+class="math inline">\(n\)</span> instead of <span
+class="math inline">\(n - 1\)</span> (Week 3) gives a sampling
+distribution centered slightly <em>below</em> <span
+class="math inline">\(\sigma^2\)</span>.</li>
+</ul>
+<p>Bias moves the center of the sampling distribution; the standard
+error describes its spread.</p>
+</blockquote>
 </div>
 <div id="standard-error" class="section level2">
 <h2>Standard error</h2>
@@ -1947,133 +1976,63 @@ would produce.</p>
 </div>
 <div id="introduction-to-probability" class="section level1">
 <h1>Introduction to probability</h1>
-<p>Wednesday’s argument rested on statements like “about 95% of sample
-means land within 2 standard errors”. Those are statements about
-<strong>chance</strong>, and statistics needs a precise language for
-chance. That language is probability. When data are produced by random
-sampling or random assignment, the outcomes follow the laws of
-probability, and that is what lets us say how often a method would give
-the right answer if we used it many times.</p>
-<div id="random-phenomena-and-long-run-frequency"
-class="section level2">
-<h2>Random phenomena and long-run frequency</h2>
-<p>Tossing a coin, rolling a die and choosing a simple random sample are
-all <strong>random</strong> phenomena: the result of any one trial can’t
-be predicted, but there is a predictable pattern over many trials.</p>
-<ul>
-<li>The <strong>probability</strong> of an outcome is its long-run
-relative frequency: the proportion of times it would occur if the
-process were repeated a very large number of times. A probability is
-always between 0 and 1, inclusive.</li>
-</ul>
-<p>This long-run pattern is guaranteed by the <strong>law of large
-numbers</strong>: as the number of independent repetitions grows, the
-relative frequency of an outcome gets closer and closer to its
-probability. The plot below follows the running proportion of heads over
-5,000 simulated tosses of a fair coin.</p>
-<div class="figure">
-<img src="lecturemenu6_files/figure-html/unnamed-chunk-23-1.png" alt="The running proportion of heads in 5,000 simulated fair-coin tosses. The red line is P(Heads) = 0.5." width="960" />
-<p class="caption">
-The running proportion of heads in 5,000 simulated fair-coin tosses. The
-red line is P(Heads) = 0.5.
-</p>
+<div id="why-probability" class="section level2">
+<h2>Why probability?</h2>
+<p>Look again at two statements from this week. On Wednesday: <em>about
+95% of samples land within 2 standard errors of <span
+class="math inline">\(\mu\)</span></em>. And in the significance
+example: <em>a sample that far out would be very unlikely to happen by
+chance</em>. But we only ever take <strong>one</strong> sample. So what
+do “95%” and “unlikely” actually mean?</p>
+<p>They describe what would happen if we repeated the random sampling
+many, many times. Statements about the long run of a chance process are
+statements of <strong>probability</strong>, and statistics needs a
+precise language for them.</p>
 </div>
-<p>In the first few tosses the proportion jumps all over the place:
-after 4 tosses, 3 heads (75%) is not at all unusual. Over thousands of
-tosses it settles down to 0.5. The statistician Karl Pearson actually
-did this by hand, tossing a coin 24,000 times and getting 12,012 heads,
-a proportion of 0.5005. Probability describes the long run; it says very
-little about any single toss.</p>
+<div id="quantifying-uncertainty" class="section level2">
+<h2>Quantifying uncertainty</h2>
+<ul>
+<li><strong>Randomization.</strong> We use chance on purpose, by
+randomly sampling subjects from a population in a survey or randomly
+assigning subjects to treatments in an experiment, to avoid bias.</li>
+<li><strong>The price: uncertainty.</strong> By chance, the statistics
+from a sample are not exactly the parameters of the population.</li>
+<li><strong>The payoff.</strong> Because chance chose the sample, the
+results follow the laws of mathematical probability, so we can measure
+how far off we are likely to be.</li>
+</ul>
 </div>
 <div id="the-language-of-probability" class="section level2">
 <h2>The language of probability</h2>
 <ul>
-<li>A <strong>chance experiment</strong> (or trial) is any process with
-an uncertain result, such as rolling a die.</li>
-<li>An <strong>outcome</strong> is one possible result.</li>
+<li>A <strong>random trial</strong> is a process or experiment with a
+set of well-defined possible outcomes. What makes it <em>random</em> is
+that more than one outcome is possible: rolling a die, flipping a coin,
+or choosing a simple random sample.</li>
 <li>The <strong>sample space</strong> <span
-class="math inline">\(S\)</span> is the set of all possible outcomes.
-For one roll of a six-sided die, <span class="math inline">\(S = \{1, 2,
-3, 4, 5, 6\}\)</span>.</li>
-<li>An <strong>event</strong> is any collection of outcomes, written
-with a capital letter. For example <span class="math inline">\(A =
-\{\text{roll an even number}\} = \{2, 4, 6\}\)</span>. Its probability
-is written <span class="math inline">\(P(A)\)</span>.</li>
+class="math inline">\(S\)</span> is the collection of all possible
+outcomes. For one roll of a six-sided die, <span class="math inline">\(S
+= \{1, 2, 3, 4, 5, 6\}\)</span>.</li>
+<li>An <strong>event</strong> is any possible outcome of a random trial,
+written with a capital letter. For example <span
+class="math inline">\(A\)</span> = roll an even number <span
+class="math inline">\(= \{2, 4, 6\}\)</span>.</li>
+<li>The <strong>probability</strong> of an event <span
+class="math inline">\(A\)</span>, written <span
+class="math inline">\(P(A)\)</span>, is a number between 0 and 1 that
+measures how likely <span class="math inline">\(A\)</span> is: the
+proportion of times <span class="math inline">\(A\)</span> occurs in a
+very long series of repetitions of the random trial. A probability of 0
+means <span class="math inline">\(A\)</span> never happens; 1 means it
+always does.</li>
 </ul>
 <p>When every outcome in the sample space is <strong>equally
 likely</strong>,</p>
-<p><span class="math display">\[P(A) = \frac{\text{number of outcomes in
-} A}{\text{total number of outcomes in } S}\]</span></p>
+<p><span class="math display">\[P(A) = \frac{\text{number of ways } A
+\text{ can happen}}{\text{total number of outcomes}}\]</span></p>
 <p>so for a fair die <span class="math inline">\(P(\text{even}) = 3/6 =
-0.5\)</span>.</p>
-</div>
-<div id="the-rules-of-probability" class="section level2">
-<h2>The rules of probability</h2>
-<p>Four rules hold for every probability model.</p>
-<ol style="list-style-type: decimal">
-<li><strong>Probabilities are between 0 and 1:</strong> <span
-class="math inline">\(0 \leq P(A) \leq 1\)</span>. An event with
-probability 0 never happens; one with probability 1 always does.</li>
-<li><strong>The whole sample space has probability 1:</strong> the
-probabilities of all the outcomes add to 1.</li>
-<li><strong>The complement rule:</strong> the complement <span
-class="math inline">\(A&#39;\)</span> (“not <span
-class="math inline">\(A\)</span>”) is everything in <span
-class="math inline">\(S\)</span> that is not in <span
-class="math inline">\(A\)</span>, and <span
-class="math inline">\(P(A&#39;) = 1 - P(A)\)</span>.</li>
-<li><strong>The addition rule:</strong> the event <span
-class="math inline">\(A \text{ OR } B\)</span> happens if <span
-class="math inline">\(A\)</span> happens, <span
-class="math inline">\(B\)</span> happens, or both. <span
-class="math display">\[P(A \text{ OR } B) = P(A) + P(B) - P(A \text{ AND
-} B)\]</span> The subtraction stops the outcomes in both events from
-being counted twice. Two events are <strong>mutually exclusive</strong>
-if they cannot happen together, so <span class="math inline">\(P(A
-\text{ AND } B) = 0\)</span> and the rule becomes simply <span
-class="math inline">\(P(A) + P(B)\)</span>.</li>
-</ol>
-<p>And one rule for events that don’t influence each other:</p>
-<ol start="5" style="list-style-type: decimal">
-<li><strong>The multiplication rule for independent events:</strong> two
-events are <strong>independent</strong> if knowing that one happened
-does not change the probability of the other. Then <span
-class="math display">\[P(A \text{ AND } B) = P(A) \cdot
-P(B)\]</span></li>
-</ol>
-<p>Mutually exclusive and independent are <strong>not</strong> the same
-thing. Mutually exclusive events can’t both happen, so knowing one
-happened tells you the other <em>didn’t</em>, and that makes them
-strongly dependent.</p>
-<div id="example-one-die-two-dice" class="section level3">
-<h3>Example: one die, two dice</h3>
-<p>Roll a fair six-sided die.</p>
-<ul>
-<li><span class="math inline">\(P(\text{not a six}) = 1 - P(\text{six})
-= 1 - 1/6 = 5/6\)</span>, by the complement rule.</li>
-<li>“Roll a 1” and “roll a 6” are mutually exclusive, so <span
-class="math inline">\(P(1 \text{ OR } 6) = 1/6 + 1/6 =
-1/3\)</span>.</li>
-<li>“Roll an even number” and “roll a number greater than 3” can happen
-together (on a 4 or a 6), so <span class="math display">\[P(\text{even
-OR} &gt; 3) = \frac{3}{6} + \frac{3}{6} - \frac{2}{6} =
-\frac{4}{6}\]</span> Check it directly: the outcomes are <span
-class="math inline">\(\{2, 4, 5, 6\}\)</span>, four of the six.</li>
-</ul>
-<p>Now roll the die twice. The two rolls don’t influence each other, so
-they are independent:</p>
-<ul>
-<li><span class="math inline">\(P(\text{six on both rolls}) =
-\frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}\)</span>.</li>
-<li><span class="math inline">\(P(\text{at least one six})\)</span> is
-easiest through the complement. “At least one six” is the complement of
-“no sixes at all”: <span class="math display">\[P(\text{at least one
-six}) = 1 - P(\text{no six, no six}) = 1 - \frac{5}{6} \cdot \frac{5}{6}
-= \frac{11}{36} \approx 0.31\]</span></li>
-</ul>
-<p>“At least one” questions almost always go faster through the
-complement.</p>
-</div>
+0.5\)</span> and <span class="math inline">\(P(\text{not a six}) =
+5/6\)</span>.</p>
 <div id="example-probabilities-from-real-data" class="section level3">
 <h3>Example: probabilities from real data</h3>
 <p>The table below classifies the 379 students in
@@ -2144,60 +2103,200 @@ Total
 </table>
 <p>Let <span class="math inline">\(F\)</span> be the event that the
 student is female and <span class="math inline">\(T\)</span> that the
-student is at least 70 inches tall.</p>
+student is at least 70 inches tall. Then <span
+class="math inline">\(P(T) = 106/379 \approx 0.28\)</span> and <span
+class="math inline">\(P(F) = 262/379 \approx 0.69\)</span>.</p>
+</div>
+</div>
+<div id="where-do-probabilities-come-from" class="section level2">
+<h2>Where do probabilities come from?</h2>
+<p>Flip a fair coin once. Intuition says <span
+class="math inline">\(P(\text{heads}) = 1/2\)</span>. But suppose you
+flip it 4 times and get 3 heads, 75%. Was 1/2 wrong?</p>
+<p>No. With random phenomena, the proportion of times an event happens
+can be quite unpredictable in the short run but very predictable in the
+long run.</p>
+<p>That is exactly the definition of probability from the start of this
+section: the <strong>probability</strong> of an event is the proportion
+of times it occurs in a very long series of repetitions, not in a
+handful. The law of large numbers is what makes that long-run proportion
+settle down to a single number.</p>
+</div>
+<div id="the-law-of-large-numbers" class="section level2">
+<h2>The law of large numbers</h2>
 <ul>
-<li><span class="math inline">\(P(F) = 262/379 = 0.691\)</span> and
-<span class="math inline">\(P(T) = 106/379 = 0.280\)</span>.</li>
-<li><span class="math inline">\(P(F \text{ AND } T) = 19/379 =
-0.050\)</span>: female <strong>and</strong> at least 70 inches.</li>
-<li>By the addition rule, <span class="math display">\[P(F \text{ OR }
-T) = \frac{262}{379} + \frac{106}{379} - \frac{19}{379} =
-\frac{349}{379} = 0.921\]</span> Without the subtraction, the 19 tall
-women would be counted twice.</li>
-<li><span class="math inline">\(F\)</span> and <span
-class="math inline">\(T\)</span> are <strong>not</strong> independent.
-Among all students, 28% are at least 70 inches, but among the women only
-<span class="math inline">\(19/262 = 7\%\)</span> are. Knowing the
-student is female changes the probability a lot. The multiplication rule
-would predict <span class="math inline">\(P(F)\cdot P(T) = 0.691 \times
-0.280 = 0.193\)</span>, far from the actual 0.050, which is another way
-to see it.</li>
+<li>The <strong>law of large numbers</strong> (LLN): as the number of
+independent trials <span class="math inline">\(n\)</span> increases, the
+relative frequency of an event, <span
+class="math display">\[\frac{\text{number of times } A \text{
+occurs}}{n},\]</span> gets closer and closer to its probability <span
+class="math inline">\(P(A)\)</span>.</li>
+<li>Trials are <strong>independent trials</strong> if the outcome of any
+one trial is not affected by the outcome of any other.</li>
 </ul>
+<p>The plot below follows the running proportion of heads over 5,000
+simulated tosses of a fair coin.</p>
+<p><img src="assets/l13_lln.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>In the first few tosses the proportion jumps all over the place; over
+thousands of tosses it settles down to 0.5. The Swiss mathematician
+Jacob Bernoulli proved the first version of the law; it was published in
+1713, after his death, in <em>Ars Conjectandi</em>. The statistician
+Karl Pearson checked it by hand, tossing a coin 24,000 times and getting
+12,012 heads, a proportion of 0.5005.</p>
+<p>The LLN is also how probabilities are found when outcomes are not
+equally likely: the relative frequency over many trials is an
+<em>estimate</em> of the probability, and the estimate gets better as
+<span class="math inline">\(n\)</span> gets larger. That is exactly what
+the heights table did: <span class="math inline">\(P(T) \approx
+0.28\)</span> is a relative frequency.</p>
+</div>
+<div id="the-rules-of-probability" class="section level2">
+<h2>The rules of probability</h2>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(0 \leq P(A) \leq 1\)</span>: the
+probability of an event must be a value between 0 and 1.</li>
+<li><span class="math inline">\(\sum_i P(A_i) = 1\)</span>: the
+probabilities of all the outcomes in the sample space must add to
+1.</li>
+<li><span class="math inline">\(P(A \cup B) = P(A) + P(B)\)</span> when
+<span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are <strong>disjoint</strong>, that is,
+they have no outcomes in common. This is the <strong>addition rule for
+disjoint events</strong>.</li>
+<li><span class="math inline">\(P(A&#39;) = 1 - P(A)\)</span>: the
+<strong>complement rule</strong>. <span
+class="math inline">\(A&#39;\)</span> (“<span
+class="math inline">\(A\)</span>-not”) is every outcome in <span
+class="math inline">\(S\)</span> that is not in <span
+class="math inline">\(A\)</span>.</li>
+</ol>
+</div>
+<div id="combining-two-events" class="section level2">
+<h2>Combining two events</h2>
+<ul>
+<li>The <strong>union</strong> <span class="math inline">\(A \cup
+B\)</span> is all the outcomes in <span class="math inline">\(A\)</span>
+or in <span class="math inline">\(B\)</span> (or both). The key word is
+“or”.</li>
+<li>The <strong>intersection</strong> <span class="math inline">\(A \cap
+B\)</span> is the outcomes that <span class="math inline">\(A\)</span>
+and <span class="math inline">\(B\)</span> have in common. The key word
+is “and”.</li>
+<li><span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are <strong>disjoint</strong> (or
+<strong>mutually exclusive</strong>) if they have no outcomes in common:
+<span class="math inline">\(A \cap B = \emptyset\)</span>.</li>
+</ul>
+<p><img src="assets/l14_venn.png" width="45%" style="display: block; margin: auto;" /></p>
+<p>Two more rules for combining events:</p>
+<ul>
+<li>The <strong>general addition rule</strong>, for events that may
+overlap: <span class="math display">\[P(A \cup B) = P(A) + P(B) - P(A
+\cap B)\]</span> The subtraction stops the outcomes in the overlap from
+being counted twice. For disjoint events <span class="math inline">\(P(A
+\cap B) = 0\)</span>, and this is just Rule 3.</li>
+<li>The <strong>multiplication rule for independent events.</strong> Two
+events are <strong>independent</strong> if one occurring does not change
+the probability of the other. Then <span class="math display">\[P(A \cap
+B) = P(A) \cdot P(B)\]</span></li>
+<li><strong>Disjoint <span class="math inline">\(\neq\)</span>
+independent.</strong> Disjoint events cannot happen together, so knowing
+one happened tells you the other did not, and that makes them strongly
+dependent.</li>
+</ul>
+<div id="example-one-die" class="section level3">
+<h3>Example: one die</h3>
+<p>Roll a fair six-sided die once.</p>
+<ul>
+<li><span class="math inline">\(P(\text{not a six}) = 1 - 1/6 =
+5/6\)</span>, by Rule 4.</li>
+<li>“Roll a 1” and “roll a 6” are disjoint, so <span
+class="math inline">\(P(1 \cup 6) = 1/6 + 1/6 = 1/3\)</span>, by Rule
+3.</li>
+<li>“Roll an even number” and “roll a number greater than 3” overlap (on
+a 4 or a 6), so by the general addition rule <span
+class="math display">\[P(\text{even} \cup {&gt;}3) = \frac{3}{6} +
+\frac{3}{6} - \frac{2}{6} = \frac{4}{6}\]</span> Check it directly: the
+outcomes are <span class="math inline">\(\{2, 4, 5, 6\}\)</span>, four
+of the six.</li>
+</ul>
+</div>
+<div id="example-two-dice" class="section level3">
+<h3>Example: two dice</h3>
+<p>Roll the die twice. The two rolls are independent.</p>
+<ul>
+<li><span class="math inline">\(P(\text{six on both rolls}) =
+\frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}\)</span>, by the
+multiplication rule.</li>
+<li><span class="math inline">\(P(\text{at least one six})\)</span> is
+easiest through the complement, since “at least one six” is the
+complement of “no sixes”: <span class="math display">\[P(\text{at least
+one six}) = 1 - P(\text{no sixes}) = 1 - \frac{5}{6} \cdot \frac{5}{6} =
+\frac{11}{36} \approx 0.31\]</span></li>
+</ul>
+</div>
+<div id="example-unions-and-intersections" class="section level3">
+<h3>Example: unions and intersections</h3>
+<p>Back to the heights table, with <span
+class="math inline">\(F\)</span> = female and <span
+class="math inline">\(T\)</span> = at least 70 inches.</p>
+<ul>
+<li><span class="math inline">\(P(F \cap T) = 19/379 \approx
+0.05\)</span>: female <strong>and</strong> at least 70 inches.</li>
+<li>By the general addition rule, <span class="math display">\[P(F \cup
+T) = \frac{262}{379} + \frac{106}{379} - \frac{19}{379} =
+\frac{349}{379} \approx 0.92\]</span> Without the subtraction, the 19
+tall women would be counted twice.</li>
+</ul>
+</div>
+<div id="are-f-and-t-independent" class="section level3">
+<h3>Are <span class="math inline">\(F\)</span> and <span
+class="math inline">\(T\)</span> independent?</h3>
+<p>No. Among all students 28% are at least 70 inches, but among the
+women only <span class="math inline">\(19/262 \approx 7\%\)</span> are,
+so knowing a student is female changes the probability a lot. The
+multiplication rule would predict <span class="math inline">\(P(F) \cdot
+P(T) \approx 0.69 \cdot 0.28 \approx 0.19\)</span>, far from the actual
+<span class="math inline">\(P(F \cap T) \approx 0.05\)</span>.</p>
 </div>
 </div>
 <div id="random-variables" class="section level2">
 <h2>Random variables</h2>
-<p>In statistics we usually care about a <em>number</em> attached to
-each outcome, not the outcome itself.</p>
+<p>In statistics we usually record the outcome of a random trial as a
+number.</p>
 <ul>
-<li>A <strong>random variable</strong> is a numerical outcome of a
-chance experiment. Random variables are written with capital letters
-such as <span class="math inline">\(X\)</span>, and a particular value
-with a lower-case letter such as <span
-class="math inline">\(x\)</span>.</li>
+<li>A <strong>random variable</strong> is the outcome of a random trial
+recorded as a number, written with a capital letter such as <span
+class="math inline">\(X\)</span>; a particular value is written with a
+lower-case letter such as <span class="math inline">\(x\)</span>.</li>
+<li>It is <strong>discrete</strong> if its possible values can be
+listed, like a count of heads, and <strong>continuous</strong> if it can
+take any value in an interval, like a height. The normal distribution is
+the most important continuous distribution; this week we focus on
+discrete ones.</li>
 </ul>
-<p>For example, toss a coin four times. Each outcome is a sequence such
-as HHTH, and there are <span class="math inline">\(2^4 = 16\)</span>
-equally likely sequences. Let <span class="math inline">\(X\)</span> be
-the number of heads. HHTH gives <span class="math inline">\(X =
-3\)</span>, and TTTT gives <span class="math inline">\(X = 0\)</span>.
-<span class="math inline">\(X\)</span> can take the values 0, 1, 2, 3
-and 4.</p>
-<p>A random variable is <strong>discrete</strong> if we can list its
-possible values, like the count of heads, and
-<strong>continuous</strong> if it can take any value in an interval,
-like a height. The normal distribution from Monday is the most important
-continuous distribution; this week we focus on discrete ones.</p>
+<div id="example-three-coin-tosses" class="section level3">
+<h3>Example: three coin tosses</h3>
+<p>Toss a fair coin 3 times. There are <span class="math inline">\(2
+\times 2 \times 2 = 8\)</span> equally likely outcomes:</p>
+<p><span class="math display">\[S = \{HHH, HHT, HTH, THH, HTT, THT, TTH,
+TTT\}\]</span></p>
+<p>Let <span class="math inline">\(X\)</span> be the number of heads.
+HTH gives <span class="math inline">\(X = 2\)</span> and TTT gives <span
+class="math inline">\(X = 0\)</span>, so <span
+class="math inline">\(X\)</span> can be 0, 1, 2 or 3.</p>
+</div>
 </div>
 <div id="discrete-probability-distributions" class="section level2">
 <h2>Discrete probability distributions</h2>
 <ul>
 <li>The <strong>probability distribution</strong> of a discrete random
-variable lists its possible values and their probabilities. (The
-textbook calls this a <em>probability distribution function</em>, or
-PDF.)</li>
+variable is a function that assigns a probability to each possible value
+of <span class="math inline">\(X\)</span>. Each probability is between 0
+and 1, and they add to 1. (The textbook calls this a <em>probability
+distribution function</em>, or PDF.)</li>
 </ul>
-<p>For the four coin tosses, counting the sequences that give each
+<p>For the three coin tosses, counting the outcomes that give each
 number of heads:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -2206,10 +2305,10 @@ number of heads:</p>
 <span class="math inline">\(x\)</span> (heads)
 </th>
 <th style="text-align:left;">
-Sequences
+Outcomes
 </th>
 <th style="text-align:right;">
-Number of sequences
+Number of outcomes
 </th>
 <th style="text-align:left;">
 <span class="math inline">\(P(x)\)</span>
@@ -2222,13 +2321,13 @@ Number of sequences
 0
 </td>
 <td style="text-align:left;">
-TTTT
+TTT
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:left;">
-1/16 = 0.0625
+1/8
 </td>
 </tr>
 <tr>
@@ -2236,13 +2335,13 @@ TTTT
 1
 </td>
 <td style="text-align:left;">
-HTTT, THTT, TTHT, TTTH
+HTT, THT, TTH
 </td>
 <td style="text-align:right;">
-4
+3
 </td>
 <td style="text-align:left;">
-4/16 = 0.2500
+3/8
 </td>
 </tr>
 <tr>
@@ -2250,13 +2349,13 @@ HTTT, THTT, TTHT, TTTH
 2
 </td>
 <td style="text-align:left;">
-HHTT, HTHT, HTTH, THHT, THTH, TTHH
+HHT, HTH, THH
 </td>
 <td style="text-align:right;">
-6
+3
 </td>
 <td style="text-align:left;">
-6/16 = 0.3750
+3/8
 </td>
 </tr>
 <tr>
@@ -2264,54 +2363,32 @@ HHTT, HTHT, HTTH, THHT, THTH, TTHH
 3
 </td>
 <td style="text-align:left;">
-HHHT, HHTH, HTHH, THHH
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-4/16 = 0.2500
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-HHHH
+HHH
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:left;">
-1/16 = 0.0625
+1/8
 </td>
 </tr>
 </tbody>
 </table>
-<p>Every discrete probability distribution follows the same two rules as
-any probability model:</p>
-<ol style="list-style-type: decimal">
-<li>every probability is between 0 and 1, and</li>
-<li>the probabilities add to 1. Here <span class="math inline">\(1 + 4 +
-6 + 4 + 1 = 16\)</span> sequences, so the probabilities sum to <span
-class="math inline">\(16/16 = 1\)</span>.</li>
-</ol>
+<p>Here <span class="math inline">\(1 + 3 + 3 + 1 = 8\)</span> outcomes,
+so the probabilities add to <span class="math inline">\(8/8 =
+1\)</span>.</p>
+<p><img src="assets/l14_three_tosses.png" width="65%" style="display: block; margin: auto;" /></p>
 <p>To find the probability of an event, add the probabilities of the
 values that make it up:</p>
 <ul>
-<li><span class="math inline">\(P(X \geq 3) = P(X = 3) + P(X = 4) = 4/16
-+ 1/16 = 5/16 = 0.3125\)</span>.</li>
-<li><span class="math inline">\(P(X \geq 1) = 1 - P(X = 0) = 1 - 1/16 =
-15/16\)</span>, by the complement rule.</li>
-<li><span class="math inline">\(P(1 \leq X \leq 3) = (4 + 6 + 4)/16 =
-14/16 = 0.875\)</span>.</li>
+<li><span class="math inline">\(P(X \geq 2) = P(X = 2) + P(X = 3) = 3/8
++ 1/8 = 4/8\)</span>.</li>
+<li><span class="math inline">\(P(X \leq 1) = 1 - P(X \geq 2) = 1 - 4/8
+= 4/8\)</span>, by the complement rule. In general <span
+class="math inline">\(P(X &gt; a) = 1 - P(X \leq a)\)</span>.</li>
+<li><span class="math inline">\(P(1 \leq X \leq 2) = 3/8 + 3/8 =
+6/8\)</span>.</li>
 </ul>
-<p>A probability distribution can be drawn as a bar chart (a probability
-histogram) whose bars add to 1. Shading the bars that make up an event
-shows its probability as an area, the same idea as the area under a
-density curve.</p>
-<p><img src="lecturemenu6_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 </div>
 <div id="mean-and-standard-deviation-of-a-discrete-random-variable"
 class="section level2">
@@ -2321,8 +2398,8 @@ distribution of data. The formulas weight each value by its probability
 instead of by how often it appeared in a sample.</p>
 <ul>
 <li>The <strong>mean</strong>, or <strong>expected value</strong>, of a
-discrete random variable is <span class="math display">\[\mu = \sum x
-\cdot P(x)\]</span></li>
+discrete random variable is its long-run average: <span
+class="math display">\[\mu = \sum x \cdot P(x)\]</span></li>
 <li>The <strong>variance</strong> and <strong>standard
 deviation</strong> are <span class="math display">\[\sigma^2 = \sum (x -
 \mu)^2 \cdot P(x) \qquad\qquad \sigma = \sqrt{\sigma^2}\]</span></li>
@@ -2332,8 +2409,7 @@ class="math inline">\(X\)</span> over many repetitions, which is the law
 of large numbers again. It does not have to be a value <span
 class="math inline">\(X\)</span> can actually take, and it is not a
 prediction for any single trial.</p>
-<p>For the number of heads in four tosses, an expected value table lays
-the work out:</p>
+<p>For the number of heads in three tosses:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2357,13 +2433,13 @@ the work out:</p>
 0
 </td>
 <td style="text-align:left;">
-1/16
+1/8
 </td>
 <td style="text-align:left;">
-0(1/16) = 0.0000
+0(1/8) = 0.000
 </td>
 <td style="text-align:left;">
-(0 - 2)^2(1/16) = 0.2500
+(0 - 1.5)^2(1/8) = 0.281
 </td>
 </tr>
 <tr>
@@ -2371,13 +2447,13 @@ the work out:</p>
 1
 </td>
 <td style="text-align:left;">
-4/16
+3/8
 </td>
 <td style="text-align:left;">
-1(4/16) = 0.2500
+1(3/8) = 0.375
 </td>
 <td style="text-align:left;">
-(1 - 2)^2(4/16) = 0.2500
+(1 - 1.5)^2(3/8) = 0.094
 </td>
 </tr>
 <tr>
@@ -2385,13 +2461,13 @@ the work out:</p>
 2
 </td>
 <td style="text-align:left;">
-6/16
+3/8
 </td>
 <td style="text-align:left;">
-2(6/16) = 0.7500
+2(3/8) = 0.750
 </td>
 <td style="text-align:left;">
-(2 - 2)^2(6/16) = 0.0000
+(2 - 1.5)^2(3/8) = 0.094
 </td>
 </tr>
 <tr>
@@ -2399,37 +2475,24 @@ the work out:</p>
 3
 </td>
 <td style="text-align:left;">
-4/16
+1/8
 </td>
 <td style="text-align:left;">
-3(4/16) = 0.7500
+3(1/8) = 0.375
 </td>
 <td style="text-align:left;">
-(3 - 2)^2(4/16) = 0.2500
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-1/16
-</td>
-<td style="text-align:left;">
-4(1/16) = 0.2500
-</td>
-<td style="text-align:left;">
-(4 - 2)^2(1/16) = 0.2500
+(3 - 1.5)^2(1/8) = 0.281
 </td>
 </tr>
 </tbody>
 </table>
-<p>Adding the columns, <span class="math inline">\(\mu = 0 + 0.25 + 0.75
-+ 0.75 + 0.25 = 2\)</span> heads, and <span
-class="math inline">\(\sigma^2 = 0.25 + 0.25 + 0 + 0.25 + 0.25 =
-1\)</span>, so <span class="math inline">\(\sigma = 1\)</span> head.
-Over many sets of four tosses the average number of heads is 2, and a
-typical set is about 1 head away from that.</p>
+<p>Adding the columns, <span class="math inline">\(\mu = 0 + 0.375 +
+0.75 + 0.375 = 1.5\)</span> heads, and <span
+class="math inline">\(\sigma^2 = 0.281 + 0.094 + 0.094 + 0.281 =
+0.75\)</span>, so <span class="math inline">\(\sigma = \sqrt{0.75}
+\approx 0.87\)</span> heads. Over many sets of three tosses the average
+number of heads is 1.5, even though no single set can have 1.5
+heads.</p>
 <div id="example-grade-points-on-an-exam" class="section level3">
 <h3>Example: grade points on an exam</h3>
 <p>A STAT 251 exam grade on the four-point scale (<span
@@ -2567,10 +2630,11 @@ normal.</li>
 <li>A statistic varies from sample to sample. Its <strong>sampling
 distribution</strong> is its distribution over all possible samples of
 size <span class="math inline">\(n\)</span>.</li>
-<li>The sampling distribution of <span
-class="math inline">\(\bar{x}\)</span> is centered at <span
-class="math inline">\(\mu\)</span> and has <strong>standard
-error</strong> <span class="math inline">\(SE =
+<li>A sampling distribution is centered at the parameter only if the
+statistic is <strong>unbiased</strong>. For a random sample, <span
+class="math inline">\(\bar{x}\)</span> is unbiased, so its sampling
+distribution is centered at <span class="math inline">\(\mu\)</span> and
+has <strong>standard error</strong> <span class="math inline">\(SE =
 \sigma/\sqrt{n}\)</span>. Quadrupling <span
 class="math inline">\(n\)</span> halves the standard error.</li>
 <li><strong>Margin of error</strong> <span class="math inline">\(= 2
@@ -2582,15 +2646,21 @@ not the same as important.</li>
 <div id="probability" class="section level2">
 <h2>Probability</h2>
 <ul>
-<li>Probability is long-run relative frequency, and the law of large
-numbers is why it works.</li>
-<li>The rules: <span class="math inline">\(0 \leq P(A) \leq 1\)</span>;
-everything adds to 1; <span class="math inline">\(P(A&#39;) = 1 -
-P(A)\)</span>; <span class="math inline">\(P(A \text{ OR } B) = P(A) +
-P(B) - P(A \text{ AND } B)\)</span>; and for independent events <span
-class="math inline">\(P(A \text{ AND } B) = P(A)P(B)\)</span>.</li>
-<li>A <strong>random variable</strong> is a numerical outcome of a
-chance experiment. A discrete one has a probability distribution with
+<li>Probability is the long-run relative frequency of an event, between
+0 and 1. The <strong>law of large numbers</strong> says the relative
+frequency over <span class="math inline">\(n\)</span> independent trials
+gets closer and closer to the probability as <span
+class="math inline">\(n\)</span> grows.</li>
+<li>The four rules: <span class="math inline">\(0 \leq P(A) \leq
+1\)</span>; <span class="math inline">\(\sum_i P(A_i) = 1\)</span>;
+<span class="math inline">\(P(A \cup B) = P(A) + P(B)\)</span> for
+disjoint events; <span class="math inline">\(P(A&#39;) = 1 -
+P(A)\)</span>. In general <span class="math inline">\(P(A \cup B) = P(A)
++ P(B) - P(A \cap B)\)</span>, and for independent events <span
+class="math inline">\(P(A \cap B) = P(A) \cdot P(B)\)</span>. Disjoint
+is not the same as independent.</li>
+<li>A <strong>random variable</strong> is the outcome of a random trial
+recorded as a number. A discrete one has a probability distribution with
 mean <span class="math inline">\(\mu = \sum x P(x)\)</span> and standard
 deviation <span class="math inline">\(\sigma = \sqrt{\sum (x - \mu)^2
 P(x)}\)</span>.</li>
