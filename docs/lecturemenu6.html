@@ -2260,6 +2260,44 @@ P(T) \approx 0.69 \cdot 0.28 \approx 0.19\)</span>, far from the actual
 <span class="math inline">\(P(F \cap T) \approx 0.05\)</span>.</p>
 </div>
 </div>
+<div id="sampling-with-and-without-replacement" class="section level2">
+<h2>Sampling with and without replacement</h2>
+<p>Recall the two ways of drawing a sample from the Weeks 4-5 notes.
+Here a sample of 3 balls is drawn from a bag of 5:</p>
+<p><img src="assets/l8_replacement.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Are the draws independent?</p>
+<ul>
+<li><strong>With replacement</strong>, yes. Each ball goes back before
+the next draw, so the bag is the same on every draw and what happened on
+one draw cannot change the next. The multiplication rule <span
+class="math inline">\(P(A \cap B) = P(A) \cdot P(B)\)</span>
+applies.</li>
+<li><strong>Without replacement</strong>, no. Each draw removes a ball,
+so it changes what is left, and the probabilities on the next draw
+depend on what was drawn before.</li>
+</ul>
+<p>Simple random samples are drawn without replacement, so strictly
+their draws are dependent. When the population is much larger than the
+sample, though, removing a few units barely changes what is left, and
+the draws behave almost exactly as if they were independent.</p>
+<div id="example-drawing-two-aces" class="section level3">
+<h3>Example: drawing two aces</h3>
+<p>A standard deck has 52 cards, 4 of them aces. Draw two cards. What is
+the probability that both are aces?</p>
+<ul>
+<li><strong>With replacement:</strong> the first card goes back, so the
+two draws are independent and <span class="math display">\[P(\text{two
+aces}) = \frac{4}{52} \cdot \frac{4}{52} = \frac{1}{169} \approx
+0.0059\]</span></li>
+<li><strong>Without replacement:</strong> if the first card is an ace,
+only 3 aces are left among 51 cards, so <span
+class="math display">\[P(\text{two aces}) = \frac{4}{52} \cdot
+\frac{3}{51} = \frac{1}{221} \approx 0.0045\]</span></li>
+</ul>
+<p>Not putting the card back makes two aces less likely, because the
+first ace used up one of the four.</p>
+</div>
+</div>
 <div id="random-variables" class="section level2">
 <h2>Random variables</h2>
 <p>In statistics we usually record the outcome of a random trial as a
