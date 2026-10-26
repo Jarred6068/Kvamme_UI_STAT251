@@ -103,6 +103,13 @@ stopifnot(x_t == 238, n_t == 743, ph_t == 0.320, se_t == 0.017,
   value, finishes the Lecture 20 material, and squeezes in "Choosing a minimum sample size" (one
   definition slide and one example). "Assumptions behind these intervals" is notes reading only.
   No schedule shift: Friday's planned topics are still covered.
+
+  Lecture 21 also ran short (Oct 26 2026): it stopped after the t-table example (slide 11), so its
+  deck is trimmed to slides 1-11. Lecture 22 (Mon Oct 26, Week10_Lecture22_Slides_10_26_2026.pptx)
+  opens with "Which interval?" as the review and the spotted seal example, then moves on to
+  "Choosing a minimum sample size" (its definition slide, the planning example and a new practice
+  problem), then moves on to significance tests. The watermelon example was not delivered in class;
+  it stays on this page as reading.
 -->
 
 # Finding normal probabilities
@@ -922,6 +929,8 @@ nsz_m <- function(z, sig, m) ceiling(round((z * sig / m)^2, 6))
 stopifnot(round(1.96^2 * 0.25 / 0.03^2, 1) == 1067.1, nsz_p(1.96, 0.5, 0.03) == 1068,
           round((1.96 * 7.9 / 2)^2, 1) == 59.9, nsz_m(1.96, 7.9, 2) == 60,
           nsz_p(1.96, 0.5, 0.015) == 4269, round(1.96^2 * 0.55 * 0.45 / 0.03^2, 1) == 1056.4,
+          round(1.645^2 * 0.21 / 0.04^2, 1) == 355.2, nsz_p(1.645, 0.3, 0.04) == 356,
+          round(1.645^2 * 0.25 / 0.04^2, 1) == 422.8, nsz_p(1.645, 0.5, 0.04) == 423,
           nsz_p(1.96, 0.95, 0.02) == 457, nsz_m(1.96, 2.5, 0.5) == 97, nsz_m(1.645, 400, 120) == 31,
           round(1 / 0.00012) == 8333, round(1 / 0.0054) == 185, round(0.00012 * 5.6e6) == 672)
 ```
@@ -966,6 +975,13 @@ people instead of 1,068.
 
 * **Try it out.**
 
+    * *(The Lecture 22 practice problem.)* Campus dining wants to estimate the proportion of students who
+      skip breakfast, within $\pm 0.04$ with 90% confidence. Last year's survey found that 30% skip
+      breakfast. (a) How many students should they survey, using last year's 30%? (b) How many if there
+      were no earlier survey? (c) Why is (b) larger?
+      *Answer:* (a) $n = 1.645^2(0.3)(0.7)/0.04^2 = 355.2$, so **356** students. (b) With $p^* = 0.5$,
+      $n = 1.645^2(0.5)(0.5)/0.04^2 = 422.8$, so **423** students. (c) $p^*(1-p^*)$ is largest at
+      $p^* = 0.5$, so having no earlier guess is the safe, larger choice.
     * The sensitivity of a medical test is the probability that it comes back positive when the person has
       the disease. Rapid strep tests have a sensitivity of about 0.95. How many tests of a new rapid strep
       test would be needed to estimate its sensitivity within $\pm 0.02$ with 95% confidence?

@@ -179,7 +179,15 @@ Confidence levels other than 95%: the confidence level, &alpha; and critical val
 <a href="./lecture_slides/Week%209/2026/Week9_Lecture20_Slides_10_21_2026.pptx">Slides (PowerPoint)</a>
 
 ## Lecture 21 &middot; Friday, October 23
-Confidence intervals concluded: interval width, the t distribution and intervals for a mean when &sigma; is unknown; choosing a minimum sample size
+Interval width and the t distribution (intervals for a mean when &sigma; is unknown and choosing a minimum sample size moved to Lecture 22)
 
 <a href="./lecture_slides/Week%209/2026/Week9_Lecture21_Slides_10_23_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%209/2026/Week9_Lecture21_Slides_10_23_2026.pptx">Slides (PowerPoint)</a>
+
+# Week 10
+
+## Lecture 22 &middot; Monday, October 26
+An interval for a mean when &sigma; is unknown; choosing a minimum sample size; introduction to significance tests: hypotheses, test statistics, P-values and statistical significance
+
+<a href="./lecture_slides/Week%2010/2026/Week10_Lecture22_Slides_10_26_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2010/2026/Week10_Lecture22_Slides_10_26_2026.pptx">Slides (PowerPoint)</a>
