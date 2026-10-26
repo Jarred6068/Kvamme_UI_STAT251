@@ -374,6 +374,9 @@ $(document).ready(function () {
         <li>
           <a href="lecturemenu9.html">Week 9</a>
         </li>
+        <li>
+          <a href="lecturemenu10.html">Week 10</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -559,530 +562,905 @@ $(document).ready(function () {
 </div>
 
 
-<div id="review-of-confidence-intervals-for-p" class="section level1">
-<h1>Review of confidence intervals for <span
-class="math inline">\(p\)</span>:</h1>
-<p>Recall that <strong>confidence intervals</strong> are used to
-estimate the value of an <u>unknown parameter</u> with an interval of
-values. Confidence intervals serve two purposes: (1) they provide a
-range of possible values of the parameter and (2) they provide an
-indication of how accurate the estimate is i.e how <i>confident</i> we
-are in the results. A confidence interval has the general form</p>
-<p><span class="math display">\[ \text{point estimate} \ \pm \
-\text{margin of error}  \]</span></p>
-<p>The <i>confidence</i> portion comes from the <strong>confidence
-level</strong> which states the probability that the interval will give
-the correct result based on the long-run frequency of the method. That
-is, for a confidence level of <span class="math inline">\(95\%\)</span>,
-for example, we can expect approximately <span
-class="math inline">\(95\%\)</span> of confidence intervals to capture
-the value of the unknown parameter. However, for any given confidence
-interval, once it is computed the value of the parameter is either in
-the interval or not in the interval - but we do not know.</p>
-<p>Before the break, we discussed three confidence intervals: 2 for a
-population mean and one for a population proportion. We will review the
-latter first. The <span class="math inline">\(100(1 - \alpha)\%\)</span>
-confidence interval for estimating <span
-class="math inline">\(p\)</span> with <span
-class="math inline">\(\hat{p}\)</span> is given by</p>
-<p><span class="math display">\[ \hat{p} \ \pm \ z_{1 - \alpha/2} \
-\sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]</span></p>
-<p>where <span class="math inline">\(\hat{p}\)</span> denotes the sample
-proportion and</p>
-<p><span class="math display">\[ m = z_{1 - \alpha/2}
-\sqrt{\frac{\hat{p}(1- \hat{p})}{n}}\]</span></p>
-<p>denotes the margin of error.</p>
+<!--
+  SCOPE OF THIS PAGE (Oct 26 2026). Week 10 per Course_Schedule.Rmd (the date source of truth):
+    Mon Oct 26   Lecture 22  the t interval concluded (seal whiskers, on the Week 9 page) and choosing a
+                             minimum sample size (also on the Week 9 page); introduction to
+                             significance tests and P-values (this page)
+                             lecture_slides/Week 10/2026/Week10_Lecture22_Slides_10_26_2026.pptx
+    Wed Oct 28   Lecture 23  tests for a population proportion   (to be added)
+    Fri Oct 30   Lecture 24  tests for a population mean         (to be added)
+
+  This page replaced the 2024 Week 10 page (git show 27a60f5:docs/lecturemenu10.Rmd). Its review of
+  confidence intervals and sample size now lives on the Week 9 page. Its "Introduction to tests of
+  significance" is rebuilt here, slowly, from the tools students already have: parameters and
+  estimates (Week 1), the binomial (Week 7), sampling distributions and the CLT (Week 8), z-scores and
+  normal areas (Weeks 6 and 9). The notation and the five steps follow Jarred's 2024 notes (2024
+  Lecture 21, git show 27a60f5:docs/lecturemenu11.Rmd). Textbook: OpenStax Introductory Statistics 2e,
+  Sections 9.1-9.5. The taste test and the Candidate X poll (Jarred's idea, midterm season) are
+  hypothetical; the coin flips are Bartos et al. (2025). The poll is also slide 14 of Lecture 22.
+-->
+<div id="from-estimating-to-testing" class="section level1">
+<h1>From estimating to testing</h1>
+<p>For the last two weeks we have been <strong>estimating</strong>
+parameters: a confidence interval answers the question <em>“what is
+<span class="math inline">\(p\)</span> (or <span
+class="math inline">\(\mu\)</span>), give or take?”</em> A lot of
+questions are not asked that way. They come as a <strong>claim</strong>,
+and we want to know whether the data back it up:</p>
 <ul>
-<li><p><strong>Practice:</strong> Investors in the stock market are
-often interested in understanding the true proportion of stocks that go
-up and down each week. Suppose a random sample of <span
-class="math inline">\(150\)</span> stocks is taken, and it is found that
-<span class="math inline">\(82\)</span> of them have increased in value
-during the past week.</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>compute the margin of error <span
-class="math inline">\(m\)</span></p></li>
-<li><p>Give the <span class="math inline">\(95\%\)</span> confidence
-interval for the true proportion of stocks <span
-class="math inline">\(p\)</span></p></li>
-<li><p>If you instead wanted the <span
-class="math inline">\(99\%\)</span> confidence interval for the same
-sample, would the margin of error be greater than, less than, or equal
-to the margin of error you computed in part (a)?</p></li>
-</ol></li>
+<li>A new drug claims to lower blood pressure. Does it, or did the
+patients’ readings just happen to drop?</li>
+<li>The polling averages say a Senate candidate has 52% support. A new
+poll finds less. Has support really dropped, or is the new poll just a
+different sample?</li>
+<li>Your roommate says they can tell Coke from Pepsi. Can they, or are
+they guessing?</li>
 </ul>
-<div id="review-of-confidence-intervals-for-mu" class="section level2">
-<h2>Review of confidence intervals for <span
-class="math inline">\(\mu\)</span>:</h2>
-<p>For estimating <span class="math inline">\(\mu\)</span> with <span
-class="math inline">\(\bar{x}\)</span>, we first proposed the following
-confidence interval</p>
-<p><span class="math display">\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \
-\frac{\sigma}{\sqrt{n}}\]</span></p>
-<p>where <span class="math inline">\(\bar{x}\)</span> denotes the sample
-mean and</p>
-<p><span class="math display">\[ m = z_{1 - \alpha/2} \
-\frac{\sigma}{\sqrt{n}}\]</span></p>
-<p>denotes the margin of error. Recall that this interval requires that
-we know the value of <span class="math inline">\(\sigma\)</span> - the
-population standard deviation. If we do not know the value of <span
-class="math inline">\(\sigma\)</span>, we could instead sub in the
-sample standard deviation <span class="math inline">\(s\)</span> in its
-place to get</p>
-<p><span class="math display">\[ \bar{x} \ \pm \  z_{1 - \alpha/2} \
-\frac{s}{\sqrt{n}}\]</span></p>
-<p>However, as we discussed before the break, the confidence interval
-above, which is based on the standard normal distribution, will tend to
-have a lower than expected confidence level when <span
-class="math inline">\(n\)</span> is small, say <span
-class="math inline">\(n \leq 30\)</span>. Instead, a better confidence
-interval that is based on the <span
-class="math inline">\(t\)</span>-distribution is given by</p>
-<p><span class="math display">\[ \bar{x} \ \pm \  t_{n-1, 1 - \alpha/2}
-\ \frac{s}{\sqrt{n}}\]</span></p>
-<p>where <span class="math inline">\(t_{n-1, 1 - \alpha/2}\)</span> is
-the <span class="math inline">\(1-\alpha/2\)</span> percentile of a
-<span class="math inline">\(t\)</span> distribution with <span
-class="math inline">\(n-1\)</span> degrees of freedom. The above
-confidence interval will give correct results regardless of sample size.
-Moreover, since the <span class="math inline">\(t\)</span>-distribution
-converges to the standard normal distribution as <span
-class="math inline">\(n\)</span> gets large, the two methods tend to
-give identical results for large <span
-class="math inline">\(n\)</span>.</p>
-<ul>
-<li><strong>Practice</strong> Consider the following data table which
-gives the mean annual temperature in Central Park over 10 years of
-recordings starting in 2009.</li>
-</ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Year
-</th>
-<th style="text-align:right;">
-Mean Annual Temp
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-2009
-</td>
-<td style="text-align:right;">
-54.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2010
-</td>
-<td style="text-align:right;">
-56.7
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2011
-</td>
-<td style="text-align:right;">
-56.4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2012
-</td>
-<td style="text-align:right;">
-57.3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2013
-</td>
-<td style="text-align:right;">
-55.3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2014
-</td>
-<td style="text-align:right;">
-54.4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2015
-</td>
-<td style="text-align:right;">
-56.7
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2016
-</td>
-<td style="text-align:right;">
-57.2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2017
-</td>
-<td style="text-align:right;">
-56.3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2018
-</td>
-<td style="text-align:right;">
-55.9
-</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>Verify that the average mean annual temp is <span
-class="math inline">\(\bar{x} = 56.02\)</span> with standard deviation
-<span class="math inline">\(s \approx 1.13\)</span></p></li>
-<li><p>Give the <span class="math inline">\(95\%\)</span> confidence
-interval for mean annual temperature</p></li>
-</ul>
+<p>Each claim is about a <strong>parameter</strong>: the drug’s average
+effect <span class="math inline">\(\mu\)</span>, the candidate’s support
+<span class="math inline">\(p\)</span>, your roommate’s chance <span
+class="math inline">\(p\)</span> of naming a cup correctly. We never see
+the parameter. We see an <strong>estimate</strong> from a sample, and
+estimates bounce around from sample to sample (Week 8: two polls of the
+same state give two different answers). So the real question is
+always:</p>
+<blockquote>
+<p><strong>Is the difference between what we saw and what the claim says
+too big to be ordinary sampling variation?</strong></p>
+</blockquote>
+<p>A <strong>significance test</strong> (also called a
+<strong>hypothesis test</strong>) is the tool that answers it. A result
+that is decidedly <strong>not</strong> due to ordinary variation, that
+is, not due to chance or coincidence, is called <strong>statistically
+significant</strong>.</p>
 </div>
-<div id="factors-that-influence-the-margin-of-error"
+<div id="the-logic-of-a-significance-test" class="section level1">
+<h1>The logic of a significance test</h1>
+<div id="in-plain-words-a-courtroom" class="section level2">
+<h2>In plain words: a courtroom</h2>
+<p>A significance test works like a criminal trial.</p>
+<ul>
+<li>The defendant is <strong>presumed innocent</strong>. Nobody has to
+prove innocence; innocence is the starting assumption. In a test, the
+starting assumption is the boring explanation, “nothing interesting is
+going on”, and it is called the <strong>null hypothesis</strong>.</li>
+<li>The prosecution has a <strong>suspicion</strong>: the defendant did
+it. In a test, the suspicion is called the <strong>alternative
+hypothesis</strong>. The burden of proof is on the suspicion, not on the
+boring explanation.</li>
+<li>The jury asks: <strong>if the defendant really were innocent, how
+likely is evidence like this?</strong> If that is very unlikely (beyond
+reasonable doubt), they convict. In a test, that probability is the
+<strong>P-value</strong>, and “beyond reasonable doubt” is a cutoff we
+pick in advance, the <strong>significance level</strong> <span
+class="math inline">\(\alpha\)</span>.</li>
+<li>A jury that does not convict says <strong>“not guilty”</strong>,
+never “innocent”. Weak evidence does not prove innocence. In a test, we
+either <strong>reject</strong> the null hypothesis or <strong>do not
+reject</strong> it. We never “accept” it.</li>
+</ul>
+<p>Hold on to that picture. Everything below is the same four ideas with
+numbers attached.</p>
+</div>
+<div id="working-it-through-can-you-taste-the-difference"
 class="section level2">
-<h2>Factors that influence the margin of error:</h2>
-<p>When we compute a confidence interval, we would like the interval to
-be as small as possible. Why? simply put, because we want the most
-precise estimate of the parameter that we can get. A small interval is
-the result of a small margin of error. However, several factors affect
-the width of the margin of error of an estimate. The margin of error of
-a confidence interval decreases as:</p>
+<h2>Working it through: can you taste the difference?</h2>
+<p>Your roommate claims they can tell Coke from Pepsi. You set up a
+blind test: 8 times, you flip a coin to decide which soda to pour, and
+they taste the cup and name it. They get <strong>all 8 right</strong>.
+Impressive, or lucky?</p>
+<div id="step-1-name-the-parameter-and-the-two-stories"
+class="section level3">
+<h3>Step 1: name the parameter, and the two stories</h3>
+<p>The parameter is <span class="math inline">\(p\)</span>, your
+roommate’s true, long-run chance of naming a cup correctly. We cannot
+see <span class="math inline">\(p\)</span>; we only see this one test,
+where they got <span class="math inline">\(\hat{p} = 8/8 = 1\)</span>.
+There are two stories about <span class="math inline">\(p\)</span>:</p>
+<ul>
+<li><strong>Story 1, “just guessing”:</strong> they cannot really tell,
+so each cup is a coin flip, and <span class="math inline">\(p =
+0.5\)</span>. This is the <strong>null hypothesis</strong>, written
+<span class="math inline">\(H_0: p = 0.5\)</span>.</li>
+<li><strong>Story 2, “they can taste it”:</strong> they do better than
+guessing, <span class="math inline">\(p &gt; 0.5\)</span>. This is the
+<strong>alternative hypothesis</strong>, written <span
+class="math inline">\(H_A: p &gt; 0.5\)</span>.</li>
+</ul>
+<p>Notice that the hypotheses are about <span
+class="math inline">\(p\)</span>, the parameter, not about <span
+class="math inline">\(\hat{p}\)</span>. We already <strong>know</strong>
+<span class="math inline">\(\hat{p} = 1\)</span>; there is nothing to
+test about it. The question is what it tells us about <span
+class="math inline">\(p\)</span>.</p>
+</div>
+<div id="step-2-suppose-h_0-is-true.-what-results-would-we-expect"
+class="section level3">
+<h3>Step 2: suppose <span class="math inline">\(H_0\)</span> is true.
+What results would we expect?</h3>
+<p>Here is the key move. We cannot prove story 2 directly, so we
+<strong>assume story 1</strong> and work out what it predicts. If they
+are only guessing, then the number of cups they get right, <span
+class="math inline">\(X\)</span>, is a count of successes in 8
+independent trials that each succeed with probability 0.5. That is a
+binomial random variable from Week 7: <span class="math display">\[X
+\sim \text{Binom}(8,\ 0.5) \qquad\text{when } H_0 \text{ is
+true}\]</span></p>
+<p>A helpful way to see this distribution: imagine <strong>256 people
+who cannot taste the difference</strong> each take the 8-cup test,
+guessing every time. Since <span class="math inline">\(2^8 =
+256\)</span>, the binomial formula <span class="math inline">\(P(X = k)
+= \binom{8}{k}(0.5)^k(0.5)^{8-k} = \binom{8}{k}/256\)</span> says that,
+on average, exactly <span class="math inline">\(\binom{8}{k}\)</span> of
+them score <span class="math inline">\(k\)</span>:</p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-1-1.png" alt="Bar chart of how many of 256 pure guessers get each score on an 8-cup taste test, from 0 to 8 correct. The bars rise and fall symmetrically: 1, 8, 28, 56, 70, 56, 28, 8 and 1 guessers. The tallest bar is at 4 correct. Only the single guesser at 8 correct, the far right bar, is highlighted, matching the roommate's score." width="768" style="display: block; margin: auto;" /></p>
+<p>This is what “just guessing” looks like. Most guessers land near 4
+out of 8, which makes sense: the mean of a binomial is <span
+class="math inline">\(np = 8(0.5) = 4\)</span>. Some get 5 or 6 by luck.
+Getting <strong>all 8</strong> happens to about <strong>1 guesser in
+256</strong>.</p>
+</div>
+<div id="step-3-how-surprising-is-what-we-actually-saw"
+class="section level3">
+<h3>Step 3: how surprising is what we actually saw?</h3>
+<p>Now compare the data with the prediction. The probability, <strong>if
+<span class="math inline">\(H_0\)</span> is true</strong>, of a result
+at least as extreme as the one we saw is called the
+<strong>P-value</strong>. “At least as extreme” means at least as far in
+the direction <span class="math inline">\(H_A\)</span> points to, which
+here is “as many correct, or more”: <span
+class="math display">\[\text{P-value} = P(X \geq 8 \mid H_0 \text{
+true}) = \binom{8}{8}(0.5)^8 = \frac{1}{256} \approx 0.0039\]</span> The
+bar <span class="math inline">\(\mid\)</span> is read
+<strong>“given”</strong>: the probability is worked out in the world
+where <span class="math inline">\(H_0\)</span> is true. That is the same
+conditional probability idea from Week 6.</p>
+<p>A P-value of 0.0039 says: <strong>if your roommate were only
+guessing, a result this good would happen less than half a percent of
+the time.</strong></p>
+</div>
+<div id="step-4-two-explanations-and-a-decision" class="section level3">
+<h3>Step 4: two explanations, and a decision</h3>
+<p>There are only two ways to explain a result with a small P-value:</p>
 <ol style="list-style-type: decimal">
-<li><p>The confidence level decreases</p></li>
-<li><p>The population standard deviation <span
-class="math inline">\(\sigma\)</span> decreases</p></li>
-<li><p>The sample size <span class="math inline">\(n\)</span>
-increases</p></li>
+<li><strong>Something unusual happened.</strong> Your roommate was
+guessing and got very lucky: they are the 1 in 256.</li>
+<li><strong>The assumption behind the calculation is wrong.</strong>
+<span class="math inline">\(H_0\)</span> is false; they really can taste
+the difference.</li>
 </ol>
-<p><a
-href="https://digitalfirst.bfwpub.com/stats_applet/stats_applet_20_ciprop.html">See
-this link here</a> to check these properties yourself!</p>
-<p>First, we typically do not want to decrease the confidence level. By
-convention, most confidence intervals reported in academic journals are
-at least <span class="math inline">\(90\%\)</span> or greater. This is
-because we want to retain a high degree of <i>confidence</i> that our
-estimate is accurate. Secondly, we have no control over the value of the
-population standard deviation. <span
-class="math inline">\(\sigma\)</span> is a property of the population.
-If <span class="math inline">\(\sigma\)</span> is inherently large for
-the population under study, then we are out of luck in that regard.</p>
-<p>However, we are fortunate in that we can control the sample size of
-our study. Recall that the standard deviation for the sampling
-distributions of <span class="math inline">\(\bar{x}\)</span> and <span
-class="math inline">\(\hat{p}\)</span> both involve division by the
-number of observations in the sample <span
-class="math inline">\(n\)</span>. Therefore, we can reduce the margin of
-error of our estimate of <span class="math inline">\(\mu\)</span> or
-<span class="math inline">\(p\)</span> by increasing <span
-class="math inline">\(n\)</span> - the number of observations in the
-sample.</p>
+<p>Both are possible. The test does not tell us which one is true. It
+tells us how hard we would have to believe in luck to keep believing
+<span class="math inline">\(H_0\)</span>. The smaller the P-value, the
+harder that gets, and at some point explanation 2 becomes the more
+reasonable one.</p>
+<p>Where is that point? It is a choice, made <strong>before</strong>
+looking at the data, called the <strong>significance level</strong>
+<span class="math inline">\(\alpha\)</span>. By convention <span
+class="math inline">\(\alpha = 0.05\)</span>, i.e. “if a result this
+extreme would happen less than 5% of the time by luck alone, we stop
+believing it was luck”. The decision rule is:</p>
+<ul>
+<li>If the P-value <span class="math inline">\(&lt; \alpha\)</span>:
+<strong>reject <span class="math inline">\(H_0\)</span></strong>. The
+result is statistically significant; the data are evidence for <span
+class="math inline">\(H_A\)</span>.</li>
+<li>If the P-value <span class="math inline">\(\geq \alpha\)</span>:
+<strong>do not reject <span class="math inline">\(H_0\)</span></strong>.
+The result is not statistically significant; the data are not strong
+enough evidence for <span class="math inline">\(H_A\)</span>.</li>
+</ul>
+<p>Here <span class="math inline">\(0.0039 &lt; 0.05\)</span>, so we
+reject <span class="math inline">\(H_0\)</span>: the data are evidence
+that your roommate can taste the difference. The textbook’s memory
+device: <strong>“if the P-value is low, the null must go.”</strong></p>
 </div>
-<div id="choosing-a-minimum-sample-size" class="section level2">
-<h2>Choosing a minimum sample size</h2>
-<p>While it is nice that we can simply choose to observe a large number
-of observations from the population to get a small margin of error, real
-studies and surveys cost time, money, and effort on behalf of the
-researchers. Therefore, we want to avoid taking an arbitrarily large
-number of observations. Instead, we would like to observe only as many
-observations as needed to achieve a certain precision in our
-estimate.</p>
-<p>Luckily, with a little bit of algebra we can rearrange the formula
-for the margin of error to determine the sample size we required to
-achieve a desired level of precision.</p>
-<p>How do we choose <span class="math inline">\(n\)</span> for estimate
-<span class="math inline">\(p\)</span> with <span
-class="math inline">\(\hat{p}\)</span>? Consider that</p>
-<p><span class="math display">\[ m = z_{1-\alpha/2} \
-\sqrt{\frac{p(1-p)}{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2
-p(1-p)}{m^2}\]</span></p>
-<p>where <span class="math inline">\(m\)</span> denotes the margin of
-error, <span class="math inline">\(p\)</span> is the population
-proportion and <span class="math inline">\(z\)</span> is the standard
-score corresponding the desired <span
-class="math inline">\(100(1-\alpha)\%\)</span> confidence level. Keep in
-mind that the formula above is used to determine the sample size needed
-when we designing a study to investigate the value of an unknown
-population proportion. Therefore, how do we choose the value <span
-class="math inline">\(p\)</span>? We have essentially two options</p>
-<ol style="list-style-type: decimal">
-<li><p>We can look for related studies or prior research to inform the
-value of <span class="math inline">\(p\)</span></p></li>
-<li><p>We can use <span class="math inline">\(p = 0.5\)</span> which
-gives the upper bound on the sample size:</p></li>
-</ol>
-<p><span class="math display">\[ n = \frac{z^2 p(1-p)}{m^2} \leq
-\frac{z^2 0.5(1-0.5)}{m^2} \]</span></p>
-<p>The latter option is a conservative approach we can use when we have
-no prior information regarding the value of the population
-proportion.</p>
-<ul>
-<li><strong>Try it out: </strong> The sensitivity of a medical test is
-the probability of a positive result when the condition (e.g., disease)
-is present. Rapid strep tests have a sensitivity of about <span
-class="math inline">\(0.95\)</span>. A new rapid strep test has been
-developed but its sensitivity is unknown. How many tests would be
-necessary to estimate its sensitivity with a margin of error of <span
-class="math inline">\(0.02\)</span> at a confidence level of <span
-class="math inline">\(95\%\)</span>?</li>
-</ul>
-<p>How do we choose <span class="math inline">\(n\)</span> for estimate
-<span class="math inline">\(\mu\)</span> with <span
-class="math inline">\(\bar{x}\)</span>? Consider that</p>
-<p><span class="math display">\[ m = z_{1-\alpha/2} \
-\frac{\sigma}{\sqrt{n}} \Leftrightarrow n = \frac{(z_{1-\alpha/2})^2
-\sigma^2}{m^2}\]</span></p>
-<p>Notice that the above equation for <span
-class="math inline">\(n\)</span> requires that we know <span
-class="math inline">\(\sigma\)</span>. So how can we choose the value of
-<span class="math inline">\(\sigma\)</span>?. Again we have two
-options:</p>
-<ol style="list-style-type: decimal">
-<li><p>Use prior research/knowledge to inform the value of <span
-class="math inline">\(\sigma\)</span></p></li>
-<li><p>We can use an educated guess about the possible range of the data
-and estimate <span class="math inline">\(\sigma\)</span> via</p></li>
-</ol>
-<p><span class="math display">\[ \sigma \approx \frac{\text{range}}{4}
-\]</span></p>
-<ul>
-<li><p><strong>Try it out: </strong> A researcher wants to estimate the
-mean number of hours college students spend scrolling TikTok each week.
-Previous studies suggest that the standard deviation of the weekly hours
-spent on TikTok is approximately 2.5 hours. The researcher desires a
-margin of error of no more than 0.5 hours. Compute the sample size the
-researcher needs to estimate the mean number of hours within the desired
-margin of error.</p></li>
-<li><p><strong>Try it out: </strong> A marketing research firm wants to
-estimate the average amount a student spends during the Spring break.
-They want to determine it to within <span
-class="math inline">\(\$120\)</span> with <span
-class="math inline">\(90\%\)</span> confidence. One can roughly say that
-the amount a student spends ranges from <span
-class="math inline">\(\$100\)</span> to <span
-class="math inline">\(\$1700\)</span>. About how many students should
-they sample?</p></li>
-</ul>
-</div>
-<div id="assumptions-of-estimators" class="section level2">
-<h2>Assumptions of estimators</h2>
-<p>When we compute the confidence intervals that we have learned above
-we make a few assumptions about the data and the estimator:</p>
-<ul>
-<li><p>We assume the data constitute a random sample</p></li>
-<li><p>We assume that the statistic is unbiased</p></li>
-<li><p>We assume an infinite population size. <strong>Note</strong> that
-under small, finite populations the formulas for the confidence
-intervals will be different.</p></li>
-<li><p>That we can compute (approximately) the correct standard
-error</p></li>
-<li><p>The shape of the sampling distribution is approximately
-normal.</p></li>
-</ul>
-<p>To have a sampling distribution that is (approximately) normal in
-shape, we need at least one of the following two conditions:</p>
-<ol style="list-style-type: decimal">
-<li><p>The population distribution of the variable needs to be
-(approximately) normal in shape</p></li>
-<li><p>The sample size (n) is sufficiently large.</p></li>
-</ol>
-<div id="the-sampling-distribution-of-hatp" class="section level3">
-<h3>The sampling distribution of <span
-class="math inline">\(\hat{p}\)</span></h3>
-<ul>
-<li><p>The shape of the population distribution is never normal</p></li>
-<li><p>The sample size is “sufficiently large” if both <span
-class="math inline">\(np \geq 15\)</span> and <span
-class="math inline">\(n(1-p) \geq 15\)</span>.</p></li>
-</ul>
-</div>
-<div id="the-sampling-distribution-of-barx" class="section level3">
-<h3>The sampling distribution of <span
-class="math inline">\(\bar{x}\)</span></h3>
-<ul>
-<li><p>The shape of the population distribution <i>might</i> be normal -
-you can check this by plotting the data</p></li>
-<li><p>The sampling distribution will be approximately normal if <span
-class="math inline">\(n\)</span> is large enough</p></li>
-</ul>
+<div id="a-second-taster" class="section level3">
+<h3>A second taster</h3>
+<p>A friend makes the same claim, but takes a shorter 6-cup test and
+gets <strong>4 of 6</strong> right. Under <span
+class="math inline">\(H_0: p = 0.5\)</span>, their score is <span
+class="math inline">\(X \sim \text{Binom}(6,\ 0.5)\)</span>. Picture 64
+guessers (<span class="math inline">\(2^6 = 64\)</span>):</p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-2-1.png" alt="Bar chart of how many of 64 pure guessers get each score on a 6-cup taste test, from 0 to 6 correct: 1, 6, 15, 20, 15, 6 and 1 guessers. The bars at 4, 5 and 6 correct are highlighted, holding 15 plus 6 plus 1, or 22, of the 64 guessers." width="768" style="display: block; margin: auto;" /></p>
+<p>“At least as extreme” as 4 correct means 4, 5 or 6 correct, the
+shaded bars: <span class="math display">\[\text{P-value} = P(X \geq 4
+\mid H_0 \text{ true}) = \frac{15 + 6 + 1}{64} = \frac{22}{64} \approx
+0.34\]</span> About a third of pure guessers do this well, so 4 of 6 is
+not surprising at all if your friend is guessing. <span
+class="math inline">\(0.34 \geq 0.05\)</span>: <strong>do not reject
+<span class="math inline">\(H_0\)</span></strong>. This does
+<strong>not</strong> prove your friend is guessing (“not guilty”, not
+“innocent”). It says this test gives no real evidence that they can
+taste the difference. A longer test might.</p>
+<p>One more thought. If all 256 guessers from the first picture took the
+8-cup test, about one of them would score 8 for 8 and be convinced they
+have a gift. A small P-value means <strong>either</strong> rare luck
+<strong>or</strong> a false <span class="math inline">\(H_0\)</span>,
+and from one test we cannot be sure which. That is why surprising
+results get repeated before anyone believes them.</p>
 </div>
 </div>
 </div>
-<div id="introduction-to-tests-of-significance" class="section level1">
-<h1>Introduction to tests of significance</h1>
-<p>Confidence intervals are an appropriate tool when the goal is to
-<i>estimate</i> something about a population. The second part of
-statistical inference deals with a very different sort of goal.
-Significance tests (also called hypothesis tests) combine mathematics
-and logic to assess the validity of a claim about a population parameter
-using the evidence provided in a set of data. Specifically, we compare
-properties of a set of observed data to a hypothesis about the
-population. The hypothesis is a statement that asserts something about
-the value of the population parameters. The results of the test are
-expressed in terms of probability that measures the degree to which the
-data agree with claim laid out by the hypothesis.</p>
-<p><strong>Consider the following example</strong>: Imagine you are a
-quality control manager at an electronics company that produces
-microchips for personal computers. To ensure quality, the company tests
-all chips before they are sent out to retailers. The company claims
-that, thanks to their post-production testing, only about <span
-class="math inline">\(2\%\)</span> of their microchips are defective,
-but recent reports about customer feedback indicate that the chips might
-have an issue that causes the defective rate to be higher than <span
-class="math inline">\(2\%\)</span>. To address these concerns, you
-decide to conduct a study to test the claim that only <span
-class="math inline">\(2\%\)</span> of chips are defective. To test this,
-the company purchases <span class="math inline">\(10\)</span> computers
-from a random sample of <span class="math inline">\(5\)</span> retailers
-that it supplies microchips. Each computer is run through the same set
-of high intensity tasks to test the chips and the proportion of chips
-that fail is estimated. From this experiment, you estimate the
-proportion of defective chips to be about <span
-class="math inline">\(2.053\%\)</span> with a standard error of <span
-class="math inline">\(0.019\)</span> which gives a difference in rates
-of <span class="math inline">\(0.00053\)</span>.</p>
-<ul>
-<li>From the estimate, can you conclude that the proportion of defective
-chips is greater than the expected rate of <span
-class="math inline">\(2\%\)</span>?</li>
-</ul>
-<p>One way to answer this question is to compute the probability of
-obtaining a difference as large or larger than the one you have
-observed. This probability is <span class="math inline">\(0.48\)</span>.
-Since this probability is quite large, we conclude that observing a
-difference of <span class="math inline">\(0.00053\)</span> is not
-surprising if the defective rate of the sample is the same as the
-population rate of <span class="math inline">\(2\%\)</span>. In this
-case, the sample supports the initial claim that the defective rate is
-about <span class="math inline">\(2\%\)</span>.</p>
-<p>A <strong>statistically significant</strong> result is one that is
-decidedly not due to “ordinary variation” in the data (i.e., not due to
-chance or not a coincidence). <strong>Significance tests</strong> are
-how we decide whether or not an observed result is statistically
-significant.</p>
-<p>Consider a coin that is flipped <span
-class="math inline">\(n\)</span> times. The population distribution for
-a single flip is given below:</p>
+<div id="the-notation" class="section level1">
+<h1>The notation</h1>
+<p>Significance tests bring a lot of new symbols. Most of them are old
+ideas with new names.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-X
+Symbol
 </th>
 <th style="text-align:left;">
-Probability(X)
+Read as
+</th>
+<th style="text-align:left;">
+Meaning
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Heads
+<span class="math inline">\(\theta\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(p\)</span>
+“theta”
+</td>
+<td style="text-align:left;">
+a parameter, any parameter: stands for <span
+class="math inline">\(p\)</span> or <span
+class="math inline">\(\mu\)</span> when we talk about tests in general
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Tails
+<span class="math inline">\(\theta_0\)</span>, e.g. <span
+class="math inline">\(p_0\)</span>, <span
+class="math inline">\(\mu_0\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(1-p\)</span>
+“theta-naught”, “p-naught”, “mu-naught”
+</td>
+<td style="text-align:left;">
+the value of the parameter that <span class="math inline">\(H_0\)</span>
+claims, a number like 0.5 or 28 g
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\theta}\)</span>, e.g. <span
+class="math inline">\(\hat{p}\)</span>, <span
+class="math inline">\(\bar{x}\)</span>
+</td>
+<td style="text-align:left;">
+“theta-hat”, “p-hat”, “x-bar”
+</td>
+<td style="text-align:left;">
+the estimate of <span class="math inline">\(\theta\)</span> from our
+sample (Weeks 1 and 8)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: \theta = \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+“H-naught: theta equals theta-naught”
+</td>
+<td style="text-align:left;">
+the null hypothesis: “no effect”, the parameter equals the claimed value
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \theta &gt; \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+“H-A: theta is greater than theta-naught”
+</td>
+<td style="text-align:left;">
+an upper-tailed alternative: we suspect the parameter is bigger
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \theta &lt; \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+“H-A: theta is less than theta-naught”
+</td>
+<td style="text-align:left;">
+a lower-tailed alternative: we suspect the parameter is smaller
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \theta \neq \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+“H-A: theta is not equal to theta-naught”
+</td>
+<td style="text-align:left;">
+a two-sided alternative: we suspect it is different, in either direction
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs}\)</span>
+</td>
+<td style="text-align:left;">
+“z observed”
+</td>
+<td style="text-align:left;">
+the test statistic: how many standard errors <span
+class="math inline">\(\hat{\theta}\)</span> is from <span
+class="math inline">\(\theta_0\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \geq z_{obs} \mid H_0 \text{
+true})\)</span>
+</td>
+<td style="text-align:left;">
+“the probability Z is at least z observed, given H-naught is true”
+</td>
+<td style="text-align:left;">
+the P-value of an upper-tailed test
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\alpha\)</span>
+</td>
+<td style="text-align:left;">
+“alpha”
+</td>
+<td style="text-align:left;">
+the significance level, the cutoff for the P-value, usually 0.05
 </td>
 </tr>
 </tbody>
 </table>
-<p>The value of <span class="math inline">\(p\)</span> implies something
-about the coin:</p>
+<p>The subscript 0 always marks “the value from the null hypothesis”. In
+the taste test, <span class="math inline">\(\theta\)</span> is <span
+class="math inline">\(p\)</span>, <span class="math inline">\(\theta_0 =
+p_0 = 0.5\)</span>, and <span class="math inline">\(\hat{\theta} =
+\hat{p}\)</span>.</p>
+</div>
+<div id="writing-the-hypotheses" class="section level1">
+<h1>Writing the hypotheses</h1>
+<p>Hypotheses come first, before any data are looked at. A good order to
+write them in:</p>
 <ol style="list-style-type: decimal">
-<li><p>If <span class="math inline">\(p = 0.5\)</span> the coin is
-fair</p></li>
-<li><p>If <span class="math inline">\(p \neq 0.5\)</span> the coin is
-unfair.</p></li>
+<li><strong>Start with <span
+class="math inline">\(H_A\)</span></strong>: what do we suspect, or hope
+to find evidence for? “They can taste the difference” becomes <span
+class="math inline">\(H_A: p &gt; 0.5\)</span>.</li>
+<li><strong>Then write <span class="math inline">\(H_0\)</span></strong>
+as “that effect is not there”, with an equals sign: <span
+class="math inline">\(H_0: p = 0.5\)</span>.</li>
 </ol>
-<p>Assume we do not know the value of <span
-class="math inline">\(p\)</span>. We flip the coin <span
-class="math inline">\(30\)</span> times to produce a sample of <span
-class="math inline">\(n = 30\)</span> observations. It comes up heads
-<span class="math inline">\(20\)</span> times, so <span
-class="math inline">\(\hat{p} = 20/30 = 2/3 \approx 0.67\)</span>. What
-might we decide about the value of <span
-class="math inline">\(p\)</span>?</p>
-<ol style="list-style-type: decimal">
-<li><p>Conclude that <span class="math inline">\(p =0.5\)</span>. The
-result that <span class="math inline">\(\hat{p} = 2/3\)</span>
-<strong>is not</strong> statistically significant.</p></li>
-<li><p>Conclude that <span class="math inline">\(p \neq 0.5\)</span>.
-The result that <span class="math inline">\(\hat{p} = 2/3\)</span>
-<strong>is</strong> statistically significant.</p></li>
-</ol>
-<p>The probability of observing a proportion of heads of <span
-class="math inline">\(\hat{p} = 2/3\)</span> assuming <span
-class="math inline">\(p = 0.5\)</span> is about <span
-class="math inline">\(0.067\)</span> (using a two-sided normal
-approximation). What might we conclude about the coin?</p>
-<p>In this example, the probability we obtained is fairly small. There
-are two explanations for this probability:</p>
-<ol style="list-style-type: lower-roman">
-<li><p>We have observed something unusual (i.e the coin is fair and we
-just got a large proportion of heads by coincidence)</p></li>
-<li><p>The assumption that underlies the calculation is not true. (i.e
-the coin is not fair and the population proportion <span
-class="math inline">\(p\)</span> is not equal to <span
-class="math inline">\(1/2\)</span>)</p></li>
-</ol>
-<p>So how unusual does a result need to be for us to consider the latter
-statement (ii) to be more plausible? We will discuss this more later on,
-but, in general, this is an arbitrary choice that we must make when
-setting up our test.</p>
-<p>In both of these examples, we stated hypotheses about the value of
-the parameter and then proposed a counter hypothesis about that value. A
-significance test is a comparison between two such
-<strong>hypotheses</strong> about the value of a parameter: a <em>null
-hypothesis</em> and an <em>alternative hypothesis</em>.</p>
-<p>The <strong>null hypothesis</strong> (denoted <span
-class="math inline">\(H_0\)</span>) is usually the hypothesis of “no
-effect” or that “nothing interesting is happening”. The null hypothesis
-is usually that the population parameter equals some value <span
-class="math inline">\(H_0: \theta = \theta_0\)</span> for some constant
-<span class="math inline">\(\theta_0\)</span></p>
-<p>The <strong>alternative hypothesis</strong> (denoted <span
-class="math inline">\(H_A\)</span>) is the hypothesis of “effect” or
-that “something interesting has happened”. The alternative hypothesis is
-usually that the population parameter falls in some range of values such
-as:</p>
-<p>The value of the parameter is greater than the value proposed in the
-null hypothesis <span class="math display">\[H_A: \theta &gt;
-\theta_0  \]</span> The value of the parameter is less than the value
-proposed in the null hypothesis <span class="math display">\[H_A: \theta
-&lt; \theta_0 \]</span> The value of the parameter is different than the
-value proposed in the null hypothesis (could be greater than or less
-than - we aren’t sure, we just suspect its different) <span
-class="math display">\[H_A: \theta \neq \theta_0 \]</span></p>
+<p>Rules that always hold:</p>
 <ul>
-<li>the alternative hypothesis expresses our “suspicions” that we have
-about the data. For example, <i> we suspect the defect rate is higher
-than <span class="math inline">\(2\%\)</span></i> or <i> we suspect the
-coin is not fair </i>.</li>
+<li>Both hypotheses are about a <strong>parameter</strong> (<span
+class="math inline">\(p\)</span> or <span
+class="math inline">\(\mu\)</span>), never an estimate. <span
+class="math inline">\(H_0: \hat{p} = 0.5\)</span> makes no sense: we
+already know <span class="math inline">\(\hat{p}\)</span>.</li>
+<li><span class="math inline">\(H_0\)</span> always contains the
+<strong>equals sign</strong>, and <span
+class="math inline">\(H_A\)</span> never does.</li>
+<li><span class="math inline">\(H_A\)</span> must come from the
+question, <strong>not from the data</strong>. Looking at the data first
+and then pointing <span class="math inline">\(H_A\)</span> the way the
+data went is a form of bias: it makes the evidence look stronger than it
+is.</li>
+</ul>
+<p>The direction of <span class="math inline">\(H_A\)</span> decides
+which kind of test it is:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative
+</th>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:left;">
+Use it when the question says
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \theta &gt; \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+upper-tailed (one-sided)
+</td>
+<td style="text-align:left;">
+“more than”, “better”, “increased”, “at least”
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \theta &lt; \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+lower-tailed (one-sided)
+</td>
+<td style="text-align:left;">
+“less than”, “worse”, “decreased”, “fewer”
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \theta \neq \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+two-sided
+</td>
+<td style="text-align:left;">
+“different”, “changed”, “is it fair?”
+</td>
+</tr>
+</tbody>
+</table>
+<div id="example-stating-hypotheses" class="section level2">
+<h2>Example: stating hypotheses</h2>
+<ol style="list-style-type: lower-alpha">
+<li><p><em>Your roommate names Coke or Pepsi. Do they do better than
+guessing?</em> <span class="math inline">\(p\)</span> = their chance of
+naming a cup right. <span class="math inline">\(H_A: p &gt;
+0.5\)</span>, <span class="math inline">\(H_0: p = 0.5\)</span>, with
+<span class="math inline">\(p_0 = 0.5\)</span>:
+<strong>upper-tailed</strong>.</p></li>
+<li><p><em>A coin is spun on a table. Does it favor heads or tails?</em>
+<span class="math inline">\(p\)</span> = the chance of heads. We do not
+suspect a direction, only “not fair”: <span class="math inline">\(H_A: p
+\neq 0.5\)</span>, <span class="math inline">\(H_0: p = 0.5\)</span>,
+with <span class="math inline">\(p_0 = 0.5\)</span>:
+<strong>two-sided</strong>.</p></li>
+<li><p><em>A chip bag says 28 g. Do the bags hold less than that on
+average?</em> <span class="math inline">\(\mu\)</span> = the mean weight
+of all bags. <span class="math inline">\(H_A: \mu &lt; 28\)</span>,
+<span class="math inline">\(H_0: \mu = 28\)</span>, with <span
+class="math inline">\(\mu_0 = 28\)</span> g:
+<strong>lower-tailed</strong>.</p></li>
+</ol>
+</div>
+</div>
+<div id="measuring-how-surprising-the-test-statistic"
+class="section level1">
+<h1>Measuring “how surprising”: the test statistic</h1>
+<p>For the taste test we could list every possible score and add up the
+binomial probabilities. With hundreds or thousands of observations that
+gets impractical, but we already have a better tool: the
+<strong>sampling distribution</strong> and the <strong>central limit
+theorem</strong> from Week 8.</p>
+<p>Recall what the CLT told us about <span
+class="math inline">\(\hat{p}\)</span>: over all possible samples of
+size <span class="math inline">\(n\)</span>, the values of <span
+class="math inline">\(\hat{p}\)</span> pile up in a roughly normal
+shape, centered at the true <span class="math inline">\(p\)</span>, with
+standard error <span class="math inline">\(SE =
+\sqrt{p(1-p)/n}\)</span>. In a significance test we <strong>assume <span
+class="math inline">\(H_0\)</span> is true</strong>, so the true <span
+class="math inline">\(p\)</span> is <span
+class="math inline">\(p_0\)</span>. That pins down the whole pile: <span
+class="math display">\[\text{if } H_0 \text{ is true:}\qquad \hat{p}
+\;\approx\; N\!\left(p_0,\ \sqrt{\frac{p_0(1-p_0)}{n}}\right)\]</span>
+Notice where every number comes from. The <strong>center</strong> <span
+class="math inline">\(p_0\)</span> comes from <span
+class="math inline">\(H_0\)</span>, not from the data. The standard
+error also uses <span class="math inline">\(p_0\)</span>, because we are
+describing the world where <span class="math inline">\(H_0\)</span> is
+true. The data enter only once, as the single <span
+class="math inline">\(\hat{p}\)</span> we observed, which we then place
+on that curve.</p>
+<p>To see how far out on the curve it lands, we turn it into a <span
+class="math inline">\(z\)</span>-score, exactly as in Weeks 6 and 9
+(observation minus mean, divided by standard deviation). This <span
+class="math inline">\(z\)</span>-score is the <strong>test
+statistic</strong>: <span class="math display">\[z_{obs} =
+\frac{\hat{\theta} - \theta_0}{SE} \qquad\text{for a proportion:}\qquad
+z_{obs} = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}\]</span> It
+measures <strong>how many standard errors the estimate is from the value
+<span class="math inline">\(H_0\)</span> claims</strong>. If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(z_{obs}\)</span> comes from the standard normal
+<span class="math inline">\(N(0, 1)\)</span>, so values near 0 are
+ordinary and values beyond about <span class="math inline">\(\pm
+2\)</span> are rare. The P-value is then an area under the standard
+normal curve, found with the <span
+class="math inline">\(z\)</span>-table just as in Week 9.</p>
+<p>This is the same machinery as a confidence interval, pointed in a
+different direction:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Confidence interval
+</th>
+<th style="text-align:left;">
+Significance test
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Question
+</td>
+<td style="text-align:left;">
+What is the parameter, give or take?
+</td>
+<td style="text-align:left;">
+Is the claim <span class="math inline">\(\theta = \theta_0\)</span>
+believable?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Normal curve centered at
+</td>
+<td style="text-align:left;">
+the estimate <span class="math inline">\(\hat{\theta}\)</span>
+</td>
+<td style="text-align:left;">
+the claimed value <span class="math inline">\(\theta_0\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Uses
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{\theta} \pm z \times SE\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} = (\hat{\theta} -
+\theta_0)/SE\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Result
+</td>
+<td style="text-align:left;">
+a range of believable values for <span
+class="math inline">\(\theta\)</span>
+</td>
+<td style="text-align:left;">
+a P-value, then reject or do not reject <span
+class="math inline">\(H_0\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div id="example-has-the-candidates-support-dropped"
+class="section level2">
+<h2>Example: has the candidate’s support dropped?</h2>
+<p>It is midterm season (Election Day is Tuesday, November 3). Suppose
+the polling averages put Candidate X in a Senate race at
+<strong>52%</strong> support among likely voters. Your campaign suspects
+X’s support is actually lower. You run your own poll of a random sample
+of <span class="math inline">\(n = 1{,}000\)</span> likely voters, and
+<strong>490</strong> say they will vote for X: <span
+class="math inline">\(\hat{p} = 0.490\)</span>.</p>
+<p>49% is lower than 52%. But Week 8 taught us that two polls of the
+same state give different answers just because they reach different
+people. Is a 3-point gap <strong>bigger than ordinary poll-to-poll
+variation</strong>? That is exactly a significance test.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> A random sample of likely voters, and
+a large enough sample: <span class="math inline">\(np_0 = 1000(0.52) =
+520\)</span> and <span class="math inline">\(n(1-p_0) = 480\)</span>,
+both well above 15.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
+= the proportion of <strong>all</strong> likely voters who support X. We
+suspect it is lower than the polls say, so <span
+class="math inline">\(H_A: p &lt; 0.52\)</span> and <span
+class="math inline">\(H_0: p = 0.52\)</span>, with <span
+class="math inline">\(p_0 = 0.52\)</span>:
+<strong>lower-tailed</strong>.</li>
+<li><strong>Test statistic.</strong> If <span
+class="math inline">\(H_0\)</span> is true, polls of 1,000 voters give
+values of <span class="math inline">\(\hat{p}\)</span> centered at 0.52
+with <span class="math display">\[SE = \sqrt{\frac{0.52 \times
+0.48}{1000}} = \sqrt{0.0002496} \approx 0.0158\]</span> so <span
+class="math display">\[z_{obs} = \frac{0.490 - 0.52}{0.0158} \approx
+-1.90\]</span> Our poll is 1.9 standard errors below what <span
+class="math inline">\(H_0\)</span> predicts.</li>
+<li><strong>P-value.</strong> <span class="math inline">\(P(Z \leq -1.90
+\mid H_0 \text{ true}) = 0.0287\)</span>, from the <span
+class="math inline">\(z\)</span>-table. If X’s support really were 52%,
+only about 3 polls in 100 would come out this low.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0287 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The poll is evidence that
+X’s support is below 52%.</li>
+</ol>
+<p>Here is the same reasoning as a picture. The curve shows where <span
+class="math inline">\(\hat{p}\)</span> from a poll of 1,000 voters would
+land <strong>if <span class="math inline">\(H_0\)</span> were
+true</strong>; the red line is where ours landed, and the shaded area is
+the P-value.</p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-6-1.png" alt="A normal curve showing where p-hat from a poll of 1,000 voters would land if the true support were 0.52: centered at 0.52, running from about 0.47 to 0.57. A second axis underneath shows the same points as z-scores from -3 to 3. A red line marks the observed p-hat of 0.490 at z = -1.90, and the small lower tail to its left is shaded, with area 0.0287, the P-value." width="864" style="display: block; margin: auto;" /></p>
+<p>Read the two axes together: the top axis is in the units of the
+problem (proportions of voters), the bottom axis is the same picture in
+standard errors. The test statistic is just the poll’s position on the
+bottom axis.</p>
+<p><strong>A different claim, the same poll.</strong> The headline
+question on election night is whether X is <strong>losing</strong>,
+i.e. below 50%. That is a different <span
+class="math inline">\(H_0\)</span>: <span class="math inline">\(H_0: p =
+0.5\)</span>, <span class="math inline">\(H_A: p &lt; 0.5\)</span>. Now
+<span class="math inline">\(SE = \sqrt{0.25/1000} \approx
+0.0158\)</span> and <span class="math inline">\(z_{obs} = (0.490 -
+0.5)/0.0158 \approx -0.63\)</span>, so the P-value is <span
+class="math inline">\(P(Z \leq -0.63) = 0.2643\)</span>. <strong>Do not
+reject <span class="math inline">\(H_0\)</span>.</strong> The same 49%
+that is good evidence against “52%” is weak evidence against “50%”,
+because 0.490 sits only 0.63 standard errors below 0.5. A test always
+answers a question about one specific value <span
+class="math inline">\(\theta_0\)</span>: change <span
+class="math inline">\(\theta_0\)</span> and you change the question.
+This is why poll reports say a race is “within the margin of error”.</p>
+</div>
+<div id="which-tail-is-the-p-value" class="section level2">
+<h2>Which tail is the P-value?</h2>
+<p>“At least as extreme” always means “at least as far in the direction
+<span class="math inline">\(H_A\)</span> points to”. So the shape of
+<span class="math inline">\(H_A\)</span> decides which area of the curve
+is the P-value. To see how much it matters, take our poll (<span
+class="math inline">\(z_{obs} = -1.90\)</span> against <span
+class="math inline">\(p_0 = 0.52\)</span>) and work out the P-value for
+all three alternatives:</p>
+<p><img src="assets/l22_tails.png" alt="Three standard normal curves, each with the poll's z observed of -1.90 marked. Left, for the alternative p greater than 0.52: everything above -1.90 is shaded, almost the whole curve. Middle, for p less than 0.52: only the small lower tail below -1.90 is shaded. Right, for p not equal to 0.52: both tails, below -1.90 and above 1.90, are shaded." width="95%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Lower-tailed</strong>, <span class="math inline">\(H_A: p
+&lt; 0.52\)</span>: the area <strong>below</strong> <span
+class="math inline">\(z_{obs}\)</span>, <span class="math inline">\(P(Z
+\leq -1.90 \mid H_0 \text{ true}) = 0.0287\)</span>, read straight from
+the table.</li>
+<li><strong>Two-sided</strong>, <span class="math inline">\(H_A: p \neq
+0.52\)</span>: a poll far out in <strong>either</strong> direction
+counts as extreme, so the P-value is <strong>both</strong> tails, twice
+the one-tail area: <span class="math inline">\(2 \times 0.0287 =
+0.0574\)</span>.</li>
+<li><strong>Upper-tailed</strong>, <span class="math inline">\(H_A: p
+&gt; 0.52\)</span>: the area <strong>above</strong> <span
+class="math inline">\(z_{obs}\)</span>, <span class="math inline">\(P(Z
+\geq -1.90 \mid H_0 \text{ true}) = 1 - 0.0287 = 0.9713\)</span>. A poll
+<strong>below</strong> 52% is no evidence at all that support is
+<strong>above</strong> 52%, and the huge P-value says so.</li>
+</ul>
+<p>At <span class="math inline">\(\alpha = 0.05\)</span>, only the
+lower-tailed test rejects <span class="math inline">\(H_0\)</span>. The
+two-sided test, with the same data, does not (0.0574): it spreads its
+doubt over both directions, so it needs a little more evidence. This is
+why <span class="math inline">\(H_A\)</span> has to come from the
+question before the poll is run. Choosing the tail after seeing which
+way the poll went would make any result look more convincing than it
+is.</p>
+</div>
+</div>
+<div id="example-do-coins-land-the-way-they-started"
+class="section level1">
+<h1>Example: do coins land the way they started?</h1>
+<p>A physics model of coin tossing (Diaconis, Holmes and Montgomery,
+2007) predicts that a flipped coin lands on the <strong>same side it
+started on</strong> a little more than half the time, about 51%, because
+a real flip wobbles. Bartoš et al. (2025) tested it: 48 people flipped
+coins 350,757 times, recording the side facing up before and after every
+flip (and filming it).</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Who flipped
+</th>
+<th style="text-align:left;">
+Flips
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+students, for a thesis project
+</td>
+<td style="text-align:left;">
+75,036
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+coin-flipping marathons (up to 12 hours)
+</td>
+<td style="text-align:left;">
+203,440
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+volunteers recruited online
+</td>
+<td style="text-align:left;">
+72,281
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>total</strong>
+</td>
+<td style="text-align:left;">
+<strong>350,757</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(X\)</span> = 1 if a flip lands on the
+side it started on, and 0 otherwise. In all, <strong>178,079</strong> of
+the <span class="math inline">\(n = 350{,}757\)</span> flips did. Test
+the model’s prediction at <span class="math inline">\(\alpha =
+0.05\)</span>, using the five steps.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> The flips are a random sample of how
+people flip coins, and <span class="math inline">\(n\)</span> is large:
+<span class="math inline">\(np_0\)</span> and <span
+class="math inline">\(n(1-p_0)\)</span> are both about 175,000, far more
+than enough for the normal curve to apply.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
+= the chance a flip lands on its starting side. The model predicted the
+direction before any flips were made, so <span
+class="math inline">\(H_A: p &gt; 0.5\)</span> and <span
+class="math inline">\(H_0: p = 0.5\)</span>, with <span
+class="math inline">\(p_0 = 0.5\)</span>:
+<strong>upper-tailed</strong>.</li>
+<li><strong>Test statistic.</strong> <span class="math inline">\(\hat{p}
+= 178{,}079 / 350{,}757 \approx 0.5077\)</span> and <span
+class="math inline">\(SE = \sqrt{0.5 \times 0.5 / 350{,}757} \approx
+0.000844\)</span>, so <span class="math display">\[z_{obs} =
+\frac{0.5077 - 0.5}{0.000844} \approx 9.1\]</span> The estimate sits
+about <strong>9 standard errors</strong> above <span
+class="math inline">\(p_0\)</span>.</li>
+<li><strong>P-value.</strong> <span class="math inline">\(P(Z \geq 9.1
+\mid H_0 \text{ true}) \approx 0\)</span>. The <span
+class="math inline">\(z\)</span>-table stops at 3.49, and 9.1 is far
+beyond it.</li>
+<li><strong>Decision.</strong> The P-value is far below 0.05:
+<strong>reject <span class="math inline">\(H_0\)</span></strong>. The
+data are strong evidence that flips land on their starting side more
+than half the time, just as the model predicted.</li>
+</ol>
+<p>Here is what step 3 looks like on the sampling distribution. The
+curve is where <span class="math inline">\(\hat{p}\)</span> would land
+if <span class="math inline">\(H_0\)</span> were true; the red line is
+where it actually landed.</p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-9-1.png" alt="A normal curve showing where p-hat would land if the true proportion were 0.5 and n = 350,757: it is centered at 0.500 and almost all of it lies between 0.4975 and 0.5025. A second axis underneath shows the same points as z-scores from -3 to 3. A red line marks the observed p-hat of 0.5077, far to the right of the curve, at z = 9.1, where the curve's height is essentially zero." width="864" style="display: block; margin: auto;" /></p>
+</div>
+<div id="significant-is-not-the-same-as-important"
+class="section level1">
+<h1>Significant is not the same as important</h1>
+<p>A 50.8% same-side rate instead of 50% is about <strong>1 extra
+same-side landing in every 130 flips</strong>. Nobody could notice that
+in a coin toss before a football game. So how can it be
+“significant”?</p>
+<p>Because significance depends on the <strong>sample size</strong>. The
+standard error has <span class="math inline">\(\sqrt{n}\)</span> on the
+bottom, so with 350,757 flips the curve of believable <span
+class="math inline">\(\hat{p}\)</span> values is extremely narrow, and
+even a tiny difference lands far out in the tail. Suppose instead only
+1,000 flips had been made, with the same 50.8% (508 same-side). Then
+<span class="math inline">\(SE = \sqrt{0.25/1000} \approx
+0.0158\)</span>, <span class="math inline">\(z_{obs} = (0.508 -
+0.5)/0.0158 \approx 0.51\)</span>, and the P-value is <span
+class="math inline">\(1 - 0.6950 = 0.3050\)</span>: <strong>not</strong>
+significant.</p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-10-1.png" alt="Two normal curves, each showing where p-hat would land if p were 0.5, drawn on the same p-hat axis from 0.45 to 0.55. Left, n = 1,000: a wide curve, and the observed 0.508 sits near the middle at z = 0.51 with P-value 0.305. Right, n = 350,757: a very narrow spike at 0.5, and the observed 0.5077 sits completely outside it at z = 9.1." width="864" style="display: block; margin: auto;" /></p>
+<p>Same estimate, opposite conclusions. “Statistically significant”
+means <strong>“probably not chance”</strong>. It does not mean “big” or
+“important”. Whether a difference matters is a question about the
+context, and a confidence interval (which shows <strong>how big</strong>
+the effect is) answers it better than a P-value does.</p>
+</div>
+<div id="the-five-steps-of-a-significance-test" class="section level1">
+<h1>The five steps of a significance test</h1>
+<p>Every test in the rest of the course follows the same five steps:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> The data come from a random sample or
+a randomized experiment, plus any conditions on sample size or on the
+shape of the population.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: \theta
+= \theta_0\)</span> and <span class="math inline">\(H_A\)</span>
+(upper-tailed, lower-tailed or two-sided), written before looking at the
+data.</li>
+<li><strong>Test statistic.</strong> <span class="math inline">\(z_{obs}
+= (\hat{\theta} - \theta_0)/SE\)</span>, computed as if <span
+class="math inline">\(H_0\)</span> were true: how many standard errors
+the estimate is from <span class="math inline">\(\theta_0\)</span>.</li>
+<li><strong>P-value.</strong> The probability, if <span
+class="math inline">\(H_0\)</span> is true, of a test statistic at least
+as extreme as <span class="math inline">\(z_{obs}\)</span>, in the tail
+or tails that <span class="math inline">\(H_A\)</span> points to.</li>
+<li><strong>Decision.</strong> If the P-value <span
+class="math inline">\(&lt; \alpha\)</span>, reject <span
+class="math inline">\(H_0\)</span> (statistically significant);
+otherwise do not reject <span class="math inline">\(H_0\)</span>. Then
+say what it means in the context of the question.</li>
+</ol>
+<p>On Wednesday we use these steps to test claims about a population
+proportion <span class="math inline">\(p\)</span>, and on Friday about a
+population mean <span class="math inline">\(\mu\)</span>.</p>
+<div id="try-it-out" class="section level2">
+<h2>Try it out</h2>
+<ul>
+<li><p>A friend claims they can predict coin flips. In a test of 10
+flips, they call <strong>7</strong> correctly. Write the hypotheses and
+find the P-value. Is the result significant at <span
+class="math inline">\(\alpha = 0.05\)</span>? <em>Answer:</em> <span
+class="math inline">\(H_A: p &gt; 0.5\)</span>, <span
+class="math inline">\(H_0: p = 0.5\)</span> (upper-tailed). Under <span
+class="math inline">\(H_0\)</span>, <span class="math inline">\(X \sim
+\text{Binom}(10, 0.5)\)</span>, so P-value <span class="math inline">\(=
+P(X \geq 7 \mid H_0 \text{ true}) = (120 + 45 + 10 + 1)/1024 = 176/1024
+\approx 0.172\)</span>. <span class="math inline">\(0.172 \geq
+0.05\)</span>: do not reject <span class="math inline">\(H_0\)</span>.
+Seven of ten is quite common for a guesser.</p></li>
+<li><p>Write <span class="math inline">\(H_0\)</span> and <span
+class="math inline">\(H_A\)</span>, give <span
+class="math inline">\(\theta_0\)</span>, and name the type of test.</p>
+<ul>
+<li>A coffee shop says its large cup holds 16 oz on average. Customers
+suspect it holds less. <em>Answer:</em> <span class="math inline">\(H_0:
+\mu = 16\)</span>, <span class="math inline">\(H_A: \mu &lt;
+16\)</span>, <span class="math inline">\(\mu_0 = 16\)</span> oz,
+lower-tailed.</li>
+<li>A website’s sign-up rate used to be 12%. After a redesign, has it
+changed? <em>Answer:</em> <span class="math inline">\(H_0: p =
+0.12\)</span>, <span class="math inline">\(H_A: p \neq 0.12\)</span>,
+<span class="math inline">\(p_0 = 0.12\)</span>, two-sided.</li>
+</ul></li>
+<li><p>A test statistic comes out to <span class="math inline">\(z_{obs}
+= -2.10\)</span>. Find the P-value if <span
+class="math inline">\(H_A\)</span> is lower-tailed, and if it is
+two-sided. What is the decision for each at <span
+class="math inline">\(\alpha = 0.05\)</span>? At <span
+class="math inline">\(\alpha = 0.01\)</span>? <em>Answer:</em>
+lower-tailed: <span class="math inline">\(P(Z \leq -2.10) =
+0.0179\)</span>; two-sided: <span class="math inline">\(2 \times 0.0179
+= 0.0358\)</span>. Both are below 0.05, so reject <span
+class="math inline">\(H_0\)</span> either way at <span
+class="math inline">\(\alpha = 0.05\)</span>. Neither is below 0.01, so
+do not reject <span class="math inline">\(H_0\)</span> at <span
+class="math inline">\(\alpha = 0.01\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<div id="sources" class="section level1">
+<h1>Sources</h1>
+<ul>
+<li>Coin flips: Bartoš, F., et al. (2025), “Fair coins tend to land on
+the same side they started: Evidence from 350,757 flips”, <em>Journal of
+the American Statistical Association</em> 120(552), 2118–2127 (<a
+href="https://arxiv.org/abs/2310.04153">preprint on arXiv</a>). The
+physics model: Diaconis, P., Holmes, S., and Montgomery, R. (2007),
+“Dynamical bias in the coin toss”, <em>SIAM Review</em> 49(2),
+211–235.</li>
+<li>The taste test, Candidate X’s poll, the chip bag, the coffee shop
+and the website are made-up examples.</li>
+<li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Chapter 9,
+Sections 9.1–9.5.</li>
 </ul>
 </div>
 

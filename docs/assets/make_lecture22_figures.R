@@ -1,7 +1,7 @@
 #Checks the numbers on the Week 10 Lecture 22 deck (10/26/2026): an introduction to significance
 #tests and P-values. It draws:
 #
-#  l22_tails.png         the P-value for each alternative: upper tail, lower tail, both tails
+#  l22_tails.png         one poll (z_obs = -1.90), its P-value under each of the three alternatives
 #  l22_figure_sizes.csv  the size, in points, each figure is drawn at
 #
 #P-values from the normal are the hand-method values from the course z-table (four decimals).
@@ -44,9 +44,14 @@ stopifnot(near(0.5^8, 0.0039, 1e-4), 1 / 0.5^8 == 256,
           sum(choose(6, 4:6)) == 22, near(1 - pbinom(3, 6, 0.5), 22 / 64, 1e-12),
           near(22 / 64, 0.34, 0.005))
 
-#the tails figure: z = 1.80 (and -1.80)
-stopifnot(zt(-1.80) == 0.0359, near(2 * zt(-1.80), 0.0718, 1e-12),
-          round(zt(-1.80), 3) == 0.036, round(2 * zt(-1.80), 3) == 0.072)
+#the poll (hypothetical): other polls say 52% for Candidate X; ours finds 490 of 1,000 likely voters.
+#H0: p = 0.52; the SE uses p0. Then the same poll against p0 = 0.5.
+se_p <- round(sqrt(0.52 * 0.48 / 1000), 4); z_p <- round((0.490 - 0.52) / se_p, 2)
+se_h <- round(sqrt(0.25 / 1000), 4); z_h <- round((0.490 - 0.5) / se_h, 2)
+stopifnot(1000 * 0.52 >= 15, 1000 * 0.48 >= 15, se_p == 0.0158, z_p == -1.90,
+          zt(-1.90) == 0.0287, round(1 - zt(-1.90), 4) == 0.9713, round(2 * zt(-1.90), 4) == 0.0574,
+          round(zt(-1.90), 3) == 0.029, round(1 - zt(-1.90), 3) == 0.971, round(2 * zt(-1.90), 3) == 0.057,
+          se_h == 0.0158, z_h == -0.63, zt(-0.63) == 0.2643)
 
 #coin flips: H0 p = 0.5, HA p > 0.5; the SE uses H0's p
 n_f <- 75036 + 203440 + 72281; x_f <- 178079
@@ -82,18 +87,18 @@ neg <- function(s) sub("-", MINUS, s, fixed = TRUE)
 
 #l22_tails.png: the observed z marked, the P-value shaded for each alternative
 grid <- seq(-4, 4, length.out = 401)
-panels <- c("H[A]:~p > p[0]", "H[A]:~p < p[0]", "H[A]:~p != p[0]")
-pan <- data.frame(panel = factor(panels, levels = panels), z = c(1.80, -1.80, 1.80))
+panels <- c("H[A]:~p > 0.52", "H[A]:~p < 0.52", "H[A]:~p != 0.52")
+pan <- data.frame(panel = factor(panels, levels = panels), z = c(-1.90, -1.90, -1.90))
 line <- do.call(rbind, lapply(panels, function(p) data.frame(panel = p, x = grid, y = dnorm(grid))))
 line$panel <- factor(line$panel, levels = panels)
 tail_poly <- function(panel, lo, hi) {
   g <- c(lo, grid[grid >= lo & grid <= hi], hi)
   data.frame(panel = panel, part = paste(panel, lo), x = g, y = c(0, dnorm(g[-c(1, length(g))]), 0))
 }
-fill <- rbind(tail_poly(panels[1], 1.80, 4), tail_poly(panels[2], -4, -1.80),
-              tail_poly(panels[3], 1.80, 4), tail_poly(panels[3], -4, -1.80))
+fill <- rbind(tail_poly(panels[1], -1.90, 4), tail_poly(panels[2], -4, -1.90),
+              tail_poly(panels[3], 1.90, 4), tail_poly(panels[3], -4, -1.90))
 fill$panel <- factor(fill$panel, levels = panels)
-marks <- rbind(pan, data.frame(panel = factor(panels[3], levels = panels), z = -1.80))
+marks <- rbind(pan, data.frame(panel = factor(panels[3], levels = panels), z = 1.90))
 p_tails <- ggplot() +
   geom_polygon(data = fill, aes(x, y, group = part), fill = SHADE, alpha = 0.9) +
   geom_line(data = line, aes(x, y), colour = NAVY, linewidth = 0.9) +
