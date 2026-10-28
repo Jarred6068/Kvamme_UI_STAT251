@@ -28,11 +28,7 @@ library(plyr)
 
 # Exam Logistics:
 
-  * The exam is scheduled for **Friday, November 20, 2026**, and will be taken in class. An in-class review will be held on **Wednesday, November 18, 2026**
-
-  * You will have the entire 50 minute class period to complete the exam
-
-  * The exam is proctored in class but delivered through **Canvas**, so you must bring a fully charged laptop. **Notes are not permitted.** A calculator is permitted, but it must not be capable of wireless communication
+  * Exam 3 is a **take-home, open-note exam** completed in **Canvas**. You may use your notes, the textbook and the course website. It opens **Friday, November 20, 2026** and is due **Sunday, November 29, 2026 at 11:59PM**, the last night of Fall Recess. In-class reviews will be held on **Wednesday, November 18** and **Friday, November 20, 2026**
 
   * The exam will be about 20 - 25 questions long, with at least one bonus question. Questions are mostly multiple choice, short answer, or labeling problems, with the possibility of one or two short essay / longer explanation problems
 

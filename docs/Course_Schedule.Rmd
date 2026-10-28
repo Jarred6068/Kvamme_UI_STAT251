@@ -233,7 +233,11 @@ outlined below. Any changes will be announced in class and posted here.**
 
   DUE DATES, Oct 28 2026. No lecture dates changed. Homework 3 had not been released yet, so its due
   date moved from Sun Nov 1 to Sun Nov 8 (now on the Fri Nov 6 row), and Homework 4 moved from Sun Nov 15
-  to Sun Nov 22 (now on the Fri Nov 20 Exam 3 row) - Jarred's choice.
+  to Sun Nov 22 (now on the Fri Nov 20 row) - Jarred's choice.
+
+  EXAM 3, Oct 28 2026. Exam 3 became a TAKE-HOME, open-note exam in Canvas (like Exam 2). Fri Nov 20
+  is now a second review day (Wed Nov 18 stays Exam 3 Review); the exam opens Fri Nov 20 and is due
+  Sun Nov 29 at 11:59PM, the last night of Fall Recess - Jarred's choice. Exam 3 scope is unchanged.
 -->
 
 
@@ -504,7 +508,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>November 20, 2026</td>
-  <td>Exam 3 -- **Homework 4 due Sunday, November 22 at 11:59PM**</td>
+  <td>Exam 3 Review, continued -- Exam 3 (take-home, open-note, in Canvas) opens -- **Homework 4 due Sunday, November 22 at 11:59PM**; **Exam 3 due Sunday, November 29 at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
