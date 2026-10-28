@@ -82,8 +82,8 @@ navbar:
             href: homeworks/2026/homework_1_2026.html
           - text: 'Homework 2'
             href: homeworks/2026/homework_2_2026.html
-#         - text: 'Homework 3'
-#           href: homeworks/2026/homework_3_2026.html
+          - text: 'Homework 3'
+            href: homeworks/2026/homework_3_2026.html
 #         - text: 'Homework 4'
 #           href: homeworks/2024/week12homework.html
 #         - text: 'Homework 5'
@@ -106,11 +106,11 @@ navbar:
             href: homeworks/homework_downloads.html#hw1
           - text: 'Homework 2'
             href: homeworks/homework_downloads.html#hw2
-##        HIDDEN - Homework 3-5 anchors. NOTE: these are anchors into the single
+          - text: 'Homework 3'
+            href: homeworks/homework_downloads.html#hw3
+##        HIDDEN - Homework 4-5 anchors. NOTE: these are anchors into the single
 ##        homework_downloads.html page, which still lists ALL FIVE homeworks and
 ##        is still linked below as 'All downloads'.
-#         - text: 'Homework 3'
-#           href: homeworks/homework_downloads.html#hw3
 #         - text: 'Homework 4'
 #           href: homeworks/homework_downloads.html#hw4
 #         - text: 'Homework 5'

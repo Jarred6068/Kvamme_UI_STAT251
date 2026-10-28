@@ -236,8 +236,16 @@ outlined below. Any changes will be announced in class and posted here.**
   to Sun Nov 22 (now on the Fri Nov 20 row) - Jarred's choice.
 
   EXAM 3, Oct 28 2026. Exam 3 became a TAKE-HOME, open-note exam in Canvas (like Exam 2). Fri Nov 20
-  is now a second review day (Wed Nov 18 stays Exam 3 Review); the exam opens Fri Nov 20 and is due
-  Sun Nov 29 at 11:59PM, the last night of Fall Recess - Jarred's choice. Exam 3 scope is unchanged.
+  is the Exam 3 Review day; the exam opens Fri Nov 20 and is due Sun Nov 29 at 11:59PM, the last
+  night of Fall Recess - Jarred's choice. With no in-class exam day, every lecture from Cramer's V on
+  moved one class EARLIER: Cramer's V / McNemar / Fisher to Wed Nov 18, measures of association to
+  Nov 30, correlation and SLR to Dec 2, coefficient of determination / slope tests to Dec 4 (Homework
+  5 stays due Sun Dec 6, on the Dec 4 row), SLR continued to Dec 7. That frees Wed Dec 9, which gets
+  back "Analysis of variance (ANOVA): comparing several means" (dropped Sept 24). The ANOVA
+  multiple-comparisons lecture is still dropped. Dec 11 stays the Jeopardy review.
+    * Nov 18 (Cramer's V etc.) falls before the exam opens - Jarred to decide whether it is on Exam 3.
+    * The Week 13/15/16 notes pages are still laid out by the old lecture split; re-check them
+      against these dates before enabling them in _site.yml.
 -->
 
 
@@ -503,12 +511,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Wednesday</th>
   <td>November 18, 2026</td>
-  <td>Exam 3 Review</td>
+  <td>Cramer's V, McNemar's Test, Fisher's exact test</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>November 20, 2026</td>
-  <td>Exam 3 Review, continued -- Exam 3 (take-home, open-note, in Canvas) opens -- **Homework 4 due Sunday, November 22 at 11:59PM**; **Exam 3 due Sunday, November 29 at 11:59PM**</td>
+  <td>Exam 3 Review -- Exam 3 (take-home, open-note, in Canvas) opens -- **Homework 4 due Sunday, November 22 at 11:59PM**; **Exam 3 due Sunday, November 29 at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -538,17 +546,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November 30, 2026</td>
-  <td>Cramer's V, McNemar's Test, Fisher's exact test</td>
+  <td>Measures of association</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>December  2, 2026</td>
-  <td>Measures of association</td>
+  <td>Correlation and simple linear regression</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>December  4, 2026</td>
-  <td>Correlation and simple linear regression -- **Homework 5 due Sunday at 11:59PM**</td>
+  <td>Coefficient of determination, tests for slope coefficients -- **Homework 5 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -558,12 +566,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>December  7, 2026</td>
-  <td>Coefficient of determination, tests for slope coefficients</td>
+  <td>Simple linear regression continued: omnibus F-test, checking assumptions</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>December  9, 2026</td>
-  <td>Simple linear regression continued: omnibus F-test, checking assumptions</td>
+  <td>Analysis of variance (ANOVA): comparing several means</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

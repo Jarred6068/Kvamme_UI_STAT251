@@ -74,12 +74,9 @@ downloads(rbind(
 
 <br>
 
-<!-- HIDDEN until Homework 3 is reviewed and released (Oct 18 2026): to release,
-     restore the heading below and drop `include=FALSE` from the chunk.
 ## Homework 3 {#hw3}
--->
 
-```{r, include=FALSE}
+```{r}
 downloads(rbind(
   c("2026/homework_3_2026.pdf",                                      "Assignment (printable PDF)"),
   c("../Data/homework_tables/hw3_2026_confidence_levels_proportion.csv", "Problem 6 — confidence levels to fill in (proportion)"),
