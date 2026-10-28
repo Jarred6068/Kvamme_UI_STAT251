@@ -63,6 +63,17 @@ stopifnot(n_f == 350757, ph_f == 0.5077, se_f == 0.000844, z_f == 9.1,
 se_k <- round(sqrt(0.25 / 1000), 4); z_k <- round((0.508 - 0.5) / se_k, 2)
 stopifnot(se_k == 0.0158, z_k == 0.51, zt(0.51) == 0.6950, round(1 - zt(0.51), 4) == 0.3050)
 
+# Lecture 23: cell phones and brain cancer (OpenStax Example 9.21): 172 of 420,019, p0 = 0.00034
+n_c <- 420019; x_c <- 172; p0_c <- 0.00034
+ph_c <- round(x_c / n_c, 7); se_c <- round(sqrt(p0_c * (1 - p0_c) / n_c), 8)
+z_c <- round((ph_c - p0_c) / se_c, 2)
+stopifnot(near(ph_c, 0.0004095, 1e-12), near(se_c, 0.00002845, 1e-12), z_c == 2.44, round(n_c * p0_c, 1) == 142.8,
+          round(n_c * (1 - p0_c)) == 419876, zt(2.44) == 0.9927, round(1 - zt(2.44), 4) == 0.0073)
+# Lecture 23 practice: 136 of 400 skip breakfast, p0 = 0.30
+se_b <- round(sqrt(0.3 * 0.7 / 400), 4); z_b <- round((136 / 400 - 0.3) / se_b, 2)
+stopifnot(136 / 400 == 0.34, se_b == 0.0229, z_b == 1.75, zt(1.75) == 0.9599,
+          round(1 - zt(1.75), 4) == 0.0401)
+
 # try it out
 stopifnot(sum(choose(10, 7:10)) == 176, round(176 / 1024, 3) == 0.172,
           zt(-2.10) == 0.0179, round(2 * zt(-2.10), 4) == 0.0358)
@@ -72,9 +83,14 @@ stopifnot(sum(choose(10, 7:10)) == 176, round(176 / 1024, 3) == 0.172,
   SCOPE OF THIS PAGE (Oct 26 2026). Week 10 per Course_Schedule.Rmd (the date source of truth):
     Mon Oct 26   Lecture 22  the t interval concluded (seal whiskers, on the Week 9 page) and choosing a
                              minimum sample size (also on the Week 9 page); introduction to
-                             significance tests and P-values (this page)
+                             significance tests (the taste test, this page); Lecture 22 stopped
+                             at its slide 9, so it is trimmed to slides 1-8
                              lecture_slides/Week 10/2026/Week10_Lecture22_Slides_10_26_2026.pptx
-    Wed Oct 28   Lecture 23  tests for a population proportion   (to be added)
+    Wed Oct 28   Lecture 23  significance tests and P-values (Lecture 22 slides 9-16 carried over),
+                             testing a population proportion with OpenStax Example 9.21 (cell
+                             phones and brain cancer) and a breakfast practice (this page). The
+                             coin-flip example was cut from the slides and stays here as reading.
+                             lecture_slides/Week 10/2026/Week10_Lecture23_Slides_10_28_2026.pptx
     Fri Oct 30   Lecture 24  tests for a population mean         (to be added)
 
   This page replaced the 2024 Week 10 page (git show 27a60f5:docs/lecturemenu10.Rmd). Its review of
@@ -84,7 +100,7 @@ stopifnot(sum(choose(10, 7:10)) == 176, round(176 / 1024, 3) == 0.172,
   normal areas (Weeks 6 and 9). The notation and the five steps follow Jarred's 2024 notes (2024
   Lecture 21, git show 27a60f5:docs/lecturemenu11.Rmd). Textbook: OpenStax Introductory Statistics 2e,
   Sections 9.1-9.5. The taste test and the Candidate X poll (Jarred's idea, midterm season) are
-  hypothetical; the coin flips are Bartos et al. (2025). The poll is also slide 14 of Lecture 22.
+  hypothetical; the coin flips are Bartos et al. (2025). The poll is also slide 11 of Lecture 23.
 -->
 
 # From estimating to testing
@@ -532,8 +548,59 @@ Every test in the rest of the course follows the same five steps:
 5. **Decision.** If the P-value $< \alpha$, reject $H_0$ (statistically significant); otherwise do not
    reject $H_0$. Then say what it means in the context of the question.
 
-On Wednesday we use these steps to test claims about a population proportion $p$, and on Friday about a
-population mean $\mu$.
+On Friday we use the same steps to test claims about a population mean $\mu$.
+
+# Testing a population proportion
+
+When the variable is categorical and the claim is about the proportion of successes, $H_0: p = p_0$, the
+five steps become:
+
+1. **Assumptions.** A random sample, and a large enough sample: $np_0 \geq 15$ and $n(1-p_0) \geq 15$.
+2. **Hypotheses.** $H_0: p = p_0$ against $H_A: p > p_0$, $p < p_0$ or $p \neq p_0$.
+3. **Test statistic.**
+   $$z_{obs} = \frac{\hat{p} - p_0}{\sqrt{p_0(1 - p_0)/n}}$$
+   The standard error uses $p_0$, not $\hat{p}$, because the whole calculation assumes $H_0$ is true.
+   (A confidence interval uses $\hat{p}$, because there is no $p_0$ to assume.)
+4. **P-value.** Upper-tailed: $P(Z \geq z_{obs} \mid H_0 \text{ true})$. Lower-tailed:
+   $P(Z \leq z_{obs} \mid H_0 \text{ true})$. Two-sided: double the tail beyond $z_{obs}$.
+5. **Decision.** Compare the P-value with $\alpha$, then say what it means in context.
+
+The coin-flip study above is one of these tests. Here is a second one, from the textbook.
+
+## Example: cell phones and brain cancer
+
+*OpenStax Introductory Statistics 2e, Example 9.21.* In a study of 420,019 cell phone users, 172
+developed brain cancer. For people who do not use cell phones, the rate is 0.034%. Do cell phone users
+get brain cancer at a higher rate? Because this is a critical issue, use $\alpha = 0.005$.
+
+1. **Assumptions.** Treat the users as a random sample. $np_0 = 420{,}019(0.00034) = `r fmt(n_c * p0_c, 1)`$
+   and $n(1 - p_0) = `r format(round(n_c * (1 - p0_c)), big.mark = ',')`$, both at least 15.
+2. **Hypotheses.** $p$ = the proportion of cell phone users who develop brain cancer.
+   $H_0: p = 0.00034$ and $H_A: p > 0.00034$: **upper-tailed**.
+3. **Test statistic.** $\hat{p} = 172/420{,}019 \approx `r fmt(ph_c, 7)`$ and
+   $SE = \sqrt{0.00034 \times 0.99966 / 420{,}019} \approx `r fmt(se_c, 8)`$, so
+   $$z_{obs} = \frac{`r fmt(ph_c, 7)` - 0.00034}{`r fmt(se_c, 8)`} \approx `r fmt(z_c, 2)`$$
+4. **P-value.** $P(Z \geq `r fmt(z_c, 2)` \mid H_0 \text{ true}) = 1 - `r fmt(zt(2.44), 4)` = `r fmt(1 - zt(2.44), 4)`$.
+5. **Decision.** $`r fmt(1 - zt(2.44), 4)` \geq 0.005$: **do not reject $H_0$**. At the 0.5% level, the
+   data are not strong enough evidence that cell phone users get brain cancer at a higher rate.
+
+Why such a small $\alpha$? Rejecting $H_0$ when it is true would wrongly blame cell phones for cancer, a
+claim with serious consequences, so we ask for very strong evidence before making it. Notice that the
+P-value of 0.0073 would have been significant at the usual $\alpha = 0.05$. The decision depends on the
+cutoff, which is why $\alpha$ is chosen **before** the data are collected.
+
+## Assumptions for a population proportion
+
+Intervals and tests for $p$ both need a random sample, with each individual counted as a success or a
+failure. They differ in the sample-size check:
+
+* **Confidence interval for $p$:** $n\hat{p} > 5$ and $n(1 - \hat{p}) > 5$, checked with $\hat{p}$,
+  because $p$ is unknown.
+* **Significance test for $p$:** $np_0 \geq 15$ and $n(1 - p_0) \geq 15$, checked with $p_0$, because the
+  test assumes $H_0$ is true.
+
+Either way, the check is there to make the sampling distribution of $\hat{p}$ close to normal, so
+that the areas from the $z$-table are right.
 
 ## Try it out
 
@@ -554,6 +621,13 @@ population mean $\mu$.
   *Answer:* lower-tailed: $P(Z \leq -2.10) = `r fmt(zt(-2.10), 4)`$; two-sided:
   $2 \times `r fmt(zt(-2.10), 4)` = `r fmt(2 * zt(-2.10), 4)`$. Both are below 0.05, so reject $H_0$
   either way at $\alpha = 0.05$. Neither is below 0.01, so do not reject $H_0$ at $\alpha = 0.01$.
+* *(The Lecture 23 practice problem.)* Last year 30% of students skipped breakfast. This fall, campus
+  dining asks a random sample of 400 students, and 136 say they skip it. Has the proportion gone up? Use
+  $\alpha = 0.05$.
+  *Answer:* $np_0 = 120$ and $n(1-p_0) = 280$, both at least 15. $H_0: p = 0.30$, $H_A: p > 0.30$
+  (upper-tailed). $\hat{p} = 136/400 = 0.34$, $SE = \sqrt{0.30 \times 0.70/400} \approx `r fmt(se_b, 4)`$,
+  $z_{obs} = 0.04/`r fmt(se_b, 4)` \approx `r fmt(z_b, 2)`$. P-value $= 1 - `r fmt(zt(1.75), 4)` =
+  `r fmt(1 - zt(1.75), 4)` < 0.05$: reject $H_0$. The proportion of students skipping breakfast has gone up.
 
 # Sources
 
@@ -563,4 +637,6 @@ population mean $\mu$.
   P., Holmes, S., and Montgomery, R. (2007), "Dynamical bias in the coin toss", *SIAM Review* 49(2),
   211&ndash;235.
 * The taste test, Candidate X's poll, the chip bag, the coffee shop and the website are made-up examples.
-* Textbook: OpenStax *Introductory Statistics 2e*, Chapter 9, Sections 9.1&ndash;9.5.
+* Cell phones and brain cancer: OpenStax *Introductory Statistics 2e*, Example 9.21. The breakfast
+  survey is made up.
+* Textbook: OpenStax *Introductory Statistics 2e*, Chapter 9, Sections 9.1&ndash;9.6.

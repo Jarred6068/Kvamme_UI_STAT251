@@ -566,9 +566,14 @@ $(document).ready(function () {
   SCOPE OF THIS PAGE (Oct 26 2026). Week 10 per Course_Schedule.Rmd (the date source of truth):
     Mon Oct 26   Lecture 22  the t interval concluded (seal whiskers, on the Week 9 page) and choosing a
                              minimum sample size (also on the Week 9 page); introduction to
-                             significance tests and P-values (this page)
+                             significance tests (the taste test, this page); Lecture 22 stopped
+                             at its slide 9, so it is trimmed to slides 1-8
                              lecture_slides/Week 10/2026/Week10_Lecture22_Slides_10_26_2026.pptx
-    Wed Oct 28   Lecture 23  tests for a population proportion   (to be added)
+    Wed Oct 28   Lecture 23  significance tests and P-values (Lecture 22 slides 9-16 carried over),
+                             testing a population proportion with OpenStax Example 9.21 (cell
+                             phones and brain cancer) and a breakfast practice (this page). The
+                             coin-flip example was cut from the slides and stays here as reading.
+                             lecture_slides/Week 10/2026/Week10_Lecture23_Slides_10_28_2026.pptx
     Fri Oct 30   Lecture 24  tests for a population mean         (to be added)
 
   This page replaced the 2024 Week 10 page (git show 27a60f5:docs/lecturemenu10.Rmd). Its review of
@@ -578,7 +583,7 @@ $(document).ready(function () {
   normal areas (Weeks 6 and 9). The notation and the five steps follow Jarred's 2024 notes (2024
   Lecture 21, git show 27a60f5:docs/lecturemenu11.Rmd). Textbook: OpenStax Introductory Statistics 2e,
   Sections 9.1-9.5. The taste test and the Candidate X poll (Jarred's idea, midterm season) are
-  hypothetical; the coin flips are Bartos et al. (2025). The poll is also slide 14 of Lecture 22.
+  hypothetical; the coin flips are Bartos et al. (2025). The poll is also slide 11 of Lecture 23.
 -->
 <div id="from-estimating-to-testing" class="section level1">
 <h1>From estimating to testing</h1>
@@ -1399,9 +1404,105 @@ class="math inline">\(H_0\)</span> (statistically significant);
 otherwise do not reject <span class="math inline">\(H_0\)</span>. Then
 say what it means in the context of the question.</li>
 </ol>
-<p>On Wednesday we use these steps to test claims about a population
-proportion <span class="math inline">\(p\)</span>, and on Friday about a
-population mean <span class="math inline">\(\mu\)</span>.</p>
+<p>On Friday we use the same steps to test claims about a population
+mean <span class="math inline">\(\mu\)</span>.</p>
+</div>
+<div id="testing-a-population-proportion" class="section level1">
+<h1>Testing a population proportion</h1>
+<p>When the variable is categorical and the claim is about the
+proportion of successes, <span class="math inline">\(H_0: p =
+p_0\)</span>, the five steps become:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> A random sample, and a large enough
+sample: <span class="math inline">\(np_0 \geq 15\)</span> and <span
+class="math inline">\(n(1-p_0) \geq 15\)</span>.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: p =
+p_0\)</span> against <span class="math inline">\(H_A: p &gt;
+p_0\)</span>, <span class="math inline">\(p &lt; p_0\)</span> or <span
+class="math inline">\(p \neq p_0\)</span>.</li>
+<li><strong>Test statistic.</strong> <span
+class="math display">\[z_{obs} = \frac{\hat{p} - p_0}{\sqrt{p_0(1 -
+p_0)/n}}\]</span> The standard error uses <span
+class="math inline">\(p_0\)</span>, not <span
+class="math inline">\(\hat{p}\)</span>, because the whole calculation
+assumes <span class="math inline">\(H_0\)</span> is true. (A confidence
+interval uses <span class="math inline">\(\hat{p}\)</span>, because
+there is no <span class="math inline">\(p_0\)</span> to assume.)</li>
+<li><strong>P-value.</strong> Upper-tailed: <span
+class="math inline">\(P(Z \geq z_{obs} \mid H_0 \text{ true})\)</span>.
+Lower-tailed: <span class="math inline">\(P(Z \leq z_{obs} \mid H_0
+\text{ true})\)</span>. Two-sided: double the tail beyond <span
+class="math inline">\(z_{obs}\)</span>.</li>
+<li><strong>Decision.</strong> Compare the P-value with <span
+class="math inline">\(\alpha\)</span>, then say what it means in
+context.</li>
+</ol>
+<p>The coin-flip study above is one of these tests. Here is a second
+one, from the textbook.</p>
+<div id="example-cell-phones-and-brain-cancer" class="section level2">
+<h2>Example: cell phones and brain cancer</h2>
+<p><em>OpenStax Introductory Statistics 2e, Example 9.21.</em> In a
+study of 420,019 cell phone users, 172 developed brain cancer. For
+people who do not use cell phones, the rate is 0.034%. Do cell phone
+users get brain cancer at a higher rate? Because this is a critical
+issue, use <span class="math inline">\(\alpha = 0.005\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Treat the users as a random sample.
+<span class="math inline">\(np_0 = 420{,}019(0.00034) = 142.8\)</span>
+and <span class="math inline">\(n(1 - p_0) = 419,876\)</span>, both at
+least 15.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
+= the proportion of cell phone users who develop brain cancer. <span
+class="math inline">\(H_0: p = 0.00034\)</span> and <span
+class="math inline">\(H_A: p &gt; 0.00034\)</span>:
+<strong>upper-tailed</strong>.</li>
+<li><strong>Test statistic.</strong> <span class="math inline">\(\hat{p}
+= 172/420{,}019 \approx 0.0004095\)</span> and <span
+class="math inline">\(SE = \sqrt{0.00034 \times 0.99966 / 420{,}019}
+\approx 0.00002845\)</span>, so <span class="math display">\[z_{obs} =
+\frac{0.0004095 - 0.00034}{0.00002845} \approx 2.44\]</span></li>
+<li><strong>P-value.</strong> <span class="math inline">\(P(Z \geq 2.44
+\mid H_0 \text{ true}) = 1 - 0.9927 = 0.0073\)</span>.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0073 \geq
+0.005\)</span>: <strong>do not reject <span
+class="math inline">\(H_0\)</span></strong>. At the 0.5% level, the data
+are not strong enough evidence that cell phone users get brain cancer at
+a higher rate.</li>
+</ol>
+<p>Why such a small <span class="math inline">\(\alpha\)</span>?
+Rejecting <span class="math inline">\(H_0\)</span> when it is true would
+wrongly blame cell phones for cancer, a claim with serious consequences,
+so we ask for very strong evidence before making it. Notice that the
+P-value of 0.0073 would have been significant at the usual <span
+class="math inline">\(\alpha = 0.05\)</span>. The decision depends on
+the cutoff, which is why <span class="math inline">\(\alpha\)</span> is
+chosen <strong>before</strong> the data are collected.</p>
+</div>
+<div id="assumptions-for-a-population-proportion"
+class="section level2">
+<h2>Assumptions for a population proportion</h2>
+<p>Intervals and tests for <span class="math inline">\(p\)</span> both
+need a random sample, with each individual counted as a success or a
+failure. They differ in the sample-size check:</p>
+<ul>
+<li><strong>Confidence interval for <span
+class="math inline">\(p\)</span>:</strong> <span
+class="math inline">\(n\hat{p} &gt; 5\)</span> and <span
+class="math inline">\(n(1 - \hat{p}) &gt; 5\)</span>, checked with <span
+class="math inline">\(\hat{p}\)</span>, because <span
+class="math inline">\(p\)</span> is unknown.</li>
+<li><strong>Significance test for <span
+class="math inline">\(p\)</span>:</strong> <span
+class="math inline">\(np_0 \geq 15\)</span> and <span
+class="math inline">\(n(1 - p_0) \geq 15\)</span>, checked with <span
+class="math inline">\(p_0\)</span>, because the test assumes <span
+class="math inline">\(H_0\)</span> is true.</li>
+</ul>
+<p>Either way, the check is there to make the sampling distribution of
+<span class="math inline">\(\hat{p}\)</span> close to normal, so that
+the areas from the <span class="math inline">\(z\)</span>-table are
+right.</p>
+</div>
 <div id="try-it-out" class="section level2">
 <h2>Try it out</h2>
 <ul>
@@ -1444,6 +1545,22 @@ class="math inline">\(H_0\)</span> either way at <span
 class="math inline">\(\alpha = 0.05\)</span>. Neither is below 0.01, so
 do not reject <span class="math inline">\(H_0\)</span> at <span
 class="math inline">\(\alpha = 0.01\)</span>.</p></li>
+<li><p><em>(The Lecture 23 practice problem.)</em> Last year 30% of
+students skipped breakfast. This fall, campus dining asks a random
+sample of 400 students, and 136 say they skip it. Has the proportion
+gone up? Use <span class="math inline">\(\alpha = 0.05\)</span>.
+<em>Answer:</em> <span class="math inline">\(np_0 = 120\)</span> and
+<span class="math inline">\(n(1-p_0) = 280\)</span>, both at least 15.
+<span class="math inline">\(H_0: p = 0.30\)</span>, <span
+class="math inline">\(H_A: p &gt; 0.30\)</span> (upper-tailed). <span
+class="math inline">\(\hat{p} = 136/400 = 0.34\)</span>, <span
+class="math inline">\(SE = \sqrt{0.30 \times 0.70/400} \approx
+0.0229\)</span>, <span class="math inline">\(z_{obs} = 0.04/0.0229
+\approx 1.75\)</span>. P-value <span class="math inline">\(= 1 - 0.9599
+=
+0.0401 &lt; 0.05\)</span>: reject <span
+class="math inline">\(H_0\)</span>. The proportion of students skipping
+breakfast has gone up.</p></li>
 </ul>
 </div>
 </div>
@@ -1459,8 +1576,10 @@ physics model: Diaconis, P., Holmes, S., and Montgomery, R. (2007),
 211–235.</li>
 <li>The taste test, Candidate X’s poll, the chip bag, the coffee shop
 and the website are made-up examples.</li>
+<li>Cell phones and brain cancer: OpenStax <em>Introductory Statistics
+2e</em>, Example 9.21. The breakfast survey is made up.</li>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Chapter 9,
-Sections 9.1–9.5.</li>
+Sections 9.1–9.6.</li>
 </ul>
 </div>
 
