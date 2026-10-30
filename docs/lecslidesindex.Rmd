@@ -193,7 +193,13 @@ An interval for a mean when &sigma; is unknown; choosing a minimum sample size; 
 <a href="./lecture_slides/Week%2010/2026/Week10_Lecture22_Slides_10_26_2026.pptx">Slides (PowerPoint)</a>
 
 ## Lecture 23 &middot; Wednesday, October 28
-Significance tests: hypotheses, test statistics, P-values and statistical significance; testing a population proportion
+Significance tests: hypotheses, test statistics and P-values (the decision and testing a population proportion moved to Lecture 24)
 
 <a href="./lecture_slides/Week%2010/2026/Week10_Lecture23_Slides_10_28_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2010/2026/Week10_Lecture23_Slides_10_28_2026.pptx">Slides (PowerPoint)</a>
+
+## Lecture 24 &middot; Friday, October 30
+Making a decision; testing a population proportion and a population mean (z and t tests)
+
+<a href="./lecture_slides/Week%2010/2026/Week10_Lecture24_Slides_10_30_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2010/2026/Week10_Lecture24_Slides_10_30_2026.pptx">Slides (PowerPoint)</a>

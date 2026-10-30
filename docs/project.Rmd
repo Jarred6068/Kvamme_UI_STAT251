@@ -149,7 +149,7 @@ Rather than analyzing the whole dataset, you will analyze a **sample** drawn fro
 
 * **(A)** Draw a sample of **at least 20-30 observations** from your chosen dataset using an appropriate sampling method (e.g., simple random sampling, systematic sampling, stratified sampling, or cluster sampling).
 
-* **(B)** Describe exactly how you drew the sample: the method you used, the sample size $n$, and the tool or procedure you used to select the observations (for example, a random number generator, the `sample()` function in R, or a random number table). Someone reading your report should be able to repeat what you did.
+* **(B)** Describe exactly how you drew the sample: the method you used, the sample size $n$, and the tool or procedure you used to select the observations (for example, a random number generator, the `sample()` function in R, or a random number table). Someone reading your report should be able to repeat what you did. The [Online Sampling Tools](sampling_tools.html) page lists free websites that can draw each kind of sample.
 
 * **(C)** **Provide a justification for the sampling approach you chose.** Explain why that method is appropriate for your dataset and your question, and note any bias your method could introduce.
 

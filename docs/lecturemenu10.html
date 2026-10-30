@@ -498,6 +498,9 @@ $(document).ready(function () {
     <li>
       <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
     </li>
+    <li>
+      <a href="sampling_tools.html">Online Sampling Tools</a>
+    </li>
     <li class="dropdown-submenu">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tables</a>
       <ul class="dropdown-menu" role="menu">
@@ -580,7 +583,13 @@ $(document).ready(function () {
                              phones and brain cancer) and a breakfast practice (this page). The
                              coin-flip example was cut from the slides and stays here as reading.
                              lecture_slides/Week 10/2026/Week10_Lecture23_Slides_10_28_2026.pptx
-    Fri Oct 30   Lecture 24  tests for a population mean         (to be added)
+                             Lecture 23 stopped at its slide 9 (test statistics and P-values), so
+                             it is trimmed to slides 1-9.
+    Fri Oct 30   Lecture 24  making a decision (with a P-value practice), then Lecture 23 slides 12-13 (testing a proportion,
+                             cell phones) and testing a population mean (this page): OpenStax
+                             Example 9.16 (first statistics test), with practice from Examples
+                             9.17 (brides, two-sided) and 9.14 (goggles, lower-tailed)
+                             lecture_slides/Week 10/2026/Week10_Lecture24_Slides_10_30_2026.pptx
 
   This page replaced the 2024 Week 10 page (git show 27a60f5:docs/lecturemenu10.Rmd). Its review of
   confidence intervals and sample size now lives on the Week 9 page. Its "Introduction to tests of
@@ -1025,26 +1034,66 @@ two-sided
 </table>
 <div id="example-stating-hypotheses" class="section level2">
 <h2>Example: stating hypotheses</h2>
+<p>For each story, decide what the parameter is, write <span
+class="math inline">\(H_A\)</span> first (the suspicion), then <span
+class="math inline">\(H_0\)</span> (no effect), give <span
+class="math inline">\(\theta_0\)</span> and say which tail.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p><em>Your roommate names Coke or Pepsi. Do they do better than
-guessing?</em> <span class="math inline">\(p\)</span> = their chance of
-naming a cup right. <span class="math inline">\(H_A: p &gt;
+<li><em>The taste test.</em> Your roommate swears they can tell Coke
+from Pepsi with their eyes closed. You decide to put it to the test:
+behind their back, you flip a coin to choose which soda goes in each
+cup, hand them the cups one at a time, and write down whether they name
+each one correctly. Someone who is just guessing would be right about
+half the time. Does your roommate do better than guessing?</li>
+</ol>
+<p><em>Answer:</em> <span class="math inline">\(p\)</span> = their
+chance of naming a cup right. <span class="math inline">\(H_A: p &gt;
 0.5\)</span>, <span class="math inline">\(H_0: p = 0.5\)</span>, with
 <span class="math inline">\(p_0 = 0.5\)</span>:
-<strong>upper-tailed</strong>.</p></li>
-<li><p><em>A coin is spun on a table. Does it favor heads or tails?</em>
-<span class="math inline">\(p\)</span> = the chance of heads. We do not
-suspect a direction, only “not fair”: <span class="math inline">\(H_A: p
-\neq 0.5\)</span>, <span class="math inline">\(H_0: p = 0.5\)</span>,
-with <span class="math inline">\(p_0 = 0.5\)</span>:
-<strong>two-sided</strong>.</p></li>
-<li><p><em>A chip bag says 28 g. Do the bags hold less than that on
-average?</em> <span class="math inline">\(\mu\)</span> = the mean weight
-of all bags. <span class="math inline">\(H_A: \mu &lt; 28\)</span>,
-<span class="math inline">\(H_0: \mu = 28\)</span>, with <span
-class="math inline">\(\mu_0 = 28\)</span> g:
-<strong>lower-tailed</strong>.</p></li>
+<strong>upper-tailed</strong>. Only “better than guessing” would support
+the claim.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><em>The spinning coin.</em> A friend says that a penny spun on its
+edge on a table does not land heads half the time, the way a flipped
+penny does. Neither of you knows which way it should lean: the two faces
+are stamped differently, so the coin might fall toward heads or toward
+tails. You plan to spin it many times and count the heads. Is a spun
+penny fair?</li>
 </ol>
+<p><em>Answer:</em> <span class="math inline">\(p\)</span> = the chance
+a spun penny lands heads. We do not suspect a direction, only “not
+fair”: <span class="math inline">\(H_A: p \neq 0.5\)</span>, <span
+class="math inline">\(H_0: p = 0.5\)</span>, with <span
+class="math inline">\(p_0 = 0.5\)</span>:
+<strong>two-sided</strong>.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><em>The chip bag.</em> Every bag of your favorite chips says “Net
+weight 28 g”. Lately the bags seem to have more air and fewer chips, and
+you suspect the company is quietly under-filling them. You buy a bag
+from several different stores and weigh the chips in each one. Do the
+bags hold less than 28 g on average?</li>
+</ol>
+<p><em>Answer:</em> <span class="math inline">\(\mu\)</span> = the mean
+weight of chips in all bags of this brand. <span
+class="math inline">\(H_A: \mu &lt; 28\)</span>, <span
+class="math inline">\(H_0: \mu = 28\)</span>, with <span
+class="math inline">\(\mu_0 = 28\)</span> g:
+<strong>lower-tailed</strong>. Only an under-filled bag would cheat the
+customer.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li><em>The coffee machine.</em> The campus coffee shop’s machine is set
+to pour 12 oz into a medium cup. If it pours too little, customers
+complain; if it pours too much, the shop wastes coffee and cups
+overflow. Each month the manager measures a sample of medium pours to
+check that the machine is still set correctly. Is the machine’s mean
+pour off from 12 oz?</li>
+</ol>
+<p><em>Answer:</em> <span class="math inline">\(\mu\)</span> = the mean
+amount the machine pours into a medium cup. A problem in either
+direction matters: <span class="math inline">\(H_A: \mu \neq
+12\)</span>, <span class="math inline">\(H_0: \mu = 12\)</span>, with
+<span class="math inline">\(\mu_0 = 12\)</span> oz:
+<strong>two-sided</strong>.</p>
 </div>
 </div>
 <div id="measuring-how-surprising-the-test-statistic"
@@ -1410,8 +1459,86 @@ class="math inline">\(H_0\)</span> (statistically significant);
 otherwise do not reject <span class="math inline">\(H_0\)</span>. Then
 say what it means in the context of the question.</li>
 </ol>
-<p>On Friday we use the same steps to test claims about a population
-mean <span class="math inline">\(\mu\)</span>.</p>
+<p>“Do not reject <span class="math inline">\(H_0\)</span>” is not the
+same as “accept <span class="math inline">\(H_0\)</span>”. Not rejecting
+<span class="math inline">\(H_0\)</span> does not prove it true; the
+data just are not strong enough evidence against it.</p>
+<div id="practice-p-values-and-decisions" class="section level2">
+<h2>Practice: P-values and decisions</h2>
+<p>For each test, write the P-value as a probability given <span
+class="math inline">\(H_0\)</span> is true. Then use its value to make a
+decision.</p>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Test</th>
+<th align="left">Hypotheses</th>
+<th align="left">Test statistic</th>
+<th align="left"><span class="math inline">\(\alpha\)</span></th>
+<th align="left">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(a)</td>
+<td align="left"><span class="math inline">\(H_0: p = 0.40\)</span>,
+<span class="math inline">\(H_A: p &gt; 0.40\)</span></td>
+<td align="left"><span class="math inline">\(z_{obs} =
+1.52\)</span></td>
+<td align="left">0.05</td>
+<td align="left">0.0643</td>
+</tr>
+<tr class="even">
+<td align="left">(b)</td>
+<td align="left"><span class="math inline">\(H_0: \mu = 12\)</span>,
+<span class="math inline">\(H_A: \mu &lt; 12\)</span></td>
+<td align="left"><span class="math inline">\(t_{obs} = -2.30\)</span>,
+<span class="math inline">\(df = 15\)</span></td>
+<td align="left">0.01</td>
+<td align="left">0.0181</td>
+</tr>
+<tr class="odd">
+<td align="left">(c)</td>
+<td align="left"><span class="math inline">\(H_0: \mu = 50\)</span>,
+<span class="math inline">\(H_A: \mu \neq 50\)</span></td>
+<td align="left"><span class="math inline">\(z_{obs} =
+-2.10\)</span></td>
+<td align="left">0.05</td>
+<td align="left">0.0358</td>
+</tr>
+</tbody>
+</table>
+<p><em>Answers:</em></p>
+<ul>
+<li><ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(P(Z \geq 1.52 \mid H_0 \text{ true}) =
+0.0643 \geq 0.05\)</span>: do not reject <span
+class="math inline">\(H_0\)</span>.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(P(T \leq -2.30 \mid H_0 \text{ true}) =
+0.0181 \geq 0.01\)</span>: do not reject <span
+class="math inline">\(H_0\)</span>. (It would be significant at <span
+class="math inline">\(\alpha = 0.05\)</span>.)</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(P(Z \leq -2.10 \text{ or } Z \geq 2.10
+\mid H_0 \text{ true}) = 2(0.0179) =
+0.0358 &lt; 0.05\)</span>: reject <span
+class="math inline">\(H_0\)</span>.</li>
+</ol></li>
+</ul>
+<p>The same five steps test claims about a population proportion <span
+class="math inline">\(p\)</span> and about a population mean <span
+class="math inline">\(\mu\)</span>.</p>
+</div>
 </div>
 <div id="testing-a-population-proportion" class="section level1">
 <h1>Testing a population proportion</h1>
@@ -1570,6 +1697,121 @@ breakfast has gone up.</p></li>
 </ul>
 </div>
 </div>
+<div id="testing-a-population-mean" class="section level1">
+<h1>Testing a population mean</h1>
+<p>When the variable is quantitative and the claim is about its mean,
+<span class="math inline">\(H_0: \mu = \mu_0\)</span>, the five steps
+become:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> A random sample, from a population
+that is normal or close to it. With <span class="math inline">\(n \geq
+30\)</span> the Central Limit Theorem makes <span
+class="math inline">\(\bar{x}\)</span> close to normal anyway.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: \mu =
+\mu_0\)</span> against <span class="math inline">\(H_A: \mu &gt;
+\mu_0\)</span>, <span class="math inline">\(\mu &lt; \mu_0\)</span> or
+<span class="math inline">\(\mu \neq \mu_0\)</span>.</li>
+<li><strong>Test statistic.</strong> Just as for confidence intervals,
+which one depends on whether <span class="math inline">\(\sigma\)</span>
+is known: <span class="math display">\[\sigma \text{ known: } z_{obs} =
+\frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} \qquad\qquad
+  \sigma \text{ unknown: } t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}},
+\quad df = n - 1\]</span></li>
+<li><strong>P-value.</strong> The same tails as for <span
+class="math inline">\(p\)</span>. Upper-tailed: <span
+class="math inline">\(P(T \geq t_{obs} \mid H_0 \text{ true})\)</span>;
+lower-tailed: <span class="math inline">\(P(T \leq t_{obs} \mid H_0
+\text{ true})\)</span>; two-sided: double the tail beyond <span
+class="math inline">\(t_{obs}\)</span>. With <span
+class="math inline">\(z_{obs}\)</span>, read it from the <span
+class="math inline">\(z\)</span>-table as before.</li>
+<li><strong>Decision.</strong> Compare the P-value with <span
+class="math inline">\(\alpha\)</span>, then say what it means in
+context.</li>
+</ol>
+<p><strong>P-values from the <span
+class="math inline">\(t\)</span>-table.</strong> The <a
+href="misc/t_table.html">course <span
+class="math inline">\(t\)</span>-table</a> lists critical values, not
+areas, so it gives the P-value only between two bounds. In row <span
+class="math inline">\(df\)</span>, find the two values that <span
+class="math inline">\(|t_{obs}|\)</span> falls between. The P-value is
+between the upper-tail areas at the top of those two columns (for a
+two-sided test, use the two-tail areas). Software gives the exact
+value.</p>
+<div id="example-the-first-statistics-test" class="section level2">
+<h2>Example: the first statistics test</h2>
+<p><em>OpenStax Introductory Statistics 2e, Example 9.16.</em>
+Statistics students believe the mean score on the first statistics test
+is 65. An instructor thinks it is higher. He samples ten students’
+scores, 65, 65, 70, 67, 66, 63, 63, 68, 72, 71, which come from a normal
+distribution. Use <span class="math inline">\(\alpha =
+0.05\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> <span class="math inline">\(n =
+10\)</span> is small, but the scores are normal, so the test works.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu\)</span> = the mean score on the first test.
+<span class="math inline">\(H_0: \mu = 65\)</span> and <span
+class="math inline">\(H_A: \mu &gt; 65\)</span>:
+<strong>upper-tailed</strong>.</li>
+<li><strong>Test statistic.</strong> <span class="math inline">\(\bar{x}
+= 67\)</span> and <span class="math inline">\(s = 3.197\)</span>. <span
+class="math inline">\(\sigma\)</span> is unknown, so use <span
+class="math inline">\(t\)</span>: <span class="math inline">\(SE =
+3.197/\sqrt{10} \approx 1.011\)</span> and <span
+class="math display">\[t_{obs} = \frac{67 - 65}{1.011} \approx 1.98,
+\qquad df = 10 - 1 = 9\]</span></li>
+<li><strong>P-value.</strong> In row 9 of the <span
+class="math inline">\(t\)</span>-table, <span
+class="math inline">\(1.833 &lt; 1.98 &lt; 2.262\)</span>. Those columns
+have upper-tail areas 0.05 and 0.025, so <span
+class="math inline">\(0.025 &lt; \text{P-value} &lt; 0.05\)</span>.
+(Software gives 0.0395.)</li>
+<li><strong>Decision.</strong> The P-value is below <span
+class="math inline">\(\alpha = 0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are convincing
+evidence that the mean score on the first test is higher than 65.</li>
+</ol>
+</div>
+<div id="practice-a-proportion-and-a-mean" class="section level2">
+<h2>Practice: a proportion and a mean</h2>
+<ul>
+<li><em>(Lecture 24 practice; OpenStax Example 9.17.)</em> Joon believes
+50% of first-time brides in the United States are younger than their
+grooms. She samples 100 first-time brides, and 53 say they are younger
+than their grooms. Is the percentage different from 50%? Use <span
+class="math inline">\(\alpha = 0.01\)</span>. <em>Answer:</em> <span
+class="math inline">\(np_0 = n(1 - p_0) = 50\)</span>, both at least 15.
+<span class="math inline">\(H_0: p = 0.50\)</span>, <span
+class="math inline">\(H_A: p \neq 0.50\)</span> (two-sided). <span
+class="math inline">\(\hat{p} = 0.53\)</span>, <span
+class="math inline">\(SE = \sqrt{0.50 \times 0.50/100} = 0.05\)</span>,
+<span class="math inline">\(z_{obs} = 0.03/0.05 = 0.60\)</span>. P-value
+<span class="math inline">\(= 2 \times P(Z \geq 0.60 \mid H_0 \text{
+true}) = 2(1 - 0.7257) =
+0.5486 \geq 0.01\)</span>: do not reject <span
+class="math inline">\(H_0\)</span>. The data are not convincing evidence
+that the percentage differs from 50%.</li>
+<li><em>(Lecture 24 practice; OpenStax Example 9.14.)</em> Jeffrey’s
+mean time for the 25-yard freestyle is 16.43 seconds, with <span
+class="math inline">\(\sigma = 0.8\)</span> seconds. In new goggles he
+swims it 15 times, with a mean of 16 seconds. Do the goggles make him
+faster? Swim times are normal; use <span class="math inline">\(\alpha =
+0.05\)</span>. <em>Answer:</em> <span class="math inline">\(H_0: \mu =
+16.43\)</span>, <span class="math inline">\(H_A: \mu &lt; 16.43\)</span>
+(lower-tailed: faster means less time). <span
+class="math inline">\(\sigma\)</span> is known, so use <span
+class="math inline">\(z\)</span>: <span class="math inline">\(SE =
+0.8/\sqrt{15} \approx 0.2066\)</span>, <span
+class="math inline">\(z_{obs} = (16 - 16.43)/0.2066 \approx
+-2.08\)</span>. P-value <span class="math inline">\(= P(Z \leq -2.08
+\mid H_0 \text{ true}) = 0.0188 &lt; 0.05\)</span>: reject <span
+class="math inline">\(H_0\)</span>. Jeffrey swims faster with the
+goggles.</li>
+</ul>
+</div>
+</div>
 <div id="sources" class="section level1">
 <h1>Sources</h1>
 <ul>
@@ -1583,7 +1825,9 @@ physics model: Diaconis, P., Holmes, S., and Montgomery, R. (2007),
 <li>The taste test, Candidate X’s poll, the chip bag, the coffee shop
 and the website are made-up examples.</li>
 <li>Cell phones and brain cancer: OpenStax <em>Introductory Statistics
-2e</em>, Example 9.21. The breakfast survey is made up.</li>
+2e</em>, Example 9.21. The first statistics test, the first-time brides
+and the goggles are Examples 9.16, 9.17 and 9.14. The breakfast survey
+is made up.</li>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Chapter 9,
 Sections 9.1–9.6.</li>
 </ul>

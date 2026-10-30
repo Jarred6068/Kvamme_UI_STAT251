@@ -1,0 +1,45 @@
+---
+title: "Online Sampling Tools"
+output: html_document
+## NOTE: keep this a scalar (or a non-empty map). The form
+##   output:
+##     html_document: default
+## silently discards the whole _site.yml output block - see _site.yml.
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For **Part 3 of the [Course Project](project.html)** you need to draw a sample of at least 20-30 observations from your dataset. The course [Tools/Calculators site](https://stat-tools.jmks-homelab.dev/) can do this, and it now accepts larger data files. The free online tools below are other options. Whichever one you use, say in your report which tool and settings you used (and the seed, if the tool has one) so that someone else could repeat your sample.
+
+These are outside websites that the course does not maintain. Check that the sample you get looks sensible, and do not upload data that contains private information.
+
+## Tools that sample rows from an uploaded file
+
+These take your data file (for example a `.csv`) and give back the sampled rows.
+
+* [Statistical Sampling Tool from StatsCalculators.com](https://www.statscalculators.com/resources/data-tools/statistical-sampling): simple random, stratified, systematic, cluster and two-stage cluster sampling. You can download the sample as a CSV file.
+* [CSV Sample Generator from 1000 Free Tools](https://1000freetools.pages.dev/csv-tools/csv-sample-generator): simple random and stratified sampling from a CSV file. You can set a seed so the same sample can be drawn again.
+* [Data Sampler from UtilsZone](https://utilszone.pages.dev/data-tools/data-sampler): simple random and stratified sampling from CSV, JSON or Excel files.
+
+## Random number generators
+
+These do not read your file. Number the rows of your dataset 1 to $N$ (most spreadsheets already show row numbers), generate random numbers between 1 and $N$, and take the rows with those numbers. Choose the option for unique numbers (no repeats).
+
+* [Research Randomizer](https://randomizer.org/): sets of random numbers in a range you choose.
+* [Stat Trek Random Number Generator](https://stattrek.com/statistics/random-number-generator): up to 10,000 random numbers, with an optional seed.
+* [RANDOM.ORG Integer Set Generator](https://www.random.org/integer-sets/): sets of unique random integers.
+* [GraphPad QuickCalcs Random Selection](https://www.graphpad.com/quickcalcs/randomselect1/): picks a random subset of subjects from each of up to 10 groups.
+
+A random number generator works for each design we covered in class:
+
+* **Simple random sample:** generate $n$ unique numbers between 1 and $N$.
+* **Systematic sample:** generate one random starting row between 1 and $k$, then take every $k$-th row after it.
+* **Stratified sample:** split the rows into strata (for example, sort by the grouping variable), number the rows within each stratum, and draw a simple random sample from each stratum.
+* **Cluster sample:** number the clusters, randomly select some clusters, and keep every row in the selected clusters.
+* **Two-stage cluster sample:** randomly select clusters, then draw a simple random sample of rows within each selected cluster.
+
+## Doing it yourself in software
+
+You can also sample with software you already have, such as the `sample()` function in R or the `RAND()` function in Excel or Google Sheets (add a column of `RAND()` values, sort by it, and take the first $n$ rows). See the [R code examples](misc/rcode_examples.html) page for help getting started in R.

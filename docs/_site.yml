@@ -160,6 +160,8 @@ navbar:
       menu:
         - text: 'Tools/Calculators'
           href: https://stat-tools.jmks-homelab.dev/
+        - text: 'Online Sampling Tools'
+          href: sampling_tools.html
         - text: 'Tables'
           menu:  
           - text: 'Z-table'

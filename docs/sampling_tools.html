@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Online Sampling Tools</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<!--
+  Pre-paint theme resolution. Included via `includes: in_header:` so it lands in
+  <head> and runs synchronously before first paint - that is what prevents a
+  flash of the wrong theme on load.
+
+  We ALWAYS set data-theme (never leave it unset), which lets site.css express
+  dark mode as a plain `:root[data-theme="dark"]` block with no duplicated
+  @media (prefers-color-scheme) rules.
+-->
+<script>
+(function () {
+  var stored = null;
+  // localStorage THROWS (not returns null) in Safari private browsing and in
+  // some file:// contexts - which is exactly how these pages get previewed
+  // locally. An uncaught throw here would leave data-theme unset and kill
+  // every dark-mode rule on the page.
+  try { stored = window.localStorage.getItem('stat251-theme'); } catch (e) { stored = null; }
+
+  var theme = (stored === 'dark' || stored === 'light') ? stored :
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+
+<!--
+  MathJax 4, SVG output, with speech.
+
+  WHY VERSION 4. The pages used to load MathJax 2.7 from mathjax.rstudio.com.
+  Its SVG output is aria-hidden and has no spoken text. The only thing assistive
+  technology got was a hidden MathML copy, which only a screen reader with a math
+  module (NVDA + MathCAT, JAWS, VoiceOver) can voice. Read-aloud tools (Edge and
+  Chrome Read Aloud, Read&Write, Speechify, phone Speak Screen) read nothing, or
+  stray letters, for all ~6,000 expressions on the site. MathJax 4 runs Speech
+  Rule Engine on every expression and attaches a natural-language label, e.g.
+  "P of open paren X is greater than or equal to 2 close paren equals ...",
+  that any text-to-speech tool or screen reader reads.
+
+  WHY SVG. CHTML output (v2 HTML-CSS, and v3 CHTML) prints square-root bars too
+  wide in headless Chrome: on the Exam 1 study guide the bar over
+  sqrt( (1/(n-1)) sum (x_i - xbar)^2 ) ran past the expression into the line
+  above. SVG draws it the right width; re-checked with v4 SVG before switching.
+
+  The script URL itself is set by `mathjax:` in _site.yml and in every
+  per-directory _output.yml (rmarkdown injects it at the end of <body>). This
+  block has to be in <head> so window.MathJax exists before that script runs.
+  Keep the version pinned and the same in all seven places.
+
+  inTabOrder: false. MathJax makes every expression a Tab stop by default (for
+  its keyboard explorer), which put ~300 Tab stops on a single lecture page in
+  front of the links a keyboard user is trying to reach. Screen-reader users
+  still reach every expression in browse mode, and the label is on the
+  expression either way. It is options.a11y, NOT menuOptions.settings - the
+  menu setting is accepted but ignored at startup.
+
+  SVG output inherits currentColor, so both themes are unaffected (see the
+  MathJax rule in assets/brand/site.css).
+-->
+<script>
+window.MathJax = {
+  options: { a11y: { inTabOrder: false } }
+};
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/brand/uidaho-branding.css" type="text/css" />
+<link rel="stylesheet" href="assets/brand/site.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-01</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+    <li>
+      <a href="sac_schedule.html">SAC Schedule</a>
+    </li>
+    <li>
+      <a href="university_resources.html">University Resources</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lecture Notes</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="lecturemenu1.html">Week 1</a>
+        </li>
+        <li>
+          <a href="lecturemenu2.html">Week 2</a>
+        </li>
+        <li>
+          <a href="lecturemenu3.html">Week 3</a>
+        </li>
+        <li>
+          <a href="lecturemenu4.html">Weeks 4-5</a>
+        </li>
+        <li>
+          <a href="lecturemenu6.html">Week 6</a>
+        </li>
+        <li>
+          <a href="lecturemenu7.html">Week 7</a>
+        </li>
+        <li>
+          <a href="lecturemenu8.html">Week 8</a>
+        </li>
+        <li>
+          <a href="lecturemenu9.html">Week 9</a>
+        </li>
+        <li>
+          <a href="lecturemenu10.html">Week 10</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="lecslidesindex.html">Lecture Slides</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assignments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/2026/homework_1_2026.html">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_2_2026.html">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_3_2026.html">Homework 3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/2026/homework_1_2026_solns.html">Hmwk 1 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_2_2026_solns.html">Hmwk 2 Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data &amp; PDF Downloads</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/homework_downloads.html#hw1">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html#hw2">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html#hw3">Homework 3</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html">All downloads</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="homeworks/reading_and_book_problems.html">Reading &amp; Extra Problems</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="study_guides/exam1_study_guide.html">Exam 1 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 1 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam1_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam1_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="study_guides/exam2_study_guide.html">Exam 2 Study Guide</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="project_check.html">Project Check</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+    <li>
+      <a href="example_project_categorical.html">Example Project 1: Categorical</a>
+    </li>
+    <li>
+      <a href="example_project_continuous.html">Example Project 2: Quantitative</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
+    </li>
+    <li>
+      <a href="sampling_tools.html">Online Sampling Tools</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tables</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/Z_table.html">Z-table</a>
+        </li>
+        <li>
+          <a href="misc/t_table.html">t-table</a>
+        </li>
+        <li>
+          <a href="misc/chisq_table.html">Chi-square table</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">R code</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/rcode_examples.html">plotting in R</a>
+        </li>
+        <li>
+          <a href="misc/hp_r_code.html">Functions</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Extras</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric Tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="misc/R_download_instructions.html">Downloading R/Rstudio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<!--
+  Bypass block (WCAG 2.4.1). Included via `includes: before_body:` so it is the
+  very first thing inside <body> - ahead of the navbar, which is what it skips.
+
+  Every top-level page puts a ~25-link fixed navbar in front of the content, so
+  without this a keyboard or switch user tabs the entire menu on every single
+  page before reaching anything they came for.
+
+  .sr-only / .sr-only-focusable are Bootstrap 3's own classes (already in
+  site_libs/bootstrap-3.3.5) - visually hidden until focused, then revealed.
+  site.css only adds the on-brand painted state and the z-index needed to sit
+  above .navbar-fixed-top.
+
+  The #main-content target does not exist in pandoc's template; a11y.html
+  stamps it onto .main-container at parse time. Both files must ship together.
+-->
+<a href="#main-content" class="sr-only sr-only-focusable skip-link">Skip to main content</a>
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Online Sampling Tools</h1>
+
+</div>
+
+
+<p>For <strong>Part 3 of the <a href="project.html">Course
+Project</a></strong> you need to draw a sample of at least 20-30
+observations from your dataset. The course <a
+href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators site</a>
+can do this, and it now accepts larger data files. The free online tools
+below are other options. Whichever one you use, say in your report which
+tool and settings you used (and the seed, if the tool has one) so that
+someone else could repeat your sample.</p>
+<p>These are outside websites that the course does not maintain. Check
+that the sample you get looks sensible, and do not upload data that
+contains private information.</p>
+<div id="tools-that-sample-rows-from-an-uploaded-file"
+class="section level2">
+<h2>Tools that sample rows from an uploaded file</h2>
+<p>These take your data file (for example a <code>.csv</code>) and give
+back the sampled rows.</p>
+<ul>
+<li><a
+href="https://www.statscalculators.com/resources/data-tools/statistical-sampling">Statistical
+Sampling Tool from StatsCalculators.com</a>: simple random, stratified,
+systematic, cluster and two-stage cluster sampling. You can download the
+sample as a CSV file.</li>
+<li><a
+href="https://1000freetools.pages.dev/csv-tools/csv-sample-generator">CSV
+Sample Generator from 1000 Free Tools</a>: simple random and stratified
+sampling from a CSV file. You can set a seed so the same sample can be
+drawn again.</li>
+<li><a href="https://utilszone.pages.dev/data-tools/data-sampler">Data
+Sampler from UtilsZone</a>: simple random and stratified sampling from
+CSV, JSON or Excel files.</li>
+</ul>
+</div>
+<div id="random-number-generators" class="section level2">
+<h2>Random number generators</h2>
+<p>These do not read your file. Number the rows of your dataset 1 to
+<span class="math inline">\(N\)</span> (most spreadsheets already show
+row numbers), generate random numbers between 1 and <span
+class="math inline">\(N\)</span>, and take the rows with those numbers.
+Choose the option for unique numbers (no repeats).</p>
+<ul>
+<li><a href="https://randomizer.org/">Research Randomizer</a>: sets of
+random numbers in a range you choose.</li>
+<li><a
+href="https://stattrek.com/statistics/random-number-generator">Stat Trek
+Random Number Generator</a>: up to 10,000 random numbers, with an
+optional seed.</li>
+<li><a href="https://www.random.org/integer-sets/">RANDOM.ORG Integer
+Set Generator</a>: sets of unique random integers.</li>
+<li><a
+href="https://www.graphpad.com/quickcalcs/randomselect1/">GraphPad
+QuickCalcs Random Selection</a>: picks a random subset of subjects from
+each of up to 10 groups.</li>
+</ul>
+<p>A random number generator works for each design we covered in
+class:</p>
+<ul>
+<li><strong>Simple random sample:</strong> generate <span
+class="math inline">\(n\)</span> unique numbers between 1 and <span
+class="math inline">\(N\)</span>.</li>
+<li><strong>Systematic sample:</strong> generate one random starting row
+between 1 and <span class="math inline">\(k\)</span>, then take every
+<span class="math inline">\(k\)</span>-th row after it.</li>
+<li><strong>Stratified sample:</strong> split the rows into strata (for
+example, sort by the grouping variable), number the rows within each
+stratum, and draw a simple random sample from each stratum.</li>
+<li><strong>Cluster sample:</strong> number the clusters, randomly
+select some clusters, and keep every row in the selected clusters.</li>
+<li><strong>Two-stage cluster sample:</strong> randomly select clusters,
+then draw a simple random sample of rows within each selected
+cluster.</li>
+</ul>
+</div>
+<div id="doing-it-yourself-in-software" class="section level2">
+<h2>Doing it yourself in software</h2>
+<p>You can also sample with software you already have, such as the
+<code>sample()</code> function in R or the <code>RAND()</code> function
+in Excel or Google Sheets (add a column of <code>RAND()</code> values,
+sort by it, and take the first <span class="math inline">\(n\)</span>
+rows). See the <a href="misc/rcode_examples.html">R code examples</a>
+page for help getting started in R.</p>
+</div>
+
+<!--
+  Light/dark toggle. Included via `includes: after_body:`.
+
+  Two ordering constraints, both load-bearing - do not "modernise" this:
+
+  1. NOT wrapped in DOMContentLoaded / $(document).ready / defer.
+     An after_body <script> runs synchronously during parsing, so the button is
+     already in the DOM when rmarkdown's navbar script measures
+     `$(".navbar").first().height() + 15` at ready-time to set body padding-top.
+     Deferring would turn a guaranteed ordering into a race we'd lose - jQuery's
+     ready queue is FIFO and the template registered its handler first, in <head>.
+
+  2. A <button>, not an <a href="#">.
+     rmarkdown's active-link script queries `a[href="..."]`; an anchor would get
+     swept into that and would also jump the page to the top on click.
+
+  It injects into .navbar-header (NOT .navbar-right) so the control stays visible
+  at mobile widths - .navbar-right lives inside .navbar-collapse and is hidden
+  below 768px until the hamburger is opened. Pages with no navbar at all (the
+  homeworks/, misc/, study_guides/, Review_problems/ pages) get a floating button.
+-->
+<script>
+(function () {
+  var root = document.documentElement;
+  var KEY = 'stat251-theme';
+
+  var SUN = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4' +
+    'M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"/></svg>';
+
+  var MOON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" ' +
+    'aria-hidden="true" focusable="false">' +
+    '<path d="M20.7 14.6A8.6 8.6 0 0 1 9.4 3.3a8.6 8.6 0 1 0 11.3 11.3z"/></svg>';
+
+  function paint(theme) {
+    // Show the action, not the state: in dark mode the button offers "Light".
+    var goingTo = theme === 'dark' ? 'light' : 'dark';
+    btn.innerHTML = (theme === 'dark' ? SUN : MOON) +
+      '<span class="theme-toggle-label">' + (goingTo === 'dark' ? 'Dark' : 'Light') + '</span>';
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    btn.setAttribute('title', 'Switch to ' + goingTo + ' mode');
+  }
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'theme-toggle';
+  btn.setAttribute('aria-label', 'Toggle dark mode');
+  paint(root.getAttribute('data-theme') || 'light');
+
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    paint(next);
+    try { window.localStorage.setItem(KEY, next); } catch (e) { /* private mode; session-only */ }
+  });
+
+  var header = document.querySelector('.navbar .navbar-header');
+  if (header) {
+    btn.classList.add('theme-toggle-nav');
+    header.appendChild(btn);
+  } else {
+    btn.classList.add('theme-toggle-floating');
+    document.body.appendChild(btn);
+  }
+})();
+</script>
+<!--
+  Structural accessibility patches. Included via `includes: after_body:` AFTER
+  theme-toggle.html.
+
+  Why a script and not markup: everything below has to change elements that
+  pandoc's HTML template and rmarkdown's navbar generator emit. We do not own
+  either template, and the navbar is rebuilt from _site.yml on every render, so
+  a hand-edit would be overwritten. Patching the parsed DOM is the only place
+  these fixes survive a rebuild.
+
+  Why a SEPARATE file rather than appending to theme-toggle.html: that file's
+  header documents two load-bearing ordering constraints. Leave it alone.
+
+  Same synchronous-during-parsing guarantee that theme-toggle.html relies on -
+  no DOMContentLoaded, no defer. By the time an after_body script runs, the
+  navbar and .main-container are already in the DOM, and we are still ahead of
+  jQuery's ready queue.
+
+  EVERY lookup is null-guarded: 29 subdirectory pages (homeworks/, misc/,
+  study_guides/, Review_problems/) render without a navbar, and this file loads
+  on those too.
+-->
+<script>
+(function () {
+  /* 1. Main landmark + skip-link target (WCAG 1.3.1, 2.4.1).
+        pandoc emits no <main> at all; the content lives in a bare div.
+        tabindex="-1" is what makes the skip link MOVE FOCUS rather than merely
+        scroll - without it Chrome and Safari scroll and leave focus on <body>,
+        so the next Tab drops the user back at the top of the navbar. */
+  var main = document.querySelector('.main-container');
+  if (main) {
+    if (!main.id) main.id = 'main-content';
+    main.setAttribute('role', 'main');
+    main.setAttribute('tabindex', '-1');
+  }
+
+  var navbar = document.querySelector('.navbar');
+
+  /* 2. Name the hamburger (WCAG 4.1.2). rmarkdown emits the button with three
+        empty <span class="icon-bar"> and no text and no label, so screen
+        readers announce a bare "button". */
+  var toggle = document.querySelector('.navbar-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    var target = (toggle.getAttribute('data-target') || '').replace(/^#/, '');
+    if (target) toggle.setAttribute('aria-controls', target);
+  }
+
+  /* 3. Dropdown triggers advertise that they open something.
+        Bootstrap 3.3.5's own JS already maintains aria-expanded, so we only
+        add what it does not: aria-haspopup. */
+  var togglers = document.querySelectorAll('.navbar .dropdown-toggle');
+  for (var i = 0; i < togglers.length; i++) {
+    togglers[i].setAttribute('aria-haspopup', 'true');
+  }
+
+  /* 4. Drop the broken ARIA menu pattern (WCAG 4.1.2).
+        rmarkdown puts role="menu" on the dropdown <ul> but never gives the
+        children role="menuitem". A menu with no menuitems is announced as an
+        empty menu - strictly worse than no role, because it suppresses the
+        list semantics the plain <ul>/<a> markup would otherwise expose.
+        Removing the role is correct and far cheaper than implementing the
+        full APG menubar pattern (roving tabindex, arrow keys, Escape). */
+  var menus = document.querySelectorAll('.navbar [role="menu"]');
+  for (var j = 0; j < menus.length; j++) {
+    menus[j].removeAttribute('role');
+  }
+
+  /* 5. Escape hatch for the navbar-less pages (WCAG 2.4.5, 3.2.3).
+        The subdirectory pages are rendered outside render_site() and never see
+        the _site.yml navbar, so a reader who followed a menu link into one has
+        no way back except the browser's Back button - and no way at all if
+        they arrived from a bookmark or a direct link.
+
+        How far up docs/index.html is depends on the directory. Most pages sit
+        one level below docs/, but homeworks/<year>/ and Examinations/<term>/
+        are two levels down, and '../index.html' 404s from those. The page
+        cannot measure this for itself - it is rendered self-contained, so every
+        asset is inlined and no relative URL survives in the markup - so the
+        deeper directories declare it by including assets/brand/site-depth-2.html
+        ahead of this file in their _output.yml. Default is 1.
+
+        This branch cannot run on a top-level page: those all have a navbar. */
+  if (!navbar && main) {
+    var depth = window.__siteDepth || 1;
+    var prefix = '';
+    for (var d = 0; d < depth; d++) { prefix += '../'; }
+    var bar = document.createElement('div');
+    bar.className = 'site-backlink-bar';
+    var link = document.createElement('a');
+    link.className = 'site-backlink';
+    link.href = prefix + 'index.html';
+    link.textContent = '\u2190 Back to course site';
+    bar.appendChild(link);
+    main.insertBefore(bar, main.firstChild);
+  }
+
+  /* 6. Author / date are not headings (WCAG 1.3.1, 2.4.6).
+        pandoc's template emits them as <h4 class="author"> and
+        <h4 class="date"> straight after the <h1> title. Screen-reader users
+        navigating by heading hear "heading level 4, STAT 251 Section 01" as if
+        it were a section, and it puts an h1 -> h4 skip at the top of every
+        page. Re-tag them as paragraphs; site.css styles them by class. */
+  var meta = document.querySelectorAll('#header h4.author, #header h4.date');
+  for (var k = 0; k < meta.length; k++) {
+    var h4 = meta[k];
+    var p = document.createElement('p');
+    p.className = h4.className;
+    while (h4.firstChild) p.appendChild(h4.firstChild);
+    h4.parentNode.replaceChild(p, h4);
+  }
+
+  /* 7. Solution answers carry more than colour (WCAG 1.4.1, 1.4.3).
+        Answers are marked three ways across the solution pages: an inline
+        style="color: red", the RA/RZ <div style="color: red;"> helper, and
+        class="soln". Colour was the only cue, so a screen reader, a
+        read-aloud tool, or a colour-blind reader could not tell the answer
+        from the question. Each one gets class .answer (site.css section 20b:
+        AA-contrast red, shaded box) and a screen-reader-only "Answer:" label.
+        The label goes on the outermost answer element only, so an answer
+        that contains another red span is announced once. Matching the inline
+        style here rather than editing the sources keeps the 2024 archive
+        untouched. */
+  /* el.style.color rather than a [style*=...] selector, which would also catch
+     background-color and border-color. Empty placeholder spans are skipped so
+     they do not render as an empty shaded box. */
+  var candidates = document.querySelectorAll('.main-container .soln, .main-container [style*="color"]');
+  var answers = [];
+  for (var a = 0; a < candidates.length; a++) {
+    var c = candidates[a];
+    var isRed = c.style.color === 'red' || c.style.color === 'rgb(255, 0, 0)';
+    if (!isRed && !c.classList.contains('soln')) continue;
+    if (!c.textContent.replace(/\s+/g, '') && !c.querySelector('img, svg')) continue;
+    c.classList.add('answer');
+    answers.push(c);
+  }
+  for (var b = 0; b < answers.length; b++) {
+    var el = answers[b];
+    if (el.parentNode.closest && el.parentNode.closest('.answer')) continue;
+    var label = document.createElement('span');
+    label.className = 'sr-only';
+    label.textContent = 'Answer: ';
+    el.insertBefore(label, el.firstChild);
+  }
+
+  /* 8. The decorative arrow in the back link (item 5) is read aloud as
+        "leftwards arrow". */
+  var back = document.querySelector('.site-backlink');
+  if (back) {
+    back.textContent = '';
+    var arrow = document.createElement('span');
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '\u2190 ';
+    back.appendChild(arrow);
+    back.appendChild(document.createTextNode('Back to course site'));
+  }
+})();
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-mml-svg.js";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
