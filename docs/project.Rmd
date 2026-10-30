@@ -99,7 +99,7 @@ The full instructions, grading rubric, and an example of a full-credit submissio
 
 * **Write up your results as a short report (1-5 pages).**
 * A written report documenting your entire statistical process, including the dataset citation, the statistical question, your sampling method and its justification, descriptive statistics, hypothesis formulation, statistical test application, and conclusion.
-* The sample of 20--30 observations you drew, included as a table or an appendix so that your work can be checked.
+* The sample of at least 20--30 observations you drew, included as a table or an appendix so that your work can be checked.
 * Visualizations of the chosen variables' distributions including plot or table captions.
 * All work shown for the calculation of the observed statistic and the test statistic.
 * Any additional insights or observations gained during the analysis.
@@ -147,7 +147,7 @@ Choose a dataset on a topic that interests you. The dataset may come from a webs
 
 Rather than analyzing the whole dataset, you will analyze a **sample** drawn from it.
 
-* **(A)** Draw a sample of **20 to 30 observations** from your chosen dataset using an appropriate sampling method (e.g., simple random sampling, systematic sampling, stratified sampling, or cluster sampling).
+* **(A)** Draw a sample of **at least 20-30 observations** from your chosen dataset using an appropriate sampling method (e.g., simple random sampling, systematic sampling, stratified sampling, or cluster sampling).
 
 * **(B)** Describe exactly how you drew the sample: the method you used, the sample size $n$, and the tool or procedure you used to select the observations (for example, a random number generator, the `sample()` function in R, or a random number table). Someone reading your report should be able to repeat what you did.
 

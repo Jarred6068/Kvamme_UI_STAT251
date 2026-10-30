@@ -246,7 +246,7 @@ include_graphics("example_projects/figs/p1_srs.png")
 * **Why years rather than days.** I sample whole years instead of individual days, and that is deliberate.
   Rainy days come in storm systems, so neighbouring days are not independent. Two different Januaries are
   much closer to independent.
-* **Why n = 24.** 24 is within the required 20–30 and divides evenly into four classes. Under $H_0$ each
+* **Why n = 24.** 24 meets the required minimum of 20–30 observations and divides evenly into four classes. Under $H_0$ each
   class then expects $24 \times 0.25 = 6$ Januaries, which satisfies the rule of thumb that every expected
   count be at least 5 (Part 5).
 * **Why the historical Januaries are not sampled.** They are not part of the sample. They play the role of

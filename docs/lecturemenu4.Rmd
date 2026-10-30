@@ -613,7 +613,7 @@ dropped to 43%
 
 ## Sampling for your course project
 
-Part 3 of the [course project](project.html) asks you to draw a sample of 20 to 30 observations from
+Part 3 of the [course project](project.html) asks you to draw a sample of at least 20-30 observations from
 your dataset. When you write this part up, you should:
 
 * choose a sampling design (simple random, systematic, stratified, or cluster sampling)
