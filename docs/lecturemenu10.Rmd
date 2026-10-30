@@ -69,6 +69,8 @@ ph_c <- round(x_c / n_c, 7); se_c <- round(sqrt(p0_c * (1 - p0_c) / n_c), 8)
 z_c <- round((ph_c - p0_c) / se_c, 2)
 stopifnot(near(ph_c, 0.0004095, 1e-12), near(se_c, 0.00002845, 1e-12), z_c == 2.44, round(n_c * p0_c, 1) == 142.8,
           round(n_c * (1 - p0_c)) == 419876, zt(2.44) == 0.9927, round(1 - zt(2.44), 4) == 0.0073)
+zc_c <- round(qnorm(1 - 0.005), 2)      # critical value at alpha = 0.005, upper-tailed
+stopifnot(zc_c == 2.58, round(qnorm(0.95), 3) == 1.645, z_c < zc_c, z_c > 1.645)
 # Lecture 23 practice: 136 of 400 skip breakfast, p0 = 0.30
 se_b <- round(sqrt(0.3 * 0.7 / 400), 4); z_b <- round((136 / 400 - 0.3) / se_b, 2)
 stopifnot(136 / 400 == 0.34, se_b == 0.0229, z_b == 1.75, zt(1.75) == 0.9599,
@@ -637,20 +639,105 @@ The coin-flip study above is one of these tests. Here is a second one, from the 
 
 ## Example: cell phones and brain cancer
 
-*OpenStax Introductory Statistics 2e, Example 9.21.* In a study of 420,019 cell phone users, 172
-developed brain cancer. For people who do not use cell phones, the rate is 0.034%. Do cell phone users
-get brain cancer at a higher rate? Because this is a critical issue, use $\alpha = 0.005$.
+*From OpenStax Introductory Statistics 2e, Example 9.21.*
 
-1. **Assumptions.** Treat the users as a random sample. $np_0 = 420{,}019(0.00034) = `r fmt(n_c * p0_c, 1)`$
-   and $n(1 - p_0) = `r format(round(n_c * (1 - p0_c)), big.mark = ',')`$, both at least 15.
-2. **Hypotheses.** $p$ = the proportion of cell phone users who develop brain cancer.
-   $H_0: p = 0.00034$ and $H_A: p > 0.00034$: **upper-tailed**.
-3. **Test statistic.** $\hat{p} = 172/420{,}019 \approx `r fmt(ph_c, 7)`$ and
-   $SE = \sqrt{0.00034 \times 0.99966 / 420{,}019} \approx `r fmt(se_c, 8)`$, so
-   $$z_{obs} = \frac{`r fmt(ph_c, 7)` - 0.00034}{`r fmt(se_c, 8)`} \approx `r fmt(z_c, 2)`$$
-4. **P-value.** $P(Z \geq `r fmt(z_c, 2)` \mid H_0 \text{ true}) = 1 - `r fmt(zt(2.44), 4)` = `r fmt(1 - zt(2.44), 4)`$.
+Almost everyone carries a cell phone, and most of us hold it against our heads every day. That has
+led to a worry that comes up again and again: can the radio waves from a phone cause brain cancer?
+
+Brain cancer is rare. Among people who do **not** use cell phones, about 0.034% develop it, which is
+34 people in every 100,000. If phones raise the risk, then the rate among cell phone users should be
+higher than 0.034%.
+
+To check, researchers follow a very large group of **420,019 cell phone users**. Over the course of the
+study, **172** of them develop brain cancer.
+
+If phones made no difference, we would expect about $420{,}019 \times 0.00034 \approx 143$ of these users
+to develop brain cancer. We saw 172, which is more. But is 172 far enough above 143 to rule out chance?
+Or is it the kind of number a group this size could produce even if phones are harmless?
+
+The stakes are high. Announcing that cell phones cause cancer when they do not would frighten a great
+many people and send research and regulation chasing a false cause. So before making that claim we want very strong evidence, and we use
+a strict significance level of $\alpha = 0.005$ instead of the usual 0.05.
+
+**Question:** At $\alpha = 0.005$, do the data show that cell phone users develop brain cancer at a
+higher rate than non-users?
+
+1. **Assumptions.** We treat the 420,019 users as a random sample of cell phone users. Each user either
+   develops brain cancer or does not, and the sample is large enough:
+   $np_0 = 420{,}019(0.00034) = `r fmt(n_c * p0_c, 1)` \geq 15$ and
+   $n(1 - p_0) = 420{,}019(0.99966) = `r format(round(n_c * (1 - p0_c)), big.mark = ',')` \geq 15$.
+   The first number is the "about 143" expected cases from the story.
+2. **Hypotheses.** The parameter is $p$, the proportion of **all** cell phone users who develop brain
+   cancer. The null value is the non-user rate, $p_0 = 0.034\% = 0.00034$.
+   $H_0: p = 0.00034$ (phones make no difference) and $H_A: p > 0.00034$ (users get brain cancer at a
+   higher rate). The claim is about a **higher** rate, so the test is **upper-tailed**.
+3. **Test statistic.** The sample proportion is
+   $\hat{p} = 172/420{,}019 \approx `r fmt(ph_c, 7)`$, or about 0.041%. The standard error uses $p_0$,
+   because we work as if $H_0$ is true:
+   $$SE = \sqrt{\frac{p_0(1-p_0)}{n}} = \sqrt{\frac{0.00034 \times 0.99966}{420{,}019}} \approx `r fmt(se_c, 8)`$$
+   $$z_{obs} = \frac{\hat{p} - p_0}{SE} = \frac{`r fmt(ph_c, 7)` - 0.00034}{`r fmt(se_c, 8)`} \approx `r fmt(z_c, 2)`$$
+   The users' cancer rate is `r fmt(z_c, 2)` standard errors above the non-user rate.
+4. **P-value.** Upper-tailed, so we want the area to the right of $z_{obs}$:
+   $$P(Z \geq `r fmt(z_c, 2)` \mid H_0 \text{ true}) = 1 - `r fmt(zt(2.44), 4)` = `r fmt(1 - zt(2.44), 4)`$$
+   In words: if phones made no difference, a study this size would see a cancer rate this far above
+   0.034% only about 73 times in 10,000.
 5. **Decision.** $`r fmt(1 - zt(2.44), 4)` \geq 0.005$: **do not reject $H_0$**. At the 0.5% level, the
-   data are not strong enough evidence that cell phone users get brain cancer at a higher rate.
+   data are not strong enough evidence that cell phone users develop brain cancer at a higher rate than
+   non-users. This does **not** prove phones are safe. The evidence just does not clear the high bar
+   we set.
+
+Here is the whole test as a picture. The curve is the distribution of $z$ **if $H_0$ is true** (phones
+make no difference). The **rejection region** is the upper 0.5% of that curve, everything at or beyond
+the **critical value** $z^* = `r fmt(zc_c, 2)`$, so $P(Z \geq `r fmt(zc_c, 2)` \mid H_0 \text{ true}) = 0.005 = \alpha$.
+Our test statistic, $z_{obs} = `r fmt(z_c, 2)`$, lands just short of it. The area beyond $z_{obs}$ is the
+P-value, `r fmt(1 - zt(2.44), 4)`, and it is a little bigger than $\alpha$. That is the decision rule in
+picture form: $z_{obs}$ inside the rejection region exactly when the P-value is less than $\alpha$.
+
+```{r, echo=FALSE, fig.width=10, fig.height=4.6, fig.align='center', fig.alt = "Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 2.58 starts the rejection region, and a blue line marks the observed z = 2.44, just to its left. A grey dashed line at z = 1.645 marks where the critical value would be at the usual alpha = 0.05. A box marks the upper tail from z = 2 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 2.58 is shaded red and labelled rejection region, alpha = 0.005. The area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it includes the red area plus a thin blue strip between 2.44 and 2.58, so the P-value is slightly larger than alpha and z_obs falls just outside the rejection region."}
+cx <- seq(-4, 4, length.out = 800)
+cd <- data.frame(x = cx, y = dnorm(cx))
+top <- max(cd$y)
+lab <- function(x, y, s, col, hj, face = 'plain', sz = 3.8)   # a label on a white patch, so curves don't run through it
+  annotate('label', x = x, y = y, label = s, colour = col, hjust = hj, size = sz, fontface = face,
+           fill = 'white', border.colour = NA, label.padding = unit(0.1, 'lines'))
+rate <- function(z) formatC(100 * (p0_c + z * se_c), format = 'f', digits = 4)
+bare <- theme_classic(base_size = 13) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.line.y = element_blank(),
+        plot.title = element_text(size = 13, face = 'bold', colour = NAVY))
+tails <- list(geom_area(data = subset(cd, x >= z_c), fill = SHADE, alpha = 0.9),
+              geom_area(data = subset(cd, x >= zc_c), fill = RED, alpha = 0.75),
+              geom_line(colour = NAVY, linewidth = 1),
+              geom_vline(xintercept = zc_c, colour = RED, linewidth = 1.1),
+              geom_vline(xintercept = z_c, colour = NAVY, linewidth = 1.1))
+full <- ggplot(cd, aes(x, y)) + tails +
+  geom_vline(xintercept = 0, colour = NAVY, linetype = 'dashed') +
+  geom_vline(xintercept = qnorm(0.95), colour = 'grey50', linetype = 'dashed') +
+  annotate('rect', xmin = 2, xmax = 3.6, ymin = -0.005, ymax = 0.07, fill = NA, colour = 'grey30') +
+  lab(-3.9, top * 0.85, 'H0 true:\np = 0.00034\n(z = 0)', NAVY, 0) +
+  lab(1.6, top * 0.11, 'z* = 1.645\n(alpha = 0.05)', 'grey40', 1, sz = 3.3) +
+  lab(2.38, top * 0.55, paste0('z_obs\n', fmt(z_c, 2)), NAVY, 1, 'bold') +
+  lab(2.64, top * 0.55, paste0('z*\n', fmt(zc_c, 2)), RED, 0, 'bold') +
+  scale_x_continuous(breaks = -4:4, sec.axis = sec_axis(~ ., name = 'cancer rate among users (%)',
+                                                        breaks = c(-4, -2, 0, 2, 4), labels = rate)) +
+  labs(title = 'The distribution of z if H0 is true', x = 'z', y = NULL) + bare
+zoom <- ggplot(subset(cd, x >= 2 & x <= 3.6), aes(x, y)) + tails +
+  lab(z_c - 0.03, 0.057, paste0('z_obs = ', fmt(z_c, 2)), NAVY, 1, 'bold') +
+  lab(zc_c + 0.03, 0.045, paste0('critical value\nz* = ', fmt(zc_c, 2)), RED, 0, 'bold') +
+  annotate('segment', x = 3.0, xend = 2.68, y = 0.022, yend = 0.006, colour = RED,
+           arrow = arrow(length = unit(0.2, 'cm'))) +
+  lab(3.02, 0.024, 'rejection region\narea = alpha = 0.005', RED, 0) +
+  annotate('segment', x = 2.2, xend = 2.5, y = 0.003, yend = 0.003, colour = NAVY,
+           arrow = arrow(length = unit(0.2, 'cm'))) +
+  lab(2.01, 0.014, paste0('P-value\n= ', fmt(1 - zt(2.44), 4), '\n(blue + red)'), NAVY, 0) +
+  scale_x_continuous(breaks = seq(2, 3.6, by = 0.2), sec.axis = sec_axis(~ ., name = 'cancer rate among users (%)',
+                                                                        breaks = c(2, 2.4, 2.8, 3.2, 3.6), labels = rate)) +
+  coord_cartesian(xlim = c(2, 3.6), ylim = c(0, 0.06)) +
+  labs(title = 'Close-up of the upper tail', x = 'z', y = NULL) + bare
+ggarrange(full, zoom, ncol = 2, widths = c(1.15, 1))
+```
+
+The grey dashed line shows the same test at the usual $\alpha = 0.05$: the critical value would move left
+to 1.645, and $z_{obs} = `r fmt(z_c, 2)`$ would fall inside the rejection region.
 
 Why such a small $\alpha$? Rejecting $H_0$ when it is true would wrongly blame cell phones for cancer, a
 claim with serious consequences, so we ask for very strong evidence before making it. Notice that the

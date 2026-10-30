@@ -1574,34 +1574,93 @@ context.</li>
 one, from the textbook.</p>
 <div id="example-cell-phones-and-brain-cancer" class="section level2">
 <h2>Example: cell phones and brain cancer</h2>
-<p><em>OpenStax Introductory Statistics 2e, Example 9.21.</em> In a
-study of 420,019 cell phone users, 172 developed brain cancer. For
-people who do not use cell phones, the rate is 0.034%. Do cell phone
-users get brain cancer at a higher rate? Because this is a critical
-issue, use <span class="math inline">\(\alpha = 0.005\)</span>.</p>
+<p><em>From OpenStax Introductory Statistics 2e, Example 9.21.</em></p>
+<p>Almost everyone carries a cell phone, and most of us hold it against
+our heads every day. That has led to a worry that comes up again and
+again: can the radio waves from a phone cause brain cancer?</p>
+<p>Brain cancer is rare. Among people who do <strong>not</strong> use
+cell phones, about 0.034% develop it, which is 34 people in every
+100,000. If phones raise the risk, then the rate among cell phone users
+should be higher than 0.034%.</p>
+<p>To check, researchers follow a very large group of <strong>420,019
+cell phone users</strong>. Over the course of the study,
+<strong>172</strong> of them develop brain cancer.</p>
+<p>If phones made no difference, we would expect about <span
+class="math inline">\(420{,}019 \times 0.00034 \approx 143\)</span> of
+these users to develop brain cancer. We saw 172, which is more. But is
+172 far enough above 143 to rule out chance? Or is it the kind of number
+a group this size could produce even if phones are harmless?</p>
+<p>The stakes are high. Announcing that cell phones cause cancer when
+they do not would frighten a great many people and send research and
+regulation chasing a false cause. So before making that claim we want
+very strong evidence, and we use a strict significance level of <span
+class="math inline">\(\alpha = 0.005\)</span> instead of the usual
+0.05.</p>
+<p><strong>Question:</strong> At <span class="math inline">\(\alpha =
+0.005\)</span>, do the data show that cell phone users develop brain
+cancer at a higher rate than non-users?</p>
 <ol style="list-style-type: decimal">
-<li><strong>Assumptions.</strong> Treat the users as a random sample.
-<span class="math inline">\(np_0 = 420{,}019(0.00034) = 142.8\)</span>
-and <span class="math inline">\(n(1 - p_0) = 419,876\)</span>, both at
-least 15.</li>
-<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
-= the proportion of cell phone users who develop brain cancer. <span
-class="math inline">\(H_0: p = 0.00034\)</span> and <span
-class="math inline">\(H_A: p &gt; 0.00034\)</span>:
+<li><strong>Assumptions.</strong> We treat the 420,019 users as a random
+sample of cell phone users. Each user either develops brain cancer or
+does not, and the sample is large enough: <span
+class="math inline">\(np_0 = 420{,}019(0.00034) = 142.8 \geq 15\)</span>
+and <span class="math inline">\(n(1 - p_0) = 420{,}019(0.99966) =
+419,876 \geq 15\)</span>. The first number is the “about 143” expected
+cases from the story.</li>
+<li><strong>Hypotheses.</strong> The parameter is <span
+class="math inline">\(p\)</span>, the proportion of <strong>all</strong>
+cell phone users who develop brain cancer. The null value is the
+non-user rate, <span class="math inline">\(p_0 = 0.034\% =
+0.00034\)</span>. <span class="math inline">\(H_0: p = 0.00034\)</span>
+(phones make no difference) and <span class="math inline">\(H_A: p &gt;
+0.00034\)</span> (users get brain cancer at a higher rate). The claim is
+about a <strong>higher</strong> rate, so the test is
 <strong>upper-tailed</strong>.</li>
-<li><strong>Test statistic.</strong> <span class="math inline">\(\hat{p}
-= 172/420{,}019 \approx 0.0004095\)</span> and <span
-class="math inline">\(SE = \sqrt{0.00034 \times 0.99966 / 420{,}019}
-\approx 0.00002845\)</span>, so <span class="math display">\[z_{obs} =
-\frac{0.0004095 - 0.00034}{0.00002845} \approx 2.44\]</span></li>
-<li><strong>P-value.</strong> <span class="math inline">\(P(Z \geq 2.44
-\mid H_0 \text{ true}) = 1 - 0.9927 = 0.0073\)</span>.</li>
+<li><strong>Test statistic.</strong> The sample proportion is <span
+class="math inline">\(\hat{p} = 172/420{,}019 \approx
+0.0004095\)</span>, or about 0.041%. The standard error uses <span
+class="math inline">\(p_0\)</span>, because we work as if <span
+class="math inline">\(H_0\)</span> is true: <span
+class="math display">\[SE = \sqrt{\frac{p_0(1-p_0)}{n}} =
+\sqrt{\frac{0.00034 \times 0.99966}{420{,}019}} \approx
+0.00002845\]</span> <span class="math display">\[z_{obs} = \frac{\hat{p}
+- p_0}{SE} = \frac{0.0004095 - 0.00034}{0.00002845} \approx
+2.44\]</span> The users’ cancer rate is 2.44 standard errors above the
+non-user rate.</li>
+<li><strong>P-value.</strong> Upper-tailed, so we want the area to the
+right of <span class="math inline">\(z_{obs}\)</span>: <span
+class="math display">\[P(Z \geq 2.44 \mid H_0 \text{ true}) = 1 - 0.9927
+= 0.0073\]</span> In words: if phones made no difference, a study this
+size would see a cancer rate this far above 0.034% only about 73 times
+in 10,000.</li>
 <li><strong>Decision.</strong> <span class="math inline">\(0.0073 \geq
 0.005\)</span>: <strong>do not reject <span
 class="math inline">\(H_0\)</span></strong>. At the 0.5% level, the data
-are not strong enough evidence that cell phone users get brain cancer at
-a higher rate.</li>
+are not strong enough evidence that cell phone users develop brain
+cancer at a higher rate than non-users. This does <strong>not</strong>
+prove phones are safe. The evidence just does not clear the high bar we
+set.</li>
 </ol>
+<p>Here is the whole test as a picture. The curve is the distribution of
+<span class="math inline">\(z\)</span> <strong>if <span
+class="math inline">\(H_0\)</span> is true</strong> (phones make no
+difference). The <strong>rejection region</strong> is the upper 0.5% of
+that curve, everything at or beyond the <strong>critical value</strong>
+<span class="math inline">\(z^* = 2.58\)</span>, so <span
+class="math inline">\(P(Z \geq 2.58 \mid H_0 \text{ true}) = 0.005 =
+\alpha\)</span>. Our test statistic, <span class="math inline">\(z_{obs}
+= 2.44\)</span>, lands just short of it. The area beyond <span
+class="math inline">\(z_{obs}\)</span> is the P-value, 0.0073, and it is
+a little bigger than <span class="math inline">\(\alpha\)</span>. That
+is the decision rule in picture form: <span
+class="math inline">\(z_{obs}\)</span> inside the rejection region
+exactly when the P-value is less than <span
+class="math inline">\(\alpha\)</span>.</p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-11-1.png" alt="Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 2.58 starts the rejection region, and a blue line marks the observed z = 2.44, just to its left. A grey dashed line at z = 1.645 marks where the critical value would be at the usual alpha = 0.05. A box marks the upper tail from z = 2 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 2.58 is shaded red and labelled rejection region, alpha = 0.005. The area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it includes the red area plus a thin blue strip between 2.44 and 2.58, so the P-value is slightly larger than alpha and z_obs falls just outside the rejection region." width="960" style="display: block; margin: auto;" /></p>
+<p>The grey dashed line shows the same test at the usual <span
+class="math inline">\(\alpha = 0.05\)</span>: the critical value would
+move left to 1.645, and <span class="math inline">\(z_{obs} =
+2.44\)</span> would fall inside the rejection region.</p>
 <p>Why such a small <span class="math inline">\(\alpha\)</span>?
 Rejecting <span class="math inline">\(H_0\)</span> when it is true would
 wrongly blame cell phones for cancer, a claim with serious consequences,
