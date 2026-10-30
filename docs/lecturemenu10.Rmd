@@ -69,8 +69,8 @@ ph_c <- round(x_c / n_c, 7); se_c <- round(sqrt(p0_c * (1 - p0_c) / n_c), 8)
 z_c <- round((ph_c - p0_c) / se_c, 2)
 stopifnot(near(ph_c, 0.0004095, 1e-12), near(se_c, 0.00002845, 1e-12), z_c == 2.44, round(n_c * p0_c, 1) == 142.8,
           round(n_c * (1 - p0_c)) == 419876, zt(2.44) == 0.9927, round(1 - zt(2.44), 4) == 0.0073)
-zc_c <- round(qnorm(1 - 0.005), 2)      # critical value at alpha = 0.005, upper-tailed
-stopifnot(zc_c == 2.58, round(qnorm(0.95), 3) == 1.645, z_c < zc_c, z_c > 1.645)
+zc_c <- round(qnorm(1 - 0.05), 3)      # critical value at alpha = 0.05 (used in class; the book uses 0.005)
+stopifnot(zc_c == 1.645, round(qnorm(0.995), 2) == 2.58, z_c > zc_c, z_c < 2.58)
 # Lecture 23 practice: 136 of 400 skip breakfast, p0 = 0.30
 se_b <- round(sqrt(0.3 * 0.7 / 400), 4); z_b <- round((136 / 400 - 0.3) / se_b, 2)
 stopifnot(136 / 400 == 0.34, se_b == 0.0229, z_b == 1.75, zt(1.75) == 0.9599,
@@ -655,11 +655,9 @@ If phones made no difference, we would expect about $420{,}019 \times 0.00034 \a
 to develop brain cancer. We saw 172, which is more. But is 172 far enough above 143 to rule out chance?
 Or is it the kind of number a group this size could produce even if phones are harmless?
 
-The stakes are high. Announcing that cell phones cause cancer when they do not would frighten a great
-many people and send research and regulation chasing a false cause. So before making that claim we want very strong evidence, and we use
-a strict significance level of $\alpha = 0.005$ instead of the usual 0.05.
+That is the question a significance test answers. We use the usual significance level, $\alpha = 0.05$.
 
-**Question:** At $\alpha = 0.005$, do the data show that cell phone users develop brain cancer at a
+**Question:** At $\alpha = 0.05$, do the data show that cell phone users develop brain cancer at a
 higher rate than non-users?
 
 1. **Assumptions.** We treat the 420,019 users as a random sample of cell phone users. Each user either
@@ -681,19 +679,18 @@ higher rate than non-users?
    $$P(Z \geq `r fmt(z_c, 2)` \mid H_0 \text{ true}) = 1 - `r fmt(zt(2.44), 4)` = `r fmt(1 - zt(2.44), 4)`$$
    In words: if phones made no difference, a study this size would see a cancer rate this far above
    0.034% only about 73 times in 10,000.
-5. **Decision.** $`r fmt(1 - zt(2.44), 4)` \geq 0.005$: **do not reject $H_0$**. At the 0.5% level, the
-   data are not strong enough evidence that cell phone users develop brain cancer at a higher rate than
-   non-users. This does **not** prove phones are safe. The evidence just does not clear the high bar
-   we set.
+5. **Decision.** $`r fmt(1 - zt(2.44), 4)` < 0.05$: **reject $H_0$**. The data are convincing evidence that
+   cell phone users develop brain cancer at a higher rate than non-users. (The study shows a higher
+   rate among users. On its own it does not show that the phones are the **cause**.)
 
 Here is the whole test as a picture. The curve is the distribution of $z$ **if $H_0$ is true** (phones
-make no difference). The **rejection region** is the upper 0.5% of that curve, everything at or beyond
-the **critical value** $z^* = `r fmt(zc_c, 2)`$, so $P(Z \geq `r fmt(zc_c, 2)` \mid H_0 \text{ true}) = 0.005 = \alpha$.
-Our test statistic, $z_{obs} = `r fmt(z_c, 2)`$, lands just short of it. The area beyond $z_{obs}$ is the
-P-value, `r fmt(1 - zt(2.44), 4)`, and it is a little bigger than $\alpha$. That is the decision rule in
-picture form: $z_{obs}$ inside the rejection region exactly when the P-value is less than $\alpha$.
+make no difference). The **rejection region** is the upper 5% of that curve, everything at or beyond
+the **critical value** $z^* = `r fmt(zc_c, 3)`$, so $P(Z \geq `r fmt(zc_c, 3)` \mid H_0 \text{ true}) = 0.05 = \alpha$.
+Our test statistic, $z_{obs} = `r fmt(z_c, 2)`$, lands well inside it. The area beyond $z_{obs}$ is the
+P-value, `r fmt(1 - zt(2.44), 4)`, and it is smaller than $\alpha$. That is the decision rule in picture
+form: $z_{obs}$ lands in the rejection region exactly when the P-value is less than $\alpha$.
 
-```{r, echo=FALSE, fig.width=10, fig.height=4.6, fig.align='center', fig.alt = "Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 2.58 starts the rejection region, and a blue line marks the observed z = 2.44, just to its left. A grey dashed line at z = 1.645 marks where the critical value would be at the usual alpha = 0.05. A box marks the upper tail from z = 2 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 2.58 is shaded red and labelled rejection region, alpha = 0.005. The area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it includes the red area plus a thin blue strip between 2.44 and 2.58, so the P-value is slightly larger than alpha and z_obs falls just outside the rejection region."}
+```{r, echo=FALSE, fig.width=10, fig.height=4.6, fig.align='center', fig.alt = "Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 1.645 starts the rejection region, and a blue line marks the observed z = 2.44, well to its right. A grey dashed line at z = 2.58 marks where the critical value would be at the textbook's alpha = 0.005. A box marks the upper tail from z = 1.4 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 1.645 is shaded red and labelled rejection region, alpha = 0.05. The smaller area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it sits inside the rejection region, so the P-value is smaller than alpha and H0 is rejected."}
 cx <- seq(-4, 4, length.out = 800)
 cd <- data.frame(x = cx, y = dnorm(cx))
 top <- max(cd$y)
@@ -704,45 +701,43 @@ rate <- function(z) formatC(100 * (p0_c + z * se_c), format = 'f', digits = 4)
 bare <- theme_classic(base_size = 13) +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.line.y = element_blank(),
         plot.title = element_text(size = 13, face = 'bold', colour = NAVY))
-tails <- list(geom_area(data = subset(cd, x >= z_c), fill = SHADE, alpha = 0.9),
-              geom_area(data = subset(cd, x >= zc_c), fill = RED, alpha = 0.75),
+tails <- list(geom_area(data = subset(cd, x >= zc_c), fill = RED, alpha = 0.6),
+              geom_area(data = subset(cd, x >= z_c), fill = SHADE, alpha = 0.95),
               geom_line(colour = NAVY, linewidth = 1),
+              geom_vline(xintercept = qnorm(0.995), colour = 'grey50', linetype = 'dashed'),
               geom_vline(xintercept = zc_c, colour = RED, linewidth = 1.1),
               geom_vline(xintercept = z_c, colour = NAVY, linewidth = 1.1))
 full <- ggplot(cd, aes(x, y)) + tails +
   geom_vline(xintercept = 0, colour = NAVY, linetype = 'dashed') +
-  geom_vline(xintercept = qnorm(0.95), colour = 'grey50', linetype = 'dashed') +
-  annotate('rect', xmin = 2, xmax = 3.6, ymin = -0.005, ymax = 0.07, fill = NA, colour = 'grey30') +
+  annotate('rect', xmin = 1.4, xmax = 3.6, ymin = -0.005, ymax = 0.16, fill = NA, colour = 'grey30') +
   lab(-3.9, top * 0.85, 'H0 true:\np = 0.00034\n(z = 0)', NAVY, 0) +
-  lab(1.6, top * 0.11, 'z* = 1.645\n(alpha = 0.05)', 'grey40', 1, sz = 3.3) +
-  lab(2.38, top * 0.55, paste0('z_obs\n', fmt(z_c, 2)), NAVY, 1, 'bold') +
-  lab(2.64, top * 0.55, paste0('z*\n', fmt(zc_c, 2)), RED, 0, 'bold') +
+  lab(1.58, top * 0.9, paste0('z*\n', fmt(zc_c, 3)), RED, 1, 'bold') +
+  lab(2.5, top * 0.9, paste0('z_obs\n', fmt(z_c, 2)), NAVY, 0, 'bold') +
   scale_x_continuous(breaks = -4:4, sec.axis = sec_axis(~ ., name = 'cancer rate among users (%)',
                                                         breaks = c(-4, -2, 0, 2, 4), labels = rate)) +
   labs(title = 'The distribution of z if H0 is true', x = 'z', y = NULL) + bare
-zoom <- ggplot(subset(cd, x >= 2 & x <= 3.6), aes(x, y)) + tails +
-  lab(z_c - 0.03, 0.057, paste0('z_obs = ', fmt(z_c, 2)), NAVY, 1, 'bold') +
-  lab(zc_c + 0.03, 0.045, paste0('critical value\nz* = ', fmt(zc_c, 2)), RED, 0, 'bold') +
-  annotate('segment', x = 3.0, xend = 2.68, y = 0.022, yend = 0.006, colour = RED,
+zoom <- ggplot(subset(cd, x >= 1.4 & x <= 3.6), aes(x, y)) + tails +
+  lab(zc_c + 0.03, 0.14, paste0('critical value\nz* = ', fmt(zc_c, 3)), RED, 0, 'bold') +
+  lab(z_c + 0.03, 0.09, paste0('z_obs = ', fmt(z_c, 2)), NAVY, 0, 'bold') +
+  lab(2.62, 0.055, "z* = 2.58 if alpha = 0.005\n(the textbook's choice)", 'grey40', 0, sz = 3.3) +
+  lab(1.7, 0.03, 'rejection region\nalpha = 0.05', RED, 0) +
+  annotate('segment', x = 3.1, xend = 2.6, y = 0.022, yend = 0.006, colour = NAVY,
            arrow = arrow(length = unit(0.2, 'cm'))) +
-  lab(3.02, 0.024, 'rejection region\narea = alpha = 0.005', RED, 0) +
-  annotate('segment', x = 2.2, xend = 2.5, y = 0.003, yend = 0.003, colour = NAVY,
-           arrow = arrow(length = unit(0.2, 'cm'))) +
-  lab(2.01, 0.014, paste0('P-value\n= ', fmt(1 - zt(2.44), 4), '\n(blue + red)'), NAVY, 0) +
-  scale_x_continuous(breaks = seq(2, 3.6, by = 0.2), sec.axis = sec_axis(~ ., name = 'cancer rate among users (%)',
-                                                                        breaks = c(2, 2.4, 2.8, 3.2, 3.6), labels = rate)) +
-  coord_cartesian(xlim = c(2, 3.6), ylim = c(0, 0.06)) +
+  lab(3.1, 0.026, paste0('P-value\n= ', fmt(1 - zt(2.44), 4)), NAVY, 0) +
+  scale_x_continuous(breaks = seq(1.4, 3.6, by = 0.2), sec.axis = sec_axis(~ ., name = 'cancer rate among users (%)',
+                                                                          breaks = c(1.6, 2.2, 2.8, 3.4), labels = rate)) +
+  coord_cartesian(xlim = c(1.4, 3.6), ylim = c(0, 0.155)) +
   labs(title = 'Close-up of the upper tail', x = 'z', y = NULL) + bare
 ggarrange(full, zoom, ncol = 2, widths = c(1.15, 1))
 ```
 
-The grey dashed line shows the same test at the usual $\alpha = 0.05$: the critical value would move left
-to 1.645, and $z_{obs} = `r fmt(z_c, 2)`$ would fall inside the rejection region.
-
-Why such a small $\alpha$? Rejecting $H_0$ when it is true would wrongly blame cell phones for cancer, a
-claim with serious consequences, so we ask for very strong evidence before making it. Notice that the
-P-value of 0.0073 would have been significant at the usual $\alpha = 0.05$. The decision depends on the
-cutoff, which is why $\alpha$ is chosen **before** the data are collected.
+**The textbook's choice of $\alpha$.** OpenStax works this example at a much stricter $\alpha = 0.005$.
+Wrongly announcing that cell phones cause cancer would frighten a great many people and send research
+and regulation chasing a false cause, so the book asks for very strong evidence first. At that cutoff
+the critical value moves right to 2.58 (the grey dashed line), $z_{obs} = `r fmt(z_c, 2)`$ falls just
+short of it, and $`r fmt(1 - zt(2.44), 4)` \geq 0.005$: **do not reject $H_0$**. Same data, opposite
+decision. The decision depends on the cutoff, which is why $\alpha$ is chosen **before** the data are
+collected.
 
 ## Assumptions for a population proportion
 

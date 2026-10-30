@@ -1590,14 +1590,11 @@ class="math inline">\(420{,}019 \times 0.00034 \approx 143\)</span> of
 these users to develop brain cancer. We saw 172, which is more. But is
 172 far enough above 143 to rule out chance? Or is it the kind of number
 a group this size could produce even if phones are harmless?</p>
-<p>The stakes are high. Announcing that cell phones cause cancer when
-they do not would frighten a great many people and send research and
-regulation chasing a false cause. So before making that claim we want
-very strong evidence, and we use a strict significance level of <span
-class="math inline">\(\alpha = 0.005\)</span> instead of the usual
-0.05.</p>
+<p>That is the question a significance test answers. We use the usual
+significance level, <span class="math inline">\(\alpha =
+0.05\)</span>.</p>
 <p><strong>Question:</strong> At <span class="math inline">\(\alpha =
-0.005\)</span>, do the data show that cell phone users develop brain
+0.05\)</span>, do the data show that cell phone users develop brain
 cancer at a higher rate than non-users?</p>
 <ol style="list-style-type: decimal">
 <li><strong>Assumptions.</strong> We treat the 420,019 users as a random
@@ -1633,42 +1630,42 @@ class="math display">\[P(Z \geq 2.44 \mid H_0 \text{ true}) = 1 - 0.9927
 = 0.0073\]</span> In words: if phones made no difference, a study this
 size would see a cancer rate this far above 0.034% only about 73 times
 in 10,000.</li>
-<li><strong>Decision.</strong> <span class="math inline">\(0.0073 \geq
-0.005\)</span>: <strong>do not reject <span
-class="math inline">\(H_0\)</span></strong>. At the 0.5% level, the data
-are not strong enough evidence that cell phone users develop brain
-cancer at a higher rate than non-users. This does <strong>not</strong>
-prove phones are safe. The evidence just does not clear the high bar we
-set.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0073 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are convincing
+evidence that cell phone users develop brain cancer at a higher rate
+than non-users. (The study shows a higher rate among users. On its own
+it does not show that the phones are the <strong>cause</strong>.)</li>
 </ol>
 <p>Here is the whole test as a picture. The curve is the distribution of
 <span class="math inline">\(z\)</span> <strong>if <span
 class="math inline">\(H_0\)</span> is true</strong> (phones make no
-difference). The <strong>rejection region</strong> is the upper 0.5% of
+difference). The <strong>rejection region</strong> is the upper 5% of
 that curve, everything at or beyond the <strong>critical value</strong>
-<span class="math inline">\(z^* = 2.58\)</span>, so <span
-class="math inline">\(P(Z \geq 2.58 \mid H_0 \text{ true}) = 0.005 =
+<span class="math inline">\(z^* = 1.645\)</span>, so <span
+class="math inline">\(P(Z \geq 1.645 \mid H_0 \text{ true}) = 0.05 =
 \alpha\)</span>. Our test statistic, <span class="math inline">\(z_{obs}
-= 2.44\)</span>, lands just short of it. The area beyond <span
+= 2.44\)</span>, lands well inside it. The area beyond <span
 class="math inline">\(z_{obs}\)</span> is the P-value, 0.0073, and it is
-a little bigger than <span class="math inline">\(\alpha\)</span>. That
-is the decision rule in picture form: <span
-class="math inline">\(z_{obs}\)</span> inside the rejection region
+smaller than <span class="math inline">\(\alpha\)</span>. That is the
+decision rule in picture form: <span
+class="math inline">\(z_{obs}\)</span> lands in the rejection region
 exactly when the P-value is less than <span
 class="math inline">\(\alpha\)</span>.</p>
-<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-11-1.png" alt="Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 2.58 starts the rejection region, and a blue line marks the observed z = 2.44, just to its left. A grey dashed line at z = 1.645 marks where the critical value would be at the usual alpha = 0.05. A box marks the upper tail from z = 2 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 2.58 is shaded red and labelled rejection region, alpha = 0.005. The area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it includes the red area plus a thin blue strip between 2.44 and 2.58, so the P-value is slightly larger than alpha and z_obs falls just outside the rejection region." width="960" style="display: block; margin: auto;" /></p>
-<p>The grey dashed line shows the same test at the usual <span
-class="math inline">\(\alpha = 0.05\)</span>: the critical value would
-move left to 1.645, and <span class="math inline">\(z_{obs} =
-2.44\)</span> would fall inside the rejection region.</p>
-<p>Why such a small <span class="math inline">\(\alpha\)</span>?
-Rejecting <span class="math inline">\(H_0\)</span> when it is true would
-wrongly blame cell phones for cancer, a claim with serious consequences,
-so we ask for very strong evidence before making it. Notice that the
-P-value of 0.0073 would have been significant at the usual <span
-class="math inline">\(\alpha = 0.05\)</span>. The decision depends on
-the cutoff, which is why <span class="math inline">\(\alpha\)</span> is
-chosen <strong>before</strong> the data are collected.</p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-11-1.png" alt="Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 1.645 starts the rejection region, and a blue line marks the observed z = 2.44, well to its right. A grey dashed line at z = 2.58 marks where the critical value would be at the textbook's alpha = 0.005. A box marks the upper tail from z = 1.4 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 1.645 is shaded red and labelled rejection region, alpha = 0.05. The smaller area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it sits inside the rejection region, so the P-value is smaller than alpha and H0 is rejected." width="960" style="display: block; margin: auto;" /></p>
+<p><strong>The textbook’s choice of <span
+class="math inline">\(\alpha\)</span>.</strong> OpenStax works this
+example at a much stricter <span class="math inline">\(\alpha =
+0.005\)</span>. Wrongly announcing that cell phones cause cancer would
+frighten a great many people and send research and regulation chasing a
+false cause, so the book asks for very strong evidence first. At that
+cutoff the critical value moves right to 2.58 (the grey dashed line),
+<span class="math inline">\(z_{obs} = 2.44\)</span> falls just short of
+it, and <span class="math inline">\(0.0073 \geq 0.005\)</span>:
+<strong>do not reject <span class="math inline">\(H_0\)</span></strong>.
+Same data, opposite decision. The decision depends on the cutoff, which
+is why <span class="math inline">\(\alpha\)</span> is chosen
+<strong>before</strong> the data are collected.</p>
 </div>
 <div id="assumptions-for-a-population-proportion"
 class="section level2">
