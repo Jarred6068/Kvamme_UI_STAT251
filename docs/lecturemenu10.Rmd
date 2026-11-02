@@ -90,10 +90,22 @@ se_s <- round(3.197 / sqrt(10), 3); t_s <- round((67 - 65) / se_s, 2)
 stopifnot(mean(sc) == 67, round(sd(sc), 3) == 3.197, se_s == 1.011, t_s == 1.98,
           round(qt(0.95, 9), 3) == 1.833, round(qt(0.975, 9), 3) == 2.262,
           1 - pt(t_s, 9) > 0.025, 1 - pt(t_s, 9) < 0.05)
-# Lecture 24 practice: first-time brides (OpenStax Example 9.17), 53 of 100, p0 = 0.5, two-sided
-z_y <- round((0.53 - 0.5) / sqrt(0.25 / 100), 2)
-stopifnot(sqrt(0.25 / 100) == 0.05, z_y == 0.60, 100 * 0.5 >= 15, zt(0.60) == 0.7257,
-          round(2 * (1 - zt(0.60)), 4) == 0.5486)
+# Marco's throwing distance (OpenStax Try It 9.14): sigma = 2 known, so z; alpha = 0.05, upper-tailed
+se_m <- round(2 / sqrt(20), 4); z_m <- round((45 - 40) / se_m, 2)
+stopifnot(se_m == 0.4472, z_m == 11.18, 1 - pnorm(z_m) < 1e-10, round(qnorm(0.95), 3) == 1.645)
+# boiling point (OpenStax Try It 9.20): sigma unknown, so t with df = 14; alpha = 0.10, upper-tailed
+bo <- c(205, 206, 206, 202, 199, 194, 197, 198, 198, 201, 201, 202, 207, 211, 205)
+xb_bo <- round(mean(bo), 2); s_bo <- round(sd(bo), 3); se_bo <- round(s_bo / sqrt(15), 3)
+t_bo <- round((xb_bo - 200) / se_bo, 2)
+stopifnot(sum(bo) == 3032, xb_bo == 202.13, s_bo == 4.533, se_bo == 1.170, t_bo == 1.82,
+          round(qt(0.95, 14), 3) == 1.761, round(qt(0.975, 14), 3) == 2.145,
+          round(1 - pt(t_bo, 14), 3) == 0.045,
+          round(qt(0.90, 14), 3) == 1.345, t_bo >= 1.345, round(qt(0.95, 9), 3) == 1.833, t_s >= 1.833)
+# practice (replaces the Lecture 24 brides, Example 9.17): households with three cell phones
+# (OpenStax Example 9.18), 43 of 150, p0 = 0.30, two-sided, alpha = 0.05
+ph_hh <- round(43 / 150, 4); se_hh <- round(sqrt(0.3 * 0.7 / 150), 4); z_hh <- round((ph_hh - 0.3) / se_hh, 2)
+stopifnot(ph_hh == 0.2867, se_hh == 0.0374, z_hh == -0.36, 150 * 0.3 >= 15, 150 * 0.7 >= 15,
+          zt(-0.36) == 0.3594, round(2 * zt(-0.36), 4) == 0.7188)
 # Lecture 24 practice: goggles (OpenStax Example 9.14), sigma = 0.8 known, so z
 se_g <- round(0.8 / sqrt(15), 4); z_g <- round((16 - 16.43) / se_g, 2)
 stopifnot(se_g == 0.2066, z_g == -2.08, zt(-2.08) == 0.0188)
@@ -125,6 +137,12 @@ stopifnot(sum(choose(10, 7:10)) == 176, round(176 / 1024, 3) == 0.172,
                              Example 9.16 (first statistics test), with practice from Examples
                              9.17 (brides, two-sided) and 9.14 (goggles, lower-tailed)
                              lecture_slides/Week 10/2026/Week10_Lecture24_Slides_10_30_2026.pptx
+                             On this page (Nov 2 2026, Jarred's choice) the mean section is: 9.16
+                             restated in full, a second t-test (Try It 9.20, boiling point), then
+                             practice from 9.18 (households, two-sided; replaces the deck's
+                             brides) and 9.14 (goggles). Lecture 24's tests-for-a-mean end portion
+                             was cut (Nov 2 2026, Jarred), so it is slides 1-6; the mean slides were
+                             rebuilt in Lecture 25 (Week 11).
 
   This page replaced the 2024 Week 10 page (git show 27a60f5:docs/lecturemenu10.Rmd). Its review of
   confidence intervals and sample size now lives on the Week 9 page. Its "Introduction to tests of
@@ -647,7 +665,7 @@ The coin-flip study above is one of these tests. Here is a second one, from the 
 
 ## Example: cell phones and brain cancer
 
-*From OpenStax Introductory Statistics 2e, Example 9.21.*
+*From [OpenStax Introductory Statistics 2e, Section 9.5, Example 9.21](https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples).*
 
 Almost everyone carries a cell phone, and most of us hold it against our heads every day. That has
 led to a worry that comes up again and again: can the radio waves from a phone cause brain cancer?
@@ -691,14 +709,17 @@ higher rate than non-users?
    cell phone users develop brain cancer at a higher rate than non-users. (The study shows a higher
    rate among users. On its own it does not show that the phones are the **cause**.)
 
-Here is the whole test as a picture. The curve is the distribution of $z$ **if $H_0$ is true** (phones
-make no difference). The **rejection region** is the upper 5% of that curve, everything at or beyond
-the **critical value** $z^* = `r fmt(zc_c, 3)`$, so $P(Z \geq `r fmt(zc_c, 3)` \mid H_0 \text{ true}) = 0.05 = \alpha$.
+Here is the whole test as a picture. The curve is the distribution of $z_{obs}$ **if $H_0$ is true**
+(phones make no difference). The **rejection region** is the upper 5% of that curve, everything at or
+beyond the **critical value** $Z_{1-\alpha} = Z_{0.95} = `r fmt(zc_c, 3)`$, so
+$P(Z \geq `r fmt(zc_c, 3)` \mid H_0 \text{ true}) = 0.05 = \alpha$. (The test is upper-tailed, so all of
+$\alpha$ goes in one tail and the critical value is $Z_{1-\alpha}$. A two-sided test splits $\alpha$
+between the tails and uses $Z_{1-\alpha/2}$.)
 Our test statistic, $z_{obs} = `r fmt(z_c, 2)`$, lands well inside it. The area beyond $z_{obs}$ is the
 P-value, `r fmt(1 - zt(2.44), 4)`, and it is smaller than $\alpha$. That is the decision rule in picture
 form: $z_{obs}$ lands in the rejection region exactly when the P-value is less than $\alpha$.
 
-```{r, echo=FALSE, fig.width=10, fig.height=4.6, fig.align='center', fig.alt = "Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 1.645 starts the rejection region, and a blue line marks the observed z = 2.44, well to its right. A grey dashed line at z = 2.58 marks where the critical value would be at the textbook's alpha = 0.005. A box marks the upper tail from z = 1.4 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 1.645 is shaded red and labelled rejection region, alpha = 0.05. The smaller area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it sits inside the rejection region, so the P-value is smaller than alpha and H0 is rejected."}
+```{r, echo=FALSE, fig.width=10, fig.height=4.6, fig.align='center', fig.alt = "Two panels. Left: a standard normal curve, the distribution of z_obs if H0 is true, centered at 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value Z sub 0.95 = 1.645 starts the rejection region, and a blue line marks the observed z = 2.44, well to its right. A grey dashed line at z = 2.58 marks where the critical value would be at the textbook's alpha = 0.005. A box marks the upper tail from z = 1.4 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond Z sub 0.95 = 1.645 is shaded red and labelled rejection region, alpha = 0.05. The smaller area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it sits inside the rejection region, so the P-value is smaller than alpha and H0 is rejected."}
 cx <- seq(-4, 4, length.out = 800)
 cd <- data.frame(x = cx, y = dnorm(cx))
 top <- max(cd$y)
@@ -719,15 +740,15 @@ full <- ggplot(cd, aes(x, y)) + tails +
   geom_vline(xintercept = 0, colour = NAVY, linetype = 'dashed') +
   annotate('rect', xmin = 1.4, xmax = 3.6, ymin = -0.005, ymax = 0.16, fill = NA, colour = 'grey30') +
   lab(-3.9, top * 0.85, 'H0 true:\np = 0.00034\n(z = 0)', NAVY, 0) +
-  lab(1.58, top * 0.9, paste0('z*\n', fmt(zc_c, 3)), RED, 1, 'bold') +
+  lab(1.58, top * 0.9, paste0('Z_0.95\n', fmt(zc_c, 3)), RED, 1, 'bold') +
   lab(2.5, top * 0.9, paste0('z_obs\n', fmt(z_c, 2)), NAVY, 0, 'bold') +
   scale_x_continuous(breaks = -4:4, sec.axis = sec_axis(~ ., name = 'cancer rate among users (%)',
                                                         breaks = c(-4, -2, 0, 2, 4), labels = rate)) +
-  labs(title = 'The distribution of z if H0 is true', x = 'z', y = NULL) + bare
+  labs(title = 'The distribution of z_obs if H0 is true', x = 'z_obs', y = NULL) + bare
 zoom <- ggplot(subset(cd, x >= 1.4 & x <= 3.6), aes(x, y)) + tails +
-  lab(zc_c + 0.03, 0.14, paste0('critical value\nz* = ', fmt(zc_c, 3)), RED, 0, 'bold') +
+  lab(zc_c + 0.03, 0.14, paste0('critical value\nZ_0.95 = ', fmt(zc_c, 3)), RED, 0, 'bold') +
   lab(z_c + 0.03, 0.09, paste0('z_obs = ', fmt(z_c, 2)), NAVY, 0, 'bold') +
-  lab(2.62, 0.055, "z* = 2.58 if alpha = 0.005\n(the textbook's choice)", 'grey40', 0, sz = 3.3) +
+  lab(2.62, 0.055, "Z_0.995 = 2.58 if alpha = 0.005\n(the textbook's choice)", 'grey40', 0, sz = 3.3) +
   lab(1.7, 0.03, 'rejection region\nalpha = 0.05', RED, 0) +
   annotate('segment', x = 3.1, xend = 2.6, y = 0.022, yend = 0.006, colour = NAVY,
            arrow = arrow(length = unit(0.2, 'cm'))) +
@@ -735,14 +756,14 @@ zoom <- ggplot(subset(cd, x >= 1.4 & x <= 3.6), aes(x, y)) + tails +
   scale_x_continuous(breaks = seq(1.4, 3.6, by = 0.2), sec.axis = sec_axis(~ ., name = 'cancer rate among users (%)',
                                                                           breaks = c(1.6, 2.2, 2.8, 3.4), labels = rate)) +
   coord_cartesian(xlim = c(1.4, 3.6), ylim = c(0, 0.155)) +
-  labs(title = 'Close-up of the upper tail', x = 'z', y = NULL) + bare
+  labs(title = 'Close-up of the upper tail', x = 'z_obs', y = NULL) + bare
 ggarrange(full, zoom, ncol = 2, widths = c(1.15, 1))
 ```
 
 **The textbook's choice of $\alpha$.** OpenStax works this example at a much stricter $\alpha = 0.005$.
 Wrongly announcing that cell phones cause cancer would frighten a great many people and send research
 and regulation chasing a false cause, so the book asks for very strong evidence first. At that cutoff
-the critical value moves right to 2.58 (the grey dashed line), $z_{obs} = `r fmt(z_c, 2)`$ falls just
+the critical value moves right to $Z_{0.995} = 2.58$ (the grey dashed line), $z_{obs} = `r fmt(z_c, 2)`$ falls just
 short of it, and $`r fmt(1 - zt(2.44), 4)` \geq 0.005$: **do not reject $H_0$**. Same data, opposite
 decision. The decision depends on the cutoff, which is why $\alpha$ is chosen **before** the data are
 collected.
@@ -808,61 +829,156 @@ areas, so it gives the P-value only between two bounds. In row $df$, find the tw
 falls between. The P-value is between the upper-tail areas at the top of those two columns (for a
 two-sided test, use the two-tail areas). Software gives the exact value.
 
-## Example: the first statistics test
+## Example: Marco's throwing distance ($\sigma$ known)
 
-*OpenStax Introductory Statistics 2e, Example 9.16.* Statistics students believe the mean score on the
-first statistics test is 65. An instructor thinks it is higher. He samples ten students' scores,
-65, 65, 70, 67, 66, 63, 63, 68, 72, 71, which come from a normal distribution. Use $\alpha = 0.05$.
+*From [OpenStax Introductory Statistics 2e, Section 9.5, Try It 9.14](https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples).*
 
-1. **Assumptions.** $n = 10$ is small, but the scores are normal, so the test works.
-2. **Hypotheses.** $\mu$ = the mean score on the first test. $H_0: \mu = 65$ and $H_A: \mu > 65$:
+> The mean throwing distance of a football for **Marco**, a high school quarterback, is **40 yards**,
+> with a standard deviation of **two yards**. The team coach tells Marco to adjust his grip to get more
+> distance. The coach records the distances for **20** throws. For the 20 throws, Marco's mean distance
+> was **45 yards**. The coach thought the different grip helped Marco throw farther than 40 yards.
+> Conduct a hypothesis test using a preset $\alpha = 0.05$. Assume the throw distances for footballs are
+> normal.
+
+Marco's long record gives the population standard deviation, $\sigma = 2$, so this is a $z$-test. (The
+book leaves this one as an exercise; the solution below is ours.)
+
+**Question:** At $\alpha = 0.05$, does the new grip make Marco throw farther than 40 yards, on average?
+
+1. **Assumptions.** We treat the 20 throws as a random sample of Marco's throws with the new grip.
+   $n = 20$ is small, but the distances are normal, so the test works. $\sigma = 2$ is known, so we use
+   $z$.
+2. **Hypotheses.** $\mu$ = Marco's mean throwing distance with the new grip. $H_0: \mu = 40$ and
+   $H_A: \mu > 40$. The coach thinks he throws **farther**, so the test is **upper-tailed**.
+3. **Test statistic.**
+   $$SE = \frac{\sigma}{\sqrt{n}} = \frac{2}{\sqrt{20}} \approx `r fmt(se_m, 4)`$$
+   $$z_{obs} = \frac{\bar{x} - \mu_0}{SE} = \frac{45 - 40}{`r fmt(se_m, 4)`} \approx `r fmt(z_m, 2)`$$
+   If $H_0$ is true, $z_{obs} \sim N(0, 1)$ (standard normal).
+4. **P-value.** $P(Z \geq `r fmt(z_m, 2)` \mid H_0 \text{ true})$ is far off the end of the $z$-table:
+   **essentially 0**.
+5. **Decision.** P-value $\approx 0 < 0.05$: **reject $H_0$**. The data are convincing evidence that the
+   new grip makes Marco throw farther than 40 yards, on average.
+
+   **With the critical value.** The test is upper-tailed with $\alpha = 0.05$, so the critical value is
+   $Z_{1-\alpha} = Z_{0.95} = 1.645$. The rejection region is $z_{obs} \geq 1.645$. Since
+   $z_{obs} = `r fmt(z_m, 2)` \geq 1.645$, it lands in the rejection region: the same decision, reject
+   $H_0$.
+
+## Example: the first statistics test ($\sigma$ unknown)
+
+*From [OpenStax Introductory Statistics 2e, Section 9.5, Example 9.16](https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples).*
+
+> Statistics students believe that the mean score on the first statistics test is **65**. A statistics
+> instructor thinks the mean score is **higher** than 65. He samples **ten** statistics students and
+> obtains the scores
+>
+> 65, 65, 70, 67, 66, 63, 63, 68, 72, 71.
+>
+> He performs a hypothesis test using a 5% level of significance. The data are assumed to be from a
+> normal distribution.
+
+No population standard deviation is given, only the ten scores, so $\sigma$ is unknown and this is a
+$t$-test.
+
+**Question:** At $\alpha = 0.05$, is the mean score on the first statistics test higher than 65?
+
+1. **Assumptions.** We treat the ten students as a random sample. $n = 10$ is small, but the scores are
+   normal, so the test works. $\sigma$ is unknown, so we use $t$.
+2. **Hypotheses.** $\mu$ = the mean score of all statistics students on the first test.
+   $H_0: \mu = 65$ and $H_A: \mu > 65$. The instructor thinks the mean is **higher**, so the test is
    **upper-tailed**.
-3. **Test statistic.** $\bar{x} = 67$ and $s = 3.197$. $\sigma$ is unknown, so use $t$:
-   $SE = 3.197/\sqrt{10} \approx `r fmt(se_s, 3)`$ and
-   $$t_{obs} = \frac{67 - 65}{`r fmt(se_s, 3)`} \approx `r fmt(t_s, 2)`, \qquad df = 10 - 1 = 9$$
-4. **P-value.** In row 9 of the $t$-table, $1.833 < `r fmt(t_s, 2)` < 2.262$. Those columns have upper-tail
-   areas 0.05 and 0.025, so $0.025 < \text{P-value} < 0.05$. (Software gives
-   `r fmt(1 - pt(t_s, 9), 4)`.)
+3. **Test statistic.** From the data, $\bar{x} = 670/10 = 67$ and $s = 3.197$.
+   $$SE = \frac{s}{\sqrt{n}} = \frac{3.197}{\sqrt{10}} \approx `r fmt(se_s, 3)`$$
+   $$t_{obs} = \frac{\bar{x} - \mu_0}{SE} = \frac{67 - 65}{`r fmt(se_s, 3)`} \approx `r fmt(t_s, 2)`, \qquad df = 10 - 1 = 9$$
+   If $H_0$ is true, $t_{obs} \sim t(9)$ (Student's $t$ with 9 degrees of freedom).
+4. **P-value.** Upper-tailed, so we want $P(T \geq `r fmt(t_s, 2)` \mid H_0 \text{ true})$. In row 9 of the
+   [$t$-table](misc/t_table.html), $1.833 < `r fmt(t_s, 2)` < 2.262$. Those columns have upper-tail areas
+   0.05 and 0.025, so
+   $$0.025 < P(T \geq `r fmt(t_s, 2)` \mid H_0 \text{ true}) < 0.05$$
+   Software gives `r fmt(1 - pt(t_s, 9), 4)`.
 5. **Decision.** The P-value is below $\alpha = 0.05$: **reject $H_0$**. The data are convincing evidence
-   that the mean score on the first test is higher than 65.
+   that the mean score on the first test is higher than 65, as the instructor thinks.
 
-The two practice problems from Lecture 24 follow: one proportion and one mean.
+   **With the critical value.** The test is upper-tailed with $\alpha = 0.05$ and $df = 9$, so the critical
+   value is $t_{9,\,0.95} = 1.833$ (row 9, upper-tail area 0.05). The rejection region is
+   $t_{obs} \geq 1.833$. Since $t_{obs} = `r fmt(t_s, 2)` \geq 1.833$, it lands in the rejection region:
+   the same decision, reject $H_0$.
 
-## Practice: younger than the groom?
+## Example: the boiling point of a liquid ($\sigma$ unknown)
 
-*From OpenStax Introductory Statistics 2e, Example 9.17.*
+*From [OpenStax Introductory Statistics 2e, Section 9.5, Try It 9.20](https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples).*
 
-Joon believes that in the United States, half of first-time brides are younger than their grooms. She
-wants to check that 50% figure, but she has no hunch about which way it might be off. More than half
-would surprise her just as much as less than half.
+> The boiling point of a specific liquid is measured for **15** samples, and the boiling points are
+>
+> 205, 206, 206, 202, 199, 194, 197, 198, 198, 201, 201, 202, 207, 211, 205.
+>
+> Is there convincing evidence that the average boiling point is **greater than 200**? Use a
+> significance level of 0.1. Assume the population is normal.
 
-She surveys **100 first-time brides**, and **53** of them say they are younger than their grooms. That
-is 53%, a little over half. Is that far enough from 50% to say the figure is wrong, or is it the kind of
-wobble a sample of 100 gives by chance? Joon uses a 1% significance level, $\alpha = 0.01$.
+Again only the data are given, so $\sigma$ is unknown and we use $t$. (The book leaves this one as an
+exercise; the solution below is ours.)
 
-**Question:** At $\alpha = 0.01$, is the percentage of first-time brides who are younger than their
-grooms different from 50%?
+**Question:** At $\alpha = 0.10$, is the mean boiling point of this liquid greater than 200?
 
-1. **Assumptions.** A random sample of first-time brides, each either younger than her groom or not, and
-   a large enough sample: $np_0 = 100(0.50) = 50 \geq 15$ and $n(1 - p_0) = 100(0.50) = 50 \geq 15$.
-2. **Hypotheses.** $p$ = the proportion of **all** U.S. first-time brides who are younger than their
-   grooms. $H_0: p = 0.50$ and $H_A: p \neq 0.50$. Joon cares about a difference in either direction, so
-   the test is **two-sided**.
-3. **Test statistic.** $\hat{p} = 53/100 = 0.53$. Using $p_0$ in the standard error,
-   $$SE = \sqrt{\frac{p_0(1-p_0)}{n}} = \sqrt{\frac{0.50 \times 0.50}{100}} = 0.05$$
-   $$z_{obs} = \frac{\hat{p} - p_0}{SE} = \frac{0.53 - 0.50}{0.05} = `r fmt(z_y, 2)`$$
-   The sample is only `r fmt(z_y, 2)` standard errors above 50%.
-4. **P-value.** Two-sided, so we count both tails: results at least this far from 50% in **either**
-   direction.
-   $$P(Z \leq -`r fmt(z_y, 2)` \text{ or } Z \geq `r fmt(z_y, 2)` \mid H_0 \text{ true}) = 2 \times P(Z \geq `r fmt(z_y, 2)`) = 2(1 - `r fmt(zt(0.60), 4)`) = `r fmt(2 * (1 - zt(0.60)), 4)`$$
-   If the true figure really is 50%, a sample of 100 lands this far from 50% more than half the time.
-5. **Decision.** $`r fmt(2 * (1 - zt(0.60)), 4)` \geq 0.01$: **do not reject $H_0$**. The data are not
-   convincing evidence that the percentage differs from 50%. A result of 53% is entirely ordinary for a
-   sample of 100.
+1. **Assumptions.** We treat the 15 measurements as a random sample. $n = 15$ is small, but the
+   population is normal, so the test works. $\sigma$ is unknown, so we use $t$.
+2. **Hypotheses.** $\mu$ = the mean boiling point of the liquid. $H_0: \mu = 200$ and $H_A: \mu > 200$:
+   **upper-tailed**.
+3. **Test statistic.** From the data, $\bar{x} = 3{,}032/15 \approx `r fmt(xb_bo, 2)`$ and
+   $s \approx `r fmt(s_bo, 3)`$.
+   $$SE = \frac{s}{\sqrt{n}} = \frac{`r fmt(s_bo, 3)`}{\sqrt{15}} \approx `r fmt(se_bo, 3)`$$
+   $$t_{obs} = \frac{\bar{x} - \mu_0}{SE} = \frac{`r fmt(xb_bo, 2)` - 200}{`r fmt(se_bo, 3)`} \approx `r fmt(t_bo, 2)`, \qquad df = 15 - 1 = 14$$
+   If $H_0$ is true, $t_{obs} \sim t(14)$ (Student's $t$ with 14 degrees of freedom).
+4. **P-value.** In row 14 of the [$t$-table](misc/t_table.html), $1.761 < `r fmt(t_bo, 2)` < 2.145$.
+   Those columns have upper-tail areas 0.05 and 0.025, so
+   $$0.025 < P(T \geq `r fmt(t_bo, 2)` \mid H_0 \text{ true}) < 0.05$$
+   Software gives `r fmt(1 - pt(t_bo, 14), 3)`.
+5. **Decision.** The P-value is below $\alpha = 0.10$: **reject $H_0$**. The data are convincing evidence
+   that the mean boiling point of the liquid is greater than 200.
+
+   **With the critical value.** The test is upper-tailed with $\alpha = 0.10$ and $df = 14$, so the
+   critical value is $t_{14,\,0.90} = 1.345$ (row 14, upper-tail area 0.10). The rejection region is
+   $t_{obs} \geq 1.345$. Since $t_{obs} = `r fmt(t_bo, 2)` \geq 1.345$, it lands in the rejection region:
+   the same decision, reject $H_0$.
+
+The next two problems are extra practice: one proportion and one mean.
+
+## Practice: households with three cell phones
+
+*From [OpenStax Introductory Statistics 2e, Section 9.5, Example 9.18](https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples).*
+
+> Suppose a consumer group suspects that the proportion of households that have **three cell phones** is
+> **30%**. A cell phone company has reason to believe that the proportion is **not** 30%. Before they
+> start a big advertising campaign, they conduct a hypothesis test. Their marketing people survey
+> **150** households, with the result that **43** of the households have three cell phones.
+>
+> a. Calculate the sample proportion.
+> b. What is a success for this problem?
+> c. What is the level of significance?
+> d. Draw the graph for this problem and calculate the P-value.
+> e. Make a decision: reject or do not reject $H_0$, and why?
+
+No significance level is given, so we use the usual $\alpha = 0.05$.
+
+1. **Assumptions.** A random sample of households, and a large enough sample:
+   $np_0 = 150(0.30) = 45 \geq 15$ and $n(1 - p_0) = 150(0.70) = 105 \geq 15$. A **success** is a household
+   with three cell phones.
+2. **Hypotheses.** $p$ = the proportion of **all** households with three cell phones. $H_0: p = 0.30$ and
+   $H_A: p \neq 0.30$. The company thinks the proportion is "not 30%", in either direction, so the test is
+   **two-sided**.
+3. **Test statistic.** $\hat{p} = 43/150 \approx `r fmt(ph_hh, 4)`$. Using $p_0$ in the standard error,
+   $$SE = \sqrt{\frac{p_0(1-p_0)}{n}} = \sqrt{\frac{0.30 \times 0.70}{150}} \approx `r fmt(se_hh, 4)`$$
+   $$z_{obs} = \frac{\hat{p} - p_0}{SE} = \frac{`r fmt(ph_hh, 4)` - 0.30}{`r fmt(se_hh, 4)`} \approx `r fmt(z_hh, 2)`$$
+4. **P-value.** Two-sided, so we count both tails:
+   $$P(Z \leq `r fmt(z_hh, 2)` \text{ or } Z \geq `r fmt(-z_hh, 2)` \mid H_0 \text{ true}) = 2 \times `r fmt(zt(z_hh), 4)` = `r fmt(2 * zt(z_hh), 4)`$$
+   (The book's calculator, without rounding $z_{obs}$, gives 0.7216.) The graph is the standard normal
+   curve with both tails beyond $\pm `r fmt(-z_hh, 2)`$ shaded: most of the curve.
+5. **Decision.** $`r fmt(2 * zt(z_hh), 4)` \geq 0.05$: **do not reject $H_0$**. The data are not convincing
+   evidence that the proportion of households with three cell phones differs from 30%.
 
 ## Practice: faster with goggles?
 
-*From OpenStax Introductory Statistics 2e, Example 9.14.*
+*From [OpenStax Introductory Statistics 2e, Section 9.5, Example 9.14](https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples).*
 
 When Jeffrey was eight years old, he established a mean time of **16.43 seconds** for the 25-yard freestyle, with a standard deviation of $\sigma = 0.8$ seconds. His dad, Frank, thinks a good
 pair of goggles would make Jeffrey faster, so he buys him an expensive new pair.
@@ -899,6 +1015,6 @@ $\alpha = 0.05$.
   211&ndash;235.
 * The taste test, Candidate X's poll, the chip bag, the coffee shop and the website are made-up examples.
 * Cell phones and brain cancer: OpenStax *Introductory Statistics 2e*, Example 9.21. The first statistics
-  test, the first-time brides and the goggles are Examples 9.16, 9.17 and 9.14. The breakfast survey is
-  made up.
+  test, the households with three cell phones and the goggles are Examples 9.16, 9.18 and 9.14; Marco is Try It 9.14 and the
+  boiling point is Try It 9.20 (our solution). The breakfast survey is made up.
 * Textbook: OpenStax *Introductory Statistics 2e*, Chapter 9, Sections 9.1&ndash;9.6.

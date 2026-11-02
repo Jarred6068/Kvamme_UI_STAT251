@@ -241,6 +241,18 @@ outlined below. Any changes will be announced in class and posted here.**
   taste-test P-values, "Which tail?", the assumptions comparison, the five steps and the breakfast
   practice (all on the Week 10 page). Lecture 23 is trimmed to slides 1-9. Nothing shifts.
 
+  SWAP, Nov 2 2026. No dates changed. Jarred swapped the Week 11 Monday and Wednesday topics: Mon Nov 2
+  (Lecture 25) is now the tests for a mean left over from Lecture 24 (sigma known vs unknown), composite
+  hypotheses, types of errors and power, opening with the three distributions behind a test (variable,
+  estimate, test statistic); some of it is expected to carry over. Wed Nov 4 (Lecture 26) is now
+  confidence intervals and two-sided tests and the sign test. "Making decisions" was already covered
+  in Lecture 24. Fri Nov 6 is unchanged.
+  Lecture 24's tests-for-a-mean slides (7-10: the mean term slide, the first statistics test, the
+  brides and goggles practice) were cut, so the deck is slides 1-6. Lecture 25 opens with a blank
+  Review slide (Jarred labels the parts of a test on the distribution), then sigma known / sigma
+  unknown slides, Marco's throwing distance (Try It 9.14, sigma known) and the first statistics test (9.16, sigma unknown), each with a critical-value part (d), then the
+  Week 11 notes material.
+
   DUE DATES, Oct 28 2026. No lecture dates changed. Homework 3 had not been released yet, so its due
   date moved from Sun Nov 1 to Sun Nov 8 (now on the Fri Nov 6 row), and Homework 4 moved from Sun Nov 15
   to Sun Nov 22 (now on the Fri Nov 20 row) - Jarred's choice.
@@ -476,12 +488,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November  2, 2026</td>
-  <td>Composite hypotheses, relationship between confidence intervals and hypothesis tests, the sign test</td>
+  <td>Tests for a mean (sigma known vs unknown), composite hypotheses, types of errors in hypothesis tests, statistical power</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>November  4, 2026</td>
-  <td>Making decisions, types of errors in hypothesis tests, statistical power</td>
+  <td>Relationship between confidence intervals and hypothesis tests, parametric vs non-parametric tests: the sign test</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

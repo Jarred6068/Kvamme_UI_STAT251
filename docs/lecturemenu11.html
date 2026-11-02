@@ -453,6 +453,9 @@ div.tocify {
         <li>
           <a href="lecturemenu10.html">Week 10</a>
         </li>
+        <li>
+          <a href="lecturemenu11.html">Week 11</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -647,1341 +650,1145 @@ div.tocify {
 </div>
 
 
-<div id="lecture-21" class="section level1">
-<h1>Lecture 21</h1>
-<p><strong>Warm Up:</strong> Consider the following example - a gardener
-is conducting an experiment to evaluate the effectiveness of a new
-fertilizer on the heights of tomato plants. They purchase 80 tomato
-plants from their local seedling outlet. The gardener randomly selects
-<span class="math inline">\(40\)</span> of plants to receive a
-fertilizer and water mixture and the remaining half to receive only
-water. After one month the mean height is recorded in both groups and
-the difference in height between the two experimental groups of tomato
-plants is measured.</p>
-<p>The gardener suspects that the plants which received the new
-fertilizer will tend to be taller than the plants that received only
-water. They set the null hypothesis to be “no difference in height”
-which can be thought of as “the fertilizer has no effect on tomato plant
-growth”.</p>
-<p><span class="math display">\[ H_0: \mu_d = 0 \]</span></p>
-<p><span class="math inline">\(\mu_d\)</span> denotes the population
-mean difference in tomato plant height between the two experimental
-groups. We can use the sample mean difference <span
-class="math inline">\(\bar{x}_d\)</span> to estimate <span
-class="math inline">\(\mu_d\)</span> which is calculated as</p>
-<p><span class="math display">\[\bar{x}_d = \frac{1}{n}\sum_i (x_{i} -
-y_i) \]</span></p>
-<p>where <span class="math inline">\(x_i\)</span> is the height of
-tomato plants receiving the fertilizer and <span
-class="math inline">\(y_i\)</span> is the height the tomato plants
-receiving only water.</p>
-<p>Since the suspicion is that the plants receiving fertilizer will be
-taller, the alternative hypothesis is</p>
-<p><span class="math display">\[ H_A: \mu_d &gt; 0 \]</span></p>
-<p>The data from the gardeners experiment are shown below:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Height Fertilized (Inches)
-</th>
-<th style="text-align:right;">
-Height Water Only (Inches)
-</th>
-<th style="text-align:right;">
-Difference In Height (Inches)
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-43.60
-</td>
-<td style="text-align:right;">
-38.15
-</td>
-<td style="text-align:right;">
-5.45
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-44.42
-</td>
-<td style="text-align:right;">
-40.15
-</td>
-<td style="text-align:right;">
-4.28
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-48.90
-</td>
-<td style="text-align:right;">
-35.81
-</td>
-<td style="text-align:right;">
-13.08
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45.18
-</td>
-<td style="text-align:right;">
-49.89
-</td>
-<td style="text-align:right;">
--4.72
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45.32
-</td>
-<td style="text-align:right;">
-45.95
-</td>
-<td style="text-align:right;">
--0.63
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-49.29
-</td>
-<td style="text-align:right;">
-36.40
-</td>
-<td style="text-align:right;">
-12.89
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-46.15
-</td>
-<td style="text-align:right;">
-39.35
-</td>
-<td style="text-align:right;">
-6.80
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-41.84
-</td>
-<td style="text-align:right;">
-39.09
-</td>
-<td style="text-align:right;">
-2.75
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43.28
-</td>
-<td style="text-align:right;">
-44.20
-</td>
-<td style="text-align:right;">
--0.91
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43.89
-</td>
-<td style="text-align:right;">
-40.66
-</td>
-<td style="text-align:right;">
-3.23
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-48.06
-</td>
-<td style="text-align:right;">
-42.04
-</td>
-<td style="text-align:right;">
-6.02
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45.90
-</td>
-<td style="text-align:right;">
-40.88
-</td>
-<td style="text-align:right;">
-5.02
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-46.00
-</td>
-<td style="text-align:right;">
-40.82
-</td>
-<td style="text-align:right;">
-5.18
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45.28
-</td>
-<td style="text-align:right;">
-46.61
-</td>
-<td style="text-align:right;">
--1.33
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43.61
-</td>
-<td style="text-align:right;">
-40.07
-</td>
-<td style="text-align:right;">
-3.54
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-49.47
-</td>
-<td style="text-align:right;">
-47.22
-</td>
-<td style="text-align:right;">
-2.25
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-46.24
-</td>
-<td style="text-align:right;">
-34.65
-</td>
-<td style="text-align:right;">
-11.59
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-40.08
-</td>
-<td style="text-align:right;">
-43.40
-</td>
-<td style="text-align:right;">
--3.31
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-46.75
-</td>
-<td style="text-align:right;">
-41.51
-</td>
-<td style="text-align:right;">
-5.25
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43.82
-</td>
-<td style="text-align:right;">
-41.89
-</td>
-<td style="text-align:right;">
-1.93
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-42.33
-</td>
-<td style="text-align:right;">
-42.56
-</td>
-<td style="text-align:right;">
--0.23
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-44.46
-</td>
-<td style="text-align:right;">
-38.94
-</td>
-<td style="text-align:right;">
-5.51
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-42.43
-</td>
-<td style="text-align:right;">
-39.63
-</td>
-<td style="text-align:right;">
-2.80
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43.18
-</td>
-<td style="text-align:right;">
-36.82
-</td>
-<td style="text-align:right;">
-6.35
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43.44
-</td>
-<td style="text-align:right;">
-36.61
-</td>
-<td style="text-align:right;">
-6.83
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-40.78
-</td>
-<td style="text-align:right;">
-42.24
-</td>
-<td style="text-align:right;">
--1.46
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-47.09
-</td>
-<td style="text-align:right;">
-42.84
-</td>
-<td style="text-align:right;">
-4.26
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45.38
-</td>
-<td style="text-align:right;">
-41.22
-</td>
-<td style="text-align:right;">
-4.17
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-42.15
-</td>
-<td style="text-align:right;">
-44.78
-</td>
-<td style="text-align:right;">
--2.63
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-48.13
-</td>
-<td style="text-align:right;">
-49.41
-</td>
-<td style="text-align:right;">
--1.27
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-46.07
-</td>
-<td style="text-align:right;">
-38.99
-</td>
-<td style="text-align:right;">
-7.08
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-44.26
-</td>
-<td style="text-align:right;">
-31.53
-</td>
-<td style="text-align:right;">
-12.73
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-47.24
-</td>
-<td style="text-align:right;">
-45.12
-</td>
-<td style="text-align:right;">
-2.11
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-47.20
-</td>
-<td style="text-align:right;">
-38.09
-</td>
-<td style="text-align:right;">
-9.10
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-47.05
-</td>
-<td style="text-align:right;">
-38.18
-</td>
-<td style="text-align:right;">
-8.87
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-46.72
-</td>
-<td style="text-align:right;">
-45.20
-</td>
-<td style="text-align:right;">
-1.52
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-46.38
-</td>
-<td style="text-align:right;">
-39.83
-</td>
-<td style="text-align:right;">
-6.55
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-44.85
-</td>
-<td style="text-align:right;">
-36.00
-</td>
-<td style="text-align:right;">
-8.85
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-44.24
-</td>
-<td style="text-align:right;">
-41.74
-</td>
-<td style="text-align:right;">
-2.49
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-44.05
-</td>
-<td style="text-align:right;">
-40.43
-</td>
-<td style="text-align:right;">
-3.62
-</td>
-</tr>
-</tbody>
-</table>
-<p>The summary statistics from the gardeners data are listed below</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Name
-</th>
-<th style="text-align:left;">
-Symbol
-</th>
-<th style="text-align:right;">
-Value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Sample size
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(n\)</span>
-</td>
-<td style="text-align:right;">
-40.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mean Height (Fertilized)
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}\)</span>
-</td>
-<td style="text-align:right;">
-45.11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SD (Fertilized)
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(s_x\)</span>
-</td>
-<td style="text-align:right;">
-2.24
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mean Height (Water Only)
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{y}\)</span>
-</td>
-<td style="text-align:right;">
-40.97
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SD (Water Only)
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(s_y\)</span>
-</td>
-<td style="text-align:right;">
-3.93
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mean Difference (Fertilized - Water Only)
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}_d\)</span>
-</td>
-<td style="text-align:right;">
-4.14
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SD Difference
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(s_d\)</span>
-</td>
-<td style="text-align:right;">
-4.43
-</td>
-</tr>
-</tbody>
-</table>
-<p>Recall from last week that a significance test is a test of the null
-hypothesis. To test the null hypothesis, we compute the scenario given
-by the alternative hypothesis under the assumption that the null is
-true. In the case of this gardeners experiment, we need to compute the
-probability of observing a mean difference larger than the difference we
-observed under the sampling distribution of the null hypothesis. In
-other words, “how likely is it that we would see a difference in height
-as large as the one we observed, assuming that the true difference is
-zero?”</p>
-<p><span class="math display">\[P(\bar{X} \geq \bar{x}_d | H_0 \
-\text{true}) \]</span></p>
-<p>To compute this probability, we need convert the difference we
-observed into a standardized score that we can look up in one of our
-tables. Since we are discussing a “mean” difference we can use the <span
-class="math inline">\(t\)</span>-distribution as we did before with
-confidence intervals:</p>
-<p><span class="math display">\[ t_{obs} = \frac{\bar{x}_d -
-\mu_d}{s_d/\sqrt{n}}  = \frac{4.14 - 0}{4.43/\sqrt{40}} = 5.91 \sim
-t(n-1)\]</span></p>
-<p>Where <span class="math inline">\(\bar{x}_d\)</span> is the sample
-mean difference in height, <span class="math inline">\(\mu_d\)</span> is
-population mean difference under the null hypothesis, and <span
-class="math inline">\(s_d\)</span> is the sample standard deviation for
-the difference in height. The above formula converts the observed
-difference <span class="math inline">\(\bar{x}_d\)</span> to a <span
-class="math inline">\(t\)</span>-score from a <span
-class="math inline">\(t\)</span>-distribution with <span
-class="math inline">\(n-1\)</span> degrees of freedom under the
-assumption that the null hypothesis is true. <span
-class="math inline">\(t_{obs}\)</span> is called the <strong>test
-statistic</strong> - it measures the discrepancy (distance) between the
-point estimate of the parameter and the hypothesized value of the
-parameter under the null hypothesis. It tells us approximately how many
-standard deviations the observed mean difference is from the population
-mean difference under the null.</p>
-<p>Using the above formula the gardener calculates a <span
-class="math inline">\(t\)</span>-score of <span
-class="math inline">\(t_{obs} = 5.91\)</span> with <span
-class="math inline">\(39\)</span> degrees of freedom. The probability
-from earlier can be re-framed in the context of the <span
-class="math inline">\(t\)</span>-distribution</p>
-<p><span class="math display">\[P(t \geq t_{\text{obs}}| H_0 \
-\text{true}) = 1-P(t&lt; t_{\text{obs}}|H_0 \ \text{true}) \]</span></p>
-<p>i.e the probability of observing a <span
-class="math inline">\(t\)</span> value greater than the one we observed
-when the true difference is assumed to be <span
-class="math inline">\(\mu_d = 0\)</span>. For the gardener’s experiment,
-this probability is <span class="math inline">\(3.39 \times 10^{-7}
-\approx 0\)</span>, which is very small.</p>
-<p>This probability is called the <strong>p-value</strong> and it
-measures the probability of observing an estimate as or more extreme
-than the one we observed under the assumption that the null hypothesis
-is true. So what does this small probability mean? Just as we observed
-with the coin flip example from last week, it can mean one of two
-things:</p>
-<ol style="list-style-type: decimal">
-<li><p>We observed something very unusual</p></li>
-<li><p>The assumption underlying the calculation (i.e <span
-class="math inline">\(\mu_d = 0\)</span> no difference in mean height)
-is not true.</p></li>
-</ol>
-<p>We prefer the second conclusion when the <span
-class="math inline">\(p\)</span>-value is “sufficiently” small and take
-it as evidence against the null hypothesis. So how small is small
-enough? By convention, most tests use a probability cutoff of <span
-class="math inline">\(5\%\)</span> or less which is called the
-<strong>significance level</strong> of the test. The significance level
-of a test is denoted as <span class="math inline">\(\alpha\)</span>. For
-the gardeners test <span class="math inline">\(\alpha = 0.05\)</span>.
-<span class="math inline">\(\alpha\)</span> sets the boundary for how
-big (or small) the test statistic needs to be to conclude that the test
-statistic is <u>statistically significant</u>.</p>
-<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-3-1.png" alt="Distribution under H0: a bell-shaped t distribution centered at 0, with t on the x-axis and probability density on the y-axis. The upper tail to the right of the critical value t sub 1 minus alpha is shaded as the rejection region, and the observed t sub obs is marked farther right, inside the shaded tail." width="672" /></p>
-<p>In the plot above, <span class="math inline">\(t_{1-\alpha}\)</span>
-denotes the boundary for significance in the gardener’s test. Any <span
-class="math inline">\(t\)</span>-value greater than <span
-class="math inline">\(t_{1-\alpha}\)</span> will have a
-<strong>p-value</strong> less than <span
-class="math inline">\(\alpha\)</span> and be deemed
-<i>significant</i></p>
-<p>What were the steps involved with this test?</p>
+<!--
+  SCOPE OF THIS PAGE (Nov 2 2026). Week 11 per Course_Schedule.Rmd (the date source of truth):
+    Mon Nov 2    Lecture 25  the three distributions behind a test (variable, estimate, test
+                             statistic) and why z_obs is a z-score if H0 is true (OpenStax 9.15 as
+                             the number); composite hypotheses (Table 9.1, the 9.20 glass t-test and
+                             the 9.9 bread z-test); types of errors (OpenStax
+                             9.5-9.8) and statistical power (the 9.14 goggles at an assumed true
+                             mean of 16.0 s). Jarred expects some of this to carry over to Wednesday.
+    Wed Nov 4    Lecture 26  confidence intervals and two-sided tests; parametric vs non-parametric
+                             tests: the sign test (to be written; the 2024 sign test is in
+                             git show 27a60f5:docs/lecturemenu12.Rmd)
+    Fri Nov 6    Lecture 27  introduction to two-sample tests for independent samples (to be written)
+  Jarred moved types of errors and power from Wednesday to Monday, and confidence intervals and
+  the sign test from Monday to Wednesday (Nov 2 2026). The sigma known / unknown tests for a mean
+  carry over from Lecture 24 but have no section here (Jarred: they are on the Week 10 page).
+  Deck: lecture_slides/Week 11/2026/Week11_Lecture25_Slides_11_02_2026.pptx (30 slides, built from
+  Lecture 24's slides as templates; figures from assets/make_lecture25_figures.R): blank Review,
+  sigma known, sigma unknown, Marco (Try It 9.14, z), first statistics test (9.16, t), then this page in order;
+  every practice problem (writing hypotheses, errors in context, E. coli, the patient) has its own story slide,
+  and slide 20 is the decision-vs-truth table (Type I/II, false/true positive and negative).
+
+  This page replaced the 2024 Week 11 page (git show 320f927:docs/lecturemenu11.Rmd), whose
+  decision-rule framing, error table and power picture it follows. Textbook: OpenStax
+  Introductory Statistics 2e, Sections 9.1-9.5. The notation and five steps match the Week 10 page.
+  The power example's true mean of 16.0 s is our assumption, not the book's.
+-->
+<div id="three-distributions-behind-every-test" class="section level1">
+<h1>Three distributions behind every test</h1>
+<p>Every test so far has quietly used <strong>three different
+distributions</strong>. Most mistakes with tests come from mixing them
+up, so it is worth laying them side by side before going further.</p>
+<p>Take two variables measured on each individual in a sample:</p>
 <ul>
-<li><p><strong>step 1</strong> - The first step in any hypothesis test
-is to address the assumptions we make about the data. The hypothesis
-tests we will learn in this class assume that the data are produced by a
-randomization process. There may also be assumptions about the
-population distribution.</p></li>
-<li><p><strong>step 2</strong> - Formulate the question you wish to
-evaluate and set up the null and alternative hypotheses.</p></li>
-<li><p><strong>step 3</strong> - Calculate the <strong>test
-statistic</strong> which measures the discrepancy (distance) between the
-the estimate of the parameter and the hypothesized value of the
-parameter under the null.</p></li>
-<li><p><strong>step 4</strong> - Compute the <strong><span
-class="math inline">\(p\)</span>-value</strong> - the probability of
-observing a value of the test statistic that is as extreme or more
-extreme than the observed value given that the null hypothesis is
-true</p></li>
-<li><p><strong>step 5</strong> - Make a conclusion about the null
-hypothesis - we either (i) fail to reject the null hypothesis and
-conclude that there is not sufficient evidence in favor of the
-alternative or (ii) reject the null hypothesis in favor of the
-alternative</p></li>
+<li><span class="math inline">\(X\)</span>, a
+<strong>quantitative</strong> variable. For example, <span
+class="math inline">\(X\)</span> = the most weight a college football
+player can bench press, in pounds.</li>
+<li><span class="math inline">\(Y\)</span>, a
+<strong>categorical</strong> variable with two outcomes, recorded as
+<span class="math inline">\(Y = 1\)</span> for a “success” and <span
+class="math inline">\(Y = 0\)</span> otherwise. For example, <span
+class="math inline">\(Y = 1\)</span> if a household has three cell
+phones.</li>
 </ul>
-<p>With the examples of significance tests we have discussed thus far we
-have learned two formal significance tests: one concerning a population
-proportion <span class="math inline">\(p\)</span> and one concerning a
-population mean <span class="math inline">\(\mu\)</span>.</p>
-</div>
-<div id="setting-up-the-null-and-alternative-hypothesis"
-class="section level1">
-<h1>Setting up the null and alternative hypothesis</h1>
-<p>As we stated previously, the null hypothesis is a statement about the
-value of a population parameter. The alternative hypothesis is a
-statement about our suspicions regarding the value of that parameter.
-The alternative hypothesis can be directional such as <span
-class="math inline">\(H_A: p &gt; p_0\)</span> (called an upper tail
-test) or <span class="math inline">\(H_A: p &lt; p_0\)</span> (called a
-lower tailed test). These types of alternative hypotheses are called
-<em>one-sided</em> because they direct our attention to either the lower
-or upper tail of the distribution of the test statistic. If our
-suspicion about the parameter is that it differs in either direction or
-if we are unsure, the alternative hypothesis is <span
-class="math inline">\(H_A: p \neq p_0\)</span> and the test is called
-<em>two-sided</em> because the suspicion includes both the lower and
-upper tails of the distribution of the test statistic.</p>
-<p>Because the alternative hypothesis expresses some effect that we hope
-to find evidence for, we often begin by stating <span
-class="math inline">\(H_A\)</span> and then set up <span
-class="math inline">\(H_0\)</span> as the statement that the “hoped-for”
-effect is not present. It’s important to note that the alternative
-hypothesis should express the hopes or suspicions we bring to the data.
-It is biased to first look at the data and then set up the alternative
-hypothesis based on what the data show. If you do not have a direction
-firmly in mind before gathering the data you must use a two-sided
-test.</p>
-<div id="significance-level-critical-value-and-decision-making"
+<p><strong>1. The distribution of the variable.</strong> This is how the
+values of <span class="math inline">\(X\)</span> (or <span
+class="math inline">\(Y\)</span>) are spread across the whole
+<strong>population</strong>, one individual at a time.</p>
+<ul>
+<li><span class="math inline">\(X\)</span> has a population mean <span
+class="math inline">\(\mu\)</span> and a population standard deviation
+<span class="math inline">\(\sigma\)</span>. Its shape can be anything:
+normal, skewed, lumpy. When it is normal, we write <span
+class="math display">\[X \sim N(\mu, \sigma) \qquad
+\text{(normal)}\]</span> read “<span class="math inline">\(X\)</span>
+follows a normal distribution with mean <span
+class="math inline">\(\mu\)</span> and standard deviation <span
+class="math inline">\(\sigma\)</span>”.</li>
+<li><span class="math inline">\(Y\)</span> has only two values, so its
+whole distribution is two probabilities: <span
+class="math display">\[P(Y = 1) = p, \qquad P(Y = 0) = 1 - p\]</span>
+Recall, this is called a <strong>Bernoulli</strong> distribution,
+written <span class="math inline">\(Y \sim
+\text{Bernoulli}(p)\)</span>.</li>
+</ul>
+<p><strong>2. The sampling distribution of the estimate.</strong> We
+estimate <span class="math inline">\(\mu\)</span> with <span
+class="math inline">\(\bar{x}\)</span> and <span
+class="math inline">\(p\)</span> with <span
+class="math inline">\(\hat{p}\)</span>, both computed from a sample of
+size <span class="math inline">\(n\)</span>. A different sample gives a
+different <span class="math inline">\(\bar{x}\)</span> or <span
+class="math inline">\(\hat{p}\)</span>, and the sampling distribution
+(Week 8) describes how they vary from sample to sample.</p>
+<ul>
+<li>The sample mean is <span class="math display">\[\bar{x} \sim
+N\left(\mu, \frac{\sigma}{\sqrt{n}}\right) \qquad
+\text{(normal)}\]</span> exactly if <span
+class="math inline">\(X\)</span> is normal, and approximately when <span
+class="math inline">\(n \geq 30\)</span> whatever the shape of <span
+class="math inline">\(X\)</span> (the Central Limit Theorem).</li>
+<li>The sample proportion is approximately <span
+class="math display">\[\hat{p} \sim N\left(p,
+\sqrt{\frac{p(1-p)}{n}}\right) \qquad \text{(normal)}\]</span> when
+<span class="math inline">\(np \geq 15\)</span> and <span
+class="math inline">\(n(1-p) \geq 15\)</span>.</li>
+</ul>
+<p><strong>3. The distribution of the test statistic, if <span
+class="math inline">\(H_0\)</span> is true.</strong> A test standardizes
+the estimate, using the <strong>null value</strong> in place of the
+unknown parameter. If <span class="math inline">\(H_0\)</span> is true,
+the result has a distribution we know exactly, so we can say how
+surprising our sample is: <span class="math display">\[z_{obs} =
+\frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} \sim N(0, 1) \qquad z_{obs} =
+\frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0, 1) \qquad
+\text{(standard normal)}\]</span> <span class="math display">\[t_{obs} =
+\frac{\bar{x} - \mu_0}{s/\sqrt{n}} \sim t(n - 1) \qquad
+\text{(Student&#39;s } t \text{ with } df = n - 1\text{)}\]</span> The
+subscript “obs” (observed) marks the test statistic computed from our
+sample. It keeps it apart from a <strong>critical value</strong> such as
+<span class="math inline">\(Z_{1-\alpha/2}\)</span> (two-sided) or <span
+class="math inline">\(Z_{1-\alpha}\)</span> (upper-tailed), which comes
+from the table and not from the data. For example, <span
+class="math inline">\(Z_{1-\alpha} = Z_{0.95} = 1.645\)</span> when
+<span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Quantitative <span class="math inline">\(X\)</span>: the mean
+</th>
+<th style="text-align:left;">
+Categorical <span class="math inline">\(Y\)</span>: the proportion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<strong>1. the variable</strong> (one individual)
+</td>
+<td style="text-align:left;">
+mean <span class="math inline">\(\mu\)</span>, SD <span
+class="math inline">\(\sigma\)</span>, any shape;<br>if normal, <span
+class="math inline">\(X \sim N(\mu, \sigma)\)</span> (normal)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Y \sim
+\text{Bernoulli}(p)\)</span>:<br><span class="math inline">\(P(Y = 1) =
+p\)</span>, <span class="math inline">\(P(Y = 0) = 1 - p\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>2. the estimate</strong> (one sample of size <span
+class="math inline">\(n\)</span>)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x} \sim N(\mu,
+\sigma/\sqrt{n})\)</span> (normal),<br>if <span
+class="math inline">\(X\)</span> is normal or <span
+class="math inline">\(n \geq 30\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p} \sim N\left(p,
+\sqrt{p(1-p)/n}\right)\)</span> (normal),<br>if <span
+class="math inline">\(np \geq 15\)</span> and <span
+class="math inline">\(n(1-p) \geq 15\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>3. the test statistic</strong>, if <span
+class="math inline">\(H_0\)</span> is true
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma\)</span> known: <span
+class="math inline">\(z_{obs} = \dfrac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}
+\sim N(0, 1)\)</span> (standard normal)<br><span
+class="math inline">\(\sigma\)</span> unknown: <span
+class="math inline">\(t_{obs} = \dfrac{\bar{x} - \mu_0}{s/\sqrt{n}} \sim
+t(n - 1)\)</span> (Student’s <span class="math inline">\(t\)</span>)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} = \dfrac{\hat{p} -
+p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0, 1)\)</span> (standard normal)
+</td>
+</tr>
+</tbody>
+</table>
+<p>Here are the three, side by side, for a quantitative <span
+class="math inline">\(X\)</span> (top row) and a two-outcome <span
+class="math inline">\(Y\)</span> (bottom row). The estimate and
+test-statistic panels are drawn as if <span
+class="math inline">\(H_0\)</span> is true.</p>
+<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-2-1.png" alt="Six panels in two rows. Top row: first, the distribution of X, a slightly right-skewed curve with its mean mu marked; second, the sampling distribution of the mean, x-bar, a normal curve centred at mu and much narrower than the distribution of X, on the same axis; third, the distribution of the test statistic z_obs, the standard normal curve centred at 0. Bottom row: first, the distribution of Y, Bernoulli with parameter p, two bars, P of Y = 0 equal to 1 minus p and P of Y = 1 equal to p; second, the sampling distribution of the sample proportion, p-hat, a normal curve centred at p; third, the same standard normal curve for z_obs." width="1056" style="display: block; margin: auto;" /></p>
+<p>Three things to notice:</p>
+<ul>
+<li><strong>The estimate varies much less than the variable.</strong>
+Panels 1 and 2 of the top row share an axis: one individual’s <span
+class="math inline">\(X\)</span> can land far from <span
+class="math inline">\(\mu\)</span>, but the mean of <span
+class="math inline">\(n\)</span> of them stays close. That is the <span
+class="math inline">\(\sqrt{n}\)</span> in <span
+class="math inline">\(\sigma/\sqrt{n}\)</span>.</li>
+<li><strong>The variable does not have to be normal.</strong> <span
+class="math inline">\(X\)</span> is skewed, and <span
+class="math inline">\(Y\)</span> is two bars, nothing like a bell. Their
+estimates <span class="math inline">\(\bar{x}\)</span> and <span
+class="math inline">\(\hat{p}\)</span> are still close to normal when
+<span class="math inline">\(n\)</span> is large (the Central Limit
+Theorem).</li>
+<li><strong>The last panel is the same in both rows.</strong>
+Standardizing removes the units and the null value, so every <span
+class="math inline">\(z_{obs}\)</span> ends on the same standard normal
+curve, and one <span class="math inline">\(z\)</span>-table serves them
+all. A <span class="math inline">\(t_{obs}\)</span> ends on a <span
+class="math inline">\(t\)</span> curve instead, which depends only on
+<span class="math inline">\(df\)</span>.</li>
+</ul>
+<p>The <strong>P-value is always an area under the third
+distribution</strong>: the distribution of the test statistic when <span
+class="math inline">\(H_0\)</span> is true.</p>
+<div id="why-the-test-statistic-is-standard-normal-when-h_0-is-true"
 class="section level2">
-<h2>Significance level, critical value, and decision making</h2>
-<p>The <strong>significance level</strong> of test (denoted <span
-class="math inline">\(\alpha\)</span>) is how we turn the <span
-class="math inline">\(p\)</span>-value of a significance test into a
-<i>reject/not reject</i> decision about the null hypothesis. It sets how
-“strong” the evidence against the null needs to be in order for a result
-to be deemed statistically significant. The researcher determines the
-significance level before conducting the experiment.</p>
-<p>The <strong>critical value</strong> of a significance test is a point
-on the distribution of the test statistic that defines a set of values
-that call for rejecting the null hypothesis.</p>
-<p>The critical value determines the boundary of the <strong>rejection
-region</strong> – the area in the tail (or tails) of the distribution of
-the test statistic for which a result is deemed significant. The
-rejection region has an area of exactly <span
-class="math inline">\(\alpha\)</span>.</p>
-<p>The significance level, critical value, and rejection region are all
-related to each other but we typically only set the significance level.
-The critical value and rejection region then follow from the specified
-significance level. All three of these things are used to help us turn
-the <span class="math inline">\(p\)</span>-value of a hypothesis test
-into a formal decision about the null hypothesis. The decision rule is
-as follows:</p>
-<ol style="list-style-type: decimal">
-<li><p>If <span class="math inline">\(p\)</span>-value <span
-class="math inline">\(&lt; \alpha\)</span>, then <em>reject</em> <span
-class="math inline">\(H_0\)</span> (results are statistically
-significant)</p></li>
-<li><p>If <span class="math inline">\(p\)</span>-value <span
-class="math inline">\(\geq \alpha\)</span>, then <em>do not reject</em>
-<span class="math inline">\(H_0\)</span> (results are <u>not</u>
-statistically significant)</p></li>
-</ol>
-<p>So how does this relate the to critical value and rejection region?
-We can state the decision rule in terms of both of these quantities but
-to do so is more nuanced and depends on the direction (or lack there of)
-of the alternative hypothesis. For example, consider the null hypothesis
-and alternative hypotheses</p>
-<p><span class="math display">\[ H_0: \mu = \mu_0 \]</span> <span
-class="math display">\[ H_A: \mu &lt; \mu_0 \]</span></p>
-<p>The decision rule stated in terms of the critical value and rejection
-region is:</p>
-<ol style="list-style-type: decimal">
-<li><p>If <span class="math inline">\(p\)</span>-value <span
-class="math inline">\(&lt; \alpha\)</span> then <span
-class="math inline">\(t_{obs} &lt; t_\alpha\)</span>; <em>reject</em>
-<span class="math inline">\(H_0\)</span> (results are statistically
-significant) - this is the same as saying “if the test statistic falls
-within the rejection region then <u>reject <span
-class="math inline">\(H_0\)</span></u>”</p></li>
-<li><p>If <span class="math inline">\(p\)</span>-value <span
-class="math inline">\(\geq \alpha\)</span>, then <span
-class="math inline">\(t_{obs} \geq t_\alpha\)</span>; <em>do not
-reject</em> <span class="math inline">\(H_0\)</span> (results are
-<u>not</u> statistically significant) - this is the same as saying “if
-the test statistic does not fall within the rejection region then <u>do
-not reject <span class="math inline">\(H_0\)</span></u>”</p></li>
-</ol>
-<p>The <strong>critical value</strong> and <strong>rejection
-region</strong> of a test depend on the significance level of the test
-and the direction of the alternative hypothesis. Consider the plots
-below:</p>
-<div class="figure">
-<img src="lecturemenu11_files/figure-html/unnamed-chunk-4-1.png" alt="Three stacked standard normal curves of Z under the null, each with Reject H0 and Do Not Reject H0 regions labeled. Top, alternative p not equal to c: both tails shaded, with dashed critical lines near z equals -2 and 2. Middle, alternative p greater than p0: only the upper tail shaded. Bottom, alternative p less than p0: only the lower tail shaded." width="960" />
-<p class="caption">
-This plot depicts the decision rule for a given alternative hypothesis
-at a significance level <span class="math inline">\(\alpha =
-0.05\)</span>. In each subplot, the rejection region is highlighted in
-turquoise and the critical value(s) are denoted by the vertical dashed
-lines.
-</p>
-</div>
-<p>Consider the six plots below which show the position of the critical
-value, and rejection region for the three types of alternative
-hypotheses at two significance levels. What do you notice about the
-relationship between the significance level and the rejection
-region?</p>
-<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-5-1.png" alt="Six standard normal curves in two columns, alpha equals 0.05 on the left and alpha equals 0.01 on the right. Rows show the alternatives p greater than p0 (upper tail shaded), p less than p0 (lower tail shaded) and p not equal to p0 (both tails shaded), with critical values marked. The shaded rejection regions in the alpha equals 0.01 column are smaller and farther out in the tails." width="1344" /></p>
-<p>Notice from the plots above that the alternative hypothesis also
-impacts how significant a result must be in order to reject the null.
-Specifically, a result need not be as extreme under the alternative
-hypotheses <span class="math inline">\(H_A: p &gt; p_0\)</span> and
-<span class="math inline">\(H_A: p &lt; p_0\)</span> to be statistically
-significant. This is because when we suspect the direction of the effect
-we have more information about the parameter which improves our ability
-to detect a significant result.</p>
-</div>
-</div>
-<div id="significance-tests-concerning-p" class="section level1">
-<h1>Significance tests concerning <span
-class="math inline">\(p\)</span></h1>
-<p>The following are the steps for conducting a significance tests for a
-population proportion:</p>
-<ol style="list-style-type: decimal">
-<li><strong>Assumptions</strong></li>
-</ol>
+<h2>Why the test statistic is standard normal when <span
+class="math inline">\(H_0\)</span> is true</h2>
+<p>Recall the <strong>z-score</strong> from Week 6. To standardize a
+value, subtract the <strong>mean of its distribution</strong> and divide
+by the <strong>standard deviation of its distribution</strong>: <span
+class="math display">\[z = \frac{\text{value} -
+\text{mean}}{\text{SD}}\]</span> If the value comes from a normal
+distribution, its z-score follows <span class="math inline">\(N(0,
+1)\)</span> (standard normal). Every normal curve turns into the same
+standard normal curve once we measure in SDs from its centre.</p>
+<p>Now look at the test statistic for a mean, one piece at a time.</p>
 <ul>
-<li>The sample size is sufficiently large. The sample size is
-sufficiently large whenever <span class="math inline">\(np_0 \geq
-15\)</span> and <span class="math inline">\(n(1-p_0) \geq 15\)</span>
-where <span class="math inline">\(p_0\)</span> is the value of <span
-class="math inline">\(p\)</span> specified under the null hypothesis. If
-these conditions are not met the inference may not be correct.</li>
+<li>The value we standardize is <span
+class="math inline">\(\bar{x}\)</span>. Its distribution is <span
+class="math inline">\(\bar{x} \sim N(\mu,
+\sigma/\sqrt{n})\)</span>.</li>
+<li><strong>If <span class="math inline">\(H_0\)</span> is
+true</strong>, then <span class="math inline">\(\mu = \mu_0\)</span>, so
+<span class="math inline">\(\bar{x} \sim N(\mu_0,
+\sigma/\sqrt{n})\)</span>. The mean of its distribution is <span
+class="math inline">\(\mu_0\)</span>, and its SD is <span
+class="math inline">\(\sigma/\sqrt{n}\)</span>.</li>
+<li>So the test statistic is exactly the z-score of <span
+class="math inline">\(\bar{x}\)</span>: <span
+class="math display">\[z_{obs} = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}
+= \frac{\text{value} - \text{its mean if } H_0 \text{ is
+true}}{\text{its SD}} \sim N(0, 1) \qquad \text{(standard
+normal)}\]</span></li>
 </ul>
-<ol start="2" style="list-style-type: decimal">
-<li><strong>State the null and alternative hypotheses</strong>. For a
-constant <span class="math inline">\(c\)</span> the null hypothesis
-is</li>
-</ol>
-<p><span class="math display">\[H_0: p = c \]</span></p>
+<p>The proportion works the same way. If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(p = p_0\)</span>, so <span
+class="math inline">\(\hat{p} \sim N\left(p_0,
+\sqrt{p_0(1-p_0)/n}\right)\)</span>, and <span
+class="math display">\[z_{obs} = \frac{\hat{p} -
+p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0, 1) \qquad \text{(standard
+normal)}\]</span> is the z-score of <span
+class="math inline">\(\hat{p}\)</span>. This is why the standard error
+in a test uses <span class="math inline">\(p_0\)</span> and not <span
+class="math inline">\(\hat{p}\)</span>: if <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(\sqrt{p_0(1-p_0)/n}\)</span> <strong>is</strong>
+the SD of <span class="math inline">\(\hat{p}\)</span>.</p>
+<p><strong>A number to hold on to: the bench press.</strong> <em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Example 9.15</a>.</em></p>
+<blockquote>
+<p>A college football coach records the mean weight that his players can
+bench press as <strong>275 pounds</strong>, with a standard deviation of
+<span class="math inline">\(\sigma = 55\)</span> pounds. Three of the
+players think the mean is more than that. They ask <strong>30</strong>
+of their teammates for their estimated maximum bench press. The answers
+range from 205 to 385 pounds; the weights, with the number of players
+giving each in parentheses, are 205 (3), 215 (3), 225 (1), 241 (2), 252
+(2), 265 (2), 275 (2), 313 (2), 316 (5), 338 (2), 341 (1), 345 (2), 368
+(2), 385 (1). Using a 2.5% significance level, test whether the mean
+bench press is more than 275 pounds.</p>
+</blockquote>
+<p>The hypotheses are <span class="math inline">\(H_0: \mu =
+275\)</span> and <span class="math inline">\(H_A: \mu &gt; 275\)</span>,
+and the 30 weights add up to 8,585 pounds, so <span
+class="math inline">\(\bar{x} = 8{,}585/30 \approx 286.17\)</span>
+pounds.</p>
 <ul>
-<li>the alternative hypotheses, critical values, and rejection regions
-are listed below:</li>
+<li><strong>If <span class="math inline">\(H_0\)</span> is
+true</strong>, the mean of 30 players follows <span
+class="math display">\[\bar{x} \sim N\left(275,
+\frac{55}{\sqrt{30}}\right) = N(275, 10.04) \qquad
+\text{(normal)}\]</span></li>
+<li>The players’ mean, <span class="math inline">\(\bar{x} =
+286.17\)</span>, sits this many SDs above the centre of that curve:
+<span class="math display">\[\frac{286.17 - 275}{10.04} \approx
+1.11\]</span></li>
+<li>That z-score <strong>is</strong> the test statistic: <span
+class="math inline">\(z_{obs} = 1.11\)</span>, and if <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(z_{obs} \sim N(0, 1)\)</span> (standard
+normal).</li>
 </ul>
+<p>To finish the test, the P-value is <span class="math inline">\(P(Z
+\geq 1.11 \mid H_0 \text{ true}) = 1 - 0.8665 = 0.1335\)</span> (the
+book’s calculator, without rounding <span
+class="math inline">\(z_{obs}\)</span>, gives 0.1331). Since <span
+class="math inline">\(0.1335 \geq 0.025\)</span>, <strong>do not reject
+<span class="math inline">\(H_0\)</span></strong>: at the 2.5% level,
+the data are not convincing evidence that the mean bench press is more
+than 275 pounds.</p>
+<p><strong>What if <span class="math inline">\(H_0\)</span> is
+false?</strong> Then the true mean <span
+class="math inline">\(\mu\)</span> is not <span
+class="math inline">\(\mu_0\)</span>, and subtracting <span
+class="math inline">\(\mu_0\)</span> subtracts the wrong centre. <span
+class="math inline">\(z_{obs}\)</span> is still normal with SD 1, but
+its centre moves to <span class="math inline">\((\mu -
+\mu_0)/(\sigma/\sqrt{n})\)</span>, away from 0. That is why a <span
+class="math inline">\(z_{obs}\)</span> far from 0 is evidence against
+<span class="math inline">\(H_0\)</span>: it is the kind of value we
+expect when the curve has shifted. (This shifted curve comes back in the
+section on power.)</p>
+<p><strong>Why <span class="math inline">\(t_{obs}\)</span> is not a
+z-score.</strong> With <span class="math inline">\(\sigma\)</span>
+unknown, we divide by <span class="math inline">\(s/\sqrt{n}\)</span>
+instead. But <span class="math inline">\(s\)</span> is an estimate that
+changes from sample to sample, so we are not dividing by the true SD of
+<span class="math inline">\(\bar{x}\)</span>. That extra uncertainty
+spreads the statistic out, and if <span
+class="math inline">\(H_0\)</span> is true it follows <span
+class="math display">\[t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} \sim
+t(n - 1) \qquad \text{(Student&#39;s } t \text{ with } df = n -
+1\text{)}\]</span> which has heavier tails than <span
+class="math inline">\(N(0, 1)\)</span> and gets closer to it as <span
+class="math inline">\(n\)</span> grows.</p>
+</div>
+</div>
+<div id="composite-hypotheses" class="section level1">
+<h1>Composite hypotheses</h1>
+<p>So far every null hypothesis has named a single value of the
+parameter: <span class="math inline">\(H_0: \mu = 275\)</span>, <span
+class="math inline">\(H_0: p = 0.5\)</span>. A hypothesis that
+<strong>completely specifies</strong> the parameter like this is called
+a <strong>simple</strong> hypothesis.</p>
+<p>Often, though, the “nothing interesting” story does not pin the
+parameter down to one value. If the claim is that a glass conducts
+electricity <strong>better</strong> than 1 (the glass example below),
+then a mean of exactly 1 is not the only way for the claim to be wrong:
+0.99, 0.95 or 0.80 would be just as disappointing. The null has to
+include all of them, <span class="math inline">\(H_0: \mu \leq
+1\)</span>. A hypothesis that allows a whole <strong>range</strong> of
+values, because the value of the parameter is not completely specified,
+is called a <strong>composite</strong> hypothesis.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Alternative Hypothesis
+If <span class="math inline">\(H_A\)</span> is
 </th>
 <th style="text-align:left;">
-Critical Value
+the simple null is
 </th>
 <th style="text-align:left;">
-Rejection Region
+the composite null is
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p \neq p_0\)</span>
+<span class="math inline">\(\theta &gt; \theta_0\)</span> (upper-tailed)
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z_{1-\alpha/2}\)</span>
+<span class="math inline">\(H_0: \theta = \theta_0\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(-\infty \leq Z \leq Z_{\alpha/2}\)</span> or
-<span class="math inline">\(Z_{1-\alpha/2}\leq Z \leq \infty\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p &gt; p_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(Z_{1-\alpha}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(Z_{1-\alpha} \leq Z \leq \infty\)</span>
+<span class="math inline">\(H_0: \theta \leq \theta_0\)</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p &lt; p_0\)</span>
+<span class="math inline">\(\theta &lt; \theta_0\)</span> (lower-tailed)
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z_{\alpha}\)</span>
+<span class="math inline">\(H_0: \theta = \theta_0\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(-\infty \leq Z \leq Z_{\alpha}\)</span>
+<span class="math inline">\(H_0: \theta \geq \theta_0\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\theta \neq \theta_0\)</span> (two-sided)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: \theta = \theta_0\)</span>
+</td>
+<td style="text-align:left;">
+(none)
 </td>
 </tr>
 </tbody>
 </table>
-<ol start="3" style="list-style-type: decimal">
-<li><strong>Compute the test statistic</strong></li>
-</ol>
-<p><span class="math display">\[ Z_{obs} = \frac{\hat{p} -
-p_0}{\sqrt{\frac{p_0(1 - p_0)}{n}}} \sim N(0,1) \]</span></p>
-<ol start="4" style="list-style-type: decimal">
-<li><strong>Compute the <span
-class="math inline">\(p\)</span>-value.</strong></li>
-</ol>
+<p>Here <span class="math inline">\(\theta\)</span> stands for whichever
+parameter we are testing, <span class="math inline">\(\mu\)</span> or
+<span class="math inline">\(p\)</span>. Two rules follow from this
+(summarized in OpenStax Table 9.1):</p>
 <ul>
-<li>Under the assumption in [1.] the test statistic follows a standard
-normal distribution. The <span class="math inline">\(p\)</span>-value
-corresponding to each alternative hypothesis is given below:</li>
+<li><strong><span class="math inline">\(H_0\)</span> always contains the
+equals sign</strong> (<span class="math inline">\(=\)</span>, <span
+class="math inline">\(\leq\)</span> or <span
+class="math inline">\(\geq\)</span>). <strong><span
+class="math inline">\(H_A\)</span> never does</strong> (<span
+class="math inline">\(\neq\)</span>, <span
+class="math inline">\(&gt;\)</span> or <span
+class="math inline">\(&lt;\)</span>).</li>
+<li>Together, <span class="math inline">\(H_0\)</span> and <span
+class="math inline">\(H_A\)</span> cover <strong>every</strong> possible
+value of the parameter. With <span class="math inline">\(H_A: \mu &gt;
+1\)</span>, the composite null <span class="math inline">\(H_0: \mu \leq
+1\)</span> is “everything else”.</li>
 </ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Alternative Hypothesis
-</th>
-<th style="text-align:left;">
-<span class="math inline">\(p\)</span>-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p \neq p_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P( Z  \geq | Z_{obs} | | H_0 \
-\text{True})\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p &gt; p_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P( Z \geq Z_{obs} | H_0 \
-\text{True})\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p &lt; p_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P( Z \leq Z_{obs} | H_0 \
-\text{True})\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<ol start="5" style="list-style-type: decimal">
-<li><strong>Draw a conclusion</strong>: if <span
-class="math inline">\(p\)</span>-value <span class="math inline">\(&lt;
-\alpha\)</span> <i>reject</i> <span class="math inline">\(H_0\)</span>.
-Else <i>fail to reject</i> <span
-class="math inline">\(H_0\)</span>.</li>
-</ol>
-<p><strong>Practice:</strong></p>
-<ol style="list-style-type: decimal">
-<li>A leading electric vehicle (EV) manufacturer claims that at least
-<span class="math inline">\(20\%\)</span> of all vehicles sold in a
-particular region are electric. To verify this claim, a consumer
-advocacy group randomly surveys <span class="math inline">\(500\)</span>
-recent vehicle purchases in the region and finds that <span
-class="math inline">\(115\)</span> of them are electric. Conduct a
-significance test at the <span class="math inline">\(\alpha =
-0.01\)</span> significance level to determine if the proportion of
-vehicles sold is less than the manufacturer’s claim.</li>
-</ol>
-<p><em>Solution.</em> Here <span class="math inline">\(n = 500\)</span>,
-<span class="math inline">\(p_0 = 0.20\)</span>, and the sample
-proportion is <span class="math inline">\(\hat{p} = 115/500 =
-0.23\)</span>. We test <span class="math inline">\(H_0: p =
-0.20\)</span> against the lower-tail alternative <span
-class="math inline">\(H_A: p &lt; 0.20\)</span> at <span
-class="math inline">\(\alpha = 0.01\)</span>.</p>
+<div id="when-is-a-composite-null-the-right-one" class="section level2">
+<h2>When is a composite null the right one?</h2>
+<p>A composite null is the honest way to write a
+<strong>one-sided</strong> claim, where the “nothing interesting” story
+is a whole range of values, not one point. Listen for the words:</p>
 <ul>
-<li><p><strong>Check the assumption.</strong> <span
-class="math inline">\(np_0 = 500(0.20) = 100 \geq 15\)</span> and <span
-class="math inline">\(n(1-p_0) = 500(0.80) = 400 \geq 15\)</span>, so
-the sample is large enough for the normal approximation.</p></li>
-<li><p><strong>Test statistic.</strong> <span class="math display">\[
-Z_{obs} = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} = \frac{0.23
-- 0.20}{\sqrt{\frac{0.20(0.80)}{500}}} = \frac{0.03}{0.0179} = 1.68
-\]</span></p></li>
-<li><p><strong><span class="math inline">\(p\)</span>-value.</strong>
-For the lower-tail alternative, <span
-class="math inline">\(p\text{-value} = P(Z \leq 1.68) \approx
-0.95\)</span>.</p></li>
-<li><p><strong>Conclusion.</strong> Since the <span
-class="math inline">\(p\)</span>-value <span
-class="math inline">\(\approx 0.95\)</span> is far greater than <span
-class="math inline">\(\alpha = 0.01\)</span>, we <em>fail to reject</em>
-<span class="math inline">\(H_0\)</span>. The observed proportion (<span
-class="math inline">\(0.23\)</span>) is actually above the claimed <span
-class="math inline">\(0.20\)</span>, so there is no evidence that the
-true proportion of EVs is less than <span
-class="math inline">\(20\%\)</span>.</p></li>
+<li>“<strong>at least</strong>”, “<strong>no less than</strong>” <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(H_0\)</span> uses <span
+class="math inline">\(\geq\)</span>;</li>
+<li>“<strong>at most</strong>”, “<strong>no more than</strong>” <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(H_0\)</span> uses <span
+class="math inline">\(\leq\)</span>.</li>
 </ul>
-<div id="significance-tests-concerning-mu" class="section level2">
-<h2>Significance tests concerning <span
-class="math inline">\(\mu\)</span></h2>
-<p>The following are the steps for conducting a significance test for a
-population mean:</p>
-<ol style="list-style-type: decimal">
-<li><strong>Assumptions</strong></li>
-</ol>
+<p>Some examples (from <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-1-null-and-alternative-hypotheses">OpenStax
+Section 9.1</a> and <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-2-outcomes-and-the-type-i-and-type-ii-errors">Section
+9.2</a>):</p>
+<p>For each one, name the parameter in words, then write <span
+class="math inline">\(H_0\)</span> and <span
+class="math inline">\(H_A\)</span>. (The book gives each claim in one
+sentence; the setup around it is ours, so there is a story to test.)</p>
+<p><strong>Voter turnout (Example 9.1).</strong> A county election
+official reports that <strong>no more than 30%</strong> of the
+registered voters in Santa Clara County voted in the primary election. A
+local newspaper suspects turnout was <strong>higher</strong>, and
+surveys a random sample of registered voters.</p>
 <ul>
-<li>The population distribution is approximately normal. This can be
-checked by making a plot of the data.</li>
+<li><em>Parameter:</em> <span class="math inline">\(p\)</span> = the
+proportion of <strong>all</strong> registered voters in the county who
+voted in the primary.</li>
+<li><em>Hypotheses:</em> the official’s figure, “30% or less”, is the
+null: <span class="math inline">\(H_0: p \leq 0.30\)</span>. The
+newspaper’s suspicion is the alternative: <span
+class="math inline">\(H_A: p &gt; 0.30\)</span>. Composite,
+<strong>upper-tailed</strong>, tested at <span class="math inline">\(p_0
+= 0.30\)</span>.</li>
 </ul>
-<ol start="2" style="list-style-type: decimal">
-<li><strong>State the null and alternative hypotheses</strong>. For a
-constant <span class="math inline">\(c\)</span> the null hypothesis
-is</li>
-</ol>
-<p><span class="math display">\[H_0: \mu = c \]</span></p>
+<p><strong>Time to graduate (Example 9.3).</strong> College students are
+often told a degree takes <strong>five years</strong>, on average. An
+advising office believes its students finish <strong>faster</strong>,
+and records how long a random sample of recent graduates took to
+graduate.</p>
 <ul>
-<li>the alternative hypotheses, critical values, and rejection regions
-are listed below:</li>
+<li><em>Parameter:</em> <span class="math inline">\(\mu\)</span> = the
+mean time to graduate for <strong>all</strong> of the college’s
+students.</li>
+<li><em>Hypotheses:</em> the office’s claim, “less than 5 years”, is the
+alternative, <span class="math inline">\(H_A: \mu &lt; 5\)</span>.
+Taking exactly 5 years or longer are both “not less than 5”, so <span
+class="math inline">\(H_0: \mu \geq 5\)</span>. Composite,
+<strong>lower-tailed</strong>, tested at <span
+class="math inline">\(\mu_0 = 5\)</span>.</li>
 </ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Alternative Hypothesis
-</th>
-<th style="text-align:left;">
-Critical Value
-</th>
-<th style="text-align:left;">
-Rejection Region
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu \neq \mu_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t_{n-1, 1-\alpha/2}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t_{n-1, 1-\alpha/2}\leq t \leq
-\infty\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t_{n-1, 1-\alpha}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t_{n-1, 1-\alpha} \leq t \leq
-\infty\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t_{n-1, \alpha}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(-\infty \leq t \leq t_{n-1, \alpha}\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<ol start="3" style="list-style-type: decimal">
-<li><strong>Compute the test statistic</strong></li>
-</ol>
-<p><span class="math display">\[ t_{obs} = \frac{\bar{x} -
-\mu_0}{s/\sqrt{n}} \sim t(n-1)\]</span></p>
-<ol start="4" style="list-style-type: decimal">
-<li><strong>Compute the <span
-class="math inline">\(p\)</span>-value.</strong></li>
-</ol>
+<p><strong>A cure-rate claim (Example 9.8).</strong> A drug company
+advertises that its experimental drug cures <strong>at least
+75%</strong> of men with prostate cancer. An independent research group
+suspects the true cure rate is <strong>lower</strong>, and follows a
+random sample of patients who took the drug.</p>
 <ul>
-<li>Under the assumption in [1.] the test statistic follows a <span
-class="math inline">\(t\)</span> distribution with <span
-class="math inline">\(n-1\)</span> degrees of freedom. The <span
-class="math inline">\(p\)</span>-value corresponding to each alternative
-hypothesis is given below:</li>
+<li><em>Parameter:</em> <span class="math inline">\(p\)</span> = the
+proportion of <strong>all</strong> men with prostate cancer who are
+cured by the drug.</li>
+<li><em>Hypotheses:</em> the company’s claim, “75% or more”, is the
+null: <span class="math inline">\(H_0: p \geq 0.75\)</span>. The
+research group’s suspicion is the alternative: <span
+class="math inline">\(H_A: p &lt; 0.75\)</span>. Composite,
+<strong>lower-tailed</strong>, tested at <span class="math inline">\(p_0
+= 0.75\)</span>.</li>
 </ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Alternative Hypothesis
-</th>
-<th style="text-align:left;">
-<span class="math inline">\(p\)</span>-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu \neq \mu_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P( t  \geq | t_{obs} | | H_0 \
-\text{True})\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P( t \geq t_{obs} | H_0 \
-\text{True})\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P( t \leq t_{obs} | H_0 \
-\text{True})\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<ol start="5" style="list-style-type: decimal">
-<li><strong>Draw a conclusion</strong>: if <span
-class="math inline">\(p\)</span>-value <span class="math inline">\(&lt;
-\alpha\)</span> <i>reject</i> <span class="math inline">\(H_0\)</span>.
-Else <i>fail to reject</i> <span
-class="math inline">\(H_0\)</span>.</li>
-</ol>
-<p><strong>Practice:</strong></p>
-<ol style="list-style-type: decimal">
-<li>A government agency is interested in understanding the average
-annual income of households in a particular region to inform economic
-policies. The agency hypothesizes that the mean annual income of
-households in this region is <span
-class="math inline">\(\$50,000\)</span>. To test this, they collect a
-random sample of <span class="math inline">\(100\)</span> households
-from the region and estimate the annual income to be <span
-class="math inline">\(\$45,323\)</span> with a standard deviation of
-<span class="math inline">\(\$13,121\)</span>. Conduct a hypothesis test
-at the <span class="math inline">\(\alpha = 0.05\)</span> significance
-level to determine if the annual income is significantly different than
-the agency’s hypothesis for this region.</li>
-</ol>
-<p><em>Solution.</em> Here <span class="math inline">\(n = 100\)</span>,
-<span class="math inline">\(\bar{x} = 45{,}323\)</span>, <span
-class="math inline">\(s = 13{,}121\)</span>, and <span
-class="math inline">\(\mu_0 = 50{,}000\)</span>. Because we are asked
-whether the mean is <em>different</em> (in either direction), we test
-<span class="math inline">\(H_0: \mu = 50{,}000\)</span> against the
-two-sided alternative <span class="math inline">\(H_A: \mu \neq
-50{,}000\)</span> at <span class="math inline">\(\alpha =
-0.05\)</span>.</p>
-<ul>
-<li><p><strong>Check the assumption.</strong> The sample size <span
-class="math inline">\(n = 100\)</span> is large, so by the Central Limit
-Theorem the sampling distribution of <span
-class="math inline">\(\bar{x}\)</span> is approximately normal.</p></li>
-<li><p><strong>Test statistic.</strong> <span class="math display">\[
-t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} = \frac{45{,}323 -
-50{,}000}{13{,}121/\sqrt{100}} = \frac{-4677}{1312.1} = -3.57 \sim t(99)
-\]</span></p></li>
-<li><p><strong><span class="math inline">\(p\)</span>-value.</strong>
-For the two-sided alternative, <span
-class="math inline">\(p\text{-value} = 2 \times P(t \leq -3.57) \approx
-0.0006\)</span>.</p></li>
-<li><p><strong>Conclusion.</strong> Since the <span
-class="math inline">\(p\)</span>-value <span
-class="math inline">\(\approx 0.0006\)</span> is less than <span
-class="math inline">\(\alpha = 0.05\)</span>, we <em>reject</em> <span
-class="math inline">\(H_0\)</span>. There is strong evidence that the
-mean annual household income differs from <span
-class="math inline">\(\$50{,}000\)</span> (specifically, the data
-suggest it is lower).</p></li>
-</ul>
+<p>A two-sided test <strong>never</strong> has a composite null: if
+<span class="math inline">\(H_A\)</span> is <span
+class="math inline">\(\theta \neq \theta_0\)</span>, the only value left
+for <span class="math inline">\(H_0\)</span> is <span
+class="math inline">\(\theta = \theta_0\)</span>.</p>
 </div>
-<div id="relationship-between-two-sided-tests-and-confidence-intervals"
+<div id="example-the-conductivity-of-glass-a-composite-null"
 class="section level2">
-<h2>Relationship between two-sided tests and confidence intervals</h2>
-<p>Recall the basic idea of a confidence interval. We construct an
-interval that includes the true value of the parameter <span
-class="math inline">\(\mu\)</span> or <span
-class="math inline">\(p\)</span> with specified frequency <span
-class="math inline">\(100(1-\alpha)\%\)</span>. Now consider a two-sided
-significance test for a population mean. A two-sided test constructs an
-<strong>acceptance region</strong> around the value of the parameter
-suggested in the null hypothesis (i.e <span
-class="math inline">\(\mu_0\)</span>). At the <span
-class="math inline">\(100(1-\alpha)\%\)</span> confidence level, this
-acceptance region is given by <span
-class="math inline">\([\mu_0-t_{1-\alpha/2} \times \frac{s}{\sqrt{n}},
-\mu_0 + t_{1-\alpha/2}\times \frac{s}{\sqrt{n}}]\)</span>. Values of
-<span class="math inline">\(\bar{x}\)</span> that are not in this
-interval seem to be incompatible with the data. Thus when <span
-class="math inline">\(\bar{x}\)</span> is not in this interval, it is
-statistically significant and the null hypothesis is rejected. This
-produces a significance test at <span class="math inline">\(\alpha =
-0.05\)</span> significance level.</p>
-<p><strong>Example</strong></p>
-<p>Return to the household income problem above (<span
-class="math inline">\(\mu_0 = 50{,}000\)</span>, <span
-class="math inline">\(n = 100\)</span>, <span
-class="math inline">\(\bar{x} = 45{,}323\)</span>, <span
-class="math inline">\(s = 13{,}121\)</span>, <span
-class="math inline">\(\alpha = 0.05\)</span>). The standard error is
-<span class="math inline">\(s/\sqrt{n} = 13{,}121/\sqrt{100} =
-1312.1\)</span>, and with <span class="math inline">\(n-1 = 99\)</span>
-degrees of freedom the critical value is <span
-class="math inline">\(t_{99,\ 0.975} \approx 1.984\)</span>. The <span
-class="math inline">\(95\%\)</span> acceptance region around <span
-class="math inline">\(\mu_0\)</span> is</p>
-<p><span class="math display">\[ \left[50{,}000 - 1.984 \times 1312.1,\
-\ 50{,}000 + 1.984 \times 1312.1\right] = [47{,}397,\ 52{,}603]
-\]</span></p>
-<p>The observed sample mean <span class="math inline">\(\bar{x} =
-45{,}323\)</span> falls <strong>outside</strong> this interval, so we
-reject <span class="math inline">\(H_0\)</span> at the <span
-class="math inline">\(\alpha = 0.05\)</span> level. This is exactly the
-same decision we reached with the test statistic (<span
-class="math inline">\(t_{obs} = -3.57\)</span>, <span
-class="math inline">\(p\)</span>-value <span
-class="math inline">\(\approx 0.0006 &lt; 0.05\)</span>): a two-sided
-test rejects <span class="math inline">\(H_0\)</span> precisely when the
-observed <span class="math inline">\(\bar{x}\)</span> lies outside the
-<span class="math inline">\(100(1-\alpha)\%\)</span> acceptance region
-centered at <span class="math inline">\(\mu_0\)</span>.</p>
-</div>
-<div id="types-of-errors" class="section level2">
-<h2>Types of Errors</h2>
-<p>Conducting a hypothesis test is a simple-enough procedure in the
-modern age as many software programs effortlessly give out a <span
-class="math inline">\(p\)</span>-value for a chosen test and dataset.
-However, using tests wisely is another matter entirely. A single
-significant result is not irrefutable evidence of a statistical
-relationship. This is because all tests come with a probability of
-making an error. Moreover, other factors can influence the outcome of a
-test such as the presence of outliers in the data. In addition, when
-sample sizes are very large, even tiny deviations from the null
-hypothesis can be deemed significant - this is related to the
-<strong>power</strong> of a test.</p>
-<p>Statistical <strong>power</strong> is the ability to reject the null
-hypothesis when it is, in fact, false. For example, the power of a
-right-tailed (or upper tail) test of a population mean is given by <span
-class="math display">\[ Power = P(t &gt; t_{1-\alpha} | H_0 \ \text{Not
-True}) \]</span></p>
-<p>There are several factors that influence the power of a statistical
-test. Some of the ways to increase power are:</p>
+<h2>Example: the conductivity of glass (a composite null)</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Example 9.20</a>.</em></p>
+<blockquote>
+<p>The National Institute of Standards and Technology provides exact
+data on conductivity properties of materials. Following are conductivity
+measurements for <strong>11</strong> randomly selected pieces of a
+particular type of glass:</p>
+<p>1.11, 1.07, 1.11, 1.07, 1.12, 1.08, 0.98, 0.98, 1.02, 0.95, 0.95</p>
+<p>Is there convincing evidence that the average conductivity of this
+type of glass is <strong>greater than one</strong>? Use a significance
+level of 0.05. Assume the population is normal.</p>
+</blockquote>
+<p>Only the data are given, so <span
+class="math inline">\(\sigma\)</span> is unknown and this is a <span
+class="math inline">\(t\)</span>-test.</p>
+<p><strong>Question:</strong> At <span class="math inline">\(\alpha =
+0.05\)</span>, is the mean conductivity of this glass greater than
+1?</p>
 <ol style="list-style-type: decimal">
-<li><p>Increase the sample size</p></li>
-<li><p>Increase the significance level <span
-class="math inline">\(\alpha\)</span></p></li>
-<li><p>Choose a more powerful test</p></li>
+<li><strong>Assumptions.</strong> A random sample of 11 pieces. <span
+class="math inline">\(n\)</span> is small, but the population is normal,
+so the test works. <span class="math inline">\(\sigma\)</span> is
+unknown, so we use a <span class="math inline">\(t\)</span>-test.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu\)</span> = the mean conductivity of all glass
+of this type. The claim “greater than 1” is the alternative, <span
+class="math inline">\(H_A: \mu &gt; 1\)</span>, and the null is
+everything else, a composite null: <span class="math inline">\(H_0: \mu
+\leq 1\)</span>. The test is <strong>upper-tailed</strong>, and it is
+done at the boundary, <span class="math inline">\(\mu_0 = 1\)</span>
+(the next section explains why).</li>
+<li><strong>Test statistic.</strong> From the data, <span
+class="math inline">\(\bar{x} = 1.04\)</span> and <span
+class="math inline">\(s = 0.0659\)</span>. <span
+class="math display">\[SE = \frac{s}{\sqrt{n}} =
+\frac{0.0659}{\sqrt{11}} \approx 0.0199\]</span> <span
+class="math display">\[t_{obs} = \frac{\bar{x} - \mu_0}{SE} = \frac{1.04
+- 1}{0.0199} \approx 2.01, \qquad df = 11 - 1 = 10\]</span></li>
+<li><strong>P-value.</strong> In row 10 of the <a
+href="misc/t_table.html"><span
+class="math inline">\(t\)</span>-table</a>, <span
+class="math inline">\(1.812 &lt; 2.01 &lt; 2.228\)</span>. Those columns
+have upper-tail areas 0.05 and 0.025, so <span
+class="math display">\[0.025 &lt; P(T \geq 2.01 \mid \mu = 1) &lt;
+0.05\]</span> Software gives 0.036.</li>
+<li><strong>Decision.</strong> The P-value is below <span
+class="math inline">\(\alpha = 0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are convincing
+evidence that the mean conductivity of this glass is greater than
+1.</li>
 </ol>
-<p>The significance level of a test, like the confidence level, tells us
-how reliable the test is in repeated use. Thus a test at <span
-class="math inline">\(\alpha = 0.05\)</span> significance level will
-return the correct result <span class="math inline">\(95/100\)</span>
-times when <span class="math inline">\(H_0\)</span> is in fact true and
-when the test is conducted on data arising from the same conditions. The
-<span class="math inline">\(5/100\)</span> times that the test gives the
-incorrect result is called the <strong>type I error</strong> rate</p>
-<p>The <strong>type I error</strong> rate is the probability that we
-reject the null when the null is in fact true (denoted <span
-class="math inline">\(\alpha\)</span>).</p>
-<p>For example, the probability of committing a type I error for a
-right-tailed (or upper tail) test of a population mean is <span
-class="math display">\[ P( t &gt; t_{1-\alpha} | H_0 \ \text{True})
-=\alpha \]</span></p>
-<p>Another type of error that can occur is called a <strong>type II
-error</strong> (denoted <span class="math inline">\(\beta\)</span>).
-This type of error occurs when we fail to reject the null hypothesis but
-the alternative hypothesis is true.</p>
-<p>The probability of committing a type II error for a right-tailed (or
-upper tail) test of a population mean is <span class="math display">\[
-P( t \leq t_{1-\alpha} | H_0 \ \text{Is not True}) =\beta \]</span></p>
-<p>Looking at the previous example it is easy to see that power is the
-complement of the type II error rate.</p>
-<p><span class="math display">\[ Power = P(t \geq t_{1-\alpha} | H_0 \
-\text{Not True}) = 1 - P( t \leq t_{1-\alpha} | H_0 \ \text{Is not
-True}) \]</span> <span class="math display">\[ = 1-\beta \]</span></p>
-<p>The relationship between the result of a test and the truth
-underlying the test can be summarized as follows:</p>
+</div>
+<div id="how-do-we-test-a-composite-null" class="section level2">
+<h2>How do we test a composite null?</h2>
+<p>There is a catch. To compute a test statistic we need
+<strong>one</strong> null value, but <span class="math inline">\(H_0:
+\mu \leq 1\)</span> has infinitely many: 1, 0.99, 0.98, and so on. Which
+one goes into the formula?</p>
+<p><strong>Answer: the boundary value, <span class="math inline">\(\mu_0
+= 1\)</span>.</strong> The test statistic and P-value are computed
+exactly as if the null were <span class="math inline">\(H_0: \mu =
+1\)</span>, as in the glass example. Here is why. The glass data have
+<span class="math inline">\(\bar{x} = 1.04\)</span>. Look at the P-value
+for three values that are all inside <span class="math inline">\(H_0:
+\mu \leq 1\)</span>:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
+if the true mean were
 </th>
 <th style="text-align:left;">
-<span class="math inline">\(H_0\)</span> is True
+<span class="math inline">\(t_{obs}\)</span>
 </th>
 <th style="text-align:left;">
-<span class="math inline">\(H_0\)</span> is False
+P-value <span class="math inline">\(P(T \geq t_{obs})\)</span>
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Decision: Reject <span class="math inline">\(H_0\)</span>
+<span class="math inline">\(\mu = 0.98\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\alpha\)</span>
+<span class="math inline">\((1.04 - 0.98)/0.0199 = 3.02\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(1-\beta\)</span>
+0.0064
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Decision: Fail To Reject <span class="math inline">\(H_0\)</span>
+<span class="math inline">\(\mu = 0.99\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(1 - \alpha\)</span>
+<span class="math inline">\((1.04 - 0.99)/0.0199 = 2.51\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\beta\)</span>
+0.0155
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu = 1.00\)</span> (the boundary)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((1.04 - 1.00)/0.0199 = 2.01\)</span>
+</td>
+<td style="text-align:left;">
+0.0361
 </td>
 </tr>
 </tbody>
 </table>
-<p>This can be visualized in terms the distribution of the test
-statistic under the null and alternative hypotheses. The plot below
-shows the relationship between power, type I and type II error rates in
-a right-tailed test of a population mean conducted at the <span
-class="math inline">\(\alpha\)</span> significance level.</p>
-<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-11-1.png" alt="Two overlapping normal curves: the distribution under H0 (solid line) centered at mu0, and the distribution under HA (dashed line) centered at a larger mu. A dotted vertical line marks the critical value Z sub 1 minus alpha. The area under the H0 curve right of the line is labeled alpha, the area under the HA curve left of the line is labeled beta, and the area under the HA curve right of the line is labeled 1 minus beta, the power." width="1152" />
-* in the plot above, the green region represents the probability of
-committing a type II error, the orange region the probability of
-committing a type I error and the pink/red region is the power of the
-test.</p>
-<p><strong>Below</strong> the three panels show the relationship between
-power, the probability of a type I error and the probability of a type
-II error.
-<img src="lecturemenu11_files/figure-html/unnamed-chunk-12-1.png" alt="Three line plots. Top left: power rises as the significance level alpha increases from 0 to 0.5, steeply at first and then leveling off. Top right: power falls in a straight line as the type II error rate beta increases. Bottom: alpha decreases as beta increases, a downward curve showing the trade-off between the two error rates." width="960" /></p>
+<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-5-1.png" alt="Three panels, one for each of three true means allowed by H0: mu at most 1, namely 0.98, 0.99 and 1.00. Each shows the t curve for x-bar of the glass, standard error 0.0199, centred at that mean, with a red vertical line at the observed x-bar of 1.04 and the area to its right shaded as the P-value. The shaded area is tiny at 0.98 (P-value 0.0064), larger at 0.99 (0.0155) and largest at 1.00, the boundary (0.0361)." width="1056" style="display: block; margin: auto;" /></p>
+<p>The farther the true mean is <strong>below</strong> 1, the less
+likely a sample mean as high as 1.04 becomes, so the P-value shrinks.
+The <strong>largest</strong> P-value in <span
+class="math inline">\(H_0\)</span> is at the boundary, <span
+class="math inline">\(\mu = 1\)</span>. So:</p>
+<ul>
+<li>If we reject at the boundary (P-value <span
+class="math inline">\(&lt; \alpha\)</span> there), the P-value is even
+smaller for every other value in <span
+class="math inline">\(H_0\)</span>, so we reject all of <span
+class="math inline">\(H_0\)</span> at once.</li>
+<li>The boundary is the <strong>hardest</strong> case to reject, so
+testing there is the cautious choice. It also means the chance of
+wrongly rejecting is <strong>at most</strong> <span
+class="math inline">\(\alpha\)</span>, whichever value in <span
+class="math inline">\(H_0\)</span> is the truth.</li>
+</ul>
+<p>That is also why many researchers write <span
+class="math inline">\(H_0: \mu = 1\)</span> even when they mean <span
+class="math inline">\(H_0: \mu \leq 1\)</span>: <strong>the calculation
+and the decision are identical.</strong> The composite version says more
+honestly what we would conclude if we do not reject: “the mean could be
+1 <strong>or less</strong>”.</p>
 </div>
+<div id="example-the-bakers-bread-a-composite-null"
+class="section level2">
+<h2>Example: the baker’s bread (a composite null)</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-4-rare-events-the-sample-decision-and-conclusion">OpenStax
+Introductory Statistics 2e, Section 9.4, Example 9.9</a>.</em></p>
+<blockquote>
+<p>Suppose a baker claims that his bread height is <strong>more than 15
+cm</strong>, on average. Several of his customers do not believe him. To
+persuade his customers that he is right, the baker decides to do a
+hypothesis test. He bakes <strong>10</strong> loaves of bread. The mean
+height of the sample loaves is <strong>17 cm</strong>. The baker knows
+from baking hundreds of loaves of bread that the standard deviation for
+the height is <span class="math inline">\(\sigma = 0.5\)</span> cm, and
+the distribution of heights is normal.</p>
+</blockquote>
+<p>The book gives no significance level, so we use the usual <span
+class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p><strong>Question:</strong> At <span class="math inline">\(\alpha =
+0.05\)</span>, do the data back up the baker’s claim?</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> We treat the 10 loaves as a random
+sample of his bread. The heights are normal, so <span
+class="math inline">\(n = 10\)</span> is enough. <span
+class="math inline">\(\sigma = 0.5\)</span> is known, so we use a <span
+class="math inline">\(z\)</span>-test.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu\)</span> = the mean height of all of the
+baker’s loaves. The claim “more than 15 cm” is the alternative, <span
+class="math inline">\(H_A: \mu &gt; 15\)</span>. The customers’ view is
+everything else, “15 cm <strong>or less</strong>”, so the null is
+composite: <span class="math inline">\(H_0: \mu \leq 15\)</span>. The
+test is <strong>upper-tailed</strong>, done at the boundary <span
+class="math inline">\(\mu_0 = 15\)</span>.</li>
+<li><strong>Test statistic.</strong> <span class="math display">\[SE =
+\frac{\sigma}{\sqrt{n}} = \frac{0.5}{\sqrt{10}} \approx 0.1581\]</span>
+<span class="math display">\[z_{obs} = \frac{\bar{x} - \mu_0}{SE} =
+\frac{17 - 15}{0.1581} \approx 12.65\]</span> The sample mean is more
+than 12 standard errors above 15 cm.</li>
+<li><strong>P-value.</strong> <span class="math inline">\(P(Z \geq 12.65
+\mid \mu = 15)\)</span> is far off the end of the <span
+class="math inline">\(z\)</span>-table: <strong>essentially 0</strong>.
+And that is the largest P-value for any value in <span
+class="math inline">\(H_0\)</span>; if the true mean were below 15, a
+sample mean of 17 would be even less likely.</li>
+<li><strong>Decision.</strong> P-value <span
+class="math inline">\(\approx 0 &lt; 0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are convincing
+evidence that the baker’s loaves average more than 15 cm.</li>
+</ol>
+</div>
+<div id="try-it-out" class="section level2">
+<h2>Try it out</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-4-rare-events-the-sample-decision-and-conclusion">OpenStax
+Introductory Statistics 2e, Section 9.4, Try It 9.9</a>.</em></p>
+<blockquote>
+<p>A normal distribution has a standard deviation of <strong>1</strong>.
+We want to verify a claim that the mean is <strong>greater than
+12</strong>. A sample of <strong>36</strong> is taken with a sample mean
+of <strong>12.5</strong>. The hypotheses are <span
+class="math inline">\(H_0: \mu \leq 12\)</span> and <span
+class="math inline">\(H_A: \mu &gt; 12\)</span>, and the P-value is
+0.0013. Draw a graph that shows the P-value.</p>
+</blockquote>
+<p>Check the book’s P-value by running the test yourself, and decide at
+<span class="math inline">\(\alpha = 0.05\)</span> (the book gives no
+<span class="math inline">\(\alpha\)</span>).</p>
+<p><em>Answer:</em> <span class="math inline">\(H_0: \mu \leq
+12\)</span> and <span class="math inline">\(H_A: \mu &gt; 12\)</span>,
+tested at the boundary <span class="math inline">\(\mu_0 = 12\)</span>.
+<span class="math inline">\(SE = 1/\sqrt{36} = 1/6 \approx
+0.1667\)</span>, so <span class="math inline">\(z_{obs} = (12.5 -
+12)/(1/6) = 3.00\)</span>. The P-value is <span
+class="math inline">\(P(Z \geq 3.00 \mid \mu = 12) = 1 - 0.9987 = 0.0013
+&lt; 0.05\)</span>: reject <span class="math inline">\(H_0\)</span>. The
+mean is greater than 12.</p>
+</div>
+</div>
+<div id="types-of-errors" class="section level1">
+<h1>Types of errors</h1>
+<p>A test ends in a decision, reject <span
+class="math inline">\(H_0\)</span> or do not reject it, and it makes
+that decision <strong>without ever learning the truth</strong>. So there
+are four ways it can turn out (OpenStax Table 9.2):</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(H_0\)</span> is actually true
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(H_0\)</span> is actually false
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<strong>Do not reject <span class="math inline">\(H_0\)</span></strong>
+</td>
+<td style="text-align:left;">
+correct
+</td>
+<td style="text-align:left;">
+<strong>Type II error</strong><br>probability <span
+class="math inline">\(\beta\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Reject <span class="math inline">\(H_0\)</span></strong>
+</td>
+<td style="text-align:left;">
+<strong>Type I error</strong><br>probability <span
+class="math inline">\(\alpha\)</span>
+</td>
+<td style="text-align:left;">
+correct<br>probability <span class="math inline">\(1 - \beta\)</span>,
+the <strong>power</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A <strong>Type I error</strong> is rejecting <span
+class="math inline">\(H_0\)</span> when it is true: a <strong>false
+alarm</strong>. Its probability is the significance level, <span
+class="math display">\[\alpha = P(\text{Type I error}) = P(\text{reject
+} H_0 \mid H_0 \text{ true})\]</span> We choose <span
+class="math inline">\(\alpha\)</span> before collecting the data, so we
+decide in advance how often we are willing to raise a false alarm.</li>
+<li>A <strong>Type II error</strong> is not rejecting <span
+class="math inline">\(H_0\)</span> when it is false: a <strong>missed
+effect</strong>. Its probability is <span class="math display">\[\beta =
+P(\text{Type II error}) = P(\text{do not reject } H_0 \mid H_0 \text{
+false})\]</span></li>
+</ul>
+<p>Back to the courtroom from the Week 10 notes, where <span
+class="math inline">\(H_0\)</span> is “the defendant is innocent”. A
+Type I error convicts an innocent person. A Type II error lets a guilty
+person go free. The legal system sets a high bar, “beyond reasonable
+doubt”, because it considers the first error worse; the price is more of
+the second.</p>
+<p><strong>Which error is worse depends on the situation.</strong> In
+each example below, write <span class="math inline">\(H_0\)</span> down
+first; the errors follow from it.</p>
+<div id="example-errors-in-context" class="section level2">
+<h2>Example: errors in context</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-2-outcomes-and-the-type-i-and-type-ii-errors">OpenStax
+Introductory Statistics 2e, Section 9.2, Examples 9.5, 9.7 and
+9.8</a>.</em></p>
+<div id="navahs-rock-climbing-equipment-example-9.5"
+class="section level3">
+<h3>Navah’s rock climbing equipment (Example 9.5)</h3>
+<p>Navah is a rock climber. Before a climb she has to decide whether her
+ropes, harness and anchors are safe to trust. Because she has used the
+gear before, her starting assumption, the null hypothesis, is that it is
+fine. (The book states only the null hypothesis; this setup is
+ours.)</p>
+<blockquote>
+<p>Suppose the null hypothesis, <span
+class="math inline">\(H_0\)</span>, is: <strong>Navah’s rock climbing
+equipment is safe.</strong> State the Type I and Type II errors. Which
+error has the greater consequence?</p>
+</blockquote>
+<ul>
+<li><em>Type I error</em> (reject a true <span
+class="math inline">\(H_0\)</span>): Navah thinks her rock climbing
+equipment may <strong>not</strong> be safe when, in fact, it really is
+safe. She retires good gear.</li>
+<li><em>Type II error</em> (do not reject a false <span
+class="math inline">\(H_0\)</span>): Navah thinks her rock climbing
+equipment <strong>may be safe</strong> when, in fact, it is not safe.
+She goes ahead and climbs on it.</li>
+<li><span class="math inline">\(\alpha\)</span> = the probability that
+Navah thinks her equipment may not be safe when it really is; <span
+class="math inline">\(\beta\)</span> = the probability that she thinks
+it may be safe when it is not.</li>
+<li>The <strong>Type II error</strong> has the greater consequence: if
+Navah thinks her equipment is safe, she will use it, and it can fail.
+Here we want <span class="math inline">\(\beta\)</span> small, even at
+the cost of more false alarms.</li>
+</ul>
+</div>
+<div id="genetic-labs-example-9.7" class="section level3">
+<h3>Genetic Labs (Example 9.7)</h3>
+<blockquote>
+<p>A company called <strong>Genetic Labs</strong> claims to be able to
+increase the likelihood that a pregnancy will result in a
+<strong>male</strong> being born. Statisticians want to test the claim.
+Suppose that the null hypothesis, <span
+class="math inline">\(H_0\)</span>, is: <strong>Genetic Labs has no
+effect on sex outcome.</strong> Describe the Type I and Type II errors,
+and say which has the greater consequence.</p>
+</blockquote>
+<ul>
+<li><em>Type I error:</em> we conclude that Genetic Labs
+<strong>does</strong> influence the sex outcome, when in fact it has no
+effect. Its probability is <span
+class="math inline">\(\alpha\)</span>.</li>
+<li><em>Type II error:</em> we conclude that Genetic Labs does
+<strong>not</strong> influence the sex outcome of a pregnancy when, in
+fact, it does. Its probability is <span
+class="math inline">\(\beta\)</span>.</li>
+<li>The <strong>Type I error</strong> has the greater consequence:
+people would pay for Genetic Labs’ product in the hope of having a boy,
+when it does nothing. Here we want <span
+class="math inline">\(\alpha\)</span> small.</li>
+</ul>
+</div>
+<div id="a-cancer-drug-example-9.8-a-composite-null"
+class="section level3">
+<h3>A cancer drug (Example 9.8, a composite null)</h3>
+<blockquote>
+<p>A certain experimental drug claims a cure rate of <strong>at least
+75%</strong> for males with prostate cancer. Describe both the Type I
+and Type II errors in context. Which error is the more serious?</p>
+</blockquote>
+<p>The claim “at least 75%” is the null, a composite one: <span
+class="math inline">\(H_0: p \geq 0.75\)</span>, and a skeptic tests it
+against <span class="math inline">\(H_A: p &lt; 0.75\)</span>.</p>
+<ul>
+<li><em>Type I error:</em> a cancer patient believes the cure rate for
+the drug is <strong>less than 75%</strong> when it actually is at least
+75%. He may turn down a drug that works.</li>
+<li><em>Type II error:</em> a cancer patient believes the experimental
+drug has <strong>at least a 75%</strong> cure rate when it has a cure
+rate that is less than 75%. He relies on a drug that works less well
+than claimed.</li>
+<li>The <strong>Type II error</strong> is more serious: a patient and
+doctor who believe the drug works at least 75% of the time will likely
+choose it as the treatment.</li>
+</ul>
+</div>
+</div>
+<div id="practice-cell-phone-owners" class="section level2">
+<h2>Practice: cell phone owners</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Try It 9.18</a>.</em></p>
+<blockquote>
+<p>Marketers believe that <strong>92%</strong> of adults in the United
+States own a cell phone. A cell phone manufacturer believes that number
+is actually <strong>lower</strong>. <strong>200</strong> American adults
+are surveyed, of which <strong>174</strong> report having cell phones.
+Use a 5% level of significance. State the null and alternative
+hypotheses, find the P-value, state your conclusion, and identify the
+Type I and Type II errors.</p>
+</blockquote>
+<p>The book leaves this one as an exercise; the solution below is
+ours.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> A random sample of adults: <span
+class="math inline">\(np_0 = 200(0.92) = 184 \geq 15\)</span> and <span
+class="math inline">\(n(1-p_0) = 200(0.08) = 16 \geq 15\)</span>.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
+= the proportion of all U.S. adults who own a cell phone. The marketers’
+figure is “92% or more”, so <span class="math inline">\(H_0: p \geq
+0.92\)</span> (composite), and the manufacturer’s suspicion is <span
+class="math inline">\(H_A: p &lt; 0.92\)</span>:
+<strong>lower-tailed</strong>, tested at the boundary <span
+class="math inline">\(p_0 = 0.92\)</span>.</li>
+<li><strong>Test statistic.</strong> <span class="math inline">\(\hat{p}
+= 174/200 = 0.87\)</span>. <span class="math display">\[SE =
+\sqrt{\frac{0.92 \times 0.08}{200}} \approx 0.0192, \qquad z_{obs} =
+\frac{0.87 - 0.92}{0.0192} \approx -2.60\]</span></li>
+<li><strong>P-value.</strong> <span class="math inline">\(P(Z \leq -2.60
+\mid p = 0.92) = 0.0047\)</span>.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0047 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are convincing
+evidence that fewer than 92% of U.S. adults own a cell phone.</li>
+</ol>
+<p><em>The errors.</em> A <strong>Type I error</strong> would be
+concluding that fewer than 92% own a cell phone when really at least 92%
+do. A <strong>Type II error</strong> would be concluding that the 92%
+figure could be right when really fewer own one. Since we rejected <span
+class="math inline">\(H_0\)</span>, the only error we could have made
+here is a Type I error.</p>
+</div>
+</div>
+<div id="statistical-power" class="section level1">
+<h1>Statistical power</h1>
+<p>The <strong>power</strong> of a test is its chance of catching an
+effect that is really there: <span class="math display">\[\text{Power} =
+P(\text{reject } H_0 \mid H_0 \text{ false}) = 1 - \beta\]</span></p>
+<p>A test with low power can easily miss a real effect and end with “do
+not reject”, which is one more reason that “do not reject” never means
+“<span class="math inline">\(H_0\)</span> is true”. We want power close
+to 1.</p>
+<p>Power has a catch: “<span class="math inline">\(H_0\)</span> is
+false” is not one situation. It depends on <strong>how</strong> false. A
+test finds a big effect more easily than a small one, so a power
+calculation always starts by assuming a particular true value of the
+parameter.</p>
+<div id="example-how-often-would-we-catch-the-goggles-working"
+class="section level2">
+<h2>Example: how often would we catch the goggles working?</h2>
+<p>Return to Jeffrey and his goggles from Lecture 24, <em>from <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Example 9.14</a></em>:</p>
+<blockquote>
+<p>Jeffrey, as an eight-year old, established a mean time of
+<strong>16.43 seconds</strong> for swimming the 25-yard freestyle, with
+a standard deviation of <span class="math inline">\(\sigma =
+0.8\)</span> seconds. His dad, Frank, thought that Jeffrey could swim
+the 25-yard freestyle faster using goggles. Frank bought Jeffrey a new
+pair of expensive goggles and timed Jeffrey for <strong>15</strong>
+25-yard freestyle swims. For the 15 swims, Jeffrey’s mean time was 16
+seconds. Frank thought that the goggles helped Jeffrey to swim faster
+than the 16.43 seconds. Conduct a hypothesis test using a preset <span
+class="math inline">\(\alpha = 0.05\)</span>. Assume that the swim times
+for the 25-yard freestyle are normal.</p>
+</blockquote>
+<p>Frank’s test is <span class="math inline">\(H_0: \mu = 16.43\)</span>
+against <span class="math inline">\(H_A: \mu &lt; 16.43\)</span> at
+<span class="math inline">\(\alpha = 0.05\)</span>, a lower-tailed <span
+class="math inline">\(z\)</span>-test (Week 10 works it: <span
+class="math inline">\(z_{obs} = -2.08\)</span>, reject <span
+class="math inline">\(H_0\)</span>). Power asks a different question,
+one Frank could answer <strong>before</strong> timing a single swim.</p>
+<p>Suppose the goggles <strong>really do</strong> help, and Jeffrey’s
+true mean in them is <strong>16.0 seconds</strong>. (This value is our
+assumption; the book does not give one.) Before Frank collects any data,
+what is the chance his test will reject <span
+class="math inline">\(H_0\)</span>?</p>
+<ol style="list-style-type: decimal">
+<li><strong>Find the cutoff.</strong> A lower-tailed test rejects when
+<span class="math inline">\(z_{obs} \leq Z_{\alpha}\)</span>, the
+lower-tail critical value. For <span class="math inline">\(\alpha =
+0.05\)</span>, <span class="math inline">\(Z_{0.05} = -1.645\)</span>.
+In seconds, with <span class="math inline">\(SE = 0.8/\sqrt{15} \approx
+0.2066\)</span>, that is a sample mean of <span
+class="math display">\[\bar{x} \leq 16.43 - 1.645 \times 0.2066 \approx
+16.09 \text{ seconds}\]</span> The cutoff comes from <span
+class="math inline">\(H_0\)</span> alone. If the true mean were 16.43, a
+sample mean this low would happen only 5% of the time; that is <span
+class="math inline">\(\alpha\)</span>.</li>
+<li><strong>Switch to the truth.</strong> If the true mean is 16.0, the
+sample mean has a normal distribution centred at <strong>16.0</strong>,
+with the same <span class="math inline">\(SE\)</span>. The power is the
+chance that it lands below the cutoff: <span
+class="math display">\[\text{Power} = P(\bar{x} \leq 16.09 \mid \mu =
+16.0) = P\left(Z \leq \frac{16.09 - 16.0}{0.2066}\right) = P(Z \leq
+0.44) = 0.67\]</span></li>
+<li><strong>Interpret.</strong> Even if the goggles really cut Jeffrey’s
+mean to 16.0 seconds, a test with 15 swims catches it only about 67% of
+the time. The other <span class="math inline">\(\beta \approx
+0.33\)</span> of the time, Frank’s test misses it: a <strong>Type II
+error</strong>.</li>
+</ol>
+<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-7-1.png" alt="Two bell curves for Jeffrey's mean swim time with goggles, each with standard error 0.21 seconds. The right curve, labelled H0 true, is centred at 16.43 seconds; the left curve, labelled the truth we assumed, is centred at 16.0 seconds. A vertical line at the cutoff, 16.09 seconds, splits them: the test rejects H0 for sample means to the left of it. Under the H0 curve, the small area left of the cutoff is shaded red and labelled alpha = 0.05. Under the true curve, the area left of the cutoff is shaded green and labelled power = 0.67, and the area right of the cutoff is shaded grey and labelled beta = 0.33." width="960" style="display: block; margin: auto;" /></p>
+<p>Read the picture from the cutoff line. Everything to its left is
+“reject <span class="math inline">\(H_0\)</span>”. Under the <span
+class="math inline">\(H_0\)</span> curve, that area is <span
+class="math inline">\(\alpha\)</span>, the false alarms. Under the true
+curve, it is the power. What is left of the true curve, to the right of
+the line, is <span class="math inline">\(\beta\)</span>, the misses.</p>
+</div>
+<div id="what-raises-the-power" class="section level2">
+<h2>What raises the power?</h2>
+<p>Each change below starts from the goggles test (<span
+class="math inline">\(n = 15\)</span>, <span
+class="math inline">\(\alpha = 0.05\)</span>, true mean 16.0 seconds)
+and changes <strong>one</strong> thing:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Change
+</th>
+<th style="text-align:left;">
+Power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+none (the example above)
+</td>
+<td style="text-align:left;">
+0.67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+more swims: <span class="math inline">\(n = 30\)</span>
+</td>
+<td style="text-align:left;">
+0.90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+more swims: <span class="math inline">\(n = 60\)</span>
+</td>
+<td style="text-align:left;">
+0.99
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+smaller <span class="math inline">\(\alpha = 0.01\)</span>
+</td>
+<td style="text-align:left;">
+0.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+larger <span class="math inline">\(\alpha = 0.10\)</span>
+</td>
+<td style="text-align:left;">
+0.79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+smaller effect: true mean 16.2 s
+</td>
+<td style="text-align:left;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bigger effect: true mean 15.8 s
+</td>
+<td style="text-align:left;">
+0.92
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>A bigger sample</strong> is the usual fix. More data shrinks
+<span class="math inline">\(SE = \sigma/\sqrt{n}\)</span>, so the two
+curves overlap less. With 30 swims, <span class="math inline">\(SE
+\approx 0.1461\)</span>, the cutoff moves to <span
+class="math inline">\(16.43 - 1.645(0.1461) \approx 16.19\)</span>, and
+the power is <span class="math inline">\(P(Z \leq (16.19 - 16)/0.1461) =
+P(Z \leq 1.30) = 0.90\)</span>.</li>
+<li><strong>A larger <span
+class="math inline">\(\alpha\)</span></strong> moves the cutoff toward
+the alternative and raises the power, but only by allowing more Type I
+errors. For a fixed sample size, <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> pull against each other: making one
+smaller makes the other larger.</li>
+<li><strong>A bigger true effect</strong> is easier to detect. We cannot
+control it, but it matters when planning: a study meant to find a small
+effect needs a large sample.</li>
+<li><strong>Less variability</strong> (a smaller <span
+class="math inline">\(\sigma\)</span>) works like a bigger sample, since
+it also shrinks <span class="math inline">\(SE\)</span>.</li>
+</ul>
+<p>In practice, when the power is too low, statisticians usually
+<strong>increase the sample size</strong> while keeping <span
+class="math inline">\(\alpha\)</span> the same.</p>
+</div>
+<div id="try-it-out-1" class="section level2">
+<h2>Try it out</h2>
+<ul>
+<li><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-practice">OpenStax
+Chapter 9 Practice</a>, Section 9.2, Exercise 17.)</em> The power of a
+test is 0.981. What is the probability of a Type II error?
+<em>Answer:</em> <span class="math inline">\(\beta = 1 - 0.981 =
+0.019\)</span>.</li>
+<li><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-practice">OpenStax
+Chapter 9 Practice</a>, Section 9.2, Exercise 19.)</em> A microbiologist
+is testing a water sample for E. coli. Suppose the null hypothesis,
+<span class="math inline">\(H_0\)</span>, is: the sample does not
+contain E. coli. The probability that the sample does not contain E.
+coli, but the microbiologist thinks it does, is 0.012. The probability
+that the sample does contain E. coli, but the microbiologist thinks it
+does not, is 0.002. What is the power of this test? <em>Answer:</em> the
+first probability is <span class="math inline">\(\alpha = 0.012\)</span>
+(a false alarm) and the second is <span class="math inline">\(\beta =
+0.002\)</span> (a miss). Power <span class="math inline">\(= 1 - \beta =
+0.998\)</span>.</li>
+<li><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-2-outcomes-and-the-type-i-and-type-ii-errors">OpenStax
+Section 9.2, Try It 9.6</a>.)</em> Suppose the null hypothesis, <span
+class="math inline">\(H_0\)</span>, is: a patient is not sick. Which
+type of error has the greater consequence, Type I or Type II?
+<em>Answer:</em> a Type II error, deciding the patient is not sick when
+they are. A sick patient goes untreated.</li>
+</ul>
+</div>
+</div>
+<div id="sources" class="section level1">
+<h1>Sources</h1>
+<ul>
+<li>All examples are from OpenStax <em>Introductory Statistics 2e</em>,
+Chapter 9: the bench press (Example 9.15), glass conductivity (Example
+9.20), the baker’s bread (Example 9.9 and Try It 9.9), the composite
+hypotheses (Table 9.1 and Examples 9.1, 9.3 and 9.8), the errors (Table
+9.2, Examples 9.5, 9.7 and 9.8, Try It 9.6), cell phone owners (Try It
+9.18), and the goggles (Example 9.14) and Exercises 17 and 19.</li>
+<li>The goggles’ true mean of 16.0 seconds in the power example is an
+assumption for illustration.</li>
+<li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
+9.1–9.5.</li>
+</ul>
 </div>
 
 <!--

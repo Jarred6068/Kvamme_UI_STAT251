@@ -453,6 +453,9 @@ div.tocify {
         <li>
           <a href="lecturemenu10.html">Week 10</a>
         </li>
+        <li>
+          <a href="lecturemenu11.html">Week 11</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -666,6 +669,12 @@ div.tocify {
                              Example 9.16 (first statistics test), with practice from Examples
                              9.17 (brides, two-sided) and 9.14 (goggles, lower-tailed)
                              lecture_slides/Week 10/2026/Week10_Lecture24_Slides_10_30_2026.pptx
+                             On this page (Nov 2 2026, Jarred's choice) the mean section is: 9.16
+                             restated in full, a second t-test (Try It 9.20, boiling point), then
+                             practice from 9.18 (households, two-sided; replaces the deck's
+                             brides) and 9.14 (goggles). Lecture 24's tests-for-a-mean end portion
+                             was cut (Nov 2 2026, Jarred), so it is slides 1-6; the mean slides were
+                             rebuilt in Lecture 25 (Week 11).
 
   This page replaced the 2024 Week 10 page (git show 27a60f5:docs/lecturemenu10.Rmd). Its review of
   confidence intervals and sample size now lives on the Week 9 page. Its "Introduction to tests of
@@ -1650,7 +1659,9 @@ context.</li>
 one, from the textbook.</p>
 <div id="example-cell-phones-and-brain-cancer" class="section level2">
 <h2>Example: cell phones and brain cancer</h2>
-<p><em>From OpenStax Introductory Statistics 2e, Example 9.21.</em></p>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Example 9.21</a>.</em></p>
 <p>Almost everyone carries a cell phone, and most of us hold it against
 our heads every day. That has led to a worry that comes up again and
 again: can the radio waves from a phone cause brain cancer?</p>
@@ -1714,28 +1725,34 @@ than non-users. (The study shows a higher rate among users. On its own
 it does not show that the phones are the <strong>cause</strong>.)</li>
 </ol>
 <p>Here is the whole test as a picture. The curve is the distribution of
-<span class="math inline">\(z\)</span> <strong>if <span
+<span class="math inline">\(z_{obs}\)</span> <strong>if <span
 class="math inline">\(H_0\)</span> is true</strong> (phones make no
 difference). The <strong>rejection region</strong> is the upper 5% of
 that curve, everything at or beyond the <strong>critical value</strong>
-<span class="math inline">\(z^* = 1.645\)</span>, so <span
-class="math inline">\(P(Z \geq 1.645 \mid H_0 \text{ true}) = 0.05 =
-\alpha\)</span>. Our test statistic, <span class="math inline">\(z_{obs}
-= 2.44\)</span>, lands well inside it. The area beyond <span
+<span class="math inline">\(Z_{1-\alpha} = Z_{0.95} = 1.645\)</span>, so
+<span class="math inline">\(P(Z \geq 1.645 \mid H_0 \text{ true}) = 0.05
+= \alpha\)</span>. (The test is upper-tailed, so all of <span
+class="math inline">\(\alpha\)</span> goes in one tail and the critical
+value is <span class="math inline">\(Z_{1-\alpha}\)</span>. A two-sided
+test splits <span class="math inline">\(\alpha\)</span> between the
+tails and uses <span class="math inline">\(Z_{1-\alpha/2}\)</span>.) Our
+test statistic, <span class="math inline">\(z_{obs} = 2.44\)</span>,
+lands well inside it. The area beyond <span
 class="math inline">\(z_{obs}\)</span> is the P-value, 0.0073, and it is
 smaller than <span class="math inline">\(\alpha\)</span>. That is the
 decision rule in picture form: <span
 class="math inline">\(z_{obs}\)</span> lands in the rejection region
 exactly when the P-value is less than <span
 class="math inline">\(\alpha\)</span>.</p>
-<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-11-1.png" alt="Two panels. Left: a standard normal curve, the distribution of z if H0 is true, centered at z = 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value z-star = 1.645 starts the rejection region, and a blue line marks the observed z = 2.44, well to its right. A grey dashed line at z = 2.58 marks where the critical value would be at the textbook's alpha = 0.005. A box marks the upper tail from z = 1.4 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond z-star = 1.645 is shaded red and labelled rejection region, alpha = 0.05. The smaller area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it sits inside the rejection region, so the P-value is smaller than alpha and H0 is rejected." width="960" style="display: block; margin: auto;" /></p>
+<p><img src="lecturemenu10_files/figure-html/unnamed-chunk-11-1.png" alt="Two panels. Left: a standard normal curve, the distribution of z_obs if H0 is true, centered at 0, which is a cancer rate of 0.034 percent. A red vertical line at the critical value Z sub 0.95 = 1.645 starts the rejection region, and a blue line marks the observed z = 2.44, well to its right. A grey dashed line at z = 2.58 marks where the critical value would be at the textbook's alpha = 0.005. A box marks the upper tail from z = 1.4 to 3.6, shown enlarged on the right. Right: a close-up of that tail. The area beyond Z sub 0.95 = 1.645 is shaded red and labelled rejection region, alpha = 0.05. The smaller area beyond z_obs = 2.44 is shaded blue and labelled P-value = 0.0073; it sits inside the rejection region, so the P-value is smaller than alpha and H0 is rejected." width="960" style="display: block; margin: auto;" /></p>
 <p><strong>The textbook’s choice of <span
 class="math inline">\(\alpha\)</span>.</strong> OpenStax works this
 example at a much stricter <span class="math inline">\(\alpha =
 0.005\)</span>. Wrongly announcing that cell phones cause cancer would
 frighten a great many people and send research and regulation chasing a
 false cause, so the book asks for very strong evidence first. At that
-cutoff the critical value moves right to 2.58 (the grey dashed line),
+cutoff the critical value moves right to <span
+class="math inline">\(Z_{0.995} = 2.58\)</span> (the grey dashed line),
 <span class="math inline">\(z_{obs} = 2.44\)</span> falls just short of
 it, and <span class="math inline">\(0.0073 \geq 0.005\)</span>:
 <strong>do not reject <span class="math inline">\(H_0\)</span></strong>.
@@ -1871,94 +1888,268 @@ class="math inline">\(|t_{obs}|\)</span> falls between. The P-value is
 between the upper-tail areas at the top of those two columns (for a
 two-sided test, use the two-tail areas). Software gives the exact
 value.</p>
-<div id="example-the-first-statistics-test" class="section level2">
-<h2>Example: the first statistics test</h2>
-<p><em>OpenStax Introductory Statistics 2e, Example 9.16.</em>
-Statistics students believe the mean score on the first statistics test
-is 65. An instructor thinks it is higher. He samples ten students’
-scores, 65, 65, 70, 67, 66, 63, 63, 68, 72, 71, which come from a normal
-distribution. Use <span class="math inline">\(\alpha =
-0.05\)</span>.</p>
+<div id="example-marcos-throwing-distance-sigma-known"
+class="section level2">
+<h2>Example: Marco’s throwing distance (<span
+class="math inline">\(\sigma\)</span> known)</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Try It 9.14</a>.</em></p>
+<blockquote>
+<p>The mean throwing distance of a football for <strong>Marco</strong>,
+a high school quarterback, is <strong>40 yards</strong>, with a standard
+deviation of <strong>two yards</strong>. The team coach tells Marco to
+adjust his grip to get more distance. The coach records the distances
+for <strong>20</strong> throws. For the 20 throws, Marco’s mean distance
+was <strong>45 yards</strong>. The coach thought the different grip
+helped Marco throw farther than 40 yards. Conduct a hypothesis test
+using a preset <span class="math inline">\(\alpha = 0.05\)</span>.
+Assume the throw distances for footballs are normal.</p>
+</blockquote>
+<p>Marco’s long record gives the population standard deviation, <span
+class="math inline">\(\sigma = 2\)</span>, so this is a <span
+class="math inline">\(z\)</span>-test. (The book leaves this one as an
+exercise; the solution below is ours.)</p>
+<p><strong>Question:</strong> At <span class="math inline">\(\alpha =
+0.05\)</span>, does the new grip make Marco throw farther than 40 yards,
+on average?</p>
 <ol style="list-style-type: decimal">
-<li><strong>Assumptions.</strong> <span class="math inline">\(n =
-10\)</span> is small, but the scores are normal, so the test works.</li>
-<li><strong>Hypotheses.</strong> <span
-class="math inline">\(\mu\)</span> = the mean score on the first test.
-<span class="math inline">\(H_0: \mu = 65\)</span> and <span
-class="math inline">\(H_A: \mu &gt; 65\)</span>:
-<strong>upper-tailed</strong>.</li>
-<li><strong>Test statistic.</strong> <span class="math inline">\(\bar{x}
-= 67\)</span> and <span class="math inline">\(s = 3.197\)</span>. <span
-class="math inline">\(\sigma\)</span> is unknown, so use <span
-class="math inline">\(t\)</span>: <span class="math inline">\(SE =
-3.197/\sqrt{10} \approx 1.011\)</span> and <span
-class="math display">\[t_{obs} = \frac{67 - 65}{1.011} \approx 1.98,
-\qquad df = 10 - 1 = 9\]</span></li>
-<li><strong>P-value.</strong> In row 9 of the <span
-class="math inline">\(t\)</span>-table, <span
+<li><p><strong>Assumptions.</strong> We treat the 20 throws as a random
+sample of Marco’s throws with the new grip. <span
+class="math inline">\(n = 20\)</span> is small, but the distances are
+normal, so the test works. <span class="math inline">\(\sigma =
+2\)</span> is known, so we use <span
+class="math inline">\(z\)</span>.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu\)</span> = Marco’s mean throwing distance with
+the new grip. <span class="math inline">\(H_0: \mu = 40\)</span> and
+<span class="math inline">\(H_A: \mu &gt; 40\)</span>. The coach thinks
+he throws <strong>farther</strong>, so the test is
+<strong>upper-tailed</strong>.</p></li>
+<li><p><strong>Test statistic.</strong> <span class="math display">\[SE
+= \frac{\sigma}{\sqrt{n}} = \frac{2}{\sqrt{20}} \approx 0.4472\]</span>
+<span class="math display">\[z_{obs} = \frac{\bar{x} - \mu_0}{SE} =
+\frac{45 - 40}{0.4472} \approx 11.18\]</span> If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(z_{obs} \sim N(0, 1)\)</span> (standard
+normal).</p></li>
+<li><p><strong>P-value.</strong> <span class="math inline">\(P(Z \geq
+11.18 \mid H_0 \text{ true})\)</span> is far off the end of the <span
+class="math inline">\(z\)</span>-table: <strong>essentially
+0</strong>.</p></li>
+<li><p><strong>Decision.</strong> P-value <span
+class="math inline">\(\approx 0 &lt; 0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are convincing
+evidence that the new grip makes Marco throw farther than 40 yards, on
+average.</p>
+<p><strong>With the critical value.</strong> The test is upper-tailed
+with <span class="math inline">\(\alpha = 0.05\)</span>, so the critical
+value is <span class="math inline">\(Z_{1-\alpha} = Z_{0.95} =
+1.645\)</span>. The rejection region is <span
+class="math inline">\(z_{obs} \geq 1.645\)</span>. Since <span
+class="math inline">\(z_{obs} = 11.18 \geq 1.645\)</span>, it lands in
+the rejection region: the same decision, reject <span
+class="math inline">\(H_0\)</span>.</p></li>
+</ol>
+</div>
+<div id="example-the-first-statistics-test-sigma-unknown"
+class="section level2">
+<h2>Example: the first statistics test (<span
+class="math inline">\(\sigma\)</span> unknown)</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Example 9.16</a>.</em></p>
+<blockquote>
+<p>Statistics students believe that the mean score on the first
+statistics test is <strong>65</strong>. A statistics instructor thinks
+the mean score is <strong>higher</strong> than 65. He samples
+<strong>ten</strong> statistics students and obtains the scores</p>
+<p>65, 65, 70, 67, 66, 63, 63, 68, 72, 71.</p>
+<p>He performs a hypothesis test using a 5% level of significance. The
+data are assumed to be from a normal distribution.</p>
+</blockquote>
+<p>No population standard deviation is given, only the ten scores, so
+<span class="math inline">\(\sigma\)</span> is unknown and this is a
+<span class="math inline">\(t\)</span>-test.</p>
+<p><strong>Question:</strong> At <span class="math inline">\(\alpha =
+0.05\)</span>, is the mean score on the first statistics test higher
+than 65?</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> We treat the ten students as a
+random sample. <span class="math inline">\(n = 10\)</span> is small, but
+the scores are normal, so the test works. <span
+class="math inline">\(\sigma\)</span> is unknown, so we use <span
+class="math inline">\(t\)</span>.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu\)</span> = the mean score of all statistics
+students on the first test. <span class="math inline">\(H_0: \mu =
+65\)</span> and <span class="math inline">\(H_A: \mu &gt; 65\)</span>.
+The instructor thinks the mean is <strong>higher</strong>, so the test
+is <strong>upper-tailed</strong>.</p></li>
+<li><p><strong>Test statistic.</strong> From the data, <span
+class="math inline">\(\bar{x} = 670/10 = 67\)</span> and <span
+class="math inline">\(s = 3.197\)</span>. <span
+class="math display">\[SE = \frac{s}{\sqrt{n}} = \frac{3.197}{\sqrt{10}}
+\approx 1.011\]</span> <span class="math display">\[t_{obs} =
+\frac{\bar{x} - \mu_0}{SE} = \frac{67 - 65}{1.011} \approx 1.98, \qquad
+df = 10 - 1 = 9\]</span> If <span class="math inline">\(H_0\)</span> is
+true, <span class="math inline">\(t_{obs} \sim t(9)\)</span> (Student’s
+<span class="math inline">\(t\)</span> with 9 degrees of
+freedom).</p></li>
+<li><p><strong>P-value.</strong> Upper-tailed, so we want <span
+class="math inline">\(P(T \geq 1.98 \mid H_0 \text{ true})\)</span>. In
+row 9 of the <a href="misc/t_table.html"><span
+class="math inline">\(t\)</span>-table</a>, <span
 class="math inline">\(1.833 &lt; 1.98 &lt; 2.262\)</span>. Those columns
 have upper-tail areas 0.05 and 0.025, so <span
-class="math inline">\(0.025 &lt; \text{P-value} &lt; 0.05\)</span>.
-(Software gives 0.0395.)</li>
-<li><strong>Decision.</strong> The P-value is below <span
+class="math display">\[0.025 &lt; P(T \geq 1.98 \mid H_0 \text{ true})
+&lt; 0.05\]</span> Software gives 0.0395.</p></li>
+<li><p><strong>Decision.</strong> The P-value is below <span
 class="math inline">\(\alpha = 0.05\)</span>: <strong>reject <span
 class="math inline">\(H_0\)</span></strong>. The data are convincing
-evidence that the mean score on the first test is higher than 65.</li>
+evidence that the mean score on the first test is higher than 65, as the
+instructor thinks.</p>
+<p><strong>With the critical value.</strong> The test is upper-tailed
+with <span class="math inline">\(\alpha = 0.05\)</span> and <span
+class="math inline">\(df = 9\)</span>, so the critical value is <span
+class="math inline">\(t_{9,\,0.95} = 1.833\)</span> (row 9, upper-tail
+area 0.05). The rejection region is <span class="math inline">\(t_{obs}
+\geq 1.833\)</span>. Since <span class="math inline">\(t_{obs} = 1.98
+\geq 1.833\)</span>, it lands in the rejection region: the same
+decision, reject <span class="math inline">\(H_0\)</span>.</p></li>
 </ol>
-<p>The two practice problems from Lecture 24 follow: one proportion and
-one mean.</p>
 </div>
-<div id="practice-younger-than-the-groom" class="section level2">
-<h2>Practice: younger than the groom?</h2>
-<p><em>From OpenStax Introductory Statistics 2e, Example 9.17.</em></p>
-<p>Joon believes that in the United States, half of first-time brides
-are younger than their grooms. She wants to check that 50% figure, but
-she has no hunch about which way it might be off. More than half would
-surprise her just as much as less than half.</p>
-<p>She surveys <strong>100 first-time brides</strong>, and
-<strong>53</strong> of them say they are younger than their grooms. That
-is 53%, a little over half. Is that far enough from 50% to say the
-figure is wrong, or is it the kind of wobble a sample of 100 gives by
-chance? Joon uses a 1% significance level, <span
-class="math inline">\(\alpha = 0.01\)</span>.</p>
+<div id="example-the-boiling-point-of-a-liquid-sigma-unknown"
+class="section level2">
+<h2>Example: the boiling point of a liquid (<span
+class="math inline">\(\sigma\)</span> unknown)</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Try It 9.20</a>.</em></p>
+<blockquote>
+<p>The boiling point of a specific liquid is measured for
+<strong>15</strong> samples, and the boiling points are</p>
+<p>205, 206, 206, 202, 199, 194, 197, 198, 198, 201, 201, 202, 207, 211,
+205.</p>
+<p>Is there convincing evidence that the average boiling point is
+<strong>greater than 200</strong>? Use a significance level of 0.1.
+Assume the population is normal.</p>
+</blockquote>
+<p>Again only the data are given, so <span
+class="math inline">\(\sigma\)</span> is unknown and we use <span
+class="math inline">\(t\)</span>. (The book leaves this one as an
+exercise; the solution below is ours.)</p>
 <p><strong>Question:</strong> At <span class="math inline">\(\alpha =
-0.01\)</span>, is the percentage of first-time brides who are younger
-than their grooms different from 50%?</p>
+0.10\)</span>, is the mean boiling point of this liquid greater than
+200?</p>
 <ol style="list-style-type: decimal">
-<li><strong>Assumptions.</strong> A random sample of first-time brides,
-each either younger than her groom or not, and a large enough sample:
-<span class="math inline">\(np_0 = 100(0.50) = 50 \geq 15\)</span> and
-<span class="math inline">\(n(1 - p_0) = 100(0.50) = 50 \geq
-15\)</span>.</li>
+<li><p><strong>Assumptions.</strong> We treat the 15 measurements as a
+random sample. <span class="math inline">\(n = 15\)</span> is small, but
+the population is normal, so the test works. <span
+class="math inline">\(\sigma\)</span> is unknown, so we use <span
+class="math inline">\(t\)</span>.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu\)</span> = the mean boiling point of the
+liquid. <span class="math inline">\(H_0: \mu = 200\)</span> and <span
+class="math inline">\(H_A: \mu &gt; 200\)</span>:
+<strong>upper-tailed</strong>.</p></li>
+<li><p><strong>Test statistic.</strong> From the data, <span
+class="math inline">\(\bar{x} = 3{,}032/15 \approx 202.13\)</span> and
+<span class="math inline">\(s \approx 4.533\)</span>. <span
+class="math display">\[SE = \frac{s}{\sqrt{n}} = \frac{4.533}{\sqrt{15}}
+\approx 1.170\]</span> <span class="math display">\[t_{obs} =
+\frac{\bar{x} - \mu_0}{SE} = \frac{202.13 - 200}{1.170} \approx 1.82,
+\qquad df = 15 - 1 = 14\]</span> If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(t_{obs} \sim t(14)\)</span> (Student’s <span
+class="math inline">\(t\)</span> with 14 degrees of freedom).</p></li>
+<li><p><strong>P-value.</strong> In row 14 of the <a
+href="misc/t_table.html"><span
+class="math inline">\(t\)</span>-table</a>, <span
+class="math inline">\(1.761 &lt; 1.82 &lt; 2.145\)</span>. Those columns
+have upper-tail areas 0.05 and 0.025, so <span
+class="math display">\[0.025 &lt; P(T \geq 1.82 \mid H_0 \text{ true})
+&lt; 0.05\]</span> Software gives 0.045.</p></li>
+<li><p><strong>Decision.</strong> The P-value is below <span
+class="math inline">\(\alpha = 0.10\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are convincing
+evidence that the mean boiling point of the liquid is greater than
+200.</p>
+<p><strong>With the critical value.</strong> The test is upper-tailed
+with <span class="math inline">\(\alpha = 0.10\)</span> and <span
+class="math inline">\(df = 14\)</span>, so the critical value is <span
+class="math inline">\(t_{14,\,0.90} = 1.345\)</span> (row 14, upper-tail
+area 0.10). The rejection region is <span class="math inline">\(t_{obs}
+\geq 1.345\)</span>. Since <span class="math inline">\(t_{obs} = 1.82
+\geq 1.345\)</span>, it lands in the rejection region: the same
+decision, reject <span class="math inline">\(H_0\)</span>.</p></li>
+</ol>
+<p>The next two problems are extra practice: one proportion and one
+mean.</p>
+</div>
+<div id="practice-households-with-three-cell-phones"
+class="section level2">
+<h2>Practice: households with three cell phones</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Example 9.18</a>.</em></p>
+<blockquote>
+<p>Suppose a consumer group suspects that the proportion of households
+that have <strong>three cell phones</strong> is <strong>30%</strong>. A
+cell phone company has reason to believe that the proportion is
+<strong>not</strong> 30%. Before they start a big advertising campaign,
+they conduct a hypothesis test. Their marketing people survey
+<strong>150</strong> households, with the result that
+<strong>43</strong> of the households have three cell phones.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Calculate the sample proportion.</li>
+<li>What is a success for this problem?</li>
+<li>What is the level of significance?</li>
+<li>Draw the graph for this problem and calculate the P-value.</li>
+<li>Make a decision: reject or do not reject <span
+class="math inline">\(H_0\)</span>, and why?</li>
+</ol>
+</blockquote>
+<p>No significance level is given, so we use the usual <span
+class="math inline">\(\alpha = 0.05\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> A random sample of households, and a
+large enough sample: <span class="math inline">\(np_0 = 150(0.30) = 45
+\geq 15\)</span> and <span class="math inline">\(n(1 - p_0) = 150(0.70)
+= 105 \geq 15\)</span>. A <strong>success</strong> is a household with
+three cell phones.</li>
 <li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
-= the proportion of <strong>all</strong> U.S. first-time brides who are
-younger than their grooms. <span class="math inline">\(H_0: p =
-0.50\)</span> and <span class="math inline">\(H_A: p \neq 0.50\)</span>.
-Joon cares about a difference in either direction, so the test is
+= the proportion of <strong>all</strong> households with three cell
+phones. <span class="math inline">\(H_0: p = 0.30\)</span> and <span
+class="math inline">\(H_A: p \neq 0.30\)</span>. The company thinks the
+proportion is “not 30%”, in either direction, so the test is
 <strong>two-sided</strong>.</li>
 <li><strong>Test statistic.</strong> <span class="math inline">\(\hat{p}
-= 53/100 = 0.53\)</span>. Using <span class="math inline">\(p_0\)</span>
-in the standard error, <span class="math display">\[SE =
-\sqrt{\frac{p_0(1-p_0)}{n}} = \sqrt{\frac{0.50 \times 0.50}{100}} =
-0.05\]</span> <span class="math display">\[z_{obs} = \frac{\hat{p} -
-p_0}{SE} = \frac{0.53 - 0.50}{0.05} = 0.60\]</span> The sample is only
-0.60 standard errors above 50%.</li>
-<li><strong>P-value.</strong> Two-sided, so we count both tails: results
-at least this far from 50% in <strong>either</strong> direction. <span
-class="math display">\[P(Z \leq -0.60 \text{ or } Z \geq 0.60 \mid H_0
-\text{ true}) = 2 \times P(Z \geq 0.60) = 2(1 - 0.7257) =
-0.5486\]</span> If the true figure really is 50%, a sample of 100 lands
-this far from 50% more than half the time.</li>
-<li><strong>Decision.</strong> <span class="math inline">\(0.5486 \geq
-0.01\)</span>: <strong>do not reject <span
+= 43/150 \approx 0.2867\)</span>. Using <span
+class="math inline">\(p_0\)</span> in the standard error, <span
+class="math display">\[SE = \sqrt{\frac{p_0(1-p_0)}{n}} =
+\sqrt{\frac{0.30 \times 0.70}{150}} \approx 0.0374\]</span> <span
+class="math display">\[z_{obs} = \frac{\hat{p} - p_0}{SE} = \frac{0.2867
+- 0.30}{0.0374} \approx -0.36\]</span></li>
+<li><strong>P-value.</strong> Two-sided, so we count both tails: <span
+class="math display">\[P(Z \leq -0.36 \text{ or } Z \geq 0.36 \mid H_0
+\text{ true}) = 2 \times 0.3594 = 0.7188\]</span> (The book’s
+calculator, without rounding <span
+class="math inline">\(z_{obs}\)</span>, gives 0.7216.) The graph is the
+standard normal curve with both tails beyond <span
+class="math inline">\(\pm 0.36\)</span> shaded: most of the curve.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.7188 \geq
+0.05\)</span>: <strong>do not reject <span
 class="math inline">\(H_0\)</span></strong>. The data are not convincing
-evidence that the percentage differs from 50%. A result of 53% is
-entirely ordinary for a sample of 100.</li>
+evidence that the proportion of households with three cell phones
+differs from 30%.</li>
 </ol>
 </div>
 <div id="practice-faster-with-goggles" class="section level2">
 <h2>Practice: faster with goggles?</h2>
-<p><em>From OpenStax Introductory Statistics 2e, Example 9.14.</em></p>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples">OpenStax
+Introductory Statistics 2e, Section 9.5, Example 9.14</a>.</em></p>
 <p>When Jeffrey was eight years old, he established a mean time of
 <strong>16.43 seconds</strong> for the 25-yard freestyle, with a
 standard deviation of <span class="math inline">\(\sigma = 0.8\)</span>
@@ -2018,9 +2209,10 @@ physics model: Diaconis, P., Holmes, S., and Montgomery, R. (2007),
 <li>The taste test, Candidate X’s poll, the chip bag, the coffee shop
 and the website are made-up examples.</li>
 <li>Cell phones and brain cancer: OpenStax <em>Introductory Statistics
-2e</em>, Example 9.21. The first statistics test, the first-time brides
-and the goggles are Examples 9.16, 9.17 and 9.14. The breakfast survey
-is made up.</li>
+2e</em>, Example 9.21. The first statistics test, the households with
+three cell phones and the goggles are Examples 9.16, 9.18 and 9.14;
+Marco is Try It 9.14 and the boiling point is Try It 9.20 (our
+solution). The breakfast survey is made up.</li>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Chapter 9,
 Sections 9.1–9.6.</li>
 </ul>

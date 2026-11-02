@@ -199,7 +199,15 @@ Significance tests: hypotheses, test statistics and P-values (the decision and t
 <a href="./lecture_slides/Week%2010/2026/Week10_Lecture23_Slides_10_28_2026.pptx">Slides (PowerPoint)</a>
 
 ## Lecture 24 &middot; Friday, October 30
-Making a decision; testing a population proportion and a population mean (z and t tests)
+Making a decision; testing a population proportion (testing a population mean moved to Lecture 25)
 
 <a href="./lecture_slides/Week%2010/2026/Week10_Lecture24_Slides_10_30_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2010/2026/Week10_Lecture24_Slides_10_30_2026.pptx">Slides (PowerPoint)</a>
+
+# Week 11
+
+## Lecture 25 &middot; Monday, November 2
+Tests for a mean (&sigma; known and unknown); the three distributions behind a test; composite hypotheses; types of errors and statistical power
+
+<a href="./lecture_slides/Week%2011/2026/Week11_Lecture25_Slides_11_02_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2011/2026/Week11_Lecture25_Slides_11_02_2026.pptx">Slides (PowerPoint)</a>
