@@ -156,6 +156,13 @@ body div.main-container {
   max-width: 1040px;
 }
 
+/* Pages with a toc_float sidebar (the lecturemenu notes pages) give a quarter
+   of the width to the TOC, so let them go wider and keep the text column, and
+   its full-width figures, close to the 1040px pages. */
+body div.main-container:has(#TOC) {
+  max-width: 1360px;
+}
+
 
 /* 4. Typography ====================================================== */
 
@@ -1021,8 +1028,9 @@ a,
 
 /* 18. Widget / plugin patch-ups ====================================== */
 
-/* toc_float sidebar (homeworks/homework_downloads.html). */
+/* toc_float sidebar (homeworks/homework_downloads.html, the lecturemenu notes pages). */
 .tocify {
+  font-size: 0.9em;
   background-color: var(--site-surface);
   border: 1px solid var(--site-border);
   border-radius: 0;

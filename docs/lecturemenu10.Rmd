@@ -1,7 +1,15 @@
 ---
 title: "Week 10 Notes"
 author: "STAT 251 Section 01"
-output: html_document
+output:
+  html_document:
+    ## floating table of contents (top left, follows the scroll); a non-empty map, so it
+    ## still merges with the _site.yml output block - see the warning there
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
 ## pdf_document: default   ## (already disabled before this change)
 ## NOTE: keep this a scalar (or a non-empty map). The form
 ##   output:
@@ -818,23 +826,69 @@ first statistics test is 65. An instructor thinks it is higher. He samples ten s
 5. **Decision.** The P-value is below $\alpha = 0.05$: **reject $H_0$**. The data are convincing evidence
    that the mean score on the first test is higher than 65.
 
-## Practice: a proportion and a mean
+The two practice problems from Lecture 24 follow: one proportion and one mean.
 
-* *(Lecture 24 practice; OpenStax Example 9.17.)* Joon believes 50% of first-time brides in the United
-  States are younger than their grooms. She samples 100 first-time brides, and 53 say they are younger
-  than their grooms. Is the percentage different from 50%? Use $\alpha = 0.01$.
-  *Answer:* $np_0 = n(1 - p_0) = 50$, both at least 15. $H_0: p = 0.50$, $H_A: p \neq 0.50$ (two-sided).
-  $\hat{p} = 0.53$, $SE = \sqrt{0.50 \times 0.50/100} = 0.05$, $z_{obs} = 0.03/0.05 = `r fmt(z_y, 2)`$.
-  P-value $= 2 \times P(Z \geq 0.60 \mid H_0 \text{ true}) = 2(1 - `r fmt(zt(0.60), 4)`) =
-  `r fmt(2 * (1 - zt(0.60)), 4)` \geq 0.01$: do not reject $H_0$. The data are not convincing evidence that the
-  percentage differs from 50%.
-* *(Lecture 24 practice; OpenStax Example 9.14.)* Jeffrey's mean time for the 25-yard freestyle is 16.43
-  seconds, with $\sigma = 0.8$ seconds. In new goggles he swims it 15 times, with a mean of 16 seconds. Do
-  the goggles make him faster? Swim times are normal; use $\alpha = 0.05$.
-  *Answer:* $H_0: \mu = 16.43$, $H_A: \mu < 16.43$ (lower-tailed: faster means less time). $\sigma$ is known,
-  so use $z$: $SE = 0.8/\sqrt{15} \approx `r fmt(se_g, 4)`$, $z_{obs} = (16 - 16.43)/`r fmt(se_g, 4)` \approx
-  `r fmt(z_g, 2)`$. P-value $= P(Z \leq -2.08 \mid H_0 \text{ true}) = `r fmt(zt(-2.08), 4)` < 0.05$: reject
-  $H_0$. Jeffrey swims faster with the goggles.
+## Practice: younger than the groom?
+
+*From OpenStax Introductory Statistics 2e, Example 9.17.*
+
+Joon believes that in the United States, half of first-time brides are younger than their grooms. She
+wants to check that 50% figure, but she has no hunch about which way it might be off. More than half
+would surprise her just as much as less than half.
+
+She surveys **100 first-time brides**, and **53** of them say they are younger than their grooms. That
+is 53%, a little over half. Is that far enough from 50% to say the figure is wrong, or is it the kind of
+wobble a sample of 100 gives by chance? Joon uses a 1% significance level, $\alpha = 0.01$.
+
+**Question:** At $\alpha = 0.01$, is the percentage of first-time brides who are younger than their
+grooms different from 50%?
+
+1. **Assumptions.** A random sample of first-time brides, each either younger than her groom or not, and
+   a large enough sample: $np_0 = 100(0.50) = 50 \geq 15$ and $n(1 - p_0) = 100(0.50) = 50 \geq 15$.
+2. **Hypotheses.** $p$ = the proportion of **all** U.S. first-time brides who are younger than their
+   grooms. $H_0: p = 0.50$ and $H_A: p \neq 0.50$. Joon cares about a difference in either direction, so
+   the test is **two-sided**.
+3. **Test statistic.** $\hat{p} = 53/100 = 0.53$. Using $p_0$ in the standard error,
+   $$SE = \sqrt{\frac{p_0(1-p_0)}{n}} = \sqrt{\frac{0.50 \times 0.50}{100}} = 0.05$$
+   $$z_{obs} = \frac{\hat{p} - p_0}{SE} = \frac{0.53 - 0.50}{0.05} = `r fmt(z_y, 2)`$$
+   The sample is only `r fmt(z_y, 2)` standard errors above 50%.
+4. **P-value.** Two-sided, so we count both tails: results at least this far from 50% in **either**
+   direction.
+   $$P(Z \leq -`r fmt(z_y, 2)` \text{ or } Z \geq `r fmt(z_y, 2)` \mid H_0 \text{ true}) = 2 \times P(Z \geq `r fmt(z_y, 2)`) = 2(1 - `r fmt(zt(0.60), 4)`) = `r fmt(2 * (1 - zt(0.60)), 4)`$$
+   If the true figure really is 50%, a sample of 100 lands this far from 50% more than half the time.
+5. **Decision.** $`r fmt(2 * (1 - zt(0.60)), 4)` \geq 0.01$: **do not reject $H_0$**. The data are not
+   convincing evidence that the percentage differs from 50%. A result of 53% is entirely ordinary for a
+   sample of 100.
+
+## Practice: faster with goggles?
+
+*From OpenStax Introductory Statistics 2e, Example 9.14.*
+
+When Jeffrey was eight years old, he established a mean time of **16.43 seconds** for the 25-yard freestyle, with a standard deviation of $\sigma = 0.8$ seconds. His dad, Frank, thinks a good
+pair of goggles would make Jeffrey faster, so he buys him an expensive new pair.
+
+Frank times Jeffrey on **15** swims of the 25-yard freestyle in the new goggles. The mean of those 15
+times is **16 seconds**, almost half a second faster than usual. Did the goggles help, or did Jeffrey
+just have a good set of swims? Jeffrey's swim times are normally distributed, and Frank uses
+$\alpha = 0.05$.
+
+**Question:** At $\alpha = 0.05$, do the data show that Jeffrey swims faster in the new goggles?
+
+1. **Assumptions.** We treat the 15 swims as a random sample of Jeffrey's swims in the goggles. $n = 15$
+   is small, but the swim times are normal, so the test works. $\sigma = 0.8$ is known, so we use $z$,
+   not $t$.
+2. **Hypotheses.** $\mu$ = Jeffrey's mean 25-yard freestyle time in the new goggles.
+   $H_0: \mu = 16.43$ (the goggles make no difference) and $H_A: \mu < 16.43$. **Faster means less
+   time**, so the test is **lower-tailed**.
+3. **Test statistic.** $\bar{x} = 16$.
+   $$SE = \frac{\sigma}{\sqrt{n}} = \frac{0.8}{\sqrt{15}} \approx `r fmt(se_g, 4)`$$
+   $$z_{obs} = \frac{\bar{x} - \mu_0}{SE} = \frac{16 - 16.43}{`r fmt(se_g, 4)`} \approx `r fmt(z_g, 2)`$$
+   Jeffrey's mean in the goggles is about `r fmt(-z_g, 2)` standard errors below his usual mean.
+4. **P-value.** Lower-tailed, so we want the area to the left of $z_{obs}$:
+   $$P(Z \leq `r fmt(z_g, 2)` \mid H_0 \text{ true}) = `r fmt(zt(-2.08), 4)`$$
+   If the goggles made no difference, a set of 15 swims would average this fast only about 2 times in 100.
+5. **Decision.** $`r fmt(zt(-2.08), 4)` < 0.05$: **reject $H_0$**. The data are convincing evidence that
+   Jeffrey swims the 25-yard freestyle faster in the new goggles.
 
 # Sources
 

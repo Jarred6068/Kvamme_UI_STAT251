@@ -1,7 +1,15 @@
 ---
 title: "Week 3 Notes"
 author: "STAT 251 Section 01"
-output: html_document
+output:
+  html_document:
+    ## floating table of contents (top left, follows the scroll); a non-empty map, so it
+    ## still merges with the _site.yml output block - see the warning there
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
 ---
 
 ```{r setup, include=FALSE}
