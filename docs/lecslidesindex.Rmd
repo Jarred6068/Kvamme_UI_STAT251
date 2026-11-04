@@ -207,7 +207,13 @@ Making a decision; testing a population proportion (testing a population mean mo
 # Week 11
 
 ## Lecture 25 &middot; Monday, November 2
-Tests for a mean (&sigma; known and unknown); the three distributions behind a test; composite hypotheses; types of errors and statistical power
+Tests for a mean (&sigma; known and unknown); the three distributions behind a test; composite hypotheses (types of errors and power moved to Lecture 26)
 
 <a href="./lecture_slides/Week%2011/2026/Week11_Lecture25_Slides_11_02_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2011/2026/Week11_Lecture25_Slides_11_02_2026.pptx">Slides (PowerPoint)</a>
+
+## Lecture 26 &middot; Wednesday, November 4
+Types of errors and statistical power (carried over from Lecture 25); confidence intervals and two-sided tests; parametric vs non-parametric tests: the sign test
+
+<a href="./lecture_slides/Week%2011/2026/Week11_Lecture26_Slides_11_04_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2011/2026/Week11_Lecture26_Slides_11_04_2026.pptx">Slides (PowerPoint)</a>

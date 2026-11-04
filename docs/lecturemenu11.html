@@ -658,18 +658,31 @@ div.tocify {
                              the 9.9 bread z-test); types of errors (OpenStax
                              9.5-9.8) and statistical power (the 9.14 goggles at an assumed true
                              mean of 16.0 s). Jarred expects some of this to carry over to Wednesday.
-    Wed Nov 4    Lecture 26  confidence intervals and two-sided tests; parametric vs non-parametric
-                             tests: the sign test (to be written; the 2024 sign test is in
-                             git show 27a60f5:docs/lecturemenu12.Rmd)
+    Wed Nov 4    Lecture 26  confidence intervals and two-sided tests (a generic picture, no example:
+                             the null sets theta0 +/- ME; review of Monday's decision rule), then types
+                             of errors and power (carried over: Lecture 25 stopped after slide 18, the
+                             Try It 9.9 practice); parametric vs non-parametric tests and the sign test
+                             (hypotheses, S ~ Binomial(n, 0.5), E(S) = n/2, SE(S) = sqrt(n)/2, the z
+                             approximation for n/2 >= 15; the couples' ratings from the 2024 notes,
+                             git show 27a60f5:docs/lecturemenu12.Rmd; hypothetical stretching-program
+                             and coffee-blend practice)
     Fri Nov 6    Lecture 27  introduction to two-sample tests for independent samples (to be written)
   Jarred moved types of errors and power from Wednesday to Monday, and confidence intervals and
   the sign test from Monday to Wednesday (Nov 2 2026). The sigma known / unknown tests for a mean
   carry over from Lecture 24 but have no section here (Jarred: they are on the Week 10 page).
-  Deck: lecture_slides/Week 11/2026/Week11_Lecture25_Slides_11_02_2026.pptx (30 slides, built from
-  Lecture 24's slides as templates; figures from assets/make_lecture25_figures.R): blank Review,
-  sigma known, sigma unknown, Marco (Try It 9.14, z), first statistics test (9.16, t), then this page in order;
-  every practice problem (writing hypotheses, errors in context, E. coli, the patient) has its own story slide,
-  and slide 20 is the decision-vs-truth table (Type I/II, false/true positive and negative).
+  Deck: lecture_slides/Week 11/2026/Week11_Lecture25_Slides_11_02_2026.pptx (built from Lecture 24's
+  slides as templates; figures from assets/make_lecture25_figures.R): blank Review, sigma known, sigma
+  unknown, Marco (Try It 9.14, z), first statistics test (9.16, t), then this page through the composite
+  hypotheses; each practice problem has its own story slide. It was 30 slides; after class it was trimmed
+  to the 18 delivered (Nov 4 2026), and slides 19-30 moved to Lecture 26.
+  Deck: lecture_slides/Week 11/2026/Week11_Lecture26_Slides_11_04_2026.pptx (30 slides; figures from
+  assets/make_lecture26_figures.R): a Q&A Review on simple/composite hypotheses and the boundary, the
+  CI-and-two-sided-test picture, the carried slides (types of errors, the decision-vs-truth table, a new
+  errors-and-power picture on the two distributions, errors in context, cell phone owners, power, two new
+  power-vs-n pictures, what raises the power, E. coli, the patient), then the assumptions of the tests so
+  far, "When is a t-test a stretch?", parametric vs non-parametric, four sign test slides (definition,
+  hypotheses, test statistic with E(S)/SE(S)/z, P-value), the couples' data and example, the binomial
+  P-value picture, and the stretching-program and coffee-blend practice.
 
   This page replaced the 2024 Week 11 page (git show 320f927:docs/lecturemenu11.Rmd), whose
   decision-rule framing, error table and power picture it follows. Textbook: OpenStax
@@ -1357,6 +1370,63 @@ class="math inline">\(P(Z \geq 3.00 \mid \mu = 12) = 1 - 0.9987 = 0.0013
 mean is greater than 12.</p>
 </div>
 </div>
+<div id="confidence-intervals-and-two-sided-tests"
+class="section level1">
+<h1>Confidence intervals and two-sided tests</h1>
+<p>This is the decision rule from Monday seen as an interval. Write
+<span class="math inline">\(\theta\)</span> for the parameter (<span
+class="math inline">\(\mu\)</span> or <span
+class="math inline">\(p\)</span>) and <span
+class="math inline">\(\hat{\theta}\)</span> for its estimate (<span
+class="math inline">\(\bar{x}\)</span> or <span
+class="math inline">\(\hat{p}\)</span>).</p>
+<p><strong>The null sets an interval.</strong> If <span
+class="math inline">\(H_0: \theta = \theta_0\)</span> is true, the
+sampling distribution of the estimate is centred at <span
+class="math inline">\(\theta_0\)</span>, and <span
+class="math inline">\(100(1-\alpha)\%\)</span> of all estimates land
+within one <strong>margin of error</strong> of it: <span
+class="math display">\[\theta_0 \pm ME, \qquad ME = Z_{1-\alpha/2}
+\times SE\]</span> (with <span
+class="math inline">\(t_{n-1,\,1-\alpha/2}\)</span> in place of <span
+class="math inline">\(Z_{1-\alpha/2}\)</span> when <span
+class="math inline">\(\sigma\)</span> is unknown). The two tails outside
+this interval hold the remaining <span
+class="math inline">\(\alpha\)</span>, <span
+class="math inline">\(\alpha/2\)</span> on each side.</p>
+<p><strong>An estimate outside it is evidence against <span
+class="math inline">\(H_0\)</span>.</strong> If our estimate lands more
+than <span class="math inline">\(ME\)</span> from <span
+class="math inline">\(\theta_0\)</span>, it is in a region that holds
+only <span class="math inline">\(100\alpha\%\)</span> of the estimates
+<span class="math inline">\(H_0\)</span> predicts. That is the same as
+<span class="math inline">\(|z_{obs}| &gt; Z_{1-\alpha/2}\)</span>, so a
+two-sided test <strong>rejects <span class="math inline">\(H_0\)</span>
+at level <span class="math inline">\(\alpha\)</span></strong>. An
+estimate inside the interval gives no such evidence: <strong>do not
+reject</strong>.</p>
+<p><img src="assets/l26_ci_null.png" alt="The sampling distribution of the estimate, x-bar or p-hat, if H0 is true: a bell curve centred at theta0. Dashed lines mark theta0 minus ME and theta0 plus ME, where ME, the margin of error, is Z sub 1 minus alpha over 2 times SE; the region between them is shaded blue and labelled: if H0 is true, 100 times 1 minus alpha percent of estimates land in theta0 plus or minus ME. Each tail beyond the dashed lines is red and labelled alpha over 2. A blue point inside the interval is labelled estimate inside: do not reject H0. A red point in the right tail is labelled estimate outside, more than ME from theta0: reject H0 at level alpha." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>The confidence interval says the same thing.</strong> “<span
+class="math inline">\(\hat{\theta}\)</span> is more than <span
+class="math inline">\(ME\)</span> from <span
+class="math inline">\(\theta_0\)</span>” is the same statement as “<span
+class="math inline">\(\theta_0\)</span> is more than <span
+class="math inline">\(ME\)</span> from <span
+class="math inline">\(\hat{\theta}\)</span>”, that is, <span
+class="math inline">\(\theta_0\)</span> lies outside the <span
+class="math inline">\(100(1-\alpha)\%\)</span> confidence interval <span
+class="math inline">\(\hat{\theta} \pm ME\)</span>. So a 95% confidence
+interval is a two-sided test at <span class="math inline">\(\alpha =
+0.05\)</span> of every value at once: values outside it would be
+rejected, values inside it would not.</p>
+<p>Two cautions. The match is for <strong>two-sided</strong> tests; a
+one-sided test puts all of <span class="math inline">\(\alpha\)</span>
+in one tail. And for a <strong>proportion</strong> the match is close
+but not exact, because the test’s <span
+class="math inline">\(SE\)</span> uses <span
+class="math inline">\(p_0\)</span> while the interval’s uses <span
+class="math inline">\(\hat{p}\)</span>.</p>
+</div>
 <div id="types-of-errors" class="section level1">
 <h1>Types of errors</h1>
 <p>A test ends in a decision, reject <span
@@ -1417,6 +1487,43 @@ class="math inline">\(H_0\)</span> when it is false: a <strong>missed
 effect</strong>. Its probability is <span class="math display">\[\beta =
 P(\text{Type II error}) = P(\text{do not reject } H_0 \mid H_0 \text{
 false})\]</span></li>
+</ul>
+<p>The same four outcomes can be read off the distributions of the test
+statistic. The picture below is a generic upper-tailed <span
+class="math inline">\(z\)</span>-test at <span
+class="math inline">\(\alpha = 0.05\)</span>: one curve shows where
+<span class="math inline">\(z_{obs}\)</span> lands if <span
+class="math inline">\(H_0\)</span> is true, and the critical value <span
+class="math inline">\(Z_{0.95} = 1.645\)</span> splits “do not reject”
+(left) from “reject” (right).</p>
+<p>The other curve needs care. “<span class="math inline">\(H_0\)</span>
+is false” is not one model: the parameter could take any of many values
+outside <span class="math inline">\(H_0\)</span>, and each one gives its
+own curve. The picture draws just <strong>one possible truth</strong>,
+as the power example below does with a true mean of 16.0 seconds. A test
+never tells us which of those values is the truth; rejecting <span
+class="math inline">\(H_0\)</span> only tells us that the null model is
+unlikely.</p>
+<p><img src="assets/l26_errors.png" alt="Two bell curves for the test statistic z_obs: the left one, labelled H0 true, is centred at 0, and the right one, labelled H0 false: one possible truth, is centred further right. A vertical line at the critical value Z0.95 = 1.645 separates do not reject H0 on the left from reject H0 on the right. Under the H0 curve, the large area left of the line is blue, labelled true negative, 1 minus alpha, and the small tail right of the line is red, labelled Type I error, alpha. Under the H0 false curve, the area left of the line is grey, labelled Type II error, beta, and the area right of the line is green, labelled power, 1 minus beta." width="100%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Under the “<span class="math inline">\(H_0\)</span> true”
+curve</strong> (the world where <span class="math inline">\(H_0\)</span>
+is true): the area left of the line is a correct “do not reject”, a
+<strong>true negative</strong>, with probability <span
+class="math inline">\(1 - \alpha\)</span>; the tail to the right is a
+<strong>Type I error</strong>, with probability <span
+class="math inline">\(\alpha\)</span>.</li>
+<li><strong>Under the “one possible truth” curve</strong> (a world where
+<span class="math inline">\(H_0\)</span> is false): the area left of the
+line is a <strong>Type II error</strong>, with probability <span
+class="math inline">\(\beta\)</span>; the area to the right is a correct
+rejection, the <strong>power</strong>, <span class="math inline">\(1 -
+\beta\)</span>.</li>
+<li>Sliding the line to the right shrinks <span
+class="math inline">\(\alpha\)</span> but grows <span
+class="math inline">\(\beta\)</span>, and sliding it left does the
+opposite. That is the trade-off between the two errors for a fixed
+sample size.</li>
 </ul>
 <p>Back to the courtroom from the Week 10 notes, where <span
 class="math inline">\(H_0\)</span> is “the defendant is innocent”. A
@@ -1633,13 +1740,44 @@ the time. The other <span class="math inline">\(\beta \approx
 0.33\)</span> of the time, Frank’s test misses it: a <strong>Type II
 error</strong>.</li>
 </ol>
-<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-7-1.png" alt="Two bell curves for Jeffrey's mean swim time with goggles, each with standard error 0.21 seconds. The right curve, labelled H0 true, is centred at 16.43 seconds; the left curve, labelled the truth we assumed, is centred at 16.0 seconds. A vertical line at the cutoff, 16.09 seconds, splits them: the test rejects H0 for sample means to the left of it. Under the H0 curve, the small area left of the cutoff is shaded red and labelled alpha = 0.05. Under the true curve, the area left of the cutoff is shaded green and labelled power = 0.67, and the area right of the cutoff is shaded grey and labelled beta = 0.33." width="960" style="display: block; margin: auto;" /></p>
+<p><img src="lecturemenu11_files/figure-html/unnamed-chunk-9-1.png" alt="Two bell curves for Jeffrey's mean swim time with goggles, each with standard error 0.21 seconds. The right curve, labelled H0 true, is centred at 16.43 seconds; the left curve, labelled the truth we assumed, is centred at 16.0 seconds. A vertical line at the cutoff, 16.09 seconds, splits them: the test rejects H0 for sample means to the left of it. Under the H0 curve, the small area left of the cutoff is shaded red and labelled alpha = 0.05. Under the true curve, the area left of the cutoff is shaded green and labelled power = 0.67, and the area right of the cutoff is shaded grey and labelled beta = 0.33." width="960" style="display: block; margin: auto;" /></p>
 <p>Read the picture from the cutoff line. Everything to its left is
 “reject <span class="math inline">\(H_0\)</span>”. Under the <span
 class="math inline">\(H_0\)</span> curve, that area is <span
 class="math inline">\(\alpha\)</span>, the false alarms. Under the true
 curve, it is the power. What is left of the true curve, to the right of
 the line, is <span class="math inline">\(\beta\)</span>, the misses.</p>
+<p><strong>The same test with more swims.</strong> Now look at it on the
+scale of the test statistic, <span class="math inline">\(z_{obs} =
+(\bar{x} - 16.43)/(0.8/\sqrt{n})\)</span>. If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(z_{obs} \sim N(0, 1)\)</span> for
+<strong>every</strong> <span class="math inline">\(n\)</span>, and the
+cutoff stays at <span class="math inline">\(Z_{0.05} = -1.645\)</span>:
+neither depends on the sample size. But if the true mean is 16.0
+seconds, <span class="math inline">\(z_{obs}\)</span> is centred at
+<span class="math display">\[\frac{16.0 - 16.43}{0.8/\sqrt{n}} = -2.08,\
+-2.94,\ -4.16 \qquad \text{for } n = 15,\ 30,\ 60\]</span> The same
+0.43-second improvement is divided by a smaller and smaller <span
+class="math inline">\(SE\)</span>, so the curve for this possible truth
+slides away from 0 and more of it falls past the cutoff:</p>
+<p><img src="assets/l26_power_n.png" alt="Three panels for the goggles test on the z_obs scale, for n = 15, 30 and 60 swims. Each has the H0 true curve, a standard normal centred at 0, and a vertical cutoff line at -1.645; we reject H0 left of the line. A second curve, for a true mean of 16.0 seconds, is centred at -2.08 when n = 15, -2.94 when n = 30 and -4.16 when n = 60, and its area left of the line is shaded green. The panels are titled power = 0.67, 0.90 and 0.99." width="100%" style="display: block; margin: auto;" /></p>
+<p>Doing this for every sample size gives a <strong>power
+curve</strong>. Each line below is one possible true mean:</p>
+<p><img src="assets/l26_power_curve.png" alt="Power plotted against the number of swims, n, from 2 to 120, for three possible true means. The curve for a true mean of 15.8 seconds rises fastest and passes 0.8 near n = 10. The curve for 16.0 seconds passes through the marked points 0.67 at n = 15, 0.90 at n = 30 and 0.99 at n = 60, and crosses 0.8 near n = 22. The curve for 16.2 seconds rises slowly and crosses 0.8 near n = 75. A dashed horizontal line marks 80% power." width="100%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Power climbs toward 1 as <span class="math inline">\(n\)</span>
+grows, for any true mean outside <span
+class="math inline">\(H_0\)</span>.</li>
+<li>The smaller the real effect, the more data it takes. A common target
+is <strong>80% power</strong>: with a true mean of 16.0 seconds that
+takes <span class="math inline">\(n = 22\)</span> swims; with 15.8
+seconds, <span class="math inline">\(n = 10\)</span>; with 16.2 seconds,
+<span class="math inline">\(n = 75\)</span>.</li>
+<li>This is how a study is planned: pick the smallest effect worth
+detecting, then choose <span class="math inline">\(n\)</span> so the
+power for that effect is high enough.</li>
+</ul>
 </div>
 <div id="what-raises-the-power" class="section level2">
 <h2>What raises the power?</h2>
@@ -1775,6 +1913,897 @@ they are. A sick patient goes untreated.</li>
 </ul>
 </div>
 </div>
+<div id="parametric-and-non-parametric-tests" class="section level1">
+<h1>Parametric and non-parametric tests</h1>
+<p>Every test so far has been <strong>parametric</strong>: it assumes a
+model for the population, written in terms of its parameters, and takes
+its P-value from the distribution that model implies. Here are the
+assumptions of each one:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Test
+</th>
+<th style="text-align:left;">
+The population
+</th>
+<th style="text-align:left;">
+The sample
+</th>
+<th style="text-align:left;">
+Then, if H0 is true
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+every test so far
+</td>
+<td style="text-align:left;">
+(any)
+</td>
+<td style="text-align:left;">
+a random sample (or a randomized experiment) of independent observations
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(z\)</span>-test for <span
+class="math inline">\(p\)</span>
+</td>
+<td style="text-align:left;">
+each individual is a success or a failure: <span class="math inline">\(Y
+\sim \text{Bernoulli}(p)\)</span>, so the number of successes in the
+sample is <span class="math inline">\(\text{Binomial}(n, p)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(np_0 \geq 15\)</span> and <span
+class="math inline">\(n(1-p_0) \geq 15\)</span>, so that <span
+class="math inline">\(\hat{p}\)</span> is approximately normal
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} \sim N(0, 1)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(z\)</span>-test for <span
+class="math inline">\(\mu\)</span> (<span
+class="math inline">\(\sigma\)</span> known)
+</td>
+<td style="text-align:left;">
+approximately normal, <span class="math inline">\(X \sim N(\mu,
+\sigma)\)</span>, with <span class="math inline">\(\sigma\)</span> known
+</td>
+<td style="text-align:left;">
+any <span class="math inline">\(n\)</span> if the population is normal;
+otherwise <span class="math inline">\(n \geq 30\)</span>, so the Central
+Limit Theorem makes <span class="math inline">\(\bar{x}\)</span>
+approximately normal
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} \sim N(0, 1)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(t\)</span>-test for <span
+class="math inline">\(\mu\)</span> (<span
+class="math inline">\(\sigma\)</span> unknown)
+</td>
+<td style="text-align:left;">
+approximately normal, <span class="math inline">\(X \sim N(\mu,
+\sigma)\)</span>
+</td>
+<td style="text-align:left;">
+any <span class="math inline">\(n\)</span> if the population is normal;
+otherwise <span class="math inline">\(n \geq 30\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{obs} \sim t(n-1)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If an assumption fails, the curve we read the P-value from is the
+wrong curve, and the P-value can be wrong. With a large sample the
+Central Limit Theorem usually rescues the tests for a mean; with a small
+sample from a population we cannot check, nothing does.</p>
+<p>When those assumptions are doubtful, and especially when the sample
+is too small to check them, we need another option. A
+<strong>non-parametric</strong> test makes few or no assumptions about
+the shape of the population’s distribution. It still assumes the data
+come from a random sample (or a randomized experiment) and that the
+observations are independent.</p>
+<ul>
+<li><strong>Advantages of non-parametric tests</strong>
+<ol style="list-style-type: decimal">
+<li>They may be the only option when the sample is very small and the
+population’s distribution is unknown, which is almost always.</li>
+<li>They make few assumptions about the population.</li>
+<li>They suit crude measurements, such as subjective ratings or rankings
+(for example, Likert responses).</li>
+<li>Their computations and interpretations are often simpler.</li>
+</ol></li>
+<li><strong>Disadvantage:</strong> they are generally <strong>less
+powerful</strong> than the parametric test when that test’s assumptions
+hold. They throw away some of the information in the data, so they need
+more evidence to reject <span class="math inline">\(H_0\)</span>.</li>
+</ul>
+<div id="the-sign-test" class="section level2">
+<h2>The sign test</h2>
+<p>The <strong>sign test</strong> is a non-parametric test for
+<strong>matched pairs</strong>: two measurements on each subject (before
+and after a treatment) or on each matched pair (a husband and a wife).
+For each pair we find the difference and keep only its
+<strong>sign</strong>, <span class="math inline">\(+\)</span> or <span
+class="math inline">\(-\)</span>, ignoring its size. A difference of
+exactly zero has no sign, so we drop it; <span
+class="math inline">\(n\)</span> is the number of
+<strong>non-zero</strong> differences.</p>
+<div id="the-parameter-and-the-hypotheses" class="section level3">
+<h3>The parameter and the hypotheses</h3>
+<p>The parameter is <span class="math display">\[p = P(\text{a
+difference is } +),\]</span> the proportion of <span
+class="math inline">\(+\)</span> signs in the population of pairs. If
+there is no systematic difference between the two measurements, a <span
+class="math inline">\(+\)</span> and a <span
+class="math inline">\(-\)</span> are equally likely, like the two sides
+of a fair coin, so the null hypothesis is always <span
+class="math display">\[H_0: p = 0.5 \qquad \text{(no systematic
+difference)}\]</span> The alternative depends on the question:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative
+</th>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:left;">
+Meaning
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &gt; 0.5\)</span>
+</td>
+<td style="text-align:left;">
+upper-tailed
+</td>
+<td style="text-align:left;">
+the first measurement tends to be larger: more <span
+class="math inline">\(+\)</span> signs than chance
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &lt; 0.5\)</span>
+</td>
+<td style="text-align:left;">
+lower-tailed
+</td>
+<td style="text-align:left;">
+the first measurement tends to be smaller: more <span
+class="math inline">\(-\)</span> signs than chance
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p \neq 0.5\)</span>
+</td>
+<td style="text-align:left;">
+two-sided
+</td>
+<td style="text-align:left;">
+a systematic difference in either direction
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="the-test-statistic-and-its-distribution"
+class="section level3">
+<h3>The test statistic and its distribution</h3>
+<p>The test statistic is <span class="math display">\[S = \text{the
+number of } + \text{ signs among the } n \text{ non-zero
+differences}\]</span> Recall from Week 7 that the number of successes in
+<span class="math inline">\(n\)</span> independent trials, each with the
+same chance of success, has a binomial distribution. Here each non-zero
+difference is a trial and a <span class="math inline">\(+\)</span> is a
+success, so if <span class="math inline">\(H_0\)</span> is true <span
+class="math display">\[S \sim \text{Binomial}(n, 0.5), \qquad P(S = k) =
+\frac{n!}{k!\,(n-k)!}\,(0.5)^k (0.5)^{n-k} =
+\frac{n!}{k!\,(n-k)!}\,(0.5)^n\]</span> Like any binomial count, its
+mean and standard error are <span class="math inline">\(np\)</span> and
+<span class="math inline">\(\sqrt{np(1-p)}\)</span>, with <span
+class="math inline">\(p = 0.5\)</span>: <span
+class="math display">\[E(S) = \frac{n}{2}, \qquad SE(S) = \sqrt{n \times
+0.5 \times 0.5} = \frac{\sqrt{n}}{2}\]</span> So if <span
+class="math inline">\(H_0\)</span> is true we expect about half the
+signs to be <span class="math inline">\(+\)</span>, give or take <span
+class="math inline">\(\sqrt{n}/2\)</span>.</p>
+<p><strong>Large samples.</strong> When <span class="math inline">\(n/2
+\geq 15\)</span> (the same <span class="math inline">\(np_0 \geq
+15\)</span> check as the test for a proportion, with <span
+class="math inline">\(p_0 = 0.5\)</span>), <span
+class="math inline">\(S\)</span> is approximately normal and we can
+standardise it: <span class="math display">\[z_{obs} = \frac{S -
+n/2}{\sqrt{n}/2} \sim N(0, 1) \text{ if } H_0 \text{ is true}\]</span>
+This is exactly the <span class="math inline">\(z\)</span>-test for a
+proportion with <span class="math inline">\(p_0 = 0.5\)</span>: dividing
+the top and bottom by <span class="math inline">\(n\)</span> gives <span
+class="math inline">\(z_{obs} = (\hat{p} - 0.5)/\sqrt{0.5 \times
+0.5/n}\)</span>, with <span class="math inline">\(\hat{p} =
+S/n\)</span>.</p>
+<p><strong>Small samples.</strong> When <span class="math inline">\(n/2
+&lt; 15\)</span>, use the binomial probabilities exactly.</p>
+</div>
+<div id="the-p-value" class="section level3">
+<h3>The P-value</h3>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative
+</th>
+<th style="text-align:left;">
+Exact (small n)
+</th>
+<th style="text-align:left;">
+Large n (z-table)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &gt; 0.5\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(S \geq s \mid H_0 \text{ true})\)</span>:
+add <span class="math inline">\(P(S = k)\)</span> for <span
+class="math inline">\(k = s, \ldots, n\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \geq z_{obs})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p &lt; 0.5\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(S \leq s \mid H_0 \text{ true})\)</span>:
+add <span class="math inline">\(P(S = k)\)</span> for <span
+class="math inline">\(k = 0, \ldots, s\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \leq z_{obs})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p \neq 0.5\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2 \times\)</span> the smaller of the two
+tails
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2 \times P(Z \geq |z_{obs}|)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="the-five-steps" class="section level3">
+<h3>The five steps</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs; the pairs are
+independent of each other. Nothing is assumed about the shape of the
+population.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: p =
+0.5\)</span> against <span class="math inline">\(H_A: p &gt;
+0.5\)</span>, <span class="math inline">\(p &lt; 0.5\)</span> or <span
+class="math inline">\(p \neq 0.5\)</span>, where <span
+class="math inline">\(p\)</span> is the probability of a <span
+class="math inline">\(+\)</span> sign.</li>
+<li><strong>Test statistic.</strong> Find each difference and its sign,
+drop the zeros, and count <span class="math inline">\(S\)</span>, the
+number of <span class="math inline">\(+\)</span> signs among the <span
+class="math inline">\(n\)</span> that remain. Compare it with <span
+class="math inline">\(E(S) = n/2\)</span>; if <span
+class="math inline">\(n/2 \geq 15\)</span>, also find <span
+class="math inline">\(z_{obs}\)</span>.</li>
+<li><strong>P-value.</strong> From <span class="math inline">\(S \sim
+\text{Binomial}(n, 0.5)\)</span> (or the <span
+class="math inline">\(z\)</span>-table, for large <span
+class="math inline">\(n\)</span>), in the tail(s) <span
+class="math inline">\(H_A\)</span> points to.</li>
+<li><strong>Decision.</strong> Reject <span
+class="math inline">\(H_0\)</span> if the P-value is at most <span
+class="math inline">\(\alpha\)</span>.</li>
+</ol>
+</div>
+</div>
+<div id="example-who-made-the-decision" class="section level2">
+<h2>Example: who made the decision?</h2>
+<p>A study asked married couples who had more say in a recent major
+financial decision. Each husband and wife answered separately, on a
+scale from 1 (the wife had more say) to 7 (the husband had more say). Do
+husbands and wives see these decisions the same way, or is there a
+systematic difference? Here are 17 couples:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Couple
+</th>
+<th style="text-align:right;">
+Husband
+</th>
+<th style="text-align:right;">
+Wife
+</th>
+<th style="text-align:right;">
+Difference
+</th>
+<th style="text-align:left;">
+Sign
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>A <span class="math inline">\(t\)</span>-test on the differences
+would assume they come from a normal population, and that is hard to
+believe here: there are only 17 couples, and the ratings are crude,
+ordered scores from 1 to 7. The sign test asks only whether each
+difference is <span class="math inline">\(+\)</span> or <span
+class="math inline">\(-\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs (a husband and wife from
+each couple), and the couples are independent.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
+= the probability that the husband rates himself as having more say than
+his wife does (a <span class="math inline">\(+\)</span> difference).
+<span class="math inline">\(H_0: p = 0.5\)</span>, no systematic
+difference; <span class="math inline">\(H_A: p \neq 0.5\)</span>,
+<strong>two-sided</strong>, since the question has no direction. Use
+<span class="math inline">\(\alpha = 0.05\)</span>.</li>
+<li><strong>Test statistic.</strong> 11 differences are <span
+class="math inline">\(+\)</span>, 3 are <span
+class="math inline">\(-\)</span>, and 3 are zero. Dropping the zeros,
+<span class="math inline">\(n = 14\)</span> and <span
+class="math inline">\(S = 11\)</span>. If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math display">\[E(S) = \frac{14}{2} = 7, \qquad SE(S) =
+\frac{\sqrt{14}}{2} \approx 1.87\]</span> so 11 is about 2.1 standard
+errors above what we would expect. But <span class="math inline">\(n/2 =
+7 &lt; 15\)</span>, so the normal approximation is not good enough here;
+we use the binomial probabilities exactly.</li>
+<li><strong>P-value.</strong> If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(S \sim \text{Binomial}(14, 0.5)\)</span>. The
+upper tail is <span class="math display">\[P(S \geq 11) =
+\frac{\binom{14}{11} + \binom{14}{12} + \binom{14}{13} +
+\binom{14}{14}}{2^{14}} = \frac{364 + 91 + 14 + 1}{16{,}384} =
+\frac{470}{16{,}384} \approx 0.0287\]</span> The test is two-sided, so
+we double it: <span class="math display">\[\text{P-value} = 2 \times P(S
+\geq 11 \mid H_0 \text{ true}) = 2 \times 0.0287 = 0.0574\]</span></li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0574 &gt;
+0.05\)</span>: <strong>do not reject <span
+class="math inline">\(H_0\)</span></strong>. Husbands and wives do not
+differ significantly in how much say they think each had, at the 5%
+level. It is close, though: a one-sided test, or a larger sample, might
+have rejected.</li>
+</ol>
+<p><img src="assets/l26_sign.png" alt="Bar chart of the binomial distribution with n = 14 and p = 0.5: the probability of each number of plus signs, S, from 0 to 14. The bars are symmetric and peak at 7. The bars for 11 through 14 are red, labelled P of S at least 11 = 0.0287, and the bars for 0 through 3 are red, labelled P of S at most 3 = 0.0287. An arrow points to the bar at 11, the observed count." width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="practice-a-stretching-program" class="section level2">
+<h2>Practice: a stretching program</h2>
+<p><em>A hypothetical example.</em> A physical therapist thinks a
+six-week stretching program <strong>lowers</strong> knee pain. Ten
+patients with chronic knee pain rate their pain from 0 (none) to 10
+(worst) before and after the program. The difference is before <span
+class="math inline">\(-\)</span> after, so a <span
+class="math inline">\(+\)</span> means the patient’s pain went down:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Patient
+</th>
+<th style="text-align:right;">
+Before - after
+</th>
+<th style="text-align:left;">
+Sign
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(-\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(+\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Carry out a sign test at <span class="math inline">\(\alpha =
+0.05\)</span>.</p>
+<p><em>Answer.</em></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs (each patient before and
+after); the patients are independent. Pain ratings are crude scores and
+<span class="math inline">\(n\)</span> is small, so the sign test suits
+them.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
+= the probability that a patient’s pain goes down. <span
+class="math inline">\(H_0: p = 0.5\)</span> against <span
+class="math inline">\(H_A: p &gt; 0.5\)</span>:
+<strong>upper-tailed</strong>, since the therapist expects more <span
+class="math inline">\(+\)</span> signs.</li>
+<li><strong>Test statistic.</strong> 8 <span
+class="math inline">\(+\)</span>, 1 <span
+class="math inline">\(-\)</span> and 1 zero, so <span
+class="math inline">\(n = 9\)</span> and <span class="math inline">\(S =
+8\)</span>. If <span class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(E(S) = 4.5\)</span> and <span
+class="math inline">\(SE(S) = \sqrt{9}/2 = 1.5\)</span>; <span
+class="math inline">\(n/2 = 4.5 &lt; 15\)</span>, so use the exact
+binomial.</li>
+<li><strong>P-value.</strong> With <span class="math inline">\(S \sim
+\text{Binomial}(9, 0.5)\)</span>, <span class="math display">\[P(S \geq
+8 \mid H_0 \text{ true}) = \frac{\binom{9}{8} + \binom{9}{9}}{2^9} =
+\frac{9 + 1}{512} \approx 0.0195\]</span></li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0195 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are evidence that
+the program lowers knee pain for more than half of patients.</li>
+</ol>
+</div>
+<div id="practice-a-new-coffee-blend" class="section level2">
+<h2>Practice: a new coffee blend</h2>
+<p><em>A hypothetical example.</em> A coffee shop thinks its regular
+customers prefer a new blend to the old one. It asks <strong>60</strong>
+regulars to taste both and rate each from 1 to 10. The difference is new
+<span class="math inline">\(-\)</span> old, so a <span
+class="math inline">\(+\)</span> means the customer rated the new blend
+higher. <strong>38</strong> differences are <span
+class="math inline">\(+\)</span>, <strong>16</strong> are <span
+class="math inline">\(-\)</span>, and <strong>6</strong> are ties. Carry
+out a sign test at <span class="math inline">\(\alpha =
+0.05\)</span>.</p>
+<p><em>Answer.</em></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs (each customer rates
+both blends); the customers are independent. The ratings are crude
+scores, so the sign test suits them.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
+= the probability that a regular rates the new blend higher. <span
+class="math inline">\(H_0: p = 0.5\)</span> against <span
+class="math inline">\(H_A: p &gt; 0.5\)</span>:
+<strong>upper-tailed</strong>, since the shop expects more <span
+class="math inline">\(+\)</span> signs.</li>
+<li><strong>Test statistic.</strong> Drop the 6 ties: <span
+class="math inline">\(n = 54\)</span> and <span class="math inline">\(S
+= 38\)</span>. If <span class="math inline">\(H_0\)</span> is true,
+<span class="math display">\[E(S) = \frac{54}{2} = 27, \qquad SE(S) =
+\frac{\sqrt{54}}{2} \approx 3.674\]</span> Now <span
+class="math inline">\(n/2 = 27 \geq 15\)</span>, so we can use the
+normal approximation: <span class="math display">\[z_{obs} = \frac{38 -
+27}{3.674} \approx 2.99\]</span></li>
+<li><strong>P-value.</strong> <span class="math inline">\(P(Z \geq 2.99
+\mid H_0 \text{ true}) = 1 - 0.9986 = 0.0014\)</span>. (The exact
+binomial tail, <span class="math inline">\(P(S \geq 38)\)</span>, is
+0.0019; the approximation is close.)</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0014 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data are evidence that
+most regulars prefer the new blend.</li>
+</ol>
+</div>
+</div>
 <div id="sources" class="section level1">
 <h1>Sources</h1>
 <ul>
@@ -1786,6 +2815,9 @@ hypotheses (Table 9.1 and Examples 9.1, 9.3 and 9.8), the errors (Table
 9.18), and the goggles (Example 9.14) and Exercises 17 and 19.</li>
 <li>The goggles’ true mean of 16.0 seconds in the power example is an
 assumption for illustration.</li>
+<li>The couples’ decision ratings come from the 2024 STAT 251 notes; the
+stretching program and the coffee blend are hypothetical. The textbook
+does not cover the sign test.</li>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
 9.1–9.5.</li>
 </ul>

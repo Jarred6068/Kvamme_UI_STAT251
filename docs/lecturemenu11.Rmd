@@ -100,6 +100,38 @@ stopifnot(pw() == 0.67, pw(n = 30) == 0.90, pw(n = 60) == 0.99, pw(a = 0.01) == 
           pw(a = 0.10) == 0.79, pw(mu = 16.2) == 0.30, pw(mu = 15.8) == 0.92)
 ```
 
+```{r lecture26-setup, include=FALSE}
+# every number in the Lecture 26 sections is checked here (and in assets/make_lecture26_figures.R)
+
+# confidence intervals and two-sided tests: the generic picture uses Z_0.975
+stopifnot(round(qnorm(0.975), 2) == 1.96)
+# the sign test, large n: the coffee blend (hypothetical), 60 regulars, 6 ties, 38 of 54 prefer the new blend
+se_cf <- round(sqrt(54) / 2, 3); z_cf <- round((38 - 27) / se_cf, 2); p_cf_exact <- round(1 - pbinom(37, 54, 0.5), 4)
+stopifnot(se_cf == 3.674, z_cf == 2.99, zt(z_cf) == 0.9986, round(1 - zt(z_cf), 4) == 0.0014, p_cf_exact == 0.0019,
+          54 / 2 >= 15)
+# the couples' mean and SE of S under H0 (n = 14 is too small for z: n/2 = 7 < 15)
+se_cpS <- sqrt(14) / 2
+stopifnot(round(se_cpS, 2) == 1.87, round((11 - 7) / se_cpS, 1) == 2.1, 14 / 2 < 15)
+# the couples (Jarred's 2024 notes): two-sided sign test, 11 of 14 non-zero differences are +
+hus <- c(5, 4, 6, 6, 3, 2, 5, 3, 1, 4, 5, 4, 4, 7, 5, 5, 5)
+wif <- c(3, 3, 4, 5, 3, 3, 2, 3, 2, 3, 2, 2, 5, 2, 5, 3, 1)
+dif <- hus - wif
+p_cp1 <- round(470 / 2^14, 4); p_cp2 <- round(2 * 470 / 2^14, 4)
+stopifnot(sum(dif > 0) == 11, sum(dif < 0) == 3, sum(dif == 0) == 3, choose(14, 11:14) == c(364, 91, 14, 1),
+          p_cp1 == 0.0287, p_cp2 == 0.0574, near(binom.test(11, 14)$p.value, 0.0574))
+# the stretching program (hypothetical): upper-tailed sign test, 8 of 9 non-zero differences are +
+kn <- c(3, 1, 0, 2, 4, -1, 2, 1, 3, 2)
+p_kn <- round(10 / 512, 4)
+stopifnot(sum(kn > 0) == 8, sum(kn < 0) == 1, sum(kn == 0) == 1, choose(9, 8:9) == c(9, 1), p_kn == 0.0195,
+          near(binom.test(8, 9, alternative = 'greater')$p.value, p_kn))
+# power and sample size for the goggles (assets/l26_power_n.png and l26_power_curve.png)
+zc_n <- round((16 - 16.43) / (0.8 / sqrt(c(15, 30, 60))), 2)
+pwx <- function(n, mu) pnorm((16.43 - qnorm(0.95) * 0.8 / sqrt(n) - mu) / (0.8 / sqrt(n)))
+n80 <- sapply(c(15.8, 16.0, 16.2), function(m) min((2:200)[pwx(2:200, m) >= 0.8]))
+stopifnot(zc_n == c(-2.08, -2.94, -4.16), n80 == c(10, 22, 75),
+          round(pwx(c(15, 30, 60), 16), 2) == c(pw(), pw(n = 30), pw(n = 60)))
+```
+
 <!--
   SCOPE OF THIS PAGE (Nov 2 2026). Week 11 per Course_Schedule.Rmd (the date source of truth):
     Mon Nov 2    Lecture 25  the three distributions behind a test (variable, estimate, test
@@ -108,18 +140,31 @@ stopifnot(pw() == 0.67, pw(n = 30) == 0.90, pw(n = 60) == 0.99, pw(a = 0.01) == 
                              the 9.9 bread z-test); types of errors (OpenStax
                              9.5-9.8) and statistical power (the 9.14 goggles at an assumed true
                              mean of 16.0 s). Jarred expects some of this to carry over to Wednesday.
-    Wed Nov 4    Lecture 26  confidence intervals and two-sided tests; parametric vs non-parametric
-                             tests: the sign test (to be written; the 2024 sign test is in
-                             git show 27a60f5:docs/lecturemenu12.Rmd)
+    Wed Nov 4    Lecture 26  confidence intervals and two-sided tests (a generic picture, no example:
+                             the null sets theta0 +/- ME; review of Monday's decision rule), then types
+                             of errors and power (carried over: Lecture 25 stopped after slide 18, the
+                             Try It 9.9 practice); parametric vs non-parametric tests and the sign test
+                             (hypotheses, S ~ Binomial(n, 0.5), E(S) = n/2, SE(S) = sqrt(n)/2, the z
+                             approximation for n/2 >= 15; the couples' ratings from the 2024 notes,
+                             git show 27a60f5:docs/lecturemenu12.Rmd; hypothetical stretching-program
+                             and coffee-blend practice)
     Fri Nov 6    Lecture 27  introduction to two-sample tests for independent samples (to be written)
   Jarred moved types of errors and power from Wednesday to Monday, and confidence intervals and
   the sign test from Monday to Wednesday (Nov 2 2026). The sigma known / unknown tests for a mean
   carry over from Lecture 24 but have no section here (Jarred: they are on the Week 10 page).
-  Deck: lecture_slides/Week 11/2026/Week11_Lecture25_Slides_11_02_2026.pptx (30 slides, built from
-  Lecture 24's slides as templates; figures from assets/make_lecture25_figures.R): blank Review,
-  sigma known, sigma unknown, Marco (Try It 9.14, z), first statistics test (9.16, t), then this page in order;
-  every practice problem (writing hypotheses, errors in context, E. coli, the patient) has its own story slide,
-  and slide 20 is the decision-vs-truth table (Type I/II, false/true positive and negative).
+  Deck: lecture_slides/Week 11/2026/Week11_Lecture25_Slides_11_02_2026.pptx (built from Lecture 24's
+  slides as templates; figures from assets/make_lecture25_figures.R): blank Review, sigma known, sigma
+  unknown, Marco (Try It 9.14, z), first statistics test (9.16, t), then this page through the composite
+  hypotheses; each practice problem has its own story slide. It was 30 slides; after class it was trimmed
+  to the 18 delivered (Nov 4 2026), and slides 19-30 moved to Lecture 26.
+  Deck: lecture_slides/Week 11/2026/Week11_Lecture26_Slides_11_04_2026.pptx (30 slides; figures from
+  assets/make_lecture26_figures.R): a Q&A Review on simple/composite hypotheses and the boundary, the
+  CI-and-two-sided-test picture, the carried slides (types of errors, the decision-vs-truth table, a new
+  errors-and-power picture on the two distributions, errors in context, cell phone owners, power, two new
+  power-vs-n pictures, what raises the power, E. coli, the patient), then the assumptions of the tests so
+  far, "When is a t-test a stretch?", parametric vs non-parametric, four sign test slides (definition,
+  hypotheses, test statistic with E(S)/SE(S)/z, P-value), the couples' data and example, the binomial
+  P-value picture, and the stretching-program and coffee-blend practice.
 
   This page replaced the 2024 Week 11 page (git show 320f927:docs/lecturemenu11.Rmd), whose
   decision-rule framing, error table and power picture it follows. Textbook: OpenStax
@@ -494,6 +539,36 @@ $SE = 1/\sqrt{36} = 1/6 \approx 0.1667$, so $z_{obs} = (12.5 - 12)/(1/6) = 3.00$
 $P(Z \geq 3.00 \mid \mu = 12) = 1 - `r fmt(zt(3), 4)` = `r fmt(1 - zt(3), 4)` < 0.05$: reject $H_0$. The
 mean is greater than 12.
 
+# Confidence intervals and two-sided tests
+
+This is the decision rule from Monday seen as an interval. Write $\theta$ for the parameter ($\mu$ or $p$)
+and $\hat{\theta}$ for its estimate ($\bar{x}$ or $\hat{p}$).
+
+**The null sets an interval.** If $H_0: \theta = \theta_0$ is true, the sampling distribution of the
+estimate is centred at $\theta_0$, and $100(1-\alpha)\%$ of all estimates land within one **margin of
+error** of it:
+$$\theta_0 \pm ME, \qquad ME = Z_{1-\alpha/2} \times SE$$
+(with $t_{n-1,\,1-\alpha/2}$ in place of $Z_{1-\alpha/2}$ when $\sigma$ is unknown). The two tails outside
+this interval hold the remaining $\alpha$, $\alpha/2$ on each side.
+
+**An estimate outside it is evidence against $H_0$.** If our estimate lands more than $ME$ from $\theta_0$,
+it is in a region that holds only $100\alpha\%$ of the estimates $H_0$ predicts. That is the same as
+$|z_{obs}| > Z_{1-\alpha/2}$, so a two-sided test **rejects $H_0$ at level $\alpha$**. An estimate inside the
+interval gives no such evidence: **do not reject**.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "The sampling distribution of the estimate, x-bar or p-hat, if H0 is true: a bell curve centred at theta0. Dashed lines mark theta0 minus ME and theta0 plus ME, where ME, the margin of error, is Z sub 1 minus alpha over 2 times SE; the region between them is shaded blue and labelled: if H0 is true, 100 times 1 minus alpha percent of estimates land in theta0 plus or minus ME. Each tail beyond the dashed lines is red and labelled alpha over 2. A blue point inside the interval is labelled estimate inside: do not reject H0. A red point in the right tail is labelled estimate outside, more than ME from theta0: reject H0 at level alpha."}
+knitr::include_graphics('assets/l26_ci_null.png')
+```
+
+**The confidence interval says the same thing.** "$\hat{\theta}$ is more than $ME$ from $\theta_0$" is the
+same statement as "$\theta_0$ is more than $ME$ from $\hat{\theta}$", that is, $\theta_0$ lies outside the
+$100(1-\alpha)\%$ confidence interval $\hat{\theta} \pm ME$. So a 95% confidence interval is a two-sided test
+at $\alpha = 0.05$ of every value at once: values outside it would be rejected, values inside it would not.
+
+Two cautions. The match is for **two-sided** tests; a one-sided test puts all of $\alpha$ in one tail. And
+for a **proportion** the match is close but not exact, because the test's $SE$ uses $p_0$ while the
+interval's uses $\hat{p}$.
+
 # Types of errors
 
 A test ends in a decision, reject $H_0$ or do not reject it, and it makes that decision **without
@@ -514,6 +589,28 @@ tab(data.frame(
   raise a false alarm.
 * A **Type II error** is not rejecting $H_0$ when it is false: a **missed effect**. Its probability is
   $$\beta = P(\text{Type II error}) = P(\text{do not reject } H_0 \mid H_0 \text{ false})$$
+
+The same four outcomes can be read off the distributions of the test statistic. The picture below is a
+generic upper-tailed $z$-test at $\alpha = 0.05$: one curve shows where $z_{obs}$ lands if $H_0$ is true,
+and the critical value $Z_{0.95} = 1.645$ splits "do not reject" (left) from "reject" (right).
+
+The other curve needs care. "$H_0$ is false" is not one model: the parameter could take any of many
+values outside $H_0$, and each one gives its own curve. The picture draws just **one possible truth**,
+as the power example below does with a true mean of 16.0 seconds. A test never tells us which of those
+values is the truth; rejecting $H_0$ only tells us that the null model is unlikely.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "Two bell curves for the test statistic z_obs: the left one, labelled H0 true, is centred at 0, and the right one, labelled H0 false: one possible truth, is centred further right. A vertical line at the critical value Z0.95 = 1.645 separates do not reject H0 on the left from reject H0 on the right. Under the H0 curve, the large area left of the line is blue, labelled true negative, 1 minus alpha, and the small tail right of the line is red, labelled Type I error, alpha. Under the H0 false curve, the area left of the line is grey, labelled Type II error, beta, and the area right of the line is green, labelled power, 1 minus beta."}
+knitr::include_graphics('assets/l26_errors.png')
+```
+
+* **Under the "$H_0$ true" curve** (the world where $H_0$ is true): the area left of the line is a correct
+  "do not reject", a **true negative**, with probability $1 - \alpha$; the tail to the right is a
+  **Type I error**, with probability $\alpha$.
+* **Under the "one possible truth" curve** (a world where $H_0$ is false): the area left of the line is a
+  **Type II error**, with probability $\beta$; the area to the right is a correct rejection, the
+  **power**, $1 - \beta$.
+* Sliding the line to the right shrinks $\alpha$ but grows $\beta$, and sliding it left does the
+  opposite. That is the trade-off between the two errors for a fixed sample size.
 
 Back to the courtroom from the Week 10 notes, where $H_0$ is "the defendant is innocent". A Type I error
 convicts an innocent person. A Type II error lets a guilty person go free. The legal system sets a high
@@ -675,6 +772,31 @@ Read the picture from the cutoff line. Everything to its left is "reject $H_0$".
 that area is $\alpha$, the false alarms. Under the true curve, it is the power. What is left of the true
 curve, to the right of the line, is $\beta$, the misses.
 
+**The same test with more swims.** Now look at it on the scale of the test statistic,
+$z_{obs} = (\bar{x} - 16.43)/(0.8/\sqrt{n})$. If $H_0$ is true, $z_{obs} \sim N(0, 1)$ for **every** $n$, and the
+cutoff stays at $Z_{0.05} = -1.645$: neither depends on the sample size. But if the true mean is 16.0
+seconds, $z_{obs}$ is centred at
+$$\frac{16.0 - 16.43}{0.8/\sqrt{n}} = `r fmt(zc_n[1], 2)`,\ `r fmt(zc_n[2], 2)`,\ `r fmt(zc_n[3], 2)` \qquad \text{for } n = 15,\ 30,\ 60$$
+The same 0.43-second improvement is divided by a smaller and smaller $SE$, so the curve for this possible
+truth slides away from 0 and more of it falls past the cutoff:
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "Three panels for the goggles test on the z_obs scale, for n = 15, 30 and 60 swims. Each has the H0 true curve, a standard normal centred at 0, and a vertical cutoff line at -1.645; we reject H0 left of the line. A second curve, for a true mean of 16.0 seconds, is centred at -2.08 when n = 15, -2.94 when n = 30 and -4.16 when n = 60, and its area left of the line is shaded green. The panels are titled power = 0.67, 0.90 and 0.99."}
+knitr::include_graphics('assets/l26_power_n.png')
+```
+
+Doing this for every sample size gives a **power curve**. Each line below is one possible true mean:
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "Power plotted against the number of swims, n, from 2 to 120, for three possible true means. The curve for a true mean of 15.8 seconds rises fastest and passes 0.8 near n = 10. The curve for 16.0 seconds passes through the marked points 0.67 at n = 15, 0.90 at n = 30 and 0.99 at n = 60, and crosses 0.8 near n = 22. The curve for 16.2 seconds rises slowly and crosses 0.8 near n = 75. A dashed horizontal line marks 80% power."}
+knitr::include_graphics('assets/l26_power_curve.png')
+```
+
+* Power climbs toward 1 as $n$ grows, for any true mean outside $H_0$.
+* The smaller the real effect, the more data it takes. A common target is **80% power**: with a true mean
+  of 16.0 seconds that takes $n = `r n80[2]`$ swims; with 15.8 seconds, $n = `r n80[1]`$; with 16.2 seconds,
+  $n = `r n80[3]`$.
+* This is how a study is planned: pick the smallest effect worth detecting, then choose $n$ so the power
+  for that effect is high enough.
+
 ## What raises the power?
 
 Each change below starts from the goggles test ($n = 15$, $\alpha = 0.05$, true mean 16.0 seconds) and
@@ -721,6 +843,205 @@ $\alpha$ the same.
   *Answer:* a Type II error, deciding the patient is not sick when they are. A sick patient goes
   untreated.
 
+# Parametric and non-parametric tests
+
+Every test so far has been **parametric**: it assumes a model for the population, written in terms of
+its parameters, and takes its P-value from the distribution that model implies. Here are the assumptions
+of each one:
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Test = c('every test so far', '$z$-test for $p$', '$z$-test for $\\mu$ ($\\sigma$ known)',
+           '$t$-test for $\\mu$ ($\\sigma$ unknown)'),
+  `The population` = c('(any)',
+                       'each individual is a success or a failure: $Y \\sim \\text{Bernoulli}(p)$, so the number of successes in the sample is $\\text{Binomial}(n, p)$',
+                       'approximately normal, $X \\sim N(\\mu, \\sigma)$, with $\\sigma$ known',
+                       'approximately normal, $X \\sim N(\\mu, \\sigma)$'),
+  `The sample` = c('a random sample (or a randomized experiment) of independent observations',
+                   '$np_0 \\geq 15$ and $n(1-p_0) \\geq 15$, so that $\\hat{p}$ is approximately normal',
+                   'any $n$ if the population is normal; otherwise $n \\geq 30$, so the Central Limit Theorem makes $\\bar{x}$ approximately normal',
+                   'any $n$ if the population is normal; otherwise $n \\geq 30$'),
+  `Then, if H0 is true` = c('', '$z_{obs} \\sim N(0, 1)$', '$z_{obs} \\sim N(0, 1)$', '$t_{obs} \\sim t(n-1)$'),
+  check.names = FALSE))
+```
+
+If an assumption fails, the curve we read the P-value from is the wrong curve, and the P-value can be
+wrong. With a large sample the Central Limit Theorem usually rescues the tests for a mean; with a small
+sample from a population we cannot check, nothing does.
+
+When those assumptions are doubtful, and especially when the sample is too small to check them, we need
+another option. A **non-parametric** test makes few or no assumptions about the shape of the
+population's distribution. It still assumes the data come from a random sample (or a randomized
+experiment) and that the observations are independent.
+
+* **Advantages of non-parametric tests**
+  1. They may be the only option when the sample is very small and the population's distribution is
+     unknown, which is almost always.
+  2. They make few assumptions about the population.
+  3. They suit crude measurements, such as subjective ratings or rankings (for example, Likert
+     responses).
+  4. Their computations and interpretations are often simpler.
+* **Disadvantage:** they are generally **less powerful** than the parametric test when that test's
+  assumptions hold. They throw away some of the information in the data, so they need more evidence to
+  reject $H_0$.
+
+## The sign test
+
+The **sign test** is a non-parametric test for **matched pairs**: two measurements on each subject (before
+and after a treatment) or on each matched pair (a husband and a wife). For each pair we find the
+difference and keep only its **sign**, $+$ or $-$, ignoring its size. A difference of exactly zero has no
+sign, so we drop it; $n$ is the number of **non-zero** differences.
+
+### The parameter and the hypotheses
+
+The parameter is
+$$p = P(\text{a difference is } +),$$
+the proportion of $+$ signs in the population of pairs. If there is no systematic difference between the
+two measurements, a $+$ and a $-$ are equally likely, like the two sides of a fair coin, so the null
+hypothesis is always
+$$H_0: p = 0.5 \qquad \text{(no systematic difference)}$$
+The alternative depends on the question:
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Alternative = c('$H_A: p > 0.5$', '$H_A: p < 0.5$', '$H_A: p \\neq 0.5$'),
+  Name = c('upper-tailed', 'lower-tailed', 'two-sided'),
+  Meaning = c('the first measurement tends to be larger: more $+$ signs than chance',
+              'the first measurement tends to be smaller: more $-$ signs than chance',
+              'a systematic difference in either direction'),
+  check.names = FALSE))
+```
+
+### The test statistic and its distribution
+
+The test statistic is
+$$S = \text{the number of } + \text{ signs among the } n \text{ non-zero differences}$$
+Recall from Week 7 that the number of successes in $n$ independent trials, each with the same chance of
+success, has a binomial distribution. Here each non-zero difference is a trial and a $+$ is a success, so
+if $H_0$ is true
+$$S \sim \text{Binomial}(n, 0.5), \qquad P(S = k) = \frac{n!}{k!\,(n-k)!}\,(0.5)^k (0.5)^{n-k} = \frac{n!}{k!\,(n-k)!}\,(0.5)^n$$
+Like any binomial count, its mean and standard error are $np$ and $\sqrt{np(1-p)}$, with $p = 0.5$:
+$$E(S) = \frac{n}{2}, \qquad SE(S) = \sqrt{n \times 0.5 \times 0.5} = \frac{\sqrt{n}}{2}$$
+So if $H_0$ is true we expect about half the signs to be $+$, give or take $\sqrt{n}/2$.
+
+**Large samples.** When $n/2 \geq 15$ (the same $np_0 \geq 15$ check as the test for a proportion, with
+$p_0 = 0.5$), $S$ is approximately normal and we can standardise it:
+$$z_{obs} = \frac{S - n/2}{\sqrt{n}/2} \sim N(0, 1) \text{ if } H_0 \text{ is true}$$
+This is exactly the $z$-test for a proportion with $p_0 = 0.5$: dividing the top and bottom by $n$ gives
+$z_{obs} = (\hat{p} - 0.5)/\sqrt{0.5 \times 0.5/n}$, with $\hat{p} = S/n$.
+
+**Small samples.** When $n/2 < 15$, use the binomial probabilities exactly.
+
+### The P-value
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Alternative = c('$H_A: p > 0.5$', '$H_A: p < 0.5$', '$H_A: p \\neq 0.5$'),
+  `Exact (small n)` = c('$P(S \\geq s \\mid H_0 \\text{ true})$: add $P(S = k)$ for $k = s, \\ldots, n$',
+                        '$P(S \\leq s \\mid H_0 \\text{ true})$: add $P(S = k)$ for $k = 0, \\ldots, s$',
+                        '$2 \\times$ the smaller of the two tails'),
+  `Large n (z-table)` = c('$P(Z \\geq z_{obs})$', '$P(Z \\leq z_{obs})$', '$2 \\times P(Z \\geq |z_{obs}|)$'),
+  check.names = FALSE))
+```
+
+### The five steps
+
+1. **Assumptions.** Matched pairs; the pairs are independent of each other. Nothing is assumed about the
+   shape of the population.
+2. **Hypotheses.** $H_0: p = 0.5$ against $H_A: p > 0.5$, $p < 0.5$ or $p \neq 0.5$, where $p$ is the
+   probability of a $+$ sign.
+3. **Test statistic.** Find each difference and its sign, drop the zeros, and count $S$, the number of
+   $+$ signs among the $n$ that remain. Compare it with $E(S) = n/2$; if $n/2 \geq 15$, also find $z_{obs}$.
+4. **P-value.** From $S \sim \text{Binomial}(n, 0.5)$ (or the $z$-table, for large $n$), in the tail(s)
+   $H_A$ points to.
+5. **Decision.** Reject $H_0$ if the P-value is at most $\alpha$.
+
+## Example: who made the decision?
+
+A study asked married couples who had more say in a recent major financial decision. Each husband and
+wife answered separately, on a scale from 1 (the wife had more say) to 7 (the husband had more say). Do
+husbands and wives see these decisions the same way, or is there a systematic difference? Here are 17
+couples:
+
+```{r, echo=FALSE}
+cp <- data.frame(Couple = 1:17, Husband = hus, Wife = wif, Difference = dif,
+                 Sign = ifelse(dif > 0, '$+$', ifelse(dif < 0, '$-$', '')))
+tab(cp)
+```
+
+A $t$-test on the differences would assume they come from a normal population, and that is hard to
+believe here: there are only 17 couples, and the ratings are crude, ordered scores from 1 to 7. The sign
+test asks only whether each difference is $+$ or $-$.
+
+1. **Assumptions.** Matched pairs (a husband and wife from each couple), and the couples are independent.
+2. **Hypotheses.** $p$ = the probability that the husband rates himself as having more say than his wife
+   does (a $+$ difference). $H_0: p = 0.5$, no systematic difference; $H_A: p \neq 0.5$, **two-sided**,
+   since the question has no direction. Use $\alpha = 0.05$.
+3. **Test statistic.** `r sum(dif > 0)` differences are $+$, `r sum(dif < 0)` are $-$, and `r sum(dif == 0)` are zero.
+   Dropping the zeros, $n = 14$ and $S = 11$. If $H_0$ is true,
+   $$E(S) = \frac{14}{2} = 7, \qquad SE(S) = \frac{\sqrt{14}}{2} \approx `r fmt(se_cpS, 2)`$$
+   so 11 is about `r fmt((11 - 7) / se_cpS, 1)` standard errors above what we would expect. But $n/2 = 7 < 15$, so
+   the normal approximation is not good enough here; we use the binomial probabilities exactly.
+4. **P-value.** If $H_0$ is true, $S \sim \text{Binomial}(14, 0.5)$. The upper tail is
+   $$P(S \geq 11) = \frac{\binom{14}{11} + \binom{14}{12} + \binom{14}{13} + \binom{14}{14}}{2^{14}} = \frac{364 + 91 + 14 + 1}{16{,}384} = \frac{470}{16{,}384} \approx `r fmt(p_cp1, 4)`$$
+   The test is two-sided, so we double it:
+   $$\text{P-value} = 2 \times P(S \geq 11 \mid H_0 \text{ true}) = 2 \times `r fmt(p_cp1, 4)` = `r fmt(p_cp2, 4)`$$
+5. **Decision.** $`r fmt(p_cp2, 4)` > 0.05$: **do not reject $H_0$**. Husbands and wives do not differ
+   significantly in how much say they think each had, at the 5% level. It is close, though: a one-sided
+   test, or a larger sample, might have rejected.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "Bar chart of the binomial distribution with n = 14 and p = 0.5: the probability of each number of plus signs, S, from 0 to 14. The bars are symmetric and peak at 7. The bars for 11 through 14 are red, labelled P of S at least 11 = 0.0287, and the bars for 0 through 3 are red, labelled P of S at most 3 = 0.0287. An arrow points to the bar at 11, the observed count."}
+knitr::include_graphics('assets/l26_sign.png')
+```
+
+## Practice: a stretching program
+
+*A hypothetical example.* A physical therapist thinks a six-week stretching program **lowers** knee pain.
+Ten patients with chronic knee pain rate their pain from 0 (none) to 10 (worst) before and after the
+program. The difference is before $-$ after, so a $+$ means the patient's pain went down:
+
+```{r, echo=FALSE}
+tab(data.frame(Patient = 1:10, `Before - after` = kn, Sign = ifelse(kn > 0, '$+$', ifelse(kn < 0, '$-$', '')),
+               check.names = FALSE))
+```
+
+Carry out a sign test at $\alpha = 0.05$.
+
+*Answer.*
+
+1. **Assumptions.** Matched pairs (each patient before and after); the patients are independent. Pain
+   ratings are crude scores and $n$ is small, so the sign test suits them.
+2. **Hypotheses.** $p$ = the probability that a patient's pain goes down. $H_0: p = 0.5$ against
+   $H_A: p > 0.5$: **upper-tailed**, since the therapist expects more $+$ signs.
+3. **Test statistic.** `r sum(kn > 0)` $+$, `r sum(kn < 0)` $-$ and `r sum(kn == 0)` zero, so $n = 9$ and $S = 8$.
+   If $H_0$ is true, $E(S) = 4.5$ and $SE(S) = \sqrt{9}/2 = 1.5$; $n/2 = 4.5 < 15$, so use the exact binomial.
+4. **P-value.** With $S \sim \text{Binomial}(9, 0.5)$,
+   $$P(S \geq 8 \mid H_0 \text{ true}) = \frac{\binom{9}{8} + \binom{9}{9}}{2^9} = \frac{9 + 1}{512} \approx `r fmt(p_kn, 4)`$$
+5. **Decision.** $`r fmt(p_kn, 4)` < 0.05$: **reject $H_0$**. The data are evidence that the program lowers
+   knee pain for more than half of patients.
+
+## Practice: a new coffee blend
+
+*A hypothetical example.* A coffee shop thinks its regular customers prefer a new blend to the old one.
+It asks **60** regulars to taste both and rate each from 1 to 10. The difference is new $-$ old, so a $+$
+means the customer rated the new blend higher. **38** differences are $+$, **16** are $-$, and **6** are
+ties. Carry out a sign test at $\alpha = 0.05$.
+
+*Answer.*
+
+1. **Assumptions.** Matched pairs (each customer rates both blends); the customers are independent. The
+   ratings are crude scores, so the sign test suits them.
+2. **Hypotheses.** $p$ = the probability that a regular rates the new blend higher. $H_0: p = 0.5$ against
+   $H_A: p > 0.5$: **upper-tailed**, since the shop expects more $+$ signs.
+3. **Test statistic.** Drop the 6 ties: $n = 54$ and $S = 38$. If $H_0$ is true,
+   $$E(S) = \frac{54}{2} = 27, \qquad SE(S) = \frac{\sqrt{54}}{2} \approx `r fmt(se_cf, 3)`$$
+   Now $n/2 = 27 \geq 15$, so we can use the normal approximation:
+   $$z_{obs} = \frac{38 - 27}{`r fmt(se_cf, 3)`} \approx `r fmt(z_cf, 2)`$$
+4. **P-value.** $P(Z \geq `r fmt(z_cf, 2)` \mid H_0 \text{ true}) = 1 - `r fmt(zt(z_cf), 4)` = `r fmt(1 - zt(z_cf), 4)`$.
+   (The exact binomial tail, $P(S \geq 38)$, is `r fmt(p_cf_exact, 4)`; the approximation is close.)
+5. **Decision.** $`r fmt(1 - zt(z_cf), 4)` < 0.05$: **reject $H_0$**. The data are evidence that most regulars
+   prefer the new blend.
+
 # Sources
 
 * All examples are from OpenStax *Introductory Statistics 2e*, Chapter 9: the bench press (Example 9.15),
@@ -729,4 +1050,6 @@ $\alpha$ the same.
   errors (Table 9.2, Examples 9.5, 9.7 and 9.8, Try It 9.6), cell phone owners (Try It 9.18), and the
   goggles (Example 9.14) and Exercises 17 and 19.
 * The goggles' true mean of 16.0 seconds in the power example is an assumption for illustration.
+* The couples' decision ratings come from the 2024 STAT 251 notes; the stretching program and the
+  coffee blend are hypothetical. The textbook does not cover the sign test.
 * Textbook: OpenStax *Introductory Statistics 2e*, Sections 9.1&ndash;9.5.
