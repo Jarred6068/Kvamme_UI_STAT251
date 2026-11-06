@@ -666,7 +666,13 @@ div.tocify {
                              approximation for n/2 >= 15; the couples' ratings from the 2024 notes,
                              git show 27a60f5:docs/lecturemenu12.Rmd; hypothetical stretching-program
                              and coffee-blend practice)
-    Fri Nov 6    Lecture 27  introduction to two-sample tests for independent samples (to be written)
+    Fri Nov 6    Lecture 27  a Q&A review (Type I vs II, power, two ways to raise it); power in five
+                             steps (the rebar, adapted from Penn State STAT 415 Example 10.4 with our
+                             alpha = 0.05 and true mean 175); two-sample tests, independent vs dependent
+                             samples; the two-sample z-test for two proportions (pooled p-hat; OpenStax
+                             10.8 hives as the example, 10.9 seat belts and 10.10 EVs as practice; the
+                             COVID manuscripts from the 2024 notes, git show 27a60f5:docs/lecturemenu12.Rmd,
+                             notes only)
   Jarred moved types of errors and power from Wednesday to Monday, and confidence intervals and
   the sign test from Monday to Wednesday (Nov 2 2026). The sigma known / unknown tests for a mean
   carry over from Lecture 24 but have no section here (Jarred: they are on the Week 10 page).
@@ -683,6 +689,12 @@ div.tocify {
   far, "When is a t-test a stretch?", parametric vs non-parametric, four sign test slides (definition,
   hypotheses, test statistic with E(S)/SE(S)/z, P-value), the couples' data and example, the binomial
   P-value picture, and the stretching-program and coffee-blend practice.
+  Deck: lecture_slides/Week 11/2026/Week11_Lecture27_Slides_11_06_2026.pptx (19 slides, built from the
+  Lecture 26 slides as templates; figures from assets/make_lecture27_figures.R): Q&A Review, the five
+  power steps, the rebar practice and its picture, one population or two? (Q&A), two-sample tests,
+  independent vs dependent, independent or dependent? (Q&A), then two proportions: notation, hypotheses,
+  the sampling distribution of p1-hat - p2-hat, pooling under H0, assumptions and P-value, the hives data,
+  example and P-value picture, and the seat-belt and EV practice.
 
   This page replaced the 2024 Week 11 page (git show 320f927:docs/lecturemenu11.Rmd), whose
   decision-rule framing, error table and power picture it follows. Textbook: OpenStax
@@ -1881,6 +1893,220 @@ it also shrinks <span class="math inline">\(SE\)</span>.</li>
 <strong>increase the sample size</strong> while keeping <span
 class="math inline">\(\alpha\)</span> the same.</p>
 </div>
+<div id="calculating-power-step-by-step" class="section level2">
+<h2>Calculating power, step by step</h2>
+<p>The goggles example did the whole calculation in one pass. Here are
+the same moves broken into five steps. They work for any <span
+class="math inline">\(z\)</span>-test for a mean with <span
+class="math inline">\(\sigma\)</span> known. Steps 1 to 3 use
+<strong>only <span class="math inline">\(H_0\)</span></strong>; step 4
+is where we switch to one possible truth.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Set up.</strong> Write down <span class="math inline">\(H_0:
+\mu = \mu_0\)</span>, the alternative <span
+class="math inline">\(H_A\)</span>, <span
+class="math inline">\(\alpha\)</span>, <span
+class="math inline">\(\sigma\)</span> and <span
+class="math inline">\(n\)</span>. Then choose <strong>one possible
+truth</strong>, <span class="math inline">\(\mu = \mu_{true}\)</span>: a
+value inside <span class="math inline">\(H_A\)</span> that would matter
+in practice. A power is always a power <em>against</em> some <span
+class="math inline">\(\mu_{true}\)</span>; a different choice gives a
+different power.</li>
+<li><strong>Find the SE.</strong> <span class="math inline">\(SE =
+\sigma / \sqrt{n}\)</span>. It is the same whether <span
+class="math inline">\(H_0\)</span> is true or not: only the centre of
+the sampling distribution of <span
+class="math inline">\(\bar{x}\)</span> changes.</li>
+<li><strong>Find the cutoff, from <span
+class="math inline">\(H_0\)</span>.</strong> The test rejects when <span
+class="math inline">\(z_{obs}\)</span> passes the critical value. Turn
+that critical value into a sample mean, <span
+class="math inline">\(\bar{x}^*\)</span>, using <span
+class="math inline">\(\mu_0\)</span> (the table below).</li>
+<li><strong>Switch to the truth.</strong> If <span
+class="math inline">\(\mu = \mu_{true}\)</span>, then <span
+class="math inline">\(\bar{x}\)</span> is normal with mean <span
+class="math inline">\(\mu_{true}\)</span> and the same <span
+class="math inline">\(SE\)</span>. Measure the cutoff from this new
+centre: <span class="math display">\[z^* = \frac{\bar{x}^* -
+\mu_{true}}{SE}\]</span></li>
+<li><strong>Find the power, then <span
+class="math inline">\(\beta\)</span>.</strong> The power is the area of
+the true curve on the <strong>reject</strong> side of the cutoff (the
+table below). Then <span class="math inline">\(\beta = 1 -
+\text{power}\)</span>.</li>
+</ol>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Step
+</th>
+<th style="text-align:left;">
+Upper-tailed, <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>
+</th>
+<th style="text-align:left;">
+Lower-tailed, <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+reject <span class="math inline">\(H_0\)</span> when
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} \geq Z_{1-\alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} \leq Z_{\alpha}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<ol start="3" style="list-style-type: decimal">
+<li>the cutoff
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}^* = \mu_0 + Z_{1-\alpha} \times
+SE\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}^* = \mu_0 + Z_{\alpha} \times
+SE\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<ol start="4" style="list-style-type: decimal">
+<li>switch to the truth
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z^* = (\bar{x}^* - \mu_{true}) / SE\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z^* = (\bar{x}^* - \mu_{true}) / SE\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<ol start="5" style="list-style-type: decimal">
+<li>the power
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \geq z^*)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \leq z^*)\)</span>
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+</ol></li>
+</ol>
+<p><strong>Check it on the goggles.</strong> Lower-tailed, <span
+class="math inline">\(\mu_0 = 16.43\)</span>, <span
+class="math inline">\(\mu_{true} = 16.0\)</span>: <span
+class="math inline">\(SE = 0.2066\)</span>; <span
+class="math inline">\(\bar{x}^* = 16.43 + (-1.645)(0.2066) \approx
+16.09\)</span>; <span class="math inline">\(z^* = (16.09 - 16.0)/0.2066
+\approx 0.44\)</span>; power <span class="math inline">\(= P(Z \leq
+0.44) = 0.67\)</span>. The same answer as above.</p>
+</div>
+<div id="practice-harder-rebar" class="section level2">
+<h2>Practice: harder rebar?</h2>
+<p><em>Adapted from <a
+href="https://online.stat.psu.edu/stat415/Lesson10.html">Penn State STAT
+415, Lesson 10, Example 10.4</a>:</em></p>
+<blockquote>
+<p>Steel reinforcing bar, or <strong>rebar</strong>, is set inside
+concrete to hold bridges, buildings and walls together. Its quality is
+checked with the <strong>Brinell hardness</strong> test, which presses a
+hard ball into the steel and measures the dent: a harder bar is a
+stronger bar. A mill’s standard rebar has a mean Brinell hardness of
+<strong>170</strong> kilograms of force per square millimetre (kgf/mm²),
+and hardness is normally distributed with <span
+class="math inline">\(\sigma = 10\)</span>. The mill has a new heat
+treatment that it hopes makes the bar harder. An engineer will test a
+random sample of <strong>25</strong> treated bars and carry out <span
+class="math display">\[H_0: \mu = 170 \qquad \text{vs} \qquad H_A: \mu
+&gt; 170\]</span> at <span class="math inline">\(\alpha = 0.05\)</span>,
+where <span class="math inline">\(\mu\)</span> is the mean hardness of
+all treated bars.</p>
+</blockquote>
+<p><strong>Question:</strong> before testing a single bar, the engineer
+asks: <em>if the treatment really raises the mean hardness to 175
+kgf/mm², what is the chance the test detects it?</em> Then: how does the
+answer change with <strong>64</strong> bars?</p>
+<p>(The Penn State version fixes the rule “reject if <span
+class="math inline">\(\bar{x} \geq 172\)</span>” and asks for <span
+class="math inline">\(\alpha\)</span> and the power at <span
+class="math inline">\(\mu = 173\)</span>. We set <span
+class="math inline">\(\alpha = 0.05\)</span> and chose <span
+class="math inline">\(\mu_{true} = 175\)</span>, so every step uses the
+<span class="math inline">\(z\)</span>-table directly.)</p>
+<p><em>Answer.</em></p>
+<ol style="list-style-type: decimal">
+<li><strong>Set up.</strong> <span class="math inline">\(H_0: \mu =
+170\)</span>, <span class="math inline">\(H_A: \mu &gt; 170\)</span>
+(upper-tailed), <span class="math inline">\(\alpha = 0.05\)</span>,
+<span class="math inline">\(\sigma = 10\)</span>, <span
+class="math inline">\(n = 25\)</span>. One possible truth: <span
+class="math inline">\(\mu_{true} = 175\)</span>, an increase of 5
+kgf/mm².</li>
+<li><strong>The SE.</strong> <span class="math display">\[SE =
+\frac{\sigma}{\sqrt{n}} = \frac{10}{\sqrt{25}} = \frac{10}{5} =
+2\]</span></li>
+<li><strong>The cutoff, from <span
+class="math inline">\(H_0\)</span>.</strong> Upper-tailed at <span
+class="math inline">\(\alpha = 0.05\)</span>: reject when <span
+class="math inline">\(z_{obs} \geq Z_{0.95} = 1.645\)</span>. On the
+scale of the sample mean, <span class="math display">\[\bar{x}^* = \mu_0
++ Z_{0.95} \times SE = 170 + 1.645 \times 2 = 173.29\]</span> So the
+engineer rejects <span class="math inline">\(H_0\)</span> if the 25 bars
+average <strong>173.29 or more</strong>. If the treatment does nothing
+(<span class="math inline">\(\mu = 170\)</span>), that happens only 5%
+of the time: that is <span class="math inline">\(\alpha\)</span>.</li>
+<li><strong>Switch to the truth.</strong> If <span
+class="math inline">\(\mu = 175\)</span>, then <span
+class="math inline">\(\bar{x}\)</span> is normal with mean 175 and <span
+class="math inline">\(SE = 2\)</span>. The cutoff, measured from 175, is
+<span class="math display">\[z^* = \frac{\bar{x}^* - \mu_{true}}{SE} =
+\frac{173.29 - 175}{2} = \frac{-1.71}{2} = -0.855 \approx -0.86\]</span>
+(<span class="math inline">\(-0.855\)</span> is exactly halfway between
+two table rows; rounding it to <span
+class="math inline">\(-0.86\)</span> is the usual choice.)</li>
+<li><strong>The power, then <span
+class="math inline">\(\beta\)</span>.</strong> Upper-tailed, so the
+power is the area to the <strong>right</strong> of <span
+class="math inline">\(z^*\)</span>: <span
+class="math display">\[\text{Power} = P(\bar{x} \geq 173.29 \mid \mu =
+175) = P(Z \geq -0.86) = 1 - 0.1949 = 0.8051\]</span> <span
+class="math display">\[\beta = 1 - 0.8051 = 0.1949\]</span> (Software,
+which does not round <span class="math inline">\(z^*\)</span>, gives
+0.8038. The table answer differs slightly only because <span
+class="math inline">\(-0.855\)</span> had to be rounded.)</li>
+</ol>
+<p><strong>Interpret.</strong> If the heat treatment really raises the
+mean hardness to 175, a test of 25 bars rejects <span
+class="math inline">\(H_0\)</span> about 81% of the time. The other 19%
+of the time it misses a real improvement: a <strong>Type II
+error</strong>. That just clears the usual 80% target.</p>
+<p><img src="assets/l27_power_rebar.png" alt="Two bell curves for the mean hardness of 25 bars, each with standard error 2. The left curve, labelled H0 true, mu = 170, is centred at 170; the right curve, labelled one possible truth, mu = 175, is centred at 175. A vertical line at the cutoff, x-bar star = 173.29, splits them: the test rejects H0 for sample means to the right of it. Under the H0 curve, the small area right of the cutoff is red and labelled alpha = 0.05. Under the true curve, the area right of the cutoff is green and labelled power = 0.81, and the area left of the cutoff is grey and labelled beta = 0.19." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>With 64 bars.</strong> Only steps 2 to 5 change: <span
+class="math display">\[SE = \frac{10}{\sqrt{64}} = \frac{10}{8} = 1.25,
+\qquad \bar{x}^* = 170 + 1.645 \times 1.25 = 172.06\]</span> <span
+class="math display">\[z^* = \frac{172.06 - 175}{1.25} = -2.35, \qquad
+\text{Power} = P(Z \geq -2.35) = 1 - 0.0094 = 0.9906\]</span></p>
+<p>More bars shrink the SE from 2 to 1.25. The cutoff moves closer to
+170, and the two curves overlap less, so the power rises from 0.81 to
+0.99 while <span class="math inline">\(\alpha\)</span> stays at 0.05.
+That is the first of the “two ways to raise power”: a bigger sample. The
+other, a larger <span class="math inline">\(\alpha\)</span>, would also
+move the cutoff left, but only by allowing more false alarms.</p>
+</div>
 <div id="try-it-out-1" class="section level2">
 <h2>Try it out</h2>
 <ul>
@@ -2847,11 +3073,888 @@ higher.</li>
 </ol>
 </div>
 </div>
+<div id="two-sample-tests" class="section level1">
+<h1>Two-sample tests</h1>
+<p>Every test so far has been about <strong>one</strong> population: one
+mean <span class="math inline">\(\mu\)</span> or one proportion <span
+class="math inline">\(p\)</span>, compared with a claimed value.
+Analysing a single variable like this is called
+<strong>univariate</strong> analysis. But most studies <strong>compare
+two groups</strong>. The textbook’s examples (<em><a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-introduction">OpenStax
+Chapter 10 introduction</a></em>):</p>
+<ul>
+<li>researchers give one group aspirin and another a placebo, then
+compare their heart attack rates;</li>
+<li>studies compare diet and exercise programs;</li>
+<li>politicians compare the share of voters from different income
+brackets who might vote for them;</li>
+<li>students want to know whether SAT or GRE prep courses really raise
+scores.</li>
+</ul>
+<p>A comparison like this involves <strong>two variables</strong>:</p>
+<ul>
+<li>an <strong>explanatory variable</strong>, which defines the groups
+(aspirin or placebo; income bracket), and</li>
+<li>a <strong>response variable</strong>, the outcome we measure in each
+group (heart attack or not; votes for us or not).</li>
+</ul>
+<p>Analyses of two variables are <strong>bivariate</strong>. A
+<strong>two-sample test</strong> treats the observations in each group
+as a sample from its own population, <strong>population 1</strong> and
+<strong>population 2</strong>, and compares the same parameter in both.
+The parameter we test is the <strong>difference</strong>:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+One-sample test
+</th>
+<th style="text-align:left;">
+Two-sample test
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+the question
+</td>
+<td style="text-align:left;">
+is a parameter equal to a claimed value?
+</td>
+<td style="text-align:left;">
+are two populations the same?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+the parameter
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu\)</span> or <span
+class="math inline">\(p\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1 - \mu_2\)</span> or <span
+class="math inline">\(p_1 - p_2\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+the usual null hypothesis
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: \mu = \mu_0\)</span> or <span
+class="math inline">\(H_0: p = p_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> or <span
+class="math inline">\(H_0: p_1 - p_2 = 0\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+an example
+</td>
+<td style="text-align:left;">
+is the mean commute 20 minutes?
+</td>
+<td style="text-align:left;">
+do drug and placebo patients recover equally often?
+</td>
+</tr>
+</tbody>
+</table>
+<p>The null hypothesis is usually <strong>no difference</strong>: the
+two populations have the same mean or the same proportion. Just as
+before, the test asks whether the data are surprising if that null model
+is true.</p>
+<div id="one-population-or-two" class="section level2">
+<h2>One population or two?</h2>
+<p><em>Try it.</em> For each question, decide whether it needs a
+one-sample or a two-sample test.</p>
+<ul>
+<li>Is the mean commute of UI students more than 20 minutes?
+<em>Answer:</em> one sample. One population, one mean, compared with a
+claimed value.</li>
+<li>Do patients on a new drug recover more often than patients on a
+placebo? <em>Answer:</em> two samples. Two populations (drug, placebo);
+compare <span class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span>.</li>
+<li>Do Moscow and Pullman voters support a new levy at the same rate?
+<em>Answer:</em> two samples. Two populations (the two towns); compare
+<span class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span>.</li>
+</ul>
+</div>
+<div id="independent-and-dependent-samples" class="section level2">
+<h2>Independent and dependent samples</h2>
+<p>How the two samples were collected decides which test we use (<em><a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-introduction">OpenStax
+Chapter 10 introduction</a></em>):</p>
+<ul>
+<li><strong>Independent samples.</strong> The values selected from one
+population are <strong>not related</strong> in any way to the values
+selected from the other. Two separate random samples, or an experiment
+that <strong>randomly assigns</strong> subjects to two groups, give
+independent samples.</li>
+<li><strong>Dependent samples (matched pairs).</strong> Each value in
+one sample is <strong>paired</strong> with a value in the other. This
+happens when the same subjects are measured twice (before and after), or
+when subjects come in natural pairs (twins, husband and wife, two eyes
+of one patient).</li>
+</ul>
+<p><strong>Why it matters.</strong> The two designs need different
+standard errors. With independent samples, the two samples vary
+separately, and their variances add (below). With matched pairs, the two
+values in a pair move together, so we work with the
+<strong>differences</strong> within each pair. The sign test was one
+test for matched pairs; the paired <span
+class="math inline">\(t\)</span>-test comes on Wednesday. <strong>The
+rest of this page is about independent samples only.</strong></p>
+<p><em>Try it.</em> Independent or dependent?</p>
+<ul>
+<li>The blood pressure of 30 patients, measured before and after a new
+medication. <em>Answer:</em> dependent. The same 30 patients are
+measured twice, so each “after” is paired with a “before”.</li>
+<li>Exam scores of 40 randomly chosen students from each of two
+sections. <em>Answer:</em> independent. Two separate random samples; no
+student in one section is linked to one in the other.</li>
+<li>Twin pairs: one twin of each pair gets a tutoring program, the other
+does not. <em>Answer:</em> dependent. Each child is matched with their
+twin.</li>
+</ul>
+</div>
+</div>
+<div id="comparing-two-proportions" class="section level1">
+<h1>Comparing two proportions</h1>
+<p><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions">OpenStax
+Section 10.3</a>.)</em> We often want to compare the share of two
+populations that has some characteristic: the proportion of patients who
+still have symptoms on two medications, or the proportion of men and
+women who skip seat belts. If two <strong>sample</strong> proportions
+differ, that may be a real difference between the populations, or it may
+be chance. A hypothesis test tells us which explanation the data
+support.</p>
+<p>The data are <strong>two independent simple random samples</strong>,
+of sizes <span class="math inline">\(n_1\)</span> and <span
+class="math inline">\(n_2\)</span>, one from each population. In each
+sample we count the <strong>successes</strong>, the observations with
+the characteristic:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Population
+</th>
+<th style="text-align:left;">
+Population proportion
+</th>
+<th style="text-align:left;">
+Sample size
+</th>
+<th style="text-align:left;">
+Count of successes
+</th>
+<th style="text-align:left;">
+Sample proportion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(X_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p}_1 = X_1 / n_1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(X_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p}_2 = X_2 / n_2\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The parameter is the <strong>difference in population
+proportions</strong>, <span class="math inline">\(p_1 - p_2\)</span>,
+and its estimate is the difference in sample proportions, <span
+class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span>.</p>
+<div id="the-sampling-distribution-of-hatp_1---hatp_2"
+class="section level2">
+<h2>The sampling distribution of <span class="math inline">\(\hat{p}_1 -
+\hat{p}_2\)</span></h2>
+<p>Like every estimate, <span class="math inline">\(\hat{p}_1 -
+\hat{p}_2\)</span> changes from sample to sample. Its sampling
+distribution has:</p>
+<ul>
+<li><strong>Centre</strong> <span class="math inline">\(p_1 -
+p_2\)</span>. Each <span class="math inline">\(\hat{p}\)</span> is
+centred at its own <span class="math inline">\(p\)</span>, so on average
+the difference of the estimates is the difference of the
+parameters.</li>
+<li><strong>Spread.</strong> From the one-sample case, <span
+class="math inline">\(\hat{p}_1\)</span> has variance <span
+class="math inline">\(p_1(1-p_1)/n_1\)</span> and <span
+class="math inline">\(\hat{p}_2\)</span> has variance <span
+class="math inline">\(p_2(1-p_2)/n_2\)</span>. Because the samples are
+<strong>independent, the variances add</strong>, even though we subtract
+the estimates. Subtracting one uncertain number from another gives a
+result that is more uncertain than either, not less. So <span
+class="math display">\[SE(\hat{p}_1 - \hat{p}_2) =
+\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}\]</span></li>
+<li><strong>Shape</strong>: approximately normal when both samples are
+large.</li>
+</ul>
+<p>Putting these together, for large samples, <span
+class="math display">\[\hat{p}_1 - \hat{p}_2 \sim N\left(p_1 - p_2,\
+\sqrt{\frac{p_1(1-p_1)}{n_1} +
+\frac{p_2(1-p_2)}{n_2}}\right)\]</span></p>
+</div>
+<div id="the-hypotheses" class="section level2">
+<h2>The hypotheses</h2>
+<p>The null hypothesis is that the two population proportions are
+<strong>equal</strong>: <span class="math display">\[H_0: p_1 = p_2,
+\qquad \text{which is the same as} \qquad H_0: p_1 - p_2 = 0\]</span>
+The alternative takes one of three forms, just as in the one-sample
+tests:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative hypothesis
+</th>
+<th style="text-align:left;">
+Tail
+</th>
+<th style="text-align:left;">
+In words
+</th>
+<th style="text-align:left;">
+Reject <span class="math inline">\(H_0\)</span> when
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+upper-tailed
+</td>
+<td style="text-align:left;">
+population 1 has the larger proportion
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} \geq Z_{1-\alpha}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
+</td>
+<td style="text-align:left;">
+lower-tailed
+</td>
+<td style="text-align:left;">
+population 1 has the smaller proportion
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} \leq Z_{\alpha}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+two-sided
+</td>
+<td style="text-align:left;">
+the proportions differ, in either direction
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(|z_{obs}| \geq Z_{1-\alpha/2}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Which population is “1” is our choice; the alternative must follow
+it. If population 1 is expected to have the <strong>smaller</strong>
+proportion, the test is lower-tailed.</p>
+</div>
+<div id="the-test-statistic-if-h_0-is-true" class="section level2">
+<h2>The test statistic, if <span class="math inline">\(H_0\)</span> is
+true</h2>
+<p>We standardize the estimate, as always: (estimate <span
+class="math inline">\(-\)</span> value under <span
+class="math inline">\(H_0\)</span>) / <span
+class="math inline">\(SE\)</span>. The value under <span
+class="math inline">\(H_0\)</span> is <span class="math inline">\(p_1 -
+p_2 = 0\)</span>. For the <span class="math inline">\(SE\)</span> we use
+what <span class="math inline">\(H_0\)</span> says:</p>
+<ol style="list-style-type: decimal">
+<li><strong>If <span class="math inline">\(H_0\)</span> is true there is
+only one proportion.</strong> Call it <span
+class="math inline">\(p\)</span>: <span class="math inline">\(p_1 = p_2
+= p\)</span>. The <span class="math inline">\(SE\)</span> becomes <span
+class="math display">\[\sqrt{\frac{p(1-p)}{n_1} + \frac{p(1-p)}{n_2}} =
+\sqrt{p(1-p)\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}\]</span></li>
+<li><strong>Estimate that one <span class="math inline">\(p\)</span>
+from both samples together.</strong> If the populations are the same,
+the two samples are really one big sample, so we <strong>pool</strong>
+them. The <strong>pooled proportion</strong> is all the successes over
+all the observations: <span class="math display">\[\hat{p} = \frac{X_1 +
+X_2}{n_1 + n_2}\]</span> (written <span
+class="math inline">\(p_c\)</span>, for “combined”, in the
+textbook).</li>
+<li><strong>The pooled SE</strong> puts <span
+class="math inline">\(\hat{p}\)</span> into the <span
+class="math inline">\(SE\)</span> from step 1: <span
+class="math display">\[SE_0 =
+\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} +
+\frac{1}{n_2}\right)}\]</span></li>
+</ol>
+<p>The test statistic is <span class="math display">\[z_{obs} =
+\frac{(\hat{p}_1 - \hat{p}_2) - 0}{SE_0} = \frac{\hat{p}_1 -
+\hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} +
+\frac{1}{n_2}\right)}}\]</span> and, <strong>if <span
+class="math inline">\(H_0\)</span> is true</strong> and the samples are
+large, <span class="math inline">\(z_{obs} \sim N(0, 1)\)</span>. So the
+P-value comes from the <span class="math inline">\(z\)</span>-table,
+exactly as in the one-sample test for a proportion. As there, the <span
+class="math inline">\(SE\)</span> is built from what <span
+class="math inline">\(H_0\)</span> says (<span
+class="math inline">\(p_0\)</span> there, the pooled <span
+class="math inline">\(\hat{p}\)</span> here), not from the two separate
+<span class="math inline">\(\hat{p}\)</span>’s.</p>
+</div>
+<div id="assumptions" class="section level2">
+<h2>Assumptions</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Two independent random samples</strong>, one from each
+population (or two groups formed by random assignment).</li>
+<li><strong>Large samples.</strong> With the pooled <span
+class="math inline">\(\hat{p}\)</span>, all four of <span
+class="math display">\[n_1\hat{p}, \qquad n_1(1-\hat{p}), \qquad
+n_2\hat{p}, \qquad n_2(1-\hat{p})\]</span> are at least 15. This is the
+course’s <span class="math inline">\(np_0 \geq 15\)</span> rule from the
+one-sample test, applied to both samples. (The textbook asks only for at
+least five successes and five failures in each sample; we use the
+stricter rule.)</li>
+<li>Each population is much larger than its sample (the textbook
+suggests at least 10 to 20 times), so sampling without replacement does
+not matter.</li>
+</ol>
+</div>
+<div id="the-p-value-and-the-five-steps" class="section level2">
+<h2>The P-value and the five steps</h2>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative hypothesis
+</th>
+<th style="text-align:left;">
+P-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \geq z_{obs} \mid H_0 \text{
+true})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(Z \leq z_{obs} \mid H_0 \text{
+true})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2 \times P(Z \geq |z_{obs}| \mid H_0 \text{
+true})\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Independent random samples; compute
+<span class="math inline">\(\hat{p}\)</span> and check the four
+counts.</li>
+<li><strong>Hypotheses.</strong> Define <span
+class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span> in words, then <span
+class="math inline">\(H_0: p_1 - p_2 = 0\)</span> and the
+alternative.</li>
+<li><strong>Test statistic.</strong> <span
+class="math inline">\(\hat{p}_1\)</span>, <span
+class="math inline">\(\hat{p}_2\)</span>, <span
+class="math inline">\(SE_0\)</span>, then <span
+class="math inline">\(z_{obs}\)</span>.</li>
+<li><strong>P-value.</strong> From the <span
+class="math inline">\(z\)</span>-table, using the tail(s) that <span
+class="math inline">\(H_A\)</span> points to.</li>
+<li><strong>Decision.</strong> Reject <span
+class="math inline">\(H_0\)</span> if the P-value <span
+class="math inline">\(&lt; \alpha\)</span>; state the conclusion in the
+context of the problem.</li>
+</ol>
+</div>
+<div id="a-confidence-interval-for-p_1---p_2" class="section level2">
+<h2>A confidence interval for <span class="math inline">\(p_1 -
+p_2\)</span></h2>
+<p>To <strong>estimate</strong> the difference rather than test it, we
+do not assume <span class="math inline">\(H_0\)</span>, so there is no
+reason to pool. The interval uses the two separate sample proportions:
+<span class="math display">\[(\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2}
+\times \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\]</span> As on Wednesday, an
+interval that leaves out <strong>0</strong> matches a two-sided test
+that rejects <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span>.
+For proportions the match is close but not exact, because the test’s
+<span class="math inline">\(SE_0\)</span> is pooled and the interval’s
+<span class="math inline">\(SE\)</span> is not.</p>
+</div>
+<div id="example-medication-for-hives" class="section level2">
+<h2>Example: medication for hives</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions">OpenStax
+Introductory Statistics 2e, Section 10.3, Example 10.8</a>:</em></p>
+<blockquote>
+<p>Two types of medication for hives are being tested to determine if
+there is a difference in the proportions of adult patient reactions.
+Twenty out of a random sample of 200 adults given medication A still had
+hives 30 minutes after taking the medication. Twelve out of another
+random sample of 200 adults given medication B still had hives 30
+minutes after taking the medication. Test at a 1% level of
+significance.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Medication
+</th>
+<th style="text-align:right;">
+Still had hives
+</th>
+<th style="text-align:right;">
+No hives
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+180
+</td>
+<td style="text-align:right;">
+200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+188
+</td>
+<td style="text-align:right;">
+200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Both
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+368
+</td>
+<td style="text-align:right;">
+400
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question:</strong> is there a difference between the
+medications in the proportion of adults who still have hives after 30
+minutes?</p>
+<p><em>Answer.</em></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Two independent random samples of
+adults, one for each medication. The pooled proportion is <span
+class="math display">\[\hat{p} = \frac{X_A + X_B}{n_A + n_B} = \frac{20
++ 12}{200 + 200} = \frac{32}{400} = 0.08\]</span> and the four counts
+are <span class="math display">\[n_A\hat{p} = 200(0.08) = 16, \quad
+n_A(1-\hat{p}) = 200(0.92) = 184, \quad n_B\hat{p} = 16, \quad
+n_B(1-\hat{p}) = 184\]</span> all at least 15 (the smallest, 16, only
+just).</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(p_A\)</span> = the proportion of all adults with
+hives who still have hives 30 minutes after medication A; <span
+class="math inline">\(p_B\)</span> the same for medication B. “Is there
+a difference” has no direction, so the test is
+<strong>two-sided</strong>: <span class="math display">\[H_0: p_A - p_B
+= 0 \qquad H_A: p_A - p_B \neq 0\]</span></li>
+<li><strong>Test statistic.</strong> The sample proportions are <span
+class="math display">\[\hat{p}_A = \frac{20}{200} = 0.10, \qquad
+\hat{p}_B = \frac{12}{200} = 0.06, \qquad \hat{p}_A - \hat{p}_B =
+0.04\]</span> The pooled standard error is <span
+class="math display">\[SE_0 = \sqrt{0.08(1 - 0.08)\left(\frac{1}{200} +
+\frac{1}{200}\right)} = \sqrt{0.08 \times 0.92 \times 0.01} =
+\sqrt{0.000736} = 0.02713\]</span> so <span
+class="math display">\[z_{obs} = \frac{0.04 - 0}{0.02713} =
+1.47\]</span> Medication A’s sample proportion is 1.47 standard errors
+above B’s.</li>
+<li><strong>P-value.</strong> Two-sided, so both tails count. The <span
+class="math inline">\(z\)</span>-table gives <span
+class="math inline">\(P(Z \leq 1.47) = 0.9292\)</span>, so <span
+class="math display">\[P(Z \geq 1.47) = 1 - 0.9292 = 0.0708, \qquad
+\text{P-value} = 2 \times 0.0708 = 0.1416\]</span> (The textbook’s
+calculator, which does not round <span
+class="math inline">\(z_{obs}\)</span>, gives 0.1404.)</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.1416 &gt;
+0.01\)</span>: <strong>do not reject <span
+class="math inline">\(H_0\)</span></strong>. At the 1% level, the data
+do not give evidence of a difference between the medications in the
+proportion of adults who still have hives after 30 minutes. A difference
+of 4 percentage points in samples of 200 is well within what chance
+alone produces if the medications work equally well.</li>
+</ol>
+<p><img src="assets/l27_hives.png" alt="A standard normal curve labelled: if H0 is true, z_obs follows N(0, 1). Dashed lines at -1.47 and 1.47. The area to the right of 1.47 is red and labelled P(Z &gt;= 1.47) = 0.0708, and the area to the left of -1.47 is red and labelled P(Z &lt;= -1.47) = 0.0708. A label in the middle reads P-value = 2(0.0708) = 0.1416. The horizontal axis is z_obs for medication A minus medication B, ours 1.47." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>The same question as an interval.</strong> A 99% confidence
+interval for <span class="math inline">\(p_A - p_B\)</span> uses the
+unpooled <span class="math inline">\(SE\)</span>: <span
+class="math display">\[SE = \sqrt{\frac{0.10(0.90)}{200} +
+\frac{0.06(0.94)}{200}} = 0.02706, \qquad ME = Z_{0.995} \times SE =
+2.576 \times 0.02706 = 0.0697\]</span> <span class="math display">\[0.04
+\pm 0.0697 = (-0.0297,\ 0.1097)\]</span> The interval contains 0, so “no
+difference” is a plausible value, which agrees with the test.</p>
+</div>
+<div id="example-covid-19-and-womens-first-authored-manuscripts"
+class="section level2">
+<h2>Example: COVID-19 and women’s first-authored manuscripts</h2>
+<p><em>From the 2024 STAT 251 notes, using data from Mogensen, Lee and
+Carlos (2021):</em></p>
+<blockquote>
+<p>When the COVID-19 pandemic sent faculty to work from home, women in
+academic medicine reported submitting fewer manuscripts and carrying a
+larger share of childcare. A study in the <em>Journal of the American
+College of Radiology</em> compared the manuscripts submitted to the
+journal in April to October 2019, before the pandemic, with those
+submitted in April to October 2020, after it began. Of 311 manuscripts
+in 2019, 140 had a woman as first author; of 441 in 2020, 172 did.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Period
+</th>
+<th style="text-align:right;">
+Female first author
+</th>
+<th style="text-align:right;">
+Male first author
+</th>
+<th style="text-align:right;">
+All manuscripts
+</th>
+<th style="text-align:left;">
+Proportion female
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+April to October 2019 (before)
+</td>
+<td style="text-align:right;">
+140
+</td>
+<td style="text-align:right;">
+171
+</td>
+<td style="text-align:right;">
+311
+</td>
+<td style="text-align:left;">
+140/311 = 0.4502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+April to October 2020 (after)
+</td>
+<td style="text-align:right;">
+172
+</td>
+<td style="text-align:right;">
+269
+</td>
+<td style="text-align:right;">
+441
+</td>
+<td style="text-align:left;">
+172/441 = 0.3900
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question:</strong> at the 5% level, did the proportion of
+manuscripts with a female first author <strong>fall</strong> after the
+pandemic began?</p>
+<p><em>Answer.</em></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> These are all the manuscripts sent to
+one journal, not random samples. We treat each period’s manuscripts as
+if they were a sample of the manuscripts that period could have
+produced, and the conclusion is only as good as that assumption. The two
+periods’ manuscripts are independent. The pooled proportion is <span
+class="math display">\[\hat{p} = \frac{172 + 140}{441 + 311} =
+\frac{312}{752} = 0.4149\]</span> and the counts are <span
+class="math inline">\(441(0.4149) = 183\)</span>, <span
+class="math inline">\(441(0.5851) = 258\)</span>, <span
+class="math inline">\(311(0.4149) = 129\)</span> and <span
+class="math inline">\(311(0.5851) = 182\)</span>: all far above 15.</li>
+<li><strong>Hypotheses.</strong> Let population 1 be the
+<strong>2020</strong> manuscripts and population 2 the
+<strong>2019</strong> manuscripts; <span
+class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span> are the proportions with a female
+first author. A fall means <span class="math inline">\(p_1 &lt;
+p_2\)</span>, so the test is <strong>lower-tailed</strong>: <span
+class="math display">\[H_0: p_1 - p_2 = 0 \qquad H_A: p_1 - p_2 &lt;
+0\]</span></li>
+<li><strong>Test statistic.</strong> <span
+class="math display">\[\hat{p}_1 = \frac{172}{441} = 0.3900, \qquad
+\hat{p}_2 = \frac{140}{311} = 0.4502, \qquad \hat{p}_1 - \hat{p}_2 =
+-0.0602\]</span> <span class="math display">\[SE_0 = \sqrt{0.4149(1 -
+0.4149)\left(\frac{1}{441} + \frac{1}{311}\right)} = \sqrt{0.2428 \times
+0.00548} = 0.03648\]</span> <span class="math display">\[z_{obs} =
+\frac{-0.0602 - 0}{0.03648} = -1.65\]</span></li>
+<li><strong>P-value.</strong> Lower-tailed: <span
+class="math display">\[P(Z \leq -1.65 \mid H_0 \text{ true}) =
+0.0495\]</span> (Without rounding <span
+class="math inline">\(z_{obs}\)</span>, software gives 0.0496.)</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0495 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. At the 5% level, the data
+are evidence that the proportion of manuscripts with a female first
+author fell after the pandemic began, from about 45% to about 39%.</li>
+</ol>
+<p><strong>A close call.</strong> The critical value is <span
+class="math inline">\(Z_{0.05} = -1.645\)</span> and <span
+class="math inline">\(z_{obs} = -1.648\)</span>, just past it, so the
+P-value is just under 0.05. A few manuscripts the other way would change
+the decision. “Reject at <span class="math inline">\(\alpha =
+0.05\)</span>” is honest, but this is weak evidence, and because the
+data are observational it says nothing about <em>why</em> the share
+fell.</p>
+</div>
+<div id="practice-seat-belts" class="section level2">
+<h2>Practice: seat belts</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions">OpenStax
+Introductory Statistics 2e, Section 10.3, Example 10.9</a>:</em></p>
+<blockquote>
+<p>A research study was conducted about gender differences regarding the
+use of seat belts in motor vehicles. The researcher believed that the
+proportion of women not wearing seat belts is less than the proportion
+of men not wearing seat belts. The data collected represents a random
+sample of U.S. adults. Is the proportion of women not wearing seat belts
+less than the proportion of men not wearing seat belts? Test at a 1%
+level of significance.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Men
+</th>
+<th style="text-align:left;">
+Women
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Do not wear seat belts
+</td>
+<td style="text-align:left;">
+183
+</td>
+<td style="text-align:left;">
+156
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total surveyed
+</td>
+<td style="text-align:left;">
+2,231
+</td>
+<td style="text-align:left;">
+2,169
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Answer.</em></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> A random sample of U.S. adults; the
+men and women in it are independent groups. The pooled proportion is
+<span class="math display">\[\hat{p} = \frac{156 + 183}{2169 + 2231} =
+\frac{339}{4400} = 0.0770\]</span> and the counts are <span
+class="math inline">\(2169(0.0770) = 167\)</span>, <span
+class="math inline">\(2169(0.9230) = 2,002\)</span>, <span
+class="math inline">\(2231(0.0770) = 171.8\)</span> and <span
+class="math inline">\(2231(0.9230) = 2,059.2\)</span>: all at least
+15.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(p_W\)</span> = the proportion of all U.S. women
+who do not wear seat belts; <span class="math inline">\(p_M\)</span> the
+same for men. The researcher expects women’s proportion to be
+<strong>less</strong>, so the test is <strong>lower-tailed</strong>:
+<span class="math display">\[H_0: p_W - p_M = 0 \qquad H_A: p_W - p_M
+&lt; 0\]</span></li>
+<li><strong>Test statistic.</strong> <span
+class="math display">\[\hat{p}_W = \frac{156}{2169} = 0.0719, \qquad
+\hat{p}_M = \frac{183}{2231} = 0.0820, \qquad \hat{p}_W - \hat{p}_M =
+-0.0101\]</span> <span class="math display">\[SE_0 = \sqrt{0.0770(1 -
+0.0770)\left(\frac{1}{2169} + \frac{1}{2231}\right)} = \sqrt{0.0711
+\times 0.000909} = 0.00804\]</span> <span class="math display">\[z_{obs}
+= \frac{-0.0101 - 0}{0.00804} = -1.26\]</span></li>
+<li><strong>P-value.</strong> Lower-tailed: <span
+class="math inline">\(P(Z \leq -1.26 \mid H_0 \text{ true}) =
+0.1038\)</span>. (The textbook’s calculator gives 0.1045.)</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.1038 &gt;
+0.01\)</span>: <strong>do not reject <span
+class="math inline">\(H_0\)</span></strong>. At the 1% level, the data
+do not give evidence that the proportion of women who do not wear seat
+belts is lower than the proportion of men. The samples are large, but
+the difference, about 1 percentage point (7.2% vs 8.2%), is small enough
+for chance to explain.</li>
+</ol>
+</div>
+<div id="practice-electric-vehicles" class="section level2">
+<h2>Practice: electric vehicles</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions">OpenStax
+Introductory Statistics 2e, Section 10.3, Example 10.10</a>:</em></p>
+<blockquote>
+<p>A marketing firm claims that the proportion of younger adults who own
+electric vehicles is greater than the proportion of older adults who own
+electric vehicles. A random sample of U.S. adults was taken. Out of a
+sample of 232 older adults (aged 35 or older), 5% own electric vehicles.
+Out of a sample of 1,343 young adults (aged 34 or younger), 10% own
+electric vehicles. Test at the 5% level of significance.</p>
+</blockquote>
+<p>The book rounds the percentages; its own calculator instructions use
+the counts <strong>135 of 1,343</strong> younger adults and <strong>12
+of 232</strong> older adults, and so do we.</p>
+<p><em>Answer.</em></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> A random sample of U.S. adults; the
+two age groups are independent. The pooled proportion is <span
+class="math display">\[\hat{p} = \frac{135 + 12}{1343 + 232} =
+\frac{147}{1575} = 0.0933\]</span> and the counts are <span
+class="math inline">\(1343(0.0933) = 125.3\)</span>, <span
+class="math inline">\(1343(0.9067) = 1,217.7\)</span>, <span
+class="math inline">\(232(0.0933) = 21.6\)</span> and <span
+class="math inline">\(232(0.9067) = 210.4\)</span>. The smallest, 21.6,
+is above 15, so the samples are large enough, though the older group’s
+small number of EV owners (12) is the one to watch.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(p_Y\)</span> = the proportion of all younger U.S.
+adults who own an EV; <span class="math inline">\(p_O\)</span> the same
+for older adults. The firm claims <span
+class="math inline">\(p_Y\)</span> is <strong>greater</strong>, so the
+test is <strong>upper-tailed</strong>: <span class="math display">\[H_0:
+p_Y - p_O = 0 \qquad H_A: p_Y - p_O &gt; 0\]</span></li>
+<li><strong>Test statistic.</strong> <span
+class="math display">\[\hat{p}_Y = \frac{135}{1343} = 0.1005, \qquad
+\hat{p}_O = \frac{12}{232} = 0.0517, \qquad \hat{p}_Y - \hat{p}_O =
+0.0488\]</span> <span class="math display">\[SE_0 = \sqrt{0.0933(1 -
+0.0933)\left(\frac{1}{1343} + \frac{1}{232}\right)} = \sqrt{0.0846
+\times 0.00505} = 0.02068\]</span> <span class="math display">\[z_{obs}
+= \frac{0.0488 - 0}{0.02068} = 2.36\]</span></li>
+<li><strong>P-value.</strong> Upper-tailed: <span
+class="math display">\[P(Z \geq 2.36 \mid H_0 \text{ true}) = 1 - 0.9909
+= 0.0091\]</span> (The textbook’s calculator gives 0.0092.)</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0091 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. At the 5% level, the data
+are evidence that a larger proportion of younger adults than older
+adults own electric vehicles, about 10% against 5%.</li>
+</ol>
+</div>
+</div>
 <div id="sources" class="section level1">
 <h1>Sources</h1>
 <ul>
-<li>All examples are from OpenStax <em>Introductory Statistics 2e</em>,
-Chapter 9: the bench press (Example 9.15), glass conductivity (Example
+<li>The Chapter 9 examples are from OpenStax <em>Introductory Statistics
+2e</em>: the bench press (Example 9.15), glass conductivity (Example
 9.20), the baker’s bread (Example 9.9 and Try It 9.9), the composite
 hypotheses (Table 9.1 and Examples 9.1, 9.3 and 9.8), the errors (Table
 9.2, Examples 9.5, 9.7 and 9.8, Try It 9.6), cell phone owners (Try It
@@ -2861,8 +3964,24 @@ assumption for illustration.</li>
 <li>The couples’ decision ratings come from the 2024 STAT 251 notes; the
 stretching program and the coffee blend are hypothetical. The textbook
 does not cover the sign test.</li>
+<li>The rebar power problem is adapted from Penn State STAT 415,
+<em>Introduction to Mathematical Statistics</em>, Lesson 10, Example
+10.4 (online.stat.psu.edu/stat415). The story, <span
+class="math inline">\(\sigma\)</span>, <span
+class="math inline">\(n\)</span> and the hypotheses are theirs; <span
+class="math inline">\(\alpha = 0.05\)</span>, the possible truth <span
+class="math inline">\(\mu = 175\)</span> and the 64-bar version are
+ours.</li>
+<li>The two-proportion examples are from OpenStax Chapter 10: the hives
+medications (Example 10.8), seat belts (Example 10.9) and electric
+vehicles (Example 10.10, with the counts from the book’s calculator
+instructions). The COVID-19 manuscripts example is from the 2024 STAT
+251 notes, using data from Mogensen, M. A., Lee, C. I., and Carlos, R.
+C. (2021), “The impact of the COVID-19 pandemic on journal scholarly
+activity among female contributors”, <em>Journal of the American College
+of Radiology</em> 18(7), 1044–1047.</li>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
-9.1–9.5.</li>
+9.1–9.5, the Chapter 10 introduction and Section 10.3.</li>
 </ul>
 </div>
 

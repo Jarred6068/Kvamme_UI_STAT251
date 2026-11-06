@@ -91,11 +91,11 @@ Chapter 8: Sections 8.1 - 8.3, p. 405 - 426
 Chapter 9: Sections 9.1 - 9.6, p. 461 - 485
 
 ## Week 11
-*Composite hypotheses; confidence intervals and tests; types of error and power; introduction to two-sample tests*
+*Composite hypotheses; confidence intervals and tests; types of error and power; introduction to two-sample tests; comparing two independent proportions*
 
 Chapter 9: Section 9.2 (Type I and Type II errors), p. 464 - 465
 
-Chapter 10: Introduction, p. 511
+Chapter 10: Introduction, p. 511; Section 10.3 (Comparing Two Independent Population Proportions), p. 523 - 527
 
 The sign test is not in the textbook; see the lecture notes for that week.
 

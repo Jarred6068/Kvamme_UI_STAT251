@@ -132,6 +132,54 @@ stopifnot(zc_n == c(-2.08, -2.94, -4.16), n80 == c(10, 22, 75),
           round(pwx(c(15, 30, 60), 16), 2) == c(pw(), pw(n = 30), pw(n = 60)))
 ```
 
+```{r lecture27-setup, include=FALSE}
+# every number in the Lecture 27 sections is checked here (and in assets/make_lecture27_figures.R)
+
+# power in five steps: the rebar (adapted from Penn State STAT 415, Example 10.4): sigma = 10,
+# H0: mu = 170 vs HA: mu > 170; alpha = 0.05 and the possible truth mu = 175 are our choices.
+# z* = -1.71 / 2 = -0.855 exactly, a rounding tie: the hand method rounds it away from 0, to -0.86
+se_r <- 10 / sqrt(25); cut_r <- round(170 + 1.645 * se_r, 2); zs_raw <- (cut_r - 175) / se_r; zs_r <- -0.86
+pow_r <- round(1 - zt(zs_r), 4); pow_rx <- round(1 - pnorm(qnorm(0.95) - 5 / se_r), 4)
+se_r64 <- 10 / sqrt(64); cut_r64 <- round(170 + 1.645 * se_r64, 2); zs_r64 <- round((cut_r64 - 175) / se_r64, 2)
+pow_r64 <- round(1 - zt(zs_r64), 4)
+stopifnot(round(qnorm(0.95), 3) == 1.645, se_r == 2, cut_r == 173.29, near(zs_raw, -0.855, 1e-9),
+          zt(zs_r) == 0.1949, pow_r == 0.8051, pow_rx == 0.8038,
+          se_r64 == 1.25, cut_r64 == 172.06, zs_r64 == -2.35, zt(zs_r64) == 0.0094, pow_r64 == 0.9906,
+          near(1 - pnorm(qnorm(0.95) - 5 / se_r64), pow_r64, 1e-3))
+
+# two proportions, by hand: each p-hat and the pooled p-hat to 4 decimals, SE0 to 5, z_obs to 2;
+# the rounding never changes z_obs (checked against the unrounded value)
+tp <- function(x1, n1, x2, n2) {
+  p1 <- round(x1 / n1, 4); p2 <- round(x2 / n2, 4); pp <- round((x1 + x2) / (n1 + n2), 4)
+  se <- round(sqrt(pp * (1 - pp) * (1 / n1 + 1 / n2)), 5); d <- round(p1 - p2, 4)
+  ppx <- (x1 + x2) / (n1 + n2); zx <- (x1 / n1 - x2 / n2) / sqrt(ppx * (1 - ppx) * (1 / n1 + 1 / n2))
+  z <- round(d / se, 2); stopifnot(z == round(zx, 2))
+  list(p1 = p1, p2 = p2, pp = pp, se = se, d = d, z = z, zx = zx,
+       cnt = round(c(n1 * pp, n1 * (1 - pp), n2 * pp, n2 * (1 - pp)), 1))
+}
+# the hives medications (OpenStax Example 10.8): A vs B, two-sided, alpha = 0.01
+hv <- tp(20, 200, 12, 200)
+p_hv <- round(2 * (1 - zt(hv$z)), 4)
+stopifnot(hv$p1 == 0.1, hv$p2 == 0.06, hv$pp == 0.08, hv$cnt == c(16, 184, 16, 184), hv$se == 0.02713,
+          hv$z == 1.47, zt(1.47) == 0.9292, p_hv == 0.1416, round(2 * pnorm(-abs(hv$zx)), 4) == 0.1404)
+# its 99% confidence interval for pA - pB, with the unpooled SE
+seu_hv <- round(sqrt(0.1 * 0.9 / 200 + 0.06 * 0.94 / 200), 5); me_hv <- round(2.576 * seu_hv, 4)
+stopifnot(round(qnorm(0.995), 3) == 2.576, seu_hv == 0.02706, me_hv == 0.0697,
+          round(0.04 - me_hv, 4) == -0.0297, round(0.04 + me_hv, 4) == 0.1097)
+# COVID-19 and manuscripts (Mogensen et al. 2021, via the 2024 notes): 2020 vs 2019, lower-tailed, alpha = 0.05
+cv <- tp(172, 441, 140, 311)
+stopifnot(cv$p1 == 0.39, cv$p2 == 0.4502, cv$pp == 0.4149, min(cv$cnt) >= 15, cv$se == 0.03648, cv$d == -0.0602,
+          cv$z == -1.65, zt(-1.65) == 0.0495, round(pnorm(cv$zx), 4) == 0.0496, round(qnorm(0.05), 3) == -1.645)
+# seat belts (OpenStax Example 10.9): women vs men who do not wear one, lower-tailed, alpha = 0.01
+sb <- tp(156, 2169, 183, 2231)
+stopifnot(sb$p1 == 0.0719, sb$p2 == 0.082, sb$pp == 0.077, min(sb$cnt) >= 15, sb$se == 0.00804, sb$d == -0.0101,
+          sb$z == -1.26, zt(-1.26) == 0.1038, round(pnorm(sb$zx), 4) == 0.1045)
+# electric vehicles (OpenStax Example 10.10, the book's counts): younger vs older, upper-tailed, alpha = 0.05
+ev <- tp(135, 1343, 12, 232)
+stopifnot(ev$p1 == 0.1005, ev$p2 == 0.0517, ev$pp == 0.0933, min(ev$cnt) >= 15, ev$se == 0.02068, ev$d == 0.0488,
+          ev$z == 2.36, zt(2.36) == 0.9909, round(1 - zt(2.36), 4) == 0.0091, round(1 - pnorm(ev$zx), 4) == 0.0092)
+```
+
 <!--
   SCOPE OF THIS PAGE (Nov 2 2026). Week 11 per Course_Schedule.Rmd (the date source of truth):
     Mon Nov 2    Lecture 25  the three distributions behind a test (variable, estimate, test
@@ -148,7 +196,13 @@ stopifnot(zc_n == c(-2.08, -2.94, -4.16), n80 == c(10, 22, 75),
                              approximation for n/2 >= 15; the couples' ratings from the 2024 notes,
                              git show 27a60f5:docs/lecturemenu12.Rmd; hypothetical stretching-program
                              and coffee-blend practice)
-    Fri Nov 6    Lecture 27  introduction to two-sample tests for independent samples (to be written)
+    Fri Nov 6    Lecture 27  a Q&A review (Type I vs II, power, two ways to raise it); power in five
+                             steps (the rebar, adapted from Penn State STAT 415 Example 10.4 with our
+                             alpha = 0.05 and true mean 175); two-sample tests, independent vs dependent
+                             samples; the two-sample z-test for two proportions (pooled p-hat; OpenStax
+                             10.8 hives as the example, 10.9 seat belts and 10.10 EVs as practice; the
+                             COVID manuscripts from the 2024 notes, git show 27a60f5:docs/lecturemenu12.Rmd,
+                             notes only)
   Jarred moved types of errors and power from Wednesday to Monday, and confidence intervals and
   the sign test from Monday to Wednesday (Nov 2 2026). The sigma known / unknown tests for a mean
   carry over from Lecture 24 but have no section here (Jarred: they are on the Week 10 page).
@@ -165,6 +219,12 @@ stopifnot(zc_n == c(-2.08, -2.94, -4.16), n80 == c(10, 22, 75),
   far, "When is a t-test a stretch?", parametric vs non-parametric, four sign test slides (definition,
   hypotheses, test statistic with E(S)/SE(S)/z, P-value), the couples' data and example, the binomial
   P-value picture, and the stretching-program and coffee-blend practice.
+  Deck: lecture_slides/Week 11/2026/Week11_Lecture27_Slides_11_06_2026.pptx (19 slides, built from the
+  Lecture 26 slides as templates; figures from assets/make_lecture27_figures.R): Q&A Review, the five
+  power steps, the rebar practice and its picture, one population or two? (Q&A), two-sample tests,
+  independent vs dependent, independent or dependent? (Q&A), then two proportions: notation, hypotheses,
+  the sampling distribution of p1-hat - p2-hat, pooling under H0, assumptions and P-value, the hives data,
+  example and P-value picture, and the seat-belt and EV practice.
 
   This page replaced the 2024 Week 11 page (git show 320f927:docs/lecturemenu11.Rmd), whose
   decision-rule framing, error table and power picture it follows. Textbook: OpenStax
@@ -825,6 +885,99 @@ tab(data.frame(
 In practice, when the power is too low, statisticians usually **increase the sample size** while keeping
 $\alpha$ the same.
 
+## Calculating power, step by step
+
+The goggles example did the whole calculation in one pass. Here are the same moves broken into five steps.
+They work for any $z$-test for a mean with $\sigma$ known. Steps 1 to 3 use **only $H_0$**; step 4 is where
+we switch to one possible truth.
+
+1. **Set up.** Write down $H_0: \mu = \mu_0$, the alternative $H_A$, $\alpha$, $\sigma$ and $n$. Then choose
+   **one possible truth**, $\mu = \mu_{true}$: a value inside $H_A$ that would matter in practice. A power is
+   always a power *against* some $\mu_{true}$; a different choice gives a different power.
+2. **Find the SE.** $SE = \sigma / \sqrt{n}$. It is the same whether $H_0$ is true or not: only the centre of
+   the sampling distribution of $\bar{x}$ changes.
+3. **Find the cutoff, from $H_0$.** The test rejects when $z_{obs}$ passes the critical value. Turn that
+   critical value into a sample mean, $\bar{x}^*$, using $\mu_0$ (the table below).
+4. **Switch to the truth.** If $\mu = \mu_{true}$, then $\bar{x}$ is normal with mean $\mu_{true}$ and the same
+   $SE$. Measure the cutoff from this new centre:
+   $$z^* = \frac{\bar{x}^* - \mu_{true}}{SE}$$
+5. **Find the power, then $\beta$.** The power is the area of the true curve on the **reject** side of the
+   cutoff (the table below). Then $\beta = 1 - \text{power}$.
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Step = c('reject $H_0$ when', '3. the cutoff', '4. switch to the truth', '5. the power'),
+  `Upper-tailed, $H_A: \\mu > \\mu_0$` = c('$z_{obs} \\geq Z_{1-\\alpha}$', '$\\bar{x}^* = \\mu_0 + Z_{1-\\alpha} \\times SE$',
+                                         '$z^* = (\\bar{x}^* - \\mu_{true}) / SE$', '$P(Z \\geq z^*)$'),
+  `Lower-tailed, $H_A: \\mu < \\mu_0$` = c('$z_{obs} \\leq Z_{\\alpha}$', '$\\bar{x}^* = \\mu_0 + Z_{\\alpha} \\times SE$',
+                                         '$z^* = (\\bar{x}^* - \\mu_{true}) / SE$', '$P(Z \\leq z^*)$'),
+  check.names = FALSE))
+```
+
+**Check it on the goggles.** Lower-tailed, $\mu_0 = 16.43$, $\mu_{true} = 16.0$:
+$SE = `r fmt(se_g, 4)`$; $\bar{x}^* = 16.43 + (-1.645)(`r fmt(se_g, 4)`) \approx `r fmt(cut_g, 2)`$;
+$z^* = (`r fmt(cut_g, 2)` - 16.0)/`r fmt(se_g, 4)` \approx `r fmt(zp_g, 2)`$; power $= P(Z \leq `r fmt(zp_g, 2)`) = `r fmt(pow_g, 2)`$.
+The same answer as above.
+
+## Practice: harder rebar?
+
+*Adapted from
+[Penn State STAT 415, Lesson 10, Example 10.4](https://online.stat.psu.edu/stat415/Lesson10.html):*
+
+> Steel reinforcing bar, or **rebar**, is set inside concrete to hold bridges, buildings and walls
+> together. Its quality is checked with the **Brinell hardness** test, which presses a hard ball into the
+> steel and measures the dent: a harder bar is a stronger bar. A mill's standard rebar has a mean Brinell
+> hardness of **170** kilograms of force per square millimetre (kgf/mm²), and hardness is normally
+> distributed with $\sigma = 10$. The mill has a new heat treatment that it hopes makes the bar harder. An
+> engineer will test a random sample of **25** treated bars and carry out
+> $$H_0: \mu = 170 \qquad \text{vs} \qquad H_A: \mu > 170$$
+> at $\alpha = 0.05$, where $\mu$ is the mean hardness of all treated bars.
+
+**Question:** before testing a single bar, the engineer asks: *if the treatment really raises the mean
+hardness to 175 kgf/mm², what is the chance the test detects it?* Then: how does the answer change with
+**64** bars?
+
+(The Penn State version fixes the rule "reject if $\bar{x} \geq 172$" and asks for $\alpha$ and the power at
+$\mu = 173$. We set $\alpha = 0.05$ and chose $\mu_{true} = 175$, so every step uses the $z$-table directly.)
+
+*Answer.*
+
+1. **Set up.** $H_0: \mu = 170$, $H_A: \mu > 170$ (upper-tailed), $\alpha = 0.05$, $\sigma = 10$, $n = 25$.
+   One possible truth: $\mu_{true} = 175$, an increase of 5 kgf/mm².
+2. **The SE.**
+   $$SE = \frac{\sigma}{\sqrt{n}} = \frac{10}{\sqrt{25}} = \frac{10}{5} = `r se_r`$$
+3. **The cutoff, from $H_0$.** Upper-tailed at $\alpha = 0.05$: reject when $z_{obs} \geq Z_{0.95} = 1.645$.
+   On the scale of the sample mean,
+   $$\bar{x}^* = \mu_0 + Z_{0.95} \times SE = 170 + 1.645 \times `r se_r` = `r fmt(cut_r, 2)`$$
+   So the engineer rejects $H_0$ if the 25 bars average **`r fmt(cut_r, 2)` or more**. If the treatment does
+   nothing ($\mu = 170$), that happens only 5% of the time: that is $\alpha$.
+4. **Switch to the truth.** If $\mu = 175$, then $\bar{x}$ is normal with mean 175 and $SE = `r se_r`$. The
+   cutoff, measured from 175, is
+   $$z^* = \frac{\bar{x}^* - \mu_{true}}{SE} = \frac{`r fmt(cut_r, 2)` - 175}{`r se_r`} = \frac{`r fmt(cut_r - 175, 2)`}{`r se_r`} = `r fmt(zs_raw, 3)` \approx `r fmt(zs_r, 2)`$$
+   ($-0.855$ is exactly halfway between two table rows; rounding it to $`r fmt(zs_r, 2)`$ is the usual choice.)
+5. **The power, then $\beta$.** Upper-tailed, so the power is the area to the **right** of $z^*$:
+   $$\text{Power} = P(\bar{x} \geq `r fmt(cut_r, 2)` \mid \mu = 175) = P(Z \geq `r fmt(zs_r, 2)`) = 1 - `r fmt(zt(zs_r), 4)` = `r fmt(pow_r, 4)`$$
+   $$\beta = 1 - `r fmt(pow_r, 4)` = `r fmt(1 - pow_r, 4)`$$
+   (Software, which does not round $z^*$, gives `r fmt(pow_rx, 4)`. The table answer differs slightly only
+   because $-0.855$ had to be rounded.)
+
+**Interpret.** If the heat treatment really raises the mean hardness to 175, a test of 25 bars rejects
+$H_0$ about `r round(100 * pow_r)`% of the time. The other `r round(100 * (1 - pow_r))`% of the time it misses a
+real improvement: a **Type II error**. That just clears the usual 80% target.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "Two bell curves for the mean hardness of 25 bars, each with standard error 2. The left curve, labelled H0 true, mu = 170, is centred at 170; the right curve, labelled one possible truth, mu = 175, is centred at 175. A vertical line at the cutoff, x-bar star = 173.29, splits them: the test rejects H0 for sample means to the right of it. Under the H0 curve, the small area right of the cutoff is red and labelled alpha = 0.05. Under the true curve, the area right of the cutoff is green and labelled power = 0.81, and the area left of the cutoff is grey and labelled beta = 0.19."}
+knitr::include_graphics('assets/l27_power_rebar.png')
+```
+
+**With 64 bars.** Only steps 2 to 5 change:
+$$SE = \frac{10}{\sqrt{64}} = \frac{10}{8} = `r se_r64`, \qquad \bar{x}^* = 170 + 1.645 \times `r se_r64` = `r fmt(cut_r64, 2)`$$
+$$z^* = \frac{`r fmt(cut_r64, 2)` - 175}{`r se_r64`} = `r fmt(zs_r64, 2)`, \qquad \text{Power} = P(Z \geq `r fmt(zs_r64, 2)`) = 1 - `r fmt(zt(zs_r64), 4)` = `r fmt(pow_r64, 4)`$$
+
+More bars shrink the SE from `r se_r` to `r se_r64`. The cutoff moves closer to 170, and the two curves overlap
+less, so the power rises from `r fmt(pow_r, 2)` to `r fmt(pow_r64, 2)` while $\alpha$ stays at 0.05. That is the
+first of the "two ways to raise power": a bigger sample. The other, a larger $\alpha$, would also move the
+cutoff left, but only by allowing more false alarms.
+
 ## Try it out
 
 * *([OpenStax Chapter 9 Practice](https://openstax.org/books/introductory-statistics-2e/pages/9-practice),
@@ -1062,9 +1215,376 @@ ties. Carry out a sign test at $\alpha = 0.05$.
 5. **Decision.** $`r fmt(1 - zt(z_cf), 4)` < 0.05$: **reject $H_0$**. The data are evidence that the median
    difference is positive: regulars tend to rate the new blend higher.
 
+# Two-sample tests
+
+Every test so far has been about **one** population: one mean $\mu$ or one proportion $p$, compared with a
+claimed value. Analysing a single variable like this is called **univariate** analysis. But most studies
+**compare two groups**. The textbook's examples
+(*[OpenStax Chapter 10 introduction](https://openstax.org/books/introductory-statistics-2e/pages/10-introduction)*):
+
+* researchers give one group aspirin and another a placebo, then compare their heart attack rates;
+* studies compare diet and exercise programs;
+* politicians compare the share of voters from different income brackets who might vote for them;
+* students want to know whether SAT or GRE prep courses really raise scores.
+
+A comparison like this involves **two variables**:
+
+* an **explanatory variable**, which defines the groups (aspirin or placebo; income bracket), and
+* a **response variable**, the outcome we measure in each group (heart attack or not; votes for us or not).
+
+Analyses of two variables are **bivariate**. A **two-sample test** treats the observations in each group
+as a sample from its own population, **population 1** and **population 2**, and compares the same parameter
+in both. The parameter we test is the **difference**:
+
+```{r, echo=FALSE}
+tab(data.frame(
+  ` ` = c('the question', 'the parameter', 'the usual null hypothesis', 'an example'),
+  `One-sample test` = c('is a parameter equal to a claimed value?', '$\\mu$ or $p$',
+                        '$H_0: \\mu = \\mu_0$ or $H_0: p = p_0$', 'is the mean commute 20 minutes?'),
+  `Two-sample test` = c('are two populations the same?', '$\\mu_1 - \\mu_2$ or $p_1 - p_2$',
+                        '$H_0: \\mu_1 - \\mu_2 = 0$ or $H_0: p_1 - p_2 = 0$', 'do drug and placebo patients recover equally often?'),
+  check.names = FALSE))
+```
+
+The null hypothesis is usually **no difference**: the two populations have the same mean or the same
+proportion. Just as before, the test asks whether the data are surprising if that null model is true.
+
+## One population or two?
+
+*Try it.* For each question, decide whether it needs a one-sample or a two-sample test.
+
+* Is the mean commute of UI students more than 20 minutes?
+  *Answer:* one sample. One population, one mean, compared with a claimed value.
+* Do patients on a new drug recover more often than patients on a placebo?
+  *Answer:* two samples. Two populations (drug, placebo); compare $p_1$ and $p_2$.
+* Do Moscow and Pullman voters support a new levy at the same rate?
+  *Answer:* two samples. Two populations (the two towns); compare $p_1$ and $p_2$.
+
+## Independent and dependent samples
+
+How the two samples were collected decides which test we use
+(*[OpenStax Chapter 10 introduction](https://openstax.org/books/introductory-statistics-2e/pages/10-introduction)*):
+
+* **Independent samples.** The values selected from one population are **not related** in any way to the
+  values selected from the other. Two separate random samples, or an experiment that **randomly assigns**
+  subjects to two groups, give independent samples.
+* **Dependent samples (matched pairs).** Each value in one sample is **paired** with a value in the other.
+  This happens when the same subjects are measured twice (before and after), or when subjects come in
+  natural pairs (twins, husband and wife, two eyes of one patient).
+
+**Why it matters.** The two designs need different standard errors. With independent samples, the two
+samples vary separately, and their variances add (below). With matched pairs, the two values in a pair
+move together, so we work with the **differences** within each pair. The sign test was one test for
+matched pairs; the paired $t$-test comes on Wednesday. **The rest of this page is about independent
+samples only.**
+
+*Try it.* Independent or dependent?
+
+* The blood pressure of 30 patients, measured before and after a new medication.
+  *Answer:* dependent. The same 30 patients are measured twice, so each "after" is paired with a "before".
+* Exam scores of 40 randomly chosen students from each of two sections.
+  *Answer:* independent. Two separate random samples; no student in one section is linked to one in the other.
+* Twin pairs: one twin of each pair gets a tutoring program, the other does not.
+  *Answer:* dependent. Each child is matched with their twin.
+
+# Comparing two proportions
+
+*([OpenStax Section 10.3](https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions).)*
+We often want to compare the share of two populations that has some characteristic: the proportion of
+patients who still have symptoms on two medications, or the proportion of men and women who skip seat
+belts. If two **sample** proportions differ, that may be a real difference between the populations, or
+it may be chance. A hypothesis test tells us which explanation the data support.
+
+The data are **two independent simple random samples**, of sizes $n_1$ and $n_2$, one from each
+population. In each sample we count the **successes**, the observations with the characteristic:
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Population = c('1', '2'),
+  `Population proportion` = c('$p_1$', '$p_2$'),
+  `Sample size` = c('$n_1$', '$n_2$'),
+  `Count of successes` = c('$X_1$', '$X_2$'),
+  `Sample proportion` = c('$\\hat{p}_1 = X_1 / n_1$', '$\\hat{p}_2 = X_2 / n_2$'),
+  check.names = FALSE))
+```
+
+The parameter is the **difference in population proportions**, $p_1 - p_2$, and its estimate is the
+difference in sample proportions, $\hat{p}_1 - \hat{p}_2$.
+
+## The sampling distribution of $\hat{p}_1 - \hat{p}_2$
+
+Like every estimate, $\hat{p}_1 - \hat{p}_2$ changes from sample to sample. Its sampling distribution has:
+
+* **Centre** $p_1 - p_2$. Each $\hat{p}$ is centred at its own $p$, so on average the difference of the
+  estimates is the difference of the parameters.
+* **Spread.** From the one-sample case, $\hat{p}_1$ has variance $p_1(1-p_1)/n_1$ and $\hat{p}_2$ has variance
+  $p_2(1-p_2)/n_2$. Because the samples are **independent, the variances add**, even though we subtract
+  the estimates. Subtracting one uncertain number from another gives a result that is more uncertain than
+  either, not less. So
+  $$SE(\hat{p}_1 - \hat{p}_2) = \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$$
+* **Shape**: approximately normal when both samples are large.
+
+Putting these together, for large samples,
+$$\hat{p}_1 - \hat{p}_2 \sim N\left(p_1 - p_2,\ \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}\right)$$
+
+## The hypotheses
+
+The null hypothesis is that the two population proportions are **equal**:
+$$H_0: p_1 = p_2, \qquad \text{which is the same as} \qquad H_0: p_1 - p_2 = 0$$
+The alternative takes one of three forms, just as in the one-sample tests:
+
+```{r, echo=FALSE}
+tab(data.frame(
+  `Alternative hypothesis` = c('$H_A: p_1 - p_2 > 0$', '$H_A: p_1 - p_2 < 0$', '$H_A: p_1 - p_2 \\neq 0$'),
+  Tail = c('upper-tailed', 'lower-tailed', 'two-sided'),
+  `In words` = c('population 1 has the larger proportion', 'population 1 has the smaller proportion',
+                 'the proportions differ, in either direction'),
+  `Reject $H_0$ when` = c('$z_{obs} \\geq Z_{1-\\alpha}$', '$z_{obs} \\leq Z_{\\alpha}$', '$|z_{obs}| \\geq Z_{1-\\alpha/2}$'),
+  check.names = FALSE))
+```
+
+Which population is "1" is our choice; the alternative must follow it. If population 1 is expected to have
+the **smaller** proportion, the test is lower-tailed.
+
+## The test statistic, if $H_0$ is true
+
+We standardize the estimate, as always: (estimate $-$ value under $H_0$) / $SE$. The value under $H_0$ is
+$p_1 - p_2 = 0$. For the $SE$ we use what $H_0$ says:
+
+1. **If $H_0$ is true there is only one proportion.** Call it $p$: $p_1 = p_2 = p$. The $SE$ becomes
+   $$\sqrt{\frac{p(1-p)}{n_1} + \frac{p(1-p)}{n_2}} = \sqrt{p(1-p)\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}$$
+2. **Estimate that one $p$ from both samples together.** If the populations are the same, the two samples
+   are really one big sample, so we **pool** them. The **pooled proportion** is all the successes over all
+   the observations:
+   $$\hat{p} = \frac{X_1 + X_2}{n_1 + n_2}$$
+   (written $p_c$, for "combined", in the textbook).
+3. **The pooled SE** puts $\hat{p}$ into the $SE$ from step 1:
+   $$SE_0 = \sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}$$
+
+The test statistic is
+$$z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{SE_0} = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}$$
+and, **if $H_0$ is true** and the samples are large, $z_{obs} \sim N(0, 1)$. So the P-value comes from the
+$z$-table, exactly as in the one-sample test for a proportion. As there, the $SE$ is built from what $H_0$
+says ($p_0$ there, the pooled $\hat{p}$ here), not from the two separate $\hat{p}$'s.
+
+## Assumptions
+
+1. **Two independent random samples**, one from each population (or two groups formed by random
+   assignment).
+2. **Large samples.** With the pooled $\hat{p}$, all four of
+   $$n_1\hat{p}, \qquad n_1(1-\hat{p}), \qquad n_2\hat{p}, \qquad n_2(1-\hat{p})$$
+   are at least 15. This is the course's $np_0 \geq 15$ rule from the one-sample test, applied to both
+   samples. (The textbook asks only for at least five successes and five failures in each sample; we use
+   the stricter rule.)
+3. Each population is much larger than its sample (the textbook suggests at least 10 to 20 times), so
+   sampling without replacement does not matter.
+
+## The P-value and the five steps
+
+```{r, echo=FALSE}
+tab(data.frame(
+  `Alternative hypothesis` = c('$H_A: p_1 - p_2 > 0$', '$H_A: p_1 - p_2 < 0$', '$H_A: p_1 - p_2 \\neq 0$'),
+  `P-value` = c('$P(Z \\geq z_{obs} \\mid H_0 \\text{ true})$', '$P(Z \\leq z_{obs} \\mid H_0 \\text{ true})$',
+                '$2 \\times P(Z \\geq |z_{obs}| \\mid H_0 \\text{ true})$'),
+  check.names = FALSE))
+```
+
+1. **Assumptions.** Independent random samples; compute $\hat{p}$ and check the four counts.
+2. **Hypotheses.** Define $p_1$ and $p_2$ in words, then $H_0: p_1 - p_2 = 0$ and the alternative.
+3. **Test statistic.** $\hat{p}_1$, $\hat{p}_2$, $SE_0$, then $z_{obs}$.
+4. **P-value.** From the $z$-table, using the tail(s) that $H_A$ points to.
+5. **Decision.** Reject $H_0$ if the P-value $< \alpha$; state the conclusion in the context of the problem.
+
+## A confidence interval for $p_1 - p_2$
+
+To **estimate** the difference rather than test it, we do not assume $H_0$, so there is no reason to pool.
+The interval uses the two separate sample proportions:
+$$(\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2} \times \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}$$
+As on Wednesday, an interval that leaves out **0** matches a two-sided test that rejects
+$H_0: p_1 - p_2 = 0$. For proportions the match is close but not exact, because the test's $SE_0$ is pooled
+and the interval's $SE$ is not.
+
+## Example: medication for hives
+
+*From [OpenStax Introductory Statistics 2e, Section 10.3, Example 10.8](https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions):*
+
+> Two types of medication for hives are being tested to determine if there is a difference in the
+> proportions of adult patient reactions. Twenty out of a random sample of 200 adults given medication A
+> still had hives 30 minutes after taking the medication. Twelve out of another random sample of 200 adults
+> given medication B still had hives 30 minutes after taking the medication. Test at a 1% level of
+> significance.
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Medication = c('A', 'B', 'Both'),
+  `Still had hives` = c(20, 12, 32), `No hives` = c(180, 188, 368), Total = c(200, 200, 400),
+  check.names = FALSE))
+```
+
+**Question:** is there a difference between the medications in the proportion of adults who still have
+hives after 30 minutes?
+
+*Answer.*
+
+1. **Assumptions.** Two independent random samples of adults, one for each medication. The pooled
+   proportion is
+   $$\hat{p} = \frac{X_A + X_B}{n_A + n_B} = \frac{20 + 12}{200 + 200} = \frac{32}{400} = `r fmt(hv$pp, 2)`$$
+   and the four counts are
+   $$n_A\hat{p} = 200(`r fmt(hv$pp, 2)`) = `r hv$cnt[1]`, \quad n_A(1-\hat{p}) = 200(`r fmt(1 - hv$pp, 2)`) = `r hv$cnt[2]`, \quad n_B\hat{p} = `r hv$cnt[3]`, \quad n_B(1-\hat{p}) = `r hv$cnt[4]`$$
+   all at least 15 (the smallest, 16, only just).
+2. **Hypotheses.** $p_A$ = the proportion of all adults with hives who still have hives 30 minutes after
+   medication A; $p_B$ the same for medication B. "Is there a difference" has no direction, so the test is
+   **two-sided**:
+   $$H_0: p_A - p_B = 0 \qquad H_A: p_A - p_B \neq 0$$
+3. **Test statistic.** The sample proportions are
+   $$\hat{p}_A = \frac{20}{200} = `r fmt(hv$p1, 2)`, \qquad \hat{p}_B = \frac{12}{200} = `r fmt(hv$p2, 2)`, \qquad \hat{p}_A - \hat{p}_B = `r fmt(hv$d, 2)`$$
+   The pooled standard error is
+   $$SE_0 = \sqrt{`r fmt(hv$pp, 2)`(1 - `r fmt(hv$pp, 2)`)\left(\frac{1}{200} + \frac{1}{200}\right)} = \sqrt{`r fmt(hv$pp, 2)` \times `r fmt(1 - hv$pp, 2)` \times 0.01} = \sqrt{`r fmt(hv$pp * (1 - hv$pp) * 0.01, 6)`} = `r fmt(hv$se, 5)`$$
+   so
+   $$z_{obs} = \frac{`r fmt(hv$d, 2)` - 0}{`r fmt(hv$se, 5)`} = `r fmt(hv$z, 2)`$$
+   Medication A's sample proportion is `r fmt(hv$z, 2)` standard errors above B's.
+4. **P-value.** Two-sided, so both tails count. The $z$-table gives $P(Z \leq `r fmt(hv$z, 2)`) = `r fmt(zt(hv$z), 4)`$, so
+   $$P(Z \geq `r fmt(hv$z, 2)`) = 1 - `r fmt(zt(hv$z), 4)` = `r fmt(1 - zt(hv$z), 4)`, \qquad \text{P-value} = 2 \times `r fmt(1 - zt(hv$z), 4)` = `r fmt(p_hv, 4)`$$
+   (The textbook's calculator, which does not round $z_{obs}$, gives 0.1404.)
+5. **Decision.** $`r fmt(p_hv, 4)` > 0.01$: **do not reject $H_0$**. At the 1% level, the data do not give
+   evidence of a difference between the medications in the proportion of adults who still have hives
+   after 30 minutes. A difference of 4 percentage points in samples of 200 is well within what chance
+   alone produces if the medications work equally well.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "A standard normal curve labelled: if H0 is true, z_obs follows N(0, 1). Dashed lines at -1.47 and 1.47. The area to the right of 1.47 is red and labelled P(Z >= 1.47) = 0.0708, and the area to the left of -1.47 is red and labelled P(Z <= -1.47) = 0.0708. A label in the middle reads P-value = 2(0.0708) = 0.1416. The horizontal axis is z_obs for medication A minus medication B, ours 1.47."}
+knitr::include_graphics('assets/l27_hives.png')
+```
+
+**The same question as an interval.** A 99% confidence interval for $p_A - p_B$ uses the unpooled $SE$:
+$$SE = \sqrt{\frac{0.10(0.90)}{200} + \frac{0.06(0.94)}{200}} = `r fmt(seu_hv, 5)`, \qquad ME = Z_{0.995} \times SE = 2.576 \times `r fmt(seu_hv, 5)` = `r fmt(me_hv, 4)`$$
+$$`r fmt(hv$d, 2)` \pm `r fmt(me_hv, 4)` = (`r fmt(hv$d - me_hv, 4)`,\ `r fmt(hv$d + me_hv, 4)`)$$
+The interval contains 0, so "no difference" is a plausible value, which agrees with the test.
+
+## Example: COVID-19 and women's first-authored manuscripts
+
+*From the 2024 STAT 251 notes, using data from Mogensen, Lee and Carlos (2021):*
+
+> When the COVID-19 pandemic sent faculty to work from home, women in academic medicine reported
+> submitting fewer manuscripts and carrying a larger share of childcare. A study in the *Journal of the
+> American College of Radiology* compared the manuscripts submitted to the journal in April to October
+> 2019, before the pandemic, with those submitted in April to October 2020, after it began. Of 311
+> manuscripts in 2019, 140 had a woman as first author; of 441 in 2020, 172 did.
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Period = c('April to October 2019 (before)', 'April to October 2020 (after)'),
+  `Female first author` = c(140, 172), `Male first author` = c(171, 269), `All manuscripts` = c(311, 441),
+  `Proportion female` = c(paste0('140/311 = ', fmt(cv$p2, 4)), paste0('172/441 = ', fmt(cv$p1, 4))),
+  check.names = FALSE))
+```
+
+**Question:** at the 5% level, did the proportion of manuscripts with a female first author **fall** after
+the pandemic began?
+
+*Answer.*
+
+1. **Assumptions.** These are all the manuscripts sent to one journal, not random samples. We treat each
+   period's manuscripts as if they were a sample of the manuscripts that period could have produced, and
+   the conclusion is only as good as that assumption. The two periods' manuscripts are independent. The
+   pooled proportion is
+   $$\hat{p} = \frac{172 + 140}{441 + 311} = \frac{312}{752} = `r fmt(cv$pp, 4)`$$
+   and the counts are $441(`r fmt(cv$pp, 4)`) = `r cv$cnt[1]`$, $441(`r fmt(1 - cv$pp, 4)`) = `r cv$cnt[2]`$,
+   $311(`r fmt(cv$pp, 4)`) = `r cv$cnt[3]`$ and $311(`r fmt(1 - cv$pp, 4)`) = `r cv$cnt[4]`$: all far above 15.
+2. **Hypotheses.** Let population 1 be the **2020** manuscripts and population 2 the **2019** manuscripts;
+   $p_1$ and $p_2$ are the proportions with a female first author. A fall means $p_1 < p_2$, so the test is
+   **lower-tailed**:
+   $$H_0: p_1 - p_2 = 0 \qquad H_A: p_1 - p_2 < 0$$
+3. **Test statistic.**
+   $$\hat{p}_1 = \frac{172}{441} = `r fmt(cv$p1, 4)`, \qquad \hat{p}_2 = \frac{140}{311} = `r fmt(cv$p2, 4)`, \qquad \hat{p}_1 - \hat{p}_2 = `r fmt(cv$d, 4)`$$
+   $$SE_0 = \sqrt{`r fmt(cv$pp, 4)`(1 - `r fmt(cv$pp, 4)`)\left(\frac{1}{441} + \frac{1}{311}\right)} = \sqrt{`r fmt(cv$pp * (1 - cv$pp), 4)` \times `r fmt(1/441 + 1/311, 5)`} = `r fmt(cv$se, 5)`$$
+   $$z_{obs} = \frac{`r fmt(cv$d, 4)` - 0}{`r fmt(cv$se, 5)`} = `r fmt(cv$z, 2)`$$
+4. **P-value.** Lower-tailed:
+   $$P(Z \leq `r fmt(cv$z, 2)` \mid H_0 \text{ true}) = `r fmt(zt(cv$z), 4)`$$
+   (Without rounding $z_{obs}$, software gives `r fmt(round(pnorm(cv$zx), 4), 4)`.)
+5. **Decision.** $`r fmt(zt(cv$z), 4)` < 0.05$: **reject $H_0$**. At the 5% level, the data are evidence that the
+   proportion of manuscripts with a female first author fell after the pandemic began, from about 45% to
+   about 39%.
+
+**A close call.** The critical value is $Z_{0.05} = -1.645$ and $z_{obs} = `r fmt(cv$zx, 3)`$, just past it,
+so the P-value is just under 0.05. A few manuscripts the other way would change the decision. "Reject at
+$\alpha = 0.05$" is honest, but this is weak evidence, and because the data are observational it says
+nothing about *why* the share fell.
+
+## Practice: seat belts
+
+*From [OpenStax Introductory Statistics 2e, Section 10.3, Example 10.9](https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions):*
+
+> A research study was conducted about gender differences regarding the use of seat belts in motor
+> vehicles. The researcher believed that the proportion of women not wearing seat belts is less than the
+> proportion of men not wearing seat belts. The data collected represents a random sample of U.S. adults.
+> Is the proportion of women not wearing seat belts less than the proportion of men not wearing seat belts?
+> Test at a 1% level of significance.
+
+```{r, echo=FALSE}
+tab(data.frame(
+  ` ` = c('Do not wear seat belts', 'Total surveyed'), Men = c(183, '2,231'), Women = c(156, '2,169'),
+  check.names = FALSE))
+```
+
+*Answer.*
+
+1. **Assumptions.** A random sample of U.S. adults; the men and women in it are independent groups. The
+   pooled proportion is
+   $$\hat{p} = \frac{156 + 183}{2169 + 2231} = \frac{339}{4400} = `r fmt(sb$pp, 4)`$$
+   and the counts are $2169(`r fmt(sb$pp, 4)`) = `r sb$cnt[1]`$, $2169(`r fmt(1 - sb$pp, 4)`) = `r format(sb$cnt[2], big.mark = ',')`$,
+   $2231(`r fmt(sb$pp, 4)`) = `r sb$cnt[3]`$ and $2231(`r fmt(1 - sb$pp, 4)`) = `r format(sb$cnt[4], big.mark = ',')`$: all at least 15.
+2. **Hypotheses.** $p_W$ = the proportion of all U.S. women who do not wear seat belts; $p_M$ the same for
+   men. The researcher expects women's proportion to be **less**, so the test is **lower-tailed**:
+   $$H_0: p_W - p_M = 0 \qquad H_A: p_W - p_M < 0$$
+3. **Test statistic.**
+   $$\hat{p}_W = \frac{156}{2169} = `r fmt(sb$p1, 4)`, \qquad \hat{p}_M = \frac{183}{2231} = `r fmt(sb$p2, 4)`, \qquad \hat{p}_W - \hat{p}_M = `r fmt(sb$d, 4)`$$
+   $$SE_0 = \sqrt{`r fmt(sb$pp, 4)`(1 - `r fmt(sb$pp, 4)`)\left(\frac{1}{2169} + \frac{1}{2231}\right)} = \sqrt{`r fmt(sb$pp * (1 - sb$pp), 4)` \times `r fmt(1/2169 + 1/2231, 6)`} = `r fmt(sb$se, 5)`$$
+   $$z_{obs} = \frac{`r fmt(sb$d, 4)` - 0}{`r fmt(sb$se, 5)`} = `r fmt(sb$z, 2)`$$
+4. **P-value.** Lower-tailed: $P(Z \leq `r fmt(sb$z, 2)` \mid H_0 \text{ true}) = `r fmt(zt(sb$z), 4)`$. (The textbook's
+   calculator gives 0.1045.)
+5. **Decision.** $`r fmt(zt(sb$z), 4)` > 0.01$: **do not reject $H_0$**. At the 1% level, the data do not give
+   evidence that the proportion of women who do not wear seat belts is lower than the proportion of men.
+   The samples are large, but the difference, about 1 percentage point (7.2% vs 8.2%), is small enough for
+   chance to explain.
+
+## Practice: electric vehicles
+
+*From [OpenStax Introductory Statistics 2e, Section 10.3, Example 10.10](https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions):*
+
+> A marketing firm claims that the proportion of younger adults who own electric vehicles is greater than
+> the proportion of older adults who own electric vehicles. A random sample of U.S. adults was taken.
+> Out of a sample of 232 older adults (aged 35 or older), 5% own electric vehicles. Out of a sample of
+> 1,343 young adults (aged 34 or younger), 10% own electric vehicles. Test at the 5% level of
+> significance.
+
+The book rounds the percentages; its own calculator instructions use the counts **135 of 1,343** younger
+adults and **12 of 232** older adults, and so do we.
+
+*Answer.*
+
+1. **Assumptions.** A random sample of U.S. adults; the two age groups are independent. The pooled
+   proportion is
+   $$\hat{p} = \frac{135 + 12}{1343 + 232} = \frac{147}{1575} = `r fmt(ev$pp, 4)`$$
+   and the counts are $1343(`r fmt(ev$pp, 4)`) = `r ev$cnt[1]`$, $1343(`r fmt(1 - ev$pp, 4)`) = `r format(ev$cnt[2], big.mark = ',')`$,
+   $232(`r fmt(ev$pp, 4)`) = `r ev$cnt[3]`$ and $232(`r fmt(1 - ev$pp, 4)`) = `r ev$cnt[4]`$. The smallest,
+   `r ev$cnt[3]`, is above 15, so the samples are large enough, though the older group's small number of EV
+   owners (12) is the one to watch.
+2. **Hypotheses.** $p_Y$ = the proportion of all younger U.S. adults who own an EV; $p_O$ the same for older
+   adults. The firm claims $p_Y$ is **greater**, so the test is **upper-tailed**:
+   $$H_0: p_Y - p_O = 0 \qquad H_A: p_Y - p_O > 0$$
+3. **Test statistic.**
+   $$\hat{p}_Y = \frac{135}{1343} = `r fmt(ev$p1, 4)`, \qquad \hat{p}_O = \frac{12}{232} = `r fmt(ev$p2, 4)`, \qquad \hat{p}_Y - \hat{p}_O = `r fmt(ev$d, 4)`$$
+   $$SE_0 = \sqrt{`r fmt(ev$pp, 4)`(1 - `r fmt(ev$pp, 4)`)\left(\frac{1}{1343} + \frac{1}{232}\right)} = \sqrt{`r fmt(ev$pp * (1 - ev$pp), 4)` \times `r fmt(1/1343 + 1/232, 5)`} = `r fmt(ev$se, 5)`$$
+   $$z_{obs} = \frac{`r fmt(ev$d, 4)` - 0}{`r fmt(ev$se, 5)`} = `r fmt(ev$z, 2)`$$
+4. **P-value.** Upper-tailed:
+   $$P(Z \geq `r fmt(ev$z, 2)` \mid H_0 \text{ true}) = 1 - `r fmt(zt(ev$z), 4)` = `r fmt(1 - zt(ev$z), 4)`$$
+   (The textbook's calculator gives 0.0092.)
+5. **Decision.** $`r fmt(1 - zt(ev$z), 4)` < 0.05$: **reject $H_0$**. At the 5% level, the data are evidence that a
+   larger proportion of younger adults than older adults own electric vehicles, about 10% against 5%.
+
 # Sources
 
-* All examples are from OpenStax *Introductory Statistics 2e*, Chapter 9: the bench press (Example 9.15),
+* The Chapter 9 examples are from OpenStax *Introductory Statistics 2e*: the bench press (Example 9.15),
   glass conductivity (Example 9.20), the baker's bread
   (Example 9.9 and Try It 9.9), the composite hypotheses (Table 9.1 and Examples 9.1, 9.3 and 9.8), the
   errors (Table 9.2, Examples 9.5, 9.7 and 9.8, Try It 9.6), cell phone owners (Try It 9.18), and the
@@ -1072,4 +1592,14 @@ ties. Carry out a sign test at $\alpha = 0.05$.
 * The goggles' true mean of 16.0 seconds in the power example is an assumption for illustration.
 * The couples' decision ratings come from the 2024 STAT 251 notes; the stretching program and the
   coffee blend are hypothetical. The textbook does not cover the sign test.
-* Textbook: OpenStax *Introductory Statistics 2e*, Sections 9.1&ndash;9.5.
+* The rebar power problem is adapted from Penn State STAT 415, *Introduction to Mathematical Statistics*,
+  Lesson 10, Example 10.4 (online.stat.psu.edu/stat415). The story, $\sigma$, $n$ and the hypotheses are
+  theirs; $\alpha = 0.05$, the possible truth $\mu = 175$ and the 64-bar version are ours.
+* The two-proportion examples are from OpenStax Chapter 10: the hives medications (Example 10.8), seat
+  belts (Example 10.9) and electric vehicles (Example 10.10, with the counts from the book's calculator
+  instructions). The COVID-19 manuscripts example is from the 2024 STAT 251 notes, using data from
+  Mogensen, M. A., Lee, C. I., and Carlos, R. C. (2021), "The impact of the COVID-19 pandemic on journal
+  scholarly activity among female contributors", *Journal of the American College of Radiology* 18(7),
+  1044&ndash;1047.
+* Textbook: OpenStax *Introductory Statistics 2e*, Sections 9.1&ndash;9.5, the Chapter 10 introduction and
+  Section 10.3.

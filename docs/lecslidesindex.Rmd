@@ -217,3 +217,9 @@ Types of errors and statistical power (carried over from Lecture 25); confidence
 
 <a href="./lecture_slides/Week%2011/2026/Week11_Lecture26_Slides_11_04_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2011/2026/Week11_Lecture26_Slides_11_04_2026.pptx">Slides (PowerPoint)</a>
+
+## Lecture 27 &middot; Friday, November 6
+Calculating power in five steps; introduction to two-sample tests, independent vs dependent samples; comparing two independent proportions
+
+<a href="./lecture_slides/Week%2011/2026/Week11_Lecture27_Slides_11_06_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2011/2026/Week11_Lecture27_Slides_11_06_2026.pptx">Slides (PowerPoint)</a>
