@@ -887,30 +887,41 @@ experiment) and that the observations are independent.
 
 ## The sign test
 
-The **sign test** is a non-parametric test for **matched pairs**: two measurements on each subject (before
-and after a treatment) or on each matched pair (a husband and a wife). For each pair we find the
-difference and keep only its **sign**, $+$ or $-$, ignoring its size. A difference of exactly zero has no
-sign, so we drop it; $n$ is the number of **non-zero** differences.
+The **sign test** is a non-parametric test for a population **median**. The $t$-test asks about the mean,
+and needs a normal population (or a large sample) to do it; the sign test asks about the median and needs
+no assumption about the population's shape.
+
+We use it here for **matched pairs**: two measurements on each subject (before and after a treatment) or
+on each matched pair (a husband and a wife). The parameter is the **median difference**, $M_D$, the median
+of all the differences in the population of pairs. For each pair in the sample we find the difference and
+keep only its **sign**, $+$ or $-$, ignoring its size. A difference of exactly zero has no sign, so we drop
+it; $n$ is the number of **non-zero** differences.
 
 ### The parameter and the hypotheses
 
-The parameter is
+"No systematic difference between the two measurements" means the median difference is zero:
+$$H_0: M_D = 0$$
+The sign test works because of what a median is: **half of any population lies above its median and half
+below**. So if $M_D = 0$, a difference is just as likely to be positive as negative. Writing
 $$p = P(\text{a difference is } +),$$
-the proportion of $+$ signs in the population of pairs. If there is no systematic difference between the
-two measurements, a $+$ and a $-$ are equally likely, like the two sides of a fair coin, so the null
-hypothesis is always
-$$H_0: p = 0.5 \qquad \text{(no systematic difference)}$$
-The alternative depends on the question:
+the null hypothesis about the median is the same as a null hypothesis about this proportion:
+$$H_0: M_D = 0 \iff H_0: p = 0.5$$
+If the median difference is above 0, more than half of the differences are positive ($p > 0.5$), and if it
+is below 0, fewer are. The alternative depends on the question:
 
 ```{r, echo=FALSE}
 tab(data.frame(
-  Alternative = c('$H_A: p > 0.5$', '$H_A: p < 0.5$', '$H_A: p \\neq 0.5$'),
+  Alternative = c('$H_A: M_D > 0$, so $p > 0.5$', '$H_A: M_D < 0$, so $p < 0.5$', '$H_A: M_D \\neq 0$, so $p \\neq 0.5$'),
   Name = c('upper-tailed', 'lower-tailed', 'two-sided'),
   Meaning = c('the first measurement tends to be larger: more $+$ signs than chance',
               'the first measurement tends to be smaller: more $-$ signs than chance',
               'a systematic difference in either direction'),
   check.names = FALSE))
 ```
+
+The same idea tests the median of a **single** population: to test $H_0: M = M_0$, give each observation
+the sign of $X - M_0$ and count the $+$ signs. Matched pairs are the special case $M_0 = 0$ applied to the
+differences.
 
 ### The test statistic and its distribution
 
@@ -948,13 +959,20 @@ tab(data.frame(
 
 1. **Assumptions.** Matched pairs; the pairs are independent of each other. Nothing is assumed about the
    shape of the population.
-2. **Hypotheses.** $H_0: p = 0.5$ against $H_A: p > 0.5$, $p < 0.5$ or $p \neq 0.5$, where $p$ is the
-   probability of a $+$ sign.
+2. **Hypotheses.** $H_0: M_D = 0$ against $H_A: M_D > 0$, $M_D < 0$ or $M_D \neq 0$; in terms of
+   $p = P(+)$, $H_0: p = 0.5$ against $p > 0.5$, $p < 0.5$ or $p \neq 0.5$.
 3. **Test statistic.** Find each difference and its sign, drop the zeros, and count $S$, the number of
    $+$ signs among the $n$ that remain. Compare it with $E(S) = n/2$; if $n/2 \geq 15$, also find $z_{obs}$.
 4. **P-value.** From $S \sim \text{Binomial}(n, 0.5)$ (or the $z$-table, for large $n$), in the tail(s)
    $H_A$ points to.
 5. **Decision.** Reject $H_0$ if the P-value is at most $\alpha$.
+
+**Want to learn more?** The sign test throws away the size of each difference. The **Wilcoxon signed-rank
+test** is another test for the median difference of matched pairs that keeps some of that information by
+ranking the absolute differences, and the **Wilcoxon rank-sum test** compares the medians of two
+independent samples. Both are worked through, with examples, in
+[Non-parametric tests for two samples](misc/Non-Parametric-Tests-For-Two-Samples.html), under
+**Resources → Extras**. This is optional reading.
 
 ## Example: who made the decision?
 
@@ -974,9 +992,10 @@ believe here: there are only 17 couples, and the ratings are crude, ordered scor
 test asks only whether each difference is $+$ or $-$.
 
 1. **Assumptions.** Matched pairs (a husband and wife from each couple), and the couples are independent.
-2. **Hypotheses.** $p$ = the probability that the husband rates himself as having more say than his wife
-   does (a $+$ difference). $H_0: p = 0.5$, no systematic difference; $H_A: p \neq 0.5$, **two-sided**,
-   since the question has no direction. Use $\alpha = 0.05$.
+2. **Hypotheses.** $M_D$ = the median of husband $-$ wife over all couples. $H_0: M_D = 0$, no systematic
+   difference; $H_A: M_D \neq 0$, **two-sided**, since the question has no direction. Equivalently, with
+   $p$ = the probability that the husband rates his say higher (a $+$ difference), $H_0: p = 0.5$ against
+   $H_A: p \neq 0.5$. Use $\alpha = 0.05$.
 3. **Test statistic.** `r sum(dif > 0)` differences are $+$, `r sum(dif < 0)` are $-$, and `r sum(dif == 0)` are zero.
    Dropping the zeros, $n = 14$ and $S = 11$. If $H_0$ is true,
    $$E(S) = \frac{14}{2} = 7, \qquad SE(S) = \frac{\sqrt{14}}{2} \approx `r fmt(se_cpS, 2)`$$
@@ -986,8 +1005,9 @@ test asks only whether each difference is $+$ or $-$.
    $$P(S \geq 11) = \frac{\binom{14}{11} + \binom{14}{12} + \binom{14}{13} + \binom{14}{14}}{2^{14}} = \frac{364 + 91 + 14 + 1}{16{,}384} = \frac{470}{16{,}384} \approx `r fmt(p_cp1, 4)`$$
    The test is two-sided, so we double it:
    $$\text{P-value} = 2 \times P(S \geq 11 \mid H_0 \text{ true}) = 2 \times `r fmt(p_cp1, 4)` = `r fmt(p_cp2, 4)`$$
-5. **Decision.** $`r fmt(p_cp2, 4)` > 0.05$: **do not reject $H_0$**. Husbands and wives do not differ
-   significantly in how much say they think each had, at the 5% level. It is close, though: a one-sided
+5. **Decision.** $`r fmt(p_cp2, 4)` > 0.05$: **do not reject $H_0$**. There is not enough evidence that the
+   median difference is different from 0: husbands and wives do not differ significantly in how much say
+   they think each had, at the 5% level. It is close, though: a one-sided
    test, or a larger sample, might have rejected.
 
 ```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "Bar chart of the binomial distribution with n = 14 and p = 0.5: the probability of each number of plus signs, S, from 0 to 14. The bars are symmetric and peak at 7. The bars for 11 through 14 are red, labelled P of S at least 11 = 0.0287, and the bars for 0 through 3 are red, labelled P of S at most 3 = 0.0287. An arrow points to the bar at 11, the observed count."}
@@ -1011,14 +1031,14 @@ Carry out a sign test at $\alpha = 0.05$.
 
 1. **Assumptions.** Matched pairs (each patient before and after); the patients are independent. Pain
    ratings are crude scores and $n$ is small, so the sign test suits them.
-2. **Hypotheses.** $p$ = the probability that a patient's pain goes down. $H_0: p = 0.5$ against
-   $H_A: p > 0.5$: **upper-tailed**, since the therapist expects more $+$ signs.
+2. **Hypotheses.** $M_D$ = the median of before $-$ after over all such patients. $H_0: M_D = 0$ against
+   $H_A: M_D > 0$ (equivalently $p > 0.5$): **upper-tailed**, since the therapist expects pain to go down.
 3. **Test statistic.** `r sum(kn > 0)` $+$, `r sum(kn < 0)` $-$ and `r sum(kn == 0)` zero, so $n = 9$ and $S = 8$.
    If $H_0$ is true, $E(S) = 4.5$ and $SE(S) = \sqrt{9}/2 = 1.5$; $n/2 = 4.5 < 15$, so use the exact binomial.
 4. **P-value.** With $S \sim \text{Binomial}(9, 0.5)$,
    $$P(S \geq 8 \mid H_0 \text{ true}) = \frac{\binom{9}{8} + \binom{9}{9}}{2^9} = \frac{9 + 1}{512} \approx `r fmt(p_kn, 4)`$$
-5. **Decision.** $`r fmt(p_kn, 4)` < 0.05$: **reject $H_0$**. The data are evidence that the program lowers
-   knee pain for more than half of patients.
+5. **Decision.** $`r fmt(p_kn, 4)` < 0.05$: **reject $H_0$**. The data are evidence that the median change is
+   positive: the program lowers knee pain.
 
 ## Practice: a new coffee blend
 
@@ -1031,16 +1051,16 @@ ties. Carry out a sign test at $\alpha = 0.05$.
 
 1. **Assumptions.** Matched pairs (each customer rates both blends); the customers are independent. The
    ratings are crude scores, so the sign test suits them.
-2. **Hypotheses.** $p$ = the probability that a regular rates the new blend higher. $H_0: p = 0.5$ against
-   $H_A: p > 0.5$: **upper-tailed**, since the shop expects more $+$ signs.
+2. **Hypotheses.** $M_D$ = the median of new $-$ old over all regulars. $H_0: M_D = 0$ against
+   $H_A: M_D > 0$ (equivalently $p > 0.5$): **upper-tailed**, since the shop expects the new blend to rate higher.
 3. **Test statistic.** Drop the 6 ties: $n = 54$ and $S = 38$. If $H_0$ is true,
    $$E(S) = \frac{54}{2} = 27, \qquad SE(S) = \frac{\sqrt{54}}{2} \approx `r fmt(se_cf, 3)`$$
    Now $n/2 = 27 \geq 15$, so we can use the normal approximation:
    $$z_{obs} = \frac{38 - 27}{`r fmt(se_cf, 3)`} \approx `r fmt(z_cf, 2)`$$
 4. **P-value.** $P(Z \geq `r fmt(z_cf, 2)` \mid H_0 \text{ true}) = 1 - `r fmt(zt(z_cf), 4)` = `r fmt(1 - zt(z_cf), 4)`$.
    (The exact binomial tail, $P(S \geq 38)$, is `r fmt(p_cf_exact, 4)`; the approximation is close.)
-5. **Decision.** $`r fmt(1 - zt(z_cf), 4)` < 0.05$: **reject $H_0$**. The data are evidence that most regulars
-   prefer the new blend.
+5. **Decision.** $`r fmt(1 - zt(z_cf), 4)` < 0.05$: **reject $H_0$**. The data are evidence that the median
+   difference is positive: regulars tend to rate the new blend higher.
 
 # Sources
 

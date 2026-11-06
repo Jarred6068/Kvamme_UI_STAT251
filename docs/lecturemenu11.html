@@ -2036,10 +2036,17 @@ more evidence to reject <span class="math inline">\(H_0\)</span>.</li>
 </ul>
 <div id="the-sign-test" class="section level2">
 <h2>The sign test</h2>
-<p>The <strong>sign test</strong> is a non-parametric test for
-<strong>matched pairs</strong>: two measurements on each subject (before
-and after a treatment) or on each matched pair (a husband and a wife).
-For each pair we find the difference and keep only its
+<p>The <strong>sign test</strong> is a non-parametric test for a
+population <strong>median</strong>. The <span
+class="math inline">\(t\)</span>-test asks about the mean, and needs a
+normal population (or a large sample) to do it; the sign test asks about
+the median and needs no assumption about the population’s shape.</p>
+<p>We use it here for <strong>matched pairs</strong>: two measurements
+on each subject (before and after a treatment) or on each matched pair
+(a husband and a wife). The parameter is the <strong>median
+difference</strong>, <span class="math inline">\(M_D\)</span>, the
+median of all the differences in the population of pairs. For each pair
+in the sample we find the difference and keep only its
 <strong>sign</strong>, <span class="math inline">\(+\)</span> or <span
 class="math inline">\(-\)</span>, ignoring its size. A difference of
 exactly zero has no sign, so we drop it; <span
@@ -2047,15 +2054,19 @@ class="math inline">\(n\)</span> is the number of
 <strong>non-zero</strong> differences.</p>
 <div id="the-parameter-and-the-hypotheses" class="section level3">
 <h3>The parameter and the hypotheses</h3>
-<p>The parameter is <span class="math display">\[p = P(\text{a
-difference is } +),\]</span> the proportion of <span
-class="math inline">\(+\)</span> signs in the population of pairs. If
-there is no systematic difference between the two measurements, a <span
-class="math inline">\(+\)</span> and a <span
-class="math inline">\(-\)</span> are equally likely, like the two sides
-of a fair coin, so the null hypothesis is always <span
-class="math display">\[H_0: p = 0.5 \qquad \text{(no systematic
-difference)}\]</span> The alternative depends on the question:</p>
+<p>“No systematic difference between the two measurements” means the
+median difference is zero: <span class="math display">\[H_0: M_D =
+0\]</span> The sign test works because of what a median is: <strong>half
+of any population lies above its median and half below</strong>. So if
+<span class="math inline">\(M_D = 0\)</span>, a difference is just as
+likely to be positive as negative. Writing <span
+class="math display">\[p = P(\text{a difference is } +),\]</span> the
+null hypothesis about the median is the same as a null hypothesis about
+this proportion: <span class="math display">\[H_0: M_D = 0 \iff H_0: p =
+0.5\]</span> If the median difference is above 0, more than half of the
+differences are positive (<span class="math inline">\(p &gt;
+0.5\)</span>), and if it is below 0, fewer are. The alternative depends
+on the question:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2073,7 +2084,8 @@ Meaning
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p &gt; 0.5\)</span>
+<span class="math inline">\(H_A: M_D &gt; 0\)</span>, so <span
+class="math inline">\(p &gt; 0.5\)</span>
 </td>
 <td style="text-align:left;">
 upper-tailed
@@ -2085,7 +2097,8 @@ class="math inline">\(+\)</span> signs than chance
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p &lt; 0.5\)</span>
+<span class="math inline">\(H_A: M_D &lt; 0\)</span>, so <span
+class="math inline">\(p &lt; 0.5\)</span>
 </td>
 <td style="text-align:left;">
 lower-tailed
@@ -2097,7 +2110,8 @@ class="math inline">\(-\)</span> signs than chance
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p \neq 0.5\)</span>
+<span class="math inline">\(H_A: M_D \neq 0\)</span>, so <span
+class="math inline">\(p \neq 0.5\)</span>
 </td>
 <td style="text-align:left;">
 two-sided
@@ -2108,6 +2122,12 @@ a systematic difference in either direction
 </tr>
 </tbody>
 </table>
+<p>The same idea tests the median of a <strong>single</strong>
+population: to test <span class="math inline">\(H_0: M = M_0\)</span>,
+give each observation the sign of <span class="math inline">\(X -
+M_0\)</span> and count the <span class="math inline">\(+\)</span> signs.
+Matched pairs are the special case <span class="math inline">\(M_0 =
+0\)</span> applied to the differences.</p>
 </div>
 <div id="the-test-statistic-and-its-distribution"
 class="section level3">
@@ -2210,12 +2230,15 @@ tails
 <li><strong>Assumptions.</strong> Matched pairs; the pairs are
 independent of each other. Nothing is assumed about the shape of the
 population.</li>
-<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: p =
-0.5\)</span> against <span class="math inline">\(H_A: p &gt;
-0.5\)</span>, <span class="math inline">\(p &lt; 0.5\)</span> or <span
-class="math inline">\(p \neq 0.5\)</span>, where <span
-class="math inline">\(p\)</span> is the probability of a <span
-class="math inline">\(+\)</span> sign.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: M_D =
+0\)</span> against <span class="math inline">\(H_A: M_D &gt; 0\)</span>,
+<span class="math inline">\(M_D &lt; 0\)</span> or <span
+class="math inline">\(M_D \neq 0\)</span>; in terms of <span
+class="math inline">\(p = P(+)\)</span>, <span
+class="math inline">\(H_0: p = 0.5\)</span> against <span
+class="math inline">\(p &gt; 0.5\)</span>, <span class="math inline">\(p
+&lt; 0.5\)</span> or <span class="math inline">\(p \neq
+0.5\)</span>.</li>
 <li><strong>Test statistic.</strong> Find each difference and its sign,
 drop the zeros, and count <span class="math inline">\(S\)</span>, the
 number of <span class="math inline">\(+\)</span> signs among the <span
@@ -2232,6 +2255,15 @@ class="math inline">\(H_A\)</span> points to.</li>
 class="math inline">\(H_0\)</span> if the P-value is at most <span
 class="math inline">\(\alpha\)</span>.</li>
 </ol>
+<p><strong>Want to learn more?</strong> The sign test throws away the
+size of each difference. The <strong>Wilcoxon signed-rank test</strong>
+is another test for the median difference of matched pairs that keeps
+some of that information by ranking the absolute differences, and the
+<strong>Wilcoxon rank-sum test</strong> compares the medians of two
+independent samples. Both are worked through, with examples, in <a
+href="misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric
+tests for two samples</a>, under <strong>Resources → Extras</strong>.
+This is optional reading.</p>
 </div>
 </div>
 <div id="example-who-made-the-decision" class="section level2">
@@ -2559,13 +2591,18 @@ class="math inline">\(-\)</span>.</p>
 <ol style="list-style-type: decimal">
 <li><strong>Assumptions.</strong> Matched pairs (a husband and wife from
 each couple), and the couples are independent.</li>
-<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
-= the probability that the husband rates himself as having more say than
-his wife does (a <span class="math inline">\(+\)</span> difference).
-<span class="math inline">\(H_0: p = 0.5\)</span>, no systematic
-difference; <span class="math inline">\(H_A: p \neq 0.5\)</span>,
-<strong>two-sided</strong>, since the question has no direction. Use
-<span class="math inline">\(\alpha = 0.05\)</span>.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(M_D\)</span> = the median of husband <span
+class="math inline">\(-\)</span> wife over all couples. <span
+class="math inline">\(H_0: M_D = 0\)</span>, no systematic difference;
+<span class="math inline">\(H_A: M_D \neq 0\)</span>,
+<strong>two-sided</strong>, since the question has no direction.
+Equivalently, with <span class="math inline">\(p\)</span> = the
+probability that the husband rates his say higher (a <span
+class="math inline">\(+\)</span> difference), <span
+class="math inline">\(H_0: p = 0.5\)</span> against <span
+class="math inline">\(H_A: p \neq 0.5\)</span>. Use <span
+class="math inline">\(\alpha = 0.05\)</span>.</li>
 <li><strong>Test statistic.</strong> 11 differences are <span
 class="math inline">\(+\)</span>, 3 are <span
 class="math inline">\(-\)</span>, and 3 are zero. Dropping the zeros,
@@ -2588,10 +2625,11 @@ we double it: <span class="math display">\[\text{P-value} = 2 \times P(S
 \geq 11 \mid H_0 \text{ true}) = 2 \times 0.0287 = 0.0574\]</span></li>
 <li><strong>Decision.</strong> <span class="math inline">\(0.0574 &gt;
 0.05\)</span>: <strong>do not reject <span
-class="math inline">\(H_0\)</span></strong>. Husbands and wives do not
-differ significantly in how much say they think each had, at the 5%
-level. It is close, though: a one-sided test, or a larger sample, might
-have rejected.</li>
+class="math inline">\(H_0\)</span></strong>. There is not enough
+evidence that the median difference is different from 0: husbands and
+wives do not differ significantly in how much say they think each had,
+at the 5% level. It is close, though: a one-sided test, or a larger
+sample, might have rejected.</li>
 </ol>
 <p><img src="assets/l26_sign.png" alt="Bar chart of the binomial distribution with n = 14 and p = 0.5: the probability of each number of plus signs, S, from 0 to 14. The bars are symmetric and peak at 7. The bars for 11 through 14 are red, labelled P of S at least 11 = 0.0287, and the bars for 0 through 3 are red, labelled P of S at most 3 = 0.0287. An arrow points to the bar at 11, the observed count." width="100%" style="display: block; margin: auto;" /></p>
 </div>
@@ -2737,12 +2775,14 @@ Sign
 after); the patients are independent. Pain ratings are crude scores and
 <span class="math inline">\(n\)</span> is small, so the sign test suits
 them.</li>
-<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
-= the probability that a patient’s pain goes down. <span
-class="math inline">\(H_0: p = 0.5\)</span> against <span
-class="math inline">\(H_A: p &gt; 0.5\)</span>:
-<strong>upper-tailed</strong>, since the therapist expects more <span
-class="math inline">\(+\)</span> signs.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(M_D\)</span> = the median of before <span
+class="math inline">\(-\)</span> after over all such patients. <span
+class="math inline">\(H_0: M_D = 0\)</span> against <span
+class="math inline">\(H_A: M_D &gt; 0\)</span> (equivalently <span
+class="math inline">\(p &gt; 0.5\)</span>):
+<strong>upper-tailed</strong>, since the therapist expects pain to go
+down.</li>
 <li><strong>Test statistic.</strong> 8 <span
 class="math inline">\(+\)</span>, 1 <span
 class="math inline">\(-\)</span> and 1 zero, so <span
@@ -2759,7 +2799,7 @@ binomial.</li>
 <li><strong>Decision.</strong> <span class="math inline">\(0.0195 &lt;
 0.05\)</span>: <strong>reject <span
 class="math inline">\(H_0\)</span></strong>. The data are evidence that
-the program lowers knee pain for more than half of patients.</li>
+the median change is positive: the program lowers knee pain.</li>
 </ol>
 </div>
 <div id="practice-a-new-coffee-blend" class="section level2">
@@ -2779,12 +2819,14 @@ out a sign test at <span class="math inline">\(\alpha =
 <li><strong>Assumptions.</strong> Matched pairs (each customer rates
 both blends); the customers are independent. The ratings are crude
 scores, so the sign test suits them.</li>
-<li><strong>Hypotheses.</strong> <span class="math inline">\(p\)</span>
-= the probability that a regular rates the new blend higher. <span
-class="math inline">\(H_0: p = 0.5\)</span> against <span
-class="math inline">\(H_A: p &gt; 0.5\)</span>:
-<strong>upper-tailed</strong>, since the shop expects more <span
-class="math inline">\(+\)</span> signs.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(M_D\)</span> = the median of new <span
+class="math inline">\(-\)</span> old over all regulars. <span
+class="math inline">\(H_0: M_D = 0\)</span> against <span
+class="math inline">\(H_A: M_D &gt; 0\)</span> (equivalently <span
+class="math inline">\(p &gt; 0.5\)</span>):
+<strong>upper-tailed</strong>, since the shop expects the new blend to
+rate higher.</li>
 <li><strong>Test statistic.</strong> Drop the 6 ties: <span
 class="math inline">\(n = 54\)</span> and <span class="math inline">\(S
 = 38\)</span>. If <span class="math inline">\(H_0\)</span> is true,
@@ -2800,7 +2842,8 @@ binomial tail, <span class="math inline">\(P(S \geq 38)\)</span>, is
 <li><strong>Decision.</strong> <span class="math inline">\(0.0014 &lt;
 0.05\)</span>: <strong>reject <span
 class="math inline">\(H_0\)</span></strong>. The data are evidence that
-most regulars prefer the new blend.</li>
+the median difference is positive: regulars tend to rate the new blend
+higher.</li>
 </ol>
 </div>
 </div>
