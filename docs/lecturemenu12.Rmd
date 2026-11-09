@@ -148,7 +148,7 @@ we are assuming:
 tab(data.frame(
   `Null hypothesis or goal` = c('$H_0: p_1 = p_2$ (that is, $p_1 - p_2 = 0$)',
                                 '$H_0: p_1 - p_2 = d_0$, with $d_0 \\neq 0$',
-                                'a confidence interval for $p_1 - p_2$'),
+                                'a $100(1 - \\alpha)\\%$ confidence interval for $p_1 - p_2$'),
   `The SE we use` = c('$SE_0 = \\sqrt{\\hat{p}(1-\\hat{p})\\left(\\frac{1}{n_1} + \\frac{1}{n_2}\\right)}, \\quad \\hat{p} = \\frac{X_1 + X_2}{n_1 + n_2}$',
                       '$SE = \\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$',
                       '$(\\hat{p}_1 - \\hat{p}_2) \\pm Z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$'),
@@ -344,12 +344,24 @@ $n_1 + n_2 - 2$ degrees of freedom.
 
 ```{r, echo=FALSE}
 tab(data.frame(
-  Situation = c('we assume $\\sigma_1 = \\sigma_2$', '$\\sigma_1, \\sigma_2$ unknown and possibly different (our default)'),
-  `The SE we use` = c('$s_p\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$', '$\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$'),
-  df = c('$n_1 + n_2 - 2$', '$\\min(n_1 - 1, n_2 - 1)$ by hand; Welch in software'),
-  `Pool?` = c('**pooled**', '**unpooled**'),
+  `Test or interval` = c('$t$-test of $H_0: \\mu_1 = \\mu_2$, assuming $\\sigma_1 = \\sigma_2$',
+                         '$t$-test of $H_0: \\mu_1 = \\mu_2$, $\\sigma_1, \\sigma_2$ possibly different (our default)',
+                         'a $100(1 - \\alpha)\\%$ confidence interval for $\\mu_1 - \\mu_2$, assuming $\\sigma_1 = \\sigma_2$',
+                         'a $100(1 - \\alpha)\\%$ confidence interval for $\\mu_1 - \\mu_2$, $\\sigma_1, \\sigma_2$ possibly different (our default)'),
+  `The SE (or interval) we use` = c('$SE = s_p\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$',
+                                    '$SE = \\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$',
+                                    '$(\\bar{x}_1 - \\bar{x}_2) \\pm t_{1-\\alpha/2}\\, s_p\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$',
+                                    '$(\\bar{x}_1 - \\bar{x}_2) \\pm t_{1-\\alpha/2}\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$'),
+  df = c('$n_1 + n_2 - 2$', '$\\approx \\min(n_1 - 1, n_2 - 1)$ by hand; Welch in software',
+         '$n_1 + n_2 - 2$', '$\\approx \\min(n_1 - 1, n_2 - 1)$ by hand; Welch in software'),
+  `Pool?` = c('**pooled**', '**unpooled**', '**pooled**', '**unpooled**'),
   check.names = FALSE))
 ```
+
+Notice the difference from proportions. There, the *hypothesis* decided whether to pool: the test of
+$H_0: p_1 = p_2$ pools, and the confidence interval does not. For means, the test and the interval always
+make the **same** choice, because what decides it is an *assumption about the SDs*, $\sigma_1 = \sigma_2$,
+not anything $H_0$ says.
 
 **We do not pool for means.** The textbook is blunt about it: right after the df formula it says "Notice
 that the sample variances $(s_1)^2$ and $(s_2)^2$ are not pooled. (If the question comes up, do not pool the
@@ -868,6 +880,67 @@ Some quick checks:
   quantitative response, so the two independent samples $t$-test.
 * **The share of 200 dog owners and 200 cat owners who exercise daily:** two independent samples and a
   yes/no response, so the two-proportion $z$-test.
+
+## Summary of the two-sample tests
+
+Every two-sample procedure from Lectures 26&ndash;28, side by side. "Large" checks use the course's
+rule of 15 (for proportions and the sign test) or 30 (for means).
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Scenario = c('**Two proportions**, test of no difference<br>(two independent samples, yes/no response)',
+               '**Two proportions**, test of a non-zero difference',
+               '**Two means**, unpooled (our default)<br>(two independent samples, quantitative response)',
+               '**Two means**, pooled',
+               '**Matched pairs**, mean difference<br>(the same subjects twice, or matched pairs)',
+               '**Matched pairs**, sign test (Lecture 26)<br>(non-parametric)',
+               '**Two independent samples**, rank-sum test<br>(non-parametric)'),
+  Hypotheses = c('$H_0: p_1 - p_2 = 0$<br>$H_A: p_1 - p_2 >, <, \\neq 0$',
+                 '$H_0: p_1 - p_2 = d_0$<br>$H_A: p_1 - p_2 >, <, \\neq d_0$',
+                 '$H_0: \\mu_1 - \\mu_2 = 0$<br>$H_A: \\mu_1 - \\mu_2 >, <, \\neq 0$',
+                 '$H_0: \\mu_1 - \\mu_2 = 0$<br>$H_A: \\mu_1 - \\mu_2 >, <, \\neq 0$',
+                 '$H_0: \\mu_d = 0$<br>$H_A: \\mu_d >, <, \\neq 0$',
+                 '$H_0: M_D = 0$ (median difference)<br>$H_A: M_D >, <, \\neq 0$',
+                 'the two populations have the same centre, against one tending to give larger values'),
+  SE = c('$\\sqrt{\\hat{p}(1-\\hat{p})\\left(\\frac{1}{n_1} + \\frac{1}{n_2}\\right)}$,<br>$\\hat{p} = \\frac{X_1 + X_2}{n_1 + n_2}$ (pooled)',
+         '$\\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$ (unpooled)',
+         '$\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$',
+         '$s_p\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$,<br>$s_p^2 = \\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}$',
+         '$\\frac{s_d}{\\sqrt{n}}$, $n$ = number of pairs',
+         '$SE(S) = \\frac{\\sqrt{n}}{2}$, $n$ = non-zero differences',
+         'see the extra notes'),
+  `Test statistic` = c('$z_{obs} = \\frac{\\hat{p}_1 - \\hat{p}_2}{SE}$',
+                       '$z_{obs} = \\frac{(\\hat{p}_1 - \\hat{p}_2) - d_0}{SE}$',
+                       '$t_{obs} = \\frac{\\bar{x}_1 - \\bar{x}_2}{SE}$',
+                       '$t_{obs} = \\frac{\\bar{x}_1 - \\bar{x}_2}{SE}$',
+                       '$t_{obs} = \\frac{\\bar{d} - 0}{s_d/\\sqrt{n}}$',
+                       '$S$ = number of $+$ differences;<br>large $n$: $z_{obs} = \\frac{S - n/2}{\\sqrt{n}/2}$',
+                       'the rank sum of one sample'),
+  `$100(1 - \\alpha)\\%$ CI` = c('(use the unpooled interval in the next row)',
+                                '$(\\hat{p}_1 - \\hat{p}_2) \\pm Z_{1-\\alpha/2}\\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$',
+                                '$(\\bar{x}_1 - \\bar{x}_2) \\pm t_{1-\\alpha/2}\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$',
+                                '$(\\bar{x}_1 - \\bar{x}_2) \\pm t_{1-\\alpha/2}\\, s_p\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$',
+                                '$\\bar{d} \\pm t_{1-\\alpha/2}\\frac{s_d}{\\sqrt{n}}$',
+                                'not covered',
+                                'not covered'),
+  `Distribution if $H_0$ is true` = c('$N(0, 1)$', '$N(0, 1)$',
+                                      'approximately $t$, $df \\approx \\min(n_1 - 1, n_2 - 1)$ (Welch df in software)',
+                                      '$t(n_1 + n_2 - 2)$, exactly if $\\sigma_1 = \\sigma_2$',
+                                      '$t(n - 1)$',
+                                      '$S \\sim$ Binomial$(n, 0.5)$; large $n$: $N(0, 1)$',
+                                      'rank-sum tables or software'),
+  Assumptions = c('two independent random samples; $n_1\\hat{p}, n_1(1-\\hat{p}), n_2\\hat{p}, n_2(1-\\hat{p})$ all $\\geq 15$ (pooled $\\hat{p}$)',
+                  'two independent random samples; at least 15 successes and 15 failures in each sample',
+                  'two independent random samples; both populations normal, or both $n \\geq 30$',
+                  'as unpooled, **plus** $\\sigma_1 = \\sigma_2$ (similar sample SDs and sizes)',
+                  'a random sample of pairs; the differences normal, or $n \\geq 30$ pairs',
+                  'a random sample of pairs; no normality needed; $n/2 \\geq 15$ for the $z$ version',
+                  'two independent random samples; no normality needed'),
+  check.names = FALSE))
+```
+
+More on the two non-parametric tests, with worked examples, is under **Resources → Extras →
+Non-parametric Tests**: [Non-parametric tests for two samples](misc/Non-Parametric-Tests-For-Two-Samples.html).
 
 # Sources
 

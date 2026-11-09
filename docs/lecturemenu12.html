@@ -734,7 +734,8 @@ class="math inline">\(d_0 \neq 0\)</span>
 </tr>
 <tr>
 <td style="text-align:left;">
-a confidence interval for <span class="math inline">\(p_1 - p_2\)</span>
+a <span class="math inline">\(100(1 - \alpha)\%\)</span> confidence
+interval for <span class="math inline">\(p_1 - p_2\)</span>
 </td>
 <td style="text-align:left;">
 <span class="math inline">\((\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2}
@@ -1175,10 +1176,10 @@ of freedom.</p>
 <thead>
 <tr>
 <th style="text-align:left;">
-Situation
+Test or interval
 </th>
 <th style="text-align:left;">
-The SE we use
+The SE (or interval) we use
 </th>
 <th style="text-align:left;">
 df
@@ -1191,10 +1192,12 @@ Pool?
 <tbody>
 <tr>
 <td style="text-align:left;">
-we assume <span class="math inline">\(\sigma_1 = \sigma_2\)</span>
+<span class="math inline">\(t\)</span>-test of <span
+class="math inline">\(H_0: \mu_1 = \mu_2\)</span>, assuming <span
+class="math inline">\(\sigma_1 = \sigma_2\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(s_p\sqrt{\frac{1}{n_1} +
+<span class="math inline">\(SE = s_p\sqrt{\frac{1}{n_1} +
 \frac{1}{n_2}}\)</span>
 </td>
 <td style="text-align:left;">
@@ -1206,16 +1209,54 @@ we assume <span class="math inline">\(\sigma_1 = \sigma_2\)</span>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(\sigma_1, \sigma_2\)</span> unknown and
-possibly different (our default)
+<span class="math inline">\(t\)</span>-test of <span
+class="math inline">\(H_0: \mu_1 = \mu_2\)</span>, <span
+class="math inline">\(\sigma_1, \sigma_2\)</span> possibly different
+(our default)
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\sqrt{\frac{s_1^2}{n_1} +
+<span class="math inline">\(SE = \sqrt{\frac{s_1^2}{n_1} +
 \frac{s_2^2}{n_2}}\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span> by hand;
-Welch in software
+<span class="math inline">\(\approx \min(n_1 - 1, n_2 - 1)\)</span> by
+hand; Welch in software
+</td>
+<td style="text-align:left;">
+<strong>unpooled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+a <span class="math inline">\(100(1 - \alpha)\%\)</span> confidence
+interval for <span class="math inline">\(\mu_1 - \mu_2\)</span>,
+assuming <span class="math inline">\(\sigma_1 = \sigma_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2}\,
+s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1 + n_2 - 2\)</span>
+</td>
+<td style="text-align:left;">
+<strong>pooled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+a <span class="math inline">\(100(1 - \alpha)\%\)</span> confidence
+interval for <span class="math inline">\(\mu_1 - \mu_2\)</span>, <span
+class="math inline">\(\sigma_1, \sigma_2\)</span> possibly different
+(our default)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm
+t_{1-\alpha/2}\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\approx \min(n_1 - 1, n_2 - 1)\)</span> by
+hand; Welch in software
 </td>
 <td style="text-align:left;">
 <strong>unpooled</strong>
@@ -1223,6 +1264,14 @@ Welch in software
 </tr>
 </tbody>
 </table>
+<p>Notice the difference from proportions. There, the
+<em>hypothesis</em> decided whether to pool: the test of <span
+class="math inline">\(H_0: p_1 = p_2\)</span> pools, and the confidence
+interval does not. For means, the test and the interval always make the
+<strong>same</strong> choice, because what decides it is an
+<em>assumption about the SDs</em>, <span class="math inline">\(\sigma_1
+= \sigma_2\)</span>, not anything <span
+class="math inline">\(H_0\)</span> says.</p>
 <p><strong>We do not pool for means.</strong> The textbook is blunt
 about it: right after the df formula it says “Notice that the sample
 variances <span class="math inline">\((s_1)^2\)</span> and <span
@@ -2941,6 +2990,255 @@ class="math inline">\(t\)</span>-test.</li>
 daily:</strong> two independent samples and a yes/no response, so the
 two-proportion <span class="math inline">\(z\)</span>-test.</li>
 </ul>
+<div id="summary-of-the-two-sample-tests" class="section level2">
+<h2>Summary of the two-sample tests</h2>
+<p>Every two-sample procedure from Lectures 26–28, side by side. “Large”
+checks use the course’s rule of 15 (for proportions and the sign test)
+or 30 (for means).</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Scenario
+</th>
+<th style="text-align:left;">
+Hypotheses
+</th>
+<th style="text-align:left;">
+SE
+</th>
+<th style="text-align:left;">
+Test statistic
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(100(1 - \alpha)\%\)</span> CI
+</th>
+<th style="text-align:left;">
+Distribution if <span class="math inline">\(H_0\)</span> is true
+</th>
+<th style="text-align:left;">
+Assumptions
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<strong>Two proportions</strong>, test of no difference<br>(two
+independent samples, yes/no response)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: p_1 - p_2 = 0\)</span><br><span
+class="math inline">\(H_A: p_1 - p_2 &gt;, &lt;, \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}
++ \frac{1}{n_2}\right)}\)</span>,<br><span class="math inline">\(\hat{p}
+= \frac{X_1 + X_2}{n_1 + n_2}\)</span> (pooled)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} = \frac{\hat{p}_1 -
+\hat{p}_2}{SE}\)</span>
+</td>
+<td style="text-align:left;">
+(use the unpooled interval in the next row)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(N(0, 1)\)</span>
+</td>
+<td style="text-align:left;">
+two independent random samples; <span class="math inline">\(n_1\hat{p},
+n_1(1-\hat{p}), n_2\hat{p}, n_2(1-\hat{p})\)</span> all <span
+class="math inline">\(\geq 15\)</span> (pooled <span
+class="math inline">\(\hat{p}\)</span>)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Two proportions</strong>, test of a non-zero difference
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: p_1 - p_2 = d_0\)</span><br><span
+class="math inline">\(H_A: p_1 - p_2 &gt;, &lt;, \neq d_0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span> (unpooled)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) -
+d_0}{SE}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\hat{p}_1 - \hat{p}_2) \pm
+Z_{1-\alpha/2}\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(N(0, 1)\)</span>
+</td>
+<td style="text-align:left;">
+two independent random samples; at least 15 successes and 15 failures in
+each sample
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Two means</strong>, unpooled (our default)<br>(two independent
+samples, quantitative response)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span><br><span
+class="math inline">\(H_A: \mu_1 - \mu_2 &gt;, &lt;, \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sqrt{\frac{s_1^2}{n_1} +
+\frac{s_2^2}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{obs} = \frac{\bar{x}_1 -
+\bar{x}_2}{SE}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm
+t_{1-\alpha/2}\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+approximately <span class="math inline">\(t\)</span>, <span
+class="math inline">\(df \approx \min(n_1 - 1, n_2 - 1)\)</span> (Welch
+df in software)
+</td>
+<td style="text-align:left;">
+two independent random samples; both populations normal, or both <span
+class="math inline">\(n \geq 30\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Two means</strong>, pooled
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span><br><span
+class="math inline">\(H_A: \mu_1 - \mu_2 &gt;, &lt;, \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(s_p\sqrt{\frac{1}{n_1} +
+\frac{1}{n_2}}\)</span>,<br><span class="math inline">\(s_p^2 =
+\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{obs} = \frac{\bar{x}_1 -
+\bar{x}_2}{SE}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2}\,
+s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n_1 + n_2 - 2)\)</span>, exactly if <span
+class="math inline">\(\sigma_1 = \sigma_2\)</span>
+</td>
+<td style="text-align:left;">
+as unpooled, <strong>plus</strong> <span class="math inline">\(\sigma_1
+= \sigma_2\)</span> (similar sample SDs and sizes)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Matched pairs</strong>, mean difference<br>(the same subjects
+twice, or matched pairs)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: \mu_d = 0\)</span><br><span
+class="math inline">\(H_A: \mu_d &gt;, &lt;, \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{s_d}{\sqrt{n}}\)</span>, <span
+class="math inline">\(n\)</span> = number of pairs
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{obs} = \frac{\bar{d} -
+0}{s_d/\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{d} \pm
+t_{1-\alpha/2}\frac{s_d}{\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n - 1)\)</span>
+</td>
+<td style="text-align:left;">
+a random sample of pairs; the differences normal, or <span
+class="math inline">\(n \geq 30\)</span> pairs
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Matched pairs</strong>, sign test (Lecture
+26)<br>(non-parametric)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: M_D = 0\)</span> (median
+difference)<br><span class="math inline">\(H_A: M_D &gt;, &lt;, \neq
+0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SE(S) = \frac{\sqrt{n}}{2}\)</span>, <span
+class="math inline">\(n\)</span> = non-zero differences
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(S\)</span> = number of <span
+class="math inline">\(+\)</span> differences;<br>large <span
+class="math inline">\(n\)</span>: <span class="math inline">\(z_{obs} =
+\frac{S - n/2}{\sqrt{n}/2}\)</span>
+</td>
+<td style="text-align:left;">
+not covered
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(S \sim\)</span> Binomial<span
+class="math inline">\((n, 0.5)\)</span>; large <span
+class="math inline">\(n\)</span>: <span class="math inline">\(N(0,
+1)\)</span>
+</td>
+<td style="text-align:left;">
+a random sample of pairs; no normality needed; <span
+class="math inline">\(n/2 \geq 15\)</span> for the <span
+class="math inline">\(z\)</span> version
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Two independent samples</strong>, rank-sum
+test<br>(non-parametric)
+</td>
+<td style="text-align:left;">
+the two populations have the same centre, against one tending to give
+larger values
+</td>
+<td style="text-align:left;">
+see the extra notes
+</td>
+<td style="text-align:left;">
+the rank sum of one sample
+</td>
+<td style="text-align:left;">
+not covered
+</td>
+<td style="text-align:left;">
+rank-sum tables or software
+</td>
+<td style="text-align:left;">
+two independent random samples; no normality needed
+</td>
+</tr>
+</tbody>
+</table>
+<p>More on the two non-parametric tests, with worked examples, is under
+<strong>Resources → Extras → Non-parametric Tests</strong>: <a
+href="misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric
+tests for two samples</a>.</p>
+</div>
 </div>
 <div id="sources" class="section level1">
 <h1>Sources</h1>
