@@ -126,29 +126,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-/* for pandoc --citeproc since 2.11 */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="assets/brand/uidaho-branding.css" type="text/css" />
 <link rel="stylesheet" href="assets/brand/site.css" type="text/css" />
@@ -479,6 +456,9 @@ div.tocify {
         <li>
           <a href="lecturemenu11.html">Week 11</a>
         </li>
+        <li>
+          <a href="lecturemenu12.html">Week 12</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -515,6 +495,9 @@ div.tocify {
         </li>
         <li>
           <a href="homeworks/2026/homework_2_2026_solns.html">Hmwk 2 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_3_2026_solns.html">Hmwk 3 Solutions</a>
         </li>
       </ul>
     </li>
@@ -673,2088 +656,2309 @@ div.tocify {
 </div>
 
 
-<div id="lecture-24" class="section level1">
-<h1>Lecture 24</h1>
-<p><strong>Warm Up:</strong></p>
+<!--
+  SCOPE (Nov 9 2026). Week 12 of Fall 2026. Lecture 28 (Mon Nov 9): a review of the two-proportion test
+  and when to pool, the two independent samples t-test, and the matched-pairs t-test (deck:
+  lecture_slides/Week 12/2026/Week12_Lecture28_Slides_11_09_2026.pptx; figures and number checks:
+  assets/make_lecture28_figures.R). Causal inference was dropped, and every later topic moved one class
+  earlier (see the SHIFT note in Course_Schedule.Rmd): Wed Nov 11 is the introduction to analyzing
+  categorical variables and Fri Nov 13 is goodness-of-fit and tests of independence. Add those sections
+  here when they are written.
+  The 2024 Week 12 content that used to be on this page (the sign test, two proportions) is in git history;
+  both topics are now on the Week 11 page.
+-->
+<div id="lecture-28" class="section level1">
+<h1>Lecture 28</h1>
+<p>Lecture 28 has three parts. It starts with a review of the
+two-proportion test from Lecture 27, focusing on one question that trips
+people up: <strong>when do we pool?</strong> Then it extends the
+two-sample idea from proportions to <strong>means</strong>, first for
+two independent samples and then for matched pairs. The textbook
+sections are <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
+10.1</a> and <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
+10.4</a>.</p>
+</div>
+<div id="review-when-do-we-pool" class="section level1">
+<h1>Review: when do we pool?</h1>
+<p>Every test and interval for two proportions uses the same estimate,
+<span class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span>, and an SE of
+the form <span class="math display">\[SE(\hat{p}_1 - \hat{p}_2) =
+\sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}\]</span> We never
+know <span class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span>, so we have to put something in their
+place. The choice depends on what we are assuming:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Null hypothesis or goal
+</th>
+<th style="text-align:left;">
+The SE we use
+</th>
+<th style="text-align:left;">
+Pool?
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: p_1 = p_2\)</span> (that is, <span
+class="math inline">\(p_1 - p_2 = 0\)</span>)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SE_0 =
+\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)},
+\quad \hat{p} = \frac{X_1 + X_2}{n_1 + n_2}\)</span>
+</td>
+<td style="text-align:left;">
+<strong>pooled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_0: p_1 - p_2 = d_0\)</span>, with <span
+class="math inline">\(d_0 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(SE =
+\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<strong>unpooled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+a confidence interval for <span class="math inline">\(p_1 - p_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2}
+\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<strong>unpooled</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the first row pools.</strong> A test works out what the
+data would look like <em>if <span class="math inline">\(H_0\)</span>
+were true</em>. If <span class="math inline">\(H_0: p_1 = p_2\)</span>
+is true, there is only one proportion, <span
+class="math inline">\(p\)</span>, and both samples estimate it. The best
+estimate of one <span class="math inline">\(p\)</span> uses all the
+data, so we combine the samples: all the successes over all the
+observations, <span class="math inline">\(\hat{p} = (X_1 + X_2)/(n_1 +
+n_2)\)</span>. This is the same reason the one-sample test uses <span
+class="math inline">\(p_0\)</span> in its SE: the SE is built from what
+<span class="math inline">\(H_0\)</span> says.</p>
+<p><strong>Why the other two rows do not.</strong> If <span
+class="math inline">\(H_0\)</span> says <span class="math inline">\(p_1
+- p_2 = d_0\)</span> with <span class="math inline">\(d_0 \neq
+0\)</span>, the null itself says the two proportions are
+<em>different</em>, so there is no common <span
+class="math inline">\(p\)</span> to estimate, and pooling the samples
+would mix two different populations. A confidence interval assumes no
+hypothesis at all, so again there is nothing to justify pooling. In both
+cases we estimate <span class="math inline">\(p_1\)</span> by <span
+class="math inline">\(\hat{p}_1\)</span> and <span
+class="math inline">\(p_2\)</span> by <span
+class="math inline">\(\hat{p}_2\)</span> separately.</p>
+<p>The rule in one line: <strong>pool only when <span
+class="math inline">\(H_0\)</span> says <span class="math inline">\(p_1
+= p_2\)</span>.</strong></p>
+<div id="example-a-confidence-interval-for-the-hives-medications"
+class="section level2">
+<h2>Example: a confidence interval for the hives medications</h2>
+<p>In Lecture 27 we tested the two hives medications (OpenStax Example
+10.8): 20 of 200 adults on medication A and 12 of 200 on medication B
+still had hives after 30 minutes. With the pooled <span
+class="math inline">\(SE_0\)</span>, <span class="math inline">\(z_{obs}
+= 1.47\)</span> and the two-sided P-value was 0.1416, so at <span
+class="math inline">\(\alpha = 0.01\)</span> we did not reject <span
+class="math inline">\(H_0: p_A = p_B\)</span>.</p>
+<p>Now <strong>estimate</strong> the difference with a 99% confidence
+interval. This time we do not assume <span
+class="math inline">\(H_0\)</span>, so we do not pool:</p>
 <ol style="list-style-type: decimal">
-<li>A car company claims that their Hybrid Sedan averages 35 mpg. You
-randomly select 8 of these vehicles from a local dealership and test
-their gas mileage under similar conditions.</li>
+<li><span class="math inline">\(\hat{p}_A = 20/200 = 0.10\)</span> and
+<span class="math inline">\(\hat{p}_B = 12/200 = 0.06\)</span>, so <span
+class="math inline">\(\hat{p}_A - \hat{p}_B = 0.04\)</span>.</li>
+<li>The unpooled SE: <span class="math display">\[SE =
+\sqrt{\frac{0.10(0.90)}{200} + \frac{0.06(0.94)}{200}} = \sqrt{0.000450
++ 0.000282} \approx 0.0271\]</span> (The pooled <span
+class="math inline">\(SE_0\)</span> was 0.02713; the two are close here
+because the sample sizes are equal and the proportions are
+similar.)</li>
+<li>For 99% confidence, <span class="math inline">\(Z_{0.995} =
+2.576\)</span>, so the margin of error is <span
+class="math inline">\(2.576 \times 0.0271 \approx 0.0698\)</span>.</li>
+<li>The interval is <span class="math inline">\(0.04 \pm
+0.0698\)</span>, or <span class="math inline">\((-0.0298,\
+0.1098)\)</span>.</li>
 </ol>
-<p>You get the following MPG scores:</p>
-<p>MPG: <span class="math inline">\(30,28,32,26,33,25,28,30\)</span></p>
-<p>Consider the following <span class="math inline">\(95\%\)</span>
-confidence interval for the null hypothesis <span
-class="math inline">\(\mu = 35\)</span>, <span
-class="math inline">\([26.68, 31.32]\)</span>. Does the actual gas
-mileage for these cars deviate significantly from <span
-class="math inline">\(35\)</span>? Why or why not?</p>
-<ol start="2" style="list-style-type: decimal">
-<li>A concern was raised in Australia that the percentage of deaths of
-Aboriginal prisoners was higher than the percent of deaths of
-non-Aboriginal prisoners, which is <span
-class="math inline">\(0.27\%\)</span>. A sample of six years (1990-1995)
-of data was collected, and it was found that out of <span
-class="math inline">\(14,495\)</span> Aboriginal prisoners, <span
-class="math inline">\(51\)</span> died (“Indigenous deaths in,” 1996).
-Do the data provide enough evidence to show that the proportion of
-deaths of Aboriginal prisoners is more than <span
-class="math inline">\(0.27\%\)</span>?</li>
+<p>We are 99% confident that the proportion of adults who still have
+hives is between 2.98 percentage points <em>lower</em> and 10.98 points
+<em>higher</em> on medication A than on medication B. The interval
+contains 0, which agrees with the test: the data are consistent with no
+difference.</p>
+</div>
+<div id="example-testing-a-difference-that-is-not-zero"
+class="section level2">
+<h2>Example: testing a difference that is not zero</h2>
+<p>In Lecture 27’s electric-vehicle practice (OpenStax Example 10.10),
+135 of 1,343 younger adults and 12 of 232 older adults owned an EV, and
+we found that younger adults were more likely to own one. Suppose the
+marketing firm makes a stronger claim: <strong>younger adults’ ownership
+rate is more than 2 percentage points higher</strong> than older
+adults’. (The 2-point claim is ours, not the book’s.) Test it at <span
+class="math inline">\(\alpha = 0.05\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Two independent random samples. Each
+sample has at least 12 successes and at least 220 failures, so both are
+large enough.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(p_Y\)</span> and <span
+class="math inline">\(p_O\)</span> are the proportions of all younger
+and all older U.S. adults who own an EV. The claim is the alternative:
+<span class="math inline">\(H_A: p_Y - p_O &gt; 0.02\)</span>
+(upper-tailed). The null is <span class="math inline">\(H_0: p_Y - p_O =
+0.02\)</span>.</li>
+<li><strong>Test statistic.</strong> <span
+class="math inline">\(H_0\)</span> says the proportions differ by 0.02,
+so there is no common <span class="math inline">\(p\)</span> and we
+<strong>do not pool</strong>. <span class="math inline">\(\hat{p}_Y =
+135/1343 \approx 0.1005\)</span> and <span
+class="math inline">\(\hat{p}_O = 12/232 \approx 0.0517\)</span>, a
+difference of 0.0488. <span class="math display">\[SE =
+\sqrt{\frac{0.1005(0.8995)}{1343} + \frac{0.0517(0.9483)}{232}} \approx
+0.0167, \qquad
+  z_{obs} = \frac{0.0488 - 0.02}{0.0167} \approx 1.72\]</span></li>
+<li><strong>P-value.</strong> <span class="math inline">\(P(Z \geq 1.72
+\mid H_0 \text{ true}) = 1 - 0.9573 = 0.0427\)</span>.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.0427 &lt;
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data support the
+stronger claim, but only just.</li>
 </ol>
-<div id="parametric-vs-non-parametric-tests" class="section level2">
-<h2>Parametric vs Non-parametric tests</h2>
-<p>The hypothesis tests that we have learned up to this point are called
-<strong>parametric</strong> tests. Parametric tests make assumptions
-about the population distribution from which the data are sampled. For
-example:</p>
-<ul>
-<li><p>The test for a proportion assumes that either the sample size is
-large enough and that the “success” and “failures” are well balanced so
-that the population distribution of <span
-class="math inline">\(X\)</span> is approximately normal</p></li>
-<li><p>The test for a population mean explicitly assumes that the
-population distribution of <span class="math inline">\(X\)</span> is
-normal</p></li>
-</ul>
-<p>Another group of hypothesis tests are said to be
-<strong>non-parametric</strong>. Non-parametric tests make few or no
-assumptions about the underlying distribution of the data. Still, both
-types of analyses assume the data are generated from a randomization
-procedure and that the observations in the data are independent and come
-from the same distribution. However, in non-parametric statistics, the
-distribution can be any distribution.</p>
-<ul>
-<li><p><strong>Advantages of Non-parametric tests</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>They may be the only alternative when sample sizes are very small
-(unless the population distribution is known exactly, but this is almost
-never the case)</p></li>
-<li><p>They make few assumptions about the population distribution of
-the data</p></li>
-<li><p>They are advantageous when the data represent crude measurements
-such as subjective ratings/rankings (e.g, Likert responses)</p></li>
-<li><p>They often have simpler computations and interpretations than
-parametric tests</p></li>
-</ol></li>
-<li><p><strong>Disadvantages of Non-parametric tests</strong></p>
-<ol style="list-style-type: decimal">
-<li>They are generally less powerful than their parametric
-analogues</li>
-</ol></li>
-</ul>
+<p>The only change from an ordinary two-proportion test is in step 3:
+the hypothesized difference, 0.02, replaces the 0 in the numerator, and
+the SE is unpooled.</p>
 </div>
-<div id="the-sign-test" class="section level2">
-<h2>The sign test</h2>
-<p>The sign test is a non-parametric significance test that is typically
-used for paired observations such as data gathered from a matched-pairs
-designs. For example, consider an experiment where individuals are
-weighed before and after a treatment with a weight loss drug and the
-difference in weight is recorded. Such data is appropriate for the sign
-test.</p>
-<p>The sign test is relatively under-powered compared to the other
-parametric tests we have learned about. However, it is very flexible and
-makes almost no assumptions about the data or its population
-distribution. The sign test is especially useful when data arise from
-crude measurements or when observations have a ranked order such as
-movie ratings or taste scores, to name a few examples.</p>
-<p>To demonstrate the use of the sign test, consider the following data
-from a study comparing the ratings of husbands and wives on the
-perceived relative influence of each member of the couple on a major
-financial decision. The ratings were given as a number between <span
-class="math inline">\(1-7\)</span> with <span
-class="math inline">\(1\)</span> indicating wife-dominated decision
-making and <span class="math inline">\(7\)</span> indicating
-husband-dominated decision making.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Couple
-</th>
-<th style="text-align:right;">
-Husband
-</th>
-<th style="text-align:right;">
-Wife
-</th>
-<th style="text-align:right;">
-Difference
-</th>
-<th style="text-align:left;">
-Sign
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
--1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(-\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
--1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(-\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
--1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(-\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>The second to last column “Difference” gives the difference in rating
-between the husbands rating and wifes rating for each couple. The last
-column denoted “Sign” indicates whether each difference was positive or
-negative. Positive differences indicate that husband perceives
-themselves as more dominating in decision making while negative signs
-indicated that the wife perceives themselves as more dominating. In this
-example, ignoring differences of zero, there are a total of <span
-class="math inline">\(14\)</span> signs and <span
-class="math inline">\(11\)</span> of them are positive. Let <span
-class="math inline">\(p\)</span> be the probability that a given sign is
-positive and consider the following pair of hypotheses:</p>
-<p><span class="math display">\[H_0: p = 0.5; \ \ H_A: p \neq 0.5
-\]</span></p>
-<p>The null hypothesis indicates that the presence of a positive or
-negative sign is essentially random while the alternative indicates that
-positive and negative signs are not equally likely, reflecting a
-systematic difference in opinion between the husband and wife in each
-couple. Under the null hypothesis, the number of positive signs is a
-binomial random variable with probability <span class="math inline">\(p
-= 0.5\)</span>.</p>
-<p><span class="math display">\[P(s) = \frac{n!}{s!(n-s)!}p^s(1-p)^{n-s}
-\]</span></p>
-<p>where <span class="math inline">\(n\)</span> is the total number of
-signs and <span class="math inline">\(s\)</span> is the number of
-positive signs. Thus the sampling distribution of the number of positive
-signs is a binomial distribution</p>
-<p><img src="lecturemenu12_files/figure-html/unnamed-chunk-2-1.png" alt="Bar chart of the binomial distribution with n equals 14 and p equals 0.5: probability for each number of positive signs from 0 to 14. The bars are symmetric, peaking at 7 with probability 0.2095. The bars for 11 through 14 are highlighted, and the plot is labeled P of X greater than or equal to 11 equals 0.0287." width="672" /></p>
-<p>Recall that the <span class="math inline">\(p\)</span>-value of a
-significance test is the probability of observing a value as or more
-extreme than the test statistic. In the case of the sign test, the test
-statistic is the number of positive signs and the <span
-class="math inline">\(p\)</span>-value is the probability of observing
-more or fewer signs, depending the nature of the alternative hypothesis.
-For a test of the hypotheses given above, the <span
-class="math inline">\(p\)</span>-value is the probability of getting
-<span class="math inline">\(11\)</span> or more positive signs
-multiplied by <span class="math inline">\(2\)</span> because it is a
-two-tailed test. This gives</p>
-<p><span class="math display">\[p\text{-value} = 2\times P(S \geq 11 |
-H_0 \ \text{True}) = 2\sum_{k = 11}^n \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k}
-\]</span> <span class="math display">\[ = 2(0.0222+0.0056+0.0009+0.0001)
-= 2(0.0287) = 0.0574 \]</span></p>
-<p>Assuming a significance level of <span
-class="math inline">\(5\%\)</span>, we would fail to reject the null
-hypothesis, and we would conclude that the probability of a positive
-sign is not significantly different than <span class="math inline">\(p =
-0.5\)</span>. In the original context of the test, this indicates that
-husbands and wives do not differ significantly in their perceived
-relative influence in major financial decision making.</p>
-<p>The five steps of the sign test are given below:</p>
-<ol style="list-style-type: decimal">
-<li><p>Assumptions: data are matched pairs</p></li>
-<li><p>State the null and alternative hypotheses. Note that the
-hypothesis are defined in terms of the probability of a positive sign.
-Usually the null is that <span class="math inline">\(p = 0.5\)</span>
-i.e positive and negative signs are equally likely/ random.</p></li>
-<li><p>Compute the differences and sign of each difference for all pairs
-of observations. The test statistic is the number of positive
-signs.</p></li>
-<li><p>Compute the <span class="math inline">\(p\)</span>-value from a
-binomial distribution</p></li>
-<li><p>Make a decision</p></li>
-</ol>
-<p>Like we have seen before with tests for <span
-class="math inline">\(p\)</span> and <span
-class="math inline">\(\mu\)</span> the sign test can be right, left or
-two-tailed tests.</p>
+</div>
+<div id="comparing-two-independent-means" class="section level1">
+<h1>Comparing two independent means</h1>
+<p><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
+Section 10.1</a>.)</em> Lecture 27 compared two populations on a
+<strong>categorical</strong> response (a proportion). Now the response
+is <strong>quantitative</strong>, and we compare the populations’
+<strong>means</strong>: the average time girls and boys spend playing
+sports, or the average final-exam score in online and face-to-face
+sections. As with proportions, two sample means will almost never be
+equal, even when the population means are. The test asks whether the
+difference we see is bigger than ordinary sampling variation would
+produce.</p>
+<p>The data are <strong>two independent simple random samples</strong>,
+one from each population:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Alternative Hypothesis <span class="math inline">\(H_A\)</span>
-</th>
-<th style="text-align:left;">
-<span class="math inline">\(p\)</span>-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p &gt; 0.5\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(S \geq s | H_0 \ \text{True})\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p &lt; 0.5\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(S \leq s | H_0 \ \text{True})\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: p \neq 0.5\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(2\times P(S \geq s | H_0 \
-\text{True})\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>We can also tabulate the probabilities for different outcomes of the
-sign test to produce a table like the <span
-class="math inline">\(Z\)</span> or <span
-class="math inline">\(t\)</span> table we have used previously. The
-table below gives the (point) probabilities for different combinations
-of positive and total signs. The columns represent the total number of
-signs and the rows represent the number of positive signs.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Number of positive signs
-</th>
-<th style="text-align:left;">
-5
-</th>
-<th style="text-align:left;">
-6
-</th>
-<th style="text-align:left;">
-7
-</th>
-<th style="text-align:left;">
-8
-</th>
-<th style="text-align:left;">
-9
-</th>
-<th style="text-align:left;">
-10
-</th>
-<th style="text-align:left;">
-11
-</th>
-<th style="text-align:left;">
-12
-</th>
-<th style="text-align:left;">
-13
-</th>
-<th style="text-align:left;">
-14
-</th>
-<th style="text-align:left;">
-15
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-0.03125
-</td>
-<td style="text-align:left;">
-0.01562
-</td>
-<td style="text-align:left;">
-0.00781
-</td>
-<td style="text-align:left;">
-0.00391
-</td>
-<td style="text-align:left;">
-0.00195
-</td>
-<td style="text-align:left;">
-0.00098
-</td>
-<td style="text-align:left;">
-0.00049
-</td>
-<td style="text-align:left;">
-0.00024
-</td>
-<td style="text-align:left;">
-0.00012
-</td>
-<td style="text-align:left;">
-6e-05
-</td>
-<td style="text-align:left;">
-3e-05
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-0.15625
-</td>
-<td style="text-align:left;">
-0.09375
-</td>
-<td style="text-align:left;">
-0.05469
-</td>
-<td style="text-align:left;">
-0.03125
-</td>
-<td style="text-align:left;">
-0.01758
-</td>
-<td style="text-align:left;">
-0.00977
-</td>
-<td style="text-align:left;">
-0.00537
-</td>
-<td style="text-align:left;">
-0.00293
-</td>
-<td style="text-align:left;">
-0.00159
-</td>
-<td style="text-align:left;">
-0.00085
-</td>
-<td style="text-align:left;">
-0.00046
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-0.3125
-</td>
-<td style="text-align:left;">
-0.23438
-</td>
-<td style="text-align:left;">
-0.16406
-</td>
-<td style="text-align:left;">
-0.10938
-</td>
-<td style="text-align:left;">
-0.07031
-</td>
-<td style="text-align:left;">
-0.04395
-</td>
-<td style="text-align:left;">
-0.02686
-</td>
-<td style="text-align:left;">
-0.01611
-</td>
-<td style="text-align:left;">
-0.00952
-</td>
-<td style="text-align:left;">
-0.00555
-</td>
-<td style="text-align:left;">
-0.0032
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-0.3125
-</td>
-<td style="text-align:left;">
-0.3125
-</td>
-<td style="text-align:left;">
-0.27344
-</td>
-<td style="text-align:left;">
-0.21875
-</td>
-<td style="text-align:left;">
-0.16406
-</td>
-<td style="text-align:left;">
-0.11719
-</td>
-<td style="text-align:left;">
-0.08057
-</td>
-<td style="text-align:left;">
-0.05371
-</td>
-<td style="text-align:left;">
-0.03491
-</td>
-<td style="text-align:left;">
-0.02222
-</td>
-<td style="text-align:left;">
-0.01389
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-0.15625
-</td>
-<td style="text-align:left;">
-0.23438
-</td>
-<td style="text-align:left;">
-0.27344
-</td>
-<td style="text-align:left;">
-0.27344
-</td>
-<td style="text-align:left;">
-0.24609
-</td>
-<td style="text-align:left;">
-0.20508
-</td>
-<td style="text-align:left;">
-0.16113
-</td>
-<td style="text-align:left;">
-0.12085
-</td>
-<td style="text-align:left;">
-0.08728
-</td>
-<td style="text-align:left;">
-0.0611
-</td>
-<td style="text-align:left;">
-0.04166
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-0.03125
-</td>
-<td style="text-align:left;">
-0.09375
-</td>
-<td style="text-align:left;">
-0.16406
-</td>
-<td style="text-align:left;">
-0.21875
-</td>
-<td style="text-align:left;">
-0.24609
-</td>
-<td style="text-align:left;">
-0.24609
-</td>
-<td style="text-align:left;">
-0.22559
-</td>
-<td style="text-align:left;">
-0.19336
-</td>
-<td style="text-align:left;">
-0.1571
-</td>
-<td style="text-align:left;">
-0.12219
-</td>
-<td style="text-align:left;">
-0.09164
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.01562
-</td>
-<td style="text-align:left;">
-0.05469
-</td>
-<td style="text-align:left;">
-0.10938
-</td>
-<td style="text-align:left;">
-0.16406
-</td>
-<td style="text-align:left;">
-0.20508
-</td>
-<td style="text-align:left;">
-0.22559
-</td>
-<td style="text-align:left;">
-0.22559
-</td>
-<td style="text-align:left;">
-0.20947
-</td>
-<td style="text-align:left;">
-0.18329
-</td>
-<td style="text-align:left;">
-0.15274
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.00781
-</td>
-<td style="text-align:left;">
-0.03125
-</td>
-<td style="text-align:left;">
-0.07031
-</td>
-<td style="text-align:left;">
-0.11719
-</td>
-<td style="text-align:left;">
-0.16113
-</td>
-<td style="text-align:left;">
-0.19336
-</td>
-<td style="text-align:left;">
-0.20947
-</td>
-<td style="text-align:left;">
-0.20947
-</td>
-<td style="text-align:left;">
-0.19638
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.00391
-</td>
-<td style="text-align:left;">
-0.01758
-</td>
-<td style="text-align:left;">
-0.04395
-</td>
-<td style="text-align:left;">
-0.08057
-</td>
-<td style="text-align:left;">
-0.12085
-</td>
-<td style="text-align:left;">
-0.1571
-</td>
-<td style="text-align:left;">
-0.18329
-</td>
-<td style="text-align:left;">
-0.19638
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.00195
-</td>
-<td style="text-align:left;">
-0.00977
-</td>
-<td style="text-align:left;">
-0.02686
-</td>
-<td style="text-align:left;">
-0.05371
-</td>
-<td style="text-align:left;">
-0.08728
-</td>
-<td style="text-align:left;">
-0.12219
-</td>
-<td style="text-align:left;">
-0.15274
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.00098
-</td>
-<td style="text-align:left;">
-0.00537
-</td>
-<td style="text-align:left;">
-0.01611
-</td>
-<td style="text-align:left;">
-0.03491
-</td>
-<td style="text-align:left;">
-0.0611
-</td>
-<td style="text-align:left;">
-0.09164
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.00049
-</td>
-<td style="text-align:left;">
-0.00293
-</td>
-<td style="text-align:left;">
-0.00952
-</td>
-<td style="text-align:left;">
-0.02222
-</td>
-<td style="text-align:left;">
-0.04166
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.00024
-</td>
-<td style="text-align:left;">
-0.00159
-</td>
-<td style="text-align:left;">
-0.00555
-</td>
-<td style="text-align:left;">
-0.01389
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0.00012
-</td>
-<td style="text-align:left;">
-0.00085
-</td>
-<td style="text-align:left;">
-0.0032
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-6e-05
-</td>
-<td style="text-align:left;">
-0.00046
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-0
-</td>
-<td style="text-align:left;">
-3e-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="lecture-25" class="section level1">
-<h1>Lecture 25</h1>
-<p><strong>Practice: The Sign Test</strong> - A group of <span
-class="math inline">\(12\)</span> fly fisherman are testing two types of
-flies to determine which one is more effective at catching trout in the
-Selway River. Each fly fisherman makes <span
-class="math inline">\(10\)</span> casts with each fly lure and records
-the number of trout that are caught. Use the table below to conduct a
-two-sided sign test at the <span class="math inline">\(\alpha =
-0.05\)</span> significance level:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Fisherman
-</th>
-<th style="text-align:right;">
-Fly1
-</th>
-<th style="text-align:right;">
-Fly2
-</th>
-<th style="text-align:right;">
-Difference
-</th>
-<th style="text-align:left;">
-Sign
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
--1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(-\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
--2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(-\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(+\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>The null hypothesis is <span class="math inline">\(H_0: p_0 =
-0.5\)</span> the probability of positive sign is <span
-class="math inline">\(50\%\)</span>. The alternative hypothesis is that
-one of the flies catches more fish <span class="math inline">\(H_A:
-p\neq p_0\)</span>. There are <span class="math inline">\(s = 7\)</span>
-positive signs out of a total of 9 total signs. The <span
-class="math inline">\(p\)</span>-value for the two sided test is given
-by</p>
-<p><span class="math display">\[\text{$p$-value} = 2\times P(S\geq s|
-H_0 \ \text{True}) = 2\left[\sum_{k = 7}^9
-\frac{9!}{k!(9-k)!}0.5^k(1-0.5)^{9-k}\right]\]</span></p>
-<p><span class="math display">\[ = 2\times[0.0703+0.0175+0.0019] =
-2(0.0898) \approx 0.179 \]</span></p>
-<p>Our <span class="math inline">\(p\)</span>-value is greater than
-<span class="math inline">\(\alpha\)</span> and thus we fail to reject
-the null hypothesis and conclude the number of fish caught with each fly
-lure is not significantly different (i.e the probability of a positive
-sign is not significantly different than <span class="math inline">\(p =
-0.5\)</span>)</p>
-<div id="comparing-two-groups" class="section level2">
-<h2>Comparing Two Groups</h2>
-<p>Up to this point in the course we have learned how to conduct
-inference on a single sample. Analyzing a single variable is referred to
-as <strong>univariate</strong> analysis. However, in statistics we are
-often interested in comparing two different groups across some
-measurement. This involves exploring the relationship between two
-variables: An <strong>explanatory variable</strong> which defines the
-groups of interests and a <strong>response variable</strong> which
-measures the outcome of interest from each group. Examples include
-exploring the relationship between gender and height or between
-treatment group (i.e placebo group and treatment group) and patient
-outcome.</p>
-<p>Statistical analyses that explore the relationship between two
-variables are called <strong>bivariate</strong> analyses. Just as we had
-univariate significance tests for a population mean and population
-proportion, we also have well defined significance tests for the
-inference of two variables - these are often called <strong>two-sample
-tests</strong> because we treat the observations in each group as a
-sample from a distinct population. Thus two-sample tests are used to
-compare the population parameters of <u>two different
-populations</u>.</p>
-</div>
-<div id="independent-vs-dependent-samples" class="section level2">
-<h2>Independent vs Dependent Samples</h2>
-<p>In bivariate analyses, we have to be considerate of whether the
-samples belonging to the two groups are dependent or independent.</p>
-<ul>
-<li><p><strong>independent samples</strong> - occur when the
-observations in one sample are independent (have no statistical
-association) of the observations in the other sample. This is most
-always the case in experiments that use randomization to allocate
-subjects to treatment groups</p></li>
-<li><p><strong>dependent samples</strong> - occur when the observations
-in one sample are associated with the observations in another sample –
-this can happen when the same subjects are used for each sample such as
-matched pair designs</p></li>
-</ul>
-<p>Dependent samples cause some difficulties for bivariate analyses of
-two groups. This is because computing the standard error under dependent
-samples can be a very complex computation (more on this later).</p>
-</div>
-<div id="introduction-to-two-sample-tests" class="section level2">
-<h2>Introduction to two-sample tests</h2>
-</div>
-<div id="comparing-two-proportions" class="section level2">
-<h2>Comparing two proportions</h2>
-<p>Comparative studies, such as comparing two related but distinct
-groups, are by far the most common type of statistical analysis. We
-often want to compare the proportions of individuals from two groups
-that share some characteristic. Examples include:</p>
-<ul>
-<li><p>Proportion of college students who binge drink among high and low
-GPA students</p></li>
-<li><p>Proportion of religious voters among Republicans and
-Democrats.</p></li>
-</ul>
-<p>These problems concern the comparison of two populations (high and
-low GPA students; Republicans and Democrats). The two groups being
-compared are called <i>population 1</i> and <i>population 2</i>, and the
-two population proportions are called <span
-class="math inline">\(p_1\)</span> and <span
-class="math inline">\(p_2\)</span>. For two population proportions we
-will consider only the case of two independent samples. The data consist
-of two independent simple random samples of sizes <span
-class="math inline">\(n_1\)</span> and <span
-class="math inline">\(n_2\)</span> from populations 1 and 2,
-respectively. The proportion of observations having the characteristic
-of interest in each sample estimates the corresponding population
-proportion. The notation is outlined in the table below:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
 Population
 </th>
 <th style="text-align:left;">
-Population Proportion
+Population mean
 </th>
 <th style="text-align:left;">
-Sample Size
+Population SD
 </th>
 <th style="text-align:left;">
-Count of Successes
+Sample size
 </th>
 <th style="text-align:left;">
-Sample Proportion
+Sample mean
+</th>
+<th style="text-align:left;">
+Sample SD
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
+<td style="text-align:left;">
 1
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(p_1\)</span>
+<span class="math inline">\(\mu_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma_1\)</span>
 </td>
 <td style="text-align:left;">
 <span class="math inline">\(n_1\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(X_1\)</span>
+<span class="math inline">\(\bar{x}_1\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\hat{p}_1 = X_1/n_1\)</span>
+<span class="math inline">\(s_1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(s_2\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The parameter is the <strong>difference in population means</strong>,
+<span class="math inline">\(\mu_1 - \mu_2\)</span>, and its estimate is
+the difference in sample means, <span class="math inline">\(\bar{x}_1 -
+\bar{x}_2\)</span>.</p>
+<div id="the-sampling-distribution-of-barx_1---barx_2"
+class="section level2">
+<h2>The sampling distribution of <span class="math inline">\(\bar{x}_1 -
+\bar{x}_2\)</span></h2>
+<ul>
+<li><strong>Centre</strong> <span class="math inline">\(\mu_1 -
+\mu_2\)</span>. Each <span class="math inline">\(\bar{x}\)</span> is
+centred at its own <span class="math inline">\(\mu\)</span>, so on
+average the difference of the estimates is the difference of the
+parameters.</li>
+<li><strong>Spread.</strong> From the one-sample case, <span
+class="math inline">\(\bar{x}_1\)</span> has variance <span
+class="math inline">\(\sigma_1^2/n_1\)</span> and <span
+class="math inline">\(\bar{x}_2\)</span> has variance <span
+class="math inline">\(\sigma_2^2/n_2\)</span>. Because the samples are
+<strong>independent, the variances add</strong>, just as they did for
+proportions: <span class="math display">\[SE(\bar{x}_1 - \bar{x}_2) =
+\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}\]</span></li>
+<li><strong>Shape.</strong> Normal if both populations are normal. If
+they are not, the CLT makes it approximately normal when both samples
+are large (the course’s rule is both <span class="math inline">\(n \geq
+30\)</span>).</li>
+</ul>
+<p>Putting these together, <span class="math inline">\(\bar{x}_1 -
+\bar{x}_2 \sim N\left(\mu_1 - \mu_2,\ \sqrt{\frac{\sigma_1^2}{n_1} +
+\frac{\sigma_2^2}{n_2}}\right)\)</span>. The picture shows why the
+variances add. Each sample mean wobbles around its own <span
+class="math inline">\(\mu\)</span>, and their difference picks up both
+wobbles, so it is more spread out than either mean on its own.</p>
+<p><img src="assets/l28_diff_dist.png" alt="Two panels. Left: two bell curves, the sampling distributions of x-bar 2 (gold, taller and narrower, centred at mu 2) and of x-bar 1 (navy, centred at mu 1 to its right), labelled two sample means, each with its own SE. Right, on the same height scale: one red bell curve for x-bar 1 minus x-bar 2, centred at mu 1 minus mu 2, lower and wider than either curve on the left, with an arrow marking one SE. A dashed line at 0 is labelled H0: mu 1 minus mu 2 equals 0. The axis label reads: the difference, wider, because variances add." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>Its distribution, in practice.</strong> We do not know <span
+class="math inline">\(\sigma_1\)</span> and <span
+class="math inline">\(\sigma_2\)</span>, so the SE uses <span
+class="math inline">\(s_1\)</span> and <span
+class="math inline">\(s_2\)</span> instead (next section). The
+difference itself stays approximately normal. What changes is the
+<strong>standardized</strong> difference: dividing by an
+<em>estimated</em> SE adds uncertainty, and the result follows,
+approximately, a <span class="math inline">\(t\)</span> distribution:
+<span class="math display">\[\frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 -
+\mu_2)}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \ \dot\sim\
+t\big(\min(n_1 - 1,\ n_2 - 1)\big)\]</span> (<span
+class="math inline">\(\dot\sim\)</span> means “approximately follows”).
+Both the <span class="math inline">\(t\)</span> shape and the df are
+approximations, as the next section explains.</p>
+</div>
+<div id="the-test-statistic" class="section level2">
+<h2>The test statistic</h2>
+<p>In practice <span class="math inline">\(\sigma_1\)</span> and <span
+class="math inline">\(\sigma_2\)</span> are unknown, so, as in the
+one-sample <span class="math inline">\(t\)</span>-test, we replace them
+with the sample standard deviations: <span class="math display">\[SE =
+\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}\]</span> Under <span
+class="math inline">\(H_0\)</span>, <span class="math inline">\(\mu_1 -
+\mu_2 = 0\)</span>, so the test statistic is <span
+class="math display">\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) -
+0}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}\]</span> Estimating two
+standard deviations adds uncertainty, so <span
+class="math inline">\(t_{obs}\)</span> is compared with a <span
+class="math inline">\(t\)</span> distribution, not the standard normal.
+Unlike the one-sample test, though, <strong>the <span
+class="math inline">\(t\)</span> distribution here is an
+approximation</strong>. With two different SDs in the SE, <span
+class="math inline">\(t_{obs}\)</span> does not follow any <span
+class="math inline">\(t\)</span> distribution exactly, so both the curve
+and its degrees of freedom are approximate:</p>
+<ul>
+<li><strong>The Welch df (what software uses).</strong> The best
+approximation, due to Welch (the textbook calls it the Aspin-Welch
+formula), is the df that makes a <span class="math inline">\(t\)</span>
+curve match <span class="math inline">\(t_{obs}\)</span> most closely.
+Writing <span class="math inline">\(v_1 = s_1^2/n_1\)</span> and <span
+class="math inline">\(v_2 = s_2^2/n_2\)</span> (each sample’s share of
+the squared SE), <span class="math display">\[df = \frac{(v_1 +
+v_2)^2}{\dfrac{v_1^2}{n_1 - 1} + \dfrac{v_2^2}{n_2 - 1}}\]</span> It is
+usually not a whole number, and it always lies between <span
+class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span> and <span
+class="math inline">\(n_1 + n_2 - 2\)</span>. For the sports example
+below, <span class="math inline">\(v_1 = 0.866^2/9 = 0.0833\)</span> and
+<span class="math inline">\(v_2 = 1.00^2/16 = 0.0625\)</span>, so <span
+class="math display">\[df = \frac{(0.0833 + 0.0625)^2}{0.0833^2/8 +
+0.0625^2/15} \approx 18.85\]</span></li>
+<li><strong>In practice, by hand: <span class="math inline">\(df \approx
+\min(n_1 - 1,\ n_2 - 1)\)</span></strong>, the smaller sample size minus
+one. This is a quick, rough approximation to the Welch df. It is never
+larger than the Welch df, so its <span class="math inline">\(t\)</span>
+curve has heavier tails and our P-value comes out a little
+<strong>larger</strong> than software’s. That makes the hand method
+<strong>conservative</strong>: if it rejects <span
+class="math inline">\(H_0\)</span>, software will too. For the sports
+example it gives 8 instead of 18.85.</li>
+</ul>
+<p>So, if <span class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(t_{obs}\)</span> approximately follows a <span
+class="math inline">\(t\)</span> distribution, and by hand we use <span
+class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span> degrees of
+freedom.</p>
+</div>
+<div id="the-hypotheses-and-the-p-value" class="section level2">
+<h2>The hypotheses and the P-value</h2>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2, \qquad \text{which
+is the same as} \qquad H_0: \mu_1 - \mu_2 = 0\]</span></p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative hypothesis
+</th>
+<th style="text-align:left;">
+Tail
+</th>
+<th style="text-align:left;">
+In words
+</th>
+<th style="text-align:left;">
+P-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+upper-tailed
+</td>
+<td style="text-align:left;">
+population 1 has the larger mean
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(T \geq t_{obs} \mid H_0 \text{
+true})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span>
+</td>
+<td style="text-align:left;">
+lower-tailed
+</td>
+<td style="text-align:left;">
+population 1 has the smaller mean
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(T \leq t_{obs} \mid H_0 \text{
+true})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+two-sided
+</td>
+<td style="text-align:left;">
+the means differ, in either direction
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(2 \times P(T \geq |t_{obs}| \mid H_0 \text{
+true})\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>With the <a href="misc/t_table.html"><span
+class="math inline">\(t\)</span>-table</a> we usually cannot find the
+P-value exactly; we <strong>bracket</strong> it. Find the row for our
+df, find the two entries that <span
+class="math inline">\(|t_{obs}|\)</span> falls between, and read their
+upper-tail areas from the top of the table. For a two-sided test, double
+both areas.</p>
+</div>
+<div id="assumptions" class="section level2">
+<h2>Assumptions</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Two independent random samples</strong>, one from each
+population (or two groups formed by random assignment). Nothing in one
+sample is paired with anything in the other.</li>
+<li><strong>Normal populations, or large samples.</strong> If both
+samples have at least 30 observations, the CLT takes care of the shape.
+With smaller samples, both populations should be roughly normal (look
+for strong skew or outliers in the data).</li>
+</ol>
+</div>
+<div id="the-five-steps" class="section level2">
+<h2>The five steps</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Independent random samples; normal
+populations or both <span class="math inline">\(n \geq 30\)</span>.</li>
+<li><strong>Hypotheses.</strong> Define <span
+class="math inline">\(\mu_1\)</span> and <span
+class="math inline">\(\mu_2\)</span> in words, then <span
+class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> and the
+alternative.</li>
+<li><strong>Test statistic.</strong> The SE, <span
+class="math inline">\(t_{obs}\)</span>, and <span
+class="math inline">\(df = \min(n_1 - 1, n_2 - 1)\)</span>.</li>
+<li><strong>P-value.</strong> Bracket it with the <span
+class="math inline">\(t\)</span>-table, using the tail(s) that <span
+class="math inline">\(H_A\)</span> points to.</li>
+<li><strong>Decision.</strong> Reject <span
+class="math inline">\(H_0\)</span> if the P-value <span
+class="math inline">\(&lt; \alpha\)</span>; state the conclusion in the
+context of the problem.</li>
+</ol>
+</div>
+<div id="a-confidence-interval-for-mu_1---mu_2" class="section level2">
+<h2>A confidence interval for <span class="math inline">\(\mu_1 -
+\mu_2\)</span></h2>
+<p>To estimate the difference rather than test it, use the same SE and
+df: <span class="math display">\[(\bar{x}_1 - \bar{x}_2) \pm
+t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}},
+\qquad df = \min(n_1 - 1, n_2 - 1)\]</span> As always, an interval that
+leaves out 0 matches a two-sided test that rejects <span
+class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span>.</p>
+</div>
+<div id="to-pool-or-not-means" class="section level2">
+<h2>To pool or not (means)</h2>
+<p>There is a second version of the two-sample <span
+class="math inline">\(t\)</span>-test, the <strong>pooled</strong> <span
+class="math inline">\(t\)</span>-test. If we are willing to assume the
+two populations have the <strong>same standard deviation</strong>, <span
+class="math inline">\(\sigma_1 = \sigma_2 = \sigma\)</span>, then both
+samples estimate the same <span class="math inline">\(\sigma\)</span>,
+and we combine them into the <strong>pooled standard deviation</strong>:
+<span class="math display">\[s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 -
+1)s_2^2}{n_1 + n_2 - 2}}\]</span> The SE becomes <span
+class="math inline">\(s_p\sqrt{1/n_1 + 1/n_2}\)</span>, and the test
+statistic follows a <span class="math inline">\(t\)</span> distribution
+with exactly <span class="math inline">\(n_1 + n_2 - 2\)</span> degrees
+of freedom.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Situation
+</th>
+<th style="text-align:left;">
+The SE we use
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+Pool?
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+we assume <span class="math inline">\(\sigma_1 = \sigma_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(s_p\sqrt{\frac{1}{n_1} +
+\frac{1}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1 + n_2 - 2\)</span>
+</td>
+<td style="text-align:left;">
+<strong>pooled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma_1, \sigma_2\)</span> unknown and
+possibly different (our default)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sqrt{\frac{s_1^2}{n_1} +
+\frac{s_2^2}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span> by hand;
+Welch in software
+</td>
+<td style="text-align:left;">
+<strong>unpooled</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>We do not pool for means.</strong> The textbook is blunt
+about it: right after the df formula it says “Notice that the sample
+variances <span class="math inline">\((s_1)^2\)</span> and <span
+class="math inline">\((s_2)^2\)</span> are not pooled. (If the question
+comes up, do not pool the variances.)” (OpenStax p. 513, and again in
+Example 10.1). The book does not give a reason. Here it is:</p>
+<ul>
+<li>The pooled test is correct <strong>only if</strong> <span
+class="math inline">\(\sigma_1 = \sigma_2\)</span>, and we almost never
+know that. Testing for equal SDs first does not really help, because
+that test has little power with small samples, which is exactly when it
+matters.</li>
+<li>If the SDs differ, especially when the sample sizes differ too, the
+pooled test’s real Type I error rate can be far from <span
+class="math inline">\(\alpha\)</span>: it rejects a true <span
+class="math inline">\(H_0\)</span> more often (or less often) than we
+think.</li>
+<li>The unpooled (Welch) test is valid whether or not the SDs are equal,
+and when they <em>are</em> equal it loses very little. So it is the safe
+default, and it is what most software does unless you ask
+otherwise.</li>
+</ul>
+<p><strong>Compare this with proportions.</strong> There we
+<em>must</em> pool for the test of <span class="math inline">\(H_0: p_1
+= p_2\)</span>, because for a proportion the SD is determined by <span
+class="math inline">\(p\)</span> itself, <span
+class="math inline">\(\sqrt{p(1-p)}\)</span>. A null that says the
+proportions are equal automatically says the SDs are equal too. <span
+class="math inline">\(H_0: \mu_1 = \mu_2\)</span> says nothing at all
+about <span class="math inline">\(\sigma_1\)</span> and <span
+class="math inline">\(\sigma_2\)</span>, so it gives us no reason to
+pool.</p>
+<div id="advantages-and-disadvantages-of-pooling"
+class="section level3">
+<h3>Advantages and disadvantages of pooling</h3>
+<ul>
+<li><strong>When it is reasonable.</strong> The sample SDs are similar
+(a common rule of thumb: the larger is less than about twice the
+smaller), and the sample sizes are similar too. Pooling is also natural
+in a randomized experiment where the treatment is expected to shift the
+mean but not the spread.</li>
+<li><strong>The advantage.</strong> If <span
+class="math inline">\(\sigma_1 = \sigma_2\)</span> really holds, the
+pooled <span class="math inline">\(t\)</span> statistic follows a <span
+class="math inline">\(t\)</span> distribution <em>exactly</em>, with
+<span class="math inline">\(n_1 + n_2 - 2\)</span> degrees of freedom,
+more than either the Welch df or our <span
+class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span>. More df means
+thinner tails, smaller P-values and <strong>more power</strong>. The
+worked example after the sports test below shows this.</li>
+<li><strong>The disadvantage.</strong> If the SDs differ, especially
+when the sample sizes differ too, the pooled test’s real Type I error
+rate is not <span class="math inline">\(\alpha\)</span>. A simulation
+makes this concrete. Suppose <span class="math inline">\(H_0\)</span> is
+true (both means equal), but sample 1 has <span
+class="math inline">\(n_1 = 10\)</span> from a population with <span
+class="math inline">\(\sigma_1 = 3\)</span> and sample 2 has <span
+class="math inline">\(n_2 = 40\)</span> with <span
+class="math inline">\(\sigma_2 = 1\)</span>. Repeating that study 20,000
+times:</li>
+</ul>
+<pre class="r"><code>set.seed(251)
+rej &lt;- replicate(20000, {
+  x &lt;- rnorm(10, mean = 0, sd = 3)     # small sample, large SD
+  y &lt;- rnorm(40, mean = 0, sd = 1)     # large sample, small SD; H0 is true
+  c(pooled = t.test(x, y, var.equal = TRUE)$p.value &lt; 0.05,
+    welch  = t.test(x, y)$p.value &lt; 0.05)
+})
+rowMeans(rej)     # how often each 5% test rejects a TRUE null</code></pre>
+<pre><code>## pooled  welch 
+## 0.2578 0.0497</code></pre>
+<p>The “5%” pooled test rejects the true null about <strong>26%</strong>
+of the time: more than five times as many false alarms as promised.
+Welch’s test stays at about 5%. (Swap which sample has the larger SD and
+the pooled test goes the other way, almost never rejecting, which costs
+power.) * <strong>Our rule.</strong> We default to the unpooled test.
+When pooling is justified, it gains a little power; when it is not, it
+can badly mislead, and we rarely know which case we are in.</p>
+<p>The textbook does use <span class="math inline">\(s_p\)</span> in one
+place, in Cohen’s <span class="math inline">\(d\)</span>, a measure of
+effect size (p. 518), but never for the test.</p>
+</div>
+</div>
+<div id="example-girls-boys-and-sports" class="section level2">
+<h2>Example: girls, boys and sports</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
+Introductory Statistics 2e, Section 10.1, Example 10.1</a>:</em></p>
+<blockquote>
+<p>The average amount of time boys and girls aged seven to 11 spend
+playing sports each day is believed to be the same. A study is done and
+data are collected, resulting in the data in the table below. Each
+population has a normal distribution.</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Sample size</th>
+<th>Average number of hours playing sports per day</th>
+<th>Sample standard deviation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Girls</td>
+<td>9</td>
+<td>2</td>
+<td>0.866</td>
+</tr>
+<tr class="even">
+<td>Boys</td>
+<td>16</td>
+<td>3.2</td>
+<td>1.00</td>
+</tr>
+</tbody>
+</table>
+<p>Is there a difference in the mean amount of time boys and girls aged
+seven to 11 play sports each day? Test at the 5% level of
+significance.</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Two independent random samples. The
+samples are small (9 and 16), but both populations are normal, so the
+<span class="math inline">\(t\)</span>-test works.</li>
+<li><strong>Hypotheses.</strong> Let <span
+class="math inline">\(\mu_g\)</span> and <span
+class="math inline">\(\mu_b\)</span> be the mean daily hours of sports
+for all girls and all boys aged 7 to 11. “Believed to be the same” is
+the null, and the question has no direction, so <span
+class="math display">\[H_0: \mu_g - \mu_b = 0 \qquad H_A: \mu_g - \mu_b
+\neq 0 \quad \text{(two-sided)}\]</span></li>
+<li><strong>Test statistic.</strong> <span class="math display">\[SE =
+\sqrt{\frac{0.866^2}{9} + \frac{1.00^2}{16}} = \sqrt{0.0833 + 0.0625}
+\approx 0.3819, \qquad
+  t_{obs} = \frac{2 - 3.2}{0.3819} \approx -3.14\]</span> with <span
+class="math inline">\(df = \min(9 - 1, 16 - 1) = 8\)</span>.</li>
+<li><strong>P-value.</strong> In row 8 of the <span
+class="math inline">\(t\)</span>-table, <span
+class="math inline">\(2.306 &lt; 3.14 &lt; 3.355\)</span>. Those entries
+have upper-tail areas 0.025 and 0.005, so <span
+class="math inline">\(0.005 &lt; P(T \leq -3.14) &lt; 0.025\)</span>.
+Doubling for two sides, <span class="math display">\[0.01 &lt;
+\text{P-value} &lt; 0.05\]</span> Software, with df = 8, gives
+0.0138.</li>
+<li><strong>Decision.</strong> The P-value is below <span
+class="math inline">\(\alpha = 0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data give convincing
+evidence that girls and boys aged 7 to 11 differ in the mean time they
+spend playing sports each day; the sample suggests boys play more.</li>
+</ol>
+<p><img src="assets/l28_sports.png" alt="A t distribution with 8 degrees of freedom, labelled if H0 is true, t obs follows t of 8. Dashed lines mark minus 3.14 and 3.14, and the tiny tail areas beyond them are shaded red. A label in the middle reads: t-table, 0.01 less than P-value less than 0.05." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>Why the book’s P-value is smaller.</strong> The book reports
+a P-value of 0.0054. It uses the Welch df, about 18.85, and our hand
+method uses df = 8. The <span class="math inline">\(t\)</span> curve
+with 8 df has heavier tails, so our P-value is larger. The conclusion is
+the same. This is the conservative trade-off: when the hand method
+rejects <span class="math inline">\(H_0\)</span>, so does software.</p>
+</div>
+<div id="example-math-classes-at-two-colleges" class="section level2">
+<h2>Example: math classes at two colleges</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
+Introductory Statistics 2e, Section 10.1, Example 10.2</a>:</em></p>
+<blockquote>
+<p>A study is done by a community group in two neighboring colleges to
+determine which one graduates students with more math classes. College A
+samples 11 graduates. Their average is four math classes with a standard
+deviation of 1.5 math classes. College B samples nine graduates. Their
+average is 3.5 math classes with a standard deviation of one math class.
+The community group believes that a student who graduates from college A
+<strong>has taken more math classes</strong>, on the average. Both
+populations have a normal distribution. Test at a 1% significance
+level.</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Two independent random samples of
+graduates; both populations are normal, so the small samples are fine.
+The SDs are unknown, so it is a <span
+class="math inline">\(t\)</span>-test of two means.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu_A\)</span> and <span
+class="math inline">\(\mu_B\)</span> are the mean number of math classes
+taken by all graduates of colleges A and B. The group’s belief is the
+alternative: <span class="math display">\[H_0: \mu_A - \mu_B = 0 \qquad
+H_A: \mu_A - \mu_B &gt; 0 \quad \text{(upper-tailed)}\]</span> (The book
+writes the null as <span class="math inline">\(H_0: \mu_A \leq
+\mu_B\)</span>, a composite null; as in Lecture 25, we test it at the
+boundary, <span class="math inline">\(\mu_A - \mu_B = 0\)</span>.)</li>
+<li><strong>Test statistic.</strong> <span class="math display">\[SE =
+\sqrt{\frac{1.5^2}{11} + \frac{1^2}{9}} = \sqrt{0.2045 + 0.1111} \approx
+0.5618, \qquad
+  t_{obs} = \frac{4 - 3.5}{0.5618} \approx 0.89, \qquad df = \min(10, 8)
+= 8\]</span></li>
+<li><strong>P-value.</strong> In row 8, <span
+class="math inline">\(0.889 &lt; 0.89 &lt; 1.108\)</span>, with
+upper-tail areas 0.20 and 0.15, so <span class="math inline">\(0.15 &lt;
+\text{P-value} &lt; 0.20\)</span>. Software, with df = 8, gives 0.1997
+(the book, with the Welch df, 0.1928).</li>
+<li><strong>Decision.</strong> The P-value is far above <span
+class="math inline">\(\alpha = 0.01\)</span>: <strong>do not reject
+<span class="math inline">\(H_0\)</span></strong>. There is not enough
+evidence that graduates of college A take more math classes, on average,
+than graduates of college B.</li>
+</ol>
+</div>
+<div id="example-online-and-face-to-face-final-exams"
+class="section level2">
+<h2>Example: online and face-to-face final exams</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
+Introductory Statistics 2e, Section 10.1, Example 10.3</a>:</em></p>
+<blockquote>
+<p>A professor at a large community college wanted to determine whether
+there is a difference in the means of final exam scores between students
+who took his statistics course online and the students who took his
+face-to-face statistics class. He believed that the mean of the final
+exam scores for the online class would be lower than that of the
+face-to-face class. Was the professor correct? The randomly selected 30
+final exam scores from each group are listed below. Is the mean of the
+Final Exam scores of the online class lower than the mean of the Final
+Exam scores of the face-to-face class? Test at a 5% significance
+level.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Class
+</th>
+<th style="text-align:left;">
+Score 1
+</th>
+<th style="text-align:left;">
+Score 2
+</th>
+<th style="text-align:left;">
+Score 3
+</th>
+<th style="text-align:left;">
+Score 4
+</th>
+<th style="text-align:left;">
+Score 5
+</th>
+<th style="text-align:left;">
+Score 6
+</th>
+<th style="text-align:left;">
+Score 7
+</th>
+<th style="text-align:left;">
+Score 8
+</th>
+<th style="text-align:left;">
+Score 9
+</th>
+<th style="text-align:left;">
+Score 10
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Online
+</td>
+<td style="text-align:left;">
+67.6
+</td>
+<td style="text-align:left;">
+41.2
+</td>
+<td style="text-align:left;">
+85.3
+</td>
+<td style="text-align:left;">
+55.9
+</td>
+<td style="text-align:left;">
+82.4
+</td>
+<td style="text-align:left;">
+91.2
+</td>
+<td style="text-align:left;">
+73.5
+</td>
+<td style="text-align:left;">
+94.1
+</td>
+<td style="text-align:left;">
+64.7
+</td>
+<td style="text-align:left;">
+64.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+70.6
+</td>
+<td style="text-align:left;">
+38.2
+</td>
+<td style="text-align:left;">
+61.8
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+<td style="text-align:left;">
+70.6
+</td>
+<td style="text-align:left;">
+58.8
+</td>
+<td style="text-align:left;">
+91.2
+</td>
+<td style="text-align:left;">
+73.5
+</td>
+<td style="text-align:left;">
+82.4
+</td>
+<td style="text-align:left;">
+35.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+94.1
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+<td style="text-align:left;">
+64.7
+</td>
+<td style="text-align:left;">
+55.9
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+<td style="text-align:left;">
+97.1
+</td>
+<td style="text-align:left;">
+85.3
+</td>
+<td style="text-align:left;">
+61.8
+</td>
+<td style="text-align:left;">
+79.4
+</td>
+<td style="text-align:left;">
+79.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Face-to-face
+</td>
+<td style="text-align:left;">
+77.9
+</td>
+<td style="text-align:left;">
+95.3
+</td>
+<td style="text-align:left;">
+81.2
+</td>
+<td style="text-align:left;">
+74.1
+</td>
+<td style="text-align:left;">
+98.8
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+<td style="text-align:left;">
+85.9
+</td>
+<td style="text-align:left;">
+92.9
+</td>
+<td style="text-align:left;">
+87.1
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+69.4
+</td>
+<td style="text-align:left;">
+57.6
+</td>
+<td style="text-align:left;">
+69.4
+</td>
+<td style="text-align:left;">
+67.1
+</td>
+<td style="text-align:left;">
+97.6
+</td>
+<td style="text-align:left;">
+85.9
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+<td style="text-align:left;">
+91.8
+</td>
+<td style="text-align:left;">
+78.8
+</td>
+<td style="text-align:left;">
+71.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+98.8
+</td>
+<td style="text-align:left;">
+61.2
+</td>
+<td style="text-align:left;">
+92.9
+</td>
+<td style="text-align:left;">
+90.6
+</td>
+<td style="text-align:left;">
+97.6
+</td>
+<td style="text-align:left;">
+100.0
+</td>
+<td style="text-align:left;">
+95.3
+</td>
+<td style="text-align:left;">
+83.5
+</td>
+<td style="text-align:left;">
+92.9
+</td>
+<td style="text-align:left;">
+89.4
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Two independent random samples of 30
+scores each. Both <span class="math inline">\(n \geq 30\)</span>, so we
+do not need the populations to be normal.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu_{on}\)</span> and <span
+class="math inline">\(\mu_{f}\)</span> are the mean final-exam scores of
+all the professor’s online and face-to-face students. His belief is the
+alternative: <span class="math display">\[H_0: \mu_{on} - \mu_f = 0
+\qquad H_A: \mu_{on} - \mu_f &lt; 0 \quad
+\text{(lower-tailed)}\]</span></li>
+<li><strong>Test statistic.</strong> From the data (a calculator or R
+does this step): online <span class="math inline">\(\bar{x} =
+72.85\)</span>, <span class="math inline">\(s = 16.92\)</span>;
+face-to-face <span class="math inline">\(\bar{x} = 84.98\)</span>, <span
+class="math inline">\(s = 11.71\)</span>. <span
+class="math display">\[SE = \sqrt{\frac{16.92^2}{30} +
+\frac{11.71^2}{30}} \approx 3.7568, \qquad
+  t_{obs} = \frac{72.85 - 84.98}{3.7568} \approx -3.23, \qquad df =
+\min(29, 29) = 29\]</span></li>
+<li><strong>P-value.</strong> In row 29, <span
+class="math inline">\(3.038 &lt; 3.23 &lt; 3.659\)</span>, with
+upper-tail areas 0.0025 and 0.0005, so <span
+class="math inline">\(0.0005 &lt; \text{P-value} &lt; 0.0025\)</span>.
+Software, with df = 29, gives 0.0015 (the book, with the Welch df,
+0.0011).</li>
+<li><strong>Decision.</strong> The P-value is below 0.05: <strong>reject
+<span class="math inline">\(H_0\)</span></strong>. The professor was
+right: the data give strong evidence that the mean final-exam score is
+lower for his online students than for his face-to-face students. (This
+is an observational comparison, so it does not show that the online
+format <em>causes</em> the lower scores; students chose their
+section.)</li>
+</ol>
+</div>
+<div id="example-the-2024-ncaa-womens-basketball-final"
+class="section level2">
+<h2>Example: the 2024 NCAA women’s basketball final</h2>
+<p>On Sunday, April 7, 2024, South Carolina and Iowa met in the NCAA
+women’s basketball championship. The table gives the points each team
+scored in its last 15 games before the final (from the 2024 STAT 251
+notes).</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Game
+</th>
+<th style="text-align:right;">
+South Carolina
+</th>
+<th style="text-align:left;">
+Opponent
+</th>
+<th style="text-align:right;">
+Iowa
+</th>
+<th style="text-align:left;">
+Opponent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+NC State
+</td>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+UConn
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:left;">
-<span class="math inline">\(p_2\)</span>
+<td style="text-align:right;">
+70
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(n_2\)</span>
+Oregon State
+</td>
+<td style="text-align:right;">
+94
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(X_2\)</span>
+LSU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+79
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\hat{p}_2 = X_2/n_2\)</span>
+Indiana
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:left;">
+Colorado
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+UNC
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+West Virginia
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+Presbyterian
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+Holy Cross
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+LSU
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+Nebraska
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+Michigan
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Texas A&amp;M
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+Penn State
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:left;">
+Ohio State
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:left;">
+Arkansas
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:left;">
+Minnesota
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:left;">
+Kentucky
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:left;">
+Illinois
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+Alabama
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Indiana
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:right;">
+106
+</td>
+<td style="text-align:left;">
+Michigan
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Nebraska
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:left;">
+UConn
+</td>
+<td style="text-align:right;">
+111
+</td>
+<td style="text-align:left;">
+Penn State
 </td>
 </tr>
 </tbody>
 </table>
-<p>We compare two population proportions by looking at the difference
-between them.</p>
-<p><span class="math display">\[D = \hat{p}_1 - \hat{p}_2 \]</span></p>
-<p>When the samples from both groups are sufficiently large, the
-sampling distribution of the difference in proportion <span
-class="math inline">\(D\)</span> is approximately normal. Like we saw
-before with the univariate case, inference procedures for comparing
-proportions are based on <span class="math inline">\(z\)</span>, the
-normal approximation, and on standardizing the difference <span
-class="math inline">\(D\)</span>. The difference <span
-class="math inline">\(D\)</span> is an unbiased estimator of the
-population difference <span class="math inline">\(p_1 - p_2\)</span>.
-Moreover, because the two samples are independent, the variance of the
-difference is the sum of the population variances:</p>
-<p><span class="math display">\[\sigma^2_D =
-\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2} \]</span></p>
-<p>Thus when the sample sizes are sufficiently large <span
-class="math inline">\(D\)</span> follows a normal distribution</p>
-<p><span class="math display">\[D \sim  N\left(p_1 - p_2,
-\sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}\right)\]</span></p>
-<p>As we did before we will start by constructing a confidence interval
-for the population difference <span
-class="math inline">\(D\)</span>.</p>
-<p>the point estimate is <span class="math display">\[D = \hat{p}_1 -
-\hat{p}_2 \]</span> with standard error</p>
-<p><span class="math display">\[ SE_D =
-\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\]</span></p>
-<p>this gives the margin of error</p>
-<p><span class="math display">\[m = z\times SE_D \]</span></p>
-<p>putting all together the <span
-class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for
-the population difference in proportion is</p>
-<p><span class="math display">\[ (\hat{p}_1 - \hat{p}_2) \pm
-Z_{1-\alpha/2} \times SE_D\]</span></p>
-<p>The critical value <span
-class="math inline">\(Z_{1-\alpha/2}\)</span> is the same critical value
-that we used in the one-sample case</p>
-<p><strong>Example: Aspirin and Heart Attacks</strong> - A large-scale
-randomized experiment investigated the effect of regular aspirin use on
-myocardial infarctions (i.e., heart attacks)<span
-class="citation">(Physicians’ Health Study Research Group* 1989)</span>.
-The results are summarized below:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Group
-</th>
-<th style="text-align:left;">
-Population Proportion
-</th>
-<th style="text-align:left;">
-Sample Size
-</th>
-<th style="text-align:left;">
-Patients Who Experienced Heart Attacks
-</th>
-<th style="text-align:left;">
-Patients Who did Not Experience A Heart Attack
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Aspirin
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(p_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(11037\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(104\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(10933\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Placebo
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(p_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(11034\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(189\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(10845\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Construct a <span class="math inline">\(95\%\)</span> confidence
-interval for the difference in proportions of patients experiencing
-heart attacks between those taking aspirin and those taking the
-placebo</p>
-<p><strong>Understand the Problem:</strong></p>
-<ul>
-<li><p>We have two groups: <u>Aspirin</u> and <u>Placebo</u>.</p></li>
-<li><p>We want to estimate the difference in proportions of patients
-experiencing heart attacks between these two groups.</p></li>
-<li><p>We have sample data for each group, including the sample
-proportions and sample sizes.</p></li>
-</ul>
-<p><strong>Calculate Sample Proportions:</strong></p>
-<ul>
-<li><p>Sample proportion for Aspirin group: <span
-class="math inline">\(\hat{p}_1 = \frac{104}{11037} =
-0.0094\)</span></p></li>
-<li><p>Sample proportion for Placebo group: <span
-class="math inline">\(\hat{p}_2 = \frac{189}{11034} =
-0.0171\)</span></p></li>
-</ul>
-<p><strong>Calculate the Standard Error:</strong></p>
-<ul>
-<li>The standard error for the difference in proportions is given
-by:</li>
-</ul>
-<p><span class="math display">\[ SE = \sqrt{\frac{0.0094
-(1-0.0094)}{11037} + \frac{0.0171(1-0.0171)}{11034}} = 0.0015
-\]</span></p>
-<p><strong>Determine the Z-Critical Value:</strong></p>
-<ul>
-<li>For a <span class="math inline">\(95\%\)</span> confidence interval,
-the critical value <span class="math inline">\(Z_{1-\alpha/2}\)</span>
-is approximately <span class="math inline">\(1.96\)</span> (from the
-standard normal distribution).</li>
-</ul>
-<p><strong>Calculate the Margin of Error:</strong></p>
-<ul>
-<li>The margin of error is given by:</li>
-</ul>
-<p><span class="math display">\[ m = 1.96 \times 0.0015 =
-0.0029\]</span></p>
-<p><strong>Construct the Confidence Interval:</strong></p>
-<ul>
-<li>The confidence interval is:</li>
-</ul>
-<p><span class="math display">\[ \text{Confidence Interval} = (\hat{p}_1
-- \hat{p}_2) \pm \text{Margin of Error} \]</span></p>
-<p>Confidence Interval <span class="math inline">\(= (0.0094 - 0.0171)
-\pm 0.0029 = [-0.0107, -0.0047]\)</span></p>
-<p><strong>Interpretation:</strong></p>
-<ul>
-<li>We are <span class="math inline">\(95\%\)</span> confident that the
-true difference in proportions of patients experiencing heart attacks
-between the Aspirin and Placebo groups is no less than <span
-class="math inline">\(-0.0107\)</span> and no greater than <span
-class="math inline">\(-0.0047\)</span>. Since the interval lies entirely
-below zero (excludes 0), we can conclude that the proportion of heart
-attacks is likely lower in the Aspirin group compared to the Placebo
-group.</li>
-</ul>
-<p><strong>Try it out:</strong> A manufacturing company is interested in
-assessing the effectiveness of two different production methods, <span
-class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span>, in terms of the proportion of
-defective products produced. A random sample of <span
-class="math inline">\(200\)</span> products produced using method <span
-class="math inline">\(A\)</span> yielded <span
-class="math inline">\(30\)</span> defective products, while a sample of
-<span class="math inline">\(250\)</span> products produced using method
-<span class="math inline">\(B\)</span> yielded <span
-class="math inline">\(20\)</span> defective products.</p>
-<p>Construct a <span class="math inline">\(95\%\)</span> confidence
-interval for the difference in proportions of defective products between
-method <span class="math inline">\(A\)</span> and method <span
-class="math inline">\(B\)</span>.</p>
-<p><br> <br></p>
+<p><strong>Question:</strong> At <span class="math inline">\(\alpha =
+0.05\)</span>, is there a difference between the two teams in mean
+points scored per game?</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> We treat each team’s 15 games as a
+sample of its games that season; the two samples are independent
+(different games). With <span class="math inline">\(n = 15\)</span>, we
+need the points per game to be roughly normal, and the data show no
+strong skew or extreme outliers. (Recent games are not a true random
+sample, so this is an approximation.)</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu_I\)</span> and <span
+class="math inline">\(\mu_S\)</span> are the mean points per game for
+Iowa and South Carolina. <span class="math display">\[H_0: \mu_I - \mu_S
+= 0 \qquad H_A: \mu_I - \mu_S \neq 0 \quad
+\text{(two-sided)}\]</span></li>
+<li><strong>Test statistic.</strong> Iowa: <span
+class="math inline">\(\bar{x} = 90.67\)</span>, <span
+class="math inline">\(s = 14.21\)</span>. South Carolina: <span
+class="math inline">\(\bar{x} = 80.40\)</span>, <span
+class="math inline">\(s = 10.57\)</span>. <span
+class="math display">\[SE = \sqrt{\frac{14.21^2}{15} +
+\frac{10.57^2}{15}} \approx 4.5727, \qquad
+  t_{obs} = \frac{90.67 - 80.40}{4.5727} \approx 2.25, \qquad df =
+14\]</span></li>
+<li><strong>P-value.</strong> In row 14, <span
+class="math inline">\(2.145 &lt; 2.25 &lt; 2.977\)</span>, with
+upper-tail areas 0.025 and 0.005; doubling, <span
+class="math inline">\(0.01 &lt; \text{P-value} &lt; 0.05\)</span>.
+Software gives 0.041.</li>
+<li><strong>Decision.</strong> <span
+class="math inline">\(\text{P-value} &lt; 0.05\)</span>: <strong>reject
+<span class="math inline">\(H_0\)</span></strong>, narrowly. Iowa scored
+significantly more points per game. (South Carolina won the final
+anyway, 87–75: a test about averages says nothing certain about any one
+game.)</li>
+</ol>
 </div>
+<div id="practice-who-keeps-workers-longer" class="section level2">
+<h2>Practice: who keeps workers longer?</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
+Introductory Statistics 2e, Section 10.1, Try It 10.2</a> (the book
+gives no solution; the worked solution is ours):</em></p>
+<blockquote>
+<p>A study is done to determine if Company A retains its workers longer
+than Company B. Company A samples 15 workers, and their average time
+with the company is five years with a standard deviation of 1.2. Company
+B samples 20 workers, and their average time with the company is 4.5
+years with a standard deviation of 0.8. The populations are normally
+distributed.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Are the population standard deviations known?</li>
+<li>Conduct an appropriate hypothesis test. At the 5% significance
+level, what is your conclusion?</li>
+</ol>
+</blockquote>
+<details>
+<summary>
+Solution
+</summary>
+<ol style="list-style-type: lower-alpha">
+<li><p>No: 1.2 and 0.8 are sample standard deviations, so we use a <span
+class="math inline">\(t\)</span>-test.</p></li>
+<li><p>The five steps:</p></li>
+</ol>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Two independent random samples; normal
+populations, so the small samples are fine.</li>
+<li><strong>Hypotheses.</strong> <span
+class="math inline">\(\mu_A\)</span> and <span
+class="math inline">\(\mu_B\)</span> are the mean years with the company
+for all workers at A and B. <span class="math inline">\(H_0: \mu_A -
+\mu_B = 0\)</span> and <span class="math inline">\(H_A: \mu_A - \mu_B
+&gt; 0\)</span> (upper-tailed).</li>
+<li><strong>Test statistic.</strong> <span class="math inline">\(SE =
+\sqrt{1.2^2/15 + 0.8^2/20} = \sqrt{0.096 + 0.032} \approx
+0.3578\)</span>, so <span class="math inline">\(t_{obs} = (5 -
+4.5)/0.3578 \approx 1.40\)</span>, with <span class="math inline">\(df =
+\min(14, 19) = 14\)</span>.</li>
+<li><strong>P-value.</strong> In row 14, <span
+class="math inline">\(1.345 &lt; 1.40 &lt; 1.523\)</span>, with
+upper-tail areas 0.10 and 0.075, so <span class="math inline">\(0.075
+&lt; \text{P-value} &lt; 0.10\)</span>. Software gives 0.092.</li>
+<li><strong>Decision.</strong> The P-value is above 0.05: <strong>do not
+reject <span class="math inline">\(H_0\)</span></strong>. There is not
+enough evidence that Company A keeps its workers longer, on
+average.</li>
+</ol>
+</details>
 </div>
-<div id="lecture-26" class="section level1">
-<h1>Lecture 26</h1>
-<p>Recall the Aspirin and Heart Attacks example from <strong>Lecture
-25</strong>. In that example, we constructed a <span
-class="math inline">\(95\%\)</span> confidence interval for the
-difference in proportions of patients experiencing heart attacks between
-the Aspirin and Placebo groups. The interval was approximately <span
-class="math inline">\([-0.0107, -0.0047]\)</span>. If the confidence
-interval we computed had included the value zero, it would suggest that
-the two proportions might be equal i.e <span class="math inline">\(p_1 =
-p_2\)</span>. In other words, we would have little evidence that there
-is a real difference between the two groups. Conversely, if the
-confidence interval does not include zero, we have stronger evidence
-that there is a significant difference between the two populations under
-study.</p>
-<p>Just as we did for population proportions in the univariate case, we
-can easily construct a hypothesis test which will allow us to formally
-evaluate whether an observed difference between two groups is
-statistically significant or merely due to random variation.</p>
-<div id="significance-tests-for-comparing-two-proportions"
+<div id="example-pooling-for-girls-and-boys" class="section level2">
+<h2>Example: pooling for girls and boys</h2>
+<p>Go back to girls, boys and sports (Example 10.1). The sample SDs are
+close, 0.866 and 1.00 (the larger is only 1.15 times the smaller), so
+assuming the two populations have the same SD, <span
+class="math inline">\(\sigma_g = \sigma_b\)</span>, is reasonable. What
+changes if we pool?</p>
+<ol style="list-style-type: decimal">
+<li><strong>The pooled SD.</strong> With <span class="math inline">\(n_g
+= 9\)</span> and <span class="math inline">\(n_b = 16\)</span>, <span
+class="math display">\[s_p = \sqrt{\frac{(9 - 1)(0.866^2) + (16 -
+1)(1.00^2)}{9 + 16 - 2}} = \sqrt{\frac{6.000 + 15}{23}} \approx
+0.9555\]</span> It lies between the two sample SDs, closer to the boys’
+because their sample is larger.</li>
+<li><strong>The pooled SE and test statistic.</strong> <span
+class="math display">\[SE = s_p\sqrt{\frac{1}{9} + \frac{1}{16}} =
+0.9555 \times 0.4167 \approx 0.3981, \qquad
+  t_{obs} = \frac{2 - 3.2}{0.3981} \approx -3.01, \qquad df = 9 + 16 - 2
+= 23\]</span></li>
+<li><strong>P-value.</strong> In row 23, <span
+class="math inline">\(2.807 &lt; 3.01 &lt; 3.104\)</span>, with
+upper-tail areas 0.005 and 0.0025; doubling, <span
+class="math inline">\(0.005 &lt; \text{P-value} &lt; 0.01\)</span>.
+Software gives 0.0062.</li>
+<li><strong>Compare.</strong> The unpooled test gave <span
+class="math inline">\(t_{obs} = -3.14\)</span> on 8 df and <span
+class="math inline">\(0.01 &lt; \text{P-value} &lt; 0.05\)</span>.
+Pooling made the SE slightly <em>larger</em> here (0.3981 against
+0.3819), but it nearly tripled the degrees of freedom, and the extra df
+shrink the P-value. That is the payoff of pooling, <em>when the equal-SD
+assumption is right</em>: a more powerful test. Both tests reject <span
+class="math inline">\(H_0\)</span> at the 5% level, so the conclusion is
+the same.</li>
+</ol>
+</div>
+<div id="a-non-parametric-alternative-the-rank-sum-test"
 class="section level2">
-<h2>Significance tests for comparing two proportions</h2>
-<p>A hypothesis test used to compare the population proportions from two
-different but independent groups is based on the standardized difference
-in proportion <span class="math inline">\(D\)</span>. Recall that, if
-the samples obtained from each group are sufficiently large, then the
-sampling distribution of <span class="math inline">\(D\)</span> is
-approximately distributed as standard normal. Here’s how we set up a
-two-sample hypothesis test for proportions:</p>
-<p><strong>1. Assumptions</strong></p>
+<h2>A non-parametric alternative: the rank-sum test</h2>
+<p>The two independent samples <span
+class="math inline">\(t\)</span>-test needs normal populations or large
+samples. When the samples are small and the data are clearly skewed,
+have outliers, or are only ranks or ordered categories (such as ratings
+from 1 to 7), the <span class="math inline">\(t\)</span>-test’s P-value
+can be wrong. The <strong>Wilcoxon rank-sum test</strong> (also called
+the Mann-Whitney test) is the <strong>non-parametric
+alternative</strong>, just as the sign test was for one sample or for
+pairs in Lecture 26:</p>
 <ul>
-<li><p>Data constitute a simple random sample</p></li>
-<li><p>The two groups are independent</p></li>
-<li><p><span class="math inline">\(n\hat{p}\)</span> and <span
-class="math inline">\(n(1-\hat{p})\)</span> are both greater than 15.
-Note that <span class="math inline">\(\hat{p}\)</span> here is pooled
-sample proportion (see below)</p></li>
+<li>It needs two independent random samples, but <strong>no normality
+assumption</strong>.</li>
+<li>It <strong>ranks</strong> all <span class="math inline">\(n_1 +
+n_2\)</span> observations together, from smallest to largest, and adds
+up the ranks belonging to each sample. If the two populations have the
+same centre, the ranks should be well mixed and each sample’s rank sum
+should be close to what we would expect from its size. A rank sum that
+is much too large or too small is evidence that one population tends to
+give larger values.</li>
+<li>Because it uses ranks rather than the values, one extreme outlier
+counts as just “the largest value”, so it cannot dominate the test the
+way it can dominate a mean and an SD.</li>
+<li>The price: when the populations really are normal, the <span
+class="math inline">\(t\)</span>-test is a little more powerful.</li>
 </ul>
-<p><strong>2. Null and Alternative Hypotheses</strong></p>
+<p>For matched pairs, the non-parametric partner of the matched-pairs
+<span class="math inline">\(t\)</span>-test is the <strong>Wilcoxon
+signed-rank test</strong>, a stronger cousin of the sign test that also
+uses the sizes of the differences.</p>
+<p>Both tests, with worked examples, are in the extra notes under
+<strong>Resources → Extras → Non-parametric Tests</strong>: <a
+href="misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric
+tests for two samples</a>.</p>
+</div>
+</div>
+<div id="matched-pairs" class="section level1">
+<h1>Matched pairs</h1>
+<p><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
+Section 10.4</a>.)</em> In Lecture 27 we saw that two samples can be
+<strong>dependent</strong>: each observation in one sample is paired
+with one in the other. The most common designs are</p>
 <ul>
-<li>The <strong>null</strong> hypothesis is generally that the two
-population proportions are equal (i.e no difference)</li>
+<li><strong>the same subjects measured twice</strong>, before and after
+a treatment (blood pressure before and after a drug), or under two
+conditions (each student’s dominant and weaker hand);</li>
+<li><strong>natural or deliberate pairs</strong>, such as twins, or two
+plots of land side by side, with one member of each pair getting each
+treatment.</li>
 </ul>
-<p><span class="math display">\[H_0: p_1 = p_2 \ \ \  \text{which is the
-same as} \ \ \ H_0: p_1 - p_2 = 0\]</span></p>
-<ul>
-<li>The alternative hypothesis can be either lower, upper, or two tailed
-just as it was with our univariate tests. The table below gives the
-possible alternative hypotheses and their critical values:</li>
-</ul>
+<p>The two-sample <span class="math inline">\(t\)</span>-test above
+would be <strong>wrong</strong> for these data, because it assumes that
+the samples are independent. Instead, we use the pairing.</p>
+<div id="from-two-samples-to-one" class="section level2">
+<h2>From two samples to one</h2>
+<p>For each pair, compute the <strong>difference</strong> <span
+class="math inline">\(d = x_1 - x_2\)</span> (for example, after <span
+class="math inline">\(-\)</span> before). The <span
+class="math inline">\(n\)</span> differences become the data, and the
+two-sample problem turns into a <strong>one-sample</strong> problem: the
+parameter is the <strong>mean difference</strong> <span
+class="math inline">\(\mu_d\)</span> in the population of pairs, and we
+test it with the one-sample <span class="math inline">\(t\)</span>-test
+from Lecture 25.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Alternative Hypothesis
+Symbol
 </th>
 <th style="text-align:left;">
-Critical Value
-</th>
-<th style="text-align:left;">
-Rejection Region
+Meaning
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+<span class="math inline">\(d\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z_{1-\alpha/2}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(|Z| \geq Z_{1-\alpha/2}\)</span>
+the difference within a pair, <span class="math inline">\(x_1 -
+x_2\)</span> (always say which way you subtract)
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
+<span class="math inline">\(n\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z_\alpha\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(Z\leq Z_{\alpha}\)</span>
+the number of pairs (not the number of measurements)
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+<span class="math inline">\(\mu_d\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z_{1-\alpha}\)</span>
+the population mean difference: the parameter
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{d}\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Z\geq Z_{1-\alpha}\)</span>
+the mean of the <span class="math inline">\(n\)</span> sample
+differences: the estimate of <span class="math inline">\(\mu_d\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(s_d\)</span>
+</td>
+<td style="text-align:left;">
+the standard deviation of the <span class="math inline">\(n\)</span>
+sample differences
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>3. Test statistic</strong></p>
+</div>
+<div id="the-test" class="section level2">
+<h2>The test</h2>
 <ul>
-<li>The null hypothesis is that the two populations are equal (i.e they
-have the same proportion). If the null is true then we can view all of
-the data as coming from from the same distribution. Thus the test
-statistic under the null hypothesis is based on the <i>pooled
-estimate</i> of the population proportion denoted <span
-class="math inline">\(\hat{p}\)</span>:</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: \mu_d
+= 0\)</span>, no difference within pairs on average, against <span
+class="math inline">\(H_A: \mu_d &gt; 0\)</span> (upper-tailed), <span
+class="math inline">\(H_A: \mu_d &lt; 0\)</span> (lower-tailed) or <span
+class="math inline">\(H_A: \mu_d \neq 0\)</span> (two-sided). Which
+direction is “upper” depends on the order of subtraction, so fix <span
+class="math inline">\(d\)</span> first.</li>
+<li><strong>Test statistic.</strong> <span
+class="math display">\[t_{obs} = \frac{\bar{d} - 0}{s_d / \sqrt{n}},
+\qquad df = n - 1\]</span> If <span class="math inline">\(H_0\)</span>
+is true, <span class="math inline">\(t_{obs}\)</span> follows a <span
+class="math inline">\(t\)</span> distribution with <span
+class="math inline">\(n - 1\)</span> degrees of freedom.</li>
+<li><strong>P-value.</strong> From the <span
+class="math inline">\(t\)</span>-table, exactly as for the one-sample
+test.</li>
+<li><strong>Confidence interval.</strong> <span
+class="math inline">\(\bar{d} \pm t_{1-\alpha/2} \times
+s_d/\sqrt{n}\)</span>, with <span class="math inline">\(df = n -
+1\)</span>.</li>
 </ul>
-<p><span class="math display">\[ \hat{p} = \frac{\text{number of
-successes in both samples}}{\text{total number of observations from both
-samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]</span> The pooled estimate
-combines all of the information from both samples</p>
-<ul>
-<li>Recall that the population standard deviation of the difference in
-proportions is</li>
-</ul>
-<p><span class="math display">\[\sigma_D =
-\sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}  \]</span></p>
-<p>However, under the null hypothesis the two proportions are equal
-giving</p>
-<p><span class="math display">\[ =
-\sqrt{\frac{p(1-p)}{n_1}+\frac{p(1-p)}{n_2}} \]</span></p>
-<p><span class="math display">\[=
-\sqrt{p(1-p)\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]</span></p>
-<p>We estimate <span class="math inline">\(\sigma_D\)</span> by
-substituting in the <i>pooled estimate</i> of the population
-proportion:</p>
-<p><span class="math display">\[ SE_{D_\text{pooled}} =
-\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]</span></p>
-<p>Combining these elements, the test statistic under a null hypothesis
-of no difference <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span>
-is given by</p>
-<p><span class="math display">\[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2)
-- 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}
-\sim N(0,1) \]</span></p>
-<p><strong>4. <span class="math inline">\(p\)</span>-value</strong></p>
-<ul>
-<li>The <span class="math inline">\(p\)</span>-values corresponding to
-each alternative hypothesis are listed in the table below</li>
-</ul>
+<p><strong>Assumptions.</strong></p>
+<ol style="list-style-type: decimal">
+<li>The pairs are a random sample (or the treatment was randomly
+assigned within each pair), and the pairs are independent of one
+another.</li>
+<li>The <strong>differences</strong> are approximately normal, or there
+are at least 30 pairs. The two original measurements do not each need to
+be normal; only the differences matter. With few pairs, look at the
+differences for skew and outliers.</li>
+</ol>
+</div>
+<div id="why-pair" class="section level2">
+<h2>Why pair?</h2>
+<p>Pairing removes the variation <strong>between subjects</strong>.
+People differ a lot in how much pain they feel, how far they can throw,
+or how high their blood pressure is. In an independent-samples design,
+all of that person-to-person variation goes into <span
+class="math inline">\(s_1\)</span> and <span
+class="math inline">\(s_2\)</span>, and so into the SE. When each
+subject is compared with themself, those differences cancel out of <span
+class="math inline">\(d\)</span>, <span
+class="math inline">\(s_d\)</span> is smaller, and the test is more
+powerful: it can detect a smaller effect with the same number of
+subjects. The hypnotism example below shows this with numbers.</p>
+<p>The sign test from Lecture 26 is also a matched-pairs test. It uses
+only the <strong>signs</strong> of the differences, so it needs no
+normality assumption; the matched-pairs <span
+class="math inline">\(t\)</span>-test uses their <strong>sizes</strong>,
+so it is more powerful when the differences really are roughly
+normal.</p>
+</div>
+<div id="example-does-hypnotism-reduce-pain" class="section level2">
+<h2>Example: does hypnotism reduce pain?</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
+Introductory Statistics 2e, Section 10.4, Example 10.11</a>:</em></p>
+<blockquote>
+<p>A study was conducted to investigate the effectiveness of hypnotism
+in reducing pain. Results for randomly selected subjects are shown in
+the table below. A lower score indicates less pain. The “before” value
+is matched to an “after” value and the differences are calculated. The
+differences have a normal distribution. Are the sensory measurements, on
+average, lower after hypnotism? Test at a 5% significance level.</p>
+</blockquote>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Alternative Hypothesis
+Subject
 </th>
 <th style="text-align:left;">
-<span class="math inline">\(p\)</span>-value
+A
+</th>
+<th style="text-align:left;">
+B
+</th>
+<th style="text-align:left;">
+C
+</th>
+<th style="text-align:left;">
+D
+</th>
+<th style="text-align:left;">
+E
+</th>
+<th style="text-align:left;">
+F
+</th>
+<th style="text-align:left;">
+G
+</th>
+<th style="text-align:left;">
+H
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span>
+Before
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(P(|Z| \geq |Z_{obs}||H_0)\)</span>
+6.6
+</td>
+<td style="text-align:left;">
+6.5
+</td>
+<td style="text-align:left;">
+9.0
+</td>
+<td style="text-align:left;">
+10.3
+</td>
+<td style="text-align:left;">
+11.3
+</td>
+<td style="text-align:left;">
+8.1
+</td>
+<td style="text-align:left;">
+6.3
+</td>
+<td style="text-align:left;">
+11.6
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span>
+After
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(P(Z \leq Z_{obs}|H_0)\)</span>
+6.8
+</td>
+<td style="text-align:left;">
+2.4
+</td>
+<td style="text-align:left;">
+7.4
+</td>
+<td style="text-align:left;">
+8.5
+</td>
+<td style="text-align:left;">
+8.1
+</td>
+<td style="text-align:left;">
+6.1
+</td>
+<td style="text-align:left;">
+3.4
+</td>
+<td style="text-align:left;">
+2.0
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span>
+<span class="math inline">\(d\)</span> = after <span
+class="math inline">\(-\)</span> before
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(P(Z\geq Z_{obs}|H_0)\)</span>
+0.2
+</td>
+<td style="text-align:left;">
+−4.1
+</td>
+<td style="text-align:left;">
+−1.6
+</td>
+<td style="text-align:left;">
+−1.8
+</td>
+<td style="text-align:left;">
+−3.2
+</td>
+<td style="text-align:left;">
+−2.0
+</td>
+<td style="text-align:left;">
+−2.9
+</td>
+<td style="text-align:left;">
+−9.6
 </td>
 </tr>
 </tbody>
 </table>
-<p><strong>5. Decision rule</strong></p>
-<p><span class="math display">\[\text{Reject} \ \ H_0 \ \ \text{if} \ \
-\text{$p$-value} &lt; \alpha \]</span></p>
-<p><strong>Example - The impact of Covid on scholarly activity?</strong>
-- During the COVID-19 pandemic, as faculty members shifted to working
-from home, women in academic medicine reported decreased manuscript
-submissions and shouldered a disproportionate share of childcare
-responsibilities. A study published in the <i>Journal of the American
-College of Radiology</i> examined the scholarly activity among male and
-female contributors during the COVID-19 Pandemic of 2019 and 2020.
-Specifically, they evaluated the proportion of female contributors
-submitting manuscripts and accepting peer review invitations before
-(April - October, 2019) and after the start of the coronavirus pandemic
-(April - October, 2020) <span class="citation">(Mogensen, Lee, and
-Carlos 2021)</span>. A summary of the data in this study are given
-below:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs: the same 8 subjects
+were measured before and after hypnotism. The subjects were randomly
+selected, and the differences are normal (given), so the small sample is
+fine.</li>
+<li><strong>Hypotheses.</strong> Let <span
+class="math inline">\(d\)</span> = after <span
+class="math inline">\(-\)</span> before, and <span
+class="math inline">\(\mu_d\)</span> the mean difference for all such
+subjects. Less pain after hypnotism means <em>negative</em> differences,
+so <span class="math display">\[H_0: \mu_d = 0 \qquad H_A: \mu_d &lt; 0
+\quad \text{(lower-tailed)}\]</span> (The book writes <span
+class="math inline">\(H_0: \mu_d \geq 0\)</span>; we test it at the
+boundary, 0.)</li>
+<li><strong>Test statistic.</strong> The 8 differences add to <span
+class="math inline">\(-25.0\)</span>, so <span
+class="math inline">\(\bar{d} = -25.0/8 = -3.125\)</span>, and their
+standard deviation is <span class="math inline">\(s_d \approx
+2.91\)</span>. <span class="math display">\[SE = \frac{s_d}{\sqrt{n}} =
+\frac{2.91}{\sqrt{8}} \approx 1.0288, \qquad
+  t_{obs} = \frac{-3.125 - 0}{1.0288} \approx -3.04, \qquad df = 8 - 1 =
+7\]</span></li>
+<li><strong>P-value.</strong> In row 7, <span
+class="math inline">\(2.365 &lt; 3.04 &lt; 3.499\)</span>, with
+upper-tail areas 0.025 and 0.005. By symmetry the lower tail beyond
+<span class="math inline">\(-3.04\)</span> has the same area, so <span
+class="math display">\[0.005 &lt; P(T \leq -3.04 \mid H_0 \text{ true})
+&lt; 0.025\]</span> Software gives 0.0094.</li>
+<li><strong>Decision.</strong> The P-value is below 0.05: <strong>reject
+<span class="math inline">\(H_0\)</span></strong>. The data give
+convincing evidence that pain scores are lower after hypnotism, on
+average.</li>
+</ol>
+<p><img src="assets/l28_hypnotism.png" alt="A t distribution with 7 degrees of freedom, labelled if H0 is true, t obs follows t of 7. A dashed line marks minus 3.04, and the small lower tail to its left is shaded red and labelled P of T at most minus 3.04. A label on the right reads: t-table, 0.005 less than P-value less than 0.025." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>What if we had ignored the pairing?</strong> Treat the before
+and after scores as two independent samples of 8: before <span
+class="math inline">\(\bar{x} = 8.71\)</span>, <span
+class="math inline">\(s = 2.18\)</span>; after <span
+class="math inline">\(\bar{x} = 5.59\)</span>, <span
+class="math inline">\(s = 2.61\)</span>. The unpooled SE is <span
+class="math display">\[\sqrt{\frac{2.18^2}{8} + \frac{2.61^2}{8}}
+\approx 1.2023, \qquad t_{obs} = \frac{-3.125}{1.2023} \approx
+-2.60\]</span> The estimate is the same, <span
+class="math inline">\(-3.125\)</span>, but the SE is larger (1.2023
+against 1.0288), so <span class="math inline">\(t_{obs}\)</span> is
+smaller. Subjects who start with a high pain score tend to stay
+relatively high, and the independent-samples SE counts that
+person-to-person spread as noise. The paired analysis removes it.
+Ignoring the pairing is not just less powerful; it is the <strong>wrong
+test</strong>, because the two samples are not independent.</p>
+</div>
+<div id="example-the-softball-strength-class" class="section level2">
+<h2>Example: the softball strength class</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
+Introductory Statistics 2e, Section 10.4, Example 10.12</a>:</em></p>
+<blockquote>
+<p>A college softball coach was interested in whether the college’s
+strength development class increased their players’ maximum lift (in
+pounds). Four players participated in the study. The amount of weight
+they could each lift was recorded before they took the strength
+development class. After completing the class, the amount of weight they
+could each lift was again measured. The data are as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Weight (in pounds)</th>
+<th>Player 1</th>
+<th>Player 2</th>
+<th>Player 3</th>
+<th>Player 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Amount of weight lifted prior to the class</td>
+<td>205</td>
+<td>241</td>
+<td>338</td>
+<td>368</td>
+</tr>
+<tr class="even">
+<td>Amount of weight lifted after the class</td>
+<td>295</td>
+<td>252</td>
+<td>330</td>
+<td>360</td>
+</tr>
+</tbody>
+</table>
+<p>The coach wants to know if the strength development class makes the
+players stronger, on average.</p>
+</blockquote>
+<p>The book does not give <span class="math inline">\(\alpha\)</span>;
+we use 0.05, as the book’s solution does.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs (the same 4 players,
+before and after). The book assumes the differences are normal; we come
+back to that below.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(d\)</span>
+= after <span class="math inline">\(-\)</span> before, so “stronger”
+means positive differences: <span class="math inline">\(H_0: \mu_d =
+0\)</span> and <span class="math inline">\(H_A: \mu_d &gt; 0\)</span>
+(upper-tailed).</li>
+<li><strong>Test statistic.</strong> The differences are <span
+class="math inline">\(90, 11, -8, -8\)</span>. So <span
+class="math inline">\(\bar{d} = 85/4 = 21.25\)</span> and <span
+class="math inline">\(s_d \approx 46.70\)</span>. <span
+class="math display">\[SE = \frac{46.70}{\sqrt{4}} = 23.35, \qquad
+t_{obs} = \frac{21.25}{23.35} \approx 0.91, \qquad df = 3\]</span></li>
+<li><strong>P-value.</strong> In row 3, <span
+class="math inline">\(0.765 &lt; 0.91 &lt; 0.978\)</span>, with
+upper-tail areas 0.25 and 0.20, so <span class="math inline">\(0.20 &lt;
+\text{P-value} &lt; 0.25\)</span>. Software (and the book) give
+0.215.</li>
+<li><strong>Decision.</strong> <strong>Do not reject <span
+class="math inline">\(H_0\)</span></strong>. There is not enough
+evidence that the class makes players stronger, on average.</li>
+</ol>
+<p><strong>A caution.</strong> Look at the differences: three of the
+four players lifted about the same or <em>less</em> after the class, and
+one player’s 90-pound gain makes <span
+class="math inline">\(\bar{d}\)</span> positive. With 4 pairs and one
+possible outlier, the assumption that the differences are normal is very
+doubtful, and so is any conclusion. The coach needs more players.</p>
+</div>
+<div id="example-shot-put-with-each-hand" class="section level2">
+<h2>Example: shot-put with each hand</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
+Introductory Statistics 2e, Section 10.4, Example 10.13</a>:</em></p>
+<blockquote>
+<p>Seven eighth graders at Kennedy Middle School measured how far they
+could push the shot-put with their dominant (writing) hand and their
+weaker (non-writing) hand. They thought that they could push equal
+distances with either hand. The data were collected and recorded in the
+table below.</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Distance (in feet) using</th>
+<th>Student 1</th>
+<th>Student 2</th>
+<th>Student 3</th>
+<th>Student 4</th>
+<th>Student 5</th>
+<th>Student 6</th>
+<th>Student 7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dominant hand</td>
+<td>30</td>
+<td>26</td>
+<td>34</td>
+<td>17</td>
+<td>19</td>
+<td>26</td>
+<td>20</td>
+</tr>
+<tr class="even">
+<td>Weaker hand</td>
+<td>28</td>
+<td>14</td>
+<td>27</td>
+<td>18</td>
+<td>17</td>
+<td>26</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a hypothesis test to determine whether the mean difference in
+distances between the children’s dominant versus weaker hands is
+significant.</p>
+</blockquote>
+<p>The book assumes the differences are normal and uses <span
+class="math inline">\(\alpha = 0.05\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs: each student used both
+hands. The differences are assumed normal.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(d\)</span>
+= dominant <span class="math inline">\(-\)</span> weaker. “Equal
+distances with either hand” is the null, and the question has no
+direction: <span class="math inline">\(H_0: \mu_d = 0\)</span> and <span
+class="math inline">\(H_A: \mu_d \neq 0\)</span> (two-sided).</li>
+<li><strong>Test statistic.</strong> The differences are <span
+class="math inline">\(2, 12, 7, -1, 2, 0, 4\)</span>. So <span
+class="math inline">\(\bar{d} = 26/7 \approx 3.71\)</span> and <span
+class="math inline">\(s_d \approx 4.50\)</span>. <span
+class="math display">\[SE = \frac{4.50}{\sqrt{7}} \approx 1.7008, \qquad
+t_{obs} = \frac{3.71}{1.7008} \approx 2.18, \qquad df = 6\]</span></li>
+<li><strong>P-value.</strong> In row 6, <span
+class="math inline">\(1.943 &lt; 2.18 &lt; 2.447\)</span>, with
+upper-tail areas 0.05 and 0.025; doubling, <span
+class="math inline">\(0.05 &lt; \text{P-value} &lt; 0.10\)</span>.
+Software gives 0.072 (the book: 0.0716).</li>
+<li><strong>Decision.</strong> The P-value is above 0.05: <strong>do not
+reject <span class="math inline">\(H_0\)</span></strong>. There is not
+enough evidence of a mean difference between the students’ dominant and
+weaker hands. Six of the seven students pushed at least as far with
+their dominant hand, so a larger study might well find a
+difference.</li>
+</ol>
+</div>
+<div
+id="example-who-made-the-decision-a-t-test-instead-of-the-sign-test"
+class="section level2">
+<h2>Example: who made the decision? (a <span
+class="math inline">\(t\)</span>-test instead of the sign test)</h2>
+<p>In Lecture 26 we used the <strong>sign test</strong> on 17 couples’
+ratings of who had more say in a major financial decision (1 = the wife,
+7 = the husband), and found a two-sided P-value of 0.0574: not
+significant at the 5% level. What does the matched-pairs <span
+class="math inline">\(t\)</span>-test say about the same data?</p>
+<p>The differences <span class="math inline">\(d\)</span> = husband
+<span class="math inline">\(-\)</span> wife add to 23, so <span
+class="math inline">\(\bar{d} = 23/17 \approx 1.35\)</span>, and <span
+class="math inline">\(s_d \approx 1.77\)</span>. <span
+class="math display">\[SE = \frac{1.77}{\sqrt{17}} \approx 0.4293,
+\qquad t_{obs} = \frac{1.35}{0.4293} \approx 3.15, \qquad df =
+16\]</span> In row 16, <span class="math inline">\(2.921 &lt; 3.15 &lt;
+3.252\)</span>, with upper-tail areas 0.005 and 0.0025; doubling, <span
+class="math inline">\(0.005 &lt; \text{P-value} &lt; 0.01\)</span>.
+Software gives 0.006. The <span class="math inline">\(t\)</span>-test
+<strong>rejects</strong> <span class="math inline">\(H_0\)</span>, and
+the sign test did not.</p>
+<p>Which one should we believe? The <span
+class="math inline">\(t\)</span>-test uses the sizes of the differences,
+so it has more power, <strong>if</strong> its assumption holds. But
+these are crude 1-to-7 ratings from only 17 couples, and it is hard to
+believe the differences come from a normal population. The sign test
+makes no such assumption. That is why we used it in Lecture 26. When the
+assumption behind a test is doubtful, a more powerful-looking P-value is
+not more trustworthy. Here the honest summary is “suggestive but not
+conclusive”.</p>
+</div>
+<div id="practice-throwing-with-each-hand" class="section level2">
+<h2>Practice: throwing with each hand</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
+Introductory Statistics 2e, Section 10.4, Try It 10.13</a> (the book
+gives no solution; the worked solution is ours, assuming the differences
+are normal):</em></p>
+<blockquote>
+<p>Five ball players think they can throw the same distance with their
+dominant hand (throwing) and off-hand (catching hand). The data were
+collected and recorded in the table below. Conduct a hypothesis test to
+determine whether the mean difference in distances between the dominant
+and off-hand is significant. Test at the 5% level.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Player 1</th>
+<th>Player 2</th>
+<th>Player 3</th>
+<th>Player 4</th>
+<th>Player 5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dominant hand</td>
+<td>120</td>
+<td>111</td>
+<td>135</td>
+<td>140</td>
+<td>125</td>
+</tr>
+<tr class="even">
+<td>Off-hand</td>
+<td>105</td>
+<td>109</td>
+<td>98</td>
+<td>111</td>
+<td>99</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<details>
+<summary>
+Solution
+</summary>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Matched pairs (each player threw with
+both hands); we assume the differences are normal.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(d\)</span>
+= dominant <span class="math inline">\(-\)</span> off-hand. <span
+class="math inline">\(H_0: \mu_d = 0\)</span> and <span
+class="math inline">\(H_A: \mu_d \neq 0\)</span> (two-sided).</li>
+<li><strong>Test statistic.</strong> The differences are <span
+class="math inline">\(15, 2, 37, 29, 26\)</span>, so <span
+class="math inline">\(\bar{d} = 109/5 = 21.8\)</span> and <span
+class="math inline">\(s_d \approx 13.59\)</span>. <span
+class="math inline">\(SE = 13.59/\sqrt{5} \approx 6.0776\)</span> and
+<span class="math inline">\(t_{obs} = 21.8/6.0776 \approx 3.59\)</span>,
+with <span class="math inline">\(df = 4\)</span>.</li>
+<li><strong>P-value.</strong> In row 4, <span
+class="math inline">\(2.776 &lt; 3.59 &lt; 4.604\)</span>, with
+upper-tail areas 0.025 and 0.005; doubling, <span
+class="math inline">\(0.01 &lt; \text{P-value} &lt; 0.05\)</span>.
+Software gives 0.023.</li>
+<li><strong>Decision.</strong> The P-value is below 0.05: <strong>reject
+<span class="math inline">\(H_0\)</span></strong>. The players throw
+significantly farther, on average, with their dominant hand.</li>
+</ol>
+</details>
+</div>
+</div>
+<div id="choosing-a-test" class="section level1">
+<h1>Choosing a test</h1>
+<p>The first question is always <strong>what kind of response</strong>
+(categorical or quantitative), and the second is <strong>how the samples
+are related</strong> (one sample, two independent samples, or matched
+pairs).</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Year
+Parameter
 </th>
 <th style="text-align:left;">
-Number of Manuscripts with Female First Author
+Design
 </th>
 <th style="text-align:left;">
-Number of Manuscripts with Male First Author
+Response
 </th>
 <th style="text-align:left;">
-All First Authors
+Test statistic
 </th>
 <th style="text-align:left;">
-Relative Percentage of Manuscripts with Female First Author
+Distribution
+</th>
+<th style="text-align:left;">
+Confidence interval
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-April - October 2019
+<span class="math inline">\(p\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(140\)</span>
+one sample
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(171\)</span>
+categorical
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(311\)</span>
+<span class="math inline">\(z_{obs} = \frac{\hat{p} -
+p_0}{\sqrt{p_0(1-p_0)/n}}\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(140/311 = 0.450\)</span>
+<span class="math inline">\(N(0, 1)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p} \pm
+Z_{1-\alpha/2}\sqrt{\hat{p}(1-\hat{p})/n}\)</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-April - October 2020
+<span class="math inline">\(p_1 - p_2\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(172\)</span>
+two independent samples
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(269\)</span>
+categorical
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(441\)</span>
+<span class="math inline">\(z_{obs} = \frac{\hat{p}_1 -
+\hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} +
+\frac{1}{n_2}\right)}}\)</span> (pooled <span
+class="math inline">\(\hat{p}\)</span>)
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(172/441 = 0.390\)</span>
+<span class="math inline">\(N(0, 1)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\hat{p}_1 - \hat{p}_2) \pm
+Z_{1-\alpha/2}\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu\)</span>
+</td>
+<td style="text-align:left;">
+one sample
+</td>
+<td style="text-align:left;">
+quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{obs} = \frac{\bar{x} -
+\mu_0}{s/\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n - 1)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x} \pm t_{1-\alpha/2}\,
+s/\sqrt{n}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1 - \mu_2\)</span>
+</td>
+<td style="text-align:left;">
+two independent samples
+</td>
+<td style="text-align:left;">
+quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{obs} = \frac{\bar{x}_1 -
+\bar{x}_2}{\sqrt{s_1^2/n_1 + s_2^2/n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(\min(n_1 - 1, n_2 - 1))\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm
+t_{1-\alpha/2}\sqrt{s_1^2/n_1 + s_2^2/n_2}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_d\)</span>
+</td>
+<td style="text-align:left;">
+matched pairs
+</td>
+<td style="text-align:left;">
+quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{obs} =
+\frac{\bar{d}}{s_d/\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n - 1)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{d} \pm t_{1-\alpha/2}\,
+s_d/\sqrt{n}\)</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Conduct a hypothesis test at the <span
-class="math inline">\(5\%\)</span> significance level to determine if
-the relative percentage of scholarly activity among female scholars was
-<i>significantly reduced</i> after the start of the coronavirus
-pandemic</p>
-<p><strong>Step 1</strong> To check the sample size assumptions of this
-test we must first calculate the pooled relative proportion:</p>
-<p><span class="math display">\[\hat{p} = \frac{140+172}{311+441} =
-0.415 \]</span></p>
-<p>Since the pooled estimate is nearly 0.5 and both sample sizes are
-quite large (<span class="math inline">\(n_1 = 311\)</span> and <span
-class="math inline">\(n_2 = 441\)</span>), the quantities <span
-class="math inline">\(n_1\hat{p}\)</span>, <span
-class="math inline">\(n_1(1-\hat{p})\)</span>, <span
-class="math inline">\(n_2\hat{p}\)</span>, and <span
-class="math inline">\(n_2(1-\hat{p})\)</span> are all greater than the
-required <span class="math inline">\(15\)</span>.</p>
-<p><strong>Step 2</strong> We want to test the null hypothesis that
-there is no significant difference in the relative percentage of
-scholarly activity among female scholars before and after the
-pandemic:</p>
-<p><span class="math display">\[ H_0: p_1 - p_2 = 0\]</span> <span
-class="math display">\[ H_A: p_1 - p_2 &lt; 0\]</span></p>
-<p>where <span class="math inline">\(p_1\)</span> is the relative
-proportion of manuscripts with female first authors after the start of
-the pandemic and <span class="math inline">\(p_2\)</span> is the
-relative proportion of manuscripts with female first authors before the
-start of the pandemic. The critical value is <span
-class="math inline">\(Z_{\alpha} = -1.645\)</span>.</p>
-<p><strong>Step 3</strong></p>
-<p>Using the pooled estimate from <strong>Step 1</strong>, the pooled
-standard error of the population difference <span
-class="math inline">\(D\)</span> is</p>
-<p><span class="math display">\[ SE_{D_\text{pooled}} =
-\sqrt{0.415(1-0.415)\left(\frac{1}{311}+\frac{1}{441}\right)} =
-0.0365\]</span></p>
-<p>The test statistic is</p>
-<p><span class="math display">\[Z_{obs} = \frac{(0.390 - 0.450) -
-0}{SE_{D_\text{pooled}}} = -1.65 \]</span></p>
-<p><strong>Step 4</strong></p>
-<p>The <span class="math inline">\(p\)</span>-value is</p>
-<p><span class="math display">\[P(Z \leq -1.65 | H_0 \ \ \text{True})  =
-0.0495\]</span></p>
-<p><strong>Decision</strong></p>
-<p>Since the <span class="math inline">\(p\)</span>-value is less than
-the significance level of <span class="math inline">\(5\%\)</span>, we
-reject the null hypothesis of no difference and conclude that the
-relative proportion of manuscripts with female first authors
-significantly decreased after the start of the COVID-19 pandemic.</p>
-<p><br> <br></p>
-</div>
-<div id="d-as-a-measure-of-association" class="section level2">
-<h2><span class="math inline">\(D\)</span> as a measure of
-association</h2>
-<p>Consider again the difference in proportion <span
-class="math inline">\(D\)</span>. In statistical analysis, we often
-study the relationship between two categorical variables. We are
-regularly interested in whether one variable (the explanatory variable)
-influences or explains the outcomes of another variable (the response
-variable). The statistic <span class="math inline">\(D\)</span> is a
-measure of the strength of statistical association between some grouping
-variable and some response that is measured across those groups.
-Consider two populations (groups) based on some characteristic (e.g.,
-treatment vs. control, male vs. female, etc). For each population the
-response variable records the fraction of the population that relates to
-some category or specific outcome (e.g. patient outcome, preference,
-occurrence of an event). The value of <span
-class="math inline">\(D\)</span> ranges between <span
-class="math inline">\(-1\)</span> and <span
-class="math inline">\(1\)</span> and has the following
-interpretation:</p>
-<p><strong>Interpretation:</strong></p>
-<p>Given <span class="math inline">\(D = p_1 - p_2\)</span> which
-compares the difference in proportion across groups/populations 1 and
-2</p>
+<p>Some quick checks:</p>
 <ul>
-<li><p>values of <span class="math inline">\(-1\)</span> or <span
-class="math inline">\(1\)</span> indicate the strongest possible
-association between the categories of the grouping variable and the
-categories of the response variable</p></li>
-<li><p>values near or at <span class="math inline">\(0\)</span>
-indicates that the explanatory and response variables are independent of
-each other</p></li>
+<li><strong>The blood pressure of 30 patients before and after a
+drug:</strong> the same patients twice, so matched pairs.</li>
+<li><strong>Mean nightly sleep for random samples of 40 first-years and
+40 seniors:</strong> two separate samples and a quantitative response,
+so the two independent samples <span
+class="math inline">\(t\)</span>-test.</li>
+<li><strong>The share of 200 dog owners and 200 cat owners who exercise
+daily:</strong> two independent samples and a yes/no response, so the
+two-proportion <span class="math inline">\(z\)</span>-test.</li>
 </ul>
-<p><br> <br> <br> <br></p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="unnumbered">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
-<div id="ref-mogensen2021impact" class="csl-entry">
-Mogensen, Monique A, Christoph I Lee, and Ruth C Carlos. 2021.
-<span>“The Impact of the COVID-19 Pandemic on Journal Scholarly Activity
-Among Female Contributors.”</span> <em>Journal of the American College
-of Radiology</em> 18 (7): 1044–47.
-</div>
-<div id="ref-steering1989final" class="csl-entry">
-Physicians’ Health Study Research Group*, Steering Committee of the.
-1989. <span>“Final Report on the Aspirin Component of the Ongoing
-Physicians’ Health Study.”</span> <em>New England Journal of
-Medicine</em> 321 (3): 129–35.
-</div>
-</div>
-</div>
+<div id="sources" class="section level1">
+<h1>Sources</h1>
+<ul>
+<li>The two-sample examples are from OpenStax <em>Introductory
+Statistics 2e</em>, Chapter 10: sports hours (Example 10.1), math
+classes (Example 10.2), online and face-to-face exams (Example 10.3),
+worker retention (Try It 10.2), hypnotism (Example 10.11), the softball
+strength class (Example 10.12), the shot-put (Example 10.13) and
+throwing distance (Try It 10.13). The “do not pool” quotation is from
+p. 513, and Cohen’s <span class="math inline">\(d\)</span> is on p. 518.
+The hives and electric-vehicle data are Examples 10.8 and 10.10; the
+2-point claim tested in the electric-vehicle example is ours.</li>
+<li>The NCAA basketball scores and the couples’ decision ratings come
+from the 2024 STAT 251 notes.</li>
+<li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
+10.1, 10.3 and 10.4.</li>
+</ul>
 </div>
 
 <!--

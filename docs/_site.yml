@@ -56,8 +56,8 @@ navbar:
             href: lecturemenu10.html
           - text: 'Week 11'
             href: lecturemenu11.html
-#         - text: 'Week 12'
-#           href: lecturemenu12.html
+          - text: 'Week 12'
+            href: lecturemenu12.html
 #         - text: 'Week 13'
 #           href: lecturemenu13.html
 #         - text: 'Week 14 — Fall Recess'
@@ -94,8 +94,8 @@ navbar:
             href: homeworks/2026/homework_1_2026_solns.html
           - text: 'Hmwk 2 Solutions'
             href: homeworks/2026/homework_2_2026_solns.html
-#         - text: 'Hmwk 3 Solutions'
-#           href: homeworks/2026/homework_3_2026_solns.html
+          - text: 'Hmwk 3 Solutions'
+            href: homeworks/2026/homework_3_2026_solns.html
 #         - text: 'Hmwk 4 Solutions'
 #           href: homeworks/2024/week12homework_solns.html
 #         - text: 'Hmwk 5 Solutions'

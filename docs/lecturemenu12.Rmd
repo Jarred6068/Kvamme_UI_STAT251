@@ -19,604 +19,863 @@ always_allow_html: true
 header-includes:
   \usepackage{float}
   \usepackage{tikz}
-bibliography: misc/Week_13_bibs.bib
+
 ---
+
+<!--
+  SCOPE (Nov 9 2026). Week 12 of Fall 2026. Lecture 28 (Mon Nov 9): a review of the two-proportion test
+  and when to pool, the two independent samples t-test, and the matched-pairs t-test (deck:
+  lecture_slides/Week 12/2026/Week12_Lecture28_Slides_11_09_2026.pptx; figures and number checks:
+  assets/make_lecture28_figures.R). Causal inference was dropped, and every later topic moved one class
+  earlier (see the SHIFT note in Course_Schedule.Rmd): Wed Nov 11 is the introduction to analyzing
+  categorical variables and Fri Nov 13 is goodness-of-fit and tests of independence. Add those sections
+  here when they are written.
+  The 2024 Week 12 content that used to be on this page (the sign test, two proportions) is in git history;
+  both topics are now on the Week 11 page.
+-->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
 library(kableExtra)
-library(ggplot2)
-library(ggthemes)
-library(ggpubr)
-library(latex2exp)
-library(gganimate)
 
-path = 'Data/'
-
-##stat pack
-source('misc/stat251_tools.R')
-
+fmt <- function(x, d = 2) formatC(x, format = 'f', digits = d)
+tab <- function(df, ...) kable(df, format = 'html', row.names = FALSE, escape = FALSE, ...) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = 'striped')
+near <- function(a, b, tol = 5e-4) abs(a - b) < tol
+zt <- function(z) round(pnorm(z), 4)                   # a z-table lookup, four decimals
+tq <- function(tail, df) round(qt(1 - tail, df), 3)    # a t-table entry: upper-tail area, df
 ```
 
-# Lecture 24
+```{r lecture28-setup, include=FALSE}
+# every number in the Lecture 28 sections is checked here (the deck's numbers are checked again in
+# assets/make_lecture28_figures.R)
 
-**Warm Up:** 
+# review: the hives CI (unpooled) and the electric-vehicle test of a non-zero difference
+se_hci <- round(sqrt(0.1 * 0.9 / 200 + 0.06 * 0.94 / 200), 4)
+stopifnot(se_hci == 0.0271, round(qnorm(0.995), 3) == 2.576, round(2.576 * se_hci, 4) == 0.0698)
+p_y <- round(135 / 1343, 4); p_o <- round(12 / 232, 4)
+se_ev <- round(sqrt((135/1343) * (1 - 135/1343) / 1343 + (12/232) * (1 - 12/232) / 232), 4)
+stopifnot(p_y == 0.1005, p_o == 0.0517, round(p_y - p_o, 4) == 0.0488, se_ev == 0.0167,
+          round((0.0488 - 0.02) / 0.0167, 2) == 1.72, zt(1.72) == 0.9573, round(1 - zt(1.72), 4) == 0.0427)
 
-  1. A car company claims that their Hybrid Sedan averages 35 mpg. You randomly select 8 of these vehicles from a local dealership and test their gas mileage under similar conditions.
-
-You get the following MPG scores:
-
-MPG:	$30,28,32,26,33,25,28,30$
-
-Consider the following $95\%$ confidence interval for the null hypothesis $\mu = 35$, $[26.68, 31.32]$. Does the actual gas mileage for these cars deviate significantly from $35$? Why or why not?
-  
-  2. A concern was raised in Australia that the percentage of deaths of Aboriginal prisoners was higher than the percent of deaths of non-Aboriginal prisoners, which is $0.27\%$. A sample of six years (1990-1995) of data was collected, and it was found that out of $14,495$ Aboriginal prisoners, $51$ died ("Indigenous deaths in," 1996). Do the data provide enough evidence to show that the proportion of deaths of Aboriginal prisoners is more than $0.27\%$?
-  
-## Parametric vs Non-parametric tests
-
-The hypothesis tests that we have learned up to this point are called **parametric** tests. Parametric tests make assumptions about the population distribution from which the data are sampled. For example:
-
-  * The test for a proportion assumes that either the sample size is large enough and that the “success” and “failures” are well balanced so that the population distribution of $X$ is approximately normal
-  
-  * The test for a population mean explicitly assumes that the population distribution of $X$ is normal 
-  
-Another group of hypothesis tests are said to be **non-parametric**. Non-parametric tests make few or no assumptions about the underlying distribution of the data. Still, both types of analyses assume the data are generated from a randomization procedure and that the observations in the data are independent and come from the same distribution. However, in non-parametric statistics, the distribution can be any distribution. 
-
-* **Advantages of Non-parametric tests**
-
-  1. They may be the only alternative when sample sizes are very small (unless the population distribution is known exactly, but this is almost never the case)
-
-  2. They make few assumptions about the population distribution of the data
-
-  3. They are advantageous when the data represent crude measurements such as subjective ratings/rankings (e.g, Likert responses)
-
-  4. They often have simpler computations and interpretations than parametric tests
-
-* **Disadvantages of Non-parametric tests**
-
-  1. They are generally less powerful than their parametric analogues
-
-
-## The sign test
-
-The sign test is a non-parametric significance test that is typically used for paired observations such as data gathered from a matched-pairs designs. For example, consider an experiment where individuals are weighed before and after a treatment with a weight loss drug and the difference in weight is recorded. Such data is appropriate for the sign test. 
-
-The sign test is relatively under-powered compared to the other parametric tests we have learned about. However, it is very flexible and makes almost no assumptions about the data or its population distribution. The sign test is especially useful when data arise from crude measurements or when observations have a ranked order such as movie ratings or taste scores, to name a few examples. 
-
-To demonstrate the use of the sign test, consider the following data from a study comparing the ratings of husbands and wives on the perceived relative influence of each member of the couple on a major financial decision. The ratings were given as a number between $1-7$ with $1$ indicating wife-dominated decision making and $7$ indicating husband-dominated decision making.
-
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-Couple = c(1:17)
-Husband = c(5,4,6,6,3,2,5,3,1,4,5,4,4,7,5,5,5)
-Wife = c(3,3,4,5,3,3,2,3,2,3,2,2,5,2,5,3,1)
-Difference = Husband - Wife
-Sign = Difference
-Sign[which(Difference > 0)] = '$+$'
-Sign[which(Difference < 0)] = '$-$'
-Sign[which(Difference == 0)] = ''
-
-df = cbind.data.frame(Couple, Husband, Wife, Difference, Sign)
-
-kable(df, format = 'html', digits = 2, 
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-```
-
-
-The second to last column "Difference" gives the difference in rating between the husbands rating and wifes rating for each couple. The last column denoted "Sign" indicates whether each difference was positive or negative. Positive differences indicate that husband perceives themselves as more dominating in decision making while negative signs indicated that the wife perceives themselves as more dominating. In this example, ignoring differences of zero, there are a total of $14$ signs and $11$ of them are positive. Let $p$ be the probability that a given sign is positive and consider the following pair of hypotheses:
-
-\[H_0: p = 0.5; \ \ H_A: p \neq 0.5 \]
-
-The null hypothesis indicates that the presence of a positive or negative sign is essentially random while the alternative indicates that positive and negative signs are not equally likely, reflecting a systematic difference in opinion between the husband and wife in each couple. Under the null hypothesis, the number of positive signs is a binomial random variable with probability $p = 0.5$. 
-
-\[P(s) = \frac{n!}{s!(n-s)!}p^s(1-p)^{n-s} \]
-
-where $n$ is the total number of signs and $s$ is the number of positive signs. Thus the sampling distribution of the number of positive signs is a binomial distribution
-
-```{r, echo=FALSE, warning=F, message=F, fig.alt = "Bar chart of the binomial distribution with n equals 14 and p equals 0.5: probability for each number of positive signs from 0 to 14. The bars are symmetric, peaking at 7 with probability 0.2095. The bars for 11 through 14 are highlighted, and the plot is labeled P of X greater than or equal to 11 equals 0.0287."}
-
-probtype = 'P(X >= k)'
-k = 11
-df = data.frame(success = 0:14, 
-                prob = dbinom(x = 0:14, size = 14, prob = 0.5))
-        if(probtype == 'P(X = k)'){
-          df=df %>% mutate(condition = ifelse(success == k, as.character(k), "failure")) 
-          lbl = paste0('$P(X = ', k, ') = ')
-        }else if (probtype == 'P(X <= k)'){
-           df=df %>% mutate(condition = ifelse(success <= k, as.character(k), "failure")) 
-           lbl = paste0('$P(X \\leq ', k, ') = ')
-        }else{
-          df=df %>% mutate(condition = ifelse(success >= k, as.character(k), "failure"))
-          lbl = paste0('$P(X \\geq ', k, ') = ')
-        }
-        
-        px = round(sum(df$prob[which(df$condition == k)]),4)
-        ggplot(data = df, aes(x = success, y = prob, fill = condition)) +
-          geom_bar(stat = 'identity', color = 'black') +
-          geom_col() +
-          geom_text(aes(label = round(prob,4), y = prob + 0.01),
-                    position = position_dodge(0.9),
-                    size = 3,
-                    vjust = 0)+
-          geom_text(aes(x = mean(success),
-                        y = max(prob) + 0.08),
-                    label = TeX(paste0(lbl, px, '$')),
-                    size = 5,
-                    vjust = 0)+
-          scale_y_continuous(limits = c(0, min(max(df$prob+0.14), 1)))+
-          labs(title = paste0("Probability of X =", k, " or more positive signs."),
-               subtitle = TeX(paste0("$X \\sim binom(n = ", 14, ", p = ", 0.5, ')$')),
-               x = "Number of Positive Signs",
-               y = "Probability")+
-          theme_classic2()+
-          theme(legend.position = 'none')
-
-
-```
-
-Recall that the $p$-value of a significance test is the probability of observing a value as or more extreme than the test statistic. In the case of the sign test, the test statistic is the number of positive signs and the $p$-value is the probability of observing more or fewer signs, depending the nature of the alternative hypothesis. For a test of the hypotheses given above, the $p$-value is the probability of getting $11$ or more positive signs multiplied by $2$ because it is a two-tailed test. This gives
-
-\[p\text{-value} = 2\times P(S \geq 11 | H_0 \ \text{True}) = 2\sum_{k = 11}^n \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} \]
-\[ = 2(0.0222+0.0056+0.0009+0.0001) = 2(0.0287) = 0.0574 \]
-
-Assuming a significance level of $5\%$, we would fail to reject the null hypothesis, and we would conclude that the probability of a positive sign is not significantly different than $p = 0.5$. In the original context of the test, this indicates that husbands and wives do not differ significantly in their perceived relative influence in major financial decision making. 
-
-The five steps of the sign test are given below:
-
-1. Assumptions: data are matched pairs
-
-2. State the null and alternative hypotheses. Note that the hypothesis are defined in terms of the probability of a positive sign. Usually the null is that $p = 0.5$ i.e positive and negative signs are equally likely/ random. 
-
-3. Compute the differences and sign of each difference for all pairs of observations. The test statistic is the number of positive signs.
-
-4. Compute the $p$-value from a binomial distribution
-
-5. Make a decision 
-
-
-Like we have seen before with tests for $p$ and $\mu$ the sign test can be right, left or two-tailed tests. 
-
-```{r, echo=FALSE, warning=F, message=F}
-
-
-df = cbind.data.frame(`Alternative Hypothesis $H_A$` = c('$H_A: p > 0.5$','$H_A: p < 0.5$','$H_A: p \\neq 0.5$'),
-                      `$p$-value` = c('$P(S \\geq s | H_0 \\ \\text{True})$', '$P(S \\leq s | H_0 \\ \\text{True})$', '$2\\times P(S \\geq s | H_0 \\ \\text{True})$'))
-
-
-kable(df, format = 'html', digits = 2, 
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-```
-
-We can also tabulate the probabilities for different outcomes of the sign test to produce a table like the $Z$ or $t$ table we have used previously. The table below gives the (point) probabilities for different combinations of positive and total signs. The columns represent the total number of signs and the rows represent the number of positive signs. 
-
-
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-n = 5:15
-s = 0:15
-
-mat = matrix(0, nrow = length(s), ncol = length(n))
-
-for(i in 1:length(n)){
-  mat[,i] = round(dbinom(s, n[i], 0.5), 5)
+# two independent means: unpooled SE (4 decimals), t_obs (2 decimals), df = min(n1 - 1, n2 - 1)
+t2 <- function(xb1, s1, n1, xb2, s2, n2) {
+  se <- round(sqrt(s1^2 / n1 + s2^2 / n2), 4)
+  list(se = se, t = round((xb1 - xb2) / se, 2), df = min(n1 - 1, n2 - 1))
 }
+sp <- t2(2, 0.866, 9, 3.2, 1, 16)        # Example 10.1, two-sided
+stopifnot(sp$se == 0.3819, sp$t == -3.14, sp$df == 8, tq(0.025, 8) == 2.306, tq(0.005, 8) == 3.355,
+          round(2 * pt(-3.14, 8), 4) == 0.0138)
+w_df <- (0.866^2 / 9 + 1 / 16)^2 / ((0.866^2 / 9)^2 / 8 + (1 / 16)^2 / 15)
+stopifnot(round(w_df, 2) == 18.85, round(2 * pt(-1.2 / sqrt(0.866^2 / 9 + 1 / 16), w_df), 4) == 0.0054)
+mc <- t2(4, 1.5, 11, 3.5, 1, 9)          # Example 10.2, upper-tailed, alpha = 0.01
+stopifnot(mc$se == 0.5618, mc$t == 0.89, mc$df == 8, tq(0.2, 8) == 0.889, tq(0.15, 8) == 1.108,
+          round(1 - pt(0.89, 8), 4) == 0.1997)
+on <- c(67.6, 41.2, 85.3, 55.9, 82.4, 91.2, 73.5, 94.1, 64.7, 64.7, 70.6, 38.2, 61.8, 88.2, 70.6,
+        58.8, 91.2, 73.5, 82.4, 35.5, 94.1, 88.2, 64.7, 55.9, 88.2, 97.1, 85.3, 61.8, 79.4, 79.4)
+ff <- c(77.9, 95.3, 81.2, 74.1, 98.8, 88.2, 85.9, 92.9, 87.1, 88.2, 69.4, 57.6, 69.4, 67.1, 97.6,
+        85.9, 88.2, 91.8, 78.8, 71.8, 98.8, 61.2, 92.9, 90.6, 97.6, 100, 95.3, 83.5, 92.9, 89.4)
+ol <- t2(72.85, 16.92, 30, 84.98, 11.71, 30)   # Example 10.3, lower-tailed
+stopifnot(length(on) == 30, length(ff) == 30, round(mean(on), 2) == 72.85, round(sd(on), 2) == 16.92,
+          round(mean(ff), 2) == 84.98, round(sd(ff), 2) == 11.71,
+          ol$se == 3.7568, ol$t == -3.23, ol$df == 29, tq(0.0025, 29) == 3.038, tq(0.0005, 29) == 3.659,
+          round(pt(-3.23, 29), 4) == 0.0015)
+sc <- c(78, 70, 79, 88, 91, 79, 74, 79, 76, 98, 103, 72, 70, 66, 83)
+io <- c(71, 94, 89, 64, 91, 94, 95, 95, 93, 108, 101, 69, 106, 79, 111)
+nc <- t2(90.67, 14.21, 15, 80.40, 10.57, 15)   # Iowa vs South Carolina, two-sided
+stopifnot(round(mean(io), 2) == 90.67, round(sd(io), 2) == 14.21, round(mean(sc), 2) == 80.40,
+          round(sd(sc), 2) == 10.57, nc$se == 4.5727, nc$t == 2.25, nc$df == 14,
+          tq(0.025, 14) == 2.145, tq(0.005, 14) == 2.977, round(2 * pt(-2.25, 14), 3) == 0.041)
+rt <- t2(5, 1.2, 15, 4.5, 0.8, 20)       # Try It 10.2, upper-tailed
+stopifnot(rt$se == 0.3578, rt$t == 1.40, rt$df == 14, tq(0.1, 14) == 1.345, tq(0.075, 14) == 1.523,
+          round(1 - pt(1.40, 14), 3) == 0.092)
+# pooled SD for the sports example (the aside on pooling)
+s_p <- round(sqrt((8 * 0.866^2 + 15 * 1^2) / 23), 4)
+stopifnot(s_p == 0.9555, round(s_p * sqrt(1/9 + 1/16), 4) == 0.3981, round(8 * 0.866^2, 3) == 6.000,
+          round(sqrt(1/9 + 1/16), 4) == 0.4167, round(-1.2 / 0.3981, 2) == -3.01,
+          tq(0.005, 23) == 2.807, tq(0.0025, 23) == 3.104, round(2 * pt(-3.01, 23), 4) == 0.0062)
+# the Welch df for the sports data, from the rounded v1, v2 shown in the notes
+stopifnot(round(0.866^2 / 9, 4) == 0.0833, 1 / 16 == 0.0625,
+          round((0.0833 + 0.0625)^2 / (0.0833^2 / 8 + 0.0625^2 / 15), 2) == 18.85)
 
-mat[which(mat == 1)] = ''
-final = cbind.data.frame(s, mat)
-colnames(final) = c('Number of positive signs', n)
-
-kable(final, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
+# matched pairs: SE = s_d / sqrt(n) (4 decimals), t_obs (2 decimals), df = n - 1
+hb <- c(6.6, 6.5, 9.0, 10.3, 11.3, 8.1, 6.3, 11.6); ha <- c(6.8, 2.4, 7.4, 8.5, 8.1, 6.1, 3.4, 2.0)
+hd <- round(ha - hb, 1)
+stopifnot(identical(hd, c(0.2, -4.1, -1.6, -1.8, -3.2, -2.0, -2.9, -9.6)), near(sum(hd), -25, 1e-9),
+          round(sd(hd), 2) == 2.91, round(2.91 / sqrt(8), 4) == 1.0288, round(-3.125 / 1.0288, 2) == -3.04,
+          tq(0.025, 7) == 2.365, tq(0.005, 7) == 3.499, round(pt(-3.04, 7), 4) == 0.0094,
+          round(sd(hb), 2) == 2.18, round(sd(ha), 2) == 2.61,
+          round(sqrt(2.18^2 / 8 + 2.61^2 / 8), 4) == 1.2023, round(-3.125 / 1.2023, 2) == -2.60)
+sb <- c(90, 11, -8, -8)                  # Example 10.12, upper-tailed
+stopifnot(mean(sb) == 21.25, round(sd(sb), 2) == 46.70, round(46.70 / 2, 4) == 23.35,
+          round(21.25 / 23.35, 2) == 0.91, tq(0.25, 3) == 0.765, tq(0.2, 3) == 0.978,
+          round(1 - pt(0.91, 3), 3) == 0.215)
+sd_ <- c(30, 26, 34, 17, 19, 26, 20) - c(28, 14, 27, 18, 17, 26, 16)   # Example 10.13, two-sided
+stopifnot(identical(sd_, c(2, 12, 7, -1, 2, 0, 4)), round(mean(sd_), 2) == 3.71, round(sd(sd_), 2) == 4.50,
+          round(4.50 / sqrt(7), 4) == 1.7008, round(3.71 / 1.7008, 2) == 2.18,
+          tq(0.05, 6) == 1.943, tq(0.025, 6) == 2.447, round(2 * pt(-2.18, 6), 3) == 0.072)
+hus <- c(5, 4, 6, 6, 3, 2, 5, 3, 1, 4, 5, 4, 4, 7, 5, 5, 5)          # the couples (Lecture 26)
+wif <- c(3, 3, 4, 5, 3, 3, 2, 3, 2, 3, 2, 2, 5, 2, 5, 3, 1)
+cd <- hus - wif
+stopifnot(sum(cd) == 23, round(mean(cd), 2) == 1.35, round(sd(cd), 2) == 1.77,
+          round(1.77 / sqrt(17), 4) == 0.4293, round((23/17) / 0.4293, 2) == 3.15,
+          tq(0.005, 16) == 2.921, tq(0.0025, 16) == 3.252, round(2 * pt(-3.15, 16), 3) == 0.006)
+th <- c(120, 111, 135, 140, 125) - c(105, 109, 98, 111, 99)          # Try It 10.13, two-sided
+stopifnot(identical(th, c(15, 2, 37, 29, 26)), mean(th) == 21.8, round(sd(th), 2) == 13.59,
+          round(13.59 / sqrt(5), 4) == 6.0776, round(21.8 / 6.0776, 2) == 3.59,
+          tq(0.025, 4) == 2.776, tq(0.005, 4) == 4.604, round(2 * pt(-3.59, 4), 3) == 0.023)
 ```
 
-# Lecture 25
+# Lecture 28
 
-**Practice: The Sign Test** - A group of $12$ fly fisherman are testing two types of flies to determine which one is more effective at catching trout in the Selway River. Each fly fisherman makes $10$ casts with each fly lure and records the number of trout that are caught. Use the table below to conduct a two-sided sign test at the $\alpha = 0.05$ significance level:
+Lecture 28 has three parts. It starts with a review of the two-proportion test from Lecture 27, focusing
+on one question that trips people up: **when do we pool?** Then it extends the two-sample idea from
+proportions to **means**, first for two independent samples and then for matched pairs. The textbook
+sections are [OpenStax 10.1](https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations)
+and [OpenStax 10.4](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples).
 
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
+# Review: when do we pool?
 
-Fisherman = c(1:12)
-Fly2 = sample(0:4, 12, replace = T, prob = c(0.1, 0.2, 0.4, 0.2, 0.1))
-Fly1 = sample(1:5, 12, replace = T, prob = c(0.2, 0.5, 0.1, 0.1, 0.1))
-Difference = Fly1 - Fly2
-Sign = rep(0, 12)
-Sign[Difference> 0] = '$+$'
-Sign[Difference == 0] = ''
-Sign[Difference<0] = '$-$'
+Every test and interval for two proportions uses the same estimate, $\hat{p}_1 - \hat{p}_2$, and an SE of
+the form
+$$SE(\hat{p}_1 - \hat{p}_2) = \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}$$
+We never know $p_1$ and $p_2$, so we have to put something in their place. The choice depends on what
+we are assuming:
 
-df = cbind.data.frame(Fisherman, Fly1, Fly2, Difference, Sign)
-
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
+```{r, echo=FALSE}
+tab(data.frame(
+  `Null hypothesis or goal` = c('$H_0: p_1 = p_2$ (that is, $p_1 - p_2 = 0$)',
+                                '$H_0: p_1 - p_2 = d_0$, with $d_0 \\neq 0$',
+                                'a confidence interval for $p_1 - p_2$'),
+  `The SE we use` = c('$SE_0 = \\sqrt{\\hat{p}(1-\\hat{p})\\left(\\frac{1}{n_1} + \\frac{1}{n_2}\\right)}, \\quad \\hat{p} = \\frac{X_1 + X_2}{n_1 + n_2}$',
+                      '$SE = \\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$',
+                      '$(\\hat{p}_1 - \\hat{p}_2) \\pm Z_{1-\\alpha/2} \\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$'),
+  `Pool?` = c('**pooled**', '**unpooled**', '**unpooled**'),
+  check.names = FALSE))
 ```
 
+**Why the first row pools.** A test works out what the data would look like *if $H_0$ were true*. If
+$H_0: p_1 = p_2$ is true, there is only one proportion, $p$, and both samples estimate it. The best
+estimate of one $p$ uses all the data, so we combine the samples: all the successes over all the
+observations, $\hat{p} = (X_1 + X_2)/(n_1 + n_2)$. This is the same reason the one-sample test uses $p_0$
+in its SE: the SE is built from what $H_0$ says.
 
-The null hypothesis is $H_0: p_0 = 0.5$ the probability of positive sign is $50\%$. The alternative hypothesis is that one of the flies catches more fish $H_A: p\neq p_0$. There are $s = 7$ positive signs out of a total of 9 total signs. The $p$-value for the two sided test is given by
+**Why the other two rows do not.** If $H_0$ says $p_1 - p_2 = d_0$ with $d_0 \neq 0$, the null itself
+says the two proportions are *different*, so there is no common $p$ to estimate, and pooling the samples
+would mix two different populations. A confidence interval assumes no hypothesis at all, so again there
+is nothing to justify pooling. In both cases we estimate $p_1$ by $\hat{p}_1$ and $p_2$ by $\hat{p}_2$
+separately.
 
+The rule in one line: **pool only when $H_0$ says $p_1 = p_2$.**
 
-\[\text{$p$-value} = 2\times P(S\geq s| H_0 \ \text{True}) = 2\left[\sum_{k = 7}^9 \frac{9!}{k!(9-k)!}0.5^k(1-0.5)^{9-k}\right]\]
+## Example: a confidence interval for the hives medications
 
-\[ = 2\times[0.0703+0.0175+0.0019] = 2(0.0898) \approx 0.179 \]
+In Lecture 27 we tested the two hives medications (OpenStax Example 10.8): 20 of 200 adults on medication A
+and 12 of 200 on medication B still had hives after 30 minutes. With the pooled $SE_0$, $z_{obs} = 1.47$ and
+the two-sided P-value was 0.1416, so at $\alpha = 0.01$ we did not reject $H_0: p_A = p_B$.
 
-Our $p$-value is greater than $\alpha$ and thus we fail to reject the null hypothesis and conclude the number of fish caught with each fly lure is not significantly different (i.e the probability of a positive sign is not significantly different than $p = 0.5$)
+Now **estimate** the difference with a 99% confidence interval. This time we do not assume $H_0$, so we do
+not pool:
 
-## Comparing Two Groups
+1. $\hat{p}_A = 20/200 = 0.10$ and $\hat{p}_B = 12/200 = 0.06$, so $\hat{p}_A - \hat{p}_B = 0.04$.
+2. The unpooled SE:
+   $$SE = \sqrt{\frac{0.10(0.90)}{200} + \frac{0.06(0.94)}{200}} = \sqrt{0.000450 + 0.000282} \approx 0.0271$$
+   (The pooled $SE_0$ was 0.02713; the two are close here because the sample sizes are equal and the
+   proportions are similar.)
+3. For 99% confidence, $Z_{0.995} = 2.576$, so the margin of error is $2.576 \times 0.0271 \approx 0.0698$.
+4. The interval is $0.04 \pm 0.0698$, or $(-0.0298,\ 0.1098)$.
 
-Up to this point in the course we have learned how to conduct inference on a single sample. Analyzing a single variable is referred to as **univariate** analysis. However, in statistics we are often interested in comparing two different groups across some measurement. This involves exploring the relationship between two variables: An **explanatory variable** which defines the groups of interests and a **response variable** which measures the outcome of interest from each group. Examples include exploring the relationship between gender and height or between treatment group (i.e placebo group and treatment group) and patient outcome. 
+We are 99% confident that the proportion of adults who still have hives is between 2.98 percentage points
+*lower* and 10.98 points *higher* on medication A than on medication B. The interval contains 0, which
+agrees with the test: the data are consistent with no difference.
 
-Statistical analyses that explore the relationship between two variables are called **bivariate** analyses. Just as we had univariate significance tests for a population mean and population proportion, we also have well defined significance tests for the inference of two variables - these are often called **two-sample tests** because we treat the observations in each group as a sample from a distinct population. Thus two-sample tests are used to compare the population parameters of <u>two different populations</u>. 
+## Example: testing a difference that is not zero
 
-## Independent vs Dependent Samples
-In bivariate analyses, we have to be considerate of whether the samples belonging to the two groups are dependent or independent. 
-  
-  * **independent samples** - occur when the observations in one sample are independent (have no statistical association) of the observations in the other sample. This is most always the case in experiments that use randomization to allocate subjects to treatment groups
-  
-  * **dependent samples** - occur when the observations in one sample are associated with the observations in another sample – this can happen when the same subjects are used for each sample such as matched pair designs
+In Lecture 27's electric-vehicle practice (OpenStax Example 10.10), 135 of 1,343 younger adults and 12 of
+232 older adults owned an EV, and we found that younger adults were more likely to own one. Suppose the
+marketing firm makes a stronger claim: **younger adults' ownership rate is more than 2 percentage points
+higher** than older adults'. (The 2-point claim is ours, not the book's.) Test it at $\alpha = 0.05$.
 
-Dependent samples cause some difficulties for bivariate analyses of two groups. This is because computing the standard error under dependent samples can be a very complex computation (more on this later).
+1. **Assumptions.** Two independent random samples. Each sample has at least 12 successes and at least
+   220 failures, so both are large enough.
+2. **Hypotheses.** $p_Y$ and $p_O$ are the proportions of all younger and all older U.S. adults who own an
+   EV. The claim is the alternative: $H_A: p_Y - p_O > 0.02$ (upper-tailed). The null is
+   $H_0: p_Y - p_O = 0.02$.
+3. **Test statistic.** $H_0$ says the proportions differ by 0.02, so there is no common $p$ and we **do not
+   pool**. $\hat{p}_Y = 135/1343 \approx 0.1005$ and $\hat{p}_O = 12/232 \approx 0.0517$, a difference of 0.0488.
+   $$SE = \sqrt{\frac{0.1005(0.8995)}{1343} + \frac{0.0517(0.9483)}{232}} \approx 0.0167, \qquad
+     z_{obs} = \frac{0.0488 - 0.02}{0.0167} \approx 1.72$$
+4. **P-value.** $P(Z \geq 1.72 \mid H_0 \text{ true}) = 1 - 0.9573 = 0.0427$.
+5. **Decision.** $0.0427 < 0.05$: **reject $H_0$**. The data support the stronger claim, but only just.
 
-## Introduction to two-sample tests
+The only change from an ordinary two-proportion test is in step 3: the hypothesized difference, 0.02,
+replaces the 0 in the numerator, and the SE is unpooled.
 
-## Comparing two proportions
+# Comparing two independent means
 
-Comparative studies, such as comparing two related but distinct groups, are by far the most common type of statistical analysis. We often want to compare the proportions of individuals from two groups that share some characteristic. Examples include:
+*([OpenStax Section 10.1](https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations).)*
+Lecture 27 compared two populations on a **categorical** response (a proportion). Now the response is
+**quantitative**, and we compare the populations' **means**: the average time girls and boys spend playing
+sports, or the average final-exam score in online and face-to-face sections. As with proportions, two
+sample means will almost never be equal, even when the population means are. The test asks whether the
+difference we see is bigger than ordinary sampling variation would produce.
 
-  * Proportion of college students who binge drink among high and low GPA students
-  
-  * Proportion of religious voters among Republicans and Democrats.
-  
-These problems concern the comparison of two populations (high and low GPA students; Republicans and Democrats). The two groups being compared are called <i>population 1</i> and <i>population 2</i>, and the two population proportions are called $p_1$ and $p_2$. For two population proportions we will consider only the case of two independent samples. The data consist of two independent simple random samples of sizes $n_1$ and $n_2$ from populations 1 and 2, respectively. The proportion of observations having the characteristic of interest in each sample estimates the corresponding population proportion. The notation is outlined in the table below:
+The data are **two independent simple random samples**, one from each population:
 
-
-
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-df = cbind.data.frame(Population = c(1, 2),
-                      `Population Proportion` = c('$p_1$', '$p_2$'),
-                      `Sample Size` = c('$n_1$', '$n_2$'),
-                      `Count of Successes` = c('$X_1$', '$X_2$'),
-                      `Sample Proportion` = c('$\\hat{p}_1 = X_1/n_1$', '$\\hat{p}_2 = X_2/n_2$'))
-
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
+```{r, echo=FALSE}
+tab(data.frame(
+  Population = c('1', '2'),
+  `Population mean` = c('$\\mu_1$', '$\\mu_2$'),
+  `Population SD` = c('$\\sigma_1$', '$\\sigma_2$'),
+  `Sample size` = c('$n_1$', '$n_2$'),
+  `Sample mean` = c('$\\bar{x}_1$', '$\\bar{x}_2$'),
+  `Sample SD` = c('$s_1$', '$s_2$'),
+  check.names = FALSE))
 ```
 
-We compare two population proportions by looking at the difference between them. 
+The parameter is the **difference in population means**, $\mu_1 - \mu_2$, and its estimate is the
+difference in sample means, $\bar{x}_1 - \bar{x}_2$.
 
-\[D = \hat{p}_1 - \hat{p}_2 \]
+## The sampling distribution of $\bar{x}_1 - \bar{x}_2$
 
-When the samples from both groups are sufficiently large, the sampling distribution of the difference in proportion $D$ is approximately normal. Like we saw before with the univariate case, inference procedures for comparing proportions are based on $z$, the normal approximation, and on standardizing the difference $D$. The difference $D$ is an unbiased estimator of the population difference $p_1 - p_2$. Moreover, because the two samples are independent, the variance of the difference is the sum of the population variances:
+* **Centre** $\mu_1 - \mu_2$. Each $\bar{x}$ is centred at its own $\mu$, so on average the difference of
+  the estimates is the difference of the parameters.
+* **Spread.** From the one-sample case, $\bar{x}_1$ has variance $\sigma_1^2/n_1$ and $\bar{x}_2$ has variance
+  $\sigma_2^2/n_2$. Because the samples are **independent, the variances add**, just as they did for
+  proportions:
+  $$SE(\bar{x}_1 - \bar{x}_2) = \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}$$
+* **Shape.** Normal if both populations are normal. If they are not, the CLT makes it approximately normal
+  when both samples are large (the course's rule is both $n \geq 30$).
 
-\[\sigma^2_D = \frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2} \]
+Putting these together, $\bar{x}_1 - \bar{x}_2 \sim N\left(\mu_1 - \mu_2,\ \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}\right)$.
+The picture shows why the variances add. Each sample mean wobbles around its own $\mu$, and their difference
+picks up both wobbles, so it is more spread out than either mean on its own.
 
-Thus when the sample sizes are sufficiently large $D$ follows a normal distribution 
-
-\[D \sim  N\left(p_1 - p_2, \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}\right)\]
-
-As we did before we will start by constructing a confidence interval for the population difference $D$.
-
-the point estimate is 
-\[D = \hat{p}_1 - \hat{p}_2 \]
-with standard error 
-
-\[ SE_D = \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\]
-
-this gives the margin of error
-
-\[m = z\times SE_D \]
-
-putting all together the $100(1-\alpha)\%$ confidence interval for the population difference in proportion is
-
-\[ (\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2} \times SE_D\]
-
-The critical value $Z_{1-\alpha/2}$ is the same critical value that we used in the one-sample case
-
-**Example: Aspirin and Heart Attacks** - A large-scale randomized experiment investigated the effect of regular aspirin use on myocardial infarctions (i.e., heart attacks)[@steering1989final]. The results are summarized below:
-
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-df = cbind.data.frame(Group = c("Aspirin", "Placebo"),
-                      `Population Proportion` = c('$p_1$', '$p_2$'),
-                      `Sample Size` = c('$11037$', '$11034$'),
-                      `Patients Who Experienced Heart Attacks` = c('$104$', '$189$'),
-                      `Patients Who did Not Experience A Heart Attack` = c('$10933$','$10845$'))
-
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "Two panels. Left: two bell curves, the sampling distributions of x-bar 2 (gold, taller and narrower, centred at mu 2) and of x-bar 1 (navy, centred at mu 1 to its right), labelled two sample means, each with its own SE. Right, on the same height scale: one red bell curve for x-bar 1 minus x-bar 2, centred at mu 1 minus mu 2, lower and wider than either curve on the left, with an arrow marking one SE. A dashed line at 0 is labelled H0: mu 1 minus mu 2 equals 0. The axis label reads: the difference, wider, because variances add."}
+knitr::include_graphics('assets/l28_diff_dist.png')
 ```
 
-Construct a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between those taking aspirin and those taking the placebo
+**Its distribution, in practice.** We do not know $\sigma_1$ and $\sigma_2$, so the SE uses $s_1$ and $s_2$
+instead (next section). The difference itself stays approximately normal. What changes is the
+**standardized** difference: dividing by an *estimated* SE adds uncertainty, and the result follows,
+approximately, a $t$ distribution:
+$$\frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \ \dot\sim\ t\big(\min(n_1 - 1,\ n_2 - 1)\big)$$
+($\dot\sim$ means "approximately follows"). Both the $t$ shape and the df are approximations, as the next
+section explains.
 
-**Understand the Problem:**
+## The test statistic
 
-  * We have two groups: <u>Aspirin</u> and <u>Placebo</u>.
+In practice $\sigma_1$ and $\sigma_2$ are unknown, so, as in the one-sample $t$-test, we replace them with
+the sample standard deviations:
+$$SE = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$$
+Under $H_0$, $\mu_1 - \mu_2 = 0$, so the test statistic is
+$$t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
+Estimating two standard deviations adds uncertainty, so $t_{obs}$ is compared with a $t$ distribution, not
+the standard normal. Unlike the one-sample test, though, **the $t$ distribution here is an approximation**.
+With two different SDs in the SE, $t_{obs}$ does not follow any $t$ distribution exactly, so both the curve
+and its degrees of freedom are approximate:
 
-  * We want to estimate the difference in proportions of patients experiencing heart attacks between these two groups.
+* **The Welch df (what software uses).** The best approximation, due to Welch (the textbook calls it the
+  Aspin-Welch formula), is the df that makes a $t$ curve match $t_{obs}$ most closely. Writing
+  $v_1 = s_1^2/n_1$ and $v_2 = s_2^2/n_2$ (each sample's share of the squared SE),
+  $$df = \frac{(v_1 + v_2)^2}{\dfrac{v_1^2}{n_1 - 1} + \dfrac{v_2^2}{n_2 - 1}}$$
+  It is usually not a whole number, and it always lies between $\min(n_1 - 1, n_2 - 1)$ and $n_1 + n_2 - 2$.
+  For the sports example below, $v_1 = 0.866^2/9 = 0.0833$ and $v_2 = 1.00^2/16 = 0.0625$, so
+  $$df = \frac{(0.0833 + 0.0625)^2}{0.0833^2/8 + 0.0625^2/15} \approx 18.85$$
+* **In practice, by hand: $df \approx \min(n_1 - 1,\ n_2 - 1)$**, the smaller sample size minus one. This
+  is a quick, rough approximation to the Welch df. It is never larger than the Welch df, so its $t$ curve has
+  heavier tails and our P-value comes out a little **larger** than software's. That makes the hand method
+  **conservative**: if it rejects $H_0$, software will too. For the sports example it gives 8 instead of 18.85.
 
-  * We have sample data for each group, including the sample proportions and sample sizes.
+So, if $H_0$ is true, $t_{obs}$ approximately follows a $t$ distribution, and by hand we use
+$\min(n_1 - 1, n_2 - 1)$ degrees of freedom.
 
-**Calculate Sample Proportions:**
-  
-  * Sample proportion for Aspirin group: $\hat{p}_1 = \frac{104}{11037} = 0.0094$
+## The hypotheses and the P-value
 
-  * Sample proportion for Placebo group: $\hat{p}_2 = \frac{189}{11034} = 0.0171$
+$$H_0: \mu_1 = \mu_2, \qquad \text{which is the same as} \qquad H_0: \mu_1 - \mu_2 = 0$$
 
-**Calculate the Standard Error:**
-
-  * The standard error for the difference in proportions is given by: 
-  
-  \[ SE = \sqrt{\frac{0.0094 (1-0.0094)}{11037} + \frac{0.0171(1-0.0171)}{11034}} = 0.0015 \] 
-
-**Determine the Z-Critical Value:**
-
-  * For a $95\%$ confidence interval, the critical value $Z_{1-\alpha/2}$ is approximately $1.96$ (from the standard normal distribution).
-
-**Calculate the Margin of Error:**
-
-  * The margin of error is given by: 
-  
-  \[ m = 1.96 \times 0.0015 = 0.0029\]
-
-**Construct the Confidence Interval:**
-
-  * The confidence interval is: 
-  
-  \[ \text{Confidence Interval} = (\hat{p}_1 - \hat{p}_2) \pm \text{Margin of Error} \]
-
-  Confidence Interval $= (0.0094 - 0.0171) \pm 0.0029 = [-0.0107, -0.0047]$
-
-**Interpretation:** 
-  
-  * We are $95\%$ confident that the true difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups is no less than $-0.0107$ and no greater than $-0.0047$. Since the interval lies entirely below zero (excludes 0), we can conclude that the proportion of heart attacks is likely lower in the Aspirin group compared to the Placebo group. 
-
-
-**Try it out:** A manufacturing company is interested in assessing the effectiveness of two different production methods, $A$ and $B$, in terms of the proportion of defective products produced. A random sample of $200$ products produced using method $A$ yielded $30$ defective products, while a sample of $250$ products produced using method $B$ yielded $20$ defective products.
-
-Construct a $95\%$ confidence interval for the difference in proportions of defective products between method $A$ and method $B$.
-
-<br>
-<br>
-
-# Lecture 26
-
-Recall the Aspirin and Heart Attacks example from **Lecture 25**. In that example, we constructed a $95\%$ confidence interval for the difference in proportions of patients experiencing heart attacks between the Aspirin and Placebo groups. The interval was approximately $[-0.0107, -0.0047]$. If the confidence interval we computed had included the value zero, it would suggest that the two proportions might be equal i.e $p_1 = p_2$. In other words, we would have little evidence that there is a real difference between the two groups. Conversely, if the confidence interval does not include zero, we have stronger evidence that there is a significant difference between the two populations under study.
-
-Just as we did for population proportions in the univariate case, we can easily construct a hypothesis  test which will allow us to formally evaluate whether an observed difference between two groups is statistically significant or merely due to random variation. 
-
-## Significance tests for comparing two proportions
-
-A hypothesis test used to compare the population proportions from two different but independent groups is based on the standardized difference in proportion $D$. Recall that, if the samples obtained from each group are sufficiently large, then the sampling distribution of $D$ is approximately distributed as standard normal. Here’s how we set up a two-sample hypothesis test for proportions:
-
-**1. Assumptions**
-
-  * Data constitute a simple random sample 
-  
-  * The two groups are independent
-  
-  * $n\hat{p}$ and $n(1-\hat{p})$ are both greater than 15. Note that $\hat{p}$ here is pooled sample proportion (see below)
-
-**2. Null and Alternative Hypotheses**
-
-  * The **null** hypothesis is generally that the two population proportions are equal (i.e no difference)
-  
-  \[H_0: p_1 = p_2 \ \ \  \text{which is the same as} \ \ \ H_0: p_1 - p_2 = 0\]
-  
-  * The alternative hypothesis can be either lower, upper, or two tailed just as it was with our univariate tests. The table below gives the possible alternative hypotheses and their critical values:
-  
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
-                      `Critical Value` = c('$Z_{1-\\alpha/2}$','$Z_\\alpha$','$Z_{1-\\alpha}$'),
-                      `Rejection Region` = c('$|Z| \\geq Z_{1-\\alpha/2}$',
-                                             '$Z\\leq Z_{\\alpha}$',
-                                             '$Z\\geq Z_{1-\\alpha}$'))
-
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
+```{r, echo=FALSE}
+tab(data.frame(
+  `Alternative hypothesis` = c('$H_A: \\mu_1 - \\mu_2 > 0$', '$H_A: \\mu_1 - \\mu_2 < 0$', '$H_A: \\mu_1 - \\mu_2 \\neq 0$'),
+  Tail = c('upper-tailed', 'lower-tailed', 'two-sided'),
+  `In words` = c('population 1 has the larger mean', 'population 1 has the smaller mean',
+                 'the means differ, in either direction'),
+  `P-value` = c('$P(T \\geq t_{obs} \\mid H_0 \\text{ true})$', '$P(T \\leq t_{obs} \\mid H_0 \\text{ true})$',
+                '$2 \\times P(T \\geq |t_{obs}| \\mid H_0 \\text{ true})$'),
+  check.names = FALSE))
 ```
 
-**3. Test statistic**
+With the [$t$-table](misc/t_table.html) we usually cannot find the P-value exactly; we **bracket** it.
+Find the row for our df, find the two entries that $|t_{obs}|$ falls between, and read their upper-tail
+areas from the top of the table. For a two-sided test, double both areas.
 
-  * The null hypothesis is that the two populations are equal (i.e they have the same proportion). If the null is true then we can view all of the data as coming from from the same distribution. Thus the test statistic under the null hypothesis is based on the <i>pooled estimate</i> of the population proportion denoted $\hat{p}$:
-  
-  \[ \hat{p} = \frac{\text{number of successes in both samples}}{\text{total number of observations from both samples}} =  \frac{X_1 + X_2}{n_1 + n_2}\]
-  The pooled estimate combines all of the information from both samples
-  
-  * Recall that the population standard deviation of the difference in proportions is 
-  
-  \[\sigma_D = \sqrt{\frac{p_1(1-p_1)}{n_1}+\frac{p_2(1-p_2)}{n_2}}  \]
-  
-  However, under the null hypothesis the two proportions are equal giving
-  
-  \[ = \sqrt{\frac{p(1-p)}{n_1}+\frac{p(1-p)}{n_2}} \]
+## Assumptions
 
-  \[= \sqrt{p(1-p)\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]
-  
-  We estimate $\sigma_D$ by substituting in the <i>pooled estimate</i> of the population proportion:
-  
-  \[ SE_{D_\text{pooled}} = \sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}\]
-  
-  Combining these elements, the test statistic under a null hypothesis of no difference $H_0: p_1 - p_2 = 0$ is given by 
-  
-  \[Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}} \sim N(0,1) \]
-  
+1. **Two independent random samples**, one from each population (or two groups formed by random
+   assignment). Nothing in one sample is paired with anything in the other.
+2. **Normal populations, or large samples.** If both samples have at least 30 observations, the CLT takes
+   care of the shape. With smaller samples, both populations should be roughly normal (look for strong
+   skew or outliers in the data).
 
-**4. $p$-value**
+## The five steps
 
-  * The $p$-values corresponding to each alternative hypothesis are listed in the table below
+1. **Assumptions.** Independent random samples; normal populations or both $n \geq 30$.
+2. **Hypotheses.** Define $\mu_1$ and $\mu_2$ in words, then $H_0: \mu_1 - \mu_2 = 0$ and the alternative.
+3. **Test statistic.** The SE, $t_{obs}$, and $df = \min(n_1 - 1, n_2 - 1)$.
+4. **P-value.** Bracket it with the $t$-table, using the tail(s) that $H_A$ points to.
+5. **Decision.** Reject $H_0$ if the P-value $< \alpha$; state the conclusion in the context of the problem.
 
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
+## A confidence interval for $\mu_1 - \mu_2$
 
-df = cbind.data.frame(`Alternative Hypothesis` = c('$H_A: p_1 - p_2 \\neq 0$','$H_A: p_1 - p_2 < 0$','$H_A: p_1 - p_2 > 0$'),
-                      `$p$-value` = c('$P(|Z| \\geq |Z_{obs}||H_0)$',
-                                             '$P(Z \\leq Z_{obs}|H_0)$',
-                                             '$P(Z\\geq Z_{obs}|H_0)$'))
+To estimate the difference rather than test it, use the same SE and df:
+$$(\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}, \qquad df = \min(n_1 - 1, n_2 - 1)$$
+As always, an interval that leaves out 0 matches a two-sided test that rejects $H_0: \mu_1 - \mu_2 = 0$.
 
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
+## To pool or not (means)
 
+There is a second version of the two-sample $t$-test, the **pooled** $t$-test. If we are willing to assume
+the two populations have the **same standard deviation**, $\sigma_1 = \sigma_2 = \sigma$, then both samples
+estimate the same $\sigma$, and we combine them into the **pooled standard deviation**:
+$$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
+The SE becomes $s_p\sqrt{1/n_1 + 1/n_2}$, and the test statistic follows a $t$ distribution with exactly
+$n_1 + n_2 - 2$ degrees of freedom.
 
-
+```{r, echo=FALSE}
+tab(data.frame(
+  Situation = c('we assume $\\sigma_1 = \\sigma_2$', '$\\sigma_1, \\sigma_2$ unknown and possibly different (our default)'),
+  `The SE we use` = c('$s_p\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$', '$\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$'),
+  df = c('$n_1 + n_2 - 2$', '$\\min(n_1 - 1, n_2 - 1)$ by hand; Welch in software'),
+  `Pool?` = c('**pooled**', '**unpooled**'),
+  check.names = FALSE))
 ```
 
-**5. Decision rule**
+**We do not pool for means.** The textbook is blunt about it: right after the df formula it says "Notice
+that the sample variances $(s_1)^2$ and $(s_2)^2$ are not pooled. (If the question comes up, do not pool the
+variances.)" (OpenStax p. 513, and again in Example 10.1). The book does not give a reason. Here it is:
 
-  \[\text{Reject} \ \ H_0 \ \ \text{if} \ \ \text{$p$-value} < \alpha \]
+* The pooled test is correct **only if** $\sigma_1 = \sigma_2$, and we almost never know that. Testing for
+  equal SDs first does not really help, because that test has little power with small samples, which is
+  exactly when it matters.
+* If the SDs differ, especially when the sample sizes differ too, the pooled test's real Type I error rate
+  can be far from $\alpha$: it rejects a true $H_0$ more often (or less often) than we think.
+* The unpooled (Welch) test is valid whether or not the SDs are equal, and when they *are* equal it loses
+  very little. So it is the safe default, and it is what most software does unless you ask otherwise.
 
+**Compare this with proportions.** There we *must* pool for the test of $H_0: p_1 = p_2$, because for a
+proportion the SD is determined by $p$ itself, $\sqrt{p(1-p)}$. A null that says the proportions are equal
+automatically says the SDs are equal too. $H_0: \mu_1 = \mu_2$ says nothing at all about $\sigma_1$ and
+$\sigma_2$, so it gives us no reason to pool.
 
+### Advantages and disadvantages of pooling
 
-**Example - The impact of Covid on scholarly activity?** - During the COVID-19 pandemic, as faculty members shifted to working from home, women in academic medicine reported decreased manuscript submissions and shouldered a disproportionate share of childcare responsibilities. A study published in the <i>Journal of the American College of Radiology</i> examined the scholarly activity among male and female contributors during the COVID-19 Pandemic of 2019 and 2020. Specifically, they evaluated the proportion of female contributors submitting manuscripts and accepting peer review invitations before (April - October, 2019) and after the start of the coronavirus pandemic (April - October, 2020) [@mogensen2021impact]. A summary of the data in this study are given below:
+* **When it is reasonable.** The sample SDs are similar (a common rule of thumb: the larger is less than
+  about twice the smaller), and the sample sizes are similar too. Pooling is also natural in a randomized
+  experiment where the treatment is expected to shift the mean but not the spread.
+* **The advantage.** If $\sigma_1 = \sigma_2$ really holds, the pooled $t$ statistic follows a $t$
+  distribution *exactly*, with $n_1 + n_2 - 2$ degrees of freedom, more than either the Welch df or our
+  $\min(n_1 - 1, n_2 - 1)$. More df means thinner tails, smaller P-values and **more power**. The worked
+  example after the sports test below shows this.
+* **The disadvantage.** If the SDs differ, especially when the sample sizes differ too, the pooled test's
+  real Type I error rate is not $\alpha$. A simulation makes this concrete. Suppose $H_0$ is true (both means
+  equal), but sample 1 has $n_1 = 10$ from a population with $\sigma_1 = 3$ and sample 2 has $n_2 = 40$ with
+  $\sigma_2 = 1$. Repeating that study 20,000 times:
 
-```{r, echo=FALSE, warning=F, message=F}
-set.seed(123)
-
-df = cbind.data.frame(`Year` = c('April - October 2019', 'April - October 2020'),
-                      `Number of Manuscripts with Female First Author` = c('$140$', '$172$'), 
-                      `Number of Manuscripts with Male First Author` = c('$171$', '$269$'),
-                      `All First Authors` = c('$311$', '$441$'),
-                      `Relative Percentage of Manuscripts with Female First Author` = c('$140/311 = 0.450$', '$172/441 = 0.390$'))
-
-kable(df, format = 'html', digits = 2,
-      row.names = F, booktabs = T, escape = F)%>%
-  kable_classic(full_width = F, html_font = "Cambria")%>%kable_styling(bootstrap_options = 'striped')
-
-
-
+```{r pool-sim, echo=TRUE}
+set.seed(251)
+rej <- replicate(20000, {
+  x <- rnorm(10, mean = 0, sd = 3)     # small sample, large SD
+  y <- rnorm(40, mean = 0, sd = 1)     # large sample, small SD; H0 is true
+  c(pooled = t.test(x, y, var.equal = TRUE)$p.value < 0.05,
+    welch  = t.test(x, y)$p.value < 0.05)
+})
+rowMeans(rej)     # how often each 5% test rejects a TRUE null
 ```
 
-Conduct a hypothesis test at the $5\%$ significance level to determine if the relative percentage of scholarly activity among female scholars was <i>significantly reduced</i> after the start of the coronavirus pandemic 
-
-
-**Step 1** To check the sample size assumptions of this test we must first calculate the pooled relative proportion:
-
-\[\hat{p} = \frac{140+172}{311+441} = 0.415 \]
-
-Since the pooled estimate is nearly 0.5 and both sample sizes are quite large ($n_1 = 311$ and $n_2 = 441$), the quantities $n_1\hat{p}$, $n_1(1-\hat{p})$, $n_2\hat{p}$, and $n_2(1-\hat{p})$ are all greater than the required $15$.
-
-
-**Step 2** We want to test the null hypothesis that there is no significant difference in the relative percentage of scholarly activity among female scholars before and after the pandemic:
-
-\[ H_0: p_1 - p_2 = 0\]
-\[ H_A: p_1 - p_2 < 0\]
-
-where $p_1$ is the relative proportion of manuscripts with female first authors after the start of the pandemic and $p_2$ is the relative proportion of manuscripts with female first authors before the start of the pandemic. The critical value is $Z_{\alpha} = -1.645$.
-
-**Step 3**
-
-Using the pooled estimate from **Step 1**, the pooled standard error of the population difference $D$ is 
-
-\[ SE_{D_\text{pooled}} = \sqrt{0.415(1-0.415)\left(\frac{1}{311}+\frac{1}{441}\right)} = 0.0365\]
-
-The test statistic is 
-
-\[Z_{obs} = \frac{(0.390 - 0.450) - 0}{SE_{D_\text{pooled}}} = -1.65 \]
-
-**Step 4**
-
-The $p$-value is 
-
-\[P(Z \leq -1.65 | H_0 \ \ \text{True})  = 0.0495\]
-
-**Decision**
-
-Since the $p$-value is less than the significance level of $5\%$, we reject the null hypothesis of no difference and conclude that the relative proportion of manuscripts with female first authors significantly decreased after the start of the COVID-19 pandemic. 
-
-<br>
-<br>
-
-## $D$ as a measure of association 
-
-Consider again the difference in proportion $D$. In statistical analysis, we often study the relationship between two categorical variables. We are regularly interested in whether one variable (the explanatory variable) influences or explains the outcomes of another variable (the response variable). The statistic $D$ is a measure of the strength of statistical association between some grouping variable and some response that is measured across those groups. Consider two populations (groups) based on some characteristic (e.g., treatment vs. control, male vs. female, etc). For each population the response variable records the fraction of the population that relates to some category or specific outcome (e.g. patient outcome, preference, occurrence of an event). The value of $D$ ranges between $-1$ and $1$ and has the following interpretation:
-
-**Interpretation:**
-
-Given $D = p_1 - p_2$ which compares the difference in proportion across groups/populations 1 and 2
-
-  * values of $-1$ or $1$ indicate the strongest possible association between the categories of the grouping variable and the categories of the response variable
-  
-  * values near or at $0$ indicates that the explanatory and response variables are independent of each other
-
-
-<br>
-<br>
-<br>
-<br>
-
-## References
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```{r, include=FALSE}
+stopifnot(round(mean(rej[1, ]), 2) == 0.26, abs(mean(rej[2, ]) - 0.05) < 0.005)
+```
+
+  The "5%" pooled test rejects the true null about **`r round(100 * mean(rej[1, ]))`%** of the time: more than
+  five times as many false alarms as promised. Welch's test stays at about 5%. (Swap which sample has the
+  larger SD and the pooled test goes the other way, almost never rejecting, which costs power.)
+* **Our rule.** We default to the unpooled test. When pooling is justified, it gains a little power; when it
+  is not, it can badly mislead, and we rarely know which case we are in.
+
+The textbook does use $s_p$ in one place, in Cohen's $d$, a measure of effect size (p. 518), but never for
+the test.
+
+## Example: girls, boys and sports
+
+*From [OpenStax Introductory Statistics 2e, Section 10.1, Example 10.1](https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations):*
+
+> The average amount of time boys and girls aged seven to 11 spend playing sports each day is believed to
+> be the same. A study is done and data are collected, resulting in the data in the table below. Each
+> population has a normal distribution.
+>
+> | | Sample size | Average number of hours playing sports per day | Sample standard deviation |
+> |---|---|---|---|
+> | Girls | 9 | 2 | 0.866 |
+> | Boys | 16 | 3.2 | 1.00 |
+>
+> Is there a difference in the mean amount of time boys and girls aged seven to 11 play sports each day?
+> Test at the 5% level of significance.
+
+1. **Assumptions.** Two independent random samples. The samples are small (9 and 16), but both populations
+   are normal, so the $t$-test works.
+2. **Hypotheses.** Let $\mu_g$ and $\mu_b$ be the mean daily hours of sports for all girls and all boys aged
+   7 to 11. "Believed to be the same" is the null, and the question has no direction, so
+   $$H_0: \mu_g - \mu_b = 0 \qquad H_A: \mu_g - \mu_b \neq 0 \quad \text{(two-sided)}$$
+3. **Test statistic.**
+   $$SE = \sqrt{\frac{0.866^2}{9} + \frac{1.00^2}{16}} = \sqrt{0.0833 + 0.0625} \approx 0.3819, \qquad
+     t_{obs} = \frac{2 - 3.2}{0.3819} \approx -3.14$$
+   with $df = \min(9 - 1, 16 - 1) = 8$.
+4. **P-value.** In row 8 of the $t$-table, $2.306 < 3.14 < 3.355$. Those entries have upper-tail areas 0.025
+   and 0.005, so $0.005 < P(T \leq -3.14) < 0.025$. Doubling for two sides,
+   $$0.01 < \text{P-value} < 0.05$$
+   Software, with df = 8, gives 0.0138.
+5. **Decision.** The P-value is below $\alpha = 0.05$: **reject $H_0$**. The data give convincing evidence
+   that girls and boys aged 7 to 11 differ in the mean time they spend playing sports each day; the sample
+   suggests boys play more.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "A t distribution with 8 degrees of freedom, labelled if H0 is true, t obs follows t of 8. Dashed lines mark minus 3.14 and 3.14, and the tiny tail areas beyond them are shaded red. A label in the middle reads: t-table, 0.01 less than P-value less than 0.05."}
+knitr::include_graphics('assets/l28_sports.png')
+```
+
+**Why the book's P-value is smaller.** The book reports a P-value of 0.0054. It uses the Welch df, about
+18.85, and our hand method uses df = 8. The $t$ curve with 8 df has heavier tails, so our P-value is larger.
+The conclusion is the same. This is the conservative trade-off: when the hand method rejects $H_0$, so does
+software.
+
+## Example: math classes at two colleges
+
+*From [OpenStax Introductory Statistics 2e, Section 10.1, Example 10.2](https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations):*
+
+> A study is done by a community group in two neighboring colleges to determine which one graduates
+> students with more math classes. College A samples 11 graduates. Their average is four math classes with a
+> standard deviation of 1.5 math classes. College B samples nine graduates. Their average is 3.5 math
+> classes with a standard deviation of one math class. The community group believes that a student who
+> graduates from college A **has taken more math classes**, on the average. Both populations have a normal
+> distribution. Test at a 1% significance level.
+
+1. **Assumptions.** Two independent random samples of graduates; both populations are normal, so the small
+   samples are fine. The SDs are unknown, so it is a $t$-test of two means.
+2. **Hypotheses.** $\mu_A$ and $\mu_B$ are the mean number of math classes taken by all graduates of colleges
+   A and B. The group's belief is the alternative:
+   $$H_0: \mu_A - \mu_B = 0 \qquad H_A: \mu_A - \mu_B > 0 \quad \text{(upper-tailed)}$$
+   (The book writes the null as $H_0: \mu_A \leq \mu_B$, a composite null; as in Lecture 25, we test it at
+   the boundary, $\mu_A - \mu_B = 0$.)
+3. **Test statistic.**
+   $$SE = \sqrt{\frac{1.5^2}{11} + \frac{1^2}{9}} = \sqrt{0.2045 + 0.1111} \approx 0.5618, \qquad
+     t_{obs} = \frac{4 - 3.5}{0.5618} \approx 0.89, \qquad df = \min(10, 8) = 8$$
+4. **P-value.** In row 8, $0.889 < 0.89 < 1.108$, with upper-tail areas 0.20 and 0.15, so
+   $0.15 < \text{P-value} < 0.20$. Software, with df = 8, gives 0.1997 (the book, with the Welch df, 0.1928).
+5. **Decision.** The P-value is far above $\alpha = 0.01$: **do not reject $H_0$**. There is not enough
+   evidence that graduates of college A take more math classes, on average, than graduates of college B.
+
+## Example: online and face-to-face final exams
+
+*From [OpenStax Introductory Statistics 2e, Section 10.1, Example 10.3](https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations):*
+
+> A professor at a large community college wanted to determine whether there is a difference in the means
+> of final exam scores between students who took his statistics course online and the students who took his
+> face-to-face statistics class. He believed that the mean of the final exam scores for the online class
+> would be lower than that of the face-to-face class. Was the professor correct? The randomly selected 30
+> final exam scores from each group are listed below. Is the mean of the Final Exam scores of the online
+> class lower than the mean of the Final Exam scores of the face-to-face class? Test at a 5% significance
+> level.
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Class = c('Online', '', '', 'Face-to-face', '', ''),
+  rbind(matrix(fmt(on, 1), nrow = 3, byrow = TRUE), matrix(fmt(ff, 1), nrow = 3, byrow = TRUE)),
+  check.names = FALSE), col.names = c('Class', paste('Score', 1:10)))
+```
+
+1. **Assumptions.** Two independent random samples of 30 scores each. Both $n \geq 30$, so we do not need the
+   populations to be normal.
+2. **Hypotheses.** $\mu_{on}$ and $\mu_{f}$ are the mean final-exam scores of all the professor's online and
+   face-to-face students. His belief is the alternative:
+   $$H_0: \mu_{on} - \mu_f = 0 \qquad H_A: \mu_{on} - \mu_f < 0 \quad \text{(lower-tailed)}$$
+3. **Test statistic.** From the data (a calculator or R does this step): online $\bar{x} = 72.85$,
+   $s = 16.92$; face-to-face $\bar{x} = 84.98$, $s = 11.71$.
+   $$SE = \sqrt{\frac{16.92^2}{30} + \frac{11.71^2}{30}} \approx 3.7568, \qquad
+     t_{obs} = \frac{72.85 - 84.98}{3.7568} \approx -3.23, \qquad df = \min(29, 29) = 29$$
+4. **P-value.** In row 29, $3.038 < 3.23 < 3.659$, with upper-tail areas 0.0025 and 0.0005, so
+   $0.0005 < \text{P-value} < 0.0025$. Software, with df = 29, gives 0.0015 (the book, with the Welch df,
+   0.0011).
+5. **Decision.** The P-value is below 0.05: **reject $H_0$**. The professor was right: the data give strong
+   evidence that the mean final-exam score is lower for his online students than for his face-to-face
+   students. (This is an observational comparison, so it does not show that the online format *causes*
+   the lower scores; students chose their section.)
+
+## Example: the 2024 NCAA women's basketball final
+
+On Sunday, April 7, 2024, South Carolina and Iowa met in the NCAA women's basketball championship. The
+table gives the points each team scored in its last 15 games before the final (from the 2024 STAT 251
+notes).
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Game = 1:15,
+  `South Carolina` = sc,
+  Opponent = rev(c('UConn', 'Tennessee', 'Georgia', 'Alabama', 'Kentucky', 'Arkansas', 'Tennessee', 'Texas A&M',
+                   'Tennessee', 'LSU', 'Presbyterian', 'UNC', 'Indiana', 'Oregon State', 'NC State')),
+  Iowa = io,
+  `Opponent ` = rev(c('Penn State', 'Nebraska', 'Michigan', 'Indiana', 'Illinois', 'Minnesota', 'Ohio State',
+                      'Penn State', 'Michigan', 'Nebraska', 'Holy Cross', 'West Virginia', 'Colorado', 'LSU', 'UConn')),
+  check.names = FALSE))
+```
+
+**Question:** At $\alpha = 0.05$, is there a difference between the two teams in mean points scored per game?
+
+1. **Assumptions.** We treat each team's 15 games as a sample of its games that season; the two samples are
+   independent (different games). With $n = 15$, we need the points per game to be roughly normal, and the
+   data show no strong skew or extreme outliers. (Recent games are not a true random sample, so this is an
+   approximation.)
+2. **Hypotheses.** $\mu_I$ and $\mu_S$ are the mean points per game for Iowa and South Carolina.
+   $$H_0: \mu_I - \mu_S = 0 \qquad H_A: \mu_I - \mu_S \neq 0 \quad \text{(two-sided)}$$
+3. **Test statistic.** Iowa: $\bar{x} = 90.67$, $s = 14.21$. South Carolina: $\bar{x} = 80.40$, $s = 10.57$.
+   $$SE = \sqrt{\frac{14.21^2}{15} + \frac{10.57^2}{15}} \approx 4.5727, \qquad
+     t_{obs} = \frac{90.67 - 80.40}{4.5727} \approx 2.25, \qquad df = 14$$
+4. **P-value.** In row 14, $2.145 < 2.25 < 2.977$, with upper-tail areas 0.025 and 0.005; doubling,
+   $0.01 < \text{P-value} < 0.05$. Software gives 0.041.
+5. **Decision.** $\text{P-value} < 0.05$: **reject $H_0$**, narrowly. Iowa scored significantly more points
+   per game. (South Carolina won the final anyway, 87&ndash;75: a test about averages says nothing certain
+   about any one game.)
+
+## Practice: who keeps workers longer?
+
+*From [OpenStax Introductory Statistics 2e, Section 10.1, Try It 10.2](https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations)
+(the book gives no solution; the worked solution is ours):*
+
+> A study is done to determine if Company A retains its workers longer than Company B. Company A samples 15
+> workers, and their average time with the company is five years with a standard deviation of 1.2. Company
+> B samples 20 workers, and their average time with the company is 4.5 years with a standard deviation of
+> 0.8. The populations are normally distributed.
+>
+> a. Are the population standard deviations known?
+> b. Conduct an appropriate hypothesis test. At the 5% significance level, what is your conclusion?
+
+<details>
+<summary>Solution</summary>
+
+a. No: 1.2 and 0.8 are sample standard deviations, so we use a $t$-test.
+
+b. The five steps:
+
+1. **Assumptions.** Two independent random samples; normal populations, so the small samples are fine.
+2. **Hypotheses.** $\mu_A$ and $\mu_B$ are the mean years with the company for all workers at A and B.
+   $H_0: \mu_A - \mu_B = 0$ and $H_A: \mu_A - \mu_B > 0$ (upper-tailed).
+3. **Test statistic.** $SE = \sqrt{1.2^2/15 + 0.8^2/20} = \sqrt{0.096 + 0.032} \approx 0.3578$, so
+   $t_{obs} = (5 - 4.5)/0.3578 \approx 1.40$, with $df = \min(14, 19) = 14$.
+4. **P-value.** In row 14, $1.345 < 1.40 < 1.523$, with upper-tail areas 0.10 and 0.075, so
+   $0.075 < \text{P-value} < 0.10$. Software gives 0.092.
+5. **Decision.** The P-value is above 0.05: **do not reject $H_0$**. There is not enough evidence that
+   Company A keeps its workers longer, on average.
+
+</details>
+
+## Example: pooling for girls and boys
+
+Go back to girls, boys and sports (Example 10.1). The sample SDs are close, 0.866 and 1.00 (the larger is
+only 1.15 times the smaller), so assuming the two populations have the same SD, $\sigma_g = \sigma_b$, is
+reasonable. What changes if we pool?
+
+1. **The pooled SD.** With $n_g = 9$ and $n_b = 16$,
+   $$s_p = \sqrt{\frac{(9 - 1)(0.866^2) + (16 - 1)(1.00^2)}{9 + 16 - 2}} = \sqrt{\frac{6.000 + 15}{23}} \approx 0.9555$$
+   It lies between the two sample SDs, closer to the boys' because their sample is larger.
+2. **The pooled SE and test statistic.**
+   $$SE = s_p\sqrt{\frac{1}{9} + \frac{1}{16}} = 0.9555 \times 0.4167 \approx 0.3981, \qquad
+     t_{obs} = \frac{2 - 3.2}{0.3981} \approx -3.01, \qquad df = 9 + 16 - 2 = 23$$
+3. **P-value.** In row 23, $2.807 < 3.01 < 3.104$, with upper-tail areas 0.005 and 0.0025; doubling,
+   $0.005 < \text{P-value} < 0.01$. Software gives 0.0062.
+4. **Compare.** The unpooled test gave $t_{obs} = -3.14$ on 8 df and $0.01 < \text{P-value} < 0.05$.
+   Pooling made the SE slightly *larger* here (0.3981 against 0.3819), but it nearly tripled the degrees of
+   freedom, and the extra df shrink the P-value. That is the payoff of pooling, *when the equal-SD assumption
+   is right*: a more powerful test. Both tests reject $H_0$ at the 5% level, so the conclusion is the same.
+
+## A non-parametric alternative: the rank-sum test
+
+The two independent samples $t$-test needs normal populations or large samples. When the samples are
+small and the data are clearly skewed, have outliers, or are only ranks or ordered categories (such as
+ratings from 1 to 7), the $t$-test's P-value can be wrong. The **Wilcoxon rank-sum test** (also called the
+Mann-Whitney test) is the **non-parametric alternative**, just as the sign test was for one sample or for
+pairs in Lecture 26:
+
+* It needs two independent random samples, but **no normality assumption**.
+* It **ranks** all $n_1 + n_2$ observations together, from smallest to largest, and adds up the ranks
+  belonging to each sample. If the two populations have the same centre, the ranks should be well mixed and
+  each sample's rank sum should be close to what we would expect from its size. A rank sum that is much too
+  large or too small is evidence that one population tends to give larger values.
+* Because it uses ranks rather than the values, one extreme outlier counts as just "the largest value", so
+  it cannot dominate the test the way it can dominate a mean and an SD.
+* The price: when the populations really are normal, the $t$-test is a little more powerful.
+
+For matched pairs, the non-parametric partner of the matched-pairs $t$-test is the **Wilcoxon signed-rank
+test**, a stronger cousin of the sign test that also uses the sizes of the differences.
+
+Both tests, with worked examples, are in the extra notes under **Resources → Extras → Non-parametric
+Tests**: [Non-parametric tests for two samples](misc/Non-Parametric-Tests-For-Two-Samples.html).
+
+# Matched pairs
+
+*([OpenStax Section 10.4](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples).)*
+In Lecture 27 we saw that two samples can be **dependent**: each observation in one sample is paired with
+one in the other. The most common designs are
+
+* **the same subjects measured twice**, before and after a treatment (blood pressure before and after a
+  drug), or under two conditions (each student's dominant and weaker hand);
+* **natural or deliberate pairs**, such as twins, or two plots of land side by side, with one member of each
+  pair getting each treatment.
+
+The two-sample $t$-test above would be **wrong** for these data, because it assumes that the samples are
+independent. Instead, we use the pairing.
+
+## From two samples to one
+
+For each pair, compute the **difference** $d = x_1 - x_2$ (for example, after $-$ before). The $n$
+differences become the data, and the two-sample problem turns into a **one-sample** problem: the parameter
+is the **mean difference** $\mu_d$ in the population of pairs, and we test it with the one-sample $t$-test
+from Lecture 25.
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Symbol = c('$d$', '$n$', '$\\mu_d$', '$\\bar{d}$', '$s_d$'),
+  Meaning = c('the difference within a pair, $x_1 - x_2$ (always say which way you subtract)',
+              'the number of pairs (not the number of measurements)',
+              'the population mean difference: the parameter',
+              'the mean of the $n$ sample differences: the estimate of $\\mu_d$',
+              'the standard deviation of the $n$ sample differences'),
+  check.names = FALSE))
+```
+
+## The test
+
+* **Hypotheses.** $H_0: \mu_d = 0$, no difference within pairs on average, against $H_A: \mu_d > 0$
+  (upper-tailed), $H_A: \mu_d < 0$ (lower-tailed) or $H_A: \mu_d \neq 0$ (two-sided). Which direction is
+  "upper" depends on the order of subtraction, so fix $d$ first.
+* **Test statistic.**
+  $$t_{obs} = \frac{\bar{d} - 0}{s_d / \sqrt{n}}, \qquad df = n - 1$$
+  If $H_0$ is true, $t_{obs}$ follows a $t$ distribution with $n - 1$ degrees of freedom.
+* **P-value.** From the $t$-table, exactly as for the one-sample test.
+* **Confidence interval.** $\bar{d} \pm t_{1-\alpha/2} \times s_d/\sqrt{n}$, with $df = n - 1$.
+
+**Assumptions.**
+
+1. The pairs are a random sample (or the treatment was randomly assigned within each pair), and the pairs
+   are independent of one another.
+2. The **differences** are approximately normal, or there are at least 30 pairs. The two original
+   measurements do not each need to be normal; only the differences matter. With few pairs, look at the
+   differences for skew and outliers.
+
+## Why pair?
+
+Pairing removes the variation **between subjects**. People differ a lot in how much pain they feel, how far
+they can throw, or how high their blood pressure is. In an independent-samples design, all of that
+person-to-person variation goes into $s_1$ and $s_2$, and so into the SE. When each subject is compared with
+themself, those differences cancel out of $d$, $s_d$ is smaller, and the test is more powerful: it can detect
+a smaller effect with the same number of subjects. The hypnotism example below shows this with numbers.
+
+The sign test from Lecture 26 is also a matched-pairs test. It uses only the **signs** of the differences,
+so it needs no normality assumption; the matched-pairs $t$-test uses their **sizes**, so it is more powerful
+when the differences really are roughly normal.
+
+## Example: does hypnotism reduce pain?
+
+*From [OpenStax Introductory Statistics 2e, Section 10.4, Example 10.11](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples):*
+
+> A study was conducted to investigate the effectiveness of hypnotism in reducing pain. Results for randomly
+> selected subjects are shown in the table below. A lower score indicates less pain. The "before" value is
+> matched to an "after" value and the differences are calculated. The differences have a normal
+> distribution. Are the sensory measurements, on average, lower after hypnotism? Test at a 5% significance
+> level.
+
+```{r, echo=FALSE}
+tab(data.frame(Subject = c('Before', 'After', '$d$ = after $-$ before'),
+               rbind(fmt(hb, 1), fmt(ha, 1), sub('-', '&minus;', fmt(hd, 1), fixed = TRUE)),
+               check.names = FALSE), col.names = c('Subject', LETTERS[1:8]))
+```
+
+1. **Assumptions.** Matched pairs: the same 8 subjects were measured before and after hypnotism. The
+   subjects were randomly selected, and the differences are normal (given), so the small sample is fine.
+2. **Hypotheses.** Let $d$ = after $-$ before, and $\mu_d$ the mean difference for all such subjects. Less
+   pain after hypnotism means *negative* differences, so
+   $$H_0: \mu_d = 0 \qquad H_A: \mu_d < 0 \quad \text{(lower-tailed)}$$
+   (The book writes $H_0: \mu_d \geq 0$; we test it at the boundary, 0.)
+3. **Test statistic.** The 8 differences add to $-25.0$, so $\bar{d} = -25.0/8 = -3.125$, and their
+   standard deviation is $s_d \approx 2.91$.
+   $$SE = \frac{s_d}{\sqrt{n}} = \frac{2.91}{\sqrt{8}} \approx 1.0288, \qquad
+     t_{obs} = \frac{-3.125 - 0}{1.0288} \approx -3.04, \qquad df = 8 - 1 = 7$$
+4. **P-value.** In row 7, $2.365 < 3.04 < 3.499$, with upper-tail areas 0.025 and 0.005. By symmetry the lower
+   tail beyond $-3.04$ has the same area, so
+   $$0.005 < P(T \leq -3.04 \mid H_0 \text{ true}) < 0.025$$
+   Software gives 0.0094.
+5. **Decision.** The P-value is below 0.05: **reject $H_0$**. The data give convincing evidence that pain
+   scores are lower after hypnotism, on average.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "A t distribution with 7 degrees of freedom, labelled if H0 is true, t obs follows t of 7. A dashed line marks minus 3.04, and the small lower tail to its left is shaded red and labelled P of T at most minus 3.04. A label on the right reads: t-table, 0.005 less than P-value less than 0.025."}
+knitr::include_graphics('assets/l28_hypnotism.png')
+```
+
+**What if we had ignored the pairing?** Treat the before and after scores as two independent samples of 8:
+before $\bar{x} = 8.71$, $s = 2.18$; after $\bar{x} = 5.59$, $s = 2.61$. The unpooled SE is
+$$\sqrt{\frac{2.18^2}{8} + \frac{2.61^2}{8}} \approx 1.2023, \qquad t_{obs} = \frac{-3.125}{1.2023} \approx -2.60$$
+The estimate is the same, $-3.125$, but the SE is larger (1.2023 against 1.0288), so $t_{obs}$ is smaller.
+Subjects who start with a high pain score tend to stay relatively high, and the independent-samples SE
+counts that person-to-person spread as noise. The paired analysis removes it. Ignoring the pairing is not
+just less powerful; it is the **wrong test**, because the two samples are not independent.
+
+## Example: the softball strength class
+
+*From [OpenStax Introductory Statistics 2e, Section 10.4, Example 10.12](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples):*
+
+> A college softball coach was interested in whether the college's strength development class increased
+> their players' maximum lift (in pounds). Four players participated in the study. The amount of weight they
+> could each lift was recorded before they took the strength development class. After completing the class,
+> the amount of weight they could each lift was again measured. The data are as follows:
+>
+> | Weight (in pounds) | Player 1 | Player 2 | Player 3 | Player 4 |
+> |---|---|---|---|---|
+> | Amount of weight lifted prior to the class | 205 | 241 | 338 | 368 |
+> | Amount of weight lifted after the class | 295 | 252 | 330 | 360 |
+>
+> The coach wants to know if the strength development class makes the players stronger, on average.
+
+The book does not give $\alpha$; we use 0.05, as the book's solution does.
+
+1. **Assumptions.** Matched pairs (the same 4 players, before and after). The book assumes the differences
+   are normal; we come back to that below.
+2. **Hypotheses.** $d$ = after $-$ before, so "stronger" means positive differences:
+   $H_0: \mu_d = 0$ and $H_A: \mu_d > 0$ (upper-tailed).
+3. **Test statistic.** The differences are $90, 11, -8, -8$. So $\bar{d} = 85/4 = 21.25$ and $s_d \approx 46.70$.
+   $$SE = \frac{46.70}{\sqrt{4}} = 23.35, \qquad t_{obs} = \frac{21.25}{23.35} \approx 0.91, \qquad df = 3$$
+4. **P-value.** In row 3, $0.765 < 0.91 < 0.978$, with upper-tail areas 0.25 and 0.20, so
+   $0.20 < \text{P-value} < 0.25$. Software (and the book) give 0.215.
+5. **Decision.** **Do not reject $H_0$**. There is not enough evidence that the class makes players
+   stronger, on average.
+
+**A caution.** Look at the differences: three of the four players lifted about the same or *less* after the
+class, and one player's 90-pound gain makes $\bar{d}$ positive. With 4 pairs and one possible outlier, the
+assumption that the differences are normal is very doubtful, and so is any conclusion. The coach needs more
+players.
+
+## Example: shot-put with each hand
+
+*From [OpenStax Introductory Statistics 2e, Section 10.4, Example 10.13](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples):*
+
+> Seven eighth graders at Kennedy Middle School measured how far they could push the shot-put with their
+> dominant (writing) hand and their weaker (non-writing) hand. They thought that they could push equal
+> distances with either hand. The data were collected and recorded in the table below.
+>
+> | Distance (in feet) using | Student 1 | Student 2 | Student 3 | Student 4 | Student 5 | Student 6 | Student 7 |
+> |---|---|---|---|---|---|---|---|
+> | Dominant hand | 30 | 26 | 34 | 17 | 19 | 26 | 20 |
+> | Weaker hand | 28 | 14 | 27 | 18 | 17 | 26 | 16 |
+>
+> Conduct a hypothesis test to determine whether the mean difference in distances between the children's
+> dominant versus weaker hands is significant.
+
+The book assumes the differences are normal and uses $\alpha = 0.05$.
+
+1. **Assumptions.** Matched pairs: each student used both hands. The differences are assumed normal.
+2. **Hypotheses.** $d$ = dominant $-$ weaker. "Equal distances with either hand" is the null, and the
+   question has no direction: $H_0: \mu_d = 0$ and $H_A: \mu_d \neq 0$ (two-sided).
+3. **Test statistic.** The differences are $2, 12, 7, -1, 2, 0, 4$. So $\bar{d} = 26/7 \approx 3.71$ and
+   $s_d \approx 4.50$.
+   $$SE = \frac{4.50}{\sqrt{7}} \approx 1.7008, \qquad t_{obs} = \frac{3.71}{1.7008} \approx 2.18, \qquad df = 6$$
+4. **P-value.** In row 6, $1.943 < 2.18 < 2.447$, with upper-tail areas 0.05 and 0.025; doubling,
+   $0.05 < \text{P-value} < 0.10$. Software gives 0.072 (the book: 0.0716).
+5. **Decision.** The P-value is above 0.05: **do not reject $H_0$**. There is not enough evidence of a mean
+   difference between the students' dominant and weaker hands. Six of the seven students pushed at least
+   as far with their dominant hand, so a larger study might well find a difference.
+
+## Example: who made the decision? (a $t$-test instead of the sign test)
+
+In Lecture 26 we used the **sign test** on 17 couples' ratings of who had more say in a major financial
+decision (1 = the wife, 7 = the husband), and found a two-sided P-value of 0.0574: not significant at the 5%
+level. What does the matched-pairs $t$-test say about the same data?
+
+The differences $d$ = husband $-$ wife add to 23, so $\bar{d} = 23/17 \approx 1.35$, and $s_d \approx 1.77$.
+$$SE = \frac{1.77}{\sqrt{17}} \approx 0.4293, \qquad t_{obs} = \frac{1.35}{0.4293} \approx 3.15, \qquad df = 16$$
+In row 16, $2.921 < 3.15 < 3.252$, with upper-tail areas 0.005 and 0.0025; doubling, $0.005 < \text{P-value} < 0.01$.
+Software gives 0.006. The $t$-test **rejects** $H_0$, and the sign test did not.
+
+Which one should we believe? The $t$-test uses the sizes of the differences, so it has more power, **if** its
+assumption holds. But these are crude 1-to-7 ratings from only 17 couples, and it is hard to believe the
+differences come from a normal population. The sign test makes no such assumption. That is why we used it
+in Lecture 26. When the assumption behind a test is doubtful, a more powerful-looking P-value is not more
+trustworthy. Here the honest summary is "suggestive but not conclusive".
+
+## Practice: throwing with each hand
+
+*From [OpenStax Introductory Statistics 2e, Section 10.4, Try It 10.13](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples)
+(the book gives no solution; the worked solution is ours, assuming the differences are normal):*
+
+> Five ball players think they can throw the same distance with their dominant hand (throwing) and off-hand
+> (catching hand). The data were collected and recorded in the table below. Conduct a hypothesis test to
+> determine whether the mean difference in distances between the dominant and off-hand is significant. Test
+> at the 5% level.
+>
+> | | Player 1 | Player 2 | Player 3 | Player 4 | Player 5 |
+> |---|---|---|---|---|---|
+> | Dominant hand | 120 | 111 | 135 | 140 | 125 |
+> | Off-hand | 105 | 109 | 98 | 111 | 99 |
+
+<details>
+<summary>Solution</summary>
+
+1. **Assumptions.** Matched pairs (each player threw with both hands); we assume the differences are normal.
+2. **Hypotheses.** $d$ = dominant $-$ off-hand. $H_0: \mu_d = 0$ and $H_A: \mu_d \neq 0$ (two-sided).
+3. **Test statistic.** The differences are $15, 2, 37, 29, 26$, so $\bar{d} = 109/5 = 21.8$ and $s_d \approx 13.59$.
+   $SE = 13.59/\sqrt{5} \approx 6.0776$ and $t_{obs} = 21.8/6.0776 \approx 3.59$, with $df = 4$.
+4. **P-value.** In row 4, $2.776 < 3.59 < 4.604$, with upper-tail areas 0.025 and 0.005; doubling,
+   $0.01 < \text{P-value} < 0.05$. Software gives 0.023.
+5. **Decision.** The P-value is below 0.05: **reject $H_0$**. The players throw significantly farther, on
+   average, with their dominant hand.
+
+</details>
+
+# Choosing a test
+
+The first question is always **what kind of response** (categorical or quantitative), and the second is
+**how the samples are related** (one sample, two independent samples, or matched pairs).
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Parameter = c('$p$', '$p_1 - p_2$', '$\\mu$', '$\\mu_1 - \\mu_2$', '$\\mu_d$'),
+  Design = c('one sample', 'two independent samples', 'one sample', 'two independent samples', 'matched pairs'),
+  Response = c('categorical', 'categorical', 'quantitative', 'quantitative', 'quantitative'),
+  `Test statistic` = c('$z_{obs} = \\frac{\\hat{p} - p_0}{\\sqrt{p_0(1-p_0)/n}}$',
+                       '$z_{obs} = \\frac{\\hat{p}_1 - \\hat{p}_2}{\\sqrt{\\hat{p}(1-\\hat{p})\\left(\\frac{1}{n_1} + \\frac{1}{n_2}\\right)}}$ (pooled $\\hat{p}$)',
+                       '$t_{obs} = \\frac{\\bar{x} - \\mu_0}{s/\\sqrt{n}}$',
+                       '$t_{obs} = \\frac{\\bar{x}_1 - \\bar{x}_2}{\\sqrt{s_1^2/n_1 + s_2^2/n_2}}$',
+                       '$t_{obs} = \\frac{\\bar{d}}{s_d/\\sqrt{n}}$'),
+  Distribution = c('$N(0, 1)$', '$N(0, 1)$', '$t(n - 1)$', '$t(\\min(n_1 - 1, n_2 - 1))$', '$t(n - 1)$'),
+  `Confidence interval` = c('$\\hat{p} \\pm Z_{1-\\alpha/2}\\sqrt{\\hat{p}(1-\\hat{p})/n}$',
+                            '$(\\hat{p}_1 - \\hat{p}_2) \\pm Z_{1-\\alpha/2}\\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$',
+                            '$\\bar{x} \\pm t_{1-\\alpha/2}\\, s/\\sqrt{n}$',
+                            '$(\\bar{x}_1 - \\bar{x}_2) \\pm t_{1-\\alpha/2}\\sqrt{s_1^2/n_1 + s_2^2/n_2}$',
+                            '$\\bar{d} \\pm t_{1-\\alpha/2}\\, s_d/\\sqrt{n}$'),
+  check.names = FALSE))
+```
+
+Some quick checks:
+
+* **The blood pressure of 30 patients before and after a drug:** the same patients twice, so matched pairs.
+* **Mean nightly sleep for random samples of 40 first-years and 40 seniors:** two separate samples and a
+  quantitative response, so the two independent samples $t$-test.
+* **The share of 200 dog owners and 200 cat owners who exercise daily:** two independent samples and a
+  yes/no response, so the two-proportion $z$-test.
+
+# Sources
+
+* The two-sample examples are from OpenStax *Introductory Statistics 2e*, Chapter 10: sports hours
+  (Example 10.1), math classes (Example 10.2), online and face-to-face exams (Example 10.3), worker
+  retention (Try It 10.2), hypnotism (Example 10.11), the softball strength class (Example 10.12), the
+  shot-put (Example 10.13) and throwing distance (Try It 10.13). The "do not pool" quotation is from p. 513,
+  and Cohen's $d$ is on p. 518. The hives and electric-vehicle data are Examples 10.8 and 10.10; the 2-point
+  claim tested in the electric-vehicle example is ours.
+* The NCAA basketball scores and the couples' decision ratings come from the 2024 STAT 251 notes.
+* Textbook: OpenStax *Introductory Statistics 2e*, Sections 10.1, 10.3 and 10.4.

@@ -100,32 +100,27 @@ Chapter 10: Introduction, p. 511; Section 10.3 (Comparing Two Independent Popula
 The sign test is not in the textbook; see the lecture notes for that week.
 
 ## Week 12
-*Comparing two independent proportions or means; dependent samples; introduction to categorical data*
+*Comparing two independent proportions or means; matched pairs (dependent samples); introduction to categorical data; goodness-of-fit tests and tests of independence*
 
 Chapter 10: Sections 10.1 - 10.5, p. 512 - 535
 
-Chapter 11: Section 11.1, p. 563 - 564
+Chapter 11: Sections 11.1 - 11.5, p. 563 - 583
 
 ## Week 13
-*Goodness-of-fit tests and tests of independence*
+*Cramer's V, McNemar's test, Fisher's exact test; measures of association*
 
-Chapter 11: Sections 11.2 - 11.5, p. 565 - 583
+These topics are not in the textbook; see the lecture notes for that week.
 
 ## Week 15
-*Cramer's V, McNemar's test, Fisher's exact test, measures of association; correlation and simple linear regression*
+*Correlation and simple linear regression; the coefficient of determination, tests for the slope, checking assumptions*
 
-Chapter 12: Sections 12.1 - 12.3, p. 617 - 630
-
-Cramer's V, McNemar's test, Fisher's exact test and measures of association are not in the textbook;
-see the lecture notes for that week.
+Chapter 12: Sections 12.1 - 12.6, p. 617 - 643
 
 ## Week 16
-*The coefficient of determination, tests for the slope, checking assumptions*
+*Analysis of variance (ANOVA): comparing several means; multiple comparisons*
 
-Chapter 12: Sections 12.4 - 12.6, p. 631 - 643
-
-Optional: Chapter 13 (one-way ANOVA), Sections 13.1 - 13.3, p. 679 - 689. ANOVA no longer has a class
-day this term, but it is a natural next step after regression.
+Chapter 13 (one-way ANOVA), Sections 13.1 - 13.3, p. 679 - 689. Multiple comparisons are not in the
+textbook; see the lecture notes for that week.
 
 # Extra Problems
 

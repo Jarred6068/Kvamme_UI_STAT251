@@ -24,6 +24,14 @@ urlcolor: blue
 ---
 
 <!--
+  SCOPE UPDATE (Nov 9 2026). Supersedes the note below. After Lecture 28 absorbed matched pairs and
+  causal inference was dropped, every later topic moved one class earlier (see the SHIFT EARLIER note
+  in Course_Schedule.Rmd): Mon Dec 7 is now ANOVA, comparing several means, and Wed Dec 9 is ANOVA
+  continued, multiple comparisons, so both ANOVA lectures on this page have class days again. Dec 11
+  is still the Jeopardy review.
+-->
+
+<!--
   SCOPE NOTE (Sept 22 2026). The Fall 2026 schedule lost a lecture when Lecture 9
   ran short, and the slip is absorbed here: "ANOVA continued: multiple comparisons
   and checking assumptions" no longer has a class day. Dec 9 is the single ANOVA

@@ -260,6 +260,17 @@ outlined below. Any changes will be announced in class and posted here.**
   of errors and power and a five-step power calculation, then covers the introduction to two-sample tests
   and the two-sample z-test for two proportions (Jarred's choice). Mon Nov 9 is now two independent means,
   with two proportions continued if they carry over.
+  SHIFT EARLIER, Nov 9 2026. No dates changed; topics moved. Lecture 28 (Mon Nov 9) covers a review of
+  two proportions (when to pool), two independent means AND matched pairs, and causal inference was
+  dropped (Jarred's choice). That emptied Wed Nov 11, so every later topic moved one class EARLIER:
+  introduction to categorical variables to Wed Nov 11, goodness-of-fit / independence to Fri Nov 13,
+  Cramer's V / McNemar / Fisher to Mon Nov 16, measures of association to Wed Nov 18, correlation and SLR
+  to Nov 30, coefficient of determination / slope tests to Dec 2, SLR continued to Dec 4, ANOVA to Dec 7.
+  Exam 3 Review (Nov 20), Fall Recess, the Dec 11 Jeopardy review and the final did not move, and the
+  Homework 4 / Homework 5 / Exam 3 due dates stay on their own rows. The freed Wed Dec 9 gets back
+  "ANOVA continued: multiple comparisons" (dropped Oct 28).
+    * Exam 3 scope: Cramer's V etc. AND measures of association now both fall before Exam 3 opens on
+      Nov 20 - Jarred to decide whether they are on Exam 3.
 
   DUE DATES, Oct 28 2026. No lecture dates changed. Homework 3 had not been released yet, so its due
   date moved from Sun Nov 1 to Sun Nov 8 (now on the Fri Nov 6 row), and Homework 4 moved from Sun Nov 15
@@ -516,17 +527,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November  9, 2026</td>
-  <td>Tests for comparing two independent means (two proportions continued)</td>
+  <td>Review: when to pool for two proportions; comparing two independent means; matched pairs (dependent samples)</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>November 11, 2026</td>
-  <td>Tests for dependent samples, causal inference</td>
+  <td>Introduction to analyzing categorical variables</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>November 13, 2026</td>
-  <td>Introduction to analyzing categorical variables</td>
+  <td>Goodness-of-fit tests and tests of independence</td>
 </tr>
 </tbody>
 <tbody>
@@ -536,12 +547,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November 16, 2026</td>
-  <td>Goodness-of-fit tests and tests of independence</td>
+  <td>Cramer's V, McNemar's Test, Fisher's exact test</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>November 18, 2026</td>
-  <td>Cramer's V, McNemar's Test, Fisher's exact test</td>
+  <td>Measures of association</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
@@ -576,17 +587,17 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November 30, 2026</td>
-  <td>Measures of association</td>
+  <td>Correlation and simple linear regression</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>December  2, 2026</td>
-  <td>Correlation and simple linear regression</td>
+  <td>Coefficient of determination, tests for slope coefficients</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>
   <td>December  4, 2026</td>
-  <td>Coefficient of determination, tests for slope coefficients -- **Homework 5 due Sunday at 11:59PM**</td>
+  <td>Simple linear regression continued: omnibus F-test, checking assumptions -- **Homework 5 due Sunday at 11:59PM**</td>
 </tr>
 </tbody>
 <tbody>
@@ -596,12 +607,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>December  7, 2026</td>
-  <td>Simple linear regression continued: omnibus F-test, checking assumptions</td>
+  <td>Analysis of variance (ANOVA): comparing several means</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>December  9, 2026</td>
-  <td>Analysis of variance (ANOVA): comparing several means</td>
+  <td>ANOVA continued: multiple comparisons</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

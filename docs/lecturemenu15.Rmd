@@ -23,6 +23,13 @@ bibliography: misc/Week_15_bibs.bib
 urlcolor: blue
 ---
 
+<!--
+  SCOPE NOTE (Nov 9 2026). After the Nov 9 shift (see Course_Schedule.Rmd), Week 15 is Mon Nov 30
+  correlation and simple linear regression, Wed Dec 2 the coefficient of determination and slope tests,
+  Fri Dec 4 SLR continued (omnibus F-test, checking assumptions). Measures of association moved to Wed
+  Nov 18 (Week 13). Re-check this page against those dates before enabling it in _site.yml.
+-->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)

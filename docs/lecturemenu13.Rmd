@@ -23,6 +23,14 @@ bibliography: misc/Week_13_bibs.bib
 urlcolor: blue
 ---
 
+<!--
+  SCOPE NOTE (Nov 9 2026). This page is hidden and still holds 2024 content. Its "Comparing two means" and
+  "Paired t test" sections are superseded by the Week 12 page (lecturemenu12.Rmd, Lecture 28), so drop
+  them when this page is rewritten. After the Nov 9 shift (see Course_Schedule.Rmd), Week 13 is Mon Nov 16
+  Cramer's V / McNemar / Fisher, Wed Nov 18 measures of association, Fri Nov 20 the Exam 3 review. The
+  goodness-of-fit and independence material below now belongs to Week 12 (Wed Nov 11 and Fri Nov 13).
+-->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
