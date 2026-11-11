@@ -75,17 +75,19 @@ navbar:
 ##        Homeworks are filed by term: homeworks/2026/ is this term's set,
 ##        named homework_<n>_2026.*; homeworks/2024/ is the archive of the
 ##        Spring 2024 originals, which keep their old week<n>homework.* names.
-##        Homework 4 and 5 have no 2026 version yet - only the 2024 archive -
-##        so their hidden entries below still point into homeworks/2024/ and
-##        must be repointed at homeworks/2026/ once they are rewritten.
+##        Homework 5 has no 2026 version yet - only the 2024 archive - so its
+##        hidden entries below still point into homeworks/2024/ and must be
+##        repointed at homeworks/2026/ once it is rewritten. Homework 4 (2026)
+##        was released Nov 11 2026; its solutions stay hidden until after the
+##        Nov 22 due date.
           - text: 'Homework 1'
             href: homeworks/2026/homework_1_2026.html
           - text: 'Homework 2'
             href: homeworks/2026/homework_2_2026.html
           - text: 'Homework 3'
             href: homeworks/2026/homework_3_2026.html
-#         - text: 'Homework 4'
-#           href: homeworks/2024/week12homework.html
+          - text: 'Homework 4'
+            href: homeworks/2026/homework_4_2026.html
 #         - text: 'Homework 5'
 #           href: homeworks/2024/week14homework.html
         - text: 'Solutions'
@@ -97,7 +99,7 @@ navbar:
           - text: 'Hmwk 3 Solutions'
             href: homeworks/2026/homework_3_2026_solns.html
 #         - text: 'Hmwk 4 Solutions'
-#           href: homeworks/2024/week12homework_solns.html
+#           href: homeworks/2026/homework_4_2026_solns.html
 #         - text: 'Hmwk 5 Solutions'
 #           href: homeworks/2024/week14homework_solns.html
         - text: 'Data & PDF Downloads'
@@ -108,11 +110,11 @@ navbar:
             href: homeworks/homework_downloads.html#hw2
           - text: 'Homework 3'
             href: homeworks/homework_downloads.html#hw3
-##        HIDDEN - Homework 4-5 anchors. NOTE: these are anchors into the single
+          - text: 'Homework 4'
+            href: homeworks/homework_downloads.html#hw4
+##        HIDDEN - Homework 5 anchor. NOTE: this is an anchor into the single
 ##        homework_downloads.html page, which still lists ALL FIVE homeworks and
 ##        is still linked below as 'All downloads'.
-#         - text: 'Homework 4'
-#           href: homeworks/homework_downloads.html#hw4
 #         - text: 'Homework 5'
 #           href: homeworks/homework_downloads.html#hw5
           - text: 'All downloads'

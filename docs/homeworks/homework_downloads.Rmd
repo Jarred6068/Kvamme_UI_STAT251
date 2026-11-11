@@ -93,12 +93,16 @@ downloads(rbind(
 
 ```{r}
 downloads(rbind(
-  c("2024/week12homework.pdf",                                              "Assignment (printable PDF)"),
-  c("../Data/homework_tables/hw4_confidence_levels_proportion.csv",    "Problem 2 — confidence levels to fill in (proportion)"),
-  c("../Data/homework_tables/hw4_confidence_levels_mean.csv",          "Problem 3 — confidence levels and sample sizes to fill in (mean)"),
-  c("../Data/homework_tables/hw4_political_party.csv",                 "Problem 4 — political party affiliation of Georgia college students"),
-  c("../Data/homework_tables/hw4_membership_satisfaction.csv",         "Problem 5 — health club membership satisfaction survey"),
-  c("../Data/homework_tables/hw4_housing_summary.csv",                 "Problem 6 — summary statistics for 1990 California census housing")
+  c("2026/homework_4_2026.pdf",                                         "Assignment (printable PDF)"),
+  c("../Data/homework_tables/hw4_2026_wearable_fitness.csv",             "Problem 3 — wearable fitness device use by age group"),
+  c("../Data/homework_tables/hw4_2026_covid_child_abuse_reports.csv",    "Problem 4 — child abuse registries before and after COVID-19"),
+  c("../Data/homework_tables/hw4_2026_sports_motivation.csv",            "Problem 5 — motivational factor scores, team vs individual athletes"),
+  c("../Data/homework_tables/hw4_2026_frog_body_sizes.csv",              "Problem 6 — common frog body lengths in two populations"),
+  c("../Data/homework_tables/hw4_2026_cholesterol.csv",                  "Problem 7 — cholesterol before and after a low-fat diet"),
+  c("../Data/homework_tables/hw4_2026_breakfast.csv",                    "Problem 8 — hours worked with and without breakfast"),
+  c("../Data/homework_tables/hw4_2026_die_rolls.csv",                    "Problem 9 — die rolls"),
+  c("../Data/homework_tables/hw4_2026_marital_status.csv",               "Problem 10 — marital status"),
+  c("../Data/homework_tables/hw4_2026_sugar_tax_poll.csv",               "Problem 11 — sugar tax poll")
 ))
 ```
 

@@ -271,6 +271,11 @@ outlined below. Any changes will be announced in class and posted here.**
   "ANOVA continued: multiple comparisons" (dropped Oct 28).
     * Exam 3 scope: Cramer's V etc. AND measures of association now both fall before Exam 3 opens on
       Nov 20 - Jarred to decide whether they are on Exam 3.
+  CARRY-OVER, Nov 11 2026. No dates changed. Lecture 28 stopped after slide 15 (pooling: advantages and
+  disadvantages), so the rank-sum test and matched pairs (its slides 16-25) moved to Wed Nov 11: Lecture 29
+  opens with them, adds a summary table of every test (pooled vs unpooled SE), then the introduction to
+  categorical variables (tables, observed/expected counts, the chi-square distribution and X^2). Lecture 28
+  is trimmed to slides 1-15. Fri Nov 13 is unchanged.
 
   DUE DATES, Oct 28 2026. No lecture dates changed. Homework 3 had not been released yet, so its due
   date moved from Sun Nov 1 to Sun Nov 8 (now on the Fri Nov 6 row), and Homework 4 moved from Sun Nov 15
@@ -527,12 +532,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November  9, 2026</td>
-  <td>Review: when to pool for two proportions; comparing two independent means; matched pairs (dependent samples)</td>
+  <td>Review: when to pool for two proportions; comparing two independent means</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>November 11, 2026</td>
-  <td>Introduction to analyzing categorical variables</td>
+  <td>Matched pairs (dependent samples); summary of the tests so far; introduction to analyzing categorical variables</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

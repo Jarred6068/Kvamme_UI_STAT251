@@ -1,0 +1,596 @@
+---
+title: "Homework 4 Solutions"
+output:
+  html_document:
+    keep_md: false   ## no-op; keeps html_document a MAP so _output.yml merges in
+  pdf_document: default
+always_allow_html: true
+header-includes:
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{colortbl}
+  - \usepackage{wrapfig}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+---
+
+<!--
+  Key for homework_4_2026.Rmd (see the comment there for where each problem comes
+  from). Problems 4-6 follow the 2024 Homework 5 key
+  (homeworks/2024/week14homework_solns.Rmd). Every number written into the text is
+  checked against R in the `checks` chunk below, so a change to a problem that
+  is not carried into the key stops the render. Table look-ups use the course
+  Z-, t- and chi-square tables (misc/*_table.Rmd); exact values are from R.
+-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
+library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+
+# Answers are printed in red so they cannot be mistaken for part of the
+# question. Write `r RA` on its own line before an answer and `r RZ` after it.
+# (See homework_2_2026_solns.Rmd for why this has to be format-aware.)
+latex_out <- knitr::is_latex_output()
+RA <- if (latex_out) knitr::raw_latex("\\begingroup\\color{red}") else knitr::raw_html('<div style="color: red;">')
+RZ <- if (latex_out) knitr::raw_latex("\\endgroup") else knitr::raw_html('</div>')
+
+ktab <- function(x, caption = NULL, digits = 2, ...) {
+  kable(x, format = tbl_fmt, digits = digits, row.names = FALSE, booktabs = TRUE,
+        escape = FALSE, caption = caption, ...) %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+    kable_styling(bootstrap_options = 'striped', latex_options = c('striped', 'HOLD_position'))
+}
+library(knitr)
+mainpath = '../../Data/'
+source('../../misc/stat251_tools.R')
+```
+
+```{r checks, include=FALSE}
+near <- function(a, b, tol = 5e-3) abs(a - b) < tol
+pool_z <- function(x1, n1, x2, n2) {
+  p <- (x1 + x2)/(n1 + n2); se <- sqrt(p*(1 - p)*(1/n1 + 1/n2))
+  list(p = p, se = se, z = (x1/n1 - x2/n2)/se, counts = c(n1*p, n1*(1 - p), n2*p, n2*(1 - p)))
+}
+# (3) wearable fitness devices
+w <- pool_z(379, 973, 404, 1304)
+stopifnot(round(379/973, 4) == 0.3895, round(404/1304, 4) == 0.3098, round(w$p, 4) == 0.3439,
+          round(w$se, 4) == 0.0201, round(w$z, 2) == 3.96, all(w$counts >= 15),
+          round(w$counts, 1) == c(334.6, 638.4, 448.4, 855.6), 1 - pnorm(w$z) < 0.0002)
+# (4) COVID registries
+cv <- pool_z(18, 70, 16, 53)
+stopifnot(round(18/70, 4) == 0.2571, round(16/53, 4) == 0.3019, round(cv$p, 4) == 0.2764,
+          round(cv$counts, 2) == c(19.35, 50.65, 14.65, 38.35), round(cv$se, 4) == 0.0814,
+          round(cv$z, 2) == -0.55, round(pnorm(-0.55), 4) == 0.2912, round(qnorm(0.995), 3) == 2.576)
+# (5) fitness motivation, pooled
+sp <- sqrt((202*1.27^2 + 61*0.94^2)/263); se4 <- sp*sqrt(1/203 + 1/62); t4 <- (7.79 - 8.40)/se4
+stopifnot(round(sp, 3) == 1.202, round(se4, 4) == 0.1744, round(t4, 2) == -3.50,
+          round(qnorm(0.975), 2) == 1.96, near(2*pt(t4, 263), 0.0005, 1e-4))
+# (6) frogs, unpooled with df = 11
+se5 <- sqrt(7.3^2/12 + 4.1^2/12); t5 <- (64.7 - 61.0)/se5
+stopifnot(round(se5, 3) == 2.417, round(t5, 2) == 1.53, round(qt(0.975, 11), 3) == 2.201,
+          round(qt(0.90, 11), 3) == 1.363, round(qt(0.95, 11), 3) == 1.796, near(2*pt(-t5, 11), 0.154))
+# (7) cholesterol
+d6 <- c(140, 230, 120, 220, 190, 150, 200, 300, 300, 240) - c(140, 220, 110, 240, 200, 180, 190, 360, 280, 260)
+t6 <- mean(d6)/(sd(d6)/sqrt(10))
+stopifnot(identical(d6, c(0, 10, 10, -20, -10, -30, 10, -60, 20, -20)), mean(d6) == -9,
+          round(sd(d6), 2) == 24.24, round(sd(d6)/sqrt(10), 2) == 7.67, round(t6, 2) == -1.17,
+          round(qt(0.05, 9), 3) == -1.833, round(qt(0.85, 9), 3) == 1.100, round(qt(0.875, 9), 3) == 1.230,
+          near(pt(t6, 9), 0.135))
+# (8) breakfast
+d7 <- c(8, 7, 9, 5, 9, 8, 10, 7, 6, 9) - c(6, 5, 5, 4, 7, 7, 7, 5, 6, 5)
+t7 <- mean(d7)/(sd(d7)/sqrt(10))
+stopifnot(identical(d7, c(2, 2, 4, 1, 2, 1, 3, 2, 0, 4)), mean(d7) == 2.1, round(sd(d7), 3) == 1.287,
+          round(sd(d7)/sqrt(10), 3) == 0.407, round(t7, 2) == 5.16, round(qt(0.95, 9), 3) == 1.833,
+          round(qt(0.9995, 9), 3) == 4.781, near(1 - pt(t7, 9), 0.0003, 1e-4))
+# (9) die
+o8 <- c(15, 29, 16, 15, 30, 15); c8 <- (o8 - 20)^2/20
+stopifnot(c8 == c(1.25, 4.05, 0.8, 1.25, 5, 1.25), sum(c8) == 13.6, round(qchisq(0.95, 5), 3) == 11.070,
+          round(qchisq(0.975, 5), 3) == 12.833, round(qchisq(0.995, 5), 3) == 16.750, near(1 - pchisq(13.6, 5), 0.018))
+# (10) marital status
+o9 <- c(140, 238, 2, 20); e9 <- 400*c(31.3, 56.1, 2.5, 10.1)/100; c9 <- (o9 - e9)^2/e9
+stopifnot(e9 == c(125.2, 224.4, 10, 40.4), round(c9, 2) == c(1.75, 0.82, 6.40, 10.30),
+          round(sum(c9), 2) == 19.27, round(qchisq(0.95, 3), 3) == 7.815, round(qchisq(0.9995, 3), 3) == 17.730)
+# (11) sugar tax poll
+o10 <- matrix(c(48, 433, 41, 160, 54, 234, 24, 147, 16, 43, 16, 19), 3, byrow = TRUE)
+e10 <- outer(rowSums(o10), colSums(o10))/sum(o10); c10 <- (o10 - e10)^2/e10
+stopifnot(rowSums(o10) == c(682, 459, 94), colSums(o10) == c(118, 710, 81, 326), sum(o10) == 1235,
+          round(e10[1, ], 2) == c(65.16, 392.08, 44.73, 180.03), round(e10[2, ], 2) == c(43.86, 263.88, 30.10, 121.16),
+          round(e10[3, ], 2) == c(8.98, 54.04, 6.17, 24.81), round(min(e10), 2) == 6.17,
+          round(c10[1, ], 2) == c(4.52, 4.27, 0.31, 2.23), round(c10[2, ], 2) == c(2.35, 3.38, 1.24, 5.51),
+          round(c10[3, ], 2) == c(5.48, 2.26, 15.69, 1.36), round(sum(c10), 2) == 48.60,
+          round(qchisq(0.95, 6), 3) == 12.592, round(qchisq(0.9995, 6), 3) == 24.103)
+```
+
+
+# Part I: Key Concepts
+
+
+$\bf (1)$
+Answer each of the following questions in a few sentences.
+
+(a) Why do we use the pooled sample proportion $\hat{p} = \frac{x_1 + x_2}{n_1 + n_2}$ in the standard error $SE_0$ when we test $H_0: p_1 = p_2$, and what is the benefit of pooling?
+
+`r RA`
+A test works out what the data should look like **if $H_0$ is true**. If $p_1 = p_2$, both samples describe the **same** population proportion $p$, so the best estimate of that one $p$ combines all of the data: all the successes over all $n_1 + n_2$ observations. The standard error is then built from what $H_0$ says, $SE_0 = \sqrt{\hat{p}(1 - \hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}$, just as the one-sample test uses $p_0$ in its SE. The benefit is that $\hat{p}$ uses all $n_1 + n_2$ observations instead of $n_1$ or $n_2$ alone, so it is a more precise estimate of $p$, and $SE_0$ is the standard error that matches the null distribution of $\hat{p}_1 - \hat{p}_2$, which keeps the Type I error rate at $\alpha$.
+`r RZ`
+
+(b) What are the assumptions of the test comparing two population proportions?
+
+`r RA`
+(1) Two **independent random samples**, one from each population (or two groups formed by random assignment). (2) **Large samples**: with the pooled $\hat{p}$, all four of $n_1\hat{p}$, $n_1(1 - \hat{p})$, $n_2\hat{p}$ and $n_2(1 - \hat{p})$ are at least $15$, so the sampling distribution of $\hat{p}_1 - \hat{p}_2$ is approximately normal.
+`r RZ`
+
+(c) What does the pooled standard deviation $s_{pooled} = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$ estimate in a two-sample $t$-test, and when is it appropriate to use it?
+
+`r RA`
+If the two populations have the **same standard deviation**, $\sigma_1 = \sigma_2 = \sigma$, both samples estimate the same $\sigma$, and $s_{pooled}$ combines them into one estimate of it (a weighted average of the two sample variances, weighted by their degrees of freedom). It is appropriate only when we can assume $\sigma_1 = \sigma_2$: the sample SDs are similar (the larger is less than about twice the smaller) and the sample sizes are similar, or we are told to assume equal variances. Unlike the test of two proportions, $H_0: \mu_1 = \mu_2$ says nothing about $\sigma_1$ and $\sigma_2$, so the unpooled test is our default.
+`r RZ`
+
+(d) Give the formula for Welch's degrees of freedom for the unpooled two-sample $t$-test. How does it differ from using $df = \min(n_1 - 1, n_2 - 1)$?
+
+`r RA`
+\[ df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\dfrac{(s_1^2/n_1)^2}{n_1 - 1} + \dfrac{(s_2^2/n_2)^2}{n_2 - 1}} \]
+It is the df that makes a $t$ curve match the distribution of $t_{obs}$ most closely. It is usually not a whole number and always lies between $\min(n_1 - 1, n_2 - 1)$ and $n_1 + n_2 - 2$; software uses it. $\min(n_1 - 1, n_2 - 1)$ is a quick by-hand approximation that is **never larger** than the Welch df, so its $t$ curve has heavier tails and its $p$-value comes out a little larger. That makes the hand method **conservative**: if it rejects $H_0$, the Welch test will too.
+`r RZ`
+
+(e) Fill in the blanks. When we can assume $\sigma_1 = \sigma_2$, the pooled two-sample $t$-test has \_\_\_\_\_\_\_\_ degrees of freedom than the unpooled test, so its $t$-distribution has \_\_\_\_\_\_\_\_ tails and the test has \_\_\_\_\_\_\_\_ power.
+
+`r RA`
+**More** degrees of freedom ($n_1 + n_2 - 2$, against $\min(n_1 - 1, n_2 - 1)$ by hand or the Welch df in software), so **thinner** tails, smaller $p$-values and **more** power. That is the payoff of pooling, but only when the equal-SD assumption is true; if the SDs differ, the pooled test's real Type I error rate can be far from $\alpha$.
+`r RZ`
+
+(f) What are the assumptions of the two independent samples $t$-test? What extra assumption does the pooled version need?
+
+`r RA`
+(1) Two **independent random samples**, one from each population (or two groups formed by random assignment), with nothing in one sample paired with anything in the other. (2) **Normal populations or large samples**: if both $n_1$ and $n_2$ are at least $30$, the Central Limit Theorem takes care of the shape; with smaller samples, both populations should be approximately normal (no strong skew or outliers). The pooled test also assumes the two populations have the **same standard deviation**, $\sigma_1 = \sigma_2$.
+`r RZ`
+
+(g) When is it appropriate to use a paired $t$-test, and how does it differ from a two independent samples $t$-test?
+
+`r RA`
+A paired $t$-test is appropriate when each observation in one sample is **matched** to one observation in the other: both are measured on the same individual (before and after a treatment, or under two conditions) or on a natural pair (twins, the two hands of one person). For each pair we compute the difference $d$, always in the same order, and run a **one-sample** $t$-test on the differences, with parameter $\mu_d$, $SE = s_d/\sqrt{n}$ and $df = n - 1$, where $n$ is the number of **pairs**. A two independent samples $t$-test compares two separate groups with nothing linking them, with parameter $\mu_1 - \mu_2$ and $SE = \sqrt{s_1^2/n_1 + s_2^2/n_2}$. Pairing removes the person-to-person variation, so $s_d$ is usually much smaller than $s_1$ and $s_2$, which gives a smaller SE and a more powerful test. Analyzing paired data as two independent samples is wrong, because the two samples are not independent.
+`r RZ`
+
+(h) What are the assumptions of the paired $t$-test?
+
+`r RA`
+(1) The pairs are a **random sample** (or the treatment was randomly assigned within each pair), and the pairs are independent of one another. (2) The **differences** are approximately normal, or there are at least $30$ pairs. The two original measurements do not each need to be normal; only the differences matter.
+`r RZ`
+
+(i) What are the observed counts and the expected counts in a chi-square test, and how is each expected count computed?
+
+`r RA`
+The **observed** counts are the numbers of individuals in each category (or cell) in the sample. The **expected** counts are the numbers we would expect in each category if the null hypothesis were true: $n \times p_i$ for a goodness-of-fit test, and $\frac{\text{row total} \times \text{column total}}{\text{grand total}}$ for a test of independence.
+`r RZ`
+
+(j) What are the parameters of a chi-square distribution? What are their values for a goodness-of-fit test with $k$ categories, and for a test of independence on a table with $r$ rows and $c$ columns?
+
+`r RA`
+A chi-square distribution has a **single parameter, its degrees of freedom** $df$, which sets its shape (its mean is $df$). The distribution starts at $0$ and is right-skewed, and it becomes more spread out and more symmetric as $df$ grows. Goodness of fit: $df = k - 1$. Test of independence: $df = (r - 1)(c - 1)$.
+`r RZ`
+
+(k) What is the difference between a goodness-of-fit test and a test of independence, and when is each test appropriate?
+
+`r RA`
+A **goodness-of-fit** test uses **one** categorical variable and asks whether its distribution in the population matches a claimed set of probabilities (for example, a fair die, or a known population distribution); its hypotheses are about the category probabilities $p_1, \dots, p_k$. A **test of independence** uses **two** categorical variables measured on the same individuals, arranged in a two-way table, and asks whether they are related; $H_0$ says the two variables are independent. Use a goodness-of-fit test to compare one variable with a claimed distribution, and a test of independence to ask whether two variables are associated.
+`r RZ`
+
+(l) What are the assumptions of the chi-square goodness-of-fit test and the chi-square test of independence?
+
+`r RA`
+Both tests assume (1) the data are a **random sample**, with each individual counted in exactly one category (or cell), and (2) **every expected count is at least $5$**, so the chi-square distribution is a good approximation to the distribution of $\chi^2_{obs}$. For the test of independence, this applies to every one of the $r \times c$ expected cell counts.
+`r RZ`
+
+(m) Why is a chi-square test always an upper-tailed test?
+
+`r RA`
+$\chi^2_{obs} = \sum \frac{(O - E)^2}{E}$ adds up squared distances, so it is never negative and it is close to $0$ when the observed counts match the expected counts. Only a **large** value is evidence against $H_0$, so the $p$-value is the area in the upper tail, $P(\chi^2 \geq \chi^2_{obs} \mid H_0 \ \text{true})$.
+`r RZ`
+
+
+
+# Part II: Choosing a Test
+
+
+$\bf (2)$
+For each study below, (i) decide whether the samples are **independent** or **dependent (paired)** and explain why, and (ii) name the most appropriate test: the test comparing two proportions, the two independent samples $t$-test, the paired $t$-test, the chi-square goodness-of-fit test, or the chi-square test of independence. You do not need to carry out the test.
+
+(a) A running-shoe company claims that its new carbon-plated racing shoe makes runners faster. A coach recruits $20$ members of a university cross-country team. Each runner runs a $5$ km time trial on the same course twice, one week apart: once in their usual training shoes and once in the new shoes, with a coin flip deciding which pair they wear first. The coach records each runner's finishing time in minutes and wants to know whether times are lower, on average, in the new shoes.
+
+`r RA`
+(i) **Dependent.** Each runner is measured twice, so every time in the new shoes is paired with the same runner's time in the usual shoes. A fast runner is fast in either pair of shoes, so the two times from one runner are related. (ii) **Paired $t$-test** on the $20$ differences $d = \text{new} - \text{usual}$, with $H_0: \mu_d = 0$ against $H_A: \mu_d < 0$ (lower-tailed) and $df = 20 - 1 = 19$.
+`r RZ`
+
+(b) A university's advising office believes that text-message reminders get more first-year students to use its free tutoring center. At the start of the fall semester, $1{,}200$ first-year students are randomly split into two groups of $600$: one group receives a weekly text reminder about the tutoring center and the other receives none. At the end of the semester, the office records whether each student visited the tutoring center at least once.
+
+`r RA`
+(i) **Independent.** The two groups are different students, formed by random assignment, and no student in one group is matched with any student in the other. (ii) The response (visited or not) is categorical with two outcomes, so this is the **test comparing two proportions**: $p_1$ and $p_2$ are the proportions of students with and without reminders who visit the center, $H_0: p_1 = p_2$ against $H_A: p_1 > p_2$ (upper-tailed), using the pooled $\hat{p}$ in $SE_0$.
+`r RZ`
+
+(c) An animal scientist suspects that adding a seaweed supplement to dairy cattle feed changes how much milk the cows produce, but she does not know in which direction. Of the $80$ cows in a university research herd, $40$ are randomly assigned to the standard diet and $40$ to the standard diet plus the supplement. After eight weeks, she records each cow's average milk yield in kilograms per day.
+
+`r RA`
+(i) **Independent.** Each cow is in only one group, the groups were formed by random assignment, and nothing links a cow in one group to a particular cow in the other. (ii) The response (milk yield) is quantitative, so this is the **two independent samples $t$-test**: $H_0: \mu_1 - \mu_2 = 0$ against $H_A: \mu_1 - \mu_2 \neq 0$ (two-sided, since the direction is unknown), unpooled by default with $df = \min(40 - 1, 40 - 1) = 39$.
+`r RZ`
+
+(d) A hospital's physical therapy team thinks a new rehabilitation program shortens recovery after knee-replacement surgery. They recruit $36$ patients and form $18$ pairs, matching the two patients in each pair on age, sex and body mass index. Within each pair, a coin flip sends one patient to the new program and the other to the standard program, and the team records the number of days until each patient can walk unassisted.
+
+`r RA`
+(i) **Dependent.** The two samples are different people, but each patient in the new program is deliberately matched to one patient in the standard program, on traits that affect how fast people recover. The pairs are what make the samples dependent, not whether the same person is measured twice. (ii) **Paired $t$-test** on the $18$ within-pair differences $d = \text{new} - \text{standard}$, with $H_0: \mu_d = 0$ against $H_A: \mu_d < 0$ (lower-tailed) and $df = 18 - 1 = 17$. Treating the data as two independent samples of $18$ would ignore the matching and give a larger SE.
+`r RZ`
+
+
+
+# Part III: Comparing Two Population Proportions $p_1$ and $p_2$
+
+
+$\bf (3)$
+Wearable fitness devices: $x_1 = 379$ of $n_1 = 973$ people in their twenties, $x_2 = 404$ of $n_2 = 1{,}304$ people in their thirties, $\alpha = 0.05$, upper-tailed.
+
+```{r, echo=T, message=F, warning=F}
+two.sample.prop.test(p0 = 0, x1 = 379, x2 = 404, n1 = 973, n2 = 1304,
+                     alpha = 0.05, test = 'upper.tail', pooled = TRUE)
+```
+
+(a) Check the assumptions of the test.
+
+`r RA`
+The two samples are independent random samples. The pooled proportion is
+\[ \hat{p} = \frac{379 + 404}{973 + 1{,}304} = \frac{783}{2{,}277} = 0.3439 \]
+and the four counts are $n_1\hat{p} = 334.6$, $n_1(1 - \hat{p}) = 638.4$, $n_2\hat{p} = 448.4$ and $n_2(1 - \hat{p}) = 855.6$, all at least $15$. The large-sample assumption holds.
+`r RZ`
+
+(b) Define $p_1$ and $p_2$ in words and state the null and alternative hypotheses.
+
+`r RA`
+$p_1$ is the proportion of all people aged 21–30 who use wearable fitness devices, and $p_2$ is the proportion of all people aged 31–40 who do. $H_0: p_1 - p_2 = 0$ and $H_A: p_1 - p_2 > 0$ (upper-tailed).
+`r RZ`
+
+(c) Compute $\hat{p}_1$, $\hat{p}_2$, the standard error under $H_0$, and the test statistic $z_{obs}$.
+
+`r RA`
+$\hat{p}_1 = 379/973 = 0.3895$ and $\hat{p}_2 = 404/1{,}304 = 0.3098$.
+\[ SE_0 = \sqrt{\hat{p}(1 - \hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)} = \sqrt{0.3439(0.6561)\left(\frac{1}{973} + \frac{1}{1{,}304}\right)} = 0.0201 \]
+\[ z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{SE_0} = \frac{0.3895 - 0.3098}{0.0201} \approx 3.96 \]
+`r RZ`
+
+(d) Compute the $p$-value.
+
+`r RA`
+\[ P(Z \geq 3.96 \mid H_0 \ \text{true}) < 0.0002 \]
+$3.96$ is beyond the end of the $Z$-table ($P(Z \leq 3.49) = 0.9998$), so the $p$-value is less than $0.0002$. The exact value is about $0.00004$.
+`r RZ`
+
+(e) Is there enough evidence to conclude that a higher proportion of people in their twenties use wearable fitness devices than people in their thirties?
+
+`r RA`
+Yes. The $p$-value $< 0.0002 < \alpha = 0.05$ (equivalently, $z_{obs} = 3.96 > z_{0.95} = 1.645$), so we reject $H_0$. At the $5\%$ significance level there is strong evidence that a higher proportion of people in their twenties use wearable fitness devices than people in their thirties (about $39\%$ vs $31\%$ in the samples).
+`r RZ`
+
+
+$\bf (4)$
+COVID-19 and child-abuse registries: $x_1 = 18$ of $n_1 = 70$ registries before COVID-19, $x_2 = 16$ of $n_2 = 53$ after, $\alpha = 0.01$, two-sided.
+
+```{r, echo=T, message=F, warning=F}
+two.sample.prop.test(p0 = 0, x1 = 18, x2 = 16, n1 = 70, n2 = 53,
+                     alpha = 0.01, test = 'two.tail', pooled = TRUE)
+```
+
+(a) Compute the pooled sample proportion $\hat{p}$ and check the four large-sample counts.
+
+`r RA`
+\[ \hat{p} = \frac{18 + 16}{70 + 53} = \frac{34}{123} = 0.2764 \]
+The counts are $n_1\hat{p} = 19.35$, $n_1(1 - \hat{p}) = 50.65$, $n_2\hat{p} = 14.65$ and $n_2(1 - \hat{p}) = 38.35$. One count, $n_2\hat{p} = 14.65$, is just under $15$, so the large-sample assumption is not quite met. The sampling distribution of $\hat{p}_1 - \hat{p}_2$ may not be close enough to normal for the standard normal $p$-value to be accurate, so the $p$-value is only an approximation and we should be cautious with a decision near the cut-off. (The shortfall here is small, and the textbook's looser rule of at least $5$ successes and $5$ failures is met.)
+`r RZ`
+
+(b) Carry out the remaining four steps of the test.
+
+`r RA`
+**Hypotheses.** Let $p_1$ be the proportion of child-abuse registries in Sergipe involving a child under 12 before COVID-19 (2019), and $p_2$ the same proportion after COVID-19 started (2020). $H_0: p_1 - p_2 = 0$ and $H_A: p_1 - p_2 \neq 0$.
+
+**Test statistic.** $\hat{p}_1 = 18/70 = 0.2571$ and $\hat{p}_2 = 16/53 = 0.3019$.
+\[ SE_0 = \sqrt{0.2764(0.7236)\left(\frac{1}{70} + \frac{1}{53}\right)} = 0.0814, \qquad z_{obs} = \frac{0.2571 - 0.3019}{0.0814} \approx -0.55 \]
+
+**$p$-value.**
+\[ 2 \times P(Z \geq |-0.55| \mid H_0 \ \text{true}) = 2 \times 0.2912 = 0.5824 \]
+
+**Decision.** The $p$-value $0.5824 > \alpha = 0.01$ (equivalently, $|z_{obs}| = 0.55 < z_{0.995} = 2.576$), so we fail to reject $H_0$. At the $1\%$ significance level there is not enough evidence that the proportion of abuse registries involving children under 12 changed after the start of the COVID-19 pandemic. The test statistic is so far from the cut-off that the concern from part (a) does not change this conclusion.
+`r RZ`
+
+
+
+# Part IV: Comparing Two Independent Population Means $\mu_1$ and $\mu_2$
+
+
+$\bf (5)$
+Fitness as a motivating factor: team sports $\bar{x}_1 = 7.79$, $s_1 = 1.27$, $n_1 = 203$; individual sports $\bar{x}_2 = 8.40$, $s_2 = 0.94$, $n_2 = 62$; pooled, $\alpha = 0.05$, two-sided.
+
+```{r, echo=T, message=F, warning=F}
+two.sample.t.test(m0 = 0, x1 = 7.79, x2 = 8.40, s1 = 1.27, s2 = 0.94, n1 = 203, n2 = 62,
+                  alpha = 0.05, test = 'two.tail', pooling = 'pooled')
+```
+
+`r RA`
+**Assumptions.** The two samples are independent random samples (stratified random sampling of athletes), both samples are large ($n_1 = 203$ and $n_2 = 62$ are well over 30), and we are told to assume the two populations have the same variance.
+
+**Hypotheses.** Let $\mu_1$ be the mean fitness motivation score of all team-sport athletes and $\mu_2$ the mean fitness motivation score of all individual-sport athletes. $H_0: \mu_1 - \mu_2 = 0$ and $H_A: \mu_1 - \mu_2 \neq 0$.
+
+**Test statistic.**
+\[ s_{pooled} = \sqrt{\frac{(203 - 1)(1.27)^2 + (62 - 1)(0.94)^2}{203 + 62 - 2}} = 1.202 \]
+\[ t_{obs} = \frac{(7.79 - 8.40) - 0}{1.202\sqrt{\frac{1}{203} + \frac{1}{62}}} = \frac{-0.61}{0.1744} \approx -3.50, \qquad df = 203 + 62 - 2 = 263 \]
+
+**$p$-value.** With $263$ degrees of freedom the $t$-distribution is essentially the standard normal, so use the $Z$-score row of the $t$-table. $|t_{obs}| = 3.50$ is larger than $3.291$, the two-tailed value for $0.001$, so
+\[ 2 \times P(t \geq 3.50 \mid H_0 \ \text{true}) < 0.001 \]
+(the exact value is about $0.0005$).
+
+**Decision.** The $p$-value $< 0.001 < \alpha = 0.05$ (equivalently, $|t_{obs}| = 3.50 > 1.96$), so we reject $H_0$. At the $5\%$ significance level the mean fitness motivation score is significantly different for team and individual sports; individual-sport athletes rate fitness as a more important reason to participate ($8.40$ vs $7.79$).
+`r RZ`
+
+
+$\bf (6)$
+Four-year-old male frogs: Servotte $\bar{x}_1 = 64.7$, $s_1 = 7.3$, $n_1 = 12$; Thevenon $\bar{x}_2 = 61.0$, $s_2 = 4.1$, $n_2 = 12$; unpooled, $\alpha = 0.05$, two-sided.
+
+```{r, echo=T, message=F, warning=F}
+two.sample.t.test(m0 = 0, x1 = 64.7, x2 = 61.0, s1 = 7.3, s2 = 4.1, n1 = 12, n2 = 12,
+                  alpha = 0.05, test = 'two.tail', pooling = 'approx.unpooled')
+```
+
+`r RA`
+**Assumptions.** The two samples are independent random samples from the two populations. Both samples are small ($n = 12$), so we must assume body lengths are approximately normal in each population. The variances are not assumed equal, so we use the unpooled standard error.
+
+**Hypotheses.** Let $\mu_1$ be the mean body length of four-year-old male frogs in the Servotte population and $\mu_2$ the mean body length of four-year-old male frogs in the Thevenon population. $H_0: \mu_1 - \mu_2 = 0$ and $H_A: \mu_1 - \mu_2 \neq 0$.
+
+**Test statistic.**
+\[ t_{obs} = \frac{(64.7 - 61.0) - 0}{\sqrt{\frac{7.3^2}{12} + \frac{4.1^2}{12}}} = \frac{3.7}{2.417} \approx 1.53, \qquad df = \min(12 - 1, 12 - 1) = 11 \]
+
+**$p$-value.** In the $11$ df row of the $t$-table, $1.53$ falls between $1.363$ (two-tailed $0.2$) and $1.796$ (two-tailed $0.1$), so
+\[ 0.1 < 2 \times P(t \geq 1.53 \mid H_0 \ \text{true}) < 0.2 \]
+(the exact value is about $0.154$).
+
+**Decision.** The $p$-value $> \alpha = 0.05$ (equivalently, $|t_{obs}| = 1.53 < t_{11, 0.975} = 2.201$), so we fail to reject $H_0$. At the $5\%$ significance level there is not enough evidence that the mean body length of four-year-old male frogs differs between the Servotte and Thevenon populations.
+`r RZ`
+
+
+
+# Part V: Paired Samples
+
+
+$\bf (7)$
+Cholesterol and a low-fat diet: $10$ people, $d = \text{Ending} - \text{Starting}$, $\alpha = 0.05$.
+
+```{r, echo=F, warning=F, message=F}
+start = c(140, 220, 110, 240, 200, 180, 190, 360, 280, 260)
+end   = c(140, 230, 120, 220, 190, 150, 200, 300, 300, 240)
+ktab(cbind.data.frame(Person = 1:10, `Starting Cholesterol (mg/dL)` = start,
+                      `Ending Cholesterol (mg/dL)` = end, `Difference: d = Ending - Starting` = end - start),
+     caption = 'Cholesterol before and after the diet, with the differences filled in')
+```
+
+```{r, echo=T, message=F, warning=F}
+d = end - start
+one.sample.t.test(m0 = 0, xbar = mean(d), s = sd(d), n = length(d),
+                  alpha = 0.05, test = 'lower.tail', verbose = T)
+```
+
+(a) Explain why these are paired (dependent) samples and not two independent samples.
+
+`r RA`
+Both measurements come from the same ten people: each starting level is matched to the ending level of the same person. The two columns are not separate samples from two populations, so we analyze the ten within-person differences.
+`r RZ`
+
+(b) Fill in the difference column and compute $\bar{d}$ and $s_d$.
+
+`r RA`
+The differences are shown in the table above. $\bar{d} = -90/10 = -9$ mg/dL and $s_d = 24.24$ mg/dL.
+`r RZ`
+
+(c) Define $\mu_d$ in words and state the null and alternative hypotheses.
+
+`r RA`
+$\mu_d$ is the mean change in cholesterol (ending minus starting) for all people who follow the 12-week low-fat diet. A drop in cholesterol gives a negative difference, so $H_0: \mu_d = 0$ and $H_A: \mu_d < 0$ (lower-tailed).
+`r RZ`
+
+(d) Compute the test statistic $t_{obs}$ and give its degrees of freedom.
+
+`r RA`
+\[ t_{obs} = \frac{\bar{d} - 0}{s_d/\sqrt{n}} = \frac{-9}{24.24/\sqrt{10}} = \frac{-9}{7.67} \approx -1.17, \qquad df = 10 - 1 = 9 \]
+`r RZ`
+
+(e) Compute the $p$-value.
+
+`r RA`
+By symmetry, $P(t \leq -1.17) = P(t \geq 1.17)$. In the $9$ df row, $1.17$ falls between $1.100$ (upper tail $0.15$) and $1.230$ (upper tail $0.125$), so
+\[ 0.125 < P(t \leq -1.17 \mid H_0 \ \text{true}) < 0.15 \]
+(the exact value is about $0.135$).
+`r RZ`
+
+(f) Is there enough evidence to conclude that the low-fat diet lowered cholesterol levels?
+
+`r RA`
+No. The $p$-value $> \alpha = 0.05$ (equivalently, $t_{obs} = -1.17 > t_{9, 0.05} = -1.833$), so we fail to reject $H_0$. Although cholesterol fell by $9$ mg/dL on average, at the $5\%$ significance level there is not enough evidence that the diet lowers mean cholesterol: the changes vary too much from person to person (from a rise of $20$ to a drop of $60$) for ten people to rule out ordinary variation.
+`r RZ`
+
+
+$\bf (8)$
+Breakfast and work hours: $10$ pairs, $d = \text{With} - \text{Without}$, $\alpha = 0.05$.
+
+```{r, echo=F, warning=F, message=F}
+with_b    = c(8, 7, 9, 5, 9, 8, 10, 7, 6, 9)
+without_b = c(6, 5, 5, 4, 7, 7, 7, 5, 6, 5)
+ktab(cbind.data.frame(Pair = 1:10, `Work Hours with Breakfast` = with_b,
+                      `Work Hours without Breakfast` = without_b, `Difference: d = With - Without` = with_b - without_b),
+     caption = 'Hours worked, with the differences filled in')
+```
+
+```{r, echo=T, message=F, warning=F}
+d = with_b - without_b
+one.sample.t.test(m0 = 0, xbar = mean(d), s = sd(d), n = length(d),
+                  alpha = 0.05, test = 'upper.tail', verbose = T)
+```
+
+`r RA`
+**Assumptions.** The data are paired: each person worked once without breakfast and once with it. With only $10$ pairs, we must assume the differences are approximately normal. A positive difference means the person worked longer on the day they ate breakfast.
+
+**Hypotheses.** Let $\mu_d$ be the mean difference in hours worked (with breakfast minus without). $H_0: \mu_d = 0$ and $H_A: \mu_d > 0$ (upper-tailed).
+
+**Test statistic.** The differences are $2, 2, 4, 1, 2, 1, 3, 2, 0, 4$, so $\bar{d} = 2.1$ hours and $s_d = 1.287$ hours.
+\[ t_{obs} = \frac{2.1 - 0}{1.287/\sqrt{10}} = \frac{2.1}{0.407} \approx 5.16, \qquad df = 9 \]
+
+**$p$-value.** In the $9$ df row, $5.16$ is beyond $4.781$ (upper tail $0.0005$), so
+\[ P(t \geq 5.16 \mid H_0 \ \text{true}) < 0.0005 \]
+(the exact value is about $0.0003$).
+
+**Decision.** The $p$-value $< 0.0005 < \alpha = 0.05$ (equivalently, $t_{obs} = 5.16 > t_{9, 0.95} = 1.833$), so we reject $H_0$. At the $5\%$ significance level there is strong evidence that eating breakfast increases the mean number of hours worked; in this sample, people worked about $2.1$ hours longer after breakfast.
+`r RZ`
+
+
+
+# Part VI: Chi-Square Goodness-of-Fit Tests
+
+
+$\bf (9)$
+A die rolled $120$ times, $\alpha = 0.05$.
+
+```{r, echo=T, message=F, warning=F}
+chi.squared.GOF.test(observed.ct = c(15, 29, 16, 15, 30, 15), expected.freq = rep(1/6, 6), alpha = 0.05)
+```
+
+(a) If the die is fair, what is the probability of each face? State the null and alternative hypotheses.
+
+`r RA`
+Each face has probability $1/6$. $H_0$: the die is fair, $p_1 = p_2 = \cdots = p_6 = 1/6$. $H_A$: the die is not fair; at least one face has a probability different from $1/6$.
+`r RZ`
+
+(b) Fill in the expected frequency column and check the assumption that every expected count is at least $5$.
+
+`r RA`
+Every expected count is $120 \times \frac{1}{6} = 20$, which is at least $5$, so the assumption holds.
+`r RZ`
+
+(c) Compute the test statistic $\chi^2_{obs}$ and give its degrees of freedom.
+
+`r RA`
+\[ \chi^2_{obs} = \frac{(15 - 20)^2}{20} + \frac{(29 - 20)^2}{20} + \frac{(16 - 20)^2}{20} + \frac{(15 - 20)^2}{20} + \frac{(30 - 20)^2}{20} + \frac{(15 - 20)^2}{20} \]
+\[ = 1.25 + 4.05 + 0.80 + 1.25 + 5.00 + 1.25 = 13.6, \qquad df = 6 - 1 = 5 \]
+`r RZ`
+
+(d) Use the chi-square table to find the critical value and the $p$-value.
+
+`r RA`
+The critical value is $\chi^2_{5, 0.95} = 11.070$. In the $5$ df row, $13.6$ falls between $12.833$ (upper tail $0.025$) and $16.750$ (upper tail $0.005$), so
+\[ 0.005 < P(\chi^2 \geq 13.6 \mid H_0 \ \text{true}) < 0.025 \]
+(the exact value is about $0.018$).
+`r RZ`
+
+(e) Is there enough evidence to conclude that the die is not fair?
+
+`r RA`
+Yes. The $p$-value $< 0.025 < \alpha = 0.05$ (equivalently, $\chi^2_{obs} = 13.6 > 11.070$), so we reject $H_0$. At the $5\%$ significance level there is evidence that the die is not fair. The largest contributions come from the faces 2 and 5, which came up $29$ and $30$ times instead of the expected $20$.
+`r RZ`
+
+
+$\bf (10)$
+Marital status of $400$ young adults aged 18–24 compared with the U.S. population percentages, $\alpha = 0.05$.
+
+```{r, echo=T, message=F, warning=F}
+chi.squared.GOF.test(observed.ct = c(140, 238, 2, 20), expected.freq = c(0.313, 0.561, 0.025, 0.101), alpha = 0.05)
+```
+
+```{r, echo=F, warning=F, message=F}
+ktab(cbind.data.frame(`Marital Status` = c('Never married', 'Married', 'Widowed', 'Divorced/separated'),
+                      `Percent` = c(31.3, 56.1, 2.5, 10.1),
+                      `Observed` = o9,
+                      `Expected` = sprintf('%.2f', e9),
+                      `Contribution` = sprintf('%.2f', c9)),
+     caption = 'Expected counts and chi-square contributions for the marital status sample')
+```
+
+`r RA`
+**Assumptions.** The $400$ young adults are a random sample, and every expected count is at least $5$ (the smallest is widowed, $400 \times 0.025 = 10$).
+
+**Hypotheses.** $H_0$: the marital status of U.S. young adults aged 18–24 follows the population distribution, $p_{\text{never}} = 0.313$, $p_{\text{married}} = 0.561$, $p_{\text{widowed}} = 0.025$, $p_{\text{divorced}} = 0.101$. $H_A$: at least one of these proportions is different for young adults.
+
+**Test statistic.** The expected counts are $400 \times$ each proportion: $125.20$, $224.40$, $10.00$ and $40.40$ (table above).
+\[ \chi^2_{obs} = \frac{(140 - 125.2)^2}{125.2} + \frac{(238 - 224.4)^2}{224.4} + \frac{(2 - 10)^2}{10} + \frac{(20 - 40.4)^2}{40.4} = 1.75 + 0.82 + 6.40 + 10.30 = 19.27, \qquad df = 4 - 1 = 3 \]
+
+**$p$-value.** In the $3$ df row, $19.27$ is beyond $17.730$ (upper tail $0.0005$), so
+\[ P(\chi^2 \geq 19.27 \mid H_0 \ \text{true}) < 0.0005 \]
+(the exact value is about $0.0002$).
+
+**Decision.** The $p$-value $< 0.0005 < \alpha = 0.05$ (equivalently, $\chi^2_{obs} = 19.27 > \chi^2_{3, 0.95} = 7.815$), so we reject $H_0$. At the $5\%$ significance level the marital status of young adults does not fit the distribution of the U.S. population. The biggest differences are that far fewer young adults are divorced/separated ($20$ vs $40.4$ expected) or widowed ($2$ vs $10$) than the population percentages predict.
+`r RZ`
+
+
+
+# Part VII: Chi-Square Test of Independence
+
+
+$\bf (11)$
+Sugar-sweetened beverage tax poll, $3 \times 4$ table, $n = 1{,}235$, $\alpha = 0.05$.
+
+```{r, echo=T, message=F, warning=F}
+tab = matrix(c(48, 433, 41, 160,
+               54, 234, 24, 147,
+               16,  43, 16,  19), nrow = 3, byrow = TRUE,
+             dimnames = list(c('Against', 'In favor', 'No opinion'),
+                             c('Asian-American', 'White/Non-Hispanic', 'Black', 'Hispanic/Latino')))
+chi.squared.test(tab, var1.name = 'Ethnicity', var2.name = 'Opinion', alpha = 0.05, test = 'independence')
+```
+
+(a) State the null and alternative hypotheses in words.
+
+`r RA`
+$H_0$: opinion on the sugar-sweetened beverage tax is independent of ethnic group (the distribution of opinions is the same in every ethnic group). $H_A$: opinion on the tax depends on ethnic group.
+`r RZ`
+
+(b) Compute the expected count for every cell and check the assumption that every expected count is at least $5$.
+
+```{r, echo=F, warning=F, message=F}
+et = cbind.data.frame(Opinion = c('Against tax', 'In favor of tax', 'No opinion'),
+                      matrix(sprintf('%.2f', e10), nrow = 3))
+names(et)[2:5] = colnames(tab)
+ktab(et, caption = 'Expected counts: row total times column total, divided by 1,235')
+```
+
+`r RA`
+For example, the expected count for Asian-Americans against the tax is $\frac{682 \times 118}{1{,}235} = 65.16$. All twelve expected counts are in the table above; the smallest is $6.17$ (Black, no opinion), so every expected count is at least $5$ and the assumption holds.
+`r RZ`
+
+(c) Compute the test statistic $\chi^2_{obs}$ and give its degrees of freedom.
+
+```{r, echo=F, warning=F, message=F}
+ct = cbind.data.frame(Opinion = c('Against tax', 'In favor of tax', 'No opinion'),
+                      matrix(sprintf('%.2f', c10), nrow = 3))
+names(ct)[2:5] = colnames(tab)
+ktab(ct, caption = 'Each cell\'s contribution (O - E) squared over E')
+```
+
+`r RA`
+Adding the twelve contributions in the table above,
+\[ \chi^2_{obs} = \sum \frac{(O - E)^2}{E} = 48.60, \qquad df = (3 - 1)(4 - 1) = 6 \]
+`r RZ`
+
+(d) Use the chi-square table to find the critical value and the $p$-value.
+
+`r RA`
+The critical value is $\chi^2_{6, 0.95} = 12.592$. In the $6$ df row, $48.60$ is far beyond $24.103$ (upper tail $0.0005$), so
+\[ P(\chi^2 \geq 48.60 \mid H_0 \ \text{true}) < 0.0005 \]
+(the exact value is about $0.00000001$).
+`r RZ`
+
+(e) Is there enough evidence to conclude that opinion on the tax depends on ethnic group?
+
+`r RA`
+Yes. The $p$-value $< 0.0005 < \alpha = 0.05$ (equivalently, $\chi^2_{obs} = 48.60 > 12.592$), so we reject $H_0$. At the $5\%$ significance level there is strong evidence that opinion on a sugar-sweetened beverage tax is related to ethnic group in California. The largest contribution is from Black respondents with no opinion ($16$ observed vs $6.17$ expected); White/Non-Hispanic respondents were more often against the tax than expected ($433$ vs $392.08$).
+`r RZ`

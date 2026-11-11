@@ -1,0 +1,372 @@
+---
+title: "Homework 4"
+output:
+  html_document:
+    keep_md: false   ## no-op; keeps html_document a MAP so _output.yml merges in
+  pdf_document: default
+always_allow_html: true
+header-includes:
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{colortbl}
+  - \usepackage{wrapfig}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+bibliography: ../../misc/hw4_2026bibs.bib
+---
+
+<!--
+  FALL 2026 HOMEWORK 4 (written Nov 7 2026), due Sunday Nov 22 at 11:59PM per
+  Course_Schedule.Rmd. Covers Weeks 11-13: two-sample tests for two proportions,
+  two independent means (pooled and unpooled) and paired samples, then the
+  chi-square goodness-of-fit test and test of independence. Cramer's V, McNemar
+  and Fisher (Nov 18) are not on it.
+
+  Sources:
+    - 4, 5, 6 are the Spring 2024 Homework 5 problems 5, 6, 7
+      (homeworks/2024/week14homework.Rmd), in its wording. Changes:
+        4: new part (a), the large-sample check. With the pooled p-hat,
+           n2 * p-hat = 14.65, just under the course's 15, so students say what
+           that means before finishing the test (Jarred's choice, Nov 7 2026).
+        5: the 2024 table overwrote the CSV's DF column with 203/62 and printed
+           it as "Sample Size"; this copy does the same, labelled explicitly.
+        6: "(use df = min(n1 - 1, n2 - 1))" added, the course's unpooled rule.
+      2024 HW5 problem 4 (SCOTUS approval) was dropped: it averages approval
+      percentages over 192 polls and treats the number of polls as n, which is
+      not a two-proportion test.
+    - 3, 7, 8, 9, 10, 11 are OpenStax Introductory Statistics 2e Chapter 10/11
+      Homework 10.109, 10.115, 10.114, 11.72, 11.73 and 11.100. Changes:
+        7 (10.115): the book gives no alpha; we use 0.05. Context added on what
+          was measured; the data are the book's.
+        8 (10.114): the book's question is whether the mean increase is more
+          than two hours. Here it is H0: mu_d = 0 vs HA: mu_d > 0 (does breakfast
+          add any work time), the form taught in class.
+        9, 10 (11.72, 11.73): the book gives no alpha; we use 0.05.
+  Problem 1 (key concepts) is new, rewritten Nov 9 2026 as questions per Jarred.
+  Problem 2 (choosing a test, added Nov 9 2026) is new: four hypothetical study
+  descriptions, not real studies.
+-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
+library(kableExtra)
+# emit tables in the native format of whichever output is being rendered
+# (hardcoding 'html' made kable dump raw HTML into the PDF, which LaTeX
+#  flattened into a vertical list of cell values instead of a table)
+tbl_fmt <- if (knitr::is_latex_output()) "latex" else "html"
+# write the printed table out as a downloadable .csv (linked from the
+# Homeworks > Data & PDF Downloads menu). Returns its input unchanged, so the
+# rendered table is exactly what it was before and the .csv can never drift
+# from the assignment -- both come from this same object.
+export_tbl <- function(x, file, names = NULL, digits = NULL) {
+  d <- as.data.frame(x, check.names = FALSE)
+  if (!is.null(names)) colnames(d) <- names
+  # round to match what the rendered table shows
+  if (!is.null(digits))
+    d[] <- lapply(d, function(cl) if (is.numeric(cl)) round(cl, digits) else cl)
+  # strip inline LaTeX from cells that carry it, so they read plainly in Excel
+  d[] <- lapply(d, function(cl) {
+    if (is.character(cl) || is.factor(cl)) {
+      cl <- as.character(cl)
+      m <- grepl('\\$', cl)
+      cl[m] <- gsub('[${}\\\\_]', '', cl[m])
+    }
+    cl
+  })
+  dir <- '../../Data/homework_tables'
+  dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+  write.csv(d, file.path(dir, file), row.names = FALSE)
+  # invisible(), not a bare `x`: this helper is always called as a bare
+  # statement for its CSV side effect. Returning x visibly made knitr echo
+  # the entire data frame as ## console output above the real kable table.
+  invisible(x)
+}
+# every table on this page is styled the same way
+# wide = TRUE shrinks a table to the PDF page width (scale_down would also
+# stretch narrow tables, so it is only switched on for the wide ones)
+ktab <- function(x, caption = NULL, digits = 2, wide = FALSE, ...) {
+  lo <- c('striped', 'HOLD_position', if (wide) 'scale_down')
+  kable(x, format = tbl_fmt, digits = digits, row.names = FALSE, booktabs = TRUE,
+        escape = FALSE, caption = caption, ...) %>%
+    kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+    kable_styling(bootstrap_options = 'striped', latex_options = lo)
+}
+library(knitr)
+mainpath = '../../Data/'
+```
+
+Show how you compute each answer: write the formula, put in the numbers, and give the result.
+Use the [Z-table](../../misc/Z_table.html), [t-table](../../misc/t_table.html) and
+[chi-square table](../../misc/chisq_table.html) from the course website.
+You can check your answers with the [course calculators](https://stat-tools.jmks-homelab.dev/).
+
+Every significance test on this assignment has **five steps**: (1) check the assumptions,
+(2) state the null and alternative hypotheses, defining each parameter in words, (3) compute the
+test statistic, (4) compute the $p$-value, and (5) make a decision at the stated significance level
+and interpret it in the context of the problem.
+
+
+# Part I: Key Concepts
+
+
+$\bf (1)$
+Answer each of the following questions in a few sentences.
+
+(a) Why do we use the pooled sample proportion $\hat{p} = \frac{x_1 + x_2}{n_1 + n_2}$ in the standard error $SE_0$ when we test $H_0: p_1 = p_2$, and what is the benefit of pooling?
+
+(b) What are the assumptions of the test comparing two population proportions?
+
+(c) What does the pooled standard deviation $s_{pooled} = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$ estimate in a two-sample $t$-test, and when is it appropriate to use it?
+
+(d) Give the formula for Welch's degrees of freedom for the unpooled two-sample $t$-test. How does it differ from using $df = \min(n_1 - 1, n_2 - 1)$?
+
+(e) Fill in the blanks. When we can assume $\sigma_1 = \sigma_2$, the pooled two-sample $t$-test has \_\_\_\_\_\_\_\_ degrees of freedom than the unpooled test, so its $t$-distribution has \_\_\_\_\_\_\_\_ tails and the test has \_\_\_\_\_\_\_\_ power.
+
+(f) What are the assumptions of the two independent samples $t$-test? What extra assumption does the pooled version need?
+
+(g) When is it appropriate to use a paired $t$-test, and how does it differ from a two independent samples $t$-test?
+
+(h) What are the assumptions of the paired $t$-test?
+
+(i) What are the observed counts and the expected counts in a chi-square test, and how is each expected count computed?
+
+(j) What are the parameters of a chi-square distribution? What are their values for a goodness-of-fit test with $k$ categories, and for a test of independence on a table with $r$ rows and $c$ columns?
+
+(k) What is the difference between a goodness-of-fit test and a test of independence, and when is each test appropriate?
+
+(l) What are the assumptions of the chi-square goodness-of-fit test and the chi-square test of independence?
+
+(m) Why is a chi-square test always an upper-tailed test?
+
+
+
+# Part II: Choosing a Test
+
+
+$\bf (2)$
+For each study below, (i) decide whether the samples are **independent** or **dependent (paired)** and explain why, and (ii) name the most appropriate test: the test comparing two proportions, the two independent samples $t$-test, the paired $t$-test, the chi-square goodness-of-fit test, or the chi-square test of independence. You do not need to carry out the test.
+
+(a) A running-shoe company claims that its new carbon-plated racing shoe makes runners faster. A coach recruits $20$ members of a university cross-country team. Each runner runs a $5$ km time trial on the same course twice, one week apart: once in their usual training shoes and once in the new shoes, with a coin flip deciding which pair they wear first. The coach records each runner's finishing time in minutes and wants to know whether times are lower, on average, in the new shoes.
+
+(b) A university's advising office believes that text-message reminders get more first-year students to use its free tutoring center. At the start of the fall semester, $1{,}200$ first-year students are randomly split into two groups of $600$: one group receives a weekly text reminder about the tutoring center and the other receives none. At the end of the semester, the office records whether each student visited the tutoring center at least once.
+
+(c) An animal scientist suspects that adding a seaweed supplement to dairy cattle feed changes how much milk the cows produce, but she does not know in which direction. Of the $80$ cows in a university research herd, $40$ are randomly assigned to the standard diet and $40$ to the standard diet plus the supplement. After eight weeks, she records each cow's average milk yield in kilograms per day.
+
+(d) A hospital's physical therapy team thinks a new rehabilitation program shortens recovery after knee-replacement surgery. They recruit $36$ patients and form $18$ pairs, matching the two patients in each pair on age, sex and body mass index. Within each pair, a coin flip sends one patient to the new program and the other to the standard program, and the team records the number of days until each patient can walk unassisted.
+
+
+
+# Part III: Comparing Two Population Proportions $p_1$ and $p_2$
+
+
+$\bf (3)$
+A group of friends debated whether more people aged 21–30 use wearable fitness devices (such as smartwatches and fitness bands) than people aged 31–40. To settle it, they consulted a research study of wearable fitness device use among adults. Of the $973$ randomly sampled people in their twenties, $379$ use wearable fitness devices. Of the $1{,}304$ randomly sampled people in their thirties, $404$ use wearable fitness devices. Test at the $\alpha = 0.05$ significance level whether the proportion of people in their twenties who use wearable fitness devices is higher than the proportion of people in their thirties [@illowsky2023introductory, Homework 10.109; see [OpenStax Section 10.3, Comparing Two Independent Population Proportions](https://openstax.org/books/introductory-statistics-2e/pages/10-3-comparing-two-independent-population-proportions)].
+
+```{r, echo=F, message=F, warning=F}
+df = cbind.data.frame(`Age Group` = c('21–30 (twenties)', '31–40 (thirties)'),
+                      Parameter = c('$p_1$', '$p_2$'),
+                      `Use a Wearable Fitness Device` = c(379, 404),
+                      `Sample Size` = c(973, 1304))
+export_tbl(df, 'hw4_2026_wearable_fitness.csv')
+ktab(df, caption = 'Wearable fitness device use by age group')
+```
+
+(a) Check the assumptions of the test. Compute the pooled sample proportion $\hat{p}$ and use it to check the four large-sample counts.
+
+(b) Define $p_1$ and $p_2$ in words and state the null and alternative hypotheses.
+
+(c) Compute $\hat{p}_1$, $\hat{p}_2$, the standard error under $H_0$, and the test statistic $z_{obs}$.
+
+(d) Compute the $p$-value.
+
+(e) Is there enough evidence to conclude that a higher proportion of people in their twenties use wearable fitness devices than people in their thirties? Interpret your decision in context.
+
+
+$\bf (4)$
+A study published in the <i>Journal of Paediatrics and Child Health</i> was interested in the number of reports of child abuse in Sergipe, Brazil, before and after COVID-19 started. The researchers hypothesized that children in abusive homes might be in more danger because they weren’t going to school and their families were under more stress [@martins2020decrease]. A summary of the study is reported below:
+
+```{r, echo=F, warning=F, message=F}
+df = cbind.data.frame(Period = c('Before COVID-19 (2019)', 'After COVID-19 (2020)'),
+                      `Parameter` = c('$p_1$','$p_2$'),
+                      `Total Registries` = c(70,53),
+                      `Registries for Children under 12 Years of Age` = c(18, 16),
+                      `Relative Proportion` = c(round(18/70,3), round(16/53,3)))
+
+export_tbl(df, 'hw4_2026_covid_child_abuse_reports.csv', digits = 3,
+           names = c('Period', 'Parameter', 'Total Registries',
+                     'Registries for Children under 12 Years of Age',
+                     'Relative Proportion'))
+ktab(df, digits = 3, wide = TRUE, caption = 'Child abuse registries in Sergipe, Brazil, before and after the start of the COVID-19 pandemic')
+```
+
+Conduct a two-sample test at the $\alpha = 0.01$ significance level to determine whether the proportion of abuse registries involving children under the age of $12$ was significantly different after the start of the COVID-19 pandemic. (Note that this proportion is the share of all registries that involve a child under 12, not the underlying rate of abuse in the population.)
+
+(a) Compute the pooled sample proportion $\hat{p}$ and use it to check the four large-sample counts $n_1\hat{p}$, $n_1(1-\hat{p})$, $n_2\hat{p}$ and $n_2(1-\hat{p})$. Is every count at least $15$? If not, what does that mean for how much we can trust the $p$-value from the standard normal distribution?
+
+(b) Carry out the remaining four steps of the test (hypotheses, test statistic, $p$-value, decision in context), even if part (a) raised a concern.
+
+
+
+# Part IV: Comparing Two Independent Population Means $\mu_1$ and $\mu_2$
+
+
+$\bf (5)$
+A study published in the journal <i>Physical Culture and Sport. Studies and Research</i> explored what motivates athletes to keep playing sports, comparing team sports like football with individual ones like taekwondo [@moradi2020motivation]. The study used stratified random sampling to survey $265$ athletes from four team disciplines (football, volleyball, basketball, handball) and 2 individual disciplines (kung fu and taekwondo). The study evaluated motivational factors affecting sport participation based on eight fields: achievement/status, teamwork, fitness, energy release, situational factors, skill development, friendship, and fun. Each field was evaluated based on a survey in which every item was scored on a three-level likert scale (very important=3, somewhat important=2, and not important=1). A field contains several items, and an athlete's score for that field is the **sum** of their item responses - so field scores range well above 3. The results of the study are summarized in the table below:
+
+```{r, echo=F, warning=F, message=F}
+tab = read.csv(file = paste0(mainpath, 'sports_motivation_summary.csv'))
+tab$Variables[tab$Variables == '\''] = ''
+# the CSV's DF column is the pooled df (263); the table shows each group's n
+tab$DF = rep(c(203, 62), 9)
+names(tab) = c('Motivational Factor', 'Sport Type', 'Sample Mean', 'Sample Stdev.', 'Sample Size')
+export_tbl(tab, 'hw4_2026_sports_motivation.csv')
+ktab(tab, caption = 'Motivational factor scores for team (n = 203) and individual (n = 62) athletes')
+```
+
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to determine whether fitness as a motivating factor is significantly different between team and individual sports. Assume the populations have the SAME variance (use the pooled standard deviation) - be sure to address all five steps of the hypothesis test.
+
+
+$\bf (6)$
+A 1993 study published in the <i>Canadian Journal of Zoology</i> investigated the characteristics of maturation and growth in two lowland populations (Servotte and Thevenon) of European Common Frogs <i>Rana temporaria</i> [@augert1993plasticity] in Southeast France from 1986 - 1989. A summary of the body lengths for male and female frogs from 1 - 4 years in age in both populations are summarized below.
+
+```{r, echo=F, warning=F, message=F}
+tab = read.csv(file = paste0(mainpath, 'frog_body_sizes.csv'), check.names = FALSE)
+names(tab) = c('Age (Years)', 'Population Location', 'Male Body Length (mm)', 'Male Stdev', 'Male Sample Size',
+               'Female Body Length (mm)', 'Female Stdev', 'Female Sample Size')
+export_tbl(tab, 'hw4_2026_frog_body_sizes.csv')
+ktab(tab, wide = TRUE, caption = 'Mean body length of common frogs by age, sex and population')
+```
+
+Conduct a two independent samples $t$-test at the $\alpha = 0.05$ significance level to evaluate whether there is a statistically significant difference in the mean body lengths of four-year-old male frogs between the Servotte and Thevenon populations. Assume the populations have DIFFERENT variances (use the unpooled standard error with $df = \min(n_1 - 1, n_2 - 1)$) - be sure to address all five steps of the hypothesis test.
+
+
+
+# Part V: Paired Samples
+
+
+$\bf (7)$
+Ten individuals went on a low-fat diet for 12 weeks to lower their cholesterol. Each person's total cholesterol level (in mg/dL) was measured at the start of the diet and again at the end of the 12 weeks. The question is whether the diet lowered cholesterol: do the data show that cholesterol levels were significantly lower at the end of the diet than at the start? Use the $\alpha = 0.05$ significance level [@illowsky2023introductory, Homework 10.115; see [OpenStax Section 10.4, Matched or Paired Samples](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples)].
+
+```{r, echo=F, warning=F, message=F}
+start = c(140, 220, 110, 240, 200, 180, 190, 360, 280, 260)
+end   = c(140, 230, 120, 220, 190, 150, 200, 300, 300, 240)
+df = cbind.data.frame(Person = 1:10,
+                      `Starting Cholesterol (mg/dL)` = start,
+                      `Ending Cholesterol (mg/dL)` = end,
+                      `Difference: d = Ending - Starting` = rep('', 10))
+# the difference column is for students to fill in -- export the data only
+export_tbl(df[, 1:3], 'hw4_2026_cholesterol.csv')
+ktab(df, caption = 'Cholesterol before and after a 12-week low-fat diet')
+```
+
+(a) Explain why these are paired (dependent) samples and not two independent samples.
+
+(b) Fill in the difference column, $d = \text{Ending} - \text{Starting}$, and compute the sample mean difference $\bar{d}$ and the standard deviation of the differences $s_d$.
+
+(c) Define $\mu_d$ in words and state the null and alternative hypotheses.
+
+(d) Compute the test statistic $t_{obs}$ and give its degrees of freedom.
+
+(e) Compute the $p$-value.
+
+(f) Is there enough evidence to conclude that the low-fat diet lowered cholesterol levels? Interpret your decision in context.
+
+
+$\bf (8)$
+In "To Breakfast or Not to Breakfast?", Richard Ayore remembers the mornings he and his brothers and sister spent weeding their family's shamba (garden) in Kenya. One brother always stayed behind and joined them an hour later, because he preferred to wait for breakfast before he came to weed. "This is why I always work more hours than you guys!" he said. To prove him right or wrong, they tried it. One day they all went to work as usual without breakfast and recorded how long each person worked before getting tired and stopping. The next day, they all ate breakfast before going to work and again recorded how long they worked before getting tired and stopping. The data (in hours) are below [@illowsky2023introductory, Homework 10.114].
+
+```{r, echo=F, warning=F, message=F}
+with_b    = c(8, 7, 9, 5, 9, 8, 10, 7, 6, 9)
+without_b = c(6, 5, 5, 4, 7, 7, 7, 5, 6, 5)
+df = cbind.data.frame(Pair = 1:10,
+                      `Work Hours with Breakfast` = with_b,
+                      `Work Hours without Breakfast` = without_b,
+                      `Difference: d = With - Without` = rep('', 10))
+export_tbl(df[, 1:3], 'hw4_2026_breakfast.csv')
+ktab(df, caption = 'Hours worked before stopping, with and without breakfast')
+```
+
+Test at the $\alpha = 0.05$ significance level whether eating breakfast increases the mean number of hours worked - be sure to address all five steps of the hypothesis test. Use $d = \text{With} - \text{Without}$, and explain what a positive difference means in this problem.
+
+
+
+# Part VI: Chi-Square Goodness-of-Fit Tests
+
+
+$\bf (9)$
+A board game player suspects that one of their six-sided dice is not fair. To check, they roll the die $120$ times and record the face that comes up each time. The results are in the table below. Fill in the expected frequency column, then conduct a goodness-of-fit test at the $\alpha = 0.05$ significance level to determine whether the die is fair [@illowsky2023introductory, Homework 11.72; see [OpenStax Section 11.2, Goodness-of-Fit Test](https://openstax.org/books/introductory-statistics-2e/pages/11-2-goodness-of-fit-test)].
+
+```{r, echo=F, warning=F, message=F}
+df = cbind.data.frame(`Face Value` = 1:6,
+                      `Observed Frequency` = c(15, 29, 16, 15, 30, 15),
+                      `Expected Frequency` = rep('', 6))
+export_tbl(df[, 1:2], 'hw4_2026_die_rolls.csv')
+ktab(df, caption = 'Results of 120 rolls of a six-sided die')
+```
+
+(a) If the die is fair, what is the probability of each face? State the null and alternative hypotheses.
+
+(b) Fill in the expected frequency column and check the assumption that every expected count is at least $5$.
+
+(c) Compute the test statistic $\chi^2_{obs}$ and give its degrees of freedom.
+
+(d) Use the chi-square table to find the critical value and the $p$-value (a range is fine).
+
+(e) Is there enough evidence to conclude that the die is not fair? Interpret your decision in context.
+
+
+$\bf (10)$
+The table below gives the marital status distribution of the population of U.S. men, ages 15 and older (the percent column). Suppose that a random sample of $400$ U.S. young adults, $18$ to $24$ years old, yielded the frequency distribution in the observed frequency column. We are interested in whether this age group fits the marital status distribution of the U.S. adult population. Conduct a goodness-of-fit test at the $\alpha = 0.05$ significance level - be sure to address all five steps of the hypothesis test [@illowsky2023introductory, Homework 11.73].
+
+```{r, echo=F, warning=F, message=F}
+df = cbind.data.frame(`Marital Status` = c('Never married', 'Married', 'Widowed', 'Divorced/separated'),
+                      `Percent of U.S. Men (15 and older)` = c(31.3, 56.1, 2.5, 10.1),
+                      `Observed Frequency (400 young adults)` = c(140, 238, 2, 20),
+                      `Expected Frequency` = rep('', 4))
+export_tbl(df[, 1:3], 'hw4_2026_marital_status.csv')
+ktab(df, digits = 1, wide = TRUE, caption = 'Marital status: U.S. population percentages and a sample of 400 young adults aged 18 to 24')
+```
+
+Fill in the expected frequency column, rounding to two decimal places, as part of your answer.
+
+
+
+# Part VII: Chi-Square Test of Independence
+
+
+$\bf (11)$
+In 2013, a poll in California asked people their opinion on taxing sugar-sweetened beverages (such as soda). The results are presented in the table below, classified by ethnic group and response. Are the poll responses independent of the participants' ethnic group? Conduct a test of independence at the $\alpha = 0.05$ significance level [@illowsky2023introductory, Homework 11.100; see [OpenStax Section 11.3, Test of Independence](https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence)].
+
+```{r, echo=F, warning=F, message=F}
+obs = matrix(c(48, 433, 41, 160,
+               54, 234, 24, 147,
+               16,  43, 16,  19), nrow = 3, byrow = TRUE)
+eth = c('Asian-American', 'White/Non-Hispanic', 'Black', 'Hispanic/Latino')
+df = cbind.data.frame(`Opinion` = c('Against tax', 'In favor of tax', 'No opinion', 'Column Total'),
+                      rbind(obs, colSums(obs)),
+                      `Row Total` = c(rowSums(obs), sum(obs)))
+names(df)[2:5] = eth
+export_tbl(df, 'hw4_2026_sugar_tax_poll.csv')
+ktab(df, caption = 'Opinion on a sugar-sweetened beverage tax by ethnic group, California, 2013')
+```
+
+(a) State the null and alternative hypotheses in words.
+
+(b) Compute the expected count for every cell, rounding to two decimal places, and check the assumption that every expected count is at least $5$. (Hint: expected count $= \frac{\text{row total} \times \text{column total}}{\text{grand total}}$.)
+
+(c) Compute the test statistic $\chi^2_{obs}$ and give its degrees of freedom.
+
+(d) Use the chi-square table to find the critical value and the $p$-value (a range is fine).
+
+(e) Is there enough evidence to conclude that opinion on the tax depends on ethnic group? Interpret your decision in context.
+
+
+\newpage
+# References

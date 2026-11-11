@@ -28,8 +28,12 @@ header-includes:
   lecture_slides/Week 12/2026/Week12_Lecture28_Slides_11_09_2026.pptx; figures and number checks:
   assets/make_lecture28_figures.R). Causal inference was dropped, and every later topic moved one class
   earlier (see the SHIFT note in Course_Schedule.Rmd): Wed Nov 11 is the introduction to analyzing
-  categorical variables and Fri Nov 13 is goodness-of-fit and tests of independence. Add those sections
-  here when they are written.
+  categorical variables and Fri Nov 13 is goodness-of-fit and tests of independence.
+  Nov 11 2026: Lecture 28 stopped after "Pooling: advantages and disadvantages" (slide 15), so the rank-sum
+  test and matched pairs carried into Lecture 29 (Wed Nov 11; deck Week12_Lecture29_Slides_11_11_2026.pptx;
+  figures and number checks: assets/make_lecture29_figures.R), which then adds the "which SE" summary table
+  and the categorical-data introduction (tables, observed/expected counts, the chi-square distribution and
+  X^2). Friday's goodness-of-fit and independence sections go after "The chi-square statistic".
   The 2024 Week 12 content that used to be on this page (the sign test, two proportions) is in git history;
   both topics are now on the Week 11 page.
 -->
@@ -135,6 +139,8 @@ on one question that trips people up: **when do we pool?** Then it extends the t
 proportions to **means**, first for two independent samples and then for matched pairs. The textbook
 sections are [OpenStax 10.1](https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations)
 and [OpenStax 10.4](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples).
+In class, Lecture 28 ended with the advantages and disadvantages of pooling. The rank-sum test and matched
+pairs moved to Lecture 29.
 
 # Review: when do we pool?
 
@@ -608,6 +614,19 @@ reasonable. What changes if we pool?
    freedom, and the extra df shrink the P-value. That is the payoff of pooling, *when the equal-SD assumption
    is right*: a more powerful test. Both tests reject $H_0$ at the 5% level, so the conclusion is the same.
 
+# Lecture 29
+
+Lecture 29 finishes the two-sample material:
+
+* the rank-sum test, the non-parametric alternative to the two independent samples $t$-test;
+* matched pairs;
+* a summary of every test so far, showing which SE each one uses, pooled or unpooled.
+
+It then opens a new topic, **categorical data with more than two categories**: one-way and two-way tables,
+observed and expected counts, the chi-square distribution and the $X^2$ statistic. The textbook sections
+are [OpenStax 10.4](https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples)
+and [OpenStax 11.1&ndash;11.3](https://openstax.org/books/introductory-statistics-2e/pages/11-1-facts-about-the-chi-square-distribution).
+
 ## A non-parametric alternative: the rank-sum test
 
 The two independent samples $t$-test needs normal populations or large samples. When the samples are
@@ -942,6 +961,199 @@ tab(data.frame(
 More on the two non-parametric tests, with worked examples, is under **Resources → Extras →
 Non-parametric Tests**: [Non-parametric tests for two samples](misc/Non-Parametric-Tests-For-Two-Samples.html).
 
+## Every test so far: which SE?
+
+The Lecture 29 summary slide. Every test statistic has the same shape, (estimate &minus; null value) / SE.
+What changes from test to test is the SE, and for two independent samples there are two versions. We
+**pool** only when $H_0$ says the two proportions are equal ($H_0: p_1 = p_2$), or when two means come
+from populations with equal SDs ($\sigma_1 = \sigma_2$) and that is a reasonable assumption. Otherwise we use
+the **unpooled** SE. Note that the one-proportion test uses the null value $p_0$ in its SE, because $H_0$
+tells us what $p$ is.
+
+```{r, echo=FALSE}
+tab(data.frame(
+  Test = c('one proportion $z$', 'one mean $t$', 'two proportions $z$', 'two means $t$', 'matched pairs $t$'),
+  Samples = c('one sample', 'one sample', 'two independent samples', 'two independent samples',
+              'dependent (pairs)'),
+  `Test statistic` = c('$z_{obs} = \\frac{\\hat{p} - p_0}{SE}$', '$t_{obs} = \\frac{\\bar{x} - \\mu_0}{SE}$',
+                       '$z_{obs} = \\frac{(\\hat{p}_1 - \\hat{p}_2) - d_0}{SE}$',
+                       '$t_{obs} = \\frac{\\bar{x}_1 - \\bar{x}_2}{SE}$', '$t_{obs} = \\frac{\\bar{d} - 0}{SE}$'),
+  `SE, unpooled` = c('$\\sqrt{\\frac{p_0(1 - p_0)}{n}}$', '$\\frac{s}{\\sqrt{n}}$',
+                     '$\\sqrt{\\frac{\\hat{p}_1(1-\\hat{p}_1)}{n_1} + \\frac{\\hat{p}_2(1-\\hat{p}_2)}{n_2}}$<br>(for $H_0: p_1 - p_2 = d_0 \\neq 0$, and every CI)',
+                     '$\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$<br>(our default)',
+                     '$\\frac{s_d}{\\sqrt{n}}$, $n$ = number of pairs'),
+  `SE, pooled` = c('&mdash;', '&mdash;',
+                   '$\\sqrt{\\hat{p}(1-\\hat{p})\\left(\\frac{1}{n_1} + \\frac{1}{n_2}\\right)}$, $\\hat{p} = \\frac{X_1 + X_2}{n_1 + n_2}$<br>(only for $H_0: p_1 = p_2$)',
+                   '$s_p\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}$<br>(only if $\\sigma_1 = \\sigma_2$ is reasonable)',
+                   '&mdash;'),
+  check.names = FALSE))
+```
+
+The two non-parametric tests sit beside these. The **sign test** (Lecture 26) is for pairs, and the
+**rank-sum test** is for two independent samples.
+
+```{r lecture29-setup, include=FALSE}
+# every number in the categorical-data sections is checked here (the deck's numbers are checked again in
+# assets/make_lecture29_figures.R)
+pew <- c(Never = 289, Rarely = 216, Sometimes = 178, Often = 60)     # published Pew margins, n = 743
+stopifnot(sum(pew) == 743, identical(unname(round(pew / 743, 2)), c(0.39, 0.29, 0.24, 0.08)))
+E <- 743 * 0.25
+pew_terms <- round((pew - E)^2 / E, 2)
+stopifnot(E == 185.75, identical(unname(pew - E), c(103.25, 30.25, -7.75, -125.75)),
+          identical(unname(pew_terms), c(57.39, 4.93, 0.32, 85.13)), round(sum((pew - E)^2 / E), 2) == 147.77)
+vol <- matrix(c(111, 96, 48, 96, 133, 61, 91, 150, 53), nrow = 3, byrow = TRUE)    # OpenStax Example 11.6
+stopifnot(identical(rowSums(vol), c(255, 290, 294)), identical(colSums(vol), c(298, 379, 162)), sum(vol) == 839)
+vol_cond <- round(vol / rowSums(vol), 3); vol_marg <- round(colSums(vol) / 839, 3)
+stopifnot(identical(vol_cond[1, ], c(0.435, 0.376, 0.188)), identical(vol_cond[2, ], c(0.331, 0.459, 0.210)),
+          identical(vol_cond[3, ], c(0.310, 0.510, 0.180)), identical(vol_marg, c(0.355, 0.452, 0.193)))
+```
+
+# Categorical data with more than two categories
+
+*([OpenStax Chapter 11](https://openstax.org/books/introductory-statistics-2e/pages/11-introduction).)*
+So far, every categorical response has had **two** outcomes, such as yes or no, or success or failure. We
+summarized it with one proportion $p$, or compared two groups with $p_1 - p_2$. Many categorical variables
+have more than two categories, though: a survey answer on a scale, a blood type, a political party, a
+number of hours grouped into ranges. The questions we ask about them change too:
+
+* **One variable:** does its distribution match a claimed set of proportions? For example, are all four
+  answers to a survey question equally common? This is the **goodness-of-fit test** (Friday).
+* **Two variables:** are they related? For example, does the number of hours a person volunteers depend on
+  what type of volunteer they are? This is the **test of independence** (Friday).
+
+A test of one proportion cannot answer either question. It looks at one category at a time, while the
+claim covers every category at once, and the category proportions are tied together because they must add
+to 1. The new tests compare whole tables of counts at once, and all of them use the **chi-square
+distribution**.
+
+## Data: teens and phones
+
+Recall the Pew Research Center survey from Week 2. It asked 743 U.S. teens aged 13 to 17, *"Are you losing
+focus in class by checking your cell phone?"*
+
+$X$ = a teen's answer: Never, Rarely, Sometimes or Often. $n = 743$.
+
+```{r, echo=FALSE}
+tab(data.frame(Answer = c('Count', 'Proportion'),
+               Never = c('289', '0.39'), Rarely = c('216', '0.29'), Sometimes = c('178', '0.24'),
+               Often = c('60', '0.08'), Total = c('743', '1.00'), check.names = FALSE))
+```
+
+This is a **one-way table**, which gives the count in each category of one categorical variable.
+
+## Two-way tables
+
+A **two-way table**, also called a **contingency table**, gives the count for every combination of two
+categorical variables. The categories of one variable are the rows and those of the other are the columns.
+From a two-way table we can read two kinds of distribution:
+
+* The **marginal distribution** of a variable is that variable on its own. It is read from the row or
+  column *totals* in the margins of the table, and is usually written as proportions of the grand total.
+* A **conditional distribution** is one variable *within a single row (or column)* of the other: each count
+  in that row divided by the row total.
+
+If the two variables are unrelated, every row has about the same conditional distribution, and so each row
+looks like the column totals. When the rows differ a lot, the variables are associated.
+
+> **Example 11.6 (OpenStax).** In a volunteer group, adults 21 and older volunteer from one to nine hours
+> each week to spend time with a disabled senior citizen. The program recruits among community college
+> students, four-year college students, and nonstudents. The table is a sample of the adult volunteers and
+> the number of hours they volunteer per week. Is the number of hours volunteered independent of the type
+> of volunteer?
+
+[OpenStax Section 11.3, Example 11.6](https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence).
+$X$ = type of volunteer, $Y$ = hours volunteered per week, $n = 839$.
+
+```{r, echo=FALSE}
+tab(data.frame(`Type of volunteer` = c('Community college students', 'Four-year college students', 'Nonstudents',
+                                       '**Column total**'),
+               `1–3 hours` = c(111, 96, 91, '**298**'), `4–6 hours` = c(96, 133, 150, '**379**'),
+               `7–9 hours` = c(48, 61, 53, '**162**'), `Row total` = c('**255**', '**290**', '**294**', '**839**'),
+               check.names = FALSE))
+```
+
+**Do the rows look alike?** Divide each row by its row total to get the conditional distribution of hours
+for each type of volunteer, and divide the column totals by 839 to get the marginal distribution:
+
+```{r, echo=FALSE}
+tab(data.frame(`Type of volunteer` = c('Community college students', 'Four-year college students', 'Nonstudents',
+                                       '**All volunteers (marginal)**'),
+               `1–3 hours` = fmt(c(vol_cond[, 1], vol_marg[1]), 3), `4–6 hours` = fmt(c(vol_cond[, 2], vol_marg[2]), 3),
+               `7–9 hours` = fmt(c(vol_cond[, 3], vol_marg[3]), 3), check.names = FALSE))
+```
+
+For example, $111/255 = 0.435$ of the community college volunteers work 1&ndash;3 hours, compared with
+$91/294 = 0.310$ of the nonstudents and $298/839 = 0.355$ of all volunteers. Community college students
+lean toward fewer hours and nonstudents toward 4&ndash;6 hours. Whether differences this large could be
+ordinary sampling variation is exactly what Friday's test of independence decides.
+
+## Observed and expected counts
+
+Every chi-square test compares two sets of counts:
+
+* the **observed count** $O$ is the count in a category (or a cell of a two-way table) in our data;
+* the **expected count** $E$ is the count we would expect *if $H_0$ were true*. For one variable whose null
+  hypothesis gives category $i$ the proportion $p_i$, the expected count is
+  \[E = n\,p_i.\]
+
+If the observed counts are close to the expected counts, the data agree with $H_0$. If they are far apart,
+the data are evidence against it.
+
+## The chi-square distribution
+
+*([OpenStax Section 11.1](https://openstax.org/books/introductory-statistics-2e/pages/11-1-facts-about-the-chi-square-distribution).)*
+The **chi-square distribution**, written $\chi^2(df)$, is a family of curves, one for each number of degrees
+of freedom, just as with the $t$ distribution. Its facts:
+
+* A chi-square value is **never negative**. The curve starts at 0 and is **skewed right**.
+* Its **mean is $df$** and its standard deviation is $\sqrt{2\,df}$.
+* As $df$ grows, the curve moves right, spreads out, and becomes more symmetric. For very large $df$ it is
+  close to a normal curve.
+* For one categorical variable with $k$ categories, the degrees of freedom are $df = k - 1$.
+
+```{r chisq-curves, echo=FALSE, fig.width=9, fig.height=3.6, fig.alt="Chi-square density curves for 1, 2, 4 and 8 degrees of freedom, drawn from 0 to 16. All are right-skewed and none goes below 0. The curves for 1 and 2 degrees of freedom are highest at 0 and fall away; for 4 and 8 degrees of freedom the curve rises to a peak and then falls, and the peak moves right and gets lower as the degrees of freedom grow."}
+x <- seq(0.02, 16, length.out = 600)
+cols <- c('#C00000', '#B8860B', '#2E7D32', '#1F3864')
+par(mar = c(4, 1, 1, 1))
+plot(x, dchisq(x, 1), type = 'l', lwd = 2, col = cols[1], ylim = c(0, 0.6), yaxt = 'n', bty = 'n',
+     xlab = expression(chi^2 ~ 'value'), ylab = '')
+for (k in 2:4) lines(x, dchisq(x, c(1, 2, 4, 8)[k]), lwd = 2, col = cols[k])
+legend('topright', legend = paste('df =', c(1, 2, 4, 8)), col = cols, lwd = 2, bty = 'n')
+```
+
+## The chi-square statistic
+
+The **chi-square statistic** adds up, over every category, how far each observed count is from its
+expected count:
+\[X^2 = \sum \frac{(O - E)^2}{E}.\]
+
+* Each term is squared, so $X^2$ is never negative, and $X^2 = 0$ only when every observed count equals its
+  expected count.
+* Dividing by $E$ scales each gap. A gap of 10 matters more when we expected 20 than when we expected 2000.
+* A **large** $X^2$ means the counts are far from what $H_0$ predicts, which is evidence against $H_0$. So
+  chi-square tests are always **right-tailed**.
+* If $H_0$ is true and every expected count is at least 5, $X^2$ approximately follows a chi-square
+  distribution. For one variable with $k$ categories that is $\chi^2(k - 1)$.
+
+**Example: are the four answers equally common?** Someone claims that the four answers to the Pew question
+are equally common among U.S. teens, so $H_0: p_1 = p_2 = p_3 = p_4 = 0.25$, where $p_1, \dots, p_4$ are the
+population proportions answering Never, Rarely, Sometimes and Often.
+
+(a) The expected count for each answer is $E = 743 \times 0.25 = 185.75$. It does not need to be a whole
+number, because it is an average.
+
+```{r, echo=FALSE}
+tab(data.frame(Answer = names(pew), `Observed $O$` = unname(pew), `Expected $E$` = fmt(rep(E, 4)),
+               `$O - E$` = fmt(unname(pew - E)), `$(O - E)^2/E$` = fmt(unname(pew_terms)), check.names = FALSE))
+```
+
+(b) $X^2 = 57.39 + 4.93 + 0.32 + 85.13 = 147.77$.
+
+(c) $df = 4 - 1 = 3$. A $\chi^2(3)$ curve has mean 3 and standard deviation $\sqrt{6} = 2.45$, so 147.77 is
+far out in its right tail. The four answers are clearly not equally common: far more teens said "Never" and
+far fewer said "Often" than the claim predicts. Friday turns this into a full goodness-of-fit test with a
+P-value.
+
 # Sources
 
 * The two-sample examples are from OpenStax *Introductory Statistics 2e*, Chapter 10: sports hours
@@ -951,4 +1163,7 @@ Non-parametric Tests**: [Non-parametric tests for two samples](misc/Non-Parametr
   and Cohen's $d$ is on p. 518. The hives and electric-vehicle data are Examples 10.8 and 10.10; the 2-point
   claim tested in the electric-vehicle example is ours.
 * The NCAA basketball scores and the couples' decision ratings come from the 2024 STAT 251 notes.
-* Textbook: OpenStax *Introductory Statistics 2e*, Sections 10.1, 10.3 and 10.4.
+* Textbook: OpenStax *Introductory Statistics 2e*, Sections 10.1, 10.3 and 10.4, and for the categorical
+  data, Sections 11.1&ndash;11.3.
+* The volunteer table is OpenStax Example 11.6 (Table 11.15). The teens-and-phones counts are the published
+  Pew Research Center margins used in Week 2; the "equally common" claim tested here is ours.

@@ -8,7 +8,7 @@
 #Supported LaTeX (the subset the course slides use):
 #  groups {..}; scripts x_a, x^b, x_a^b; \frac{a}{b}; \sqrt{a}; \hat{a}; \bar{a}; \text{..}, \mathrm{..};
 #  \left( .. \right) (also [ ] |); Greek letters; \pm \times \neq \leq \geq \approx \sim \cdot \to \infty
-#  \mid \ldots \min \max; spacing \, \; \quad.
+#  \mid \ldots \min \max \sum (a plain ∑, no limits); spacing \, \; \quad.
 #Letters become math-italic Unicode, as PowerPoint stores them; \text and digits stay upright.
 
 xml_esc <- function(s) { s <- gsub('&', '&amp;', s, fixed = TRUE); s <- gsub('<', '&lt;', s, fixed = TRUE); gsub('>', '&gt;', s, fixed = TRUE) }
@@ -27,7 +27,7 @@ it_char <- function(ch) {
 SYM <- c(alpha = 'α', beta = 'β', gamma = 'γ', delta = 'δ', theta = 'θ', mu = 'μ', pi = 'π', rho = 'ρ',
          sigma = 'σ', chi = 'χ', lambda = 'λ', Sigma = 'Σ', pm = '±', times = '×', neq = '≠', ne = '≠',
          leq = '≤', le = '≤', geq = '≥', ge = '≥', approx = '≈', sim = '∼', cdot = '⋅', to = '→',
-         infty = '∞', mid = '|', ldots = '…', lt = '<', gt = '>', minus = '−')
+         infty = '∞', mid = '|', ldots = '…', lt = '<', gt = '>', minus = '−', sum = '∑')
 UPRIGHT_FUN <- c('min', 'max', 'log', 'ln')
 
 latex2omml <- function(tex, rpr, display = FALSE) {

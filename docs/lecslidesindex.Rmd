@@ -227,7 +227,13 @@ Calculating power in five steps; introduction to two-sample tests, independent v
 # Week 12
 
 ## Lecture 28 &middot; Monday, November 9
-Review: when to pool for two proportions; the two independent samples t-test and when to pool for two means; the matched-pairs t-test
+Review: when to pool for two proportions; the two independent samples t-test and when to pool for two means
 
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture28_Slides_11_09_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture28_Slides_11_09_2026.pptx">Slides (PowerPoint)</a>
+
+## Lecture 29 &middot; Wednesday, November 11
+The rank-sum test; the matched-pairs t-test; a summary of every test (pooled vs unpooled SE); introduction to categorical data: one-way and two-way tables, observed and expected counts, the chi-square distribution and statistic
+
+<a href="./lecture_slides/Week%2012/2026/Week12_Lecture29_Slides_11_11_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2012/2026/Week12_Lecture29_Slides_11_11_2026.pptx">Slides (PowerPoint)</a>
