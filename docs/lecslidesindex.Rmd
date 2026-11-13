@@ -233,7 +233,13 @@ Review: when to pool for two proportions; the two independent samples t-test and
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture28_Slides_11_09_2026.pptx">Slides (PowerPoint)</a>
 
 ## Lecture 29 &middot; Wednesday, November 11
-The rank-sum test; the matched-pairs t-test; a summary of every test (pooled vs unpooled SE); introduction to categorical data: one-way and two-way tables, observed and expected counts, the chi-square distribution and statistic
+The rank-sum test; the matched-pairs t-test; a summary of every test (pooled vs unpooled SE); introduction to categorical data: one-way tables and more than two categories
 
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture29_Slides_11_11_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture29_Slides_11_11_2026.pptx">Slides (PowerPoint)</a>
+
+## Lecture 30 &middot; Friday, November 13
+Categorical data (continued from Lecture 29): two-way tables, observed and expected counts, the chi-square distribution and statistic; the chi-square goodness-of-fit test, test of independence and test for homogeneity
+
+<a href="./lecture_slides/Week%2012/2026/Week12_Lecture30_Slides_11_13_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2012/2026/Week12_Lecture30_Slides_11_13_2026.pptx">Slides (PowerPoint)</a>

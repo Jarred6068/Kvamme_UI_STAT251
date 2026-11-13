@@ -673,27 +673,28 @@ div.tocify {
   test and matched pairs carried into Lecture 29 (Wed Nov 11; deck Week12_Lecture29_Slides_11_11_2026.pptx;
   figures and number checks: assets/make_lecture29_figures.R), which then adds the "which SE" summary table
   and the categorical-data introduction (tables, observed/expected counts, the chi-square distribution and
-  X^2). Friday's goodness-of-fit and independence sections go after "The chi-square statistic".
+  X^2). Nov 13 2026: Lecture 29 stopped at "More than two categories?" (its slide 15), so its slides 15-22 carried
+  into Lecture 30 (Fri Nov 13; deck Week12_Lecture30_Slides_11_13_2026.pptx; figures and number checks:
+  assets/make_lecture30_figures.R), which then covers the goodness-of-fit test, the test of independence and the
+  test for homogeneity (the sections from "Three chi-square tests" on).
   The 2024 Week 12 content that used to be on this page (the sign test, two proportions) is in git history;
   both topics are now on the Week 11 page.
 -->
-<div id="lecture-28" class="section level1">
-<h1>Lecture 28</h1>
-<p>Lecture 28 has three parts. It starts with a review of the
-two-proportion test from Lecture 27, focusing on one question that trips
-people up: <strong>when do we pool?</strong> Then it extends the
-two-sample idea from proportions to <strong>means</strong>, first for
-two independent samples and then for matched pairs. The textbook
+<p>This week finishes comparing two populations and then turns to
+categorical variables with more than two categories. It starts with one
+question about two proportions that trips people up: <strong>when do we
+pool?</strong> Then it extends the two-sample idea from proportions to
+<strong>means</strong>, first for two independent samples and then for
+matched pairs, and closes with the chi-square tests. The textbook
 sections are <a
 href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
-10.1</a> and <a
+10.1</a> <a
 href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
-10.4</a>. In class, Lecture 28 ended with the advantages and
-disadvantages of pooling. The rank-sum test and matched pairs moved to
-Lecture 29.</p>
-</div>
-<div id="review-when-do-we-pool" class="section level1">
-<h1>Review: when do we pool?</h1>
+10.4</a> and <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-introduction">OpenStax
+Chapter 11</a>.</p>
+<div id="when-do-we-pool-two-proportions" class="section level1">
+<h1>When do we pool two proportions?</h1>
 <p>Every test and interval for two proportions uses the same estimate,
 <span class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span>, and an SE of
 the form <span class="math display">\[SE(\hat{p}_1 - \hat{p}_2) =
@@ -789,9 +790,10 @@ class="math inline">\(H_0\)</span> says <span class="math inline">\(p_1
 <div id="example-a-confidence-interval-for-the-hives-medications"
 class="section level2">
 <h2>Example: a confidence interval for the hives medications</h2>
-<p>In Lecture 27 we tested the two hives medications (OpenStax Example
-10.8): 20 of 200 adults on medication A and 12 of 200 on medication B
-still had hives after 30 minutes. With the pooled <span
+<p>In <a href="lecturemenu11.html#comparing-two-proportions">Comparing
+two proportions</a> (Week 11) we tested the two hives medications
+(OpenStax Example 10.8): 20 of 200 adults on medication A and 12 of 200
+on medication B still had hives after 30 minutes. With the pooled <span
 class="math inline">\(SE_0\)</span>, <span class="math inline">\(z_{obs}
 = 1.47\)</span> and the two-sided P-value was 0.1416, so at <span
 class="math inline">\(\alpha = 0.01\)</span> we did not reject <span
@@ -825,13 +827,13 @@ difference.</p>
 <div id="example-testing-a-difference-that-is-not-zero"
 class="section level2">
 <h2>Example: testing a difference that is not zero</h2>
-<p>In Lecture 27’s electric-vehicle practice (OpenStax Example 10.10),
-135 of 1,343 younger adults and 12 of 232 older adults owned an EV, and
-we found that younger adults were more likely to own one. Suppose the
-marketing firm makes a stronger claim: <strong>younger adults’ ownership
-rate is more than 2 percentage points higher</strong> than older
-adults’. (The 2-point claim is ours, not the book’s.) Test it at <span
-class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>In the Week 11 electric-vehicle practice problem (OpenStax Example
+10.10), 135 of 1,343 younger adults and 12 of 232 older adults owned an
+EV, and we found that younger adults were more likely to own one.
+Suppose the marketing firm makes a stronger claim: <strong>younger
+adults’ ownership rate is more than 2 percentage points higher</strong>
+than older adults’. (The 2-point claim is ours, not the book’s.) Test it
+at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 <ol style="list-style-type: decimal">
 <li><strong>Assumptions.</strong> Two independent random samples. Each
 sample has at least 12 successes and at least 220 failures, so both are
@@ -869,7 +871,7 @@ the SE is unpooled.</p>
 <h1>Comparing two independent means</h1>
 <p><em>(<a
 href="https://openstax.org/books/introductory-statistics-2e/pages/10-1-two-population-means-with-unknown-standard-deviations">OpenStax
-Section 10.1</a>.)</em> Lecture 27 compared two populations on a
+Section 10.1</a>.)</em> So far we have compared two populations on a
 <strong>categorical</strong> response (a proportion). Now the response
 is <strong>quantitative</strong>, and we compare the populations’
 <strong>means</strong>: the average time girls and boys spend playing
@@ -1477,8 +1479,9 @@ taken by all graduates of colleges A and B. The group’s belief is the
 alternative: <span class="math display">\[H_0: \mu_A - \mu_B = 0 \qquad
 H_A: \mu_A - \mu_B &gt; 0 \quad \text{(upper-tailed)}\]</span> (The book
 writes the null as <span class="math inline">\(H_0: \mu_A \leq
-\mu_B\)</span>, a composite null; as in Lecture 25, we test it at the
-boundary, <span class="math inline">\(\mu_A - \mu_B = 0\)</span>.)</li>
+\mu_B\)</span>, a composite null; as with composite hypotheses in Week
+11, we test it at the boundary, <span class="math inline">\(\mu_A -
+\mu_B = 0\)</span>.)</li>
 <li><strong>Test statistic.</strong> <span class="math display">\[SE =
 \sqrt{\frac{1.5^2}{11} + \frac{1^2}{9}} = \sqrt{0.2045 + 0.1111} \approx
 0.5618, \qquad
@@ -2207,26 +2210,6 @@ class="math inline">\(H_0\)</span> at the 5% level, so the conclusion is
 the same.</li>
 </ol>
 </div>
-</div>
-<div id="lecture-29" class="section level1">
-<h1>Lecture 29</h1>
-<p>Lecture 29 finishes the two-sample material:</p>
-<ul>
-<li>the rank-sum test, the non-parametric alternative to the two
-independent samples <span class="math inline">\(t\)</span>-test;</li>
-<li>matched pairs;</li>
-<li>a summary of every test so far, showing which SE each one uses,
-pooled or unpooled.</li>
-</ul>
-<p>It then opens a new topic, <strong>categorical data with more than
-two categories</strong>: one-way and two-way tables, observed and
-expected counts, the chi-square distribution and the <span
-class="math inline">\(X^2\)</span> statistic. The textbook sections are
-<a
-href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
-10.4</a> and <a
-href="https://openstax.org/books/introductory-statistics-2e/pages/11-1-facts-about-the-chi-square-distribution">OpenStax
-11.1–11.3</a>.</p>
 <div id="a-non-parametric-alternative-the-rank-sum-test"
 class="section level2">
 <h2>A non-parametric alternative: the rank-sum test</h2>
@@ -2237,8 +2220,9 @@ have outliers, or are only ranks or ordered categories (such as ratings
 from 1 to 7), the <span class="math inline">\(t\)</span>-test’s P-value
 can be wrong. The <strong>Wilcoxon rank-sum test</strong> (also called
 the Mann-Whitney test) is the <strong>non-parametric
-alternative</strong>, just as the sign test was for one sample or for
-pairs in Lecture 26:</p>
+alternative</strong>, just as <a
+href="lecturemenu11.html#the-sign-test">the sign test</a> was for one
+sample or for pairs:</p>
 <ul>
 <li>It needs two independent random samples, but <strong>no normality
 assumption</strong>.</li>
@@ -2269,7 +2253,7 @@ tests for two samples</a>.</p>
 <h1>Matched pairs</h1>
 <p><em>(<a
 href="https://openstax.org/books/introductory-statistics-2e/pages/10-4-matched-or-paired-samples">OpenStax
-Section 10.4</a>.)</em> In Lecture 27 we saw that two samples can be
+Section 10.4</a>.)</em> Recall that two samples can be
 <strong>dependent</strong>: each observation in one sample is paired
 with one in the other. The most common designs are</p>
 <ul>
@@ -2293,7 +2277,8 @@ two-sample problem turns into a <strong>one-sample</strong> problem: the
 parameter is the <strong>mean difference</strong> <span
 class="math inline">\(\mu_d\)</span> in the population of pairs, and we
 test it with the one-sample <span class="math inline">\(t\)</span>-test
-from Lecture 25.</p>
+from <a href="lecturemenu10.html#testing-a-population-mean">Testing a
+population mean</a> (Week 10).</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2400,9 +2385,9 @@ class="math inline">\(d\)</span>, <span
 class="math inline">\(s_d\)</span> is smaller, and the test is more
 powerful: it can detect a smaller effect with the same number of
 subjects. The hypnotism example below shows this with numbers.</p>
-<p>The sign test from Lecture 26 is also a matched-pairs test. It uses
-only the <strong>signs</strong> of the differences, so it needs no
-normality assumption; the matched-pairs <span
+<p>The sign test (Week 11) is also a matched-pairs test. It uses only
+the <strong>signs</strong> of the differences, so it needs no normality
+assumption; the matched-pairs <span
 class="math inline">\(t\)</span>-test uses their <strong>sizes</strong>,
 so it is more powerful when the differences really are roughly
 normal.</p>
@@ -2764,9 +2749,9 @@ id="example-who-made-the-decision-a-t-test-instead-of-the-sign-test"
 class="section level2">
 <h2>Example: who made the decision? (a <span
 class="math inline">\(t\)</span>-test instead of the sign test)</h2>
-<p>In Lecture 26 we used the <strong>sign test</strong> on 17 couples’
-ratings of who had more say in a major financial decision (1 = the wife,
-7 = the husband), and found a two-sided P-value of 0.0574: not
+<p>In the Week 11 notes we used the <strong>sign test</strong> on 17
+couples’ ratings of who had more say in a major financial decision (1 =
+the wife, 7 = the husband), and found a two-sided P-value of 0.0574: not
 significant at the 5% level. What does the matched-pairs <span
 class="math inline">\(t\)</span>-test say about the same data?</p>
 <p>The differences <span class="math inline">\(d\)</span> = husband
@@ -2786,7 +2771,7 @@ class="math inline">\(t\)</span>-test uses the sizes of the differences,
 so it has more power, <strong>if</strong> its assumption holds. But
 these are crude 1-to-7 ratings from only 17 couples, and it is hard to
 believe the differences come from a normal population. The sign test
-makes no such assumption. That is why we used it in Lecture 26. When the
+makes no such assumption. That is why we used it there. When the
 assumption behind a test is doubtful, a more powerful-looking P-value is
 not more trustworthy. Here the honest summary is “suggestive but not
 conclusive”.</p>
@@ -3206,8 +3191,7 @@ class="math inline">\(n \geq 30\)</span> pairs
 </tr>
 <tr>
 <td style="text-align:left;">
-<strong>Matched pairs</strong>, sign test (Lecture
-26)<br>(non-parametric)
+<strong>Matched pairs</strong>, sign test (Week 11)<br>(non-parametric)
 </td>
 <td style="text-align:left;">
 <span class="math inline">\(H_0: M_D = 0\)</span> (median
@@ -3273,13 +3257,13 @@ tests for two samples</a>.</p>
 </div>
 <div id="every-test-so-far-which-se" class="section level2">
 <h2>Every test so far: which SE?</h2>
-<p>The Lecture 29 summary slide. Every test statistic has the same
-shape, (estimate − null value) / SE. What changes from test to test is
-the SE, and for two independent samples there are two versions. We
-<strong>pool</strong> only when <span class="math inline">\(H_0\)</span>
-says the two proportions are equal (<span class="math inline">\(H_0: p_1
-= p_2\)</span>), or when two means come from populations with equal SDs
-(<span class="math inline">\(\sigma_1 = \sigma_2\)</span>) and that is a
+<p>Every test statistic has the same shape, (estimate − null value) /
+SE. What changes from test to test is the SE, and for two independent
+samples there are two versions. We <strong>pool</strong> only when <span
+class="math inline">\(H_0\)</span> says the two proportions are equal
+(<span class="math inline">\(H_0: p_1 = p_2\)</span>), or when two means
+come from populations with equal SDs (<span
+class="math inline">\(\sigma_1 = \sigma_2\)</span>) and that is a
 reasonable assumption. Otherwise we use the <strong>unpooled</strong>
 SE. Note that the one-proportion test uses the null value <span
 class="math inline">\(p_0\)</span> in its SE, because <span
@@ -3407,7 +3391,7 @@ class="math inline">\(n\)</span> = number of pairs
 </tbody>
 </table>
 <p>The two non-parametric tests sit beside these. The <strong>sign
-test</strong> (Lecture 26) is for pairs, and the <strong>rank-sum
+test</strong> (Week 11) is for pairs, and the <strong>rank-sum
 test</strong> is for two independent samples.</p>
 </div>
 </div>
@@ -3428,11 +3412,11 @@ The questions we ask about them change too:</p>
 <li><strong>One variable:</strong> does its distribution match a claimed
 set of proportions? For example, are all four answers to a survey
 question equally common? This is the <strong>goodness-of-fit
-test</strong> (Friday).</li>
+test</strong>, later in these notes.</li>
 <li><strong>Two variables:</strong> are they related? For example, does
 the number of hours a person volunteers depend on what type of volunteer
-they are? This is the <strong>test of independence</strong>
-(Friday).</li>
+they are? This is the <strong>test of independence</strong>, later in
+these notes.</li>
 </ul>
 <p>A test of one proportion cannot answer either question. It looks at
 one category at a time, while the claim covers every category at once,
@@ -3726,8 +3710,8 @@ class="math inline">\(91/294 = 0.310\)</span> of the nonstudents and
 <span class="math inline">\(298/839 = 0.355\)</span> of all volunteers.
 Community college students lean toward fewer hours and nonstudents
 toward 4–6 hours. Whether differences this large could be ordinary
-sampling variation is exactly what Friday’s test of independence
-decides.</p>
+sampling variation is exactly what the test of independence, later in
+these notes, decides.</p>
 </div>
 <div id="observed-and-expected-counts" class="section level2">
 <h2>Observed and expected counts</h2>
@@ -3904,10 +3888,2407 @@ class="math inline">\(\chi^2(3)\)</span> curve has mean 3 and standard
 deviation <span class="math inline">\(\sqrt{6} = 2.45\)</span>, so
 147.77 is far out in its right tail. The four answers are clearly not
 equally common: far more teens said “Never” and far fewer said “Often”
-than the claim predicts. Friday turns this into a full goodness-of-fit
-test with a P-value.</p></li>
+than the claim predicts. The goodness-of-fit test below turns this into
+a full test with a P-value.</p></li>
 </ol>
 </div>
+<div id="three-chi-square-tests" class="section level2">
+<h2>Three chi-square tests</h2>
+<p>The statistic <span class="math inline">\(X^2\)</span> is the basis
+of three tests, one for each kind of question we can ask of categorical
+data. All three use the same statistic, <span class="math display">\[X^2
+= \sum \frac{(O - E)^2}{E},\]</span> and all three are right-tailed.
+What changes from test to test is the <em>question</em>, which sets the
+null hypothesis, and that in turn sets how we find the expected counts
+<span class="math inline">\(E\)</span> and the degrees of freedom.</p>
+<p><em>(Reading: <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-2-goodness-of-fit-test">OpenStax
+Sections 11.2 to 11.5</a>. Chi-square P-values in these notes are
+bracketed with the <a href="misc/chisq_table.html">course chi-square
+table</a>, and the exact value from software is given beside each
+bracket.)</em></p>
+</div>
+</div>
+<div id="the-chi-square-goodness-of-fit-test" class="section level1">
+<h1>The chi-square goodness-of-fit test</h1>
+<div id="the-setup" class="section level2">
+<h2>The setup</h2>
+<p>A <strong>goodness-of-fit test</strong> asks whether <strong>one
+categorical variable</strong> follows a claimed distribution: a claimed
+proportion for each of its <span class="math inline">\(k\)</span>
+categories. It is the categorical version of a one-sample test.</p>
+<ul>
+<li><strong>The parameters.</strong> <span class="math inline">\(p_1,
+p_2, \dots, p_k\)</span>, the proportions of the <em>population</em> in
+each category. They always add to 1.</li>
+<li><strong>The hypotheses.</strong> The null hypothesis gives every
+category its claimed proportion, written <span
+class="math inline">\(p_{1,0}, p_{2,0}, \dots, p_{k,0}\)</span> (they
+add to 1 too): <span class="math display">\[H_0: p_1 = p_{1,0},\; p_2 =
+p_{2,0},\; \dots,\; p_k = p_{k,0}\]</span> <span
+class="math display">\[H_A: \text{at least one } p_i \text{ is not its
+claimed value}\]</span> In words: <span
+class="math inline">\(H_0\)</span> says the population <em>fits</em> the
+claimed distribution, and <span class="math inline">\(H_A\)</span> says
+it does not. There is no “upper” or “lower” version of <span
+class="math inline">\(H_A\)</span>: the counts can miss the claim in
+many different ways at once.</li>
+<li><strong>The expected counts.</strong> If <span
+class="math inline">\(H_0\)</span> is true, category <span
+class="math inline">\(i\)</span> should hold about a fraction <span
+class="math inline">\(p_{i,0}\)</span> of the sample: <span
+class="math display">\[E_i = n \, p_{i,0}\]</span> The expected counts
+add to <span class="math inline">\(n\)</span>, just as the observed
+counts do.</li>
+<li><strong>The test statistic.</strong> <span
+class="math display">\[X^2_{obs} = \sum_{i=1}^{k} \frac{(O_i -
+E_i)^2}{E_i}\]</span></li>
+<li><strong>The null distribution.</strong> If <span
+class="math inline">\(H_0\)</span> is true (and the conditions below
+hold), <span class="math inline">\(X^2_{obs}\)</span> approximately
+follows a chi-square distribution with <span class="math display">\[df =
+k - 1.\]</span> Why <span class="math inline">\(k - 1\)</span> and not
+<span class="math inline">\(k\)</span>? The observed counts must add to
+<span class="math inline">\(n\)</span>. Once you know <span
+class="math inline">\(k - 1\)</span> of them, the last one is fixed, so
+only <span class="math inline">\(k - 1\)</span> counts are free to vary.
+<strong>The df comes from the number of categories, not the sample
+size.</strong></li>
+<li><strong>The P-value.</strong> Only a <em>large</em> <span
+class="math inline">\(X^2_{obs}\)</span> is evidence against <span
+class="math inline">\(H_0\)</span>, so the P-value is always the upper
+tail: <span class="math display">\[\text{P-value} = P(\chi^2 \geq
+X^2_{obs} \mid H_0 \text{ true})\]</span></li>
+<li><strong>The conditions.</strong> (1) The data are a random sample,
+with each observation counted in exactly one category. (2) <strong>Every
+expected count is at least 5.</strong> The chi-square curve is only an
+approximation, and it is a poor one when some <span
+class="math inline">\(E_i\)</span> are small. Note that the condition is
+on the <em>expected</em> counts, not the observed counts.</li>
+</ul>
+<p><strong>Reading the chi-square table.</strong> Go to the row for your
+<span class="math inline">\(df\)</span>. Each column heading is an
+upper-tail area. Find the two entries your <span
+class="math inline">\(X^2_{obs}\)</span> falls between; the P-value is
+between their two column headings. If <span
+class="math inline">\(X^2_{obs}\)</span> is smaller than the first
+entry, the P-value is more than 0.25; if it is larger than the last
+entry, the P-value is less than 0.0005. For example, the row for <span
+class="math inline">\(df = 4\)</span> starts</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Upper tail
+</th>
+<th style="text-align:left;">
+0.25
+</th>
+<th style="text-align:left;">
+0.2
+</th>
+<th style="text-align:left;">
+0.15
+</th>
+<th style="text-align:left;">
+0.125
+</th>
+<th style="text-align:left;">
+0.1
+</th>
+<th style="text-align:left;">
+0.075
+</th>
+<th style="text-align:left;">
+0.05
+</th>
+<th style="text-align:left;">
+0.025
+</th>
+<th style="text-align:left;">
+0.005
+</th>
+<th style="text-align:left;">
+0.0025
+</th>
+<th style="text-align:left;">
+5e-04
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(df = 4\)</span>
+</td>
+<td style="text-align:left;">
+5.385
+</td>
+<td style="text-align:left;">
+5.989
+</td>
+<td style="text-align:left;">
+6.745
+</td>
+<td style="text-align:left;">
+7.214
+</td>
+<td style="text-align:left;">
+7.779
+</td>
+<td style="text-align:left;">
+8.496
+</td>
+<td style="text-align:left;">
+9.488
+</td>
+<td style="text-align:left;">
+11.143
+</td>
+<td style="text-align:left;">
+14.860
+</td>
+<td style="text-align:left;">
+16.424
+</td>
+<td style="text-align:left;">
+19.997
+</td>
+</tr>
+</tbody>
+</table>
+<div id="the-five-steps-1" class="section level3">
+<h3>The five steps</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> A random sample; every expected
+count <span class="math inline">\(E_i = n\,p_{i,0} \geq
+5\)</span>.</p></li>
+<li><p><strong>Hypotheses.</strong> Name the categories and the claimed
+proportions; state <span class="math inline">\(H_0\)</span> and <span
+class="math inline">\(H_A\)</span> in symbols or words.</p></li>
+<li><p><strong>Test statistic.</strong> Make the table of <span
+class="math inline">\(O\)</span>, <span
+class="math inline">\(E\)</span>, <span class="math inline">\(O -
+E\)</span> and <span class="math inline">\((O - E)^2/E\)</span>; add the
+last column to get <span class="math inline">\(X^2_{obs}\)</span>; <span
+class="math inline">\(df = k - 1\)</span>.</p></li>
+<li><p><strong>P-value.</strong> Bracket <span
+class="math inline">\(P(\chi^2 \geq X^2_{obs} \mid H_0 \text{
+true})\)</span> with the chi-square table.</p></li>
+<li><p><strong>Decision.</strong> Reject <span
+class="math inline">\(H_0\)</span> if the P-value <span
+class="math inline">\(&lt; \alpha\)</span>, and state the conclusion in
+context.</p></li>
+</ol>
+</div>
+</div>
+<div id="example-are-the-four-answers-equally-common"
+class="section level2">
+<h2>Example: are the four answers equally common?</h2>
+<p>The chi-square statistic section left the Pew teens-and-phones
+example at <span class="math inline">\(X^2 = 147.77\)</span> with <span
+class="math inline">\(df = 3\)</span>. Here are all five steps.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> Pew surveyed a random sample of 743
+U.S. teens, and each expected count is 185.75, far above 5.</p></li>
+<li><p><strong>Hypotheses.</strong> With <span
+class="math inline">\(p_1, \dots, p_4\)</span> the population
+proportions answering Never, Rarely, Sometimes and Often, <span
+class="math display">\[H_0: p_1 = p_2 = p_3 = p_4 = 0.25 \qquad H_A:
+\text{at least one } p_i \neq 0.25\]</span></p></li>
+<li><p><strong>Test statistic.</strong> From above, <span
+class="math inline">\(X^2_{obs} = 147.77\)</span> with <span
+class="math inline">\(df = 4 - 1 = 3\)</span>.</p></li>
+<li><p><strong>P-value.</strong> The largest entry in the <span
+class="math inline">\(df = 3\)</span> row is 17.730, in the 0.0005
+column, and 147.77 is far beyond it: <span
+class="math display">\[P(\chi^2 \geq 147.77 \mid H_0 \text{ true}) &lt;
+0.0005\]</span> (Software gives a number with 31 zeros after the decimal
+point.)</p></li>
+<li><p><strong>Decision.</strong> <strong>Reject <span
+class="math inline">\(H_0\)</span></strong> at any usual <span
+class="math inline">\(\alpha\)</span>. The four answers are not equally
+common among U.S. teens.</p></li>
+</ol>
+<p><img src="assets/l30_pew.png" alt="A chi-square distribution with 3 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 3 degrees of freedom, drawn from 0 to 22. The curve peaks near 1 and has almost no height past 10. A red dashed line at 17.73 is labelled: table, 17.73 cuts off 0.0005. A label and arrow at the right edge read: ours, 147.77, far off this edge." width="100%" style="display: block; margin: auto;" /></p>
+<p>A rejection says only that the claim is wrong. To say <em>how</em> it
+is wrong, look back at which terms of <span
+class="math inline">\(X^2\)</span> were large: “Often” (85.13) and
+“Never” (57.39). Far fewer teens than claimed say they often lose focus,
+and far more say they never do.</p>
+</div>
+<div id="example-which-day-are-employees-absent" class="section level2">
+<h2>Example: which day are employees absent?</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-2-goodness-of-fit-test">OpenStax
+Introductory Statistics 2e, Section 11.2, Example 11.2</a>:</em></p>
+<blockquote>
+<p>Employers want to know which days of the week employees are absent in
+a five-day work week. Most employers would like to believe that
+employees are absent equally during the week. Suppose a random sample of
+60 managers were asked on which day of the week they had the highest
+number of employee absences. The results were distributed as in the
+table below. For the population of employees, do the days for the
+highest number of absences occur with equal frequencies during a
+five-day work week? Test at a 5% significance level.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Day of the week
+</th>
+<th style="text-align:left;">
+Monday
+</th>
+<th style="text-align:left;">
+Tuesday
+</th>
+<th style="text-align:left;">
+Wednesday
+</th>
+<th style="text-align:left;">
+Thursday
+</th>
+<th style="text-align:left;">
+Friday
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Number of absences
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+15
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(X\)</span> = the weekday a manager named
+as having the most absences (5 categories), <span
+class="math inline">\(n = 60\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> The 60 managers are a random
+sample. “Absent equally” means each day has proportion <span
+class="math inline">\(1/5 = 0.2\)</span>, so every expected count is
+<span class="math inline">\(E = 60 \times 0.2 = 12\)</span>, which is at
+least 5.</p></li>
+<li><p><strong>Hypotheses.</strong> With <span
+class="math inline">\(p_1, \dots, p_5\)</span> the population
+proportions for Monday through Friday, <span class="math display">\[H_0:
+p_1 = p_2 = p_3 = p_4 = p_5 = 0.2 \qquad H_A: \text{at least one } p_i
+\neq 0.2\]</span> In words, <span class="math inline">\(H_0\)</span>:
+the absent days occur with equal frequencies (a <em>uniform</em>
+distribution).</p></li>
+<li><p><strong>Test statistic.</strong> Work down the table one row at a
+time:</p></li>
+</ol>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Day
+</th>
+<th style="text-align:left;">
+Observed <span class="math inline">\(O\)</span>
+</th>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(O - E\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Monday
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+12.00
+</td>
+<td style="text-align:left;">
+3.00
+</td>
+<td style="text-align:left;">
+0.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tuesday
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+12.00
+</td>
+<td style="text-align:left;">
+0.00
+</td>
+<td style="text-align:left;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+12.00
+</td>
+<td style="text-align:left;">
+−3.00
+</td>
+<td style="text-align:left;">
+0.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Thursday
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+12.00
+</td>
+<td style="text-align:left;">
+−3.00
+</td>
+<td style="text-align:left;">
+0.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Friday
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+12.00
+</td>
+<td style="text-align:left;">
+3.00
+</td>
+<td style="text-align:left;">
+0.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Total</strong>
+</td>
+<td style="text-align:left;">
+60
+</td>
+<td style="text-align:left;">
+60.00
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<strong>3.00</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For Monday, <span class="math inline">\((15 - 12)^2/12 = 9/12 =
+0.75\)</span>. Adding the last column, <span
+class="math display">\[X^2_{obs} = 0.75 + 0 + 0.75 + 0.75 + 0.75 = 3,
+\qquad df = 5 - 1 = 4\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p><strong>P-value.</strong> <span class="math inline">\(X^2_{obs} =
+3\)</span> is smaller than every entry in the <span
+class="math inline">\(df = 4\)</span> row of the chi-square table, so
+the P-value is large. Software gives <span
+class="math display">\[P(\chi^2 \geq 3 \mid H_0 \text{ true}) =
+0.5578\]</span></p></li>
+<li><p><strong>Decision.</strong> <span class="math inline">\(0.5578
+&gt; \alpha = 0.05\)</span>: <strong>fail to reject <span
+class="math inline">\(H_0\)</span></strong>. The data do not give
+convincing evidence that the days with the most absences occur with
+unequal frequencies. The sample is consistent with employees being
+absent equally across the week, although that does not prove they
+are.</p></li>
+</ol>
+<p><img src="assets/l30_absences.png" alt="A chi-square distribution with 4 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 4 degrees of freedom. A dashed line marks 3, and everything to its right, most of the area under the curve, is shaded red and labelled P of chi-square at least 3. A label reads: P-value equals 0.5578, greater than alpha equals 0.05." width="100%" style="display: block; margin: auto;" /></p>
+<p>Notice the shape of the null distribution: a <span
+class="math inline">\(\chi^2(4)\)</span> curve has mean 4, so an <span
+class="math inline">\(X^2\)</span> of 3 is a perfectly ordinary value
+when <span class="math inline">\(H_0\)</span> is true. A quick sense
+check before using the table: <strong>an <span
+class="math inline">\(X^2_{obs}\)</span> near its <span
+class="math inline">\(df\)</span> is unremarkable; one many times its
+<span class="math inline">\(df\)</span> is strong evidence against <span
+class="math inline">\(H_0\)</span>.</strong></p>
+</div>
+<div id="example-streaming-services-in-the-far-west"
+class="section level2">
+<h2>Example: streaming services in the far West</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-2-goodness-of-fit-test">OpenStax
+Introductory Statistics 2e, Section 11.2, Example 11.3</a>:</em></p>
+<blockquote>
+<p>One study indicates that the number of streaming services that
+American families have is distributed as in the table below (the percent
+column). A random sample of 600 families in the far western United
+States resulted in the data in the observed frequency column. At the 1%
+significance level, does it appear that the distribution “number of
+streaming services” of far western United States families is different
+from the distribution for the American population as a whole?</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Number of streaming services
+</th>
+<th style="text-align:left;">
+Percent (all U.S.)
+</th>
+<th style="text-align:right;">
+Observed frequency (far West)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:right;">
+66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:right;">
+119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+55
+</td>
+<td style="text-align:right;">
+340
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:right;">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4 or more
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Total</strong>
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:right;">
+600
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(X\)</span> = the number of streaming
+services a far-western family has (5 categories), <span
+class="math inline">\(n = 600\)</span>.</p>
+<p>Here the claimed distribution is not “all equal.” It comes from the
+national percentages, so each category gets its own <span
+class="math inline">\(p_{i,0}\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> A random sample of 600 families.
+The expected counts are <span class="math inline">\(E = 600 \times 0.10
+= 60\)</span>, <span class="math inline">\(600 \times 0.16 =
+96\)</span>, <span class="math inline">\(600 \times 0.55 = 330\)</span>,
+<span class="math inline">\(600 \times 0.11 = 66\)</span> and <span
+class="math inline">\(600 \times 0.08 = 48\)</span>, all at least
+5.</p></li>
+<li><p><strong>Hypotheses.</strong> With <span
+class="math inline">\(p_0, p_1, p_2, p_3, p_{4+}\)</span> the
+proportions of far-western families with each number of services, <span
+class="math display">\[H_0: p_0 = 0.10,\; p_1 = 0.16,\; p_2 = 0.55,\;
+p_3 = 0.11,\; p_{4+} = 0.08\]</span> <span class="math display">\[H_A:
+\text{at least one of these proportions differs from its national
+value}\]</span> In words, <span class="math inline">\(H_0\)</span>: the
+far West has the same distribution as the whole country.</p></li>
+<li><p><strong>Test statistic.</strong></p></li>
+</ol>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Services
+</th>
+<th style="text-align:left;">
+Observed <span class="math inline">\(O\)</span>
+</th>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(O - E\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+66
+</td>
+<td style="text-align:left;">
+60
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+0.60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+119
+</td>
+<td style="text-align:left;">
+96
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+5.51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+340
+</td>
+<td style="text-align:left;">
+330
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+60
+</td>
+<td style="text-align:left;">
+66
+</td>
+<td style="text-align:left;">
+−6
+</td>
+<td style="text-align:left;">
+0.55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4 or more
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+−33
+</td>
+<td style="text-align:left;">
+22.69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Total</strong>
+</td>
+<td style="text-align:left;">
+600
+</td>
+<td style="text-align:left;">
+600
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<strong>29.65</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[X^2_{obs} = 0.60 + 5.51 + 0.30 + 0.55 +
+22.69 = 29.65, \qquad df = 5 - 1 = 4\]</span> (Note that <span
+class="math inline">\(df = 4\)</span>, not <span
+class="math inline">\(600 - 1\)</span>. The df counts categories, not
+families.)</p>
+<ol start="4" style="list-style-type: decimal">
+<li><p><strong>P-value.</strong> The largest entry in the <span
+class="math inline">\(df = 4\)</span> row is 19.997 (0.0005), and <span
+class="math inline">\(29.65 &gt; 19.997\)</span>, so <span
+class="math display">\[P(\chi^2 \geq 29.65 \mid H_0 \text{ true}) &lt;
+0.0005\]</span> Software gives 0.000006.</p></li>
+<li><p><strong>Decision.</strong> The P-value is below <span
+class="math inline">\(\alpha = 0.01\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. At the 1% level there is
+convincing evidence that the number of streaming services in far-western
+families has a different distribution from the country as a
+whole.</p></li>
+</ol>
+<p><strong>Where is the misfit?</strong> One term, <span
+class="math inline">\(22.69\)</span>, supplies about 77% of <span
+class="math inline">\(X^2\)</span>. It is the “4 or more” category: 48
+families were expected there and only 15 were observed. The next
+biggest, 5.51, is one service (119 observed against 96 expected).
+Far-western families are more likely to have exactly one service and
+much less likely to have four or more. Listing the large terms like this
+is the natural follow-up to any rejection in a chi-square test.</p>
+</div>
+<div id="when-an-expected-count-is-below-5" class="section level2">
+<h2>When an expected count is below 5</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-2-goodness-of-fit-test">OpenStax
+Introductory Statistics 2e, Section 11.2, Example 11.1</a>:</em></p>
+<blockquote>
+<p>Absenteeism of college students from math classes is a major concern
+to math instructors because missing class appears to increase the drop
+rate. Suppose that a study was done to determine if the actual student
+absenteeism rate follows faculty perception. The faculty expected that a
+group of 100 students would miss class according to the expected column
+below. A random survey across all mathematics courses was then done to
+determine the actual number (observed) of absences in a course.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Absences per term
+</th>
+<th style="text-align:right;">
+Expected number of students
+</th>
+<th style="text-align:right;">
+Actual number of students
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0–2
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3–5
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6–8
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9–11
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12+
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Can we run the test on this table?</strong> No. The expected
+count for “12+” is 2, below 5. The fix is to <strong>combine</strong>
+that category with its neighbor, “9–11”, into one category “9 or more”,
+whose expected count is <span class="math inline">\(6 + 2 = 8\)</span>
+(and whose observed count is <span class="math inline">\(1 + 4 =
+5\)</span>). Combining <em>neighboring</em> categories keeps the
+categories meaningful. Now there are four categories, so <span
+class="math inline">\(df = 4 - 1 = 3\)</span>.</p>
+<p>The book stops there. Finishing the test at <span
+class="math inline">\(\alpha = 0.05\)</span>, with <span
+class="math inline">\(H_0\)</span>: student absenteeism fits the faculty
+perception (proportions 0.50, 0.30, 0.12, 0.08) and <span
+class="math inline">\(H_A\)</span>: it does not:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Absences
+</th>
+<th style="text-align:left;">
+Observed <span class="math inline">\(O\)</span>
+</th>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(O - E\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0–2
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+−15
+</td>
+<td style="text-align:left;">
+4.500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3–5
+</td>
+<td style="text-align:left;">
+40
+</td>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+3.333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6–8
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+5.333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9 or more
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+−3
+</td>
+<td style="text-align:left;">
+1.125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Total</strong>
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<strong>14.29</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[X^2_{obs} = 4.500 + 3.333 + 5.333 +
+1.125 = 14.29, \qquad df = 3\]</span></p>
+<p>In the <span class="math inline">\(df = 3\)</span> row, <span
+class="math inline">\(12.838 &lt; 14.29 &lt; 14.320\)</span> (upper
+tails 0.005 and 0.0025), so <span class="math inline">\(0.0025 &lt;
+P(\chi^2 \geq 14.29 \mid H_0 \text{ true}) &lt; 0.005\)</span>
+(software: 0.0025). <strong>Reject <span
+class="math inline">\(H_0\)</span></strong>: actual absenteeism does not
+fit the faculty’s perception. The biggest terms, 5.333 for 6–8 absences
+and 4.500 for 0–2, say students miss class <em>more</em> than the
+faculty think: fewer students than expected have 0–2 absences and more
+have 3–8.</p>
+</div>
+<div id="aside-two-categories" class="section level2">
+<h2>Aside: two categories</h2>
+<p>With only two categories, a goodness-of-fit test asks the same
+question as a two-sided test of one proportion. The 2024 notes used
+Gregor Mendel’s peas: Mendel’s laws say a cross of two plants that each
+carry one yellow and one green allele gives yellow offspring with
+probability 0.75 and green with probability 0.25. Of his 8023 offspring,
+6022 were yellow and 2001 were green.</p>
+<ul>
+<li><strong>Goodness of fit.</strong> <span class="math inline">\(E =
+8023 \times 0.75 = 6017.25\)</span> and <span class="math inline">\(8023
+\times 0.25 = 2005.75\)</span>, so <span
+class="math display">\[X^2_{obs} = \frac{(6022 - 6017.25)^2}{6017.25} +
+\frac{(2001 - 2005.75)^2}{2005.75} = 0.0037 + 0.0112 = 0.015,
+\qquad df = 2 - 1 = 1\]</span></li>
+<li><strong>One proportion.</strong> <span class="math inline">\(\hat{p}
+= 6022/8023 = 0.7506\)</span> and <span class="math display">\[z_{obs} =
+\frac{0.7506 - 0.75}{\sqrt{0.75 \times 0.25 / 8023}} =
+0.12\]</span></li>
+</ul>
+<p>The two agree exactly: <span class="math inline">\(X^2_{obs} =
+z_{obs}^2\)</span> (keeping all the decimals, <span
+class="math inline">\(0.1225^2 = 0.015\)</span>), and both tests give a
+P-value of 0.90. <strong>A <span
+class="math inline">\(\chi^2(1)\)</span> variable is the square of a
+standard normal variable.</strong> The data fit Mendel’s model very
+well. The chi-square test is what lets us go beyond two categories.</p>
+</div>
+</div>
+<div id="the-chi-square-test-of-independence" class="section level1">
+<h1>The chi-square test of independence</h1>
+<div id="the-setup-1" class="section level2">
+<h2>The setup</h2>
+<p>A <strong>test of independence</strong> asks whether <strong>two
+categorical variables</strong>, measured on the <strong>same</strong>
+individuals from <strong>one</strong> random sample, are related. The
+data form a two-way (contingency) table with <span
+class="math inline">\(r\)</span> rows and <span
+class="math inline">\(c\)</span> columns.</p>
+<ul>
+<li><strong>The hypotheses</strong> are stated in words: <span
+class="math display">\[H_0: \text{the two variables are independent}
+\qquad H_A: \text{the two variables are not independent (they are
+associated)}\]</span> Independent means the conditional distribution of
+one variable is the same in every row (or column) of the other, which is
+what the “do the rows look alike?” comparison in the two-way tables
+section checked.</li>
+</ul>
+<p><strong>Where the expected counts come from.</strong> Recall from
+probability that events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are independent when <span
+class="math inline">\(P(A \text{ and } B) = P(A)\,P(B)\)</span>. The
+book’s Example 11.5 makes this concrete:</p>
+<blockquote>
+<p>Suppose, in a study of drivers who received speeding violations in
+the last year, and who used cell phone while driving, that 755 people
+were surveyed. Out of the 755, 70 had a speeding violation and 685 did
+not; 305 used cell phones while driving and 450 did not.</p>
+</blockquote>
+<p>If having a speeding violation and using a cell phone while driving
+are independent, then <span class="math display">\[P(\text{violation and
+cell phone}) = \frac{70}{755} \times \frac{305}{755},\]</span> and the
+expected <em>number</em> of the 755 drivers in that cell is <span
+class="math display">\[E = 755 \times \frac{70}{755} \times
+\frac{305}{755} = \frac{70 \times 305}{755} = 28.3.\]</span> One 755
+cancels, and what is left is the rule for every cell of a two-way table:
+<span class="math display">\[E_{ij} = \frac{(\text{row } i \text{
+total}) \times (\text{column } j \text{ total})}{n}\]</span></p>
+<ul>
+<li><strong>The test statistic</strong> adds a term for <strong>every
+cell</strong>, all <span class="math inline">\(r \times c\)</span> of
+them: <span class="math display">\[X^2_{obs} = \sum_{i=1}^{r}
+\sum_{j=1}^{c} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}\]</span></li>
+<li><strong>The degrees of freedom</strong> are <span
+class="math display">\[df = (r - 1)(c - 1)\]</span> The row and column
+totals are fixed. Fill in the table one cell at a time: once <span
+class="math inline">\(c - 1\)</span> cells of a row are known, its last
+cell is forced by the row total, and once <span class="math inline">\(r
+- 1\)</span> rows are known, the last row is forced by the column
+totals. Only <span class="math inline">\((r - 1)(c - 1)\)</span> cells
+are free.</li>
+<li><strong>The P-value</strong> is again the upper tail, <span
+class="math inline">\(P(\chi^2 \geq X^2_{obs} \mid H_0 \text{
+true})\)</span>.</li>
+<li><strong>The conditions.</strong> One random sample, each individual
+classified on both variables; every expected count at least 5.</li>
+</ul>
+<p>In general, the observed table and its totals look like this:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Column 1
+</th>
+<th style="text-align:left;">
+Column 2
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</th>
+<th style="text-align:left;">
+Column <span class="math inline">\(c\)</span>
+</th>
+<th style="text-align:left;">
+Row total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Row 1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{11}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{12}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{1c}\)</span>
+</td>
+<td style="text-align:left;">
+row 1 total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Row 2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{21}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{22}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{2c}\)</span>
+</td>
+<td style="text-align:left;">
+row 2 total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\ddots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Row <span class="math inline">\(r\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{r1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{r2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{rc}\)</span>
+</td>
+<td style="text-align:left;">
+row <span class="math inline">\(r\)</span> total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+column 1 total
+</td>
+<td style="text-align:left;">
+column 2 total
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+column <span class="math inline">\(c\)</span> total
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="example-volunteers-and-hours" class="section level2">
+<h2>Example: volunteers and hours</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence">OpenStax
+Introductory Statistics 2e, Section 11.3, Example 11.6</a>:</em> the
+volunteer table from the two-way tables section. A sample of 839 adult
+volunteers was classified by <strong>type of volunteer</strong> and
+<strong>hours volunteered per week</strong>. Is the number of hours
+volunteered independent of the type of volunteer? (No <span
+class="math inline">\(\alpha\)</span> is given, so use 0.05.)</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Type of volunteer
+</th>
+<th style="text-align:left;">
+1–3 hours
+</th>
+<th style="text-align:left;">
+4–6 hours
+</th>
+<th style="text-align:left;">
+7–9 hours
+</th>
+<th style="text-align:left;">
+Row total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Community college students
+</td>
+<td style="text-align:left;">
+111
+</td>
+<td style="text-align:left;">
+96
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+255
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Four-year college students
+</td>
+<td style="text-align:left;">
+96
+</td>
+<td style="text-align:left;">
+133
+</td>
+<td style="text-align:left;">
+61
+</td>
+<td style="text-align:left;">
+290
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nonstudents
+</td>
+<td style="text-align:left;">
+91
+</td>
+<td style="text-align:left;">
+150
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+379
+</td>
+<td style="text-align:left;">
+162
+</td>
+<td style="text-align:left;">
+<strong>839</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 1: the expected counts.</strong> Each cell is (row
+total)(column total)/839. For community college students working 1–3
+hours, <span class="math display">\[E_{11} = \frac{255 \times 298}{839}
+= 90.57.\]</span> The whole table:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+1–3 hours
+</th>
+<th style="text-align:left;">
+4–6 hours
+</th>
+<th style="text-align:left;">
+7–9 hours
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Community college students
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{255 \times 298}{839} = 90.57\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{255 \times 379}{839} = 115.19\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{255 \times 162}{839} = 49.24\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Four-year college students
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{290 \times 298}{839} = 103.00\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{290 \times 379}{839} = 131.00\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{290 \times 162}{839} = 56.00\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nonstudents
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{294 \times 298}{839} = 104.42\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{294 \times 379}{839} = 132.81\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{294 \times 162}{839} = 56.77\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Check: each row of expected counts adds to its row total (for
+example, <span class="math inline">\(90.57 + 115.19 + 49.24 =
+255\)</span>), and the smallest expected count is 49.24, well above
+5.</p>
+<p><strong>Step 2: the contributions <span class="math inline">\((O -
+E)^2/E\)</span>.</strong> For the top-left cell, <span
+class="math inline">\((111 - 90.57)^2/90.57 = 4.607\)</span>.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+1–3 hours
+</th>
+<th style="text-align:left;">
+4–6 hours
+</th>
+<th style="text-align:left;">
+7–9 hours
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Community college students
+</td>
+<td style="text-align:left;">
+4.607
+</td>
+<td style="text-align:left;">
+3.197
+</td>
+<td style="text-align:left;">
+0.031
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Four-year college students
+</td>
+<td style="text-align:left;">
+0.476
+</td>
+<td style="text-align:left;">
+0.030
+</td>
+<td style="text-align:left;">
+0.447
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nonstudents
+</td>
+<td style="text-align:left;">
+1.726
+</td>
+<td style="text-align:left;">
+2.225
+</td>
+<td style="text-align:left;">
+0.250
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now the five steps.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> One random sample of 839
+volunteers, each classified on both variables; every expected count is
+at least 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: the number of hours volunteered is
+independent of the type of volunteer. <span
+class="math inline">\(H_A\)</span>: the number of hours volunteered
+depends on the type of volunteer.</p></li>
+<li><p><strong>Test statistic.</strong> Add all nine contributions:
+<span class="math display">\[X^2_{obs} = 4.607 + 3.197 + 0.031 + 0.476 +
+0.030 + 0.447 + 1.726 + 2.225 + 0.250 = 12.99\]</span> <span
+class="math display">\[df = (3 - 1)(3 - 1) = 4\]</span></p></li>
+<li><p><strong>P-value.</strong> In the <span class="math inline">\(df =
+4\)</span> row, <span class="math inline">\(11.143 &lt; 12.99 &lt;
+14.860\)</span>, with upper tails 0.025 and 0.005, so <span
+class="math display">\[0.005 &lt; P(\chi^2 \geq 12.99 \mid H_0 \text{
+true}) &lt; 0.025\]</span> Software gives 0.0113.</p></li>
+<li><p><strong>Decision.</strong> The P-value is below 0.05:
+<strong>reject <span class="math inline">\(H_0\)</span></strong>. There
+is convincing evidence that the number of hours volunteered is related
+to the type of volunteer.</p></li>
+</ol>
+<p><img src="assets/l30_volunteers.png" alt="A chi-square distribution with 4 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 4 degrees of freedom. A dashed line marks 12.99, far into the right tail, and the thin sliver of area to its right is shaded red and labelled P of chi-square at least 12.99. A label reads: table, 11.143 is less than 12.99, which is less than 14.860." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>How are they related?</strong> The largest contributions are
+community college students working 1–3 hours (4.607: 111 observed, 90.57
+expected) and 4–6 hours (3.197: 96 observed, 115.19 expected), and
+nonstudents working 4–6 hours (2.225: 150 observed, 132.81 expected).
+Community college students volunteer fewer hours than independence
+predicts and nonstudents more, which is what the conditional
+distributions in the two-way tables section suggested.</p>
+</div>
+<div id="practice-anxiety-and-the-need-to-succeed"
+class="section level2">
+<h2>Practice: anxiety and the need to succeed</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence">OpenStax
+Introductory Statistics 2e, Section 11.3, Example 11.7</a>:</em></p>
+<blockquote>
+<p>De Anza College is interested in the relationship between anxiety
+level and the need to succeed in school. A random sample of 400 students
+took a test that measured anxiety level and need to succeed in school.
+The table shows the results. De Anza College wants to know if anxiety
+level and need to succeed in school are independent events.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Need to succeed
+</th>
+<th style="text-align:left;">
+High anxiety
+</th>
+<th style="text-align:left;">
+Med-high anxiety
+</th>
+<th style="text-align:left;">
+Medium anxiety
+</th>
+<th style="text-align:left;">
+Med-low anxiety
+</th>
+<th style="text-align:left;">
+Low anxiety
+</th>
+<th style="text-align:left;">
+Row total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+High need
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+42
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+155
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Medium need
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+63
+</td>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+193
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Low need
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+95
+</td>
+<td style="text-align:left;">
+127
+</td>
+<td style="text-align:left;">
+63
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+<strong>400</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>(a)</strong> How many high-anxiety students are expected to
+have a high need to succeed, if the variables are independent?
+<strong>(b)</strong> How many are expected to have a low need to succeed
+and med-low anxiety? <strong>(c)</strong> Test whether anxiety level and
+the need to succeed are independent at <span
+class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<p><strong>(a)</strong> <span class="math inline">\(E = \dfrac{155
+\times 57}{400} = 22.09\)</span>, about 22 students.
+<strong>(b)</strong> <span class="math inline">\(E = \dfrac{52 \times
+63}{400} = 8.19\)</span>, about 8 students.</p>
+<p><strong>(c)</strong> The full table of expected counts, then the
+contributions:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+High anxiety
+</th>
+<th style="text-align:left;">
+Med-high anxiety
+</th>
+<th style="text-align:left;">
+Medium anxiety
+</th>
+<th style="text-align:left;">
+Med-low anxiety
+</th>
+<th style="text-align:left;">
+Low anxiety
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+High need
+</td>
+<td style="text-align:left;">
+22.09
+</td>
+<td style="text-align:left;">
+36.81
+</td>
+<td style="text-align:left;">
+49.21
+</td>
+<td style="text-align:left;">
+24.41
+</td>
+<td style="text-align:left;">
+22.48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Medium need
+</td>
+<td style="text-align:left;">
+27.50
+</td>
+<td style="text-align:left;">
+45.84
+</td>
+<td style="text-align:left;">
+61.28
+</td>
+<td style="text-align:left;">
+30.40
+</td>
+<td style="text-align:left;">
+27.98
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Low need
+</td>
+<td style="text-align:left;">
+7.41
+</td>
+<td style="text-align:left;">
+12.35
+</td>
+<td style="text-align:left;">
+16.51
+</td>
+<td style="text-align:left;">
+8.19
+</td>
+<td style="text-align:left;">
+7.54
+</td>
+</tr>
+</tbody>
+</table>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+High anxiety
+</th>
+<th style="text-align:left;">
+Med-high anxiety
+</th>
+<th style="text-align:left;">
+Medium anxiety
+</th>
+<th style="text-align:left;">
+Med-low anxiety
+</th>
+<th style="text-align:left;">
+Low anxiety
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+High need
+</td>
+<td style="text-align:left;">
+7.549
+</td>
+<td style="text-align:left;">
+0.731
+</td>
+<td style="text-align:left;">
+0.291
+</td>
+<td style="text-align:left;">
+3.629
+</td>
+<td style="text-align:left;">
+6.924
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Medium need
+</td>
+<td style="text-align:left;">
+3.283
+</td>
+<td style="text-align:left;">
+0.102
+</td>
+<td style="text-align:left;">
+0.048
+</td>
+<td style="text-align:left;">
+0.223
+</td>
+<td style="text-align:left;">
+0.325
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Low need
+</td>
+<td style="text-align:left;">
+1.569
+</td>
+<td style="text-align:left;">
+4.374
+</td>
+<td style="text-align:left;">
+1.839
+</td>
+<td style="text-align:left;">
+5.663
+</td>
+<td style="text-align:left;">
+11.869
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> A random sample of 400 students;
+the smallest expected count is 7.41 (low need, high anxiety), so every
+expected count is at least 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: anxiety level and the need to
+succeed are independent. <span class="math inline">\(H_A\)</span>: they
+are not independent.</p></li>
+<li><p><strong>Test statistic.</strong> The 15 contributions add to
+<span class="math inline">\(X^2_{obs} = 48.42\)</span>, with <span
+class="math inline">\(df = (3 - 1)(5 - 1) = 8\)</span>.</p></li>
+<li><p><strong>P-value.</strong> The largest entry in the <span
+class="math inline">\(df = 8\)</span> row is 27.868 (0.0005), and <span
+class="math inline">\(48.42 &gt; 27.868\)</span>, so <span
+class="math inline">\(P(\chi^2 \geq 48.42 \mid H_0 \text{ true}) &lt;
+0.0005\)</span>.</p></li>
+<li><p><strong>Decision.</strong> <strong>Reject <span
+class="math inline">\(H_0\)</span>.</strong> Anxiety level and the need
+to succeed in school are related. The largest contributions are low need
+with low anxiety (11.87: 17 observed, 7.54 expected) and high need with
+high anxiety (7.55: 35 observed, 22.09 expected): students with a higher
+need to succeed tend to report higher anxiety.</p></li>
+</ol>
+</div>
+</div>
+<div id="the-chi-square-test-for-homogeneity" class="section level1">
+<h1>The chi-square test for homogeneity</h1>
+<div id="the-setup-2" class="section level2">
+<h2>The setup</h2>
+<p>A <strong>test for homogeneity</strong> asks whether <strong>two or
+more populations</strong> have the <strong>same distribution</strong> of
+one categorical variable. The data come from a <strong>separate random
+sample from each population</strong>, and each person is classified on
+that one variable. The table has a row for each population and a column
+for each category of the response.</p>
+<p><span class="math display">\[H_0: \text{the populations have the same
+distribution of the variable}\]</span> <span class="math display">\[H_A:
+\text{the distributions are not all the same}\]</span></p>
+<p><strong>The arithmetic is identical to the test of
+independence:</strong> <span class="math display">\[E_{ij} =
+\frac{(\text{row } i \text{ total}) \times (\text{column } j \text{
+total})}{n}, \qquad
+X^2_{obs} = \sum_{\text{all cells}} \frac{(O_{ij} - E_{ij})^2}{E_{ij}},
+\qquad df = (r - 1)(c - 1),\]</span> the P-value is the upper tail, and
+every expected count must be at least 5.</p>
+<p><strong>So what is the difference?</strong> The
+<strong>design</strong>, and therefore the question:</p>
+<ul>
+<li><strong>Independence:</strong> <em>one</em> sample, and <em>two</em>
+variables measured on each person. The row totals and column totals are
+both random. Question: are the two variables related?</li>
+<li><strong>Homogeneity:</strong> <em>several</em> samples, one per
+population, and <em>one</em> variable. The row totals (the sample sizes)
+are fixed by the researcher. Question: do the populations have the same
+distribution?</li>
+</ul>
+<p>It is the categorical version of the jump from a one-sample test to a
+two-sample test: the rows are the groups we compare. With two rows, it
+extends the test of <span class="math inline">\(p_1 = p_2\)</span> to a
+response with more than two categories.</p>
+<p><em>A note on the textbook:</em> Section 11.4 of the book writes the
+homogeneity df as “number of columns <span
+class="math inline">\(-\)</span> 1”, because all of its examples compare
+exactly two populations. With <span class="math inline">\(r = 2\)</span>
+rows that is the same as <span class="math inline">\((r - 1)(c - 1) = (2
+- 1)(c - 1) = c - 1\)</span>. Use <span class="math inline">\((r - 1)(c
+- 1)\)</span>; it works for any number of populations, and it is the
+formula in the book’s Formula Review.</p>
+</div>
+<div id="example-living-arrangements-of-men-and-women"
+class="section level2">
+<h2>Example: living arrangements of men and women</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-4-test-for-homogeneity">OpenStax
+Introductory Statistics 2e, Section 11.4, Example 11.8</a>:</em></p>
+<blockquote>
+<p>Do men and women college students have the same distribution of
+living arrangements? Use a level of significance of 0.05. Suppose that
+250 randomly selected men college students and 300 randomly selected
+women college students were asked about their living arrangements:
+dormitory, apartment, with parents, other. The results are shown in the
+table. Do male and female college students have the same distribution of
+living arrangements?</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Dormitory
+</th>
+<th style="text-align:left;">
+Apartment
+</th>
+<th style="text-align:left;">
+With parents
+</th>
+<th style="text-align:left;">
+Other
+</th>
+<th style="text-align:left;">
+Row total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Men
+</td>
+<td style="text-align:left;">
+72
+</td>
+<td style="text-align:left;">
+84
+</td>
+<td style="text-align:left;">
+49
+</td>
+<td style="text-align:left;">
+45
+</td>
+<td style="text-align:left;">
+250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Women
+</td>
+<td style="text-align:left;">
+91
+</td>
+<td style="text-align:left;">
+86
+</td>
+<td style="text-align:left;">
+88
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+170
+</td>
+<td style="text-align:left;">
+137
+</td>
+<td style="text-align:left;">
+80
+</td>
+<td style="text-align:left;">
+<strong>550</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Two separate random samples (250 men, 300 women) and one variable
+(living arrangement), so this is a test for
+<strong>homogeneity</strong>.</p>
+<p><strong>Expected counts.</strong> For men in a dormitory, <span
+class="math inline">\(E = \dfrac{250 \times 163}{550} = 74.09\)</span>.
+The rest:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+Dormitory
+</th>
+<th style="text-align:left;">
+Apartment
+</th>
+<th style="text-align:left;">
+With parents
+</th>
+<th style="text-align:left;">
+Other
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Men
+</td>
+<td style="text-align:left;">
+74.09
+</td>
+<td style="text-align:left;">
+77.27
+</td>
+<td style="text-align:left;">
+62.27
+</td>
+<td style="text-align:left;">
+36.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Women
+</td>
+<td style="text-align:left;">
+88.91
+</td>
+<td style="text-align:left;">
+92.73
+</td>
+<td style="text-align:left;">
+74.73
+</td>
+<td style="text-align:left;">
+43.64
+</td>
+</tr>
+</tbody>
+</table>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+Dormitory
+</th>
+<th style="text-align:left;">
+Apartment
+</th>
+<th style="text-align:left;">
+With parents
+</th>
+<th style="text-align:left;">
+Other
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Men
+</td>
+<td style="text-align:left;">
+0.059
+</td>
+<td style="text-align:left;">
+0.586
+</td>
+<td style="text-align:left;">
+2.829
+</td>
+<td style="text-align:left;">
+2.051
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Women
+</td>
+<td style="text-align:left;">
+0.049
+</td>
+<td style="text-align:left;">
+0.488
+</td>
+<td style="text-align:left;">
+2.357
+</td>
+<td style="text-align:left;">
+1.709
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> Independent random samples of men
+and women; the smallest expected count is 36.36, well above 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: the distribution of living
+arrangements is the same for men and women college students. <span
+class="math inline">\(H_A\)</span>: the distributions are not the
+same.</p></li>
+<li><p><strong>Test statistic.</strong> <span
+class="math display">\[X^2_{obs} = 0.059 + 0.586 + 2.829 + 2.051 + 0.049
++ 0.488 + 2.357 + 1.709 = 10.13\]</span> <span class="math display">\[df
+= (2 - 1)(4 - 1) = 3\]</span></p></li>
+<li><p><strong>P-value.</strong> In the <span class="math inline">\(df =
+3\)</span> row, <span class="math inline">\(9.348 &lt; 10.13 &lt;
+12.838\)</span>, with upper tails 0.025 and 0.005, so <span
+class="math display">\[0.005 &lt; P(\chi^2 \geq 10.13 \mid H_0 \text{
+true}) &lt; 0.025\]</span> Software gives 0.0175.</p></li>
+<li><p><strong>Decision.</strong> The P-value is below 0.05:
+<strong>reject <span class="math inline">\(H_0\)</span></strong>. There
+is convincing evidence that men and women college students do not have
+the same distribution of living arrangements.</p></li>
+</ol>
+<p><img src="assets/l30_living.png" alt="A chi-square distribution with 3 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 3 degrees of freedom. A dashed line marks 10.13 in the right tail, and the thin sliver of area to its right is shaded red and labelled P of chi-square at least 10.13. A label reads: table, 9.348 is less than 10.13, which is less than 12.838." width="100%" style="display: block; margin: auto;" /></p>
+<p>As the book points out, the test itself only says the distributions
+differ, not how. The contributions show where: “with parents” (2.829 and
+2.357) and “other” (2.051 and 1.709). Women are more likely to live with
+their parents (<span class="math inline">\(88/300 = 0.293\)</span>
+against <span class="math inline">\(49/250 = 0.196\)</span> of men) and
+less likely to have some other arrangement (<span
+class="math inline">\(35/300 = 0.117\)</span> against <span
+class="math inline">\(45/250 = 0.180\)</span>).</p>
+</div>
+<div id="practice-voters-before-and-after-an-earthquake"
+class="section level2">
+<h2>Practice: voters before and after an earthquake</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-4-test-for-homogeneity">OpenStax
+Introductory Statistics 2e, Section 11.4, Example 11.9</a>:</em></p>
+<blockquote>
+<p>Both before and after a recent earthquake, surveys were conducted
+asking voters which of the three candidates they planned on voting for
+in the upcoming city council election. Has there been a change since the
+earthquake? Use a level of significance of 0.05.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Perez
+</th>
+<th style="text-align:left;">
+Chung
+</th>
+<th style="text-align:left;">
+Stevens
+</th>
+<th style="text-align:left;">
+Row total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Before
+</td>
+<td style="text-align:left;">
+167
+</td>
+<td style="text-align:left;">
+128
+</td>
+<td style="text-align:left;">
+135
+</td>
+<td style="text-align:left;">
+430
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+After
+</td>
+<td style="text-align:left;">
+214
+</td>
+<td style="text-align:left;">
+197
+</td>
+<td style="text-align:left;">
+225
+</td>
+<td style="text-align:left;">
+636
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+381
+</td>
+<td style="text-align:left;">
+325
+</td>
+<td style="text-align:left;">
+360
+</td>
+<td style="text-align:left;">
+<strong>1066</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Solution.</strong> The two surveys are separate samples of
+voters taken at two times, with one variable (candidate preference): a
+test for homogeneity.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> Two independent random samples (430
+before, 636 after). The smallest expected count is <span
+class="math inline">\(430 \times 325 / 1066 = 131.10\)</span>, so all
+are at least 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: the distribution of voter
+preferences was the same before and after the earthquake. <span
+class="math inline">\(H_A\)</span>: it was not the same.</p></li>
+<li><p><strong>Test statistic.</strong> The expected counts and
+contributions are</p></li>
+</ol>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+Perez
+</th>
+<th style="text-align:left;">
+Chung
+</th>
+<th style="text-align:left;">
+Stevens
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Before
+</td>
+<td style="text-align:left;">
+153.69
+</td>
+<td style="text-align:left;">
+131.10
+</td>
+<td style="text-align:left;">
+145.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+After
+</td>
+<td style="text-align:left;">
+227.31
+</td>
+<td style="text-align:left;">
+193.90
+</td>
+<td style="text-align:left;">
+214.78
+</td>
+</tr>
+</tbody>
+</table>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+Perez
+</th>
+<th style="text-align:left;">
+Chung
+</th>
+<th style="text-align:left;">
+Stevens
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Before
+</td>
+<td style="text-align:left;">
+1.153
+</td>
+<td style="text-align:left;">
+0.073
+</td>
+<td style="text-align:left;">
+0.719
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+After
+</td>
+<td style="text-align:left;">
+0.780
+</td>
+<td style="text-align:left;">
+0.049
+</td>
+<td style="text-align:left;">
+0.486
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[X^2_{obs} = 1.153 + 0.073 + 0.719 +
+0.780 + 0.049 + 0.486 = 3.26, \qquad df = (2 - 1)(3 - 1) =
+2\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p><strong>P-value.</strong> In the <span class="math inline">\(df =
+2\)</span> row, <span class="math inline">\(3.219 &lt; 3.26 &lt;
+3.794\)</span>, with upper tails 0.2 and 0.15, so <span
+class="math inline">\(0.15 &lt; P(\chi^2 \geq 3.26 \mid H_0 \text{
+true}) &lt; 0.2\)</span>. Software gives 0.1959.</p></li>
+<li><p><strong>Decision.</strong> The P-value is above 0.05:
+<strong>fail to reject <span
+class="math inline">\(H_0\)</span></strong>. The data do not give
+convincing evidence that the distribution of voter preferences changed
+after the earthquake.</p></li>
+</ol>
+</div>
+</div>
+<div id="which-chi-square-test" class="section level1">
+<h1>Which chi-square test?</h1>
+<p><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-5-comparison-of-the-chi-square-tests">OpenStax
+Section 11.5</a>.)</em> All three tests compute the same <span
+class="math inline">\(X^2\)</span> and use the upper tail of a
+chi-square distribution. Choose between them by asking <strong>how many
+samples</strong> there are and <strong>how many variables</strong> were
+measured.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Test
+</th>
+<th style="text-align:left;">
+Design
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(H_0\)</span>
+</th>
+<th style="text-align:left;">
+Expected count <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(df\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<strong>Goodness of fit</strong>
+</td>
+<td style="text-align:left;">
+one sample, one categorical variable
+</td>
+<td style="text-align:left;">
+the population fits the claimed distribution (<span
+class="math inline">\(p_i = p_{i,0}\)</span> for every category)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n\,p_{i,0}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(k - 1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Independence</strong>
+</td>
+<td style="text-align:left;">
+one sample, two categorical variables on each individual
+</td>
+<td style="text-align:left;">
+the two variables are independent
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{\text{row total} \times \text{column
+total}}{n}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((r - 1)(c - 1)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Homogeneity</strong>
+</td>
+<td style="text-align:left;">
+a separate sample from each of two or more populations, one categorical
+variable
+</td>
+<td style="text-align:left;">
+the populations have the same distribution
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\dfrac{\text{row total} \times \text{column
+total}}{n}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((r - 1)(c - 1)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All three need random sampling and every expected count at least 5,
+and for all three <span class="math inline">\(\text{P-value} = P(\chi^2
+\geq X^2_{obs} \mid H_0 \text{ true})\)</span>.</p>
+<p><strong>Practice: which test?</strong> For each study, name the
+chi-square test.</p>
+<ol style="list-style-type: decimal">
+<li>A random sample of 500 voters is asked both their age group (18–29,
+30–49, 50–64, 65+) and their preferred news source (TV, print, online,
+social media). Are age group and news source related?</li>
+<li>A candy company says its bags are 20% red, 20% orange, 20% yellow,
+20% green and 20% blue. You count the colors in a random sample of 300
+pieces.</li>
+<li>Separate random samples of 200 first-year students and 200 seniors
+are asked how they usually get to campus (walk, bike, bus, drive). Do
+the two classes commute the same way?</li>
+</ol>
+<p><strong>Answers.</strong> (1) Independence: one sample, two variables
+measured on each voter. (2) Goodness of fit: one variable compared with
+a claimed distribution, with <span class="math inline">\(E = 300 \times
+0.2 = 60\)</span> for each color and <span class="math inline">\(df =
+4\)</span>. (3) Homogeneity: two separately sampled populations, one
+variable, with <span class="math inline">\(df = (2 - 1)(4 - 1) =
+3\)</span>.</p>
 </div>
 <div id="sources" class="section level1">
 <h1>Sources</h1>
@@ -3924,11 +6305,22 @@ The hives and electric-vehicle data are Examples 10.8 and 10.10; the
 <li>The NCAA basketball scores and the couples’ decision ratings come
 from the 2024 STAT 251 notes.</li>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
-10.1, 10.3 and 10.4, and for the categorical data, Sections
-11.1–11.3.</li>
+10.1, 10.3 and 10.4, and for the categorical data and the chi-square
+tests, Sections 11.1–11.5.</li>
 <li>The volunteer table is OpenStax Example 11.6 (Table 11.15). The
 teens-and-phones counts are the published Pew Research Center margins
 used in Week 2; the “equally common” claim tested here is ours.</li>
+<li>The chi-square tests use OpenStax Chapter 11 examples: employee
+absences (Example 11.2, p. 568), streaming services (Example 11.3,
+p. 569), absenteeism and combining categories (Example 11.1, p. 565),
+speeding and cell phones (Example 11.5, p. 575), volunteers (Example
+11.6, p. 575), anxiety and the need to succeed (Example 11.7, p. 578),
+living arrangements (Example 11.8, p. 579) and voters and the earthquake
+(Example 11.9, p. 580); the comparison table follows Section 11.5
+(p. 582). The book gives only the two expected counts for Example 11.7
+and stops at the degrees of freedom for Example 11.1; the tests that
+finish them are ours. Mendel’s peas come from the 2024 STAT 251
+notes.</li>
 </ul>
 </div>
 

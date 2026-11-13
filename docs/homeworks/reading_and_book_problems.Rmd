@@ -100,7 +100,7 @@ Chapter 10: Introduction, p. 511; Section 10.3 (Comparing Two Independent Popula
 The sign test is not in the textbook; see the lecture notes for that week.
 
 ## Week 12
-*Comparing two independent proportions or means; matched pairs (dependent samples); introduction to categorical data; goodness-of-fit tests and tests of independence*
+*Comparing two independent proportions or means; matched pairs (dependent samples); introduction to categorical data; goodness-of-fit tests, tests of independence and tests for homogeneity*
 
 Chapter 10: Sections 10.1 - 10.5, p. 512 - 535
 

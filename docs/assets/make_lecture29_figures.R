@@ -1,7 +1,8 @@
 #Checks the numbers on the Week 12 Lecture 29 deck (11/11/2026): the introduction to categorical data
 #(one-way and two-way tables, conditional distributions, observed and expected counts, the chi-square
 #distribution and the X^2 statistic). The matched-pairs slides carried over from Lecture 28 are checked
-#in make_lecture28_figures.R. It draws:
+#in make_lecture28_figures.R. Nov 13 2026: Lecture 29 stopped at slide 15, so the slides from "Tables for
+#categorical data" on (including the l29_chisq.png slide) moved into the Lecture 30 deck. It draws:
 #
 #  l29_chisq.png         chi-square density curves for df = 1, 2, 4 and 8
 #  l29_figure_sizes.csv  the size, in points, each figure is drawn at

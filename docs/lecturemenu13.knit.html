@@ -1,0 +1,4560 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="STAT 251 Section 01" />
+
+
+<title>Week 13 Notes</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<!--
+  Pre-paint theme resolution. Included via `includes: in_header:` so it lands in
+  <head> and runs synchronously before first paint - that is what prevents a
+  flash of the wrong theme on load.
+
+  We ALWAYS set data-theme (never leave it unset), which lets site.css express
+  dark mode as a plain `:root[data-theme="dark"]` block with no duplicated
+  @media (prefers-color-scheme) rules.
+-->
+<script>
+(function () {
+  var stored = null;
+  // localStorage THROWS (not returns null) in Safari private browsing and in
+  // some file:// contexts - which is exactly how these pages get previewed
+  // locally. An uncaught throw here would leave data-theme unset and kill
+  // every dark-mode rule on the page.
+  try { stored = window.localStorage.getItem('stat251-theme'); } catch (e) { stored = null; }
+
+  var theme = (stored === 'dark' || stored === 'light') ? stored :
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+
+<!--
+  MathJax 4, SVG output, with speech.
+
+  WHY VERSION 4. The pages used to load MathJax 2.7 from mathjax.rstudio.com.
+  Its SVG output is aria-hidden and has no spoken text. The only thing assistive
+  technology got was a hidden MathML copy, which only a screen reader with a math
+  module (NVDA + MathCAT, JAWS, VoiceOver) can voice. Read-aloud tools (Edge and
+  Chrome Read Aloud, Read&Write, Speechify, phone Speak Screen) read nothing, or
+  stray letters, for all ~6,000 expressions on the site. MathJax 4 runs Speech
+  Rule Engine on every expression and attaches a natural-language label, e.g.
+  "P of open paren X is greater than or equal to 2 close paren equals ...",
+  that any text-to-speech tool or screen reader reads.
+
+  WHY SVG. CHTML output (v2 HTML-CSS, and v3 CHTML) prints square-root bars too
+  wide in headless Chrome: on the Exam 1 study guide the bar over
+  sqrt( (1/(n-1)) sum (x_i - xbar)^2 ) ran past the expression into the line
+  above. SVG draws it the right width; re-checked with v4 SVG before switching.
+
+  The script URL itself is set by `mathjax:` in _site.yml and in every
+  per-directory _output.yml (rmarkdown injects it at the end of <body>). This
+  block has to be in <head> so window.MathJax exists before that script runs.
+  Keep the version pinned and the same in all seven places.
+
+  inTabOrder: false. MathJax makes every expression a Tab stop by default (for
+  its keyboard explorer), which put ~300 Tab stops on a single lecture page in
+  front of the links a keyboard user is trying to reach. Screen-reader users
+  still reach every expression in browse mode, and the label is on the
+  expression either way. It is options.a11y, NOT menuOptions.settings - the
+  menu setting is accepted but ignored at startup.
+
+  SVG output inherits currentColor, so both themes are unaffected (see the
+  MathJax rule in assets/brand/site.css).
+-->
+<script>
+window.MathJax = {
+  options: { a11y: { inTabOrder: false } }
+};
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/brand/uidaho-branding.css" type="text/css" />
+<link rel="stylesheet" href="assets/brand/site.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">STAT251-01</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Syllabus
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="syllabus.html">Course Syllabus</a>
+    </li>
+    <li>
+      <a href="Course_Schedule.html">Course Schedule</a>
+    </li>
+    <li>
+      <a href="sac_schedule.html">SAC Schedule</a>
+    </li>
+    <li>
+      <a href="university_resources.html">University Resources</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lecture Notes</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="lecturemenu1.html">Week 1</a>
+        </li>
+        <li>
+          <a href="lecturemenu2.html">Week 2</a>
+        </li>
+        <li>
+          <a href="lecturemenu3.html">Week 3</a>
+        </li>
+        <li>
+          <a href="lecturemenu4.html">Weeks 4-5</a>
+        </li>
+        <li>
+          <a href="lecturemenu6.html">Week 6</a>
+        </li>
+        <li>
+          <a href="lecturemenu7.html">Week 7</a>
+        </li>
+        <li>
+          <a href="lecturemenu8.html">Week 8</a>
+        </li>
+        <li>
+          <a href="lecturemenu9.html">Week 9</a>
+        </li>
+        <li>
+          <a href="lecturemenu10.html">Week 10</a>
+        </li>
+        <li>
+          <a href="lecturemenu11.html">Week 11</a>
+        </li>
+        <li>
+          <a href="lecturemenu12.html">Week 12</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="lecslidesindex.html">Lecture Slides</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Homeworks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assignments</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/2026/homework_1_2026.html">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_2_2026.html">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_3_2026.html">Homework 3</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_4_2026.html">Homework 4</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/2026/homework_1_2026_solns.html">Hmwk 1 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_2_2026_solns.html">Hmwk 2 Solutions</a>
+        </li>
+        <li>
+          <a href="homeworks/2026/homework_3_2026_solns.html">Hmwk 3 Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data &amp; PDF Downloads</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="homeworks/homework_downloads.html#hw1">Homework 1</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html#hw2">Homework 2</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html#hw3">Homework 3</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html#hw4">Homework 4</a>
+        </li>
+        <li>
+          <a href="homeworks/homework_downloads.html">All downloads</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="homeworks/reading_and_book_problems.html">Reading &amp; Extra Problems</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Exam Study Guides
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="study_guides/exam1_study_guide.html">Exam 1 Study Guide</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Exam 1 Review</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Review_problems/exam1_review_problems.html">Problems</a>
+        </li>
+        <li>
+          <a href="Review_problems/exam1_review_problems_solns.html">Solutions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="study_guides/exam2_study_guide.html">Exam 2 Study Guide</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Course Project
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="project.html">Project Description</a>
+    </li>
+    <li>
+      <a href="project_check.html">Project Check</a>
+    </li>
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+    <li>
+      <a href="example_project_categorical.html">Example Project 1: Categorical</a>
+    </li>
+    <li>
+      <a href="example_project_continuous.html">Example Project 2: Quantitative</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stat-tools.jmks-homelab.dev/">Tools/Calculators</a>
+    </li>
+    <li>
+      <a href="sampling_tools.html">Online Sampling Tools</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tables</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/Z_table.html">Z-table</a>
+        </li>
+        <li>
+          <a href="misc/t_table.html">t-table</a>
+        </li>
+        <li>
+          <a href="misc/chisq_table.html">Chi-square table</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">R code</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="misc/rcode_examples.html">plotting in R</a>
+        </li>
+        <li>
+          <a href="misc/hp_r_code.html">Functions</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Extras</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric Tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="misc/R_download_instructions.html">Downloading R/Rstudio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<!--
+  Bypass block (WCAG 2.4.1). Included via `includes: before_body:` so it is the
+  very first thing inside <body> - ahead of the navbar, which is what it skips.
+
+  Every top-level page puts a ~25-link fixed navbar in front of the content, so
+  without this a keyboard or switch user tabs the entire menu on every single
+  page before reaching anything they came for.
+
+  .sr-only / .sr-only-focusable are Bootstrap 3's own classes (already in
+  site_libs/bootstrap-3.3.5) - visually hidden until focused, then revealed.
+  site.css only adds the on-brand painted state and the z-index needed to sit
+  above .navbar-fixed-top.
+
+  The #main-content target does not exist in pandoc's template; a11y.html
+  stamps it onto .main-container at parse time. Both files must ship together.
+-->
+<a href="#main-content" class="sr-only sr-only-focusable skip-link">Skip to main content</a>
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Week 13 Notes</h1>
+<h4 class="author">STAT 251 Section 01</h4>
+
+</div>
+
+
+<!--
+  SCOPE NOTE (Nov 9 2026). This page is hidden and still holds 2024 content. Its "Comparing two means" and
+  "Paired t test" sections are superseded by the Week 12 page (lecturemenu12.Rmd, Lecture 28), so drop
+  them when this page is rewritten. After the Nov 9 shift (see Course_Schedule.Rmd), Week 13 is Mon Nov 16
+  Cramer's V / McNemar / Fisher, Wed Nov 18 measures of association, Fri Nov 20 the Exam 3 review. The
+  goodness-of-fit and independence material below now belongs to Week 12 (Wed Nov 11 and Fri Nov 13).
+  Nov 11 2026: the chi-square distribution, observed/expected counts and the X^2 statistic are now written up
+  on the Week 12 page (Lecture 29); drop the duplicates here when this page is rewritten.
+-->
+<div id="comparing-two-means" class="section level1">
+<h1>Comparing two means</h1>
+<p>Last week we learned how to compare two populations across a
+qualitative response variable by comparing their relative proportions.
+Now we will learn how we can compare two groups on a quantitative
+response variable by comparing their means. There are many cases where
+researchers might be interested in comparing groups across a
+quantitative variable. For example, a teacher may be interested in
+comparing the average test scores of students in two different classes
+(Class A and Class B). A social scientist may be interested in whether
+there is a difference in salaries between men and women within a
+company. In any case, we are again dealing with two samples of sizes
+<span class="math inline">\(n_1\)</span> and <span
+class="math inline">\(n_2\)</span> which come from populations
+<i>population 1</i> and <i>population 2</i> and with means as <span
+class="math inline">\(\mu_1\)</span> and <span
+class="math inline">\(\mu_2\)</span>.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Population
+</th>
+<th style="text-align:left;">
+Population Mean
+</th>
+<th style="text-align:left;">
+Population Stdev
+</th>
+<th style="text-align:left;">
+Sample Size
+</th>
+<th style="text-align:left;">
+Sample Mean
+</th>
+<th style="text-align:left;">
+Sample Stdev
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(s_1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(s_2\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let <span class="math inline">\(\mu_d = \mu_1 - \mu_2\)</span> be the
+mean difference between the two populations. We can construct confidence
+intervals to estimate the average difference as well as conduct
+hypothesis tests to determine if two populations are significantly
+different.</p>
+<div id="a-confidence-interval-for-the-mean-difference-mu_d"
+class="section level2">
+<h2>A confidence interval for the mean difference <span
+class="math inline">\(\mu_d\)</span></h2>
+<p>We will begin by assuming that we are dealing with two independent
+samples from two distinct populations. The natural estimator of <span
+class="math inline">\(\mu_d\)</span> is the difference between the
+sample means</p>
+<p><span class="math display">\[\hat{\mu}_d = \bar{x}_1 -
+\bar{x}_2\]</span></p>
+<p>To base our inference on the above estimator, we must know its
+sampling distribution. If we assume that both samples come from
+populations that are normally distributed, then the distribution of the
+difference will also be normally distributed and the variances will
+add:</p>
+<p><span class="math display">\[Var[\mu_1 - \mu_2] =
+\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]</span></p>
+<p>In practice, <span class="math inline">\(\sigma_1^2\)</span> and
+<span class="math inline">\(\sigma_2^2\)</span> are unknown population
+parameters but can be estimated by substituting in the sample variances
+<span class="math inline">\(s_1^2\)</span> and <span
+class="math inline">\(s_2^2\)</span>. This gives the following standard
+deviation for the estimator <span
+class="math inline">\(\hat{\mu}_d\)</span></p>
+<p><span class="math display">\[SE(\hat{\mu}_d) =
+\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}  \]</span></p>
+<p>Just as it was for a single mean, estimating the population variances
+with the sample variances adds additional uncertainty. Thus, the
+sampling distribution for the difference in two means is <span
+class="math inline">\(t\)</span>-distributed, although the degrees of
+freedom are calculated differently. The actual formula for the degrees
+of freedom is quite messy and difficult to compute:</p>
+<p><span class="math display">\[df =
+\frac{\left(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}\right)^2}{ \frac{1}{n_1
+- 1}\left(\frac{s_1^2}{n_1}\right)^2 +
+\frac{1}{n_2-1}\left(\frac{s_2^2}{n_2}\right)^2} \]</span></p>
+<p>We will instead compute the degrees of freedom by taking the smaller
+of <span class="math inline">\(n_1-1\)</span> and <span
+class="math inline">\(n_2 - 1\)</span> which is a lower bound on the
+formula above</p>
+<p><span class="math display">\[\frac{\hat{\mu}_d -
+\mu_d}{SE(\hat{\mu}_d)} \sim t(\min(n_1 - 1, n_2 - 1)) \]</span></p>
+<p>The margin of error for estimating the mean difference at the <span
+class="math inline">\(100(1-\alpha)\%\)</span> level is given by</p>
+<p><span class="math display">\[m = t_{1-\alpha/2} \times
+SE(\hat{\mu}_d) \]</span></p>
+<p>which gives the following confidence interval for the mean
+difference</p>
+<p><span class="math display">\[(\bar{x}_1 - \bar{x}_2)
+\pm  t_{1-\alpha/2} \times SE(\hat{\mu}_d)\]</span></p>
+<p><strong>Example: Comparing Customer Satisfaction Levels</strong> -
+Suppose we want to compare the customer satisfaction levels of two
+competing cable television companies, Company 1 and Company 2. We
+randomly select customers from each company and ask them to rate their
+cable companies on a five-point scale (with 1 being least satisfied and
+5 most satisfied). The data are summarized in the table below:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Group
+</th>
+<th style="text-align:right;">
+Number of customers
+</th>
+<th style="text-align:right;">
+Sample Mean Rating
+</th>
+<th style="text-align:right;">
+Sample Stdev
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Company 1
+</td>
+<td style="text-align:right;">
+174
+</td>
+<td style="text-align:right;">
+4.2
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Company 2
+</td>
+<td style="text-align:right;">
+355
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Estimate the difference in mean satisfaction levels between the two
+companies at the <span class="math inline">\(95\%\)</span> confidence
+level.</p>
+<p>Let <span class="math inline">\(\mu_1\)</span> represent the mean
+satisfaction score for company 1 and <span
+class="math inline">\(\mu_2\)</span> represent the mean satisfaction
+score for company 2. The estimated mean difference in customer
+satisfaction is <span class="math display">\[\hat{\mu}_d = 4.2 - 3.8 =
+0.4 \]</span></p>
+<p>Since the confidence level is <span
+class="math inline">\(95\%\)</span> the standard score will be
+approximately the <span class="math inline">\(t_{1-0.05/2} =
+t_{0.975}\)</span> or the <span class="math inline">\(97.5th\)</span>
+percentile of a <span class="math inline">\(t\)</span>-distribution with
+<span class="math inline">\(173\)</span> degrees of freedom. Since the
+<span class="math inline">\(t\)</span> and <span
+class="math inline">\(z\)</span> distributions are approximately equal
+for sample sizes <span class="math inline">\(\geq 30\)</span> we will
+use the standard score <span class="math inline">\(1.96\)</span>. The
+standard error of the difference is given by</p>
+<p><span class="math display">\[SE(\hat{\mu}_d) =
+\sqrt{\frac{0.8^2}{174}+\frac{1.1^2}{355}} =0.0842  \]</span></p>
+<p>Which yields the follow margin of error</p>
+<p><span class="math display">\[ m = 1.96 (0.0842) = 0.165\]</span></p>
+<p>The <span class="math inline">\(95\%\)</span> confidence interval is
+<span class="math inline">\([0.24, 0.56]\)</span>. Thus, at the <span
+class="math inline">\(95\%\)</span> confidence level we estimate the
+mean difference in customer satisfaction score to be no less than <span
+class="math inline">\(0.24\)</span> and no more than <span
+class="math inline">\(0.56\)</span>. Notice that the above confidence
+interval does not span zero and thus likely constitutes a real, but
+small, difference between the companies</p>
+</div>
+<div
+id="a-significance-test-for-comparing-two-means-independent-samples"
+class="section level2">
+<h2>A significance test for comparing two means: independent
+samples</h2>
+<p>We can also test for a difference between two groups on a
+quantitative response variable by comparing their means. The set up for
+a significance test for a difference in two means is more or less the
+same as we saw previously for two proportions, however, the calculations
+now involve <span class="math inline">\(\bar{x}_1\)</span>, <span
+class="math inline">\(\bar{x}_2\)</span>, <span
+class="math inline">\(s_1\)</span> and <span
+class="math inline">\(s_2\)</span>. Recall that, under the assumption of
+normality for both populations and when using the sample standard
+deviations to estimate <span class="math inline">\(\sigma_1\)</span> and
+<span class="math inline">\(\sigma_2\)</span> the difference in means is
+<span class="math inline">\(t\)</span>-distributed. We will see that
+test statistic <span class="math inline">\(t_{obs}\)</span> is the
+standardized difference and has approximately the same distribution.
+Here’s how we set up a two-sample hypothesis test for means:</p>
+<p><strong>1. Assumptions</strong></p>
+<ul>
+<li><p>Data constitute a simple random sample</p></li>
+<li><p>The two groups are independent</p></li>
+<li><p>Both populations are normally distributed</p></li>
+</ul>
+<p><strong>2. Null and Alternative Hypotheses</strong></p>
+<ul>
+<li>The <strong>null</strong> hypothesis is generally that the two
+population means are equal (i.e no difference)</li>
+</ul>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 \ \ \  \text{which is
+the same as} \ \ \ H_0: \mu_1 - \mu_2 = 0\]</span></p>
+<ul>
+<li>The alternative hypothesis can be either lower, upper, or two tailed
+just as it was with our univariate tests. The table below gives the
+possible alternative hypotheses and their critical values:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+Critical Value
+</th>
+<th style="text-align:left;">
+Rejection Region
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{1-\alpha/2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(|t| \geq t_{1-\alpha/2}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_\alpha\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t\leq t_{\alpha}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t_{1-\alpha}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t\geq t_{1-\alpha}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. Test statistic</strong></p>
+<ul>
+<li>Under the null hypotheses the test statistic is the standardized
+difference</li>
+</ul>
+<p><span class="math display">\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2)
+- (\mu_1 -
+\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}  \]</span></p>
+<p>The above test statistic is only approximately <span
+class="math inline">\(t\)</span>-distributed. However, the lower bound
+for the degrees of freedom given by <span class="math inline">\(\min(n_1
+- 1, n_2 - 1)\)</span> generally leads to conservative estimates and
+tests and is thus favorable.</p>
+<p><strong>4. <span class="math inline">\(p\)</span>-value</strong></p>
+<ul>
+<li>The <span class="math inline">\(p\)</span>-values corresponding to
+each alternative hypothesis are listed in the table below</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Alternative Hypothesis
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(p\)</span>-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(|t| \geq |t_{obs}||H_0)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(t \leq t_{obs}|H_0)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(t\geq t_{obs}|H_0)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>5. Decision rule</strong></p>
+<p><span class="math display">\[\text{Reject} \ \ H_0 \ \ \text{if} \ \
+\text{$p$-value} &lt; \alpha \]</span></p>
+<div id="the-pooled-t-test" class="section level3">
+<h3>The pooled <span class="math inline">\(t\)</span> test</h3>
+<p>There is one situation where the above test statistic has exactly a
+<span class="math inline">\(t\)</span>-distribution and that occurs when
+we can assume that both populations have the same standard deviation. In
+this case, we need only substitute a single sample standard deviation
+for <span class="math inline">\(\sigma_1\)</span> and <span
+class="math inline">\(\sigma_2\)</span>. We call this the pooled
+estimate of the standard deviation:</p>
+<p><span class="math display">\[ s_{pooled} = \sqrt{ \frac{(n_1 -
+1)s_1^2 + (n_2 -1)s_2^2}{n_1+n_2 - 2}}\]</span></p>
+<p><span class="math inline">\(s_{pooled}\)</span> is called the
+<strong>pooled estimator</strong> of the common standard deviation <span
+class="math inline">\(\sigma\)</span> because it combines the
+information from both samples.</p>
+<p>The test statistic under the assumption of equal variances
+becomes</p>
+<p><span class="math display">\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2)
+- (\mu_1 -
+\mu_2)}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}  \]</span></p>
+<p>which is exactly distributed as a <span
+class="math inline">\(t\)</span> distribution with <span
+class="math inline">\(n_1+n_2 - 2\)</span> degrees of freedom. The test
+based on the pooled estimate of the standard deviation is more powerful
+because the sampling distribution is exact and not an approximation as
+it is in the unpooled case.</p>
+<p>Which test should you use?</p>
+<ul>
+<li>In practice, a significance test for determining equality of
+variances can be run prior to the <span
+class="math inline">\(t\)</span>-test to determine if the pooled or
+unpooled test statistic should be used. More information about this test
+can be found in
+<a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda359.htm#:~:text=An%20F%2Dtest%20(Snedecor%20and,the%20variances%20are%20not%20equal.">the
+NIST/SEMATECH e-Handbook of Statistical Methods: F-Test for Equality of
+Two Variances</a></li>
+</ul>
+<p><strong>Example: NCAA Women’s Basketball</strong> - Sunday April 7th
+South Carolina and Iowa contended for the NCAA women’s basketball
+championship. Consider the following table which gives the opponent and
+number of points scored for both teams in their last <span
+class="math inline">\(15\)</span> games leading up to the
+championship.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+South Carolina
+</th>
+<th style="text-align:left;">
+Matchup
+</th>
+<th style="text-align:left;">
+<ul>
+<li></th>
+<th style="text-align:right;">
+Iowa
+</th>
+<th style="text-align:left;">
+Matchup
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+NC State
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+UConn
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Oregon State
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+LSU
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Indiana
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:left;">
+Colorado
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+UNC
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+West Virginia
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+Presbyterian
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:left;">
+Holy Cross
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+LSU
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+Nebraska
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+Michigan
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Texas A&amp;M
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+Penn State
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:left;">
+Ohio State
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:left;">
+Arkansas
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:left;">
+Minnesota
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:left;">
+Kentucky
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:left;">
+Illinois
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+Alabama
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Indiana
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+106
+</td>
+<td style="text-align:left;">
+Michigan
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Nebraska
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:left;">
+UConn
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+111
+</td>
+<td style="text-align:left;">
+Penn State
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<p>The summary of the last <span class="math inline">\(15\)</span> games
+is given below:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Population
+</th>
+<th style="text-align:left;">
+Population Mean
+</th>
+<th style="text-align:left;">
+Sample Size
+</th>
+<th style="text-align:right;">
+Sample Mean
+</th>
+<th style="text-align:right;">
+Sample Stdev
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Iowa
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_1 = 15\)</span>
+</td>
+<td style="text-align:right;">
+90.67
+</td>
+<td style="text-align:right;">
+14.21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+South Carolina
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_2\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n_2 = 15\)</span>
+</td>
+<td style="text-align:right;">
+80.40
+</td>
+<td style="text-align:right;">
+10.57
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct an unpooled two sample <span
+class="math inline">\(t\)</span>-test at the <span
+class="math inline">\(\alpha = 0.05\)</span> significance level to
+determine if there is a significant difference between the championship
+teams in the mean number of points scored per game.</p>
+<ol style="list-style-type: decimal">
+<li>Let <span class="math inline">\(\mu_1\)</span> be the mean number of
+points scored per game for Iowa and <span
+class="math inline">\(\mu_2\)</span> be the mean number of points scored
+per game for South Carolina. The null hypothesis is that there is no
+difference in the mean number of points between the two teams</li>
+</ol>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 \]</span></p>
+<p>The alternative hypothesis is that the two teams are different</p>
+<p><span class="math display">\[H_A: \mu_1 \neq \mu_2\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>The estimated difference is given by <span
+class="math inline">\(\hat{\mu}_d = \bar{x}_1 - \bar{x}_2 =
+10.27\)</span>. The test statistic for the unpooled test is</li>
+</ol>
+<p><span class="math display">\[ t_{obs} = \frac{90.67 -
+80.40}{\sqrt{\frac{14.21^2}{15}+\frac{10.57^2}{15}}} \approx
+2.246\]</span></p>
+<p>which is approximately distributed as</p>
+<p><span class="math display">\[ t_{obs}\sim t(df = 14) \]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>The <span class="math inline">\(p\)</span>-value is</li>
+</ol>
+<p><span class="math display">\[\text{$p$-value} = 2\left[P(|t| \geq
+|t_{obs}||H_0)\right] = 2(0.0207) = 0.0414 \]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Based on the <span class="math inline">\(p\)</span>-value above we
+would narrowly reject the null hypothesis and conclude that there is a
+significant difference in the mean number of points scored per game
+between Iowa and South Carolina. The outcome of the championship was an
+87 - 75 victory for South Carolina. Given the conclusion of our test,
+this is a testament to South Carolina’s defensive prowess in being able
+to shut down a high scoring team like Iowa.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="paired-t-test" class="section level1">
+<h1>Paired <span class="math inline">\(t\)</span> test</h1>
+<p>Comparative methods (i.e methods that compare two groups/samples
+across a quantitative variable) are more common and often preferred over
+one sample procedures. One common comparative design that makes use of
+single-sample procedures for a population mean is called the paired
+<span class="math inline">\(t\)</span>-test. This test is used to draw
+inferences about a population mean in matched-pairs designs and can be
+thought of as the parametric analogue of the <i>sign test</i> we learned
+previously. Recall that in matched-pairs studies subjects are matched
+based on common characteristics and the quantitative outcome is compared
+within each pair.</p>
+<ul>
+<li><p>matched-pairs designs are most common when randomization is not
+possible</p></li>
+<li><p>often used when observations are taken on the same subject
+(before and after treatment)</p></li>
+</ul>
+<p>In a paired <span class="math inline">\(t\)</span>-test we convert a
+comparative study into a one-sample procedure by making the response
+variable the difference between the two observations in each pair <span
+class="math inline">\(d_i = x_i - y_i\)</span>. The parameter under
+study is the population mean difference <span
+class="math inline">\(\mu_d\)</span> which can be estimated by the
+sample mean difference <span class="math inline">\(\bar{x}_d = \bar{x} -
+\bar{y}\)</span> computed over all pairwise differences. The standard
+deviation of the difference <span
+class="math inline">\(\sigma_d\)</span> is then estimated with the
+sample standard deviation of the difference. Inference is then treated
+in the same way as one-sample procedures for a population mean</p>
+<ul>
+<li>the <span class="math inline">\(100(1 - \alpha)\%\)</span>
+confidence interval for the mean pairwise difference is</li>
+</ul>
+<p><span class="math display">\[ \bar{x}_d \pm t_{1-\alpha/2}
+\frac{s_d}{\sqrt{n}}\]</span></p>
+<ul>
+<li>the test statistic for a significance test regarding the pairwise
+difference is given by</li>
+</ul>
+<p><span class="math display">\[t_{obs} = \frac{\bar{x}_d -
+\mu_d}{s_d/\sqrt{n}} \sim t(n - 1) \]</span></p>
+<ul>
+<li>by treating the above procedure as a one-sample <span
+class="math inline">\(t\)</span> test we make the assumption that the
+population distribution of differences is approximately normal.</li>
+</ul>
+<p><strong>Example: Revisiting the Spousal Dominance Problem</strong> -
+Recall the study comparing the ratings of husbands and wives on the
+perceived relative influence of each member of the couple on a major
+financial decision.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Couple
+</th>
+<th style="text-align:right;">
+Husband
+</th>
+<th style="text-align:right;">
+Wife
+</th>
+<th style="text-align:right;">
+Difference
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>A summary of the difference in rating between husbands and wives is
+given below:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Stdev
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_d\)</span>
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+1.77
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a paired <span class="math inline">\(t\)</span>-test at the
+<span class="math inline">\(\alpha = 0.05\)</span> significance level to
+determine if husbands and wives differ in their perceived influence on
+financial decision making</p>
+<div id="summary-of-inference-procedures" class="section level2">
+<h2>Summary of inference procedures</h2>
+<p>The table below summarizes the procedures we have learned so far in
+the course</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Response Variable
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(100(1 - \alpha)\%\)</span> CI
+</th>
+<th style="text-align:left;">
+Test statistic
+</th>
+<th style="text-align:left;">
+Distribution
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(p\)</span>
+</td>
+<td style="text-align:left;">
+one-sample
+</td>
+<td style="text-align:left;">
+Categorical
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\hat{p}\pm
+Z_{1-\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\hat{p} -
+p_0}{\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(p_1 - p_2\)</span>
+</td>
+<td style="text-align:left;">
+two-sample
+</td>
+<td style="text-align:left;">
+Categorical
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\hat{p}_1 - \hat{p}_2)\pm Z_{1-\alpha/2}
+\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\hat{p}_1 - \hat{p}_2}{
+\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(z\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu\)</span>
+</td>
+<td style="text-align:left;">
+one-sample
+</td>
+<td style="text-align:left;">
+Quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x} \pm t_{1-\alpha/2,
+n-1}\frac{s}{\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x} - \mu_0}{s/\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n-1)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1 - \mu_2\)</span>
+</td>
+<td style="text-align:left;">
+two-sample
+</td>
+<td style="text-align:left;">
+Quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm  t_{1-\alpha/2,
+\min(n_1 -1, n_2-1)} \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x}_1 -
+\bar{x}_2}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(\min(n_1 - 1, n_2 - 1))\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_1 - \mu_2\)</span>
+</td>
+<td style="text-align:left;">
+pooled two-sample
+</td>
+<td style="text-align:left;">
+Quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm  t_{1-\alpha/2,
+n_1+n_2 - 2} s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x}_1 -
+\bar{x}_2}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n_1+n_2 - 2)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\mu_d\)</span>
+</td>
+<td style="text-align:left;">
+matched pairs
+</td>
+<td style="text-align:left;">
+Quantitative
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\bar{x}_d \pm t_{1-\alpha/2,
+n-1}\frac{s_d}{\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{\bar{x}_d -
+\mu_d}{s_d/\sqrt{n}}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(t(n-1)\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="statistical-inference-for-qualitative-data"
+class="section level2">
+<h2>Statistical Inference for qualitative data</h2>
+<p>Despite significantly expanding our statistical tools for inference,
+we are still quite limited in our ability to analyze qualitative
+responses. Our tests for a proportion are useful for comparing a single
+category of a qualitative variable across one or two samples, but what
+if we are interested in comparing multiple categories across more than
+one population? We will now explore some of the common tools for
+analyzing qualitative data. The inference techniques for analyzing
+qualitative variables are generally concerned with comparing a response
+variable with two or more categories across an explanatory variable with
+two or more groupings by exploring how the conditional distribution of
+the response varies across the groups of the explanatory variable. In
+other words, these inference procedures are designed to analyze the
+statistical association between two multi-category qualitative
+variables.</p>
+<p>Such problems are typically represented as a table where the rows
+represent the groupings of the explanatory variable and columns
+represent the categories of the response variable - often referred to as
+“two-way tables”.</p>
+</div>
+<div id="the-chi-square-goodness-of-fit-test" class="section level2">
+<h2>The Chi-square goodness of fit test</h2>
+<p>Like we have done with means and proportions, we will begin with a
+one-sample procedure for comparing the distribution of a categorical
+variable to some hypothesized model. This procedure is called the <span
+class="math inline">\(\chi^2\)</span> (“chi-squared”) goodness of fit
+test because it used to determine how well the observed distribution
+fits some proposed model of the data. We will illustrate this idea by
+starting with an example:</p>
+<p><strong>Example: Gregor Mendel’s Peas</strong> - Gregor Mendel
+conducted a study in which he crossed pea plants. The plants he crossed
+had the alleles (i.e., a form or version of a gene) for both yellow
+<span class="math inline">\(Y\)</span> and green peas <span
+class="math inline">\(y\)</span> — a trait controlled by a single locus.
+He believed two of his laws applied here: the Law of Segregation and the
+Law of Dominance. These laws would determine the probabilities of
+certain genotypes. This can be summarized by a Punnett square</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Yellow
+</th>
+<th style="text-align:left;">
+Green
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(YY = 0.25\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(Yy = 0.25\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(Yy = 0.25\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(yy = 0.25\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>If Mendel’s Laws are true, what do they imply about the probability
+distribution for these four outcomes (i.e., <span
+class="math inline">\(YY\)</span>, <span
+class="math inline">\(Yy\)</span>, <span
+class="math inline">\(yY\)</span>, or <span
+class="math inline">\(yy\)</span>)? And what does this imply about the
+probability distribution of color (i.e., yellow or green) ?</li>
+</ul>
+<p>Mendel bred <span class="math inline">\(8023\)</span> offspring. Of
+these, <span class="math inline">\(6022\)</span> were yellow, and <span
+class="math inline">\(2001\)</span> were green. Do his laws “fit” the
+data? That is, does the trait of color in pea plants exhibit what we
+would call Mendelian inheritance?</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Color
+</th>
+<th style="text-align:right;">
+Expected Frequency
+</th>
+<th style="text-align:right;">
+Observed Count
+</th>
+<th style="text-align:right;">
+Observed Frequency
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Yellow
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+<td style="text-align:right;">
+6022
+</td>
+<td style="text-align:right;">
+0.7506
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Green
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+2001
+</td>
+<td style="text-align:right;">
+0.2494
+</td>
+</tr>
+</tbody>
+</table>
+<p>The above problem amounts to comparing the observed frequencies of
+each color to the frequencies that we would expect under the Mendelian
+model of inheritance. We can test whether the data fit Mendel’s model by
+comparing the observed frequencies of pea plant colors to the
+frequencies we would expect assuming Mendelian Inheritance and
+Dominance.</p>
+<p>In this case the null hypothesis is that the offspring of the pea
+plants follows Mendelian inheritance or</p>
+<p><span class="math display">\[H_0: p_{yellow} = 0.75; p_{green} = 0.25
+\]</span></p>
+<p>The alternative is that one or more of the frequencies for each color
+do not follow the frequencies defined in the null hypothesis. To
+generalize for a categorical variable with <span
+class="math inline">\(k\)</span> possible outcomes the null becomes
+<span class="math inline">\(H_0: p_i = c_i; \forall i\in[1:k]\)</span>
+and <span class="math inline">\(H_A:\)</span> at least one <span
+class="math inline">\(p_i \neq c_i\)</span>.</p>
+<p>The above hypothesis test uses a <span
+class="math inline">\(\chi^2\)</span> test statistic defined as</p>
+<p><span class="math display">\[X^2 = \sum_{i =1}^k
+\frac{(\text{observed count}_i - \text{expected
+count}_i)^2}{\text{expected count}_i} \]</span></p>
+<ul>
+<li><p><span class="math inline">\(k\)</span> is the number of possible
+outcomes</p></li>
+<li><p>the observed count is the number of observations we observed with
+outcome <span class="math inline">\(i\)</span></p></li>
+<li><p>the expected count is the number of observations we expect to
+have outcome <span class="math inline">\(i\)</span> which is calculated
+under the null hypothesis as <span
+class="math inline">\(np_i\)</span></p></li>
+<li><p>We can think of this calculation as measuring the total
+(relative) squared distance from the observed model to the model we
+defined under the null hypothesis.</p></li>
+</ul>
+<p><span class="math inline">\(X^2\)</span> can take on values between
+<span class="math inline">\(0\)</span> and positive <span
+class="math inline">\(\infty\)</span>. A value of zero means the
+observed model exactly follows the expected model. Values greater than
+zero indicate a deviation from the expected model. Large values of <span
+class="math inline">\(X^2\)</span> indicate evidence against the null
+hypothesis.</p>
+<p>Referring back to Mendel’s pea plants we compute the expected number
+of yellow pea plants as <span class="math inline">\(8023\times 0.75 =
+6017.25\)</span> and the expected number of green pea plants to be <span
+class="math inline">\(8023\times 0.25 = 2005.75\)</span>. The test
+statistic is</p>
+<p><span class="math display">\[X^2 = \frac{(6022 - 6017.25)^2}{6017.25}
++\frac{(2001 - 2005.75)^2}{2005.75} \]</span></p>
+<p><span class="math display">\[ = 0.0037 + 0.0112  \]</span></p>
+<p><span class="math display">\[ \approx 0.015\]</span></p>
+<div id="the-chi-square-distribution" class="section level3">
+<h3>The Chi-square distribution</h3>
+<p>To convert the above statistic into a <span
+class="math inline">\(p\)</span>-value we need to know its sampling
+distribution. The statistic <span class="math inline">\(X^2\)</span> is
+called a <span class="math inline">\(\chi^2\)</span> (“chi-squared”)
+test statistic because its sampling distribution follows a special type
+of probability distribution called the <span
+class="math inline">\(\chi^2\)</span> distribution. Like the <span
+class="math inline">\(t\)</span> distribution, the <span
+class="math inline">\(\chi^2\)</span> distributions form a family of
+distributions controlled by a single parameter - the degrees of freedom.
+We will use the notation <span class="math inline">\(\chi^2(df)\)</span>
+to depict a specific member of this family. For the goodness of fit
+test, the test statistic <span class="math inline">\(X^2\)</span>
+follows a <span class="math inline">\(\chi^2\)</span> distribution with
+<span class="math inline">\(k-1\)</span> degrees of freedom where <span
+class="math inline">\(k\)</span> represents the number of categories of
+the qualitative variable</p>
+<p><img src="lecturemenu13_files/figure-html/unnamed-chunk-12-1.png" alt="Density curves of the chi-square distribution for 1, 2, 4, 6 and 8 degrees of freedom, with chi-square from 0 to 20 on the x-axis. All are right-skewed and start at 0. The df equals 1 and 2 curves are highest near 0 and decrease; for larger df the peak moves right, gets lower, and the curve spreads out and becomes more symmetric." width="960" />
+* Note from the graph above that as the degrees of freedom increase the
+<span class="math inline">\(\chi^2\)</span> distribution converges in
+shape to a normal distribution.</p>
+<ul>
+<li><p>Under the special case of a <span
+class="math inline">\(\chi^2(1)\)</span> the <span
+class="math inline">\(\chi^2\)</span> statistic is equal to the square
+of a standard normal distribution <span
+class="math inline">\(Z^2\)</span>.</p></li>
+<li><p>In general, a <span class="math inline">\(\chi^2\)</span> random
+variable with <span class="math inline">\(k\)</span> degrees of freedom
+can be represented as a sum of <span class="math inline">\(k\)</span>
+squared normal random variables</p></li>
+</ul>
+<p><span class="math display">\[\chi^2_k = \sum_{i = 1}^k Z_i^2 = Z_1^2
++ Z_2^2 + \cdots Z_k^2 \]</span></p>
+<ul>
+<li>Like the <span class="math inline">\(t\)</span> distribution, we can
+look up the probability of different chi-squared random variables using
+the degrees of freedom and a table of pre-computed probabilities:</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Upper tail
+</th>
+<th style="text-align:left;">
+0.25
+</th>
+<th style="text-align:left;">
+0.2
+</th>
+<th style="text-align:left;">
+0.15
+</th>
+<th style="text-align:left;">
+0.125
+</th>
+<th style="text-align:left;">
+0.1
+</th>
+<th style="text-align:left;">
+0.075
+</th>
+<th style="text-align:left;">
+0.05
+</th>
+<th style="text-align:left;">
+0.025
+</th>
+<th style="text-align:left;">
+0.005
+</th>
+<th style="text-align:left;">
+0.0025
+</th>
+<th style="text-align:left;">
+5e-04
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(DF\)</span>
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+1.323
+</td>
+<td style="text-align:left;">
+1.642
+</td>
+<td style="text-align:left;">
+2.072
+</td>
+<td style="text-align:left;">
+2.354
+</td>
+<td style="text-align:left;">
+2.706
+</td>
+<td style="text-align:left;">
+3.17
+</td>
+<td style="text-align:left;">
+3.841
+</td>
+<td style="text-align:left;">
+5.024
+</td>
+<td style="text-align:left;">
+7.879
+</td>
+<td style="text-align:left;">
+9.141
+</td>
+<td style="text-align:left;">
+12.116
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+2.773
+</td>
+<td style="text-align:left;">
+3.219
+</td>
+<td style="text-align:left;">
+3.794
+</td>
+<td style="text-align:left;">
+4.159
+</td>
+<td style="text-align:left;">
+4.605
+</td>
+<td style="text-align:left;">
+5.181
+</td>
+<td style="text-align:left;">
+5.991
+</td>
+<td style="text-align:left;">
+7.378
+</td>
+<td style="text-align:left;">
+10.597
+</td>
+<td style="text-align:left;">
+11.983
+</td>
+<td style="text-align:left;">
+15.202
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+4.108
+</td>
+<td style="text-align:left;">
+4.642
+</td>
+<td style="text-align:left;">
+5.317
+</td>
+<td style="text-align:left;">
+5.739
+</td>
+<td style="text-align:left;">
+6.251
+</td>
+<td style="text-align:left;">
+6.905
+</td>
+<td style="text-align:left;">
+7.815
+</td>
+<td style="text-align:left;">
+9.348
+</td>
+<td style="text-align:left;">
+12.838
+</td>
+<td style="text-align:left;">
+14.32
+</td>
+<td style="text-align:left;">
+17.73
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+5.385
+</td>
+<td style="text-align:left;">
+5.989
+</td>
+<td style="text-align:left;">
+6.745
+</td>
+<td style="text-align:left;">
+7.214
+</td>
+<td style="text-align:left;">
+7.779
+</td>
+<td style="text-align:left;">
+8.496
+</td>
+<td style="text-align:left;">
+9.488
+</td>
+<td style="text-align:left;">
+11.143
+</td>
+<td style="text-align:left;">
+14.86
+</td>
+<td style="text-align:left;">
+16.424
+</td>
+<td style="text-align:left;">
+19.997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+6.626
+</td>
+<td style="text-align:left;">
+7.289
+</td>
+<td style="text-align:left;">
+8.115
+</td>
+<td style="text-align:left;">
+8.625
+</td>
+<td style="text-align:left;">
+9.236
+</td>
+<td style="text-align:left;">
+10.008
+</td>
+<td style="text-align:left;">
+11.07
+</td>
+<td style="text-align:left;">
+12.833
+</td>
+<td style="text-align:left;">
+16.75
+</td>
+<td style="text-align:left;">
+18.386
+</td>
+<td style="text-align:left;">
+22.105
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+7.841
+</td>
+<td style="text-align:left;">
+8.558
+</td>
+<td style="text-align:left;">
+9.446
+</td>
+<td style="text-align:left;">
+9.992
+</td>
+<td style="text-align:left;">
+10.645
+</td>
+<td style="text-align:left;">
+11.466
+</td>
+<td style="text-align:left;">
+12.592
+</td>
+<td style="text-align:left;">
+14.449
+</td>
+<td style="text-align:left;">
+18.548
+</td>
+<td style="text-align:left;">
+20.249
+</td>
+<td style="text-align:left;">
+24.103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+9.037
+</td>
+<td style="text-align:left;">
+9.803
+</td>
+<td style="text-align:left;">
+10.748
+</td>
+<td style="text-align:left;">
+11.326
+</td>
+<td style="text-align:left;">
+12.017
+</td>
+<td style="text-align:left;">
+12.883
+</td>
+<td style="text-align:left;">
+14.067
+</td>
+<td style="text-align:left;">
+16.013
+</td>
+<td style="text-align:left;">
+20.278
+</td>
+<td style="text-align:left;">
+22.04
+</td>
+<td style="text-align:left;">
+26.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+10.219
+</td>
+<td style="text-align:left;">
+11.03
+</td>
+<td style="text-align:left;">
+12.027
+</td>
+<td style="text-align:left;">
+12.636
+</td>
+<td style="text-align:left;">
+13.362
+</td>
+<td style="text-align:left;">
+14.27
+</td>
+<td style="text-align:left;">
+15.507
+</td>
+<td style="text-align:left;">
+17.535
+</td>
+<td style="text-align:left;">
+21.955
+</td>
+<td style="text-align:left;">
+23.774
+</td>
+<td style="text-align:left;">
+27.868
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+11.389
+</td>
+<td style="text-align:left;">
+12.242
+</td>
+<td style="text-align:left;">
+13.288
+</td>
+<td style="text-align:left;">
+13.926
+</td>
+<td style="text-align:left;">
+14.684
+</td>
+<td style="text-align:left;">
+15.631
+</td>
+<td style="text-align:left;">
+16.919
+</td>
+<td style="text-align:left;">
+19.023
+</td>
+<td style="text-align:left;">
+23.589
+</td>
+<td style="text-align:left;">
+25.462
+</td>
+<td style="text-align:left;">
+29.666
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+12.549
+</td>
+<td style="text-align:left;">
+13.442
+</td>
+<td style="text-align:left;">
+14.534
+</td>
+<td style="text-align:left;">
+15.198
+</td>
+<td style="text-align:left;">
+15.987
+</td>
+<td style="text-align:left;">
+16.971
+</td>
+<td style="text-align:left;">
+18.307
+</td>
+<td style="text-align:left;">
+20.483
+</td>
+<td style="text-align:left;">
+25.188
+</td>
+<td style="text-align:left;">
+27.112
+</td>
+<td style="text-align:left;">
+31.42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+13.701
+</td>
+<td style="text-align:left;">
+14.631
+</td>
+<td style="text-align:left;">
+15.767
+</td>
+<td style="text-align:left;">
+16.457
+</td>
+<td style="text-align:left;">
+17.275
+</td>
+<td style="text-align:left;">
+18.294
+</td>
+<td style="text-align:left;">
+19.675
+</td>
+<td style="text-align:left;">
+21.92
+</td>
+<td style="text-align:left;">
+26.757
+</td>
+<td style="text-align:left;">
+28.729
+</td>
+<td style="text-align:left;">
+33.137
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+14.845
+</td>
+<td style="text-align:left;">
+15.812
+</td>
+<td style="text-align:left;">
+16.989
+</td>
+<td style="text-align:left;">
+17.703
+</td>
+<td style="text-align:left;">
+18.549
+</td>
+<td style="text-align:left;">
+19.602
+</td>
+<td style="text-align:left;">
+21.026
+</td>
+<td style="text-align:left;">
+23.337
+</td>
+<td style="text-align:left;">
+28.3
+</td>
+<td style="text-align:left;">
+30.318
+</td>
+<td style="text-align:left;">
+34.821
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+15.984
+</td>
+<td style="text-align:left;">
+16.985
+</td>
+<td style="text-align:left;">
+18.202
+</td>
+<td style="text-align:left;">
+18.939
+</td>
+<td style="text-align:left;">
+19.812
+</td>
+<td style="text-align:left;">
+20.897
+</td>
+<td style="text-align:left;">
+22.362
+</td>
+<td style="text-align:left;">
+24.736
+</td>
+<td style="text-align:left;">
+29.819
+</td>
+<td style="text-align:left;">
+31.883
+</td>
+<td style="text-align:left;">
+36.478
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+17.117
+</td>
+<td style="text-align:left;">
+18.151
+</td>
+<td style="text-align:left;">
+19.406
+</td>
+<td style="text-align:left;">
+20.166
+</td>
+<td style="text-align:left;">
+21.064
+</td>
+<td style="text-align:left;">
+22.18
+</td>
+<td style="text-align:left;">
+23.685
+</td>
+<td style="text-align:left;">
+26.119
+</td>
+<td style="text-align:left;">
+31.319
+</td>
+<td style="text-align:left;">
+33.426
+</td>
+<td style="text-align:left;">
+38.109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+18.245
+</td>
+<td style="text-align:left;">
+19.311
+</td>
+<td style="text-align:left;">
+20.603
+</td>
+<td style="text-align:left;">
+21.384
+</td>
+<td style="text-align:left;">
+22.307
+</td>
+<td style="text-align:left;">
+23.452
+</td>
+<td style="text-align:left;">
+24.996
+</td>
+<td style="text-align:left;">
+27.488
+</td>
+<td style="text-align:left;">
+32.801
+</td>
+<td style="text-align:left;">
+34.95
+</td>
+<td style="text-align:left;">
+39.719
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+19.369
+</td>
+<td style="text-align:left;">
+20.465
+</td>
+<td style="text-align:left;">
+21.793
+</td>
+<td style="text-align:left;">
+22.595
+</td>
+<td style="text-align:left;">
+23.542
+</td>
+<td style="text-align:left;">
+24.716
+</td>
+<td style="text-align:left;">
+26.296
+</td>
+<td style="text-align:left;">
+28.845
+</td>
+<td style="text-align:left;">
+34.267
+</td>
+<td style="text-align:left;">
+36.456
+</td>
+<td style="text-align:left;">
+41.308
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+20.489
+</td>
+<td style="text-align:left;">
+21.615
+</td>
+<td style="text-align:left;">
+22.977
+</td>
+<td style="text-align:left;">
+23.799
+</td>
+<td style="text-align:left;">
+24.769
+</td>
+<td style="text-align:left;">
+25.97
+</td>
+<td style="text-align:left;">
+27.587
+</td>
+<td style="text-align:left;">
+30.191
+</td>
+<td style="text-align:left;">
+35.718
+</td>
+<td style="text-align:left;">
+37.946
+</td>
+<td style="text-align:left;">
+42.879
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+21.605
+</td>
+<td style="text-align:left;">
+22.76
+</td>
+<td style="text-align:left;">
+24.155
+</td>
+<td style="text-align:left;">
+24.997
+</td>
+<td style="text-align:left;">
+25.989
+</td>
+<td style="text-align:left;">
+27.218
+</td>
+<td style="text-align:left;">
+28.869
+</td>
+<td style="text-align:left;">
+31.526
+</td>
+<td style="text-align:left;">
+37.156
+</td>
+<td style="text-align:left;">
+39.422
+</td>
+<td style="text-align:left;">
+44.434
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+22.718
+</td>
+<td style="text-align:left;">
+23.9
+</td>
+<td style="text-align:left;">
+25.329
+</td>
+<td style="text-align:left;">
+26.189
+</td>
+<td style="text-align:left;">
+27.204
+</td>
+<td style="text-align:left;">
+28.458
+</td>
+<td style="text-align:left;">
+30.144
+</td>
+<td style="text-align:left;">
+32.852
+</td>
+<td style="text-align:left;">
+38.582
+</td>
+<td style="text-align:left;">
+40.885
+</td>
+<td style="text-align:left;">
+45.973
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+23.828
+</td>
+<td style="text-align:left;">
+25.038
+</td>
+<td style="text-align:left;">
+26.498
+</td>
+<td style="text-align:left;">
+27.376
+</td>
+<td style="text-align:left;">
+28.412
+</td>
+<td style="text-align:left;">
+29.692
+</td>
+<td style="text-align:left;">
+31.41
+</td>
+<td style="text-align:left;">
+34.17
+</td>
+<td style="text-align:left;">
+39.997
+</td>
+<td style="text-align:left;">
+42.336
+</td>
+<td style="text-align:left;">
+47.498
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+24.935
+</td>
+<td style="text-align:left;">
+26.171
+</td>
+<td style="text-align:left;">
+27.662
+</td>
+<td style="text-align:left;">
+28.559
+</td>
+<td style="text-align:left;">
+29.615
+</td>
+<td style="text-align:left;">
+30.92
+</td>
+<td style="text-align:left;">
+32.671
+</td>
+<td style="text-align:left;">
+35.479
+</td>
+<td style="text-align:left;">
+41.401
+</td>
+<td style="text-align:left;">
+43.775
+</td>
+<td style="text-align:left;">
+49.011
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;">
+26.039
+</td>
+<td style="text-align:left;">
+27.301
+</td>
+<td style="text-align:left;">
+28.822
+</td>
+<td style="text-align:left;">
+29.737
+</td>
+<td style="text-align:left;">
+30.813
+</td>
+<td style="text-align:left;">
+32.142
+</td>
+<td style="text-align:left;">
+33.924
+</td>
+<td style="text-align:left;">
+36.781
+</td>
+<td style="text-align:left;">
+42.796
+</td>
+<td style="text-align:left;">
+45.204
+</td>
+<td style="text-align:left;">
+50.511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+27.141
+</td>
+<td style="text-align:left;">
+28.429
+</td>
+<td style="text-align:left;">
+29.979
+</td>
+<td style="text-align:left;">
+30.911
+</td>
+<td style="text-align:left;">
+32.007
+</td>
+<td style="text-align:left;">
+33.36
+</td>
+<td style="text-align:left;">
+35.172
+</td>
+<td style="text-align:left;">
+38.076
+</td>
+<td style="text-align:left;">
+44.181
+</td>
+<td style="text-align:left;">
+46.623
+</td>
+<td style="text-align:left;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+28.241
+</td>
+<td style="text-align:left;">
+29.553
+</td>
+<td style="text-align:left;">
+31.132
+</td>
+<td style="text-align:left;">
+32.081
+</td>
+<td style="text-align:left;">
+33.196
+</td>
+<td style="text-align:left;">
+34.572
+</td>
+<td style="text-align:left;">
+36.415
+</td>
+<td style="text-align:left;">
+39.364
+</td>
+<td style="text-align:left;">
+45.559
+</td>
+<td style="text-align:left;">
+48.034
+</td>
+<td style="text-align:left;">
+53.479
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+29.339
+</td>
+<td style="text-align:left;">
+30.675
+</td>
+<td style="text-align:left;">
+32.282
+</td>
+<td style="text-align:left;">
+33.247
+</td>
+<td style="text-align:left;">
+34.382
+</td>
+<td style="text-align:left;">
+35.78
+</td>
+<td style="text-align:left;">
+37.652
+</td>
+<td style="text-align:left;">
+40.646
+</td>
+<td style="text-align:left;">
+46.928
+</td>
+<td style="text-align:left;">
+49.435
+</td>
+<td style="text-align:left;">
+54.947
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+30.435
+</td>
+<td style="text-align:left;">
+31.795
+</td>
+<td style="text-align:left;">
+33.429
+</td>
+<td style="text-align:left;">
+34.41
+</td>
+<td style="text-align:left;">
+35.563
+</td>
+<td style="text-align:left;">
+36.984
+</td>
+<td style="text-align:left;">
+38.885
+</td>
+<td style="text-align:left;">
+41.923
+</td>
+<td style="text-align:left;">
+48.29
+</td>
+<td style="text-align:left;">
+50.829
+</td>
+<td style="text-align:left;">
+56.407
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+31.528
+</td>
+<td style="text-align:left;">
+32.912
+</td>
+<td style="text-align:left;">
+34.574
+</td>
+<td style="text-align:left;">
+35.57
+</td>
+<td style="text-align:left;">
+36.741
+</td>
+<td style="text-align:left;">
+38.184
+</td>
+<td style="text-align:left;">
+40.113
+</td>
+<td style="text-align:left;">
+43.195
+</td>
+<td style="text-align:left;">
+49.645
+</td>
+<td style="text-align:left;">
+52.215
+</td>
+<td style="text-align:left;">
+57.858
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+32.62
+</td>
+<td style="text-align:left;">
+34.027
+</td>
+<td style="text-align:left;">
+35.715
+</td>
+<td style="text-align:left;">
+36.727
+</td>
+<td style="text-align:left;">
+37.916
+</td>
+<td style="text-align:left;">
+39.38
+</td>
+<td style="text-align:left;">
+41.337
+</td>
+<td style="text-align:left;">
+44.461
+</td>
+<td style="text-align:left;">
+50.993
+</td>
+<td style="text-align:left;">
+53.594
+</td>
+<td style="text-align:left;">
+59.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+33.711
+</td>
+<td style="text-align:left;">
+35.139
+</td>
+<td style="text-align:left;">
+36.854
+</td>
+<td style="text-align:left;">
+37.881
+</td>
+<td style="text-align:left;">
+39.087
+</td>
+<td style="text-align:left;">
+40.573
+</td>
+<td style="text-align:left;">
+42.557
+</td>
+<td style="text-align:left;">
+45.722
+</td>
+<td style="text-align:left;">
+52.336
+</td>
+<td style="text-align:left;">
+54.967
+</td>
+<td style="text-align:left;">
+60.735
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+34.8
+</td>
+<td style="text-align:left;">
+36.25
+</td>
+<td style="text-align:left;">
+37.99
+</td>
+<td style="text-align:left;">
+39.033
+</td>
+<td style="text-align:left;">
+40.256
+</td>
+<td style="text-align:left;">
+41.762
+</td>
+<td style="text-align:left;">
+43.773
+</td>
+<td style="text-align:left;">
+46.979
+</td>
+<td style="text-align:left;">
+53.672
+</td>
+<td style="text-align:left;">
+56.332
+</td>
+<td style="text-align:left;">
+62.162
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+40
+</td>
+<td style="text-align:left;">
+45.616
+</td>
+<td style="text-align:left;">
+47.269
+</td>
+<td style="text-align:left;">
+49.244
+</td>
+<td style="text-align:left;">
+50.424
+</td>
+<td style="text-align:left;">
+51.805
+</td>
+<td style="text-align:left;">
+53.501
+</td>
+<td style="text-align:left;">
+55.758
+</td>
+<td style="text-align:left;">
+59.342
+</td>
+<td style="text-align:left;">
+66.766
+</td>
+<td style="text-align:left;">
+69.699
+</td>
+<td style="text-align:left;">
+76.095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+56.334
+</td>
+<td style="text-align:left;">
+58.164
+</td>
+<td style="text-align:left;">
+60.346
+</td>
+<td style="text-align:left;">
+61.647
+</td>
+<td style="text-align:left;">
+63.167
+</td>
+<td style="text-align:left;">
+65.03
+</td>
+<td style="text-align:left;">
+67.505
+</td>
+<td style="text-align:left;">
+71.42
+</td>
+<td style="text-align:left;">
+79.49
+</td>
+<td style="text-align:left;">
+82.664
+</td>
+<td style="text-align:left;">
+89.561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+100
+</td>
+<td style="text-align:left;">
+109.141
+</td>
+<td style="text-align:left;">
+111.667
+</td>
+<td style="text-align:left;">
+114.659
+</td>
+<td style="text-align:left;">
+116.433
+</td>
+<td style="text-align:left;">
+118.498
+</td>
+<td style="text-align:left;">
+121.017
+</td>
+<td style="text-align:left;">
+124.342
+</td>
+<td style="text-align:left;">
+129.561
+</td>
+<td style="text-align:left;">
+140.169
+</td>
+<td style="text-align:left;">
+144.293
+</td>
+<td style="text-align:left;">
+153.167
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Z-score
+</td>
+<td style="text-align:left;">
+0.674
+</td>
+<td style="text-align:left;">
+0.842
+</td>
+<td style="text-align:left;">
+1.036
+</td>
+<td style="text-align:left;">
+1.15
+</td>
+<td style="text-align:left;">
+1.282
+</td>
+<td style="text-align:left;">
+1.44
+</td>
+<td style="text-align:left;">
+1.645
+</td>
+<td style="text-align:left;">
+1.96
+</td>
+<td style="text-align:left;">
+2.576
+</td>
+<td style="text-align:left;">
+2.807
+</td>
+<td style="text-align:left;">
+3.291
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Confidence Level:
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(50\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(60\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(70\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(75\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(80\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(85\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(90\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(95\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99.5\%\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(99.9\%\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><br> <br></p>
+</div>
+</div>
+</div>
+<div id="lecture-29" class="section level1">
+<h1>Lecture 29</h1>
+<p><strong>Warm Up: <span class="math inline">\(\chi^2\)</span> Goodness
+of Fit Test</strong> - Suppose you’re hired by a dog food company to
+help them test three new dog food flavors. You recruit a random sample
+of <span class="math inline">\(75\)</span> dogs and offer each dog a
+choice between the three flavors by placing bowls in front of them.
+Assuming that the dogs have no preference, you expect that the flavors
+will be equally popular among the dogs, with about <span
+class="math inline">\(25\)</span> dogs choosing each flavor. After weeks
+of hard work, your dog food experiment is complete and you compile your
+data in a table:</p>
+<table class=" lightable-classic table table-striped" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Flavor
+</th>
+<th style="text-align:right;">
+Observed Count
+</th>
+<th style="text-align:left;">
+Expected Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Garlic Blast
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bacon Delight
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chicken Crunch
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a <span class="math inline">\(\chi^2\)</span> goodness of fit
+test to determine if the dogs show any preference for the three flavors
+being tested</p>
+<p>Note that the GOF test doesn’t tell us anything about the range of
+plausible values for the frequency parameters.</p>
+<div id="measuring-statistical-association-in-two-categorical-variables"
+class="section level2">
+<h2>Measuring statistical association in two categorical variables</h2>
+<p>As stated previously, the goodness of fit test is a one-sample
+procedure for comparing the observed distribution of a single
+categorical variable to a specific model that we hypothesize under the
+null. We will now explore another type of inference which is also based
+on the <span class="math inline">\(\chi^2\)</span> (“chi-square”)
+distribution. This procedure is used to determine if two categorical
+variables share an association by exploring how the distribution of
+counts of one variable changes as we condition on the categories of
+another variable.</p>
+</div>
+<div id="chi2-test-of-independence" class="section level2">
+<h2><span class="math inline">\(\chi^2\)</span> test of
+independence</h2>
+<p>The <span class="math inline">\(\chi^2\)</span> test of independence
+is used to examine the relationship between two categorical variables in
+a two-way table (also called a <strong>contingency table</strong>).
+Consider the following hypothetical table which compares the categorical
+variable <span class="math inline">\(A\)</span>, which has two
+categories, with the categorical variable <span
+class="math inline">\(B\)</span> which has three categories.</p>
+<table class=" lightable-classic table table-striped" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Variable A
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Category 1
+</td>
+<td style="text-align:left;">
+Category 2
+</td>
+<td style="text-align:left;">
+Marginal Distribution B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Category 1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
+1B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
+1B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_j P(\text{Category} \ jA |
+\text{Category} \ 1B)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Variable B
+</td>
+<td style="text-align:left;">
+Category 2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
+2B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
+2B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_j P(\text{Category} \ jA |
+\text{Category} \ 2B)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Category 3
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
+3B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
+3B)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_j P(\text{Category} \ jA |
+\text{Category} \ 3B)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Marginal Distribution A
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_i P(\text{Category} \ 1A |
+\text{Category} \ iB)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_i P(\text{Category} \ 2A |
+\text{Category} \ iB)\)</span>
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>The two-way table above helps us to break down the relationship
+between the outcomes of <i>Variable A</i> and the outcomes of
+<i>Variable B</i>. As we can see from the table, the cells give the
+conditional probabilities (or more often frequencies/counts) of each
+category of <span class="math inline">\(A\)</span> across each category
+of <span class="math inline">\(B\)</span>. There are also usually row
+and column totals displayed in a two-way table which summarize the
+marginal distributions of each variable.</p>
+<p>A <strong><span class="math inline">\(\chi\)</span>-square test of
+independence</strong> takes advantage of the two-way table above to
+determine if the conditional distribution of the response variable (the
+columns) changes across the categories of the explanatory variable (the
+rows). In the example above, we can see that each row gives the
+conditional distribution of the response variable for a given category
+of the explanatory variable. If <em>variable A</em> and <em>variable
+B</em> are independent then the rows of the table should be more or less
+the same across all categories of the explanatory variable. If the
+outcomes of <em>variable A</em> depend on the outcomes of variable <span
+class="math inline">\(B\)</span>, then the rows of the table will change
+as we move across the categories of <em>variable B</em>.</p>
+<p>The null and alternative hypothesis of a <span
+class="math inline">\(\chi\)</span>-square test of independence are
+simple. The null hypothesis is that the two variables being tested are
+independent and the alternative is that they not independent</p>
+<p><span class="math display">\[ H_0: \text{Variable A and Variable B
+are independent} \]</span> <span class="math display">\[ H_A:
+\text{Variable A and Variable B are NOT independent}\]</span></p>
+<p>Like the goodness of fit test, the alternative hypothesis does not
+specify any particular direction. Because the two-way table can contain
+all sorts of possible associations, the alternative hypothesis cannot be
+described as one or two sided.</p>
+<p>To test the null hypothesis of “no dependence” between two variables
+in a table with <span class="math inline">\(r\)</span> rows and <span
+class="math inline">\(c\)</span> columns, we take a similar approach to
+the goodness of fit test and compare the observed cell counts in all
+cells of the table to their expected cell counts under the null
+hypothesis.</p>
+<p>In essence we are comparing two tables which represent two
+distributions: the table of <strong>observed cell counts</strong> which
+represents the observed joint distribution of the response and
+explanatory variables and the table of <strong>expected cell
+counts</strong> which represents expected joint distribution of the two
+variables the null hypothesis of no association.</p>
+<p>The test statistic summarizes the differences (i.e distance) between
+the counts in the observed table with the counts in the expected
+table.</p>
+<p><span class="math display">\[ X_{obs}^2 = \sum_{i=1}^r\sum_{j=1}^c
+\frac{(o_{ij} - e_{ij})^2}{e_{ij}}  \]</span></p>
+<p>Where <span class="math inline">\(o_{ij}\)</span> represents the
+observed count for the <span class="math inline">\(i^{th}\)</span> row
+and <span class="math inline">\(j^{th}\)</span> column of the
+contingency table:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of observed
+counts
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+X.
+</th>
+<th style="text-align:left;">
+Category.1
+</th>
+<th style="text-align:left;">
+Category.2
+</th>
+<th style="text-align:left;">
+X..1
+</th>
+<th style="text-align:left;">
+Category.c
+</th>
+<th style="text-align:left;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Category 1
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{11}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{12}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{1c}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{j=1}^c o_{1j}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Category 2
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{21}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{22}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{2c}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{j=1}^c o_{2j}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+⋮
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Category r
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{r1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{r2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(o_{rc}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{j=1}^c o_{rj}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{i=1}^r o_{i1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{i=1}^r o_{i2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum_{i=1}^r o_{ic}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n = \sum_{i=1}^r\sum_{j=1}^c o_{ij}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The expected counts for <span class="math inline">\(i,j^{th}\)</span>
+cell of the table are computed from the observed counts such that</p>
+<p><span class="math display">\[ e_{ij} = \frac{ \big[ \sum_{i = 1}^r
+o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r
+\sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column
+total}}{n}  \]</span></p>
+<p>The test statistic follows a <span
+class="math inline">\(\chi^2\)</span> distribution with <span
+class="math inline">\((r-1)\times (c-1)\)</span> degrees of freedom,
+where <span class="math inline">\(r\)</span> is the total number of row
+categories and <span class="math inline">\(c\)</span> is the total
+column categories. Let’s try it out on an example:</p>
+<p><strong>Example: Happiness and Income</strong> - As part of their
+annual survey, the General Social Survey explored the relationship
+between income and happiness. Happiness was recorded as “Not too happy”,
+“Pretty happy”, or “Very happy”, and incomes were bracketed into three
+categories: “Below average”, “Average”, and “Above average”. The counts
+are summarized in the table below:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of observed
+counts
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Income
+</th>
+<th style="text-align:right;">
+Not Too Happy
+</th>
+<th style="text-align:right;">
+Pretty Happy
+</th>
+<th style="text-align:right;">
+Very Happy
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Above Average
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+342
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:right;">
+494
+</td>
+<td style="text-align:right;">
+277
+</td>
+<td style="text-align:right;">
+854
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Below Average
+</td>
+<td style="text-align:right;">
+104
+</td>
+<td style="text-align:right;">
+314
+</td>
+<td style="text-align:right;">
+119
+</td>
+<td style="text-align:right;">
+537
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+216
+</td>
+<td style="text-align:right;">
+986
+</td>
+<td style="text-align:right;">
+531
+</td>
+<td style="text-align:right;">
+1733
+</td>
+</tr>
+</tbody>
+</table>
+<p>Conduct a <span class="math inline">\(\chi^2\)</span> test of
+independence to determine if there is evidence to support that income is
+related to happiness</p>
+<ul>
+<li>The table of expected counts is given below</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of expected
+counts
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Not Too Happy
+</th>
+<th style="text-align:left;">
+Pretty Happy
+</th>
+<th style="text-align:left;">
+Very Happy
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Above Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{342\times 216}{1733} = 42.63\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{342\times 986}{1733} = 194.58\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{342\times 531}{1733} = 104.79\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{854\times 216}{1733} = 106.44\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{854\times 986}{1733} = 485.89\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{854\times 531}{1733} = 261.67\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Below Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{537\times 216}{1733} = 66.93\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{537\times 986}{1733} = 305.53\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{537\times 531}{1733} = 164.54\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>the table below gives the squared deviations across all cell
+counts</li>
+</ul>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>
+The <span class="math inline">\(r \times c\)</span> table of differences
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Not Too Happy
+</th>
+<th style="text-align:left;">
+Pretty Happy
+</th>
+<th style="text-align:left;">
+Very Happy
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Above Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(42.63 - 29)^2}{42.63} = 4.36\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(194.58 - 178)^2}{194.58} =
+1.41\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(104.79 - 135)^2}{104.79} =
+8.71\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(106.44 - 83)^2}{106.44} =
+5.16\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(485.89 - 494)^2}{485.89} =
+0.14\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(261.67 - 277)^2}{261.67} =
+0.9\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Below Average
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(66.93 - 104)^2}{66.93} =
+20.53\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(305.53 - 314)^2}{305.53} =
+0.23\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{(164.54 - 119)^2}{164.54} =
+12.6\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The <span class="math inline">\(\chi^2\)</span> test statistic can be
+computed as the sum of the elements in the table above</p>
+<p><span class="math display">\[ X_{obs}^2 = 4.36 + 5.16 + \cdots +0.23
++ 12.6 = 54.04 \]</span></p>
+<p>which follows a <span class="math inline">\(\chi^2\)</span>
+distribution with <span class="math inline">\((3-1)\times (3 - 1) =
+4\)</span> degrees of freedom. The <span
+class="math inline">\(p\)</span>-value is the probability of observing a
+value more extreme than <span class="math inline">\(X_{obs}^2 =
+54.04\)</span> which is</p>
+<p><span class="math display">\[P(\chi^2_4 \geq 54.04|H_0 \ \text{True})
+\approx 0 \]</span></p>
+<p>Thus, at <span class="math inline">\(\alpha = 0.05\)</span> level we
+would conclude that there is significant evidence that income and
+happiness are related.</p>
+<p><br> <br> <br> <br></p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+</div>
+</div>
+
+<!--
+  Light/dark toggle. Included via `includes: after_body:`.
+
+  Two ordering constraints, both load-bearing - do not "modernise" this:
+
+  1. NOT wrapped in DOMContentLoaded / $(document).ready / defer.
+     An after_body <script> runs synchronously during parsing, so the button is
+     already in the DOM when rmarkdown's navbar script measures
+     `$(".navbar").first().height() + 15` at ready-time to set body padding-top.
+     Deferring would turn a guaranteed ordering into a race we'd lose - jQuery's
+     ready queue is FIFO and the template registered its handler first, in <head>.
+
+  2. A <button>, not an <a href="#">.
+     rmarkdown's active-link script queries `a[href="..."]`; an anchor would get
+     swept into that and would also jump the page to the top on click.
+
+  It injects into .navbar-header (NOT .navbar-right) so the control stays visible
+  at mobile widths - .navbar-right lives inside .navbar-collapse and is hidden
+  below 768px until the hamburger is opened. Pages with no navbar at all (the
+  homeworks/, misc/, study_guides/, Review_problems/ pages) get a floating button.
+-->
+<script>
+(function () {
+  var root = document.documentElement;
+  var KEY = 'stat251-theme';
+
+  var SUN = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">' +
+    '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4' +
+    'M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"/></svg>';
+
+  var MOON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" ' +
+    'aria-hidden="true" focusable="false">' +
+    '<path d="M20.7 14.6A8.6 8.6 0 0 1 9.4 3.3a8.6 8.6 0 1 0 11.3 11.3z"/></svg>';
+
+  function paint(theme) {
+    // Show the action, not the state: in dark mode the button offers "Light".
+    var goingTo = theme === 'dark' ? 'light' : 'dark';
+    btn.innerHTML = (theme === 'dark' ? SUN : MOON) +
+      '<span class="theme-toggle-label">' + (goingTo === 'dark' ? 'Dark' : 'Light') + '</span>';
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    btn.setAttribute('title', 'Switch to ' + goingTo + ' mode');
+  }
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'theme-toggle';
+  btn.setAttribute('aria-label', 'Toggle dark mode');
+  paint(root.getAttribute('data-theme') || 'light');
+
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    paint(next);
+    try { window.localStorage.setItem(KEY, next); } catch (e) { /* private mode; session-only */ }
+  });
+
+  var header = document.querySelector('.navbar .navbar-header');
+  if (header) {
+    btn.classList.add('theme-toggle-nav');
+    header.appendChild(btn);
+  } else {
+    btn.classList.add('theme-toggle-floating');
+    document.body.appendChild(btn);
+  }
+})();
+</script>
+<!--
+  Structural accessibility patches. Included via `includes: after_body:` AFTER
+  theme-toggle.html.
+
+  Why a script and not markup: everything below has to change elements that
+  pandoc's HTML template and rmarkdown's navbar generator emit. We do not own
+  either template, and the navbar is rebuilt from _site.yml on every render, so
+  a hand-edit would be overwritten. Patching the parsed DOM is the only place
+  these fixes survive a rebuild.
+
+  Why a SEPARATE file rather than appending to theme-toggle.html: that file's
+  header documents two load-bearing ordering constraints. Leave it alone.
+
+  Same synchronous-during-parsing guarantee that theme-toggle.html relies on -
+  no DOMContentLoaded, no defer. By the time an after_body script runs, the
+  navbar and .main-container are already in the DOM, and we are still ahead of
+  jQuery's ready queue.
+
+  EVERY lookup is null-guarded: 29 subdirectory pages (homeworks/, misc/,
+  study_guides/, Review_problems/) render without a navbar, and this file loads
+  on those too.
+-->
+<script>
+(function () {
+  /* 1. Main landmark + skip-link target (WCAG 1.3.1, 2.4.1).
+        pandoc emits no <main> at all; the content lives in a bare div.
+        tabindex="-1" is what makes the skip link MOVE FOCUS rather than merely
+        scroll - without it Chrome and Safari scroll and leave focus on <body>,
+        so the next Tab drops the user back at the top of the navbar. */
+  var main = document.querySelector('.main-container');
+  if (main) {
+    if (!main.id) main.id = 'main-content';
+    main.setAttribute('role', 'main');
+    main.setAttribute('tabindex', '-1');
+  }
+
+  var navbar = document.querySelector('.navbar');
+
+  /* 2. Name the hamburger (WCAG 4.1.2). rmarkdown emits the button with three
+        empty <span class="icon-bar"> and no text and no label, so screen
+        readers announce a bare "button". */
+  var toggle = document.querySelector('.navbar-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    var target = (toggle.getAttribute('data-target') || '').replace(/^#/, '');
+    if (target) toggle.setAttribute('aria-controls', target);
+  }
+
+  /* 3. Dropdown triggers advertise that they open something.
+        Bootstrap 3.3.5's own JS already maintains aria-expanded, so we only
+        add what it does not: aria-haspopup. */
+  var togglers = document.querySelectorAll('.navbar .dropdown-toggle');
+  for (var i = 0; i < togglers.length; i++) {
+    togglers[i].setAttribute('aria-haspopup', 'true');
+  }
+
+  /* 4. Drop the broken ARIA menu pattern (WCAG 4.1.2).
+        rmarkdown puts role="menu" on the dropdown <ul> but never gives the
+        children role="menuitem". A menu with no menuitems is announced as an
+        empty menu - strictly worse than no role, because it suppresses the
+        list semantics the plain <ul>/<a> markup would otherwise expose.
+        Removing the role is correct and far cheaper than implementing the
+        full APG menubar pattern (roving tabindex, arrow keys, Escape). */
+  var menus = document.querySelectorAll('.navbar [role="menu"]');
+  for (var j = 0; j < menus.length; j++) {
+    menus[j].removeAttribute('role');
+  }
+
+  /* 5. Escape hatch for the navbar-less pages (WCAG 2.4.5, 3.2.3).
+        The subdirectory pages are rendered outside render_site() and never see
+        the _site.yml navbar, so a reader who followed a menu link into one has
+        no way back except the browser's Back button - and no way at all if
+        they arrived from a bookmark or a direct link.
+
+        How far up docs/index.html is depends on the directory. Most pages sit
+        one level below docs/, but homeworks/<year>/ and Examinations/<term>/
+        are two levels down, and '../index.html' 404s from those. The page
+        cannot measure this for itself - it is rendered self-contained, so every
+        asset is inlined and no relative URL survives in the markup - so the
+        deeper directories declare it by including assets/brand/site-depth-2.html
+        ahead of this file in their _output.yml. Default is 1.
+
+        This branch cannot run on a top-level page: those all have a navbar. */
+  if (!navbar && main) {
+    var depth = window.__siteDepth || 1;
+    var prefix = '';
+    for (var d = 0; d < depth; d++) { prefix += '../'; }
+    var bar = document.createElement('div');
+    bar.className = 'site-backlink-bar';
+    var link = document.createElement('a');
+    link.className = 'site-backlink';
+    link.href = prefix + 'index.html';
+    link.textContent = '\u2190 Back to course site';
+    bar.appendChild(link);
+    main.insertBefore(bar, main.firstChild);
+  }
+
+  /* 6. Author / date are not headings (WCAG 1.3.1, 2.4.6).
+        pandoc's template emits them as <h4 class="author"> and
+        <h4 class="date"> straight after the <h1> title. Screen-reader users
+        navigating by heading hear "heading level 4, STAT 251 Section 01" as if
+        it were a section, and it puts an h1 -> h4 skip at the top of every
+        page. Re-tag them as paragraphs; site.css styles them by class. */
+  var meta = document.querySelectorAll('#header h4.author, #header h4.date');
+  for (var k = 0; k < meta.length; k++) {
+    var h4 = meta[k];
+    var p = document.createElement('p');
+    p.className = h4.className;
+    while (h4.firstChild) p.appendChild(h4.firstChild);
+    h4.parentNode.replaceChild(p, h4);
+  }
+
+  /* 7. Solution answers carry more than colour (WCAG 1.4.1, 1.4.3).
+        Answers are marked three ways across the solution pages: an inline
+        style="color: red", the RA/RZ <div style="color: red;"> helper, and
+        class="soln". Colour was the only cue, so a screen reader, a
+        read-aloud tool, or a colour-blind reader could not tell the answer
+        from the question. Each one gets class .answer (site.css section 20b:
+        AA-contrast red, shaded box) and a screen-reader-only "Answer:" label.
+        The label goes on the outermost answer element only, so an answer
+        that contains another red span is announced once. Matching the inline
+        style here rather than editing the sources keeps the 2024 archive
+        untouched. */
+  /* el.style.color rather than a [style*=...] selector, which would also catch
+     background-color and border-color. Empty placeholder spans are skipped so
+     they do not render as an empty shaded box. */
+  var candidates = document.querySelectorAll('.main-container .soln, .main-container [style*="color"]');
+  var answers = [];
+  for (var a = 0; a < candidates.length; a++) {
+    var c = candidates[a];
+    var isRed = c.style.color === 'red' || c.style.color === 'rgb(255, 0, 0)';
+    if (!isRed && !c.classList.contains('soln')) continue;
+    if (!c.textContent.replace(/\s+/g, '') && !c.querySelector('img, svg')) continue;
+    c.classList.add('answer');
+    answers.push(c);
+  }
+  for (var b = 0; b < answers.length; b++) {
+    var el = answers[b];
+    if (el.parentNode.closest && el.parentNode.closest('.answer')) continue;
+    var label = document.createElement('span');
+    label.className = 'sr-only';
+    label.textContent = 'Answer: ';
+    el.insertBefore(label, el.firstChild);
+  }
+
+  /* 8. The decorative arrow in the back link (item 5) is read aloud as
+        "leftwards arrow". */
+  var back = document.querySelector('.site-backlink');
+  if (back) {
+    back.textContent = '';
+    var arrow = document.createElement('span');
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '\u2190 ';
+    back.appendChild(arrow);
+    back.appendChild(document.createTextNode('Back to course site'));
+  }
+})();
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-mml-svg.js";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
