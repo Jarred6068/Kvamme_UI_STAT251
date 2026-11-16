@@ -131,13 +131,13 @@ navbar:
               href: Review_problems/exam1_review_problems.html
             - text: 'Solutions'
               href: Review_problems/exam1_review_problems_solns.html
-##      HIDDEN - Exam 3 and the final (study guides + review problems)
+##      HIDDEN - the Exam 3 review problems and the final (study guide + review)
         - text: 'Exam 2 Study Guide'
           href: study_guides/exam2_study_guide.html
 ##      No Exam 2 Review entry: Exam 2 is open-note, so it has no review
 ##      problems (the old Review_problems/exam2_* pages are left unlinked).
-#       - text: 'Exam 3 Study Guide'
-#         href: study_guides/exam3_study_guide.html
+        - text: 'Exam 3 Study Guide'
+          href: study_guides/exam3_study_guide.html
 #       - text: 'Exam 3 Review'
 #         menu:
 #           - text: 'Problems'
