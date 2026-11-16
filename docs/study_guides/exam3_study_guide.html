@@ -437,6 +437,12 @@ display: none;
 </div>
 
 
+<!--
+  SCOPE (Nov 16 2026, Jarred's instruction): Exam 3 covers from the end of Exam 2 through the chi-square
+  tests - Mon Oct 19 (Week 9) through Mon Nov 16 (Week 13: independence, homogeneity, McNemar). Everything
+  after that (Cramer's V, measures of association, correlation, regression, ANOVA) is on the cumulative final.
+  Topics are taken from the notes pages lecturemenu9-13.Rmd, not from the exam file.
+-->
 <div id="exam-logistics" class="section level1">
 <h1>Exam Logistics:</h1>
 <ul>
@@ -444,442 +450,312 @@ display: none;
 in <strong>Canvas</strong>. You may use your notes, the textbook and the
 course website. It opens <strong>Friday, November 20, 2026</strong> and
 is due <strong>Sunday, November 29, 2026 at 11:59PM</strong>, the last
-night of Fall Recess. In-class reviews will be held on
-<strong>Wednesday, November 18</strong> and <strong>Friday, November 20,
-2026</strong></p></li>
-<li><p>The exam will be about 20 - 25 questions long, with at least one
-bonus question. Questions are mostly multiple choice, short answer, or
-labeling problems, with the possibility of one or two short essay /
-longer explanation problems</p></li>
+night of Fall Recess. An in-class review will be held on <strong>Friday,
+November 20, 2026</strong></p></li>
+<li><p>Like Exam 2, most questions are multiple choice or true/false,
+with a few short written explanations</p></li>
 </ul>
+</div>
+<div id="how-to-prepare" class="section level1">
+<h1>How to prepare</h1>
+<p>The exam asks you to <strong>interpret</strong> values,
+<strong>identify</strong> the correct equation, and
+<strong>choose</strong> the right method for a situation. Some questions
+are <strong>“show how to compute”</strong> problems: a short story
+problem gives you every number you need, and you choose the formula with
+the correct values filled in. You will not have to carry out long
+calculations by hand, but you do need to recognise which test or
+interval fits a study, which numbers go where, and how to read a P-value
+against <span class="math inline">\(\alpha\)</span>.</p>
+<p>The most important skill on this exam is <strong>choosing the right
+procedure</strong>: one sample or two, independent or paired, a
+proportion, a mean or a table of counts. Use the list below to check
+that your notes cover everything, and make sure you can explain each
+item in your own words. <a href="../homeworks/2026/homework_3_2026.html">Homework 3</a> and <a href="../homeworks/2026/homework_4_2026.html">Homework 4</a> cover most
+of this material.</p>
 </div>
 <div id="content-to-study" class="section level1">
 <h1>Content To Study</h1>
-<p>This exam will cover material from Lectures 15 - 26 (Week 8 to
-beginning of Week 14)</p>
-<div id="concepts-and-terminology" class="section level2">
-<h2><strong>Concepts and terminology</strong></h2>
-<p>Know/be able to define the following terms and concepts:</p>
+<p>Exam 3 covers material from <strong>Monday of Week 9 (October
+19)</strong>, the first class after Exam 2, through <strong>Monday of
+Week 13 (November 16)</strong>, ending with the <strong>chi-square
+tests</strong>. The notes for <a href="../lecturemenu9.html">Week 9</a>,
+<a href="../lecturemenu10.html">Week 10</a>, <a href="../lecturemenu11.html">Week 11</a>, <a href="../lecturemenu12.html">Week 12</a> and <a href="../lecturemenu13.html">Week 13</a> are the reference. This
+includes:</p>
 <ul>
-<li><p>know the conditions which make the <span class="math inline">\(t\)</span> distribution equal to the <span class="math inline">\(z\)</span> distribution</p></li>
-<li><p><strong>The Central Limit Theorem (CLT)</strong> a fundamental
-concept in statistics that states that the sampling distribution of the
-sample mean or sample proportion approaches a normal distribution as the
-sample size increases, regardless of the shape of the population
-distribution, as long as the sample size is sufficiently large.</p></li>
-<li><p><strong>Margin of error</strong> - the half-width of a confidence
-interval, i.e. the standard score times the standard error. It measures
-the uncertainty or precision associated with estimating a population
-parameter (such as a population mean or proportion) by quantifying the
-amount by which a sample estimate might plausibly deviate from the true
-population parameter at the stated confidence level.</p></li>
-<li><p><strong>Confidence level</strong> - the probability that the
-interval will contain the true parameter value before the data are
-gathered</p></li>
-<li><p><strong>Critical value</strong> - The point on the distribution
-of the test statistic that defines a set of values that call for
-rejecting the null hypothesis - i.e the value which defines the
-rejection region of a test.</p></li>
-<li><p><strong>Statistical significance</strong> - A statistical result
-that is decidedly not due to “ordinary variation” in the data (i.e., not
-due to chance or not a coincidence)</p></li>
-<li><p><strong>Statistical test</strong> - a type of statistical
-inference used to decide whether an observed result is statistically
-significant</p></li>
-<li><p><strong><span class="math inline">\(p\)</span>-value</strong> -
-the probability of observing a value as extreme or more extreme than the
-test statistic under the assumption that the null hypothesis is
-true</p></li>
-<li><p><strong>Null hypothesis</strong> - The hypothesis of “no effect”.
-It usually states that the population parameter is equal to some
-value</p></li>
-<li><p><strong>Alternative hypothesis</strong> - The hypothesis of
-“effect”. It usually states that the population parameter is in some
-range of value</p></li>
-<li><p><strong>Test statistic</strong> A statistic which measures the
-distance between the point estimate of the parameter and the
-hypothesized value of the parameter under the null hypothesis</p></li>
-<li><p><strong>Rejection region</strong> the interval, measured in the
-sampling distribution of the statistic under study, that leads to
-rejection of the null hypothesis <span class="math inline">\(H_0\)</span> in a significance test.</p></li>
-<li><p><strong>Type I Error</strong> - a false positive test result:
-rejecting the null hypothesis when the null hypothesis is true.</p></li>
-<li><p><strong>Type II Error</strong> - a false negative test result:
-failing to reject the null hypothesis when the alternative hypothesis is
-true.</p></li>
-<li><p><strong>Statistical Power</strong> - the probability of rejecting
-the null hypothesis when the alternative is true.</p></li>
-<li><p>Know what factors influence the power of a significance test and
-what can be done to increase the power of a significance test</p></li>
-<li><p>Know the definitions and differences between
-<strong>Parametric</strong> vs <strong>Non-parametric</strong>
-significance tests</p>
-<ul>
-<li><p>Know the advantages and disadvantages of
-<strong>Parametric</strong> vs <strong>Non-parametric</strong>
-significance tests</p></li>
-<li><p>Know how a confidence interval relates to a two-tailed
-statistical test and how to use a confidence interval to make a decision
-about a significance test.</p></li>
-</ul></li>
+<li><p>Finding normal probabilities and the central limit theorem -
+October 19</p></li>
+<li><p>Confidence intervals for a proportion and a mean, confidence
+levels, the <span class="math inline">\(t\)</span> distribution and
+sample size - October 19, 21, 23 and 26</p></li>
+<li><p>Significance tests: hypotheses, test statistics, P-values and
+decisions; tests for a proportion and a mean; composite hypotheses -
+October 26, 28 and 30, November 2</p></li>
+<li><p>Types of errors, power, confidence intervals and two-sided tests,
+the sign test - November 4 and 6</p></li>
+<li><p>Comparing two proportions, two means and matched pairs - November
+6, 9 and 11</p></li>
+<li><p>Categorical data and the chi-square tests: goodness of fit,
+independence, homogeneity, and McNemar’s test - November 11, 13 and
+16</p></li>
 </ul>
+<p><strong>Not on Exam 3:</strong> Cramér’s V, measures of association,
+correlation, regression and ANOVA. These are on the cumulative
+<strong>final exam</strong>.</p>
+<div id="normal-probabilities-and-the-central-limit-theorem" class="section level2">
+<h2>Normal Probabilities and the Central Limit Theorem</h2>
+<ol style="list-style-type: decimal">
+<li><p>Know how to find the area <strong>below</strong>,
+<strong>above</strong> and <strong>between</strong> values of a normal
+distribution by converting to <span class="math inline">\(z\)</span>-scores and using the <span class="math inline">\(z\)</span>-table (the table gives the area to the
+left; the area to the right is <span class="math inline">\(1 -\)</span>
+that)</p></li>
+<li><p>Know what the <strong>central limit theorem</strong> says: for a
+large enough sample, the sampling distribution of <span class="math inline">\(\bar{x}\)</span> is approximately normal with mean
+<span class="math inline">\(\mu\)</span> and standard error <span class="math inline">\(\sigma/\sqrt{n}\)</span>, <strong>whatever the
+shape of the population</strong></p></li>
+<li><p>Know the matching result for a sample proportion: <span class="math inline">\(\hat{p}\)</span> is approximately normal with mean
+<span class="math inline">\(p\)</span> and standard error <span class="math inline">\(\sqrt{p(1-p)/n}\)</span> when the sample is large
+enough</p></li>
+<li><p>Know the difference between the distribution of the
+<strong>data</strong> (spread <span class="math inline">\(\sigma\)</span>) and the sampling distribution of
+a <strong>statistic</strong> (spread <span class="math inline">\(SE\)</span>)</p></li>
+</ol>
 </div>
 <div id="confidence-intervals" class="section level2">
-<h2><strong>Confidence intervals</strong></h2>
-<ul>
-<li>Understand the “anatomy” of a confidence interval (i.e., point
-estimate, standard score, standard error, and margin of error). Be able
-to identify each part of a confidence interval.</li>
-</ul>
-<p><span class="math display">\[\text{point estimate}\pm \text{standard
-score} \times \text{standard error} \]</span></p>
-<p>or</p>
-<p><span class="math display">\[\text{point estimate}\pm \text{margin of
-error} \]</span></p>
-<ul>
-<li><p>What effect does increasing the confidence level have on the
-margin of error and the confidence interval?</p></li>
-<li><p>What effect does increasing the sample size have on the margin of
-error and the confidence interval?</p></li>
-<li><p>Know the correct way(s) to report a confidence interval</p>
-<ul>
-<li><strong>E.g For a <span class="math inline">\(95\%\)</span>
-Confidence Level:</strong> “At the <span class="math inline">\(95\%\)</span> confidence level, we estimate that
-the population proportion (or mean) is no less than <span class="math inline">\([\)</span><em>insert lower bound</em><span class="math inline">\(]\)</span> but no greater than <span class="math inline">\([\)</span><em>insert upper bound</em><span class="math inline">\(]\)</span>”</li>
-</ul></li>
-<li><p>Understand why it is incorrect to talk about a confidence
-interval in a probabilistic way</p></li>
-<li><p>understand that the confidence level of a confidence interval
-relates to the long-run frequency of CI’s that will cover the true value
-of the parameter</p></li>
-</ul>
-<p><br> <br></p>
-<div id="computing-a-confidence-interval-for-estimating-p-with-hatp" class="section level3">
-<h3><strong>Computing a confidence interval for estimating <span class="math inline">\(p\)</span> with <span class="math inline">\(\hat{p}\)</span></strong></h3>
-<p><span class="math display">\[ \hat{p} \pm z\times
-\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]</span></p>
-<ul>
-<li><strong>Assumptions</strong>: random sampling, requires large <span class="math inline">\(n\)</span>, only valid when</li>
-</ul>
-<p><span class="math display">\[ n\hat{p} \geq 15 \ \ \text{and} \ \
-n(1-\hat{p}) \geq 15 \]</span></p>
-<p><br> <br></p>
-</div>
-<div id="computing-a-confidence-interval-for-estimate-mu-with-barx" class="section level3">
-<h3><strong>Computing a confidence interval for estimate <span class="math inline">\(\mu\)</span> with <span class="math inline">\(\bar{x}\)</span></strong></h3>
-<p><span class="math display">\[ \bar{x} \pm t\times \frac{s}{\sqrt{n}}
-\]</span></p>
-<ul>
-<li><p><span class="math inline">\(t\)</span> is the standard score from
-a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom</p></li>
-<li><p><strong>Assumptions</strong>: data are randomized, assumes
-population distribution of <span class="math inline">\(x\)</span> is
-normal</p></li>
-</ul>
-</div>
-</div>
-<div id="computing-sample-size" class="section level2">
-<h2><strong>Computing Sample Size</strong></h2>
-<ul>
-<li><p>Know how to compute the sample size when estimating <span class="math inline">\(p\)</span> with <span class="math inline">\(\hat{p}\)</span></p>
-<p><span class="math display">\[ n = \frac{p(1-p)z^2}{m^2}
-\]</span></p></li>
-<li><p>Know how to compute the sample size when estimating <span class="math inline">\(\mu\)</span> with <span class="math inline">\(\bar{x}\)</span></p>
-<p><span class="math display">\[ n = \frac{\sigma^2z^2}{m^2}
-\]</span></p>
-<ul>
-<li><p><span class="math inline">\(z\)</span> is the standard score from
-a standard normal distribution corresponding to the desired confidence
-level</p></li>
-<li><p><span class="math inline">\(m\)</span> is the desired margin of
-error</p></li>
-<li><p><span class="math inline">\(p\)</span> and <span class="math inline">\(\sigma\)</span> must be determined from prior
-information or studies</p></li>
-</ul></li>
-</ul>
+<h2>Confidence Intervals</h2>
+<ol style="list-style-type: decimal">
+<li><p>Know the “anatomy” of a confidence interval: <strong>point
+estimate</strong>, <strong>critical value</strong> (standard score),
+<strong>standard error</strong> and <strong>margin of error</strong>,
+and be able to identify each part <span class="math display">\[\text{point estimate} \pm \text{critical value}
+\times SE \qquad\text{or}\qquad \text{point estimate} \pm \text{margin
+of error}\]</span></p></li>
+<li><p>Know how to interpret a confidence interval in context: “we are
+95% confident that the population mean (or proportion) is between … and
+…”. Know what the <strong>confidence level</strong> means: the
+proportion of intervals, over many repeated samples, that capture the
+parameter. Know why it is wrong to say there is a 95% probability that
+<em>this</em> interval contains the parameter</p></li>
+<li><p>Know the critical values for the common confidence levels (<span class="math inline">\(z^* = 1.645\)</span>, <span class="math inline">\(1.96\)</span> and <span class="math inline">\(2.576\)</span> for 90%, 95% and 99%), and where
+they come from on the standard normal curve</p></li>
+<li><p>Know how the <strong>confidence level</strong> and the
+<strong>sample size</strong> affect the width of an interval: a higher
+confidence level gives a wider interval; a larger sample gives a
+narrower one (4 times the sample size halves the margin of
+error)</p></li>
+<li><p>Know the interval for a <strong>proportion</strong> and its
+conditions (<span class="math inline">\(n\hat{p} \geq 15\)</span> and
+<span class="math inline">\(n(1-\hat{p}) \geq 15\)</span>)</p></li>
+<li><p>Know when to use <span class="math inline">\(z\)</span> and when
+to use <span class="math inline">\(t\)</span> for a
+<strong>mean</strong>: <span class="math inline">\(z\)</span> when <span class="math inline">\(\sigma\)</span> is known, <span class="math inline">\(t\)</span> with <span class="math inline">\(df = n
+- 1\)</span> when <span class="math inline">\(\sigma\)</span> is unknown
+and estimated by <span class="math inline">\(s\)</span>. Know how the
+<span class="math inline">\(t\)</span> distribution compares with the
+standard normal (heavier tails, and closer to normal as <span class="math inline">\(df\)</span> grows), and how to read a <span class="math inline">\(t\)</span>-table</p></li>
+<li><p>Know the assumptions behind these intervals: a random sample, and
+a normal population or a large sample for a mean</p></li>
+<li><p>Know how to find the <strong>minimum sample size</strong> for a
+desired margin of error, for a proportion and for a mean, and why we
+round <strong>up</strong>. Know what to use for <span class="math inline">\(p\)</span> when there is no prior estimate (<span class="math inline">\(p = 0.5\)</span>)</p></li>
+</ol>
 </div>
 <div id="significance-tests" class="section level2">
-<h2><strong>Significance Tests</strong></h2>
-<ul>
-<li><p>know the five steps to conduct a significance test:</p>
+<h2>Significance Tests</h2>
 <ol style="list-style-type: decimal">
-<li><p>Assumptions</p></li>
-<li><p>State null and alternative hypotheses</p></li>
-<li><p>Compute test statistic</p></li>
-<li><p>Compute <span class="math inline">\(p\)</span>-value</p></li>
-<li><p>Make a decision</p></li>
-</ol></li>
-<li><p>Be sure you understand and know how to apply the decision rule in
-hypothesis testing</p>
-<p><span class="math display">\[\text{Decision Rule:}\begin{cases}
-\text{if} \ p\text{-value} \leq \alpha &amp; \text{Reject} \ H_0 \\
-                         \text{else} &amp; \text{do  not reject} \ H_0
-            \end{cases}\]</span> <br> <br></p></li>
-</ul>
-<div id="significance-for-a-single-population-proportion" class="section level3">
-<h3><strong>Significance for a single population
-proportion</strong></h3>
+<li><p>Know the logic of a significance test (the courtroom analogy): we
+assume <span class="math inline">\(H_0\)</span> is true and ask how
+surprising the data would be. A small P-value means the data would be
+surprising if <span class="math inline">\(H_0\)</span> were
+true</p></li>
+<li><p>Know how to write the <strong>null</strong> and
+<strong>alternative</strong> hypotheses about a parameter, with the
+claimed value written <span class="math inline">\(p_0\)</span> or <span class="math inline">\(\mu_0\)</span>, and how to tell an
+<strong>upper-tailed</strong>, <strong>lower-tailed</strong> and
+<strong>two-sided</strong> alternative from the wording of a
+study</p></li>
+<li><p>Know the general form of a test statistic, <span class="math inline">\((\text{estimate} - \text{null value})/SE\)</span>,
+and what it measures: how many standard errors the estimate is from the
+value <span class="math inline">\(H_0\)</span> claims</p></li>
+<li><p>Know the definition of the <strong>P-value</strong>: the
+probability, if <span class="math inline">\(H_0\)</span> is true, of a
+test statistic at least as extreme as the one observed, for example
+<span class="math inline">\(P(Z \geq z_{obs} \mid H_0 \text{
+true})\)</span>. Know which tail(s) to use for each alternative, and why
+a two-sided P-value doubles the tail area</p></li>
+<li><p>Know the <strong>five steps</strong> of a significance test:
+assumptions, hypotheses, test statistic, P-value, decision. Know the
+decision rule: <strong>reject <span class="math inline">\(H_0\)</span>
+when the P-value is less than <span class="math inline">\(\alpha\)</span></strong>, and how to state the
+conclusion in context. Know why we never “accept” <span class="math inline">\(H_0\)</span></p></li>
+<li><p>Know the test for a <strong>population proportion</strong>: the
+SE uses <span class="math inline">\(p_0\)</span>, not <span class="math inline">\(\hat{p}\)</span>, and the conditions are <span class="math inline">\(np_0 \geq 15\)</span> and <span class="math inline">\(n(1-p_0) \geq 15\)</span></p></li>
+<li><p>Know the test for a <strong>population mean</strong>: <span class="math inline">\(z_{obs}\)</span> when <span class="math inline">\(\sigma\)</span> is known, <span class="math inline">\(t_{obs}\)</span> with <span class="math inline">\(df = n - 1\)</span> when it is not</p></li>
+<li><p>Know what a <strong>composite</strong> hypothesis is (for
+example, <span class="math inline">\(H_0: \mu \leq \mu_0\)</span>) and
+why we test it at the boundary value <span class="math inline">\(\mu_0\)</span></p></li>
+<li><p>Know the difference between <strong>statistically
+significant</strong> and <strong>practically important</strong>: a tiny,
+unimportant difference can be significant in a very large
+sample</p></li>
+</ol>
+</div>
+<div id="errors-power-and-intervals-vs-tests" class="section level2">
+<h2>Errors, Power, and Intervals vs Tests</h2>
 <ol style="list-style-type: decimal">
-<li><p><strong>Assumptions:</strong> <span class="math inline">\(n\)</span> is large; <span class="math inline">\(n\hat{p}\)</span> and <span class="math inline">\(n(1-\hat{p}) \geq 15\)</span></p></li>
-<li><p>State the null and alternative hypotheses, where <span class="math inline">\(p_0\)</span> is the hypothesized value of the
-population proportion</p></li>
+<li><p>Know the definitions of a <strong>Type I error</strong>
+(rejecting a true <span class="math inline">\(H_0\)</span>) and a
+<strong>Type II error</strong> (failing to reject a false <span class="math inline">\(H_0\)</span>), and be able to describe each one in
+the context of a study</p></li>
+<li><p>Know that <span class="math inline">\(\alpha\)</span> is the
+probability of a Type I error, and that lowering <span class="math inline">\(\alpha\)</span> makes a Type II error more
+likely</p></li>
+<li><p>Know the definition of <strong>power</strong> (the probability of
+rejecting <span class="math inline">\(H_0\)</span> when it is false,
+<span class="math inline">\(1 - P(\text{Type II error})\)</span>) and
+what raises it: a larger sample, a larger <span class="math inline">\(\alpha\)</span>, a true value farther from the
+null value, and less variability</p></li>
+<li><p>Know how a confidence interval relates to a <strong>two-sided
+test</strong>: a two-sided test at level <span class="math inline">\(\alpha\)</span> rejects <span class="math inline">\(H_0\)</span> exactly when the <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval does
+<strong>not</strong> contain the null value</p></li>
 </ol>
-<ul>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: p = p_0 \ \ H_A: p &gt; p_0\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: p = p_0 \ \ H_A: p &lt; p_0\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: p = p_0 \ \ H_A: p \neq p_0\)</span></p></li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li>Compute the test statistic</li>
+</div>
+<div id="parametric-and-non-parametric-tests-the-sign-test" class="section level2">
+<h2>Parametric and Non-parametric Tests: the Sign Test</h2>
+<ol style="list-style-type: decimal">
+<li><p>Know the difference between <strong>parametric</strong> tests
+(assumptions about the population distribution, such as normality) and
+<strong>non-parametric</strong> tests (no such assumptions), and the
+advantages and disadvantages of each</p></li>
+<li><p>Know when the <strong>sign test</strong> is used (paired or
+one-sample data, especially small samples that are not normal), what a
+“+” sign means in context, why ties (zeros) are dropped, and that under
+<span class="math inline">\(H_0\)</span> the number of “+” signs follows
+a binomial distribution with <span class="math inline">\(p =
+0.5\)</span></p></li>
 </ol>
-<p><span class="math display">\[ z_{\text{obs}} =
-\frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \]</span></p>
-<ol start="4" style="list-style-type: decimal">
-<li>Compute the <span class="math inline">\(p\)</span>-value</li>
+</div>
+<div id="comparing-two-populations" class="section level2">
+<h2>Comparing Two Populations</h2>
+<ol style="list-style-type: decimal">
+<li><p>Know the difference between <strong>independent</strong> samples
+(separate random samples, or randomized groups) and
+<strong>dependent</strong> samples (each observation paired with one in
+the other sample), and be able to identify which one a study
+uses</p></li>
+<li><p>Know the test and the confidence interval for <strong>two
+proportions</strong>, <span class="math inline">\(p_1 - p_2\)</span>.
+Know <strong>when to pool</strong>: the pooled proportion <span class="math inline">\(\hat{p}\)</span> is used only for the SE of a test
+of <span class="math inline">\(H_0: p_1 = p_2\)</span>; the confidence
+interval, and a test of a nonzero difference, use the unpooled
+SE</p></li>
+<li><p>Know the test and the confidence interval for <strong>two
+independent means</strong>, <span class="math inline">\(\mu_1 -
+\mu_2\)</span>: the unpooled SE with <span class="math inline">\(df =
+\min(n_1 - 1, n_2 - 1)\)</span>. Know that the <strong>pooled</strong>
+version is used only when it is reasonable to assume <span class="math inline">\(\sigma_1 = \sigma_2\)</span> (similar sample SDs),
+with <span class="math inline">\(df = n_1 + n_2 - 2\)</span></p></li>
+<li><p>Know the <strong>rank-sum test</strong> as the non-parametric
+alternative to the two independent samples <span class="math inline">\(t\)</span>-test</p></li>
+<li><p>Know the <strong>matched-pairs <span class="math inline">\(t\)</span>-test</strong>: take the differences
+<span class="math inline">\(d\)</span> within each pair, then run a
+one-sample <span class="math inline">\(t\)</span>-test on the
+differences with <span class="math inline">\(df = n - 1\)</span>, where
+<span class="math inline">\(n\)</span> is the number of pairs. Know why
+pairing usually gives a smaller SE, and why ignoring the pairing is the
+wrong test</p></li>
+<li><p>Know how to <strong>choose a test</strong> for a study: one
+sample or two, independent or paired, a proportion or a mean</p></li>
 </ol>
-<ul>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(z
-\geq z_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(z
-\leq z_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(|z| \geq |z_{\text{obs}}| \ \mid \ H_0
-\text{true})\)</span></p></li>
-</ul>
-<ol start="5" style="list-style-type: decimal">
-<li>Compare the <span class="math inline">\(p\)</span>-value to <span class="math inline">\(\alpha\)</span> and make a decision</li>
+</div>
+<div id="categorical-data-and-the-chi-square-tests" class="section level2">
+<h2>Categorical Data and the Chi-square Tests</h2>
+<ol style="list-style-type: decimal">
+<li><p>Know what a <strong>one-way table</strong> and a <strong>two-way
+(contingency) table</strong> are, and the difference between a
+<strong>marginal</strong> distribution and a
+<strong>conditional</strong> distribution</p></li>
+<li><p>Know the difference between <strong>observed</strong> counts
+<span class="math inline">\(O\)</span> and <strong>expected</strong>
+counts <span class="math inline">\(E\)</span> (the counts we would
+expect if <span class="math inline">\(H_0\)</span> were true)</p></li>
+<li><p>Know the facts about the <strong>chi-square
+distribution</strong>: a family of curves indexed by <span class="math inline">\(df\)</span>, never negative, skewed right, with
+mean <span class="math inline">\(df\)</span></p></li>
+<li><p>Know the <strong>chi-square statistic</strong> <span class="math inline">\(X^2 = \sum (O - E)^2/E\)</span>: why it is never
+negative, why only a large value is evidence against <span class="math inline">\(H_0\)</span> (so chi-square tests are always
+<strong>upper-tailed</strong>), and how to bracket its P-value with the
+chi-square table</p></li>
+<li><p>Know the condition that <strong>every expected count is at least
+5</strong>, and what to do when one is not (combine neighboring
+categories)</p></li>
+<li><p>Know the <strong>goodness-of-fit test</strong>: one categorical
+variable compared with a claimed set of proportions, <span class="math inline">\(E = n\,p_{i,0}\)</span> and <span class="math inline">\(df = k - 1\)</span>. Know why the df comes from
+the number of categories, not the sample size</p></li>
+<li><p>Know the <strong>test of independence</strong>: two categorical
+variables measured on one sample, <span class="math inline">\(H_0\)</span> “the variables are independent”,
+<span class="math inline">\(E = (\text{row total})(\text{column
+total})/n\)</span> and <span class="math inline">\(df = (r - 1)(c -
+1)\)</span></p></li>
+<li><p>Know the <strong>test for homogeneity</strong>: a separate sample
+from each of two or more populations, one variable, <span class="math inline">\(H_0\)</span> “the populations have the same
+distribution”, with the same <span class="math inline">\(E\)</span> and
+<span class="math inline">\(df\)</span> as the test of independence.
+Know how to tell independence from homogeneity by the
+<strong>design</strong> of the study</p></li>
+<li><p>Know that a chi-square test only says the distributions differ or
+the variables are related; to say <strong>how</strong>, look at which
+cells contribute most to <span class="math inline">\(X^2\)</span></p></li>
+<li><p>Know <strong>McNemar’s test</strong> for paired yes/no data (the
+same subjects measured twice): why the other chi-square tests do not
+apply, the <strong>discordant</strong> pairs <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span>, <span class="math inline">\(H_0: p_1 =
+p_2\)</span>, <span class="math inline">\(X^2 = (b - c)^2/(b +
+c)\)</span> with <span class="math inline">\(df = 1\)</span>, and the
+condition <span class="math inline">\(b + c \geq 10\)</span></p></li>
+<li><p>Know how to <strong>choose</strong> between the goodness-of-fit
+test, the test of independence, the test for homogeneity and McNemar’s
+test from the description of a study</p></li>
 </ol>
 <p><br> <br></p>
 </div>
-<div id="significance-test-for-a-single-population-mean" class="section level3">
-<h3><strong>Significance test for a single population mean</strong></h3>
-<ol style="list-style-type: decimal">
-<li><p><strong>Assumptions:</strong> The population distribution of the
-random variable <span class="math inline">\(x\)</span> is approximately
-normal (this is especially important if <span class="math inline">\(n\)</span> is small and the significance test is
-one sided)</p></li>
-<li><p>State the null and alternative hypotheses, where <span class="math inline">\(\mu_0\)</span> is the hypothesized value of the
-population mean</p></li>
-</ol>
-<ul>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_A: \mu \neq \mu_0\)</span></p></li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li>Compute the test statistic</li>
-</ol>
-<p><span class="math display">\[ t_{\text{obs}} =
-\frac{\bar{x}-\mu_0}{s/\sqrt{n}} \sim t(n-1) \]</span></p>
-<ol start="4" style="list-style-type: decimal">
-<li>Compute the <span class="math inline">\(p\)</span>-value</li>
-</ol>
-<ul>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(t
-\geq t_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(t
-\leq t_{\text{obs}} | \ H_0 \text{true})\)</span></p></li>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P(|t| \geq |t_{\text{obs}}| \ \mid \ H_0
-\text{true})\)</span></p></li>
-</ul>
-<ol start="5" style="list-style-type: decimal">
-<li>Compare the <span class="math inline">\(p\)</span>-value to <span class="math inline">\(\alpha\)</span> and make a decision</li>
-</ol>
-<p><br> <br></p>
 </div>
-<div id="the-sign-test" class="section level3">
-<h3><strong>The sign test</strong></h3>
+<div id="formulas" class="section level1">
+<h1>Formulas:</h1>
 <ul>
-<li><p>Understand how to form and interpret the null and alternative
-hypotheses for a sign test</p></li>
-<li><p>be able to interpret the meaning of a positive sign (in context)
-and the probability of a positive sign <span class="math inline">\(P(+ \
-\text{sign})\)</span></p></li>
-<li><p>Know how to compute the test statistic for a sign test (i.e
-number of positive signs)</p></li>
-<li><p>Know how to compute the <span class="math inline">\(p\)</span>-value for a sign test</p></li>
-<li><p>Know that the sign test is used for data with <strong>matched -
-pair designs</strong></p></li>
-<li><p>Know how this test relates to the binomial distribution</p></li>
-<li><p>Know why we don’t count zeros in the total number of signs for a
-sign test</p></li>
+<li>Be sure you understand the notation (symbols) we have used (e.g.,
+<span class="math inline">\(\mu, \sigma, \bar{x}, s, p, \hat{p}, p_0,
+\mu_0, n, SE, \alpha, df, O, E\)</span>)</li>
 </ul>
-<p><strong>Steps of a sign test:</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>Assumptions: data are collected from a randomization scheme.
-Observations are independent</p></li>
-<li><p>State the null and alternative hypotheses, where <span class="math inline">\(p\)</span> is the probability of a positive
-sign:</p></li>
-</ol>
-<ul>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: p = 0.5\)</span> <span class="math inline">\(H_A: p \neq 0.5\)</span></p></li>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: p = 0.5\)</span> <span class="math inline">\(H_A: p &gt; 0.5\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: p = 0.5\)</span> <span class="math inline">\(H_A: p &lt; 0.5\)</span></p></li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li><p>The test statistic <span class="math inline">\(S\)</span> is the
-total number of positive signs, which under the null follows a binomial
-distribution <span class="math inline">\(S \sim \text{binom}(n,
-0.5)\)</span> where <span class="math inline">\(n\)</span> is the total
-number of signs</p></li>
-<li><p>The <span class="math inline">\(p\)</span>-value is computed from
-a binomial distribution under the null (the one-sided forms below assume
-the observed count <span class="math inline">\(s\)</span> falls in the
-tail named by <span class="math inline">\(H_A\)</span>):</p></li>
-</ol>
-<ul>
-<li>for a two-tailed test <span class="math inline">\(H_A: p \neq
-0.5\)</span>:</li>
-</ul>
-<p><span class="math display">\[2\times P(S\geq s| H_0) = 2\times \left[
-1 - P(S&lt;s| H_0)\right]\]</span></p>
-<p><span class="math display">\[ = 2 \times \left[ 1 - \sum_{k = 0}^{s -
-1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k}\right] \]</span></p>
-<ul>
-<li>for a right-tailed test <span class="math inline">\(H_A: p &gt;
-0.5\)</span>:</li>
-</ul>
-<p><span class="math display">\[P(S\geq s| H_0) = 1 - P(S&lt;s|
-H_0)\]</span></p>
-<p><span class="math display">\[ = 1 - \sum_{k = 0}^{s -
-1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \]</span></p>
-<ul>
-<li>for a left-tailed test <span class="math inline">\(H_A: p &lt;
-0.5\)</span>:</li>
-</ul>
-<p><span class="math display">\[P(S\leq s| H_0) = \sum_{k =
-0}^{s}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \]</span></p>
-<ol start="5" style="list-style-type: decimal">
-<li>Compare the <span class="math inline">\(p\)</span>-value to <span class="math inline">\(\alpha\)</span> and make a decision</li>
-</ol>
-<p><br> <br></p>
-</div>
-<div id="comparing-two-proportions" class="section level3">
-<h3><strong>Comparing two proportions</strong></h3>
-<ul>
-<li><p>Know how to conduct a statistical test concerning <span class="math inline">\(p_1 - p_2\)</span></p>
-<ul>
-<li><p>Know how to compute a confidence interval to estimate <span class="math inline">\(p_1 - p_2\)</span></p></li>
-<li><p>Understand that the formulas below are two independent samples
-only!</p></li>
-</ul></li>
-</ul>
-<div id="inference-for-two-proportions" class="section level4">
-<h4><strong>Inference for two proportions</strong></h4>
-<p><strong><span class="math inline">\(100(1-\alpha)\%\)</span>
-Confidence interval:</strong></p>
-<p><span class="math display">\[ (\hat{p}_1 - \hat{p}_2) \pm
-Z_{1-\alpha/2} \times
-\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}
+<p>Know what each of these formulas computes and when to use it:</p>
+<p><span class="math display">\[ z = \frac{x - \mu}{\sigma}, \ \
+\mu_{\bar{x}} = \mu, \ \ SE_{\bar{x}} = \frac{\sigma}{\sqrt{n}}, \ \
+SE_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} \]</span></p>
+<p><span class="math display">\[ \hat{p} \pm z^*
+\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \ \ \bar{x} \pm z^*
+\frac{\sigma}{\sqrt{n}}, \ \ \bar{x} \pm t^* \frac{s}{\sqrt{n}}
 \]</span></p>
-<p><strong>Hypothesis Testing:</strong></p>
-<ol style="list-style-type: decimal">
-<li>Assumptions: Two populations are independent; random sampling,
-requires large <span class="math inline">\(n\)</span> in
-<strong>both</strong> groups, only valid when</li>
-</ol>
-<p><span class="math display">\[ n_1\hat{p} \geq 15, \ \ n_1(1-\hat{p})
-\geq 15, \ \ n_2\hat{p} \geq 15, \ \ \text{and} \ \ n_2(1-\hat{p}) \geq
-15 \]</span></p>
-<p>where <span class="math inline">\(\hat{p}\)</span> is the pooled
-estimate of the population proportion</p>
-<ol start="2" style="list-style-type: decimal">
-<li>Hypotheses:</li>
-</ol>
-<ul>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: p_1-p_2 = 0\)</span> <span class="math inline">\(H_A: p_1 - p_2 \neq 0\)</span></p></li>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span> <span class="math inline">\(H_A: p_1 - p_2 &gt; 0\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: p_1 - p_2 = 0\)</span> <span class="math inline">\(H_A: p_1 - p_2 &lt; 0\)</span></p></li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li><p>Test statistic:</p>
-<p><span class="math display">\[ Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2)
--
-0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim
-N(0,1) \]</span></p>
-<p><span class="math inline">\(\hat{p}\)</span> is called the pooled
-estimate of the common proportion:</p>
-<p><span class="math display">\[\hat{p} =
-\frac{x_1+x_2}{n_1+n_2}\]</span></p>
-<p>where <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are the number of observations in the
-“success” categories for sample 1 and sample 2.</p></li>
-<li><p><span class="math inline">\(p\)</span>-value:</p></li>
-</ol>
-<ul>
-<li><p>Two-tailed test <span class="math inline">\(H_A: p_1 - p_2 \neq
-0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(|z|\geq |Z_{obs}| \mid H_0) = 2\times\left[1 -
-P(z&lt;|Z_{obs}|\ \mid H_0)\right]\)</span></p></li>
-<li><p>Right-tailed test <span class="math inline">\(H_A: p_1 - p_2 &gt;
-0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(z\geq Z_{obs}| H_0) = 1 - P(z&lt;Z_{obs}|
-H_0)\)</span></p></li>
-<li><p>Left-tailed test <span class="math inline">\(H_A: p_1 - p_2 &lt;
-0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(z\leq Z_{obs}| H_0)\)</span></p></li>
-</ul>
-<p><br> <br></p>
-</div>
-</div>
-<div id="comparing-two-means" class="section level3">
-<h3><strong>Comparing two means</strong></h3>
-<ul>
-<li><p>Know how to conduct and interpret a statistical test concerning
-<span class="math inline">\(\mu_1 - \mu_2\)</span></p></li>
-<li><p>Know how to compute a confidence interval to estimate <span class="math inline">\(\mu_1 - \mu_2\)</span></p></li>
-<li><p>Understand the formulas below are for two independent samples
-only!</p></li>
-</ul>
-<p><strong><span class="math inline">\(100(1-\alpha)\%\)</span>
-Confidence interval:</strong></p>
-<p><span class="math display">\[ (\bar{x}_1 - \bar{x}_2) \pm
-t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
-\]</span></p>
-<ul>
-<li>where <span class="math inline">\(t_{1-\alpha/2}\)</span> has <span class="math inline">\(\min(n_1 - 1, n_2 - 1)\)</span> degrees of
-freedom</li>
-</ul>
-<p><strong>Hypothesis Testing:</strong></p>
-<ol style="list-style-type: decimal">
-<li><p>Assumptions: The two populations are independent, the population
-distribution of both samples is approximately normal (this is especially
-important if <span class="math inline">\(n\)</span> is small and the
-significance test is one sided)</p></li>
-<li><p>Hypotheses:</p></li>
-</ol>
-<ul>
-<li><p><strong>Two-tailed test:</strong> <span class="math inline">\(H_0: \mu_1-\mu_2 = 0\)</span> <span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span></p></li>
-<li><p><strong>Right-tailed test:</strong> <span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> <span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span></p></li>
-<li><p><strong>Left-tailed test:</strong> <span class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> <span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span></p></li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li>Test statistic:</li>
-</ol>
+<p><span class="math display">\[ n = \frac{p(1-p)\,(z^*)^2}{m^2}, \ \ n
+= \frac{\sigma^2 (z^*)^2}{m^2} \]</span></p>
+<p><span class="math display">\[ z_{obs} = \frac{\hat{p} -
+p_0}{\sqrt{p_0(1-p_0)/n}}, \ \ z_{obs} = \frac{\bar{x} -
+\mu_0}{\sigma/\sqrt{n}}, \ \ t_{obs} = \frac{\bar{x} -
+\mu_0}{s/\sqrt{n}} \]</span></p>
+<p><span class="math display">\[ z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2)
+- 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} +
+\frac{1}{n_2}\right)}}, \ \ \hat{p} = \frac{X_1 + X_2}{n_1 + n_2}, \ \
+(\hat{p}_1 - \hat{p}_2) \pm z^* \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}
++ \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]</span></p>
 <p><span class="math display">\[ t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2)
-- 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\sim t(\min(n_1 - 1, n_2
-- 1)) \]</span></p>
-<ol start="4" style="list-style-type: decimal">
-<li><span class="math inline">\(p\)</span>-value:</li>
-</ol>
-<ul>
-<li><p>Two-tailed test <span class="math inline">\(H_A: \mu_1 - \mu_2
-\neq 0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(|t|\geq |t_{obs}| \mid H_0) = 2\times\left[1 -
-P(t&lt;|t_{obs}|\ \mid H_0)\right]\)</span></p></li>
-<li><p>Right-tailed test <span class="math inline">\(H_A: \mu_1 - \mu_2
-&gt; 0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(t\geq t_{obs}| H_0) = 1 - P(t&lt;t_{obs}|
-H_0)\)</span></p></li>
-<li><p>Left-tailed test <span class="math inline">\(H_A: \mu_1 - \mu_2
-&lt; 0\)</span>: <span class="math inline">\(p\)</span>-value <span class="math inline">\(= P(t\leq t_{obs}| H_0)\)</span></p></li>
-</ul>
-<p><br> <br></p>
-<!-- ### Assumptions of Estimators -->
-<!-- 1. **Random Sampling:** The sample must be selected randomly from the population of interest. Random sampling ensures that each member of the population has an equal chance of being included in the sample, allowing for unbiased estimation of the population proportion.</span> -->
-<!-- 2. **Independence:** The observations in the sample must be independent of each other. Independence means that the occurrence or value of one observation does not influence the occurrence or value of another observation in the sample.  -->
-<!-- 3. **Large Sample Size (for symptotic normality - $p$ only):** For certain statistical methods, such as constructing confidence intervals or conducting hypothesis tests, the sample size should be sufficiently large. While there is no fixed threshold for what constitutes "large enough," a common rule of thumb is that $np\geq 15$ and $n(1-p)\geq 15$ to ensure the validity of results. -->
-<!-- 4. **Normality of Population Distribution (for $\mu$ with small sample sizes):** For small sample sizes (typically less than 30), it is assumed that the population from which the sample is drawn follows a normal distribution. This assumption is necessary for the validity of certain statistical inference methods, such as constructing confidence intervals or conducting hypothesis tests. However, the Central Limit Theorem suggests that for larger sample sizes, the distribution of the sample mean approaches normality regardless of the shape of the population distribution. -->
-<!-- 5. **independent groups: (Two sample tests only)** The observations in one sample are independent from the observations in another sample.  -->
-<!-- <br> -->
-<!-- <br> -->
-<!-- <br> -->
-<!-- <br> -->
-</div>
-</div>
+- 0}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}, \ \ (\bar{x}_1 -
+\bar{x}_2) \pm t^* \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}, \ \
+s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}
+\]</span></p>
+<p><span class="math display">\[ t_{obs} = \frac{\bar{d} -
+0}{s_d/\sqrt{n}} \]</span></p>
+<p><span class="math display">\[ X^2 = \sum \frac{(O - E)^2}{E}, \ \ E =
+n\,p_{i,0}, \ \ E = \frac{(\text{row total})(\text{column total})}{n}, \
+\ X^2 = \frac{(b - c)^2}{b + c} \]</span></p>
 </div>
 
 <!--

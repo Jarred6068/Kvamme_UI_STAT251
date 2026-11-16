@@ -3,388 +3,186 @@ title: "Exam 3 Study Guide"
 author: "STAT 251 Section 01"
 date: "2026-11-16"
 output: html_document
-## NOTE: keep this a scalar (or a non-empty map). The form
-##   output:
-##     html_document: default
-## silently discards this directory's _output.yml - see docs/_site.yml.
-  #pdf_document: default
-always_allow_html: true
-header-includes:
-  \usepackage{float}
-  \usepackage{tikz}
 ---
+
+<!--
+  SCOPE (Nov 16 2026, Jarred's instruction): Exam 3 covers from the end of Exam 2 through the chi-square
+  tests - Mon Oct 19 (Week 9) through Mon Nov 16 (Week 13: independence, homogeneity, McNemar). Everything
+  after that (Cramer's V, measures of association, correlation, regression, ANOVA) is on the cumulative final.
+  Topics are taken from the notes pages lecturemenu9-13.Rmd, not from the exam file.
+-->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(fig.width=12, fig.height=10, fig.pos = "H")
-library(kableExtra)
-library(knitr)
-library(latex2exp)
-library(gridExtra)
-library(ggpubr)
-library(ggthemes)
-library(plyr)
 ```
 
 # Exam Logistics:
 
-  * Exam 3 is a **take-home, open-note exam** completed in **Canvas**. You may use your notes, the textbook and the course website. It opens **Friday, November 20, 2026** and is due **Sunday, November 29, 2026 at 11:59PM**, the last night of Fall Recess. In-class reviews will be held on **Wednesday, November 18** and **Friday, November 20, 2026**
+  * Exam 3 is a **take-home, open-note exam** completed in **Canvas**. You may use your notes, the textbook and the course website. It opens **Friday, November 20, 2026** and is due **Sunday, November 29, 2026 at 11:59PM**, the last night of Fall Recess. An in-class review will be held on **Friday, November 20, 2026**
 
-  * The exam will be about 20 - 25 questions long, with at least one bonus question. Questions are mostly multiple choice, short answer, or labeling problems, with the possibility of one or two short essay / longer explanation problems
+  * Like Exam 2, most questions are multiple choice or true/false, with a few short written explanations
+
+# How to prepare
+
+The exam asks you to **interpret** values, **identify** the correct equation, and **choose**
+the right method for a situation. Some questions are **"show how to compute"** problems: a
+short story problem gives you every number you need, and you choose the formula with the
+correct values filled in. You will not have to carry out long calculations by hand, but you do
+need to recognise which test or interval fits a study, which numbers go where, and how to read
+a P-value against $\alpha$.
+
+The most important skill on this exam is **choosing the right procedure**: one sample or two,
+independent or paired, a proportion, a mean or a table of counts. Use the list below to check
+that your notes cover everything, and make sure you can explain each item in your own words.
+[Homework 3](../homeworks/2026/homework_3_2026.html) and
+[Homework 4](../homeworks/2026/homework_4_2026.html) cover most of this material.
 
 # Content To Study
 
-This exam will cover material from Lectures 15 - 26 (Week 8 to beginning of Week 14)
+Exam 3 covers material from **Monday of Week 9 (October 19)**, the first class after Exam 2,
+through **Monday of Week 13 (November 16)**, ending with the **chi-square tests**. The notes for
+[Week 9](../lecturemenu9.html), [Week 10](../lecturemenu10.html), [Week 11](../lecturemenu11.html),
+[Week 12](../lecturemenu12.html) and [Week 13](../lecturemenu13.html) are the reference. This includes:
 
-## **Concepts and terminology**
+* Finding normal probabilities and the central limit theorem - October 19
 
-Know/be able to define the following terms and concepts:
+* Confidence intervals for a proportion and a mean, confidence levels, the $t$ distribution and sample size - October 19, 21, 23 and 26
 
-  * know the conditions which make the $t$ distribution equal to the $z$ distribution
-  
-  * **The Central Limit Theorem (CLT)** a fundamental concept in statistics that states that the sampling distribution of the sample mean or sample proportion approaches a normal distribution as the sample size increases, regardless of the shape of the population distribution, as long as the sample size is sufficiently large.
+* Significance tests: hypotheses, test statistics, P-values and decisions; tests for a proportion and a mean; composite hypotheses - October 26, 28 and 30, November 2
 
-  * **Margin of error** - the half-width of a confidence interval, i.e. the standard score times the standard error. It measures the uncertainty or precision associated with estimating a population parameter (such as a population mean or proportion) by quantifying the amount by which a sample estimate might plausibly deviate from the true population parameter at the stated confidence level.
+* Types of errors, power, confidence intervals and two-sided tests, the sign test - November 4 and 6
 
-  * **Confidence level** - the probability that the interval will contain the true parameter value before the data are gathered
+* Comparing two proportions, two means and matched pairs - November 6, 9 and 11
 
-  * **Critical value** - The point on the distribution of the test statistic that defines a set of values that call for rejecting the null hypothesis - i.e the value which defines the rejection region of a test.
-  
-  * **Statistical significance** - A statistical result that is decidedly not due to “ordinary variation” in the data (i.e., not due to chance or not a coincidence)
-  
-  * **Statistical test** - a type of statistical inference used to decide whether an observed result is statistically significant
-  
-  * **$p$-value** - the probability of observing a value as extreme or more extreme than the test statistic under the assumption that the null hypothesis is true
-  
-  * **Null hypothesis** - The hypothesis of "no effect". It usually states that the population parameter is equal to some value
-  
-  * **Alternative hypothesis** - The hypothesis of "effect". It usually states that the population parameter is in some range of value
-  
-  * **Test statistic** A statistic which measures the distance between the point estimate of the parameter and the hypothesized value of the parameter under the null hypothesis
-  
-  * **Rejection region** the interval, measured in the sampling distribution of the statistic under study, that leads to rejection of the null hypothesis $H_0$ in a significance test.
-  
-  * **Type I Error** - a false positive test result: rejecting the null hypothesis when the null hypothesis is true.  
-  
-  * **Type II Error** - a false negative test result: failing to reject the null hypothesis when the alternative hypothesis is true.
-  
-  * **Statistical Power** - the probability of rejecting the null hypothesis when the alternative is true.
-  
-  * Know what factors influence the power of a significance test and what can be done to increase the power of a significance test
-  
-  * Know the definitions and differences between **Parametric** vs **Non-parametric** significance tests
-		
-	* Know the advantages and disadvantages of **Parametric** vs **Non-parametric** significance tests
-	
-	* Know how a confidence interval relates to a two-tailed statistical test and how to use a confidence interval to make a decision about a significance test.
+* Categorical data and the chi-square tests: goodness of fit, independence, homogeneity, and McNemar's test - November 11, 13 and 16
 
-## **Confidence intervals**
+**Not on Exam 3:** Cramér's V, measures of association, correlation, regression and ANOVA. These are
+on the cumulative **final exam**.
 
-  * Understand the “anatomy” of a confidence interval (i.e., point estimate, standard score, standard error, and margin of error). Be able to identify each part of a confidence interval.
-		
-  \[\text{point estimate}\pm \text{standard score} \times \text{standard error} \]
-  
-  or 
-  
-\[\text{point estimate}\pm \text{margin of error} \]
-	
-  * What effect does increasing the confidence level have on the margin of error and the confidence interval?
-  
-  * What effect does increasing the sample size have on the margin of error and the confidence interval?
-  
-  * Know the correct way(s) to report a confidence interval
-  
-    * **E.g For a $95\%$ Confidence Level:** “At the $95\%$ confidence level, we estimate that the population proportion (or mean) is no less than $[$*insert lower bound*$]$ but no greater than $[$*insert upper bound*$]$”
+## Normal Probabilities and the Central Limit Theorem
 
-  * Understand why it is incorrect to talk about a confidence interval in a probabilistic way
-  
-  * understand that the confidence level of a confidence interval relates to the long-run frequency of CI’s that will cover the true value of the parameter
+  1. Know how to find the area **below**, **above** and **between** values of a normal distribution by converting to $z$-scores and using the $z$-table (the table gives the area to the left; the area to the right is $1 -$ that)
 
-<br>
-<br>
+  2. Know what the **central limit theorem** says: for a large enough sample, the sampling distribution of $\bar{x}$ is approximately normal with mean $\mu$ and standard error $\sigma/\sqrt{n}$, **whatever the shape of the population**
 
-### **Computing a confidence interval for estimating $p$ with $\hat{p}$**
-  
-\[ \hat{p} \pm z\times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \]
-  
-  * **Assumptions**: random sampling, requires large $n$, only valid when
-  
-\[ n\hat{p} \geq 15 \ \ \text{and} \ \ n(1-\hat{p}) \geq 15 \]
+  3. Know the matching result for a sample proportion: $\hat{p}$ is approximately normal with mean $p$ and standard error $\sqrt{p(1-p)/n}$ when the sample is large enough
 
-<br>
-<br>
+  4. Know the difference between the distribution of the **data** (spread $\sigma$) and the sampling distribution of a **statistic** (spread $SE$)
 
-### **Computing a confidence interval for estimate $\mu$ with $\bar{x}$** 
+## Confidence Intervals
 
-\[ \bar{x} \pm t\times \frac{s}{\sqrt{n}} \]
+  1. Know the "anatomy" of a confidence interval: **point estimate**, **critical value** (standard score), **standard error** and **margin of error**, and be able to identify each part
+     \[\text{point estimate} \pm \text{critical value} \times SE \qquad\text{or}\qquad \text{point estimate} \pm \text{margin of error}\]
 
-  * $t$ is the standard score from a $t$-distribution with $n-1$ degrees of freedom
+  2. Know how to interpret a confidence interval in context: "we are 95% confident that the population mean (or proportion) is between ... and ...". Know what the **confidence level** means: the proportion of intervals, over many repeated samples, that capture the parameter. Know why it is wrong to say there is a 95% probability that *this* interval contains the parameter
 
-  * **Assumptions**: data are randomized, assumes population distribution of $x$ is normal
-	
-## **Computing Sample Size** 
+  3. Know the critical values for the common confidence levels ($z^* = 1.645$, $1.96$ and $2.576$ for 90%, 95% and 99%), and where they come from on the standard normal curve
 
-  * Know how to compute the sample size when estimating $p$ with $\hat{p}$
-		
-	\[ n = \frac{p(1-p)z^2}{m^2} \]
-		
-  * Know how to compute the sample size when estimating $\mu$ with $\bar{x}$
-		
-	\[ n = \frac{\sigma^2z^2}{m^2} \]
-	  
-	  * $z$ is the standard score from a standard normal distribution corresponding to the desired confidence level
-	  
-	  * $m$ is the desired margin of error
-	  
-	  * $p$ and $\sigma$ must be determined from prior information or studies
-	  
-## **Significance Tests**
+  4. Know how the **confidence level** and the **sample size** affect the width of an interval: a higher confidence level gives a wider interval; a larger sample gives a narrower one (4 times the sample size halves the margin of error)
 
-  * know the five steps to conduct a significance test:
-     
-    1. Assumptions 
-    
-    2. State null and alternative hypotheses
-    
-    3. Compute test statistic
-    
-    4. Compute $p$-value
-    
-    5. Make a decision 
-    
-  * Be sure you understand and know how to apply the decision rule in hypothesis testing
-  
-    \[\text{Decision Rule:}\begin{cases} \text{if} \ p\text{-value} \leq \alpha & \text{Reject} \ H_0 \\
-					         \text{else} & \text{do  not reject} \ H_0 
-				\end{cases}\]
-<br>
-<br>
+  5. Know the interval for a **proportion** and its conditions ($n\hat{p} \geq 15$ and $n(1-\hat{p}) \geq 15$)
 
-### **Significance for a single population proportion**
+  6. Know when to use $z$ and when to use $t$ for a **mean**: $z$ when $\sigma$ is known, $t$ with $df = n - 1$ when $\sigma$ is unknown and estimated by $s$. Know how the $t$ distribution compares with the standard normal (heavier tails, and closer to normal as $df$ grows), and how to read a $t$-table
 
-  1. **Assumptions:** $n$ is large; $n\hat{p}$ and $n(1-\hat{p}) \geq 15$
+  7. Know the assumptions behind these intervals: a random sample, and a normal population or a large sample for a mean
 
-  2. State the null and alternative hypotheses, where $p_0$ is the hypothesized value of the population proportion
+  8. Know how to find the **minimum sample size** for a desired margin of error, for a proportion and for a mean, and why we round **up**. Know what to use for $p$ when there is no prior estimate ($p = 0.5$)
 
-  * **Right-tailed test:** $H_0: p = p_0 \ \ H_A: p > p_0$
+## Significance Tests
 
-  * **Left-tailed test:** $H_0: p = p_0 \ \ H_A: p < p_0$
+  1. Know the logic of a significance test (the courtroom analogy): we assume $H_0$ is true and ask how surprising the data would be. A small P-value means the data would be surprising if $H_0$ were true
 
-  * **Two-tailed test:** $H_0: p = p_0 \ \ H_A: p \neq p_0$
+  2. Know how to write the **null** and **alternative** hypotheses about a parameter, with the claimed value written $p_0$ or $\mu_0$, and how to tell an **upper-tailed**, **lower-tailed** and **two-sided** alternative from the wording of a study
 
-  3. Compute the test statistic
-  
-  \[ z_{\text{obs}} = \frac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \sim N(0,1) \]
-  
-  4. Compute the $p$-value
-  
-  * **Right-tailed test:** $p$-value = $P(z \geq z_{\text{obs}} | \ H_0 \text{true})$
-  
-  * **Left-tailed test:** $p$-value = $P(z \leq z_{\text{obs}} | \ H_0 \text{true})$
-  
-  * **Two-tailed test:** $p$-value = $P(|z| \geq |z_{\text{obs}}| \ \mid \ H_0 \text{true})$
-  
-  5. Compare the $p$-value to $\alpha$ and make a decision
+  3. Know the general form of a test statistic, $(\text{estimate} - \text{null value})/SE$, and what it measures: how many standard errors the estimate is from the value $H_0$ claims
+
+  4. Know the definition of the **P-value**: the probability, if $H_0$ is true, of a test statistic at least as extreme as the one observed, for example $P(Z \geq z_{obs} \mid H_0 \text{ true})$. Know which tail(s) to use for each alternative, and why a two-sided P-value doubles the tail area
+
+  5. Know the **five steps** of a significance test: assumptions, hypotheses, test statistic, P-value, decision. Know the decision rule: **reject $H_0$ when the P-value is less than $\alpha$**, and how to state the conclusion in context. Know why we never "accept" $H_0$
+
+  6. Know the test for a **population proportion**: the SE uses $p_0$, not $\hat{p}$, and the conditions are $np_0 \geq 15$ and $n(1-p_0) \geq 15$
+
+  7. Know the test for a **population mean**: $z_{obs}$ when $\sigma$ is known, $t_{obs}$ with $df = n - 1$ when it is not
+
+  8. Know what a **composite** hypothesis is (for example, $H_0: \mu \leq \mu_0$) and why we test it at the boundary value $\mu_0$
+
+  9. Know the difference between **statistically significant** and **practically important**: a tiny, unimportant difference can be significant in a very large sample
+
+## Errors, Power, and Intervals vs Tests
+
+  1. Know the definitions of a **Type I error** (rejecting a true $H_0$) and a **Type II error** (failing to reject a false $H_0$), and be able to describe each one in the context of a study
+
+  2. Know that $\alpha$ is the probability of a Type I error, and that lowering $\alpha$ makes a Type II error more likely
+
+  3. Know the definition of **power** (the probability of rejecting $H_0$ when it is false, $1 - P(\text{Type II error})$) and what raises it: a larger sample, a larger $\alpha$, a true value farther from the null value, and less variability
+
+  4. Know how a confidence interval relates to a **two-sided test**: a two-sided test at level $\alpha$ rejects $H_0$ exactly when the $100(1-\alpha)\%$ confidence interval does **not** contain the null value
+
+## Parametric and Non-parametric Tests: the Sign Test
+
+  1. Know the difference between **parametric** tests (assumptions about the population distribution, such as normality) and **non-parametric** tests (no such assumptions), and the advantages and disadvantages of each
+
+  2. Know when the **sign test** is used (paired or one-sample data, especially small samples that are not normal), what a "+" sign means in context, why ties (zeros) are dropped, and that under $H_0$ the number of "+" signs follows a binomial distribution with $p = 0.5$
+
+## Comparing Two Populations
+
+  1. Know the difference between **independent** samples (separate random samples, or randomized groups) and **dependent** samples (each observation paired with one in the other sample), and be able to identify which one a study uses
+
+  2. Know the test and the confidence interval for **two proportions**, $p_1 - p_2$. Know **when to pool**: the pooled proportion $\hat{p}$ is used only for the SE of a test of $H_0: p_1 = p_2$; the confidence interval, and a test of a nonzero difference, use the unpooled SE
+
+  3. Know the test and the confidence interval for **two independent means**, $\mu_1 - \mu_2$: the unpooled SE with $df = \min(n_1 - 1, n_2 - 1)$. Know that the **pooled** version is used only when it is reasonable to assume $\sigma_1 = \sigma_2$ (similar sample SDs), with $df = n_1 + n_2 - 2$
+
+  4. Know the **rank-sum test** as the non-parametric alternative to the two independent samples $t$-test
+
+  5. Know the **matched-pairs $t$-test**: take the differences $d$ within each pair, then run a one-sample $t$-test on the differences with $df = n - 1$, where $n$ is the number of pairs. Know why pairing usually gives a smaller SE, and why ignoring the pairing is the wrong test
+
+  6. Know how to **choose a test** for a study: one sample or two, independent or paired, a proportion or a mean
+
+## Categorical Data and the Chi-square Tests
+
+  1. Know what a **one-way table** and a **two-way (contingency) table** are, and the difference between a **marginal** distribution and a **conditional** distribution
+
+  2. Know the difference between **observed** counts $O$ and **expected** counts $E$ (the counts we would expect if $H_0$ were true)
+
+  3. Know the facts about the **chi-square distribution**: a family of curves indexed by $df$, never negative, skewed right, with mean $df$
+
+  4. Know the **chi-square statistic** $X^2 = \sum (O - E)^2/E$: why it is never negative, why only a large value is evidence against $H_0$ (so chi-square tests are always **upper-tailed**), and how to bracket its P-value with the chi-square table
+
+  5. Know the condition that **every expected count is at least 5**, and what to do when one is not (combine neighboring categories)
+
+  6. Know the **goodness-of-fit test**: one categorical variable compared with a claimed set of proportions, $E = n\,p_{i,0}$ and $df = k - 1$. Know why the df comes from the number of categories, not the sample size
+
+  7. Know the **test of independence**: two categorical variables measured on one sample, $H_0$ "the variables are independent", $E = (\text{row total})(\text{column total})/n$ and $df = (r - 1)(c - 1)$
+
+  8. Know the **test for homogeneity**: a separate sample from each of two or more populations, one variable, $H_0$ "the populations have the same distribution", with the same $E$ and $df$ as the test of independence. Know how to tell independence from homogeneity by the **design** of the study
+
+  9. Know that a chi-square test only says the distributions differ or the variables are related; to say **how**, look at which cells contribute most to $X^2$
+
+  10. Know **McNemar's test** for paired yes/no data (the same subjects measured twice): why the other chi-square tests do not apply, the **discordant** pairs $b$ and $c$, $H_0: p_1 = p_2$, $X^2 = (b - c)^2/(b + c)$ with $df = 1$, and the condition $b + c \geq 10$
+
+  11. Know how to **choose** between the goodness-of-fit test, the test of independence, the test for homogeneity and McNemar's test from the description of a study
 
 <br>
 <br>
 
-### **Significance test for a single population mean**
+# Formulas:
 
-  1. **Assumptions:** The population distribution of the random variable $x$ is approximately normal (this is especially important if $n$ is small and the significance test is one sided)
-  
-  2. State the null and alternative hypotheses, where $\mu_0$ is the hypothesized value of the population mean
+*  Be sure you understand the notation (symbols) we have used (e.g., $\mu, \sigma, \bar{x}, s, p, \hat{p}, p_0, \mu_0, n, SE, \alpha, df, O, E$)
 
-  * **Right-tailed test:** $H_0: \mu = \mu_0$, $H_A: \mu > \mu_0$
+Know what each of these formulas computes and when to use it:
 
-  * **Left-tailed test:** $H_0: \mu = \mu_0$, $H_A: \mu < \mu_0$
+\[ z = \frac{x - \mu}{\sigma}, \ \ \mu_{\bar{x}} = \mu, \ \ SE_{\bar{x}} = \frac{\sigma}{\sqrt{n}}, \ \ SE_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} \]
 
-  * **Two-tailed test:** $H_0: \mu = \mu_0$, $H_A: \mu \neq \mu_0$
-  
-  3. Compute the test statistic
-  
-  \[ t_{\text{obs}} = \frac{\bar{x}-\mu_0}{s/\sqrt{n}} \sim t(n-1) \]
-  
-  4. Compute the $p$-value
-  
-  * **Right-tailed test:** $p$-value = $P(t \geq t_{\text{obs}} | \ H_0 \text{true})$
-  
-  * **Left-tailed test:** $p$-value = $P(t \leq t_{\text{obs}} | \ H_0 \text{true})$
-  
-  * **Two-tailed test:** $p$-value = $P(|t| \geq |t_{\text{obs}}| \ \mid \ H_0 \text{true})$
+\[ \hat{p} \pm z^* \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \ \ \bar{x} \pm z^* \frac{\sigma}{\sqrt{n}}, \ \ \bar{x} \pm t^* \frac{s}{\sqrt{n}} \]
 
-  5. Compare the $p$-value to $\alpha$ and make a decision
+\[ n = \frac{p(1-p)\,(z^*)^2}{m^2}, \ \ n = \frac{\sigma^2 (z^*)^2}{m^2} \]
 
-<br>
-<br>
+\[ z_{obs} = \frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}}, \ \ z_{obs} = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}, \ \ t_{obs} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}} \]
 
-### **The sign test**
+\[ z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}, \ \ \hat{p} = \frac{X_1 + X_2}{n_1 + n_2}, \ \ (\hat{p}_1 - \hat{p}_2) \pm z^* \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
 
-  * Understand how to form and interpret the null and alternative hypotheses for a sign test
-  
-  * be able to interpret the meaning of a positive sign (in context) and the probability of a positive sign $P(+ \ \text{sign})$
-  
-  * Know how to compute the test statistic for a sign test (i.e number of positive signs)
-  
-  * Know how to compute the $p$-value for a sign test
-  
-  * Know that the sign test is used for data with **matched - pair designs** 
-  
-  * Know how this test relates to the binomial distribution
-  
-  * Know why we don't count zeros in the total number of signs for a sign test
-	
-**Steps of a sign test:**
+\[ t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}, \ \ (\bar{x}_1 - \bar{x}_2) \pm t^* \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}, \ \ s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2} \]
 
-  1. Assumptions: data are collected from a randomization scheme. Observations are independent
-  
-  2. State the null and alternative hypotheses, where $p$ is the probability of a positive sign:
+\[ t_{obs} = \frac{\bar{d} - 0}{s_d/\sqrt{n}} \]
 
-  * **Two-tailed test:** $H_0: p = 0.5$ $H_A: p \neq 0.5$
-
-  * **Right-tailed test:** $H_0: p = 0.5$ $H_A: p > 0.5$
-
-  * **Left-tailed test:** $H_0: p = 0.5$ $H_A: p < 0.5$
-
-  3. The test statistic $S$ is the total number of positive signs, which under the null follows a binomial distribution $S \sim \text{binom}(n, 0.5)$ where $n$ is the total number of signs
-
-  4. The $p$-value is computed from a binomial distribution under the null (the one-sided forms below assume the observed count $s$ falls in the tail named by $H_A$):
-
-  * for a two-tailed test $H_A: p \neq 0.5$:
-
-\[2\times P(S\geq s| H_0) = 2\times \left[ 1 - P(S<s| H_0)\right]\]
-  
-\[ = 2 \times \left[ 1 - \sum_{k = 0}^{s - 1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k}\right] \] 
-  
-  
-  * for a right-tailed test $H_A: p > 0.5$:
-
-  \[P(S\geq s| H_0) = 1 - P(S<s| H_0)\]
-
-  \[ = 1 - \sum_{k = 0}^{s - 1}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \]
-
-  * for a left-tailed test $H_A: p < 0.5$:
-  
-  \[P(S\leq s| H_0) = \sum_{k = 0}^{s}\frac{n!}{k!(n-k)!}p_0^k (1-p_0)^{n-k} \] 
-  
-  5. Compare the $p$-value to $\alpha$ and make a decision
-
-<br>
-<br>
-
-### **Comparing two proportions**
-
-  * Know how to conduct a statistical test concerning $p_1 - p_2$
-	
-	* Know how to compute a confidence interval to estimate $p_1 - p_2$
-	
-	* Understand that the formulas below are two independent samples only!
-	
-#### **Inference for two proportions**
-
-**$100(1-\alpha)\%$ Confidence interval:**
-
-\[ (\hat{p}_1 - \hat{p}_2) \pm Z_{1-\alpha/2} \times \sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \]
-
-**Hypothesis Testing:**
-
-  1. Assumptions: Two populations are independent; random sampling, requires large $n$ in **both** groups, only valid when
-
-\[ n_1\hat{p} \geq 15, \ \ n_1(1-\hat{p}) \geq 15, \ \ n_2\hat{p} \geq 15, \ \ \text{and} \ \ n_2(1-\hat{p}) \geq 15 \]
-
-  where $\hat{p}$ is the pooled estimate of the population proportion
-
-  2. Hypotheses:
-  
-  * **Two-tailed test:** $H_0: p_1-p_2 = 0$ $H_A: p_1 - p_2 \neq 0$ 
-  
-  * **Right-tailed test:** $H_0: p_1 - p_2 = 0$ $H_A: p_1 - p_2 > 0$ 
-  
-  * **Left-tailed test:** $H_0: p_1 - p_2 = 0$ $H_A: p_1 - p_2 < 0$ 
-
-
-  3. Test statistic: 
-			
-	  \[ Z_{obs} = \frac{(\hat{p}_1 - \hat{p}_2) - 0}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim N(0,1) \]
-			
-		$\hat{p}$ is called the pooled estimate of the common proportion: 
-			
-		\[\hat{p} = \frac{x_1+x_2}{n_1+n_2}\] 
-			
-		where $x_1$ and $x_2$ are the number of observations in the "success" categories for sample 1 and sample 2.
-
-  4. $p$-value:
-
-  * Two-tailed test $H_A: p_1 - p_2 \neq 0$: $p$-value $= P(|z|\geq |Z_{obs}| \mid H_0) = 2\times\left[1 - P(z<|Z_{obs}|\ \mid H_0)\right]$
-
-  * Right-tailed test $H_A: p_1 - p_2 > 0$: $p$-value $= P(z\geq Z_{obs}| H_0) = 1 - P(z<Z_{obs}| H_0)$
-  
-  * Left-tailed test $H_A: p_1 - p_2 < 0$: $p$-value $= P(z\leq Z_{obs}| H_0)$
-
-<br>
-<br>
-
-### **Comparing two means**
-
-  * Know how to conduct and interpret a statistical test concerning $\mu_1 - \mu_2$
-  
-  * Know how to compute a confidence interval to estimate $\mu_1 - \mu_2$
-  
-  * Understand the formulas below are for two independent samples only!
-
-**$100(1-\alpha)\%$ Confidence interval:**
-
-\[ (\bar{x}_1 - \bar{x}_2) \pm t_{1-\alpha/2} \times \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}} \]
-
-  * where $t_{1-\alpha/2}$ has $\min(n_1 - 1, n_2 - 1)$ degrees of freedom
-
-**Hypothesis Testing:**
-
-  1. Assumptions: The two populations are independent, the population distribution of both samples is approximately normal (this is especially important if $n$ is small and the significance test is one sided)
-  
-  
-  2. Hypotheses: 
-  
-  * **Two-tailed test:** $H_0: \mu_1-\mu_2 = 0$ $H_A: \mu_1 - \mu_2 \neq 0$ 
-  
-  * **Right-tailed test:** $H_0: \mu_1 - \mu_2 = 0$ $H_A: \mu_1 - \mu_2 > 0$ 
-  
-  * **Left-tailed test:** $H_0: \mu_1 - \mu_2 = 0$ $H_A: \mu_1 - \mu_2 < 0$ 
-
-  3. Test statistic: 
-  
-  \[ t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2) - 0}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\sim t(\min(n_1 - 1, n_2 - 1)) \]
-  
-  4. $p$-value:
-  
-  * Two-tailed test $H_A: \mu_1 - \mu_2 \neq 0$: $p$-value $= P(|t|\geq |t_{obs}| \mid H_0) = 2\times\left[1 - P(t<|t_{obs}|\ \mid H_0)\right]$
-  
-  * Right-tailed test $H_A: \mu_1 - \mu_2 > 0$: $p$-value $= P(t\geq t_{obs}| H_0) = 1 - P(t<t_{obs}| H_0)$
-  
-  * Left-tailed test $H_A: \mu_1 - \mu_2 < 0$: $p$-value $= P(t\leq t_{obs}| H_0)$
-
-
-<br>
-<br>
-
-<!-- ### Assumptions of Estimators -->
-
-<!-- 1. **Random Sampling:** The sample must be selected randomly from the population of interest. Random sampling ensures that each member of the population has an equal chance of being included in the sample, allowing for unbiased estimation of the population proportion.</span> -->
-
-<!-- 2. **Independence:** The observations in the sample must be independent of each other. Independence means that the occurrence or value of one observation does not influence the occurrence or value of another observation in the sample.  -->
-
-<!-- 3. **Large Sample Size (for symptotic normality - $p$ only):** For certain statistical methods, such as constructing confidence intervals or conducting hypothesis tests, the sample size should be sufficiently large. While there is no fixed threshold for what constitutes "large enough," a common rule of thumb is that $np\geq 15$ and $n(1-p)\geq 15$ to ensure the validity of results. -->
-
-<!-- 4. **Normality of Population Distribution (for $\mu$ with small sample sizes):** For small sample sizes (typically less than 30), it is assumed that the population from which the sample is drawn follows a normal distribution. This assumption is necessary for the validity of certain statistical inference methods, such as constructing confidence intervals or conducting hypothesis tests. However, the Central Limit Theorem suggests that for larger sample sizes, the distribution of the sample mean approaches normality regardless of the shape of the population distribution. -->
-
-<!-- 5. **independent groups: (Two sample tests only)** The observations in one sample are independent from the observations in another sample.  -->
-
-
-<!-- <br> -->
-<!-- <br> -->
-<!-- <br> -->
-<!-- <br> -->
-
-
-
-
+\[ X^2 = \sum \frac{(O - E)^2}{E}, \ \ E = n\,p_{i,0}, \ \ E = \frac{(\text{row total})(\text{column total})}{n}, \ \ X^2 = \frac{(b - c)^2}{b + c} \]
