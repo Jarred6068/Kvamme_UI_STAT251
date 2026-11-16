@@ -100,16 +100,18 @@ Chapter 10: Introduction, p. 511; Section 10.3 (Comparing Two Independent Popula
 The sign test is not in the textbook; see the lecture notes for that week.
 
 ## Week 12
-*Comparing two independent proportions or means; matched pairs (dependent samples); introduction to categorical data; goodness-of-fit tests, tests of independence and tests for homogeneity*
+*Comparing two independent proportions or means; matched pairs (dependent samples); introduction to categorical data; goodness-of-fit tests*
 
 Chapter 10: Sections 10.1 - 10.5, p. 512 - 535
 
-Chapter 11: Sections 11.1 - 11.5, p. 563 - 583
+Chapter 11: Sections 11.1 - 11.2, p. 563 - 574
 
 ## Week 13
-*Cramer's V, McNemar's test, Fisher's exact test; measures of association*
+*Tests of independence and homogeneity; McNemar's test for paired categorical data; Cram&eacute;r's V and measures of association*
 
-These topics are not in the textbook; see the lecture notes for that week.
+Chapter 11: Sections 11.3 - 11.5, p. 574 - 583
+
+McNemar's test and Cram&eacute;r's V are not in the textbook; see the Week 13 notes. Fisher's exact test is optional reading under **Resources &rarr; Extras**.
 
 ## Week 15
 *Correlation and simple linear regression; the coefficient of determination, tests for the slope, checking assumptions*

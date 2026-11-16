@@ -239,7 +239,15 @@ The rank-sum test; the matched-pairs t-test; a summary of every test (pooled vs 
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture29_Slides_11_11_2026.pptx">Slides (PowerPoint)</a>
 
 ## Lecture 30 &middot; Friday, November 13
-Categorical data (continued from Lecture 29): two-way tables, observed and expected counts, the chi-square distribution and statistic; the chi-square goodness-of-fit test, test of independence and test for homogeneity
+Categorical data (continued from Lecture 29): two-way tables, observed and expected counts, the chi-square distribution and statistic; testing whether the Pew answers are equally common
 
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture30_Slides_11_13_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2012/2026/Week12_Lecture30_Slides_11_13_2026.pptx">Slides (PowerPoint)</a>
+
+# Week 13
+
+## Lecture 31 &middot; Monday, November 16
+The goodness-of-fit test (recap); the chi-square test of independence; the test for homogeneity; McNemar's test for paired categorical data
+
+<a href="./lecture_slides/Week%2013/2026/Week13_Lecture31_Slides_11_16_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2013/2026/Week13_Lecture31_Slides_11_16_2026.pptx">Slides (PowerPoint)</a>

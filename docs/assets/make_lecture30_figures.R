@@ -8,6 +8,9 @@
 #  l30_living.png        chi-square(3) curve, upper tail beyond X^2 = 10.13 shaded (living arrangements)
 #  l30_figure_sizes.csv  the size, in points, each figure is drawn at
 #
+#Nov 16 2026: Lecture 30 stopped after slide 10; its slides from "The goodness-of-fit test" on (all four figures
+#below) moved into the Lecture 31 deck, and the independence/homogeneity numbers are now asserted on the Week 13 page.
+#
 #The same numbers are asserted on the Week 12 notes page (lecturemenu12.Rmd, chunk lecture30-setup).
 #
 #P-VALUES. The course brackets a chi-square P-value with the site's chi-square table (misc/chisq_table.Rmd,

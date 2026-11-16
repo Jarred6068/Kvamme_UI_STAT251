@@ -281,6 +281,15 @@ outlined below. Any changes will be announced in class and posted here.**
   to Fri Nov 13: Lecture 30 opens with them, then covers goodness of fit, independence and homogeneity
   (homogeneity is new to the schedule; it is OpenStax 11.4, already in the Week 12 reading). Lecture 29 is
   trimmed to slides 1-15. Mon Nov 16 is unchanged; anything Lecture 30 does not reach carries there.
+  CARRY-OVER, Nov 16 2026. No dates changed. Lecture 30 stopped after slide 10 (the Pew "equally common
+  answers?" example), so Mon Nov 16 (Lecture 31, Week 13) opens with a short goodness-of-fit recap (setup, Pew
+  P-value, employee absences), then independence, homogeneity and McNemar's test (Jarred's choice). Lecture 30 is
+  trimmed to slides 1-10. Cramer's V moved to Wed Nov 18, now "Measures of association and the Pearson
+  correlation test". Fisher's exact test was dropped from the lectures; it is written up under Resources ->
+  Extras (misc/Fisher-Exact-Test.Rmd). The independence/homogeneity notes moved from the Week 12 page to Week 13.
+    * Nov 30 is still "Correlation and simple linear regression" - Jarred to decide how it splits with the
+      Pearson correlation test now on Nov 18.
+    * Exam 3 opens Nov 20: its study guide and review problems were not re-scoped for these moves.
 
   DUE DATES, Oct 28 2026. No lecture dates changed. Homework 3 had not been released yet, so its due
   date moved from Sun Nov 1 to Sun Nov 8 (now on the Fri Nov 6 row), and Homework 4 moved from Sun Nov 15
@@ -547,7 +556,7 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Friday</th>
   <td>November 13, 2026</td>
-  <td>Categorical data: two-way tables and the chi-square statistic; goodness-of-fit tests, tests of independence and tests for homogeneity</td>
+  <td>Categorical data: two-way tables and the chi-square statistic; goodness-of-fit tests (started)</td>
 </tr>
 </tbody>
 <tbody>
@@ -557,12 +566,12 @@ outlined below. Any changes will be announced in class and posted here.**
 <tr>
   <th scope="row">Monday</th>
   <td>November 16, 2026</td>
-  <td>Cramer's V, McNemar's Test, Fisher's exact test</td>
+  <td>Goodness-of-fit tests (recap); tests of independence and homogeneity; McNemar's test for paired categorical data</td>
 </tr>
 <tr>
   <th scope="row">Wednesday</th>
   <td>November 18, 2026</td>
-  <td>Measures of association</td>
+  <td>Cram&eacute;r's V; measures of association and the Pearson correlation test</td>
 </tr>
 <tr>
   <th scope="row">Friday</th>

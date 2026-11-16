@@ -37,6 +37,9 @@ header-includes:
   into Lecture 30 (Fri Nov 13; deck Week12_Lecture30_Slides_11_13_2026.pptx; figures and number checks:
   assets/make_lecture30_figures.R), which then covers the goodness-of-fit test, the test of independence and the
   test for homogeneity (the sections from "Three chi-square tests" on).
+  Nov 16 2026: Lecture 30 stopped after its Pew example (slide 10); its goodness-of-fit slides were recapped in
+  Lecture 31 (Week 13). The independence, homogeneity and "which test" sections moved to the Week 13 page, so
+  this page now ends with goodness of fit.
   The 2024 Week 12 content that used to be on this page (the sign test, two proportions) is in git history;
   both topics are now on the Week 11 page.
 -->
@@ -1007,7 +1010,7 @@ number of hours grouped into ranges. The questions we ask about them change too:
 * **One variable:** does its distribution match a claimed set of proportions? For example, are all four
   answers to a survey question equally common? This is the **goodness-of-fit test**, later in these notes.
 * **Two variables:** are they related? For example, does the number of hours a person volunteers depend on
-  what type of volunteer they are? This is the **test of independence**, later in these notes.
+  what type of volunteer they are? This is the **test of independence**, in the [Week 13 notes](lecturemenu13.html#the-chi-square-test-of-independence).
 
 A test of one proportion cannot answer either question. It looks at one category at a time, while the
 claim covers every category at once, and the category proportions are tied together because they must add
@@ -1073,7 +1076,7 @@ tab(data.frame(`Type of volunteer` = c('Community college students', 'Four-year 
 For example, $111/255 = 0.435$ of the community college volunteers work 1&ndash;3 hours, compared with
 $91/294 = 0.310$ of the nonstudents and $298/839 = 0.355$ of all volunteers. Community college students
 lean toward fewer hours and nonstudents toward 4&ndash;6 hours. Whether differences this large could be
-ordinary sampling variation is exactly what the test of independence, later in these notes, decides.
+ordinary sampling variation is exactly what the [test of independence](lecturemenu13.html#the-chi-square-test-of-independence) decides.
 
 ## Observed and expected counts
 
@@ -1142,8 +1145,8 @@ far out in its right tail. The four answers are clearly not equally common: far 
 far fewer said "Often" than the claim predicts. The goodness-of-fit test below turns this into a full test with a
 P-value.
 
-```{r lecture30-setup, include=FALSE}
-# every number in the Lecture 30 sections is checked here (the deck's numbers are checked again in
+```{r gof-setup, include=FALSE}
+# every number in the goodness-of-fit sections is checked here (the deck's numbers are checked again in
 # assets/make_lecture30_figures.R). P-values are bracketed with the site's chi-square table
 # (misc/chisq_table.Rmd); the exact value from software is quoted beside the bracket.
 tails <- c(0.25, 0.2, 0.15, 0.125, 0.1, 0.075, 0.05, 0.025, 0.005, 0.0025, 0.0005)
@@ -1195,48 +1198,18 @@ z_me <- (6022 / 8023 - 0.75) / sqrt(0.75 * 0.25 / 8023)
 stopifnot(identical(me$E, c(6017.25, 2005.75)), identical(round(me$terms, 4), c(0.0037, 0.0112)),
           round(me$X2, 3) == 0.015, round(z_me, 2) == 0.12, near(z_me^2, me$X2, 1e-12), crit(1)[1] == 1.323,
           round(pv(me$X2, 1), 2) == 0.90, round(2 * pnorm(-z_me), 2) == 0.90)
-
-# OpenStax Example 11.5: speeding and cell phones
-stopifnot(round(70 * 305 / 755, 1) == 28.3)
-
-# OpenStax Example 11.6: volunteers and hours
-vo <- indep(matrix(c(111, 96, 48, 96, 133, 61, 91, 150, 53), 3, byrow = TRUE))
-stopifnot(identical(round(vo$E, 2), matrix(c(90.57, 115.19, 49.24, 103, 131, 56, 104.42, 132.81, 56.77), 3, byrow = TRUE)),
-          round(sum(round(vo$terms, 3)), 2) == 12.99, round(vo$X2, 2) == 12.99, vo$df == 4,
-          identical(bracket(vo$X2, 4), c(0.025, 0.005)), crit(4)[8:9] == c(11.143, 14.860),
-          round(pv(vo$X2, 4), 4) == 0.0113, round(min(vo$E), 2) == 49.24)
-
-# OpenStax Example 11.7: anxiety and the need to succeed (the book gives two expected counts; the test is ours)
-an <- indep(matrix(c(35, 42, 53, 15, 10, 18, 48, 63, 33, 31, 4, 5, 11, 15, 17), 3, byrow = TRUE))
-stopifnot(round(an$E[1, 1], 2) == 22.09, round(an$E[3, 4], 2) == 8.19, round(min(an$E), 2) == 7.41,
-          round(sum(round(an$terms, 3)), 2) == 48.42, round(an$X2, 2) == 48.42, an$df == 8,
-          crit(8)[11] == 27.868, pv(an$X2, 8) < 0.0005, round(an$terms[3, 5], 2) == 11.87,
-          round(an$terms[1, 1], 2) == 7.55)
-
-# OpenStax Example 11.8: living arrangements (homogeneity)
-li <- indep(matrix(c(72, 84, 49, 45, 91, 86, 88, 35), 2, byrow = TRUE))
-stopifnot(identical(round(li$E, 2), matrix(c(74.09, 77.27, 62.27, 36.36, 88.91, 92.73, 74.73, 43.64), 2, byrow = TRUE)),
-          round(sum(round(li$terms, 3)), 2) == 10.13, round(li$X2, 2) == 10.13, li$df == 3,
-          identical(bracket(li$X2, 3), c(0.025, 0.005)), crit(3)[8:9] == c(9.348, 12.838),
-          round(pv(li$X2, 3), 4) == 0.0175, identical(round(c(49 / 250, 88 / 300), 3), c(0.196, 0.293)),
-          identical(round(c(45 / 250, 35 / 300), 3), c(0.18, 0.117)))
-
-# OpenStax Example 11.9: voters before and after an earthquake (homogeneity)
-qk <- indep(matrix(c(167, 128, 135, 214, 197, 225), 2, byrow = TRUE))
-stopifnot(identical(round(qk$E, 2), matrix(c(153.69, 131.1, 145.22, 227.31, 193.9, 214.78), 2, byrow = TRUE)),
-          round(sum(round(qk$terms, 3)), 2) == 3.26, round(qk$X2, 2) == 3.26, qk$df == 2,
-          identical(bracket(qk$X2, 2), c(0.2, 0.15)), crit(2)[2:3] == c(3.219, 3.794), round(pv(qk$X2, 2), 4) == 0.1959)
 ```
 
 ## Three chi-square tests
 
 The statistic $X^2$ is the basis of three tests, one for each kind of question we can ask of categorical
-data. All three use the same statistic,
+data: the **goodness-of-fit test** (one variable, below), and the **test of independence** and the **test for
+homogeneity** (two variables, in the [Week 13 notes](lecturemenu13.html)). All three use the same statistic,
 $$X^2 = \sum \frac{(O - E)^2}{E},$$
 and all three are right-tailed. What changes from test to test is the *question*, which sets the null
 hypothesis, and that in turn sets how we find the expected counts $E$ and the degrees of freedom.
 
-*(Reading: [OpenStax Sections 11.2 to 11.5](https://openstax.org/books/introductory-statistics-2e/pages/11-2-goodness-of-fit-test).
+*(Reading: [OpenStax Section 11.2](https://openstax.org/books/introductory-statistics-2e/pages/11-2-goodness-of-fit-test).
 Chi-square P-values in these notes are bracketed with the
 [course chi-square table](misc/chisq_table.html), and the exact value from software is given beside each bracket.)*
 
@@ -1482,319 +1455,8 @@ The two agree exactly: $X^2_{obs} = z_{obs}^2$ (keeping all the decimals, $0.122
 give a P-value of 0.90. **A $\chi^2(1)$ variable is the square of a standard normal variable.** The data fit
 Mendel's model very well. The chi-square test is what lets us go beyond two categories.
 
-# The chi-square test of independence
-
-## The setup
-
-A **test of independence** asks whether **two categorical variables**, measured on the **same** individuals
-from **one** random sample, are related. The data form a two-way (contingency) table with $r$ rows and $c$
-columns.
-
-* **The hypotheses** are stated in words:
-  $$H_0: \text{the two variables are independent} \qquad H_A: \text{the two variables are not independent (they are associated)}$$
-  Independent means the conditional distribution of one variable is the same in every row (or column) of
-  the other, which is what the "do the rows look alike?" comparison in the two-way tables section checked.
-
-**Where the expected counts come from.** Recall from probability that events $A$ and $B$ are independent
-when $P(A \text{ and } B) = P(A)\,P(B)$. The book's Example 11.5 makes this concrete:
-
-> Suppose, in a study of drivers who received speeding violations in the last year, and who used cell phone
-> while driving, that 755 people were surveyed. Out of the 755, 70 had a speeding violation and 685 did not;
-> 305 used cell phones while driving and 450 did not.
-
-If having a speeding violation and using a cell phone while driving are independent, then
-$$P(\text{violation and cell phone}) = \frac{70}{755} \times \frac{305}{755},$$
-and the expected *number* of the 755 drivers in that cell is
-$$E = 755 \times \frac{70}{755} \times \frac{305}{755} = \frac{70 \times 305}{755} = 28.3.$$
-One 755 cancels, and what is left is the rule for every cell of a two-way table:
-$$E_{ij} = \frac{(\text{row } i \text{ total}) \times (\text{column } j \text{ total})}{n}$$
-
-* **The test statistic** adds a term for **every cell**, all $r \times c$ of them:
-  $$X^2_{obs} = \sum_{i=1}^{r} \sum_{j=1}^{c} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
-* **The degrees of freedom** are
-  $$df = (r - 1)(c - 1)$$
-  The row and column totals are fixed. Fill in the table one cell at a time: once $c - 1$ cells of a row are
-  known, its last cell is forced by the row total, and once $r - 1$ rows are known, the last row is forced by
-  the column totals. Only $(r - 1)(c - 1)$ cells are free.
-* **The P-value** is again the upper tail, $P(\chi^2 \geq X^2_{obs} \mid H_0 \text{ true})$.
-* **The conditions.** One random sample, each individual classified on both variables; every expected count
-  at least 5.
-
-In general, the observed table and its totals look like this:
-
-```{r, echo=FALSE}
-tab(data.frame(c('Row 1', 'Row 2', '$\\vdots$', 'Row $r$', '**Column total**'),
-               c('$O_{11}$', '$O_{21}$', '$\\vdots$', '$O_{r1}$', 'column 1 total'),
-               c('$O_{12}$', '$O_{22}$', '$\\vdots$', '$O_{r2}$', 'column 2 total'),
-               c('$\\cdots$', '$\\cdots$', '$\\ddots$', '$\\cdots$', '$\\cdots$'),
-               c('$O_{1c}$', '$O_{2c}$', '$\\vdots$', '$O_{rc}$', 'column $c$ total'),
-               c('row 1 total', 'row 2 total', '$\\vdots$', 'row $r$ total', '$n$')),
-    col.names = c('', 'Column 1', 'Column 2', '$\\cdots$', 'Column $c$', 'Row total'))
-```
-
-## Example: volunteers and hours
-
-*From [OpenStax Introductory Statistics 2e, Section 11.3, Example 11.6](https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence):*
-the volunteer table from the two-way tables section. A sample of 839 adult volunteers was classified by **type of volunteer**
-and **hours volunteered per week**. Is the number of hours volunteered independent of the type of
-volunteer? (No $\alpha$ is given, so use 0.05.)
-
-```{r, echo=FALSE}
-vol_rows <- c('Community college students', 'Four-year college students', 'Nonstudents')
-vol_cols <- c('1&ndash;3 hours', '4&ndash;6 hours', '7&ndash;9 hours')
-two_way(vo$O, vol_rows, vol_cols, 'Type of volunteer')
-```
-
-**Step 1: the expected counts.** Each cell is (row total)(column total)/839. For community college students
-working 1&ndash;3 hours,
-$$E_{11} = \frac{255 \times 298}{839} = 90.57.$$
-The whole table:
-
-```{r, echo=FALSE}
-Ev <- matrix(sprintf('$\\frac{%d \\times %d}{839} = %s$', rep(rowSums(vo$O), 3), rep(colSums(vo$O), each = 3),
-                     fmt(vo$E, 2)), 3)
-tab(data.frame(vol_rows, Ev), col.names = c('Expected $E$', vol_cols))
-```
-
-Check: each row of expected counts adds to its row total (for example, $90.57 + 115.19 + 49.24 = 255$),
-and the smallest expected count is 49.24, well above 5.
-
-**Step 2: the contributions $(O - E)^2/E$.** For the top-left cell, $(111 - 90.57)^2/90.57 = 4.607$.
-
-```{r, echo=FALSE}
-two_way(vo$terms, vol_rows, vol_cols, '$(O - E)^2/E$', d = 3, totals = FALSE)
-```
-
-Now the five steps.
-
-1. **Assumptions.** One random sample of 839 volunteers, each classified on both variables; every expected
-   count is at least 5.
-
-2. **Hypotheses.** $H_0$: the number of hours volunteered is independent of the type of volunteer.
-   $H_A$: the number of hours volunteered depends on the type of volunteer.
-
-3. **Test statistic.** Add all nine contributions:
-   $$X^2_{obs} = 4.607 + 3.197 + 0.031 + 0.476 + 0.030 + 0.447 + 1.726 + 2.225 + 0.250 = 12.99$$
-   $$df = (3 - 1)(3 - 1) = 4$$
-
-4. **P-value.** In the $df = 4$ row, $11.143 < 12.99 < 14.860$, with upper tails 0.025 and 0.005, so
-   $$0.005 < P(\chi^2 \geq 12.99 \mid H_0 \text{ true}) < 0.025$$
-   Software gives 0.0113.
-
-5. **Decision.** The P-value is below 0.05: **reject $H_0$**. There is convincing evidence that the number
-   of hours volunteered is related to the type of volunteer.
-
-```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "A chi-square distribution with 4 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 4 degrees of freedom. A dashed line marks 12.99, far into the right tail, and the thin sliver of area to its right is shaded red and labelled P of chi-square at least 12.99. A label reads: table, 11.143 is less than 12.99, which is less than 14.860."}
-knitr::include_graphics('assets/l30_volunteers.png')
-```
-
-**How are they related?** The largest contributions are community college students working 1&ndash;3 hours
-(4.607: 111 observed, 90.57 expected) and 4&ndash;6 hours (3.197: 96 observed, 115.19 expected), and
-nonstudents working 4&ndash;6 hours (2.225: 150 observed, 132.81 expected). Community college students volunteer
-fewer hours than independence predicts and nonstudents more, which is what the conditional distributions in
-the two-way tables section suggested.
-
-## Practice: anxiety and the need to succeed
-
-*From [OpenStax Introductory Statistics 2e, Section 11.3, Example 11.7](https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence):*
-
-> De Anza College is interested in the relationship between anxiety level and the need to succeed in
-> school. A random sample of 400 students took a test that measured anxiety level and need to succeed in
-> school. The table shows the results. De Anza College wants to know if anxiety level and need to succeed in
-> school are independent events.
-
-```{r, echo=FALSE}
-anx_rows <- c('High need', 'Medium need', 'Low need')
-anx_cols <- c('High anxiety', 'Med-high anxiety', 'Medium anxiety', 'Med-low anxiety', 'Low anxiety')
-two_way(an$O, anx_rows, anx_cols, 'Need to succeed')
-```
-
-**(a)** How many high-anxiety students are expected to have a high need to succeed, if the variables are
-independent? **(b)** How many are expected to have a low need to succeed and med-low anxiety? **(c)** Test whether
-anxiety level and the need to succeed are independent at $\alpha = 0.05$.
-
-**Solution.**
-
-**(a)** $E = \dfrac{155 \times 57}{400} = 22.09$, about 22 students. **(b)** $E = \dfrac{52 \times 63}{400} = 8.19$,
-about 8 students.
-
-**(c)** The full table of expected counts, then the contributions:
-
-```{r, echo=FALSE}
-two_way(an$E, anx_rows, anx_cols, 'Expected $E$', d = 2, totals = FALSE)
-two_way(an$terms, anx_rows, anx_cols, '$(O - E)^2/E$', d = 3, totals = FALSE)
-```
-
-1. **Assumptions.** A random sample of 400 students; the smallest expected count is 7.41 (low need, high
-   anxiety), so every expected count is at least 5.
-
-2. **Hypotheses.** $H_0$: anxiety level and the need to succeed are independent. $H_A$: they are not
-   independent.
-
-3. **Test statistic.** The 15 contributions add to $X^2_{obs} = 48.42$, with $df = (3 - 1)(5 - 1) = 8$.
-
-4. **P-value.** The largest entry in the $df = 8$ row is 27.868 (0.0005), and $48.42 > 27.868$, so
-   $P(\chi^2 \geq 48.42 \mid H_0 \text{ true}) < 0.0005$.
-
-5. **Decision.** **Reject $H_0$.** Anxiety level and the need to succeed in school are related. The largest
-   contributions are low need with low anxiety (11.87: 17 observed, 7.54 expected) and high need with high
-   anxiety (7.55: 35 observed, 22.09 expected): students with a higher need to succeed tend to report higher
-   anxiety.
-
-# The chi-square test for homogeneity
-
-## The setup
-
-A **test for homogeneity** asks whether **two or more populations** have the **same distribution** of one
-categorical variable. The data come from a **separate random sample from each population**, and each person
-is classified on that one variable. The table has a row for each population and a column for each category
-of the response.
-
-$$H_0: \text{the populations have the same distribution of the variable}$$
-$$H_A: \text{the distributions are not all the same}$$
-
-**The arithmetic is identical to the test of independence:**
-$$E_{ij} = \frac{(\text{row } i \text{ total}) \times (\text{column } j \text{ total})}{n}, \qquad
-X^2_{obs} = \sum_{\text{all cells}} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}, \qquad df = (r - 1)(c - 1),$$
-the P-value is the upper tail, and every expected count must be at least 5.
-
-**So what is the difference?** The **design**, and therefore the question:
-
-* **Independence:** *one* sample, and *two* variables measured on each person. The row totals and column
-  totals are both random. Question: are the two variables related?
-* **Homogeneity:** *several* samples, one per population, and *one* variable. The row totals (the sample
-  sizes) are fixed by the researcher. Question: do the populations have the same distribution?
-
-It is the categorical version of the jump from a one-sample test to a two-sample test: the rows are the
-groups we compare. With two rows, it extends the test of $p_1 = p_2$ to a response with more than two
-categories.
-
-*A note on the textbook:* Section 11.4 of the book writes the homogeneity df as "number of columns $-$ 1",
-because all of its examples compare exactly two populations. With $r = 2$ rows that is the same as
-$(r - 1)(c - 1) = (2 - 1)(c - 1) = c - 1$. Use $(r - 1)(c - 1)$; it works for any number of populations,
-and it is the formula in the book's Formula Review.
-
-## Example: living arrangements of men and women
-
-*From [OpenStax Introductory Statistics 2e, Section 11.4, Example 11.8](https://openstax.org/books/introductory-statistics-2e/pages/11-4-test-for-homogeneity):*
-
-> Do men and women college students have the same distribution of living arrangements? Use a level of
-> significance of 0.05. Suppose that 250 randomly selected men college students and 300 randomly selected
-> women college students were asked about their living arrangements: dormitory, apartment, with parents,
-> other. The results are shown in the table. Do male and female college students have the same distribution
-> of living arrangements?
-
-```{r, echo=FALSE}
-liv_rows <- c('Men', 'Women'); liv_cols <- c('Dormitory', 'Apartment', 'With parents', 'Other')
-two_way(li$O, liv_rows, liv_cols, '')
-```
-
-Two separate random samples (250 men, 300 women) and one variable (living arrangement), so this is a test
-for **homogeneity**.
-
-**Expected counts.** For men in a dormitory, $E = \dfrac{250 \times 163}{550} = 74.09$. The rest:
-
-```{r, echo=FALSE}
-two_way(li$E, liv_rows, liv_cols, 'Expected $E$', d = 2, totals = FALSE)
-two_way(li$terms, liv_rows, liv_cols, '$(O - E)^2/E$', d = 3, totals = FALSE)
-```
-
-1. **Assumptions.** Independent random samples of men and women; the smallest expected count is 36.36,
-   well above 5.
-
-2. **Hypotheses.** $H_0$: the distribution of living arrangements is the same for men and women college
-   students. $H_A$: the distributions are not the same.
-
-3. **Test statistic.**
-   $$X^2_{obs} = 0.059 + 0.586 + 2.829 + 2.051 + 0.049 + 0.488 + 2.357 + 1.709 = 10.13$$
-   $$df = (2 - 1)(4 - 1) = 3$$
-
-4. **P-value.** In the $df = 3$ row, $9.348 < 10.13 < 12.838$, with upper tails 0.025 and 0.005, so
-   $$0.005 < P(\chi^2 \geq 10.13 \mid H_0 \text{ true}) < 0.025$$
-   Software gives 0.0175.
-
-5. **Decision.** The P-value is below 0.05: **reject $H_0$**. There is convincing evidence that men and women
-   college students do not have the same distribution of living arrangements.
-
-```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "A chi-square distribution with 3 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 3 degrees of freedom. A dashed line marks 10.13 in the right tail, and the thin sliver of area to its right is shaded red and labelled P of chi-square at least 10.13. A label reads: table, 9.348 is less than 10.13, which is less than 12.838."}
-knitr::include_graphics('assets/l30_living.png')
-```
-
-As the book points out, the test itself only says the distributions differ, not how. The contributions
-show where: "with parents" (2.829 and 2.357) and "other" (2.051 and 1.709). Women are more likely to live
-with their parents ($88/300 = 0.293$ against $49/250 = 0.196$ of men) and less likely to have some other
-arrangement ($35/300 = 0.117$ against $45/250 = 0.180$).
-
-## Practice: voters before and after an earthquake
-
-*From [OpenStax Introductory Statistics 2e, Section 11.4, Example 11.9](https://openstax.org/books/introductory-statistics-2e/pages/11-4-test-for-homogeneity):*
-
-> Both before and after a recent earthquake, surveys were conducted asking voters which of the three
-> candidates they planned on voting for in the upcoming city council election. Has there been a change since
-> the earthquake? Use a level of significance of 0.05.
-
-```{r, echo=FALSE}
-qk_rows <- c('Before', 'After'); qk_cols <- c('Perez', 'Chung', 'Stevens')
-two_way(qk$O, qk_rows, qk_cols, '')
-```
-
-**Solution.** The two surveys are separate samples of voters taken at two times, with one variable
-(candidate preference): a test for homogeneity.
-
-1. **Assumptions.** Two independent random samples (430 before, 636 after). The smallest expected count is
-   $430 \times 325 / 1066 = 131.10$, so all are at least 5.
-
-2. **Hypotheses.** $H_0$: the distribution of voter preferences was the same before and after the
-   earthquake. $H_A$: it was not the same.
-
-3. **Test statistic.** The expected counts and contributions are
-
-```{r, echo=FALSE}
-two_way(qk$E, qk_rows, qk_cols, 'Expected $E$', d = 2, totals = FALSE)
-two_way(qk$terms, qk_rows, qk_cols, '$(O - E)^2/E$', d = 3, totals = FALSE)
-```
-
-   $$X^2_{obs} = 1.153 + 0.073 + 0.719 + 0.780 + 0.049 + 0.486 = 3.26, \qquad df = (2 - 1)(3 - 1) = 2$$
-
-4. **P-value.** In the $df = 2$ row, $3.219 < 3.26 < 3.794$, with upper tails 0.2 and 0.15, so
-   $0.15 < P(\chi^2 \geq 3.26 \mid H_0 \text{ true}) < 0.2$. Software gives 0.1959.
-
-5. **Decision.** The P-value is above 0.05: **fail to reject $H_0$**. The data do not give convincing evidence
-   that the distribution of voter preferences changed after the earthquake.
-
-# Which chi-square test?
-
-*([OpenStax Section 11.5](https://openstax.org/books/introductory-statistics-2e/pages/11-5-comparison-of-the-chi-square-tests).)*
-All three tests compute the same $X^2$ and use the upper tail of a chi-square distribution. Choose between them
-by asking **how many samples** there are and **how many variables** were measured.
-
-```{r, echo=FALSE}
-tab(data.frame(
-  Test = c('**Goodness of fit**', '**Independence**', '**Homogeneity**'),
-  Design = c('one sample, one categorical variable', 'one sample, two categorical variables on each individual',
-             'a separate sample from each of two or more populations, one categorical variable'),
-  `$H_0$` = c('the population fits the claimed distribution ($p_i = p_{i,0}$ for every category)',
-              'the two variables are independent', 'the populations have the same distribution'),
-  `Expected count $E$` = c('$n\\,p_{i,0}$', '$\\dfrac{\\text{row total} \\times \\text{column total}}{n}$',
-                           '$\\dfrac{\\text{row total} \\times \\text{column total}}{n}$'),
-  `$df$` = c('$k - 1$', '$(r - 1)(c - 1)$', '$(r - 1)(c - 1)$'), check.names = FALSE))
-```
-
-All three need random sampling and every expected count at least 5, and for all three
-$\text{P-value} = P(\chi^2 \geq X^2_{obs} \mid H_0 \text{ true})$.
-
-**Practice: which test?** For each study, name the chi-square test.
-
-1. A random sample of 500 voters is asked both their age group (18&ndash;29, 30&ndash;49, 50&ndash;64, 65+) and
-   their preferred news source (TV, print, online, social media). Are age group and news source related?
-2. A candy company says its bags are 20% red, 20% orange, 20% yellow, 20% green and 20% blue. You count the
-   colors in a random sample of 300 pieces.
-3. Separate random samples of 200 first-year students and 200 seniors are asked how they usually get to
-   campus (walk, bike, bus, drive). Do the two classes commute the same way?
-
-**Answers.** (1) Independence: one sample, two variables measured on each voter. (2) Goodness of fit: one
-variable compared with a claimed distribution, with $E = 300 \times 0.2 = 60$ for each color and $df = 4$.
-(3) Homogeneity: two separately sampled populations, one variable, with $df = (2 - 1)(4 - 1) = 3$.
+The next chapter, the [Week 13 notes](lecturemenu13.html), turns to **two** categorical variables: the test of
+independence, the test for homogeneity, and McNemar's test for paired yes/no data.
 
 # Sources
 
@@ -1806,13 +1468,10 @@ variable compared with a claimed distribution, with $E = 300 \times 0.2 = 60$ fo
   claim tested in the electric-vehicle example is ours.
 * The NCAA basketball scores and the couples' decision ratings come from the 2024 STAT 251 notes.
 * Textbook: OpenStax *Introductory Statistics 2e*, Sections 10.1, 10.3 and 10.4, and for the categorical
-  data and the chi-square tests, Sections 11.1&ndash;11.5.
+  data and the goodness-of-fit test, Sections 11.1&ndash;11.2.
 * The volunteer table is OpenStax Example 11.6 (Table 11.15). The teens-and-phones counts are the published
   Pew Research Center margins used in Week 2; the "equally common" claim tested here is ours.
-* The chi-square tests use OpenStax Chapter 11 examples: employee absences (Example 11.2, p. 568), streaming
-  services (Example 11.3, p. 569), absenteeism and combining categories (Example 11.1, p. 565), speeding and
-  cell phones (Example 11.5, p. 575), volunteers (Example 11.6, p. 575), anxiety and the need to succeed
-  (Example 11.7, p. 578), living arrangements (Example 11.8, p. 579) and voters and the earthquake
-  (Example 11.9, p. 580); the comparison table follows Section 11.5 (p. 582). The book gives only the two
-  expected counts for Example 11.7 and stops at the degrees of freedom for Example 11.1; the tests that finish
-  them are ours. Mendel's peas come from the 2024 STAT 251 notes.
+* The goodness-of-fit sections use OpenStax Chapter 11 examples: employee absences (Example 11.2, p. 568),
+  streaming services (Example 11.3, p. 569) and absenteeism and combining categories (Example 11.1, p. 565). The
+  book stops at the degrees of freedom for Example 11.1; the test that finishes it is ours. Mendel's peas come
+  from the 2024 STAT 251 notes.

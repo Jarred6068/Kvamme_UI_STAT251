@@ -459,6 +459,9 @@ div.tocify {
         <li>
           <a href="lecturemenu12.html">Week 12</a>
         </li>
+        <li>
+          <a href="lecturemenu13.html">Week 13</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -623,6 +626,9 @@ div.tocify {
         <li>
           <a href="./misc/Non-Parametric-Tests-For-Two-Samples.html">Non-parametric Tests</a>
         </li>
+        <li>
+          <a href="./misc/Fisher-Exact-Test.html">Fisher's Exact Test</a>
+        </li>
       </ul>
     </li>
     <li>
@@ -663,2460 +669,607 @@ div.tocify {
 
 
 <!--
-  SCOPE NOTE (Nov 9 2026). This page is hidden and still holds 2024 content. Its "Comparing two means" and
-  "Paired t test" sections are superseded by the Week 12 page (lecturemenu12.Rmd, Lecture 28), so drop
-  them when this page is rewritten. After the Nov 9 shift (see Course_Schedule.Rmd), Week 13 is Mon Nov 16
-  Cramer's V / McNemar / Fisher, Wed Nov 18 measures of association, Fri Nov 20 the Exam 3 review. The
-  goodness-of-fit and independence material below now belongs to Week 12 (Wed Nov 11 and Fri Nov 13).
-  Nov 11 2026: the chi-square distribution, observed/expected counts and the X^2 statistic are now written up
-  on the Week 12 page (Lecture 29); drop the duplicates here when this page is rewritten.
+  SCOPE (Nov 16 2026). Week 13 of Fall 2026. Rewritten from scratch: the 2024 content that used to be on this
+  page (two means, paired t, goodness of fit, independence) is in git history and is covered on the Week 12 page.
+  Mon Nov 16 (Lecture 31; deck lecture_slides/Week 13/2026/Week13_Lecture31_Slides_11_16_2026.pptx; figures and
+  number checks: assets/make_lecture30_figures.R and assets/make_lecture31_figures.R) opened with a short
+  goodness-of-fit recap (Lecture 30 stopped after its Pew example), then covered the test of independence, the
+  test for homogeneity and McNemar's test. The independence and homogeneity sections were moved here from the
+  Week 12 page. Wed Nov 18 is Cramer's V, measures of association and the Pearson correlation test - add those
+  sections after McNemar's test. Fisher's exact test is not taught; it is written up under Resources -> Extras
+  (misc/Fisher-Exact-Test.Rmd).
+  House rules for this page: topic sections only (no lecture numbers or class days in the prose), every book
+  example quoted in full with a link, every number asserted in the setup chunk, decisions compare the P-value
+  with alpha.
 -->
-<div id="comparing-two-means" class="section level1">
-<h1>Comparing two means</h1>
-<p>Last week we learned how to compare two populations across a
-qualitative response variable by comparing their relative proportions.
-Now we will learn how we can compare two groups on a quantitative
-response variable by comparing their means. There are many cases where
-researchers might be interested in comparing groups across a
-quantitative variable. For example, a teacher may be interested in
-comparing the average test scores of students in two different classes
-(Class A and Class B). A social scientist may be interested in whether
-there is a difference in salaries between men and women within a
-company. In any case, we are again dealing with two samples of sizes
-<span class="math inline">\(n_1\)</span> and <span
-class="math inline">\(n_2\)</span> which come from populations
-<i>population 1</i> and <i>population 2</i> and with means as <span
-class="math inline">\(\mu_1\)</span> and <span
-class="math inline">\(\mu_2\)</span>.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Population
-</th>
-<th style="text-align:left;">
-Population Mean
-</th>
-<th style="text-align:left;">
-Population Stdev
-</th>
-<th style="text-align:left;">
-Sample Size
-</th>
-<th style="text-align:left;">
-Sample Mean
-</th>
-<th style="text-align:left;">
-Sample Stdev
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sigma_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(n_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}_1\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(s_1\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sigma_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(n_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}_2\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(s_2\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Let <span class="math inline">\(\mu_d = \mu_1 - \mu_2\)</span> be the
-mean difference between the two populations. We can construct confidence
-intervals to estimate the average difference as well as conduct
-hypothesis tests to determine if two populations are significantly
-different.</p>
-<div id="a-confidence-interval-for-the-mean-difference-mu_d"
-class="section level2">
-<h2>A confidence interval for the mean difference <span
-class="math inline">\(\mu_d\)</span></h2>
-<p>We will begin by assuming that we are dealing with two independent
-samples from two distinct populations. The natural estimator of <span
-class="math inline">\(\mu_d\)</span> is the difference between the
-sample means</p>
-<p><span class="math display">\[\hat{\mu}_d = \bar{x}_1 -
-\bar{x}_2\]</span></p>
-<p>To base our inference on the above estimator, we must know its
-sampling distribution. If we assume that both samples come from
-populations that are normally distributed, then the distribution of the
-difference will also be normally distributed and the variances will
-add:</p>
-<p><span class="math display">\[Var[\mu_1 - \mu_2] =
-\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]</span></p>
-<p>In practice, <span class="math inline">\(\sigma_1^2\)</span> and
-<span class="math inline">\(\sigma_2^2\)</span> are unknown population
-parameters but can be estimated by substituting in the sample variances
-<span class="math inline">\(s_1^2\)</span> and <span
-class="math inline">\(s_2^2\)</span>. This gives the following standard
-deviation for the estimator <span
-class="math inline">\(\hat{\mu}_d\)</span></p>
-<p><span class="math display">\[SE(\hat{\mu}_d) =
-\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}  \]</span></p>
-<p>Just as it was for a single mean, estimating the population variances
-with the sample variances adds additional uncertainty. Thus, the
-sampling distribution for the difference in two means is <span
-class="math inline">\(t\)</span>-distributed, although the degrees of
-freedom are calculated differently. The actual formula for the degrees
-of freedom is quite messy and difficult to compute:</p>
-<p><span class="math display">\[df =
-\frac{\left(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}\right)^2}{ \frac{1}{n_1
-- 1}\left(\frac{s_1^2}{n_1}\right)^2 +
-\frac{1}{n_2-1}\left(\frac{s_2^2}{n_2}\right)^2} \]</span></p>
-<p>We will instead compute the degrees of freedom by taking the smaller
-of <span class="math inline">\(n_1-1\)</span> and <span
-class="math inline">\(n_2 - 1\)</span> which is a lower bound on the
-formula above</p>
-<p><span class="math display">\[\frac{\hat{\mu}_d -
-\mu_d}{SE(\hat{\mu}_d)} \sim t(\min(n_1 - 1, n_2 - 1)) \]</span></p>
-<p>The margin of error for estimating the mean difference at the <span
-class="math inline">\(100(1-\alpha)\%\)</span> level is given by</p>
-<p><span class="math display">\[m = t_{1-\alpha/2} \times
-SE(\hat{\mu}_d) \]</span></p>
-<p>which gives the following confidence interval for the mean
-difference</p>
-<p><span class="math display">\[(\bar{x}_1 - \bar{x}_2)
-\pm  t_{1-\alpha/2} \times SE(\hat{\mu}_d)\]</span></p>
-<p><strong>Example: Comparing Customer Satisfaction Levels</strong> -
-Suppose we want to compare the customer satisfaction levels of two
-competing cable television companies, Company 1 and Company 2. We
-randomly select customers from each company and ask them to rate their
-cable companies on a five-point scale (with 1 being least satisfied and
-5 most satisfied). The data are summarized in the table below:</p>
+<p>This chapter studies data in which <strong>two categorical
+variables</strong> are recorded for the same individuals and summarized
+in a two-way table. The test of independence asks whether two variables
+measured on one sample are related. The test for homogeneity asks
+whether several populations share one distribution. McNemar’s test
+handles the special case where a yes/no variable is measured
+<strong>twice on the same subjects</strong>. All three compare observed
+counts with the counts a null hypothesis predicts, and all three end in
+a chi-square P-value. The textbook sections are <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence">OpenStax
+11.3–11.5</a>. McNemar’s test is not in the textbook.</p>
+<p>The tools carry over from the Week 12 chapter on <a
+href="lecturemenu12.html#the-chi-square-statistic">the chi-square
+statistic</a> and the <a
+href="lecturemenu12.html#the-chi-square-goodness-of-fit-test">goodness-of-fit
+test</a>. Each test compares observed counts <span
+class="math inline">\(O\)</span> with expected counts <span
+class="math inline">\(E\)</span> through <span
+class="math display">\[X^2_{obs} = \sum \frac{(O - E)^2}{E},\]</span>
+and finds the P-value in the upper tail of a chi-square distribution.
+Chi-square P-values in these notes are bracketed with the <a
+href="misc/chisq_table.html">course chi-square table</a>, and the exact
+value from software is given beside each bracket.</p>
+<div id="the-chi-square-test-of-independence" class="section level1">
+<h1>The chi-square test of independence</h1>
+<div id="the-setup" class="section level2">
+<h2>The setup</h2>
+<p>A <strong>test of independence</strong> asks whether <strong>two
+categorical variables</strong>, measured on the <strong>same</strong>
+individuals from <strong>one</strong> random sample, are related. The
+data form a two-way (contingency) table with <span
+class="math inline">\(r\)</span> rows and <span
+class="math inline">\(c\)</span> columns.</p>
+<ul>
+<li><strong>The hypotheses</strong> are stated in words: <span
+class="math display">\[H_0: \text{the two variables are independent}
+\qquad H_A: \text{the two variables are not independent (they are
+associated)}\]</span> Independent means the conditional distribution of
+one variable is the same in every row (or column) of the other, which is
+what the “do the rows look alike?” comparison in the Week 12 section on
+<a href="lecturemenu12.html#two-way-tables">two-way tables</a>
+checked.</li>
+</ul>
+<p><strong>Where the expected counts come from.</strong> Recall from
+probability that events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are independent when <span
+class="math inline">\(P(A \text{ and } B) = P(A)\,P(B)\)</span>. The
+book’s Example 11.5 makes this concrete:</p>
+<blockquote>
+<p>Suppose, in a study of drivers who received speeding violations in
+the last year, and who used cell phone while driving, that 755 people
+were surveyed. Out of the 755, 70 had a speeding violation and 685 did
+not; 305 used cell phones while driving and 450 did not.</p>
+</blockquote>
+<p>If having a speeding violation and using a cell phone while driving
+are independent, then <span class="math display">\[P(\text{violation and
+cell phone}) = \frac{70}{755} \times \frac{305}{755},\]</span> and the
+expected <em>number</em> of the 755 drivers in that cell is <span
+class="math display">\[E = 755 \times \frac{70}{755} \times
+\frac{305}{755} = \frac{70 \times 305}{755} = 28.3.\]</span> One 755
+cancels, and what is left is the rule for every cell of a two-way table:
+<span class="math display">\[E_{ij} = \frac{(\text{row } i \text{
+total}) \times (\text{column } j \text{ total})}{n}\]</span></p>
+<ul>
+<li><strong>The test statistic</strong> adds a term for <strong>every
+cell</strong>, all <span class="math inline">\(r \times c\)</span> of
+them: <span class="math display">\[X^2_{obs} = \sum_{i=1}^{r}
+\sum_{j=1}^{c} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}\]</span></li>
+<li><strong>The degrees of freedom</strong> are <span
+class="math display">\[df = (r - 1)(c - 1)\]</span> The row and column
+totals are fixed. Fill in the table one cell at a time: once <span
+class="math inline">\(c - 1\)</span> cells of a row are known, its last
+cell is forced by the row total, and once <span class="math inline">\(r
+- 1\)</span> rows are known, the last row is forced by the column
+totals. Only <span class="math inline">\((r - 1)(c - 1)\)</span> cells
+are free.</li>
+<li><strong>The P-value</strong> is again the upper tail, <span
+class="math inline">\(P(\chi^2 \geq X^2_{obs} \mid H_0 \text{
+true})\)</span>.</li>
+<li><strong>The conditions.</strong> One random sample, each individual
+classified on both variables; every expected count at least 5.</li>
+</ul>
+<p>In general, the observed table and its totals look like this:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Group
 </th>
-<th style="text-align:right;">
-Number of customers
+<th style="text-align:left;">
+Column 1
 </th>
-<th style="text-align:right;">
-Sample Mean Rating
+<th style="text-align:left;">
+Column 2
 </th>
-<th style="text-align:right;">
-Sample Stdev
+<th style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</th>
+<th style="text-align:left;">
+Column <span class="math inline">\(c\)</span>
+</th>
+<th style="text-align:left;">
+Row total
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Company 1
+Row 1
 </td>
-<td style="text-align:right;">
-174
+<td style="text-align:left;">
+<span class="math inline">\(O_{11}\)</span>
 </td>
-<td style="text-align:right;">
-4.2
+<td style="text-align:left;">
+<span class="math inline">\(O_{12}\)</span>
 </td>
-<td style="text-align:right;">
-0.8
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{1c}\)</span>
+</td>
+<td style="text-align:left;">
+row 1 total
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Company 2
+Row 2
 </td>
-<td style="text-align:right;">
-355
+<td style="text-align:left;">
+<span class="math inline">\(O_{21}\)</span>
 </td>
-<td style="text-align:right;">
-3.8
+<td style="text-align:left;">
+<span class="math inline">\(O_{22}\)</span>
 </td>
-<td style="text-align:right;">
-1.1
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{2c}\)</span>
+</td>
+<td style="text-align:left;">
+row 2 total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\ddots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\vdots\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Row <span class="math inline">\(r\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{r1}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{r2}\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(O_{rc}\)</span>
+</td>
+<td style="text-align:left;">
+row <span class="math inline">\(r\)</span> total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+column 1 total
+</td>
+<td style="text-align:left;">
+column 2 total
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\cdots\)</span>
+</td>
+<td style="text-align:left;">
+column <span class="math inline">\(c\)</span> total
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n\)</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Estimate the difference in mean satisfaction levels between the two
-companies at the <span class="math inline">\(95\%\)</span> confidence
-level.</p>
-<p>Let <span class="math inline">\(\mu_1\)</span> represent the mean
-satisfaction score for company 1 and <span
-class="math inline">\(\mu_2\)</span> represent the mean satisfaction
-score for company 2. The estimated mean difference in customer
-satisfaction is <span class="math display">\[\hat{\mu}_d = 4.2 - 3.8 =
-0.4 \]</span></p>
-<p>Since the confidence level is <span
-class="math inline">\(95\%\)</span> the standard score will be
-approximately the <span class="math inline">\(t_{1-0.05/2} =
-t_{0.975}\)</span> or the <span class="math inline">\(97.5th\)</span>
-percentile of a <span class="math inline">\(t\)</span>-distribution with
-<span class="math inline">\(173\)</span> degrees of freedom. Since the
-<span class="math inline">\(t\)</span> and <span
-class="math inline">\(z\)</span> distributions are approximately equal
-for sample sizes <span class="math inline">\(\geq 30\)</span> we will
-use the standard score <span class="math inline">\(1.96\)</span>. The
-standard error of the difference is given by</p>
-<p><span class="math display">\[SE(\hat{\mu}_d) =
-\sqrt{\frac{0.8^2}{174}+\frac{1.1^2}{355}} =0.0842  \]</span></p>
-<p>Which yields the follow margin of error</p>
-<p><span class="math display">\[ m = 1.96 (0.0842) = 0.165\]</span></p>
-<p>The <span class="math inline">\(95\%\)</span> confidence interval is
-<span class="math inline">\([0.24, 0.56]\)</span>. Thus, at the <span
-class="math inline">\(95\%\)</span> confidence level we estimate the
-mean difference in customer satisfaction score to be no less than <span
-class="math inline">\(0.24\)</span> and no more than <span
-class="math inline">\(0.56\)</span>. Notice that the above confidence
-interval does not span zero and thus likely constitutes a real, but
-small, difference between the companies</p>
 </div>
-<div
-id="a-significance-test-for-comparing-two-means-independent-samples"
-class="section level2">
-<h2>A significance test for comparing two means: independent
-samples</h2>
-<p>We can also test for a difference between two groups on a
-quantitative response variable by comparing their means. The set up for
-a significance test for a difference in two means is more or less the
-same as we saw previously for two proportions, however, the calculations
-now involve <span class="math inline">\(\bar{x}_1\)</span>, <span
-class="math inline">\(\bar{x}_2\)</span>, <span
-class="math inline">\(s_1\)</span> and <span
-class="math inline">\(s_2\)</span>. Recall that, under the assumption of
-normality for both populations and when using the sample standard
-deviations to estimate <span class="math inline">\(\sigma_1\)</span> and
-<span class="math inline">\(\sigma_2\)</span> the difference in means is
-<span class="math inline">\(t\)</span>-distributed. We will see that
-test statistic <span class="math inline">\(t_{obs}\)</span> is the
-standardized difference and has approximately the same distribution.
-Here’s how we set up a two-sample hypothesis test for means:</p>
-<p><strong>1. Assumptions</strong></p>
-<ul>
-<li><p>Data constitute a simple random sample</p></li>
-<li><p>The two groups are independent</p></li>
-<li><p>Both populations are normally distributed</p></li>
-</ul>
-<p><strong>2. Null and Alternative Hypotheses</strong></p>
-<ul>
-<li>The <strong>null</strong> hypothesis is generally that the two
-population means are equal (i.e no difference)</li>
-</ul>
-<p><span class="math display">\[H_0: \mu_1 = \mu_2 \ \ \  \text{which is
-the same as} \ \ \ H_0: \mu_1 - \mu_2 = 0\]</span></p>
-<ul>
-<li>The alternative hypothesis can be either lower, upper, or two tailed
-just as it was with our univariate tests. The table below gives the
-possible alternative hypotheses and their critical values:</li>
-</ul>
+<div id="example-volunteers-and-hours" class="section level2">
+<h2>Example: volunteers and hours</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence">OpenStax
+Introductory Statistics 2e, Section 11.3, Example 11.6</a>:</em> the
+volunteer table from the Week 12 section on <a
+href="lecturemenu12.html#two-way-tables">two-way tables</a>. A sample of
+839 adult volunteers was classified by <strong>type of
+volunteer</strong> and <strong>hours volunteered per week</strong>. Is
+the number of hours volunteered independent of the type of volunteer?
+(No <span class="math inline">\(\alpha\)</span> is given, so use
+0.05.)</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Alternative Hypothesis
+Type of volunteer
 </th>
 <th style="text-align:left;">
-Critical Value
+1–3 hours
 </th>
 <th style="text-align:left;">
-Rejection Region
+4–6 hours
+</th>
+<th style="text-align:left;">
+7–9 hours
+</th>
+<th style="text-align:left;">
+Row total
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span>
+Community college students
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(t_{1-\alpha/2}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(|t| \geq t_{1-\alpha/2}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t_\alpha\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t\leq t_{\alpha}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t_{1-\alpha}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t\geq t_{1-\alpha}\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>3. Test statistic</strong></p>
-<ul>
-<li>Under the null hypotheses the test statistic is the standardized
-difference</li>
-</ul>
-<p><span class="math display">\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2)
-- (\mu_1 -
-\mu_2)}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}  \]</span></p>
-<p>The above test statistic is only approximately <span
-class="math inline">\(t\)</span>-distributed. However, the lower bound
-for the degrees of freedom given by <span class="math inline">\(\min(n_1
-- 1, n_2 - 1)\)</span> generally leads to conservative estimates and
-tests and is thus favorable.</p>
-<p><strong>4. <span class="math inline">\(p\)</span>-value</strong></p>
-<ul>
-<li>The <span class="math inline">\(p\)</span>-values corresponding to
-each alternative hypothesis are listed in the table below</li>
-</ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Alternative Hypothesis
-</th>
-<th style="text-align:left;">
-<span class="math inline">\(p\)</span>-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu_1 - \mu_2 \neq 0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(|t| \geq |t_{obs}||H_0)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(t \leq t_{obs}|H_0)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(H_A: \mu_1 - \mu_2 &gt; 0\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(t\geq t_{obs}|H_0)\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>5. Decision rule</strong></p>
-<p><span class="math display">\[\text{Reject} \ \ H_0 \ \ \text{if} \ \
-\text{$p$-value} &lt; \alpha \]</span></p>
-<div id="the-pooled-t-test" class="section level3">
-<h3>The pooled <span class="math inline">\(t\)</span> test</h3>
-<p>There is one situation where the above test statistic has exactly a
-<span class="math inline">\(t\)</span>-distribution and that occurs when
-we can assume that both populations have the same standard deviation. In
-this case, we need only substitute a single sample standard deviation
-for <span class="math inline">\(\sigma_1\)</span> and <span
-class="math inline">\(\sigma_2\)</span>. We call this the pooled
-estimate of the standard deviation:</p>
-<p><span class="math display">\[ s_{pooled} = \sqrt{ \frac{(n_1 -
-1)s_1^2 + (n_2 -1)s_2^2}{n_1+n_2 - 2}}\]</span></p>
-<p><span class="math inline">\(s_{pooled}\)</span> is called the
-<strong>pooled estimator</strong> of the common standard deviation <span
-class="math inline">\(\sigma\)</span> because it combines the
-information from both samples.</p>
-<p>The test statistic under the assumption of equal variances
-becomes</p>
-<p><span class="math display">\[t_{obs} = \frac{(\bar{x}_1 - \bar{x}_2)
-- (\mu_1 -
-\mu_2)}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}  \]</span></p>
-<p>which is exactly distributed as a <span
-class="math inline">\(t\)</span> distribution with <span
-class="math inline">\(n_1+n_2 - 2\)</span> degrees of freedom. The test
-based on the pooled estimate of the standard deviation is more powerful
-because the sampling distribution is exact and not an approximation as
-it is in the unpooled case.</p>
-<p>Which test should you use?</p>
-<ul>
-<li>In practice, a significance test for determining equality of
-variances can be run prior to the <span
-class="math inline">\(t\)</span>-test to determine if the pooled or
-unpooled test statistic should be used. More information about this test
-can be found in
-<a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda359.htm#:~:text=An%20F%2Dtest%20(Snedecor%20and,the%20variances%20are%20not%20equal.">the
-NIST/SEMATECH e-Handbook of Statistical Methods: F-Test for Equality of
-Two Variances</a></li>
-</ul>
-<p><strong>Example: NCAA Women’s Basketball</strong> - Sunday April 7th
-South Carolina and Iowa contended for the NCAA women’s basketball
-championship. Consider the following table which gives the opponent and
-number of points scored for both teams in their last <span
-class="math inline">\(15\)</span> games leading up to the
-championship.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-South Carolina
-</th>
-<th style="text-align:left;">
-Matchup
-</th>
-<th style="text-align:left;">
-<ul>
-<li></th>
-<th style="text-align:right;">
-Iowa
-</th>
-<th style="text-align:left;">
-Matchup
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-78
-</td>
-<td style="text-align:left;">
-NC State
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-71
-</td>
-<td style="text-align:left;">
-UConn
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-70
-</td>
-<td style="text-align:left;">
-Oregon State
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-94
-</td>
-<td style="text-align:left;">
-LSU
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-79
-</td>
-<td style="text-align:left;">
-Indiana
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-89
-</td>
-<td style="text-align:left;">
-Colorado
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-88
-</td>
-<td style="text-align:left;">
-UNC
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-64
-</td>
-<td style="text-align:left;">
-West Virginia
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-91
-</td>
-<td style="text-align:left;">
-Presbyterian
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-91
-</td>
-<td style="text-align:left;">
-Holy Cross
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-79
-</td>
-<td style="text-align:left;">
-LSU
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-94
-</td>
-<td style="text-align:left;">
-Nebraska
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-74
-</td>
-<td style="text-align:left;">
-Tennessee
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-95
-</td>
-<td style="text-align:left;">
-Michigan
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-79
-</td>
-<td style="text-align:left;">
-Texas A&amp;M
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-95
-</td>
-<td style="text-align:left;">
-Penn State
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-76
-</td>
-<td style="text-align:left;">
-Tennessee
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-93
-</td>
-<td style="text-align:left;">
-Ohio State
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-98
-</td>
-<td style="text-align:left;">
-Arkansas
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-108
-</td>
-<td style="text-align:left;">
-Minnesota
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:left;">
-Kentucky
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-101
-</td>
-<td style="text-align:left;">
-Illinois
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-72
-</td>
-<td style="text-align:left;">
-Alabama
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-69
-</td>
-<td style="text-align:left;">
-Indiana
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-70
-</td>
-<td style="text-align:left;">
-Georgia
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-106
-</td>
-<td style="text-align:left;">
-Michigan
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:left;">
-Tennessee
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-79
-</td>
-<td style="text-align:left;">
-Nebraska
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-83
-</td>
-<td style="text-align:left;">
-UConn
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
 111
 </td>
 <td style="text-align:left;">
-Penn State
+96
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+255
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Four-year college students
+</td>
+<td style="text-align:left;">
+96
+</td>
+<td style="text-align:left;">
+133
+</td>
+<td style="text-align:left;">
+61
+</td>
+<td style="text-align:left;">
+290
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nonstudents
+</td>
+<td style="text-align:left;">
+91
+</td>
+<td style="text-align:left;">
+150
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+379
+</td>
+<td style="text-align:left;">
+162
+</td>
+<td style="text-align:left;">
+<strong>839</strong>
 </td>
 </tr>
 </tbody>
-</table></li>
-</ul>
-<p>The summary of the last <span class="math inline">\(15\)</span> games
-is given below:</p>
+</table>
+<p><strong>Step 1: the expected counts.</strong> Each cell is (row
+total)(column total)/839. For community college students working 1–3
+hours, <span class="math display">\[E_{11} = \frac{255 \times 298}{839}
+= 90.57.\]</span> The whole table:</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Population
+Expected <span class="math inline">\(E\)</span>
 </th>
 <th style="text-align:left;">
-Population Mean
+1–3 hours
 </th>
 <th style="text-align:left;">
-Sample Size
+4–6 hours
 </th>
-<th style="text-align:right;">
-Sample Mean
-</th>
-<th style="text-align:right;">
-Sample Stdev
+<th style="text-align:left;">
+7–9 hours
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Iowa
+Community college students
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\mu_1\)</span>
+<span class="math inline">\(\frac{255 \times 298}{839} = 90.57\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(n_1 = 15\)</span>
+<span class="math inline">\(\frac{255 \times 379}{839} = 115.19\)</span>
 </td>
-<td style="text-align:right;">
-90.67
-</td>
-<td style="text-align:right;">
-14.21
+<td style="text-align:left;">
+<span class="math inline">\(\frac{255 \times 162}{839} = 49.24\)</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-South Carolina
+Four-year college students
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\mu_2\)</span>
+<span class="math inline">\(\frac{290 \times 298}{839} = 103.00\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(n_2 = 15\)</span>
+<span class="math inline">\(\frac{290 \times 379}{839} = 131.00\)</span>
 </td>
-<td style="text-align:right;">
-80.40
+<td style="text-align:left;">
+<span class="math inline">\(\frac{290 \times 162}{839} = 56.00\)</span>
 </td>
-<td style="text-align:right;">
-10.57
+</tr>
+<tr>
+<td style="text-align:left;">
+Nonstudents
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{294 \times 298}{839} = 104.42\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{294 \times 379}{839} = 132.81\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\frac{294 \times 162}{839} = 56.77\)</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Conduct an unpooled two sample <span
-class="math inline">\(t\)</span>-test at the <span
-class="math inline">\(\alpha = 0.05\)</span> significance level to
-determine if there is a significant difference between the championship
-teams in the mean number of points scored per game.</p>
+<p>Check: each row of expected counts adds to its row total (for
+example, <span class="math inline">\(90.57 + 115.19 + 49.24 =
+255\)</span>), and the smallest expected count is 49.24, well above
+5.</p>
+<p><strong>Step 2: the contributions <span class="math inline">\((O -
+E)^2/E\)</span>.</strong> For the top-left cell, <span
+class="math inline">\((111 - 90.57)^2/90.57 = 4.607\)</span>.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+1–3 hours
+</th>
+<th style="text-align:left;">
+4–6 hours
+</th>
+<th style="text-align:left;">
+7–9 hours
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Community college students
+</td>
+<td style="text-align:left;">
+4.607
+</td>
+<td style="text-align:left;">
+3.197
+</td>
+<td style="text-align:left;">
+0.031
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Four-year college students
+</td>
+<td style="text-align:left;">
+0.476
+</td>
+<td style="text-align:left;">
+0.030
+</td>
+<td style="text-align:left;">
+0.447
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nonstudents
+</td>
+<td style="text-align:left;">
+1.726
+</td>
+<td style="text-align:left;">
+2.225
+</td>
+<td style="text-align:left;">
+0.250
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now the five steps.</p>
 <ol style="list-style-type: decimal">
-<li>Let <span class="math inline">\(\mu_1\)</span> be the mean number of
-points scored per game for Iowa and <span
-class="math inline">\(\mu_2\)</span> be the mean number of points scored
-per game for South Carolina. The null hypothesis is that there is no
-difference in the mean number of points between the two teams</li>
+<li><p><strong>Assumptions.</strong> One random sample of 839
+volunteers, each classified on both variables; every expected count is
+at least 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: the number of hours volunteered is
+independent of the type of volunteer. <span
+class="math inline">\(H_A\)</span>: the number of hours volunteered
+depends on the type of volunteer.</p></li>
+<li><p><strong>Test statistic.</strong> Add all nine contributions:
+<span class="math display">\[X^2_{obs} = 4.607 + 3.197 + 0.031 + 0.476 +
+0.030 + 0.447 + 1.726 + 2.225 + 0.250 = 12.99\]</span> <span
+class="math display">\[df = (3 - 1)(3 - 1) = 4\]</span></p></li>
+<li><p><strong>P-value.</strong> In the <span class="math inline">\(df =
+4\)</span> row, <span class="math inline">\(11.143 &lt; 12.99 &lt;
+14.860\)</span>, with upper tails 0.025 and 0.005, so <span
+class="math display">\[0.005 &lt; P(\chi^2 \geq 12.99 \mid H_0 \text{
+true}) &lt; 0.025\]</span> Software gives 0.0113.</p></li>
+<li><p><strong>Decision.</strong> <span class="math inline">\(0.005 &lt;
+\text{P-value} &lt; 0.025 &lt; \alpha = 0.05\)</span> (software: <span
+class="math inline">\(0.0113 &lt; 0.05\)</span>): <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. There is convincing
+evidence that the number of hours volunteered is related to the type of
+volunteer.</p></li>
 </ol>
-<p><span class="math display">\[H_0: \mu_1 = \mu_2 \]</span></p>
-<p>The alternative hypothesis is that the two teams are different</p>
-<p><span class="math display">\[H_A: \mu_1 \neq \mu_2\]</span></p>
-<ol start="2" style="list-style-type: decimal">
-<li>The estimated difference is given by <span
-class="math inline">\(\hat{\mu}_d = \bar{x}_1 - \bar{x}_2 =
-10.27\)</span>. The test statistic for the unpooled test is</li>
-</ol>
-<p><span class="math display">\[ t_{obs} = \frac{90.67 -
-80.40}{\sqrt{\frac{14.21^2}{15}+\frac{10.57^2}{15}}} \approx
-2.246\]</span></p>
-<p>which is approximately distributed as</p>
-<p><span class="math display">\[ t_{obs}\sim t(df = 14) \]</span></p>
-<ol start="3" style="list-style-type: decimal">
-<li>The <span class="math inline">\(p\)</span>-value is</li>
-</ol>
-<p><span class="math display">\[\text{$p$-value} = 2\left[P(|t| \geq
-|t_{obs}||H_0)\right] = 2(0.0207) = 0.0414 \]</span></p>
-<ol start="4" style="list-style-type: decimal">
-<li>Based on the <span class="math inline">\(p\)</span>-value above we
-would narrowly reject the null hypothesis and conclude that there is a
-significant difference in the mean number of points scored per game
-between Iowa and South Carolina. The outcome of the championship was an
-87 - 75 victory for South Carolina. Given the conclusion of our test,
-this is a testament to South Carolina’s defensive prowess in being able
-to shut down a high scoring team like Iowa.</li>
-</ol>
+<p><img src="assets/l30_volunteers.png" alt="A chi-square distribution with 4 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 4 degrees of freedom. A dashed line marks 12.99, far into the right tail, and the thin sliver of area to its right is shaded red and labelled P of chi-square at least 12.99. A label reads: table, 11.143 is less than 12.99, which is less than 14.860." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>How are they related?</strong> The largest contributions are
+community college students working 1–3 hours (4.607: 111 observed, 90.57
+expected) and 4–6 hours (3.197: 96 observed, 115.19 expected), and
+nonstudents working 4–6 hours (2.225: 150 observed, 132.81 expected).
+Community college students volunteer fewer hours than independence
+predicts and nonstudents more, which is what the conditional
+distributions in the Week 12 section on <a
+href="lecturemenu12.html#two-way-tables">two-way tables</a>
+suggested.</p>
 </div>
-</div>
-</div>
-<div id="paired-t-test" class="section level1">
-<h1>Paired <span class="math inline">\(t\)</span> test</h1>
-<p>Comparative methods (i.e methods that compare two groups/samples
-across a quantitative variable) are more common and often preferred over
-one sample procedures. One common comparative design that makes use of
-single-sample procedures for a population mean is called the paired
-<span class="math inline">\(t\)</span>-test. This test is used to draw
-inferences about a population mean in matched-pairs designs and can be
-thought of as the parametric analogue of the <i>sign test</i> we learned
-previously. Recall that in matched-pairs studies subjects are matched
-based on common characteristics and the quantitative outcome is compared
-within each pair.</p>
-<ul>
-<li><p>matched-pairs designs are most common when randomization is not
-possible</p></li>
-<li><p>often used when observations are taken on the same subject
-(before and after treatment)</p></li>
-</ul>
-<p>In a paired <span class="math inline">\(t\)</span>-test we convert a
-comparative study into a one-sample procedure by making the response
-variable the difference between the two observations in each pair <span
-class="math inline">\(d_i = x_i - y_i\)</span>. The parameter under
-study is the population mean difference <span
-class="math inline">\(\mu_d\)</span> which can be estimated by the
-sample mean difference <span class="math inline">\(\bar{x}_d = \bar{x} -
-\bar{y}\)</span> computed over all pairwise differences. The standard
-deviation of the difference <span
-class="math inline">\(\sigma_d\)</span> is then estimated with the
-sample standard deviation of the difference. Inference is then treated
-in the same way as one-sample procedures for a population mean</p>
-<ul>
-<li>the <span class="math inline">\(100(1 - \alpha)\%\)</span>
-confidence interval for the mean pairwise difference is</li>
-</ul>
-<p><span class="math display">\[ \bar{x}_d \pm t_{1-\alpha/2}
-\frac{s_d}{\sqrt{n}}\]</span></p>
-<ul>
-<li>the test statistic for a significance test regarding the pairwise
-difference is given by</li>
-</ul>
-<p><span class="math display">\[t_{obs} = \frac{\bar{x}_d -
-\mu_d}{s_d/\sqrt{n}} \sim t(n - 1) \]</span></p>
-<ul>
-<li>by treating the above procedure as a one-sample <span
-class="math inline">\(t\)</span> test we make the assumption that the
-population distribution of differences is approximately normal.</li>
-</ul>
-<p><strong>Example: Revisiting the Spousal Dominance Problem</strong> -
-Recall the study comparing the ratings of husbands and wives on the
-perceived relative influence of each member of the couple on a major
-financial decision.</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Couple
-</th>
-<th style="text-align:right;">
-Husband
-</th>
-<th style="text-align:right;">
-Wife
-</th>
-<th style="text-align:right;">
-Difference
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
--1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
--1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
--1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-17
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-</tbody>
-</table>
-<p>A summary of the difference in rating between husbands and wives is
-given below:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Parameter
-</th>
-<th style="text-align:right;">
-Estimate
-</th>
-<th style="text-align:right;">
-Stdev
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_d\)</span>
-</td>
-<td style="text-align:right;">
-1.35
-</td>
-<td style="text-align:right;">
-1.77
-</td>
-</tr>
-</tbody>
-</table>
-<p>Conduct a paired <span class="math inline">\(t\)</span>-test at the
-<span class="math inline">\(\alpha = 0.05\)</span> significance level to
-determine if husbands and wives differ in their perceived influence on
-financial decision making</p>
-<div id="summary-of-inference-procedures" class="section level2">
-<h2>Summary of inference procedures</h2>
-<p>The table below summarizes the procedures we have learned so far in
-the course</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Parameter
-</th>
-<th style="text-align:left;">
-Type
-</th>
-<th style="text-align:left;">
-Response Variable
-</th>
-<th style="text-align:left;">
-<span class="math inline">\(100(1 - \alpha)\%\)</span> CI
-</th>
-<th style="text-align:left;">
-Test statistic
-</th>
-<th style="text-align:left;">
-Distribution
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(p\)</span>
-</td>
-<td style="text-align:left;">
-one-sample
-</td>
-<td style="text-align:left;">
-Categorical
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\hat{p}\pm
-Z_{1-\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{\hat{p} -
-p_0}{\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(z\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(p_1 - p_2\)</span>
-</td>
-<td style="text-align:left;">
-two-sample
-</td>
-<td style="text-align:left;">
-Categorical
-</td>
-<td style="text-align:left;">
-<span class="math inline">\((\hat{p}_1 - \hat{p}_2)\pm Z_{1-\alpha/2}
-\sqrt{\frac{\hat{p}_1(1-\hat{p}_1)}{n_1}+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{\hat{p}_1 - \hat{p}_2}{
-\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(z\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\mu\)</span>
-</td>
-<td style="text-align:left;">
-one-sample
-</td>
-<td style="text-align:left;">
-Quantitative
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x} \pm t_{1-\alpha/2,
-n-1}\frac{s}{\sqrt{n}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{\bar{x} - \mu_0}{s/\sqrt{n}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t(n-1)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_1 - \mu_2\)</span>
-</td>
-<td style="text-align:left;">
-two-sample
-</td>
-<td style="text-align:left;">
-Quantitative
-</td>
-<td style="text-align:left;">
-<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm  t_{1-\alpha/2,
-\min(n_1 -1, n_2-1)} \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{\bar{x}_1 -
-\bar{x}_2}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t(\min(n_1 - 1, n_2 - 1))\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_1 - \mu_2\)</span>
-</td>
-<td style="text-align:left;">
-pooled two-sample
-</td>
-<td style="text-align:left;">
-Quantitative
-</td>
-<td style="text-align:left;">
-<span class="math inline">\((\bar{x}_1 - \bar{x}_2) \pm  t_{1-\alpha/2,
-n_1+n_2 - 2} s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{\bar{x}_1 -
-\bar{x}_2}{s_{pooled}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t(n_1+n_2 - 2)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(\mu_d\)</span>
-</td>
-<td style="text-align:left;">
-matched pairs
-</td>
-<td style="text-align:left;">
-Quantitative
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\bar{x}_d \pm t_{1-\alpha/2,
-n-1}\frac{s_d}{\sqrt{n}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{\bar{x}_d -
-\mu_d}{s_d/\sqrt{n}}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(t(n-1)\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="statistical-inference-for-qualitative-data"
+<div id="practice-anxiety-and-the-need-to-succeed"
 class="section level2">
-<h2>Statistical Inference for qualitative data</h2>
-<p>Despite significantly expanding our statistical tools for inference,
-we are still quite limited in our ability to analyze qualitative
-responses. Our tests for a proportion are useful for comparing a single
-category of a qualitative variable across one or two samples, but what
-if we are interested in comparing multiple categories across more than
-one population? We will now explore some of the common tools for
-analyzing qualitative data. The inference techniques for analyzing
-qualitative variables are generally concerned with comparing a response
-variable with two or more categories across an explanatory variable with
-two or more groupings by exploring how the conditional distribution of
-the response varies across the groups of the explanatory variable. In
-other words, these inference procedures are designed to analyze the
-statistical association between two multi-category qualitative
-variables.</p>
-<p>Such problems are typically represented as a table where the rows
-represent the groupings of the explanatory variable and columns
-represent the categories of the response variable - often referred to as
-“two-way tables”.</p>
-</div>
-<div id="the-chi-square-goodness-of-fit-test" class="section level2">
-<h2>The Chi-square goodness of fit test</h2>
-<p>Like we have done with means and proportions, we will begin with a
-one-sample procedure for comparing the distribution of a categorical
-variable to some hypothesized model. This procedure is called the <span
-class="math inline">\(\chi^2\)</span> (“chi-squared”) goodness of fit
-test because it used to determine how well the observed distribution
-fits some proposed model of the data. We will illustrate this idea by
-starting with an example:</p>
-<p><strong>Example: Gregor Mendel’s Peas</strong> - Gregor Mendel
-conducted a study in which he crossed pea plants. The plants he crossed
-had the alleles (i.e., a form or version of a gene) for both yellow
-<span class="math inline">\(Y\)</span> and green peas <span
-class="math inline">\(y\)</span> — a trait controlled by a single locus.
-He believed two of his laws applied here: the Law of Segregation and the
-Law of Dominance. These laws would determine the probabilities of
-certain genotypes. This can be summarized by a Punnett square</p>
+<h2>Practice: anxiety and the need to succeed</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence">OpenStax
+Introductory Statistics 2e, Section 11.3, Example 11.7</a>:</em></p>
+<blockquote>
+<p>De Anza College is interested in the relationship between anxiety
+level and the need to succeed in school. A random sample of 400 students
+took a test that measured anxiety level and need to succeed in school.
+The table shows the results. De Anza College wants to know if anxiety
+level and need to succeed in school are independent events.</p>
+</blockquote>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Yellow
+Need to succeed
 </th>
 <th style="text-align:left;">
-Green
+High anxiety
+</th>
+<th style="text-align:left;">
+Med-high anxiety
+</th>
+<th style="text-align:left;">
+Medium anxiety
+</th>
+<th style="text-align:left;">
+Med-low anxiety
+</th>
+<th style="text-align:left;">
+Low anxiety
+</th>
+<th style="text-align:left;">
+Row total
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span class="math inline">\(YY = 0.25\)</span>
+High need
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(Yy = 0.25\)</span>
+35
 </td>
-</tr>
-<tr>
 <td style="text-align:left;">
-<span class="math inline">\(Yy = 0.25\)</span>
+42
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(yy = 0.25\)</span>
+53
 </td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>If Mendel’s Laws are true, what do they imply about the probability
-distribution for these four outcomes (i.e., <span
-class="math inline">\(YY\)</span>, <span
-class="math inline">\(Yy\)</span>, <span
-class="math inline">\(yY\)</span>, or <span
-class="math inline">\(yy\)</span>)? And what does this imply about the
-probability distribution of color (i.e., yellow or green) ?</li>
-</ul>
-<p>Mendel bred <span class="math inline">\(8023\)</span> offspring. Of
-these, <span class="math inline">\(6022\)</span> were yellow, and <span
-class="math inline">\(2001\)</span> were green. Do his laws “fit” the
-data? That is, does the trait of color in pea plants exhibit what we
-would call Mendelian inheritance?</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Color
-</th>
-<th style="text-align:right;">
-Expected Frequency
-</th>
-<th style="text-align:right;">
-Observed Count
-</th>
-<th style="text-align:right;">
-Observed Frequency
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Yellow
-</td>
-<td style="text-align:right;">
-0.75
-</td>
-<td style="text-align:right;">
-6022
-</td>
-<td style="text-align:right;">
-0.7506
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Green
-</td>
-<td style="text-align:right;">
-0.25
-</td>
-<td style="text-align:right;">
-2001
-</td>
-<td style="text-align:right;">
-0.2494
-</td>
-</tr>
-</tbody>
-</table>
-<p>The above problem amounts to comparing the observed frequencies of
-each color to the frequencies that we would expect under the Mendelian
-model of inheritance. We can test whether the data fit Mendel’s model by
-comparing the observed frequencies of pea plant colors to the
-frequencies we would expect assuming Mendelian Inheritance and
-Dominance.</p>
-<p>In this case the null hypothesis is that the offspring of the pea
-plants follows Mendelian inheritance or</p>
-<p><span class="math display">\[H_0: p_{yellow} = 0.75; p_{green} = 0.25
-\]</span></p>
-<p>The alternative is that one or more of the frequencies for each color
-do not follow the frequencies defined in the null hypothesis. To
-generalize for a categorical variable with <span
-class="math inline">\(k\)</span> possible outcomes the null becomes
-<span class="math inline">\(H_0: p_i = c_i; \forall i\in[1:k]\)</span>
-and <span class="math inline">\(H_A:\)</span> at least one <span
-class="math inline">\(p_i \neq c_i\)</span>.</p>
-<p>The above hypothesis test uses a <span
-class="math inline">\(\chi^2\)</span> test statistic defined as</p>
-<p><span class="math display">\[X^2 = \sum_{i =1}^k
-\frac{(\text{observed count}_i - \text{expected
-count}_i)^2}{\text{expected count}_i} \]</span></p>
-<ul>
-<li><p><span class="math inline">\(k\)</span> is the number of possible
-outcomes</p></li>
-<li><p>the observed count is the number of observations we observed with
-outcome <span class="math inline">\(i\)</span></p></li>
-<li><p>the expected count is the number of observations we expect to
-have outcome <span class="math inline">\(i\)</span> which is calculated
-under the null hypothesis as <span
-class="math inline">\(np_i\)</span></p></li>
-<li><p>We can think of this calculation as measuring the total
-(relative) squared distance from the observed model to the model we
-defined under the null hypothesis.</p></li>
-</ul>
-<p><span class="math inline">\(X^2\)</span> can take on values between
-<span class="math inline">\(0\)</span> and positive <span
-class="math inline">\(\infty\)</span>. A value of zero means the
-observed model exactly follows the expected model. Values greater than
-zero indicate a deviation from the expected model. Large values of <span
-class="math inline">\(X^2\)</span> indicate evidence against the null
-hypothesis.</p>
-<p>Referring back to Mendel’s pea plants we compute the expected number
-of yellow pea plants as <span class="math inline">\(8023\times 0.75 =
-6017.25\)</span> and the expected number of green pea plants to be <span
-class="math inline">\(8023\times 0.25 = 2005.75\)</span>. The test
-statistic is</p>
-<p><span class="math display">\[X^2 = \frac{(6022 - 6017.25)^2}{6017.25}
-+\frac{(2001 - 2005.75)^2}{2005.75} \]</span></p>
-<p><span class="math display">\[ = 0.0037 + 0.0112  \]</span></p>
-<p><span class="math display">\[ \approx 0.015\]</span></p>
-<div id="the-chi-square-distribution" class="section level3">
-<h3>The Chi-square distribution</h3>
-<p>To convert the above statistic into a <span
-class="math inline">\(p\)</span>-value we need to know its sampling
-distribution. The statistic <span class="math inline">\(X^2\)</span> is
-called a <span class="math inline">\(\chi^2\)</span> (“chi-squared”)
-test statistic because its sampling distribution follows a special type
-of probability distribution called the <span
-class="math inline">\(\chi^2\)</span> distribution. Like the <span
-class="math inline">\(t\)</span> distribution, the <span
-class="math inline">\(\chi^2\)</span> distributions form a family of
-distributions controlled by a single parameter - the degrees of freedom.
-We will use the notation <span class="math inline">\(\chi^2(df)\)</span>
-to depict a specific member of this family. For the goodness of fit
-test, the test statistic <span class="math inline">\(X^2\)</span>
-follows a <span class="math inline">\(\chi^2\)</span> distribution with
-<span class="math inline">\(k-1\)</span> degrees of freedom where <span
-class="math inline">\(k\)</span> represents the number of categories of
-the qualitative variable</p>
-<p><img src="lecturemenu13_files/figure-html/unnamed-chunk-12-1.png" alt="Density curves of the chi-square distribution for 1, 2, 4, 6 and 8 degrees of freedom, with chi-square from 0 to 20 on the x-axis. All are right-skewed and start at 0. The df equals 1 and 2 curves are highest near 0 and decrease; for larger df the peak moves right, gets lower, and the curve spreads out and becomes more symmetric." width="960" />
-* Note from the graph above that as the degrees of freedom increase the
-<span class="math inline">\(\chi^2\)</span> distribution converges in
-shape to a normal distribution.</p>
-<ul>
-<li><p>Under the special case of a <span
-class="math inline">\(\chi^2(1)\)</span> the <span
-class="math inline">\(\chi^2\)</span> statistic is equal to the square
-of a standard normal distribution <span
-class="math inline">\(Z^2\)</span>.</p></li>
-<li><p>In general, a <span class="math inline">\(\chi^2\)</span> random
-variable with <span class="math inline">\(k\)</span> degrees of freedom
-can be represented as a sum of <span class="math inline">\(k\)</span>
-squared normal random variables</p></li>
-</ul>
-<p><span class="math display">\[\chi^2_k = \sum_{i = 1}^k Z_i^2 = Z_1^2
-+ Z_2^2 + \cdots Z_k^2 \]</span></p>
-<ul>
-<li>Like the <span class="math inline">\(t\)</span> distribution, we can
-look up the probability of different chi-squared random variables using
-the degrees of freedom and a table of pre-computed probabilities:</li>
-</ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Upper tail
-</th>
-<th style="text-align:left;">
-0.25
-</th>
-<th style="text-align:left;">
-0.2
-</th>
-<th style="text-align:left;">
-0.15
-</th>
-<th style="text-align:left;">
-0.125
-</th>
-<th style="text-align:left;">
-0.1
-</th>
-<th style="text-align:left;">
-0.075
-</th>
-<th style="text-align:left;">
-0.05
-</th>
-<th style="text-align:left;">
-0.025
-</th>
-<th style="text-align:left;">
-0.005
-</th>
-<th style="text-align:left;">
-0.0025
-</th>
-<th style="text-align:left;">
-5e-04
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span class="math inline">\(DF\)</span>
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-1.323
-</td>
-<td style="text-align:left;">
-1.642
-</td>
-<td style="text-align:left;">
-2.072
-</td>
-<td style="text-align:left;">
-2.354
-</td>
-<td style="text-align:left;">
-2.706
-</td>
-<td style="text-align:left;">
-3.17
-</td>
-<td style="text-align:left;">
-3.841
-</td>
-<td style="text-align:left;">
-5.024
-</td>
-<td style="text-align:left;">
-7.879
-</td>
-<td style="text-align:left;">
-9.141
-</td>
-<td style="text-align:left;">
-12.116
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-2.773
-</td>
-<td style="text-align:left;">
-3.219
-</td>
-<td style="text-align:left;">
-3.794
-</td>
-<td style="text-align:left;">
-4.159
-</td>
-<td style="text-align:left;">
-4.605
-</td>
-<td style="text-align:left;">
-5.181
-</td>
-<td style="text-align:left;">
-5.991
-</td>
-<td style="text-align:left;">
-7.378
-</td>
-<td style="text-align:left;">
-10.597
-</td>
-<td style="text-align:left;">
-11.983
-</td>
-<td style="text-align:left;">
-15.202
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
-4.108
-</td>
-<td style="text-align:left;">
-4.642
-</td>
-<td style="text-align:left;">
-5.317
-</td>
-<td style="text-align:left;">
-5.739
-</td>
-<td style="text-align:left;">
-6.251
-</td>
-<td style="text-align:left;">
-6.905
-</td>
-<td style="text-align:left;">
-7.815
-</td>
-<td style="text-align:left;">
-9.348
-</td>
-<td style="text-align:left;">
-12.838
-</td>
-<td style="text-align:left;">
-14.32
-</td>
-<td style="text-align:left;">
-17.73
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-5.385
-</td>
-<td style="text-align:left;">
-5.989
-</td>
-<td style="text-align:left;">
-6.745
-</td>
-<td style="text-align:left;">
-7.214
-</td>
-<td style="text-align:left;">
-7.779
-</td>
-<td style="text-align:left;">
-8.496
-</td>
-<td style="text-align:left;">
-9.488
-</td>
-<td style="text-align:left;">
-11.143
-</td>
-<td style="text-align:left;">
-14.86
-</td>
-<td style="text-align:left;">
-16.424
-</td>
-<td style="text-align:left;">
-19.997
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-5
-</td>
-<td style="text-align:left;">
-6.626
-</td>
-<td style="text-align:left;">
-7.289
-</td>
-<td style="text-align:left;">
-8.115
-</td>
-<td style="text-align:left;">
-8.625
-</td>
-<td style="text-align:left;">
-9.236
-</td>
-<td style="text-align:left;">
-10.008
-</td>
-<td style="text-align:left;">
-11.07
-</td>
-<td style="text-align:left;">
-12.833
-</td>
-<td style="text-align:left;">
-16.75
-</td>
-<td style="text-align:left;">
-18.386
-</td>
-<td style="text-align:left;">
-22.105
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-6
-</td>
-<td style="text-align:left;">
-7.841
-</td>
-<td style="text-align:left;">
-8.558
-</td>
-<td style="text-align:left;">
-9.446
-</td>
-<td style="text-align:left;">
-9.992
-</td>
-<td style="text-align:left;">
-10.645
-</td>
-<td style="text-align:left;">
-11.466
-</td>
-<td style="text-align:left;">
-12.592
-</td>
-<td style="text-align:left;">
-14.449
-</td>
-<td style="text-align:left;">
-18.548
-</td>
-<td style="text-align:left;">
-20.249
-</td>
-<td style="text-align:left;">
-24.103
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-7
-</td>
-<td style="text-align:left;">
-9.037
-</td>
-<td style="text-align:left;">
-9.803
-</td>
-<td style="text-align:left;">
-10.748
-</td>
-<td style="text-align:left;">
-11.326
-</td>
-<td style="text-align:left;">
-12.017
-</td>
-<td style="text-align:left;">
-12.883
-</td>
-<td style="text-align:left;">
-14.067
-</td>
-<td style="text-align:left;">
-16.013
-</td>
-<td style="text-align:left;">
-20.278
-</td>
-<td style="text-align:left;">
-22.04
-</td>
-<td style="text-align:left;">
-26.018
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-8
-</td>
-<td style="text-align:left;">
-10.219
-</td>
-<td style="text-align:left;">
-11.03
-</td>
-<td style="text-align:left;">
-12.027
-</td>
-<td style="text-align:left;">
-12.636
-</td>
-<td style="text-align:left;">
-13.362
-</td>
-<td style="text-align:left;">
-14.27
-</td>
-<td style="text-align:left;">
-15.507
-</td>
-<td style="text-align:left;">
-17.535
-</td>
-<td style="text-align:left;">
-21.955
-</td>
-<td style="text-align:left;">
-23.774
-</td>
-<td style="text-align:left;">
-27.868
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-9
-</td>
-<td style="text-align:left;">
-11.389
-</td>
-<td style="text-align:left;">
-12.242
-</td>
-<td style="text-align:left;">
-13.288
-</td>
-<td style="text-align:left;">
-13.926
-</td>
-<td style="text-align:left;">
-14.684
-</td>
-<td style="text-align:left;">
-15.631
-</td>
-<td style="text-align:left;">
-16.919
-</td>
-<td style="text-align:left;">
-19.023
-</td>
-<td style="text-align:left;">
-23.589
-</td>
-<td style="text-align:left;">
-25.462
-</td>
-<td style="text-align:left;">
-29.666
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-10
-</td>
-<td style="text-align:left;">
-12.549
-</td>
-<td style="text-align:left;">
-13.442
-</td>
-<td style="text-align:left;">
-14.534
-</td>
-<td style="text-align:left;">
-15.198
-</td>
-<td style="text-align:left;">
-15.987
-</td>
-<td style="text-align:left;">
-16.971
-</td>
-<td style="text-align:left;">
-18.307
-</td>
-<td style="text-align:left;">
-20.483
-</td>
-<td style="text-align:left;">
-25.188
-</td>
-<td style="text-align:left;">
-27.112
-</td>
-<td style="text-align:left;">
-31.42
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-11
-</td>
-<td style="text-align:left;">
-13.701
-</td>
-<td style="text-align:left;">
-14.631
-</td>
-<td style="text-align:left;">
-15.767
-</td>
-<td style="text-align:left;">
-16.457
-</td>
-<td style="text-align:left;">
-17.275
-</td>
-<td style="text-align:left;">
-18.294
-</td>
-<td style="text-align:left;">
-19.675
-</td>
-<td style="text-align:left;">
-21.92
-</td>
-<td style="text-align:left;">
-26.757
-</td>
-<td style="text-align:left;">
-28.729
-</td>
-<td style="text-align:left;">
-33.137
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-12
-</td>
-<td style="text-align:left;">
-14.845
-</td>
-<td style="text-align:left;">
-15.812
-</td>
-<td style="text-align:left;">
-16.989
-</td>
-<td style="text-align:left;">
-17.703
-</td>
-<td style="text-align:left;">
-18.549
-</td>
-<td style="text-align:left;">
-19.602
-</td>
-<td style="text-align:left;">
-21.026
-</td>
-<td style="text-align:left;">
-23.337
-</td>
-<td style="text-align:left;">
-28.3
-</td>
-<td style="text-align:left;">
-30.318
-</td>
-<td style="text-align:left;">
-34.821
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-13
-</td>
-<td style="text-align:left;">
-15.984
-</td>
-<td style="text-align:left;">
-16.985
-</td>
-<td style="text-align:left;">
-18.202
-</td>
-<td style="text-align:left;">
-18.939
-</td>
-<td style="text-align:left;">
-19.812
-</td>
-<td style="text-align:left;">
-20.897
-</td>
-<td style="text-align:left;">
-22.362
-</td>
-<td style="text-align:left;">
-24.736
-</td>
-<td style="text-align:left;">
-29.819
-</td>
-<td style="text-align:left;">
-31.883
-</td>
-<td style="text-align:left;">
-36.478
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-14
-</td>
-<td style="text-align:left;">
-17.117
-</td>
-<td style="text-align:left;">
-18.151
-</td>
-<td style="text-align:left;">
-19.406
-</td>
-<td style="text-align:left;">
-20.166
-</td>
-<td style="text-align:left;">
-21.064
-</td>
-<td style="text-align:left;">
-22.18
-</td>
-<td style="text-align:left;">
-23.685
-</td>
-<td style="text-align:left;">
-26.119
-</td>
-<td style="text-align:left;">
-31.319
-</td>
-<td style="text-align:left;">
-33.426
-</td>
-<td style="text-align:left;">
-38.109
-</td>
-</tr>
-<tr>
 <td style="text-align:left;">
 15
 </td>
 <td style="text-align:left;">
-18.245
+10
 </td>
 <td style="text-align:left;">
-19.311
-</td>
-<td style="text-align:left;">
-20.603
-</td>
-<td style="text-align:left;">
-21.384
-</td>
-<td style="text-align:left;">
-22.307
-</td>
-<td style="text-align:left;">
-23.452
-</td>
-<td style="text-align:left;">
-24.996
-</td>
-<td style="text-align:left;">
-27.488
-</td>
-<td style="text-align:left;">
-32.801
-</td>
-<td style="text-align:left;">
-34.95
-</td>
-<td style="text-align:left;">
-39.719
+155
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-16
+Medium need
 </td>
-<td style="text-align:left;">
-19.369
-</td>
-<td style="text-align:left;">
-20.465
-</td>
-<td style="text-align:left;">
-21.793
-</td>
-<td style="text-align:left;">
-22.595
-</td>
-<td style="text-align:left;">
-23.542
-</td>
-<td style="text-align:left;">
-24.716
-</td>
-<td style="text-align:left;">
-26.296
-</td>
-<td style="text-align:left;">
-28.845
-</td>
-<td style="text-align:left;">
-34.267
-</td>
-<td style="text-align:left;">
-36.456
-</td>
-<td style="text-align:left;">
-41.308
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-17
-</td>
-<td style="text-align:left;">
-20.489
-</td>
-<td style="text-align:left;">
-21.615
-</td>
-<td style="text-align:left;">
-22.977
-</td>
-<td style="text-align:left;">
-23.799
-</td>
-<td style="text-align:left;">
-24.769
-</td>
-<td style="text-align:left;">
-25.97
-</td>
-<td style="text-align:left;">
-27.587
-</td>
-<td style="text-align:left;">
-30.191
-</td>
-<td style="text-align:left;">
-35.718
-</td>
-<td style="text-align:left;">
-37.946
-</td>
-<td style="text-align:left;">
-42.879
-</td>
-</tr>
-<tr>
 <td style="text-align:left;">
 18
 </td>
 <td style="text-align:left;">
-21.605
+48
 </td>
 <td style="text-align:left;">
-22.76
+63
 </td>
 <td style="text-align:left;">
-24.155
+33
 </td>
 <td style="text-align:left;">
-24.997
+31
 </td>
 <td style="text-align:left;">
-25.989
-</td>
-<td style="text-align:left;">
-27.218
-</td>
-<td style="text-align:left;">
-28.869
-</td>
-<td style="text-align:left;">
-31.526
-</td>
-<td style="text-align:left;">
-37.156
-</td>
-<td style="text-align:left;">
-39.422
-</td>
-<td style="text-align:left;">
-44.434
+193
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-19
+Low need
 </td>
 <td style="text-align:left;">
-22.718
+4
 </td>
 <td style="text-align:left;">
-23.9
+5
 </td>
 <td style="text-align:left;">
-25.329
+11
 </td>
 <td style="text-align:left;">
-26.189
+15
 </td>
 <td style="text-align:left;">
-27.204
-</td>
-<td style="text-align:left;">
-28.458
-</td>
-<td style="text-align:left;">
-30.144
-</td>
-<td style="text-align:left;">
-32.852
-</td>
-<td style="text-align:left;">
-38.582
-</td>
-<td style="text-align:left;">
-40.885
-</td>
-<td style="text-align:left;">
-45.973
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-20
-</td>
-<td style="text-align:left;">
-23.828
-</td>
-<td style="text-align:left;">
-25.038
-</td>
-<td style="text-align:left;">
-26.498
-</td>
-<td style="text-align:left;">
-27.376
-</td>
-<td style="text-align:left;">
-28.412
-</td>
-<td style="text-align:left;">
-29.692
-</td>
-<td style="text-align:left;">
-31.41
-</td>
-<td style="text-align:left;">
-34.17
-</td>
-<td style="text-align:left;">
-39.997
-</td>
-<td style="text-align:left;">
-42.336
-</td>
-<td style="text-align:left;">
-47.498
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-21
-</td>
-<td style="text-align:left;">
-24.935
-</td>
-<td style="text-align:left;">
-26.171
-</td>
-<td style="text-align:left;">
-27.662
-</td>
-<td style="text-align:left;">
-28.559
-</td>
-<td style="text-align:left;">
-29.615
-</td>
-<td style="text-align:left;">
-30.92
-</td>
-<td style="text-align:left;">
-32.671
-</td>
-<td style="text-align:left;">
-35.479
-</td>
-<td style="text-align:left;">
-41.401
-</td>
-<td style="text-align:left;">
-43.775
-</td>
-<td style="text-align:left;">
-49.011
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-22
-</td>
-<td style="text-align:left;">
-26.039
-</td>
-<td style="text-align:left;">
-27.301
-</td>
-<td style="text-align:left;">
-28.822
-</td>
-<td style="text-align:left;">
-29.737
-</td>
-<td style="text-align:left;">
-30.813
-</td>
-<td style="text-align:left;">
-32.142
-</td>
-<td style="text-align:left;">
-33.924
-</td>
-<td style="text-align:left;">
-36.781
-</td>
-<td style="text-align:left;">
-42.796
-</td>
-<td style="text-align:left;">
-45.204
-</td>
-<td style="text-align:left;">
-50.511
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-23
-</td>
-<td style="text-align:left;">
-27.141
-</td>
-<td style="text-align:left;">
-28.429
-</td>
-<td style="text-align:left;">
-29.979
-</td>
-<td style="text-align:left;">
-30.911
-</td>
-<td style="text-align:left;">
-32.007
-</td>
-<td style="text-align:left;">
-33.36
-</td>
-<td style="text-align:left;">
-35.172
-</td>
-<td style="text-align:left;">
-38.076
-</td>
-<td style="text-align:left;">
-44.181
-</td>
-<td style="text-align:left;">
-46.623
+17
 </td>
 <td style="text-align:left;">
 52
@@ -3124,1137 +1277,1376 @@ Upper tail
 </tr>
 <tr>
 <td style="text-align:left;">
-24
+<strong>Column total</strong>
 </td>
 <td style="text-align:left;">
-28.241
+57
 </td>
 <td style="text-align:left;">
-29.553
+95
 </td>
 <td style="text-align:left;">
-31.132
+127
 </td>
 <td style="text-align:left;">
-32.081
+63
 </td>
 <td style="text-align:left;">
-33.196
+58
 </td>
 <td style="text-align:left;">
-34.572
-</td>
-<td style="text-align:left;">
-36.415
-</td>
-<td style="text-align:left;">
-39.364
-</td>
-<td style="text-align:left;">
-45.559
-</td>
-<td style="text-align:left;">
-48.034
-</td>
-<td style="text-align:left;">
-53.479
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-25
-</td>
-<td style="text-align:left;">
-29.339
-</td>
-<td style="text-align:left;">
-30.675
-</td>
-<td style="text-align:left;">
-32.282
-</td>
-<td style="text-align:left;">
-33.247
-</td>
-<td style="text-align:left;">
-34.382
-</td>
-<td style="text-align:left;">
-35.78
-</td>
-<td style="text-align:left;">
-37.652
-</td>
-<td style="text-align:left;">
-40.646
-</td>
-<td style="text-align:left;">
-46.928
-</td>
-<td style="text-align:left;">
-49.435
-</td>
-<td style="text-align:left;">
-54.947
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-26
-</td>
-<td style="text-align:left;">
-30.435
-</td>
-<td style="text-align:left;">
-31.795
-</td>
-<td style="text-align:left;">
-33.429
-</td>
-<td style="text-align:left;">
-34.41
-</td>
-<td style="text-align:left;">
-35.563
-</td>
-<td style="text-align:left;">
-36.984
-</td>
-<td style="text-align:left;">
-38.885
-</td>
-<td style="text-align:left;">
-41.923
-</td>
-<td style="text-align:left;">
-48.29
-</td>
-<td style="text-align:left;">
-50.829
-</td>
-<td style="text-align:left;">
-56.407
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-27
-</td>
-<td style="text-align:left;">
-31.528
-</td>
-<td style="text-align:left;">
-32.912
-</td>
-<td style="text-align:left;">
-34.574
-</td>
-<td style="text-align:left;">
-35.57
-</td>
-<td style="text-align:left;">
-36.741
-</td>
-<td style="text-align:left;">
-38.184
-</td>
-<td style="text-align:left;">
-40.113
-</td>
-<td style="text-align:left;">
-43.195
-</td>
-<td style="text-align:left;">
-49.645
-</td>
-<td style="text-align:left;">
-52.215
-</td>
-<td style="text-align:left;">
-57.858
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-28
-</td>
-<td style="text-align:left;">
-32.62
-</td>
-<td style="text-align:left;">
-34.027
-</td>
-<td style="text-align:left;">
-35.715
-</td>
-<td style="text-align:left;">
-36.727
-</td>
-<td style="text-align:left;">
-37.916
-</td>
-<td style="text-align:left;">
-39.38
-</td>
-<td style="text-align:left;">
-41.337
-</td>
-<td style="text-align:left;">
-44.461
-</td>
-<td style="text-align:left;">
-50.993
-</td>
-<td style="text-align:left;">
-53.594
-</td>
-<td style="text-align:left;">
-59.3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-29
-</td>
-<td style="text-align:left;">
-33.711
-</td>
-<td style="text-align:left;">
-35.139
-</td>
-<td style="text-align:left;">
-36.854
-</td>
-<td style="text-align:left;">
-37.881
-</td>
-<td style="text-align:left;">
-39.087
-</td>
-<td style="text-align:left;">
-40.573
-</td>
-<td style="text-align:left;">
-42.557
-</td>
-<td style="text-align:left;">
-45.722
-</td>
-<td style="text-align:left;">
-52.336
-</td>
-<td style="text-align:left;">
-54.967
-</td>
-<td style="text-align:left;">
-60.735
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-30
-</td>
-<td style="text-align:left;">
-34.8
-</td>
-<td style="text-align:left;">
-36.25
-</td>
-<td style="text-align:left;">
-37.99
-</td>
-<td style="text-align:left;">
-39.033
-</td>
-<td style="text-align:left;">
-40.256
-</td>
-<td style="text-align:left;">
-41.762
-</td>
-<td style="text-align:left;">
-43.773
-</td>
-<td style="text-align:left;">
-46.979
-</td>
-<td style="text-align:left;">
-53.672
-</td>
-<td style="text-align:left;">
-56.332
-</td>
-<td style="text-align:left;">
-62.162
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-40
-</td>
-<td style="text-align:left;">
-45.616
-</td>
-<td style="text-align:left;">
-47.269
-</td>
-<td style="text-align:left;">
-49.244
-</td>
-<td style="text-align:left;">
-50.424
-</td>
-<td style="text-align:left;">
-51.805
-</td>
-<td style="text-align:left;">
-53.501
-</td>
-<td style="text-align:left;">
-55.758
-</td>
-<td style="text-align:left;">
-59.342
-</td>
-<td style="text-align:left;">
-66.766
-</td>
-<td style="text-align:left;">
-69.699
-</td>
-<td style="text-align:left;">
-76.095
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-50
-</td>
-<td style="text-align:left;">
-56.334
-</td>
-<td style="text-align:left;">
-58.164
-</td>
-<td style="text-align:left;">
-60.346
-</td>
-<td style="text-align:left;">
-61.647
-</td>
-<td style="text-align:left;">
-63.167
-</td>
-<td style="text-align:left;">
-65.03
-</td>
-<td style="text-align:left;">
-67.505
-</td>
-<td style="text-align:left;">
-71.42
-</td>
-<td style="text-align:left;">
-79.49
-</td>
-<td style="text-align:left;">
-82.664
-</td>
-<td style="text-align:left;">
-89.561
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-100
-</td>
-<td style="text-align:left;">
-109.141
-</td>
-<td style="text-align:left;">
-111.667
-</td>
-<td style="text-align:left;">
-114.659
-</td>
-<td style="text-align:left;">
-116.433
-</td>
-<td style="text-align:left;">
-118.498
-</td>
-<td style="text-align:left;">
-121.017
-</td>
-<td style="text-align:left;">
-124.342
-</td>
-<td style="text-align:left;">
-129.561
-</td>
-<td style="text-align:left;">
-140.169
-</td>
-<td style="text-align:left;">
-144.293
-</td>
-<td style="text-align:left;">
-153.167
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Z-score
-</td>
-<td style="text-align:left;">
-0.674
-</td>
-<td style="text-align:left;">
-0.842
-</td>
-<td style="text-align:left;">
-1.036
-</td>
-<td style="text-align:left;">
-1.15
-</td>
-<td style="text-align:left;">
-1.282
-</td>
-<td style="text-align:left;">
-1.44
-</td>
-<td style="text-align:left;">
-1.645
-</td>
-<td style="text-align:left;">
-1.96
-</td>
-<td style="text-align:left;">
-2.576
-</td>
-<td style="text-align:left;">
-2.807
-</td>
-<td style="text-align:left;">
-3.291
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Confidence Level:
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(50\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(60\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(70\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(75\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(80\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(85\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(90\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(95\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(99\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(99.5\%\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(99.9\%\)</span>
+<strong>400</strong>
 </td>
 </tr>
 </tbody>
 </table>
-<p><br> <br></p>
-</div>
-</div>
-</div>
-<div id="lecture-29" class="section level1">
-<h1>Lecture 29</h1>
-<p><strong>Warm Up: <span class="math inline">\(\chi^2\)</span> Goodness
-of Fit Test</strong> - Suppose you’re hired by a dog food company to
-help them test three new dog food flavors. You recruit a random sample
-of <span class="math inline">\(75\)</span> dogs and offer each dog a
-choice between the three flavors by placing bowls in front of them.
-Assuming that the dogs have no preference, you expect that the flavors
-will be equally popular among the dogs, with about <span
-class="math inline">\(25\)</span> dogs choosing each flavor. After weeks
-of hard work, your dog food experiment is complete and you compile your
-data in a table:</p>
-<table class=" lightable-classic table table-striped" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<p><strong>(a)</strong> How many high-anxiety students are expected to
+have a high need to succeed, if the variables are independent?
+<strong>(b)</strong> How many are expected to have a low need to succeed
+and med-low anxiety? <strong>(c)</strong> Test whether anxiety level and
+the need to succeed are independent at <span
+class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<p><strong>(a)</strong> <span class="math inline">\(E = \dfrac{155
+\times 57}{400} = 22.09\)</span>, about 22 students.
+<strong>(b)</strong> <span class="math inline">\(E = \dfrac{52 \times
+63}{400} = 8.19\)</span>, about 8 students.</p>
+<p><strong>(c)</strong> The full table of expected counts, then the
+contributions:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-Flavor
-</th>
-<th style="text-align:right;">
-Observed Count
+Expected <span class="math inline">\(E\)</span>
 </th>
 <th style="text-align:left;">
-Expected Count
+High anxiety
+</th>
+<th style="text-align:left;">
+Med-high anxiety
+</th>
+<th style="text-align:left;">
+Medium anxiety
+</th>
+<th style="text-align:left;">
+Med-low anxiety
+</th>
+<th style="text-align:left;">
+Low anxiety
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Garlic Blast
-</td>
-<td style="text-align:right;">
-22
+High need
 </td>
 <td style="text-align:left;">
+22.09
+</td>
+<td style="text-align:left;">
+36.81
+</td>
+<td style="text-align:left;">
+49.21
+</td>
+<td style="text-align:left;">
+24.41
+</td>
+<td style="text-align:left;">
+22.48
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Bacon Delight
-</td>
-<td style="text-align:right;">
-30
+Medium need
 </td>
 <td style="text-align:left;">
+27.50
+</td>
+<td style="text-align:left;">
+45.84
+</td>
+<td style="text-align:left;">
+61.28
+</td>
+<td style="text-align:left;">
+30.40
+</td>
+<td style="text-align:left;">
+27.98
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Chicken Crunch
-</td>
-<td style="text-align:right;">
-23
+Low need
 </td>
 <td style="text-align:left;">
+7.41
+</td>
+<td style="text-align:left;">
+12.35
+</td>
+<td style="text-align:left;">
+16.51
+</td>
+<td style="text-align:left;">
+8.19
+</td>
+<td style="text-align:left;">
+7.54
 </td>
 </tr>
 </tbody>
 </table>
-<p>Conduct a <span class="math inline">\(\chi^2\)</span> goodness of fit
-test to determine if the dogs show any preference for the three flavors
-being tested</p>
-<p>Note that the GOF test doesn’t tell us anything about the range of
-plausible values for the frequency parameters.</p>
-<div id="measuring-statistical-association-in-two-categorical-variables"
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+High anxiety
+</th>
+<th style="text-align:left;">
+Med-high anxiety
+</th>
+<th style="text-align:left;">
+Medium anxiety
+</th>
+<th style="text-align:left;">
+Med-low anxiety
+</th>
+<th style="text-align:left;">
+Low anxiety
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+High need
+</td>
+<td style="text-align:left;">
+7.549
+</td>
+<td style="text-align:left;">
+0.731
+</td>
+<td style="text-align:left;">
+0.291
+</td>
+<td style="text-align:left;">
+3.629
+</td>
+<td style="text-align:left;">
+6.924
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Medium need
+</td>
+<td style="text-align:left;">
+3.283
+</td>
+<td style="text-align:left;">
+0.102
+</td>
+<td style="text-align:left;">
+0.048
+</td>
+<td style="text-align:left;">
+0.223
+</td>
+<td style="text-align:left;">
+0.325
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Low need
+</td>
+<td style="text-align:left;">
+1.569
+</td>
+<td style="text-align:left;">
+4.374
+</td>
+<td style="text-align:left;">
+1.839
+</td>
+<td style="text-align:left;">
+5.663
+</td>
+<td style="text-align:left;">
+11.869
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> A random sample of 400 students;
+the smallest expected count is 7.41 (low need, high anxiety), so every
+expected count is at least 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: anxiety level and the need to
+succeed are independent. <span class="math inline">\(H_A\)</span>: they
+are not independent.</p></li>
+<li><p><strong>Test statistic.</strong> The 15 contributions add to
+<span class="math inline">\(X^2_{obs} = 48.42\)</span>, with <span
+class="math inline">\(df = (3 - 1)(5 - 1) = 8\)</span>.</p></li>
+<li><p><strong>P-value.</strong> The largest entry in the <span
+class="math inline">\(df = 8\)</span> row is 27.868 (0.0005), and <span
+class="math inline">\(48.42 &gt; 27.868\)</span>, so <span
+class="math inline">\(P(\chi^2 \geq 48.42 \mid H_0 \text{ true}) &lt;
+0.0005\)</span>.</p></li>
+<li><p><strong>Decision.</strong> <span
+class="math inline">\(\text{P-value} &lt; 0.0005 &lt; \alpha =
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span>.</strong> Anxiety level and the need
+to succeed in school are related. The largest contributions are low need
+with low anxiety (11.87: 17 observed, 7.54 expected) and high need with
+high anxiety (7.55: 35 observed, 22.09 expected): students with a higher
+need to succeed tend to report higher anxiety.</p></li>
+</ol>
+</div>
+</div>
+<div id="the-chi-square-test-for-homogeneity" class="section level1">
+<h1>The chi-square test for homogeneity</h1>
+<div id="the-setup-1" class="section level2">
+<h2>The setup</h2>
+<p>A <strong>test for homogeneity</strong> asks whether <strong>two or
+more populations</strong> have the <strong>same distribution</strong> of
+one categorical variable. The data come from a <strong>separate random
+sample from each population</strong>, and each person is classified on
+that one variable. The table has a row for each population and a column
+for each category of the response.</p>
+<p><span class="math display">\[H_0: \text{the populations have the same
+distribution of the variable}\]</span> <span class="math display">\[H_A:
+\text{the distributions are not all the same}\]</span></p>
+<p><strong>The arithmetic is identical to the test of
+independence:</strong> <span class="math display">\[E_{ij} =
+\frac{(\text{row } i \text{ total}) \times (\text{column } j \text{
+total})}{n}, \qquad
+X^2_{obs} = \sum_{\text{all cells}} \frac{(O_{ij} - E_{ij})^2}{E_{ij}},
+\qquad df = (r - 1)(c - 1),\]</span> the P-value is the upper tail, and
+every expected count must be at least 5.</p>
+<p><strong>So what is the difference?</strong> The
+<strong>design</strong>, and therefore the question:</p>
+<ul>
+<li><strong>Independence:</strong> <em>one</em> sample, and <em>two</em>
+variables measured on each person. The row totals and column totals are
+both random. Question: are the two variables related?</li>
+<li><strong>Homogeneity:</strong> <em>several</em> samples, one per
+population, and <em>one</em> variable. The row totals (the sample sizes)
+are fixed by the researcher. Question: do the populations have the same
+distribution?</li>
+</ul>
+<p>It is the categorical version of the jump from a one-sample test to a
+two-sample test: the rows are the groups we compare. With two rows, it
+extends the test of <span class="math inline">\(p_1 = p_2\)</span> to a
+response with more than two categories.</p>
+<p><em>A note on the textbook:</em> Section 11.4 of the book writes the
+homogeneity df as “number of columns <span
+class="math inline">\(-\)</span> 1”, because all of its examples compare
+exactly two populations. With <span class="math inline">\(r = 2\)</span>
+rows that is the same as <span class="math inline">\((r - 1)(c - 1) = (2
+- 1)(c - 1) = c - 1\)</span>. Use <span class="math inline">\((r - 1)(c
+- 1)\)</span>; it works for any number of populations, and it is the
+formula in the book’s Formula Review.</p>
+</div>
+<div id="example-living-arrangements-of-men-and-women"
 class="section level2">
-<h2>Measuring statistical association in two categorical variables</h2>
-<p>As stated previously, the goodness of fit test is a one-sample
-procedure for comparing the observed distribution of a single
-categorical variable to a specific model that we hypothesize under the
-null. We will now explore another type of inference which is also based
-on the <span class="math inline">\(\chi^2\)</span> (“chi-square”)
-distribution. This procedure is used to determine if two categorical
-variables share an association by exploring how the distribution of
-counts of one variable changes as we condition on the categories of
-another variable.</p>
+<h2>Example: living arrangements of men and women</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-4-test-for-homogeneity">OpenStax
+Introductory Statistics 2e, Section 11.4, Example 11.8</a>:</em></p>
+<blockquote>
+<p>Do men and women college students have the same distribution of
+living arrangements? Use a level of significance of 0.05. Suppose that
+250 randomly selected men college students and 300 randomly selected
+women college students were asked about their living arrangements:
+dormitory, apartment, with parents, other. The results are shown in the
+table. Do male and female college students have the same distribution of
+living arrangements?</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Dormitory
+</th>
+<th style="text-align:left;">
+Apartment
+</th>
+<th style="text-align:left;">
+With parents
+</th>
+<th style="text-align:left;">
+Other
+</th>
+<th style="text-align:left;">
+Row total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Men
+</td>
+<td style="text-align:left;">
+72
+</td>
+<td style="text-align:left;">
+84
+</td>
+<td style="text-align:left;">
+49
+</td>
+<td style="text-align:left;">
+45
+</td>
+<td style="text-align:left;">
+250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Women
+</td>
+<td style="text-align:left;">
+91
+</td>
+<td style="text-align:left;">
+86
+</td>
+<td style="text-align:left;">
+88
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+170
+</td>
+<td style="text-align:left;">
+137
+</td>
+<td style="text-align:left;">
+80
+</td>
+<td style="text-align:left;">
+<strong>550</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Two separate random samples (250 men, 300 women) and one variable
+(living arrangement), so this is a test for
+<strong>homogeneity</strong>.</p>
+<p><strong>Expected counts.</strong> For men in a dormitory, <span
+class="math inline">\(E = \dfrac{250 \times 163}{550} = 74.09\)</span>.
+The rest:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+Dormitory
+</th>
+<th style="text-align:left;">
+Apartment
+</th>
+<th style="text-align:left;">
+With parents
+</th>
+<th style="text-align:left;">
+Other
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Men
+</td>
+<td style="text-align:left;">
+74.09
+</td>
+<td style="text-align:left;">
+77.27
+</td>
+<td style="text-align:left;">
+62.27
+</td>
+<td style="text-align:left;">
+36.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Women
+</td>
+<td style="text-align:left;">
+88.91
+</td>
+<td style="text-align:left;">
+92.73
+</td>
+<td style="text-align:left;">
+74.73
+</td>
+<td style="text-align:left;">
+43.64
+</td>
+</tr>
+</tbody>
+</table>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+Dormitory
+</th>
+<th style="text-align:left;">
+Apartment
+</th>
+<th style="text-align:left;">
+With parents
+</th>
+<th style="text-align:left;">
+Other
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Men
+</td>
+<td style="text-align:left;">
+0.059
+</td>
+<td style="text-align:left;">
+0.586
+</td>
+<td style="text-align:left;">
+2.829
+</td>
+<td style="text-align:left;">
+2.051
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Women
+</td>
+<td style="text-align:left;">
+0.049
+</td>
+<td style="text-align:left;">
+0.488
+</td>
+<td style="text-align:left;">
+2.357
+</td>
+<td style="text-align:left;">
+1.709
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> Independent random samples of men
+and women; the smallest expected count is 36.36, well above 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: the distribution of living
+arrangements is the same for men and women college students. <span
+class="math inline">\(H_A\)</span>: the distributions are not the
+same.</p></li>
+<li><p><strong>Test statistic.</strong> <span
+class="math display">\[X^2_{obs} = 0.059 + 0.586 + 2.829 + 2.051 + 0.049
++ 0.488 + 2.357 + 1.709 = 10.13\]</span> <span class="math display">\[df
+= (2 - 1)(4 - 1) = 3\]</span></p></li>
+<li><p><strong>P-value.</strong> In the <span class="math inline">\(df =
+3\)</span> row, <span class="math inline">\(9.348 &lt; 10.13 &lt;
+12.838\)</span>, with upper tails 0.025 and 0.005, so <span
+class="math display">\[0.005 &lt; P(\chi^2 \geq 10.13 \mid H_0 \text{
+true}) &lt; 0.025\]</span> Software gives 0.0175.</p></li>
+<li><p><strong>Decision.</strong> <span class="math inline">\(0.005 &lt;
+\text{P-value} &lt; 0.025 &lt; \alpha = 0.05\)</span> (software: <span
+class="math inline">\(0.0175 &lt; 0.05\)</span>): <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. There is convincing
+evidence that men and women college students do not have the same
+distribution of living arrangements.</p></li>
+</ol>
+<p><img src="assets/l30_living.png" alt="A chi-square distribution with 3 degrees of freedom, labelled if H0 is true, X squared follows chi-square with 3 degrees of freedom. A dashed line marks 10.13 in the right tail, and the thin sliver of area to its right is shaded red and labelled P of chi-square at least 10.13. A label reads: table, 9.348 is less than 10.13, which is less than 12.838." width="100%" style="display: block; margin: auto;" /></p>
+<p>As the book points out, the test itself only says the distributions
+differ, not how. The contributions show where: “with parents” (2.829 and
+2.357) and “other” (2.051 and 1.709). Women are more likely to live with
+their parents (<span class="math inline">\(88/300 = 0.293\)</span>
+against <span class="math inline">\(49/250 = 0.196\)</span> of men) and
+less likely to have some other arrangement (<span
+class="math inline">\(35/300 = 0.117\)</span> against <span
+class="math inline">\(45/250 = 0.180\)</span>).</p>
 </div>
-<div id="chi2-test-of-independence" class="section level2">
-<h2><span class="math inline">\(\chi^2\)</span> test of
-independence</h2>
-<p>The <span class="math inline">\(\chi^2\)</span> test of independence
-is used to examine the relationship between two categorical variables in
-a two-way table (also called a <strong>contingency table</strong>).
-Consider the following hypothetical table which compares the categorical
-variable <span class="math inline">\(A\)</span>, which has two
-categories, with the categorical variable <span
-class="math inline">\(B\)</span> which has three categories.</p>
-<table class=" lightable-classic table table-striped" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Variable A
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Category 1
-</td>
-<td style="text-align:left;">
-Category 2
-</td>
-<td style="text-align:left;">
-Marginal Distribution B
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Category 1
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
-1B)\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
-1B)\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_j P(\text{Category} \ jA |
-\text{Category} \ 1B)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Variable B
-</td>
-<td style="text-align:left;">
-Category 2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
-2B)\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
-2B)\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_j P(\text{Category} \ jA |
-\text{Category} \ 2B)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Category 3
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(\text{Category} \ 1A | \text{Category} \
-3B)\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(P(\text{Category} \ 2A | \text{Category} \
-3B)\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_j P(\text{Category} \ jA |
-\text{Category} \ 3B)\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Marginal Distribution A
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_i P(\text{Category} \ 1A |
-\text{Category} \ iB)\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_i P(\text{Category} \ 2A |
-\text{Category} \ iB)\)</span>
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-</tbody>
-</table>
-<p>The two-way table above helps us to break down the relationship
-between the outcomes of <i>Variable A</i> and the outcomes of
-<i>Variable B</i>. As we can see from the table, the cells give the
-conditional probabilities (or more often frequencies/counts) of each
-category of <span class="math inline">\(A\)</span> across each category
-of <span class="math inline">\(B\)</span>. There are also usually row
-and column totals displayed in a two-way table which summarize the
-marginal distributions of each variable.</p>
-<p>A <strong><span class="math inline">\(\chi\)</span>-square test of
-independence</strong> takes advantage of the two-way table above to
-determine if the conditional distribution of the response variable (the
-columns) changes across the categories of the explanatory variable (the
-rows). In the example above, we can see that each row gives the
-conditional distribution of the response variable for a given category
-of the explanatory variable. If <em>variable A</em> and <em>variable
-B</em> are independent then the rows of the table should be more or less
-the same across all categories of the explanatory variable. If the
-outcomes of <em>variable A</em> depend on the outcomes of variable <span
-class="math inline">\(B\)</span>, then the rows of the table will change
-as we move across the categories of <em>variable B</em>.</p>
-<p>The null and alternative hypothesis of a <span
-class="math inline">\(\chi\)</span>-square test of independence are
-simple. The null hypothesis is that the two variables being tested are
-independent and the alternative is that they not independent</p>
-<p><span class="math display">\[ H_0: \text{Variable A and Variable B
-are independent} \]</span> <span class="math display">\[ H_A:
-\text{Variable A and Variable B are NOT independent}\]</span></p>
-<p>Like the goodness of fit test, the alternative hypothesis does not
-specify any particular direction. Because the two-way table can contain
-all sorts of possible associations, the alternative hypothesis cannot be
-described as one or two sided.</p>
-<p>To test the null hypothesis of “no dependence” between two variables
-in a table with <span class="math inline">\(r\)</span> rows and <span
-class="math inline">\(c\)</span> columns, we take a similar approach to
-the goodness of fit test and compare the observed cell counts in all
-cells of the table to their expected cell counts under the null
-hypothesis.</p>
-<p>In essence we are comparing two tables which represent two
-distributions: the table of <strong>observed cell counts</strong> which
-represents the observed joint distribution of the response and
-explanatory variables and the table of <strong>expected cell
-counts</strong> which represents expected joint distribution of the two
-variables the null hypothesis of no association.</p>
-<p>The test statistic summarizes the differences (i.e distance) between
-the counts in the observed table with the counts in the expected
-table.</p>
-<p><span class="math display">\[ X_{obs}^2 = \sum_{i=1}^r\sum_{j=1}^c
-\frac{(o_{ij} - e_{ij})^2}{e_{ij}}  \]</span></p>
-<p>Where <span class="math inline">\(o_{ij}\)</span> represents the
-observed count for the <span class="math inline">\(i^{th}\)</span> row
-and <span class="math inline">\(j^{th}\)</span> column of the
-contingency table:</p>
+<div id="practice-voters-before-and-after-an-earthquake"
+class="section level2">
+<h2>Practice: voters before and after an earthquake</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-4-test-for-homogeneity">OpenStax
+Introductory Statistics 2e, Section 11.4, Example 11.9</a>:</em></p>
+<blockquote>
+<p>Both before and after a recent earthquake, surveys were conducted
+asking voters which of the three candidates they planned on voting for
+in the upcoming city council election. Has there been a change since the
+earthquake? Use a level of significance of 0.05.</p>
+</blockquote>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<caption>
-The <span class="math inline">\(r \times c\)</span> table of observed
-counts
-</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
-X.
 </th>
 <th style="text-align:left;">
-Category.1
+Perez
 </th>
 <th style="text-align:left;">
-Category.2
+Chung
 </th>
 <th style="text-align:left;">
-X..1
+Stevens
 </th>
 <th style="text-align:left;">
-Category.c
-</th>
-<th style="text-align:left;">
-Total
+Row total
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Category 1
+Before
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(o_{11}\)</span>
+167
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(o_{12}\)</span>
+128
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\cdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(o_{1c}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{j=1}^c o_{1j}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Category 2
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(o_{21}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(o_{22}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\cdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(o_{2c}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{j=1}^c o_{2j}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-⋮
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\vdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\vdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\vdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\vdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\vdots\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Category r
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(o_{r1}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(o_{r2}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\cdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(o_{rc}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{j=1}^c o_{rj}\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Total
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^r o_{i1}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^r o_{i2}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\cdots\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\sum_{i=1}^r o_{ic}\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(n = \sum_{i=1}^r\sum_{j=1}^c o_{ij}\)</span>
-</td>
-</tr>
-</tbody>
-</table>
-<p>The expected counts for <span class="math inline">\(i,j^{th}\)</span>
-cell of the table are computed from the observed counts such that</p>
-<p><span class="math display">\[ e_{ij} = \frac{ \big[ \sum_{i = 1}^r
-o_{ij} \big] \times \big[ \sum_{j = 1}^c o_{ij} \big] }{ \sum_{i=1}^r
-\sum_{j=1}^c o_{ij} } = \frac{\text{row total}\times\text{column
-total}}{n}  \]</span></p>
-<p>The test statistic follows a <span
-class="math inline">\(\chi^2\)</span> distribution with <span
-class="math inline">\((r-1)\times (c-1)\)</span> degrees of freedom,
-where <span class="math inline">\(r\)</span> is the total number of row
-categories and <span class="math inline">\(c\)</span> is the total
-column categories. Let’s try it out on an example:</p>
-<p><strong>Example: Happiness and Income</strong> - As part of their
-annual survey, the General Social Survey explored the relationship
-between income and happiness. Happiness was recorded as “Not too happy”,
-“Pretty happy”, or “Very happy”, and incomes were bracketed into three
-categories: “Below average”, “Average”, and “Above average”. The counts
-are summarized in the table below:</p>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<caption>
-The <span class="math inline">\(r \times c\)</span> table of observed
-counts
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Income
-</th>
-<th style="text-align:right;">
-Not Too Happy
-</th>
-<th style="text-align:right;">
-Pretty Happy
-</th>
-<th style="text-align:right;">
-Very Happy
-</th>
-<th style="text-align:right;">
-Total
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Above Average
-</td>
-<td style="text-align:right;">
-29
-</td>
-<td style="text-align:right;">
-178
-</td>
-<td style="text-align:right;">
 135
 </td>
-<td style="text-align:right;">
-342
+<td style="text-align:left;">
+430
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Average
+After
 </td>
-<td style="text-align:right;">
-83
+<td style="text-align:left;">
+214
 </td>
-<td style="text-align:right;">
-494
+<td style="text-align:left;">
+197
 </td>
-<td style="text-align:right;">
-277
+<td style="text-align:left;">
+225
 </td>
-<td style="text-align:right;">
-854
+<td style="text-align:left;">
+636
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Below Average
+<strong>Column total</strong>
 </td>
-<td style="text-align:right;">
-104
+<td style="text-align:left;">
+381
 </td>
-<td style="text-align:right;">
-314
+<td style="text-align:left;">
+325
 </td>
-<td style="text-align:right;">
+<td style="text-align:left;">
+360
+</td>
+<td style="text-align:left;">
+<strong>1066</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Solution.</strong> The two surveys are separate samples of
+voters taken at two times, with one variable (candidate preference): a
+test for homogeneity.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> Two independent random samples (430
+before, 636 after). The smallest expected count is <span
+class="math inline">\(430 \times 325 / 1066 = 131.10\)</span>, so all
+are at least 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: the distribution of voter
+preferences was the same before and after the earthquake. <span
+class="math inline">\(H_A\)</span>: it was not the same.</p></li>
+<li><p><strong>Test statistic.</strong> The expected counts and
+contributions are</p></li>
+</ol>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+Perez
+</th>
+<th style="text-align:left;">
+Chung
+</th>
+<th style="text-align:left;">
+Stevens
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Before
+</td>
+<td style="text-align:left;">
+153.69
+</td>
+<td style="text-align:left;">
+131.10
+</td>
+<td style="text-align:left;">
+145.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+After
+</td>
+<td style="text-align:left;">
+227.31
+</td>
+<td style="text-align:left;">
+193.90
+</td>
+<td style="text-align:left;">
+214.78
+</td>
+</tr>
+</tbody>
+</table>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+Perez
+</th>
+<th style="text-align:left;">
+Chung
+</th>
+<th style="text-align:left;">
+Stevens
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Before
+</td>
+<td style="text-align:left;">
+1.153
+</td>
+<td style="text-align:left;">
+0.073
+</td>
+<td style="text-align:left;">
+0.719
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+After
+</td>
+<td style="text-align:left;">
+0.780
+</td>
+<td style="text-align:left;">
+0.049
+</td>
+<td style="text-align:left;">
+0.486
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[X^2_{obs} = 1.153 + 0.073 + 0.719 +
+0.780 + 0.049 + 0.486 = 3.26, \qquad df = (2 - 1)(3 - 1) =
+2\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p><strong>P-value.</strong> In the <span class="math inline">\(df =
+2\)</span> row, <span class="math inline">\(3.219 &lt; 3.26 &lt;
+3.794\)</span>, with upper tails 0.2 and 0.15, so <span
+class="math inline">\(0.15 &lt; P(\chi^2 \geq 3.26 \mid H_0 \text{
+true}) &lt; 0.2\)</span>. Software gives 0.1959.</p></li>
+<li><p><strong>Decision.</strong> <span
+class="math inline">\(\text{P-value} = 0.1959 &gt; \alpha =
+0.05\)</span>: <strong>fail to reject <span
+class="math inline">\(H_0\)</span></strong>. The data do not give
+convincing evidence that the distribution of voter preferences changed
+after the earthquake.</p></li>
+</ol>
+</div>
+</div>
+<div id="mcnemars-test-for-paired-categorical-data"
+class="section level1">
+<h1>McNemar’s test for paired categorical data</h1>
+<div id="two-answers-from-the-same-subjects" class="section level2">
+<h2>Two answers from the same subjects</h2>
+<p>Every chi-square test so far has counted each individual
+<strong>once</strong>. Often, though, a yes/no variable is recorded
+<strong>twice on the same subjects</strong>:</p>
+<ul>
+<li>the same voters asked whether they support a candidate before and
+after a debate;</li>
+<li>the same patients tested for an infection with two different
+tests;</li>
+<li>the same students asked whether they can solve a type of problem
+before and after a unit.</li>
+</ul>
+<p>These are <strong>paired</strong> (dependent) data, just like the <a
+href="lecturemenu12.html#matched-pairs">matched pairs</a> of Week 12,
+except that the response is categorical instead of quantitative. Neither
+the test of independence nor the test for homogeneity applies:</p>
+<ul>
+<li><strong>Not homogeneity.</strong> The “before” and “after” answers
+are not separate samples. They come from the same people, so the two
+samples are dependent.</li>
+<li><strong>Not independence (as a test of change).</strong> A test of
+independence on the paired table asks whether a subject’s first answer
+predicts their second answer. It almost always does, since people tend
+to answer the same way twice. That is not the question we care about. We
+want to know whether the <strong>proportion</strong> answering “yes”
+changed.</li>
+</ul>
+</div>
+<div id="the-paired-table" class="section level2">
+<h2>The paired table</h2>
+<p>With <span class="math inline">\(n\)</span> subjects each measured
+twice, every subject falls into exactly one of four cells:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Second: yes
+</th>
+<th style="text-align:left;">
+Second: no
+</th>
+<th style="text-align:left;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+First: yes
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(a\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(b\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(a + b\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+First: no
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(c\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(d\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(c + d\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Total</strong>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(a + c\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(b + d\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(n\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="math inline">\(a\)</span> and <span
+class="math inline">\(d\)</span> are the <strong>concordant</strong>
+pairs: the subject gave the same answer both times.</li>
+<li><span class="math inline">\(b\)</span> and <span
+class="math inline">\(c\)</span> are the <strong>discordant</strong>
+pairs: <span class="math inline">\(b\)</span> said yes the first time
+and no the second, and <span class="math inline">\(c\)</span> the
+reverse.</li>
+</ul>
+<p>The proportions answering “yes” the first and second time are <span
+class="math display">\[\hat{p}_1 = \frac{a + b}{n}, \qquad \hat{p}_2 =
+\frac{a + c}{n}, \qquad\text{so}\qquad
+\hat{p}_1 - \hat{p}_2 = \frac{(a + b) - (a + c)}{n} = \frac{b -
+c}{n}.\]</span></p>
+<p><strong>The difference between the two proportions depends only on
+the discordant pairs.</strong> The <span class="math inline">\(a +
+d\)</span> subjects who answered the same way twice cancel out. They
+tell us nothing about change, however many of them there are.</p>
+</div>
+<div id="the-test" class="section level2">
+<h2>The test</h2>
+<ul>
+<li><strong>The parameters.</strong> <span
+class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span>, the population proportions answering
+“yes” the first and the second time.</li>
+<li><strong>The hypotheses.</strong> <span class="math display">\[H_0:
+p_1 = p_2 \qquad H_A: p_1 \neq p_2\]</span> Since <span
+class="math inline">\(p_1 - p_2\)</span> is driven by the discordant
+pairs, <span class="math inline">\(H_0\)</span> says that a subject who
+changes their answer is <strong>equally likely to change in either
+direction</strong>.</li>
+<li><strong>The test statistic.</strong> If <span
+class="math inline">\(H_0\)</span> is true, each of the <span
+class="math inline">\(b + c\)</span> discordant pairs is a coin flip
+between “yes then no” and “no then yes”. So <span
+class="math inline">\(b\)</span> behaves like the number of heads in
+<span class="math inline">\(b + c\)</span> tosses of a fair coin, with
+mean <span class="math inline">\((b + c)/2\)</span> and standard
+deviation <span class="math inline">\(\sqrt{b + c}/2\)</span>.
+Standardizing <span class="math inline">\(b\)</span>: <span
+class="math display">\[z_{obs} = \frac{b - \frac{b +
+c}{2}}{\frac{\sqrt{b + c}}{2}} = \frac{b - c}{\sqrt{b + c}},
+\qquad\qquad X^2_{obs} = z_{obs}^2 = \frac{(b - c)^2}{b +
+c}\]</span></li>
+<li><strong>The null distribution.</strong> If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(X^2_{obs}\)</span> approximately follows a <span
+class="math inline">\(\chi^2(1)\)</span> distribution, so <span
+class="math display">\[df = 1.\]</span> This is the same fact as in the
+two-category <a
+href="lecturemenu12.html#aside-two-categories">goodness-of-fit aside</a>
+of Week 12: a <span class="math inline">\(\chi^2(1)\)</span> variable is
+the square of a standard normal variable.</li>
+<li><strong>The P-value.</strong> The upper tail, <span
+class="math inline">\(P(\chi^2 \geq X^2_{obs} \mid H_0 \text{
+true})\)</span>. This counts differences in either direction, because
+squaring removes the sign. For a one-sided <span
+class="math inline">\(H_A\)</span>, use <span
+class="math inline">\(z_{obs}\)</span> and the standard normal table
+instead.</li>
+<li><strong>The conditions.</strong> The subjects are a random sample,
+and there are <strong>at least 10 discordant pairs</strong> (<span
+class="math inline">\(b + c \geq 10\)</span>). With fewer, the normal
+approximation is poor. Use the exact <a
+href="lecturemenu11.html#the-sign-test">sign test</a> on <span
+class="math inline">\(b\)</span> out of <span class="math inline">\(b +
+c\)</span> instead.</li>
+</ul>
+<p><strong>McNemar’s test is the sign test.</strong> Each discordant
+pair is a “+” (yes then no) or a “−” (no then yes), and the concordant
+pairs are ties, which the sign test drops. McNemar’s statistic is the
+large-sample version of the sign test on those signs.</p>
+<div id="the-five-steps" class="section level3">
+<h3>The five steps</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> One random sample of subjects, each
+measured twice on the same yes/no variable; <span
+class="math inline">\(b + c \geq 10\)</span>.</li>
+<li><strong>Hypotheses.</strong> Define <span
+class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span> in words; <span
+class="math inline">\(H_0: p_1 = p_2\)</span> and <span
+class="math inline">\(H_A: p_1 \neq p_2\)</span>.</li>
+<li><strong>Test statistic.</strong> Read <span
+class="math inline">\(b\)</span> and <span
+class="math inline">\(c\)</span> from the table; <span
+class="math inline">\(X^2_{obs} = (b - c)^2/(b + c)\)</span> with <span
+class="math inline">\(df = 1\)</span>.</li>
+<li><strong>P-value.</strong> Bracket <span
+class="math inline">\(P(\chi^2 \geq X^2_{obs} \mid H_0 \text{
+true})\)</span> in the <span class="math inline">\(df = 1\)</span> row
+of the chi-square table.</li>
+<li><strong>Decision.</strong> Compare the P-value with <span
+class="math inline">\(\alpha\)</span>, and state the conclusion in
+context, saying which direction the change went.</li>
+</ol>
+</div>
+</div>
+<div id="example-is-saliva-as-good-as-a-swab" class="section level2">
+<h2>Example: is saliva as good as a swab?</h2>
+<p>A nose-and-throat swab collected by a nurse is the standard sample
+for a COVID-19 PCR test. Spitting into a tube is easier, cheaper and
+safer for the nurse. But does saliva find the virus as often as the swab
+does?</p>
+<blockquote>
+<p>In October and November 2020, 403 adults came to a laboratory in
+Florianópolis, Brazil, for a routine COVID-19 PCR test. Each gave a
+nurse-collected oro/nasopharyngeal swab and then, right afterwards,
+their own saliva sample. Both samples were tested by PCR. Three saliva
+results were invalid, leaving 400 patients with a result on both
+samples.</p>
+</blockquote>
+<p><em>Source: de Oliveira et al. (2021), <a
+href="https://doi.org/10.1016/j.jviromet.2021.114241">“SARS-CoV-2 saliva
+testing is a useful tool for Covid-19 diagnosis”</a>, Journal of
+Virological Methods 296: 114241, Table 1 (saliva protocol T).</em></p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Swab positive
+</th>
+<th style="text-align:left;">
+Swab negative
+</th>
+<th style="text-align:left;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Saliva positive
+</td>
+<td style="text-align:left;">
 119
 </td>
-<td style="text-align:right;">
-537
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+<strong>124</strong>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+Saliva negative
+</td>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:left;">
+243
+</td>
+<td style="text-align:left;">
+<strong>276</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Total</strong>
+</td>
+<td style="text-align:left;">
+<strong>152</strong>
+</td>
+<td style="text-align:left;">
+<strong>248</strong>
+</td>
+<td style="text-align:left;">
+<strong>400</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p>These are <strong>paired</strong> data: there are 800 test results
+but only 400 patients, and each patient’s two results belong together. A
+patient with a high viral load tends to test positive on both. Here
+“yes” means a positive test, measurement 1 is saliva and measurement 2
+is the swab, so <span class="math display">\[b = 5 \text{ (saliva
+positive, swab negative)}, \qquad c = 33 \text{ (saliva negative, swab
+positive)}.\]</span></p>
+<p><strong>The two proportions.</strong> <span
+class="math display">\[\hat{p}_1 = \frac{119 + 5}{400} = \frac{124}{400}
+= 0.31 \text{ (saliva)}, \qquad
+\hat{p}_2 = \frac{119 + 33}{400} = \frac{152}{400} = 0.38 \text{
+(swab)}\]</span> and <span class="math inline">\(\hat{p}_1 - \hat{p}_2 =
+(5 - 33)/400 = -0.07\)</span>. Saliva found 7 percentage points fewer
+positives. Could a difference this large happen by chance if the two
+samples were equally sensitive?</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> We treat the 400 patients as a random
+sample of people seeking a COVID test. Each was tested twice (paired),
+and <span class="math inline">\(b + c = 5 + 33 = 38 \geq
+10\)</span>.</li>
+<li><strong>Hypotheses.</strong> Let <span
+class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span> be the proportions of such patients
+who would test positive by saliva and by swab. <span
+class="math display">\[H_0: p_1 = p_2 \qquad H_A: p_1 \neq p_2\]</span>
+In words, <span class="math inline">\(H_0\)</span> says that among
+patients whose two results disagree, saliva-only and swab-only positives
+are equally likely.</li>
+<li><strong>Test statistic.</strong> Only the 38 discordant patients
+enter: <span class="math display">\[X^2_{obs} = \frac{(b - c)^2}{b + c}
+= \frac{(5 - 33)^2}{5 + 33} = \frac{(-28)^2}{38} = \frac{784}{38} =
+20.63,
+\qquad df = 1\]</span> Equivalently, <span class="math inline">\(z_{obs}
+= (5 - 33)/\sqrt{38} = -28/6.16 = -4.54\)</span>, and <span
+class="math inline">\((-4.54)^2 = 20.63\)</span>. If <span
+class="math inline">\(H_0\)</span> were true, we would expect about
+<span class="math inline">\(38/2 = 19\)</span> of each kind of
+disagreement, give or take <span class="math inline">\(\sqrt{38}/2 =
+3.08\)</span>. Five is 14 below 19, about 4.5 standard deviations.</li>
+<li><strong>P-value.</strong> The largest entry in the <span
+class="math inline">\(df = 1\)</span> row of the chi-square table is
+12.116 (upper tail 0.0005), and <span class="math inline">\(20.63 &gt;
+12.116\)</span>, so <span class="math display">\[P(\chi^2 \geq 20.63
+\mid H_0 \text{ true}) &lt; 0.0005\]</span> Software gives
+0.0000056.</li>
+<li><strong>Decision.</strong> <span
+class="math inline">\(\text{P-value} &lt; 0.0005 &lt; \alpha =
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data give convincing
+evidence that saliva and the swab do not detect COVID-19 equally often.
+Saliva missed 33 infections that the swab caught and caught only 5 that
+the swab missed, so <strong>saliva is the less sensitive
+sample</strong>.</li>
+</ol>
+<p><img src="assets/l31_saliva.png" alt="A chi-square distribution with 1 degree of freedom, labelled if H0 is true, X squared follows chi-square with 1 degree of freedom, drawn from 0 to 16. The curve is highest at 0 and falls quickly. A red dashed line at 12.116 is labelled: table, 12.116 cuts off 0.0005. A label and arrow at the right edge read: ours, 20.63, off this edge." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>Two things this example shows.</strong></p>
+<ul>
+<li><strong>Agreement is not the question.</strong> The two samples
+agree for <span class="math inline">\(119 + 243 = 362\)</span> of the
+400 patients (90.5%). The paper calls saliva “useful” for exactly that
+reason. McNemar’s test ignores those 362 patients and asks only whether
+the disagreements are lopsided. They are, 33 to 5.</li>
+<li><strong>The wrong test gives a wrong-looking answer.</strong> A test
+of independence on the same table gives <span class="math inline">\(X^2
+= 256.3\)</span>, because a patient’s saliva result strongly predicts
+their swab result. That tells us the two tests agree, not whether one
+finds more positives than the other.</li>
+</ul>
+<p><strong>A note on software.</strong> Many programs, including R’s
+<code>mcnemar.test()</code>, use a continuity correction by default:
+<span class="math inline">\((|b - c| - 1)^2/(b + c) = 27^2/38 =
+19.18\)</span>. It makes little difference when <span
+class="math inline">\(b + c\)</span> is large, and our conclusion is the
+same. In this course we use the uncorrected formula.</p>
+</div>
+<div id="example-a-gargle-instead-of-a-swab" class="section level2">
+<h2>Example: a gargle instead of a swab</h2>
+<p>A second study compared a self-collected <strong>gargle</strong>
+sample with the nurse-collected swab.</p>
+<blockquote>
+<p>Between 15 and 28 April 2021, patients referred for COVID-19 testing
+at University Hospital Olomouc, Czech Republic, gave a nasopharyngeal
+swab and a self-collected gargle lavage sample. Both were tested by PCR,
+giving 494 paired results.</p>
+</blockquote>
+<p><em>Source: Bouska et al. (2022), <a
+href="https://doi.org/10.3390/v14122829">“Evaluation of non-invasive
+gargle lavage sampling for the detection of SARS-CoV-2 using rRT-PCR or
+antigen assay”</a>, Viruses 14(12): 2829, Table 2.</em></p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Swab positive
+</th>
+<th style="text-align:left;">
+Swab negative
+</th>
+<th style="text-align:left;">
 Total
-</td>
-<td style="text-align:right;">
-216
-</td>
-<td style="text-align:right;">
-986
-</td>
-<td style="text-align:right;">
-531
-</td>
-<td style="text-align:right;">
-1733
-</td>
-</tr>
-</tbody>
-</table>
-<p>Conduct a <span class="math inline">\(\chi^2\)</span> test of
-independence to determine if there is evidence to support that income is
-related to happiness</p>
-<ul>
-<li>The table of expected counts is given below</li>
-</ul>
-<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<caption>
-The <span class="math inline">\(r \times c\)</span> table of expected
-counts
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Not Too Happy
-</th>
-<th style="text-align:left;">
-Pretty Happy
-</th>
-<th style="text-align:left;">
-Very Happy
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Above Average
+Gargle positive
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{342\times 216}{1733} = 42.63\)</span>
+255
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{342\times 986}{1733} = 194.58\)</span>
+20
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{342\times 531}{1733} = 104.79\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Average
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{854\times 216}{1733} = 106.44\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{854\times 986}{1733} = 485.89\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{854\times 531}{1733} = 261.67\)</span>
+<strong>275</strong>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Below Average
+Gargle negative
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{537\times 216}{1733} = 66.93\)</span>
+20
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{537\times 986}{1733} = 305.53\)</span>
+199
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{537\times 531}{1733} = 164.54\)</span>
+<strong>219</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Total</strong>
+</td>
+<td style="text-align:left;">
+<strong>275</strong>
+</td>
+<td style="text-align:left;">
+<strong>219</strong>
+</td>
+<td style="text-align:left;">
+<strong>494</strong>
 </td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li>the table below gives the squared deviations across all cell
-counts</li>
-</ul>
+<p>Test at <span class="math inline">\(\alpha = 0.05\)</span> whether
+the gargle and the swab detect COVID-19 equally often.</p>
+<p><strong>Solution.</strong></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> 494 patients, each tested both ways
+(paired); <span class="math inline">\(b + c = 20 + 20 = 40 \geq
+10\)</span>.</li>
+<li><strong>Hypotheses.</strong> With <span
+class="math inline">\(p_1\)</span> and <span
+class="math inline">\(p_2\)</span> the proportions testing positive by
+gargle and by swab, <span class="math inline">\(H_0: p_1 = p_2\)</span>
+and <span class="math inline">\(H_A: p_1 \neq p_2\)</span>.</li>
+<li><strong>Test statistic.</strong> Here <span
+class="math inline">\(\hat{p}_1 = \hat{p}_2 = 275/494 = 0.557\)</span>,
+and <span class="math display">\[X^2_{obs} = \frac{(20 - 20)^2}{20 + 20}
+= 0, \qquad df = 1\]</span></li>
+<li><strong>P-value.</strong> <span class="math inline">\(X^2_{obs} =
+0\)</span> is the smallest value possible, so the P-value is <span
+class="math inline">\(P(\chi^2 \geq 0 \mid H_0 \text{ true}) =
+1\)</span>.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(1 &gt; \alpha
+= 0.05\)</span>: <strong>fail to reject <span
+class="math inline">\(H_0\)</span></strong>. Each sample caught 20
+infections the other missed, so there is no evidence that one finds more
+positives than the other.</li>
+</ol>
+<p>These counts are real: the paper reports exactly 20 positives on each
+side. Contrast this with the saliva study, where the discordant pairs
+were split 33 to 5.</p>
+</div>
+</div>
+<div id="which-test-for-categorical-data" class="section level1">
+<h1>Which test for categorical data?</h1>
+<p><em>(<a
+href="https://openstax.org/books/introductory-statistics-2e/pages/11-5-comparison-of-the-chi-square-tests">OpenStax
+Section 11.5</a>.)</em> All four tests compute an <span
+class="math inline">\(X^2\)</span> and use the upper tail of a
+chi-square distribution. To choose between them, ask <strong>how many
+samples</strong> there are, <strong>how many variables</strong> were
+measured, and whether each subject was <strong>measured
+twice</strong>.</p>
 <table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<caption>
-The <span class="math inline">\(r \times c\)</span> table of differences
-</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
+Test
 </th>
 <th style="text-align:left;">
-Not Too Happy
+Design
 </th>
 <th style="text-align:left;">
-Pretty Happy
+<span class="math inline">\(H_0\)</span>
 </th>
 <th style="text-align:left;">
-Very Happy
+Statistic
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(df\)</span>
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Above Average
+<strong>Goodness of fit</strong>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{(42.63 - 29)^2}{42.63} = 4.36\)</span>
+one sample, one categorical variable
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{(194.58 - 178)^2}{194.58} =
-1.41\)</span>
+the population fits the claimed distribution (<span
+class="math inline">\(p_i = p_{i,0}\)</span> for every category)
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{(104.79 - 135)^2}{104.79} =
-8.71\)</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Average
+<span class="math inline">\(\sum (O - E)^2/E\)</span> with <span
+class="math inline">\(E = n\,p_{i,0}\)</span>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{(106.44 - 83)^2}{106.44} =
-5.16\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{(485.89 - 494)^2}{485.89} =
-0.14\)</span>
-</td>
-<td style="text-align:left;">
-<span class="math inline">\(\frac{(261.67 - 277)^2}{261.67} =
-0.9\)</span>
+<span class="math inline">\(k{-}1\)</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Below Average
+<strong>Independence</strong>
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{(66.93 - 104)^2}{66.93} =
-20.53\)</span>
+one sample, two categorical variables on each individual
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{(305.53 - 314)^2}{305.53} =
-0.23\)</span>
+the two variables are independent
 </td>
 <td style="text-align:left;">
-<span class="math inline">\(\frac{(164.54 - 119)^2}{164.54} =
-12.6\)</span>
+<span class="math inline">\(\sum (O - E)^2/E\)</span> with <span
+class="math inline">\(E = \text{row} \times \text{column} / n\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((r{-}1)(c{-}1)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Homogeneity</strong>
+</td>
+<td style="text-align:left;">
+a separate sample from each of two or more populations, one categorical
+variable
+</td>
+<td style="text-align:left;">
+the populations have the same distribution
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(\sum (O - E)^2/E\)</span> with <span
+class="math inline">\(E = \text{row} \times \text{column} / n\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((r{-}1)(c{-}1)\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>McNemar</strong>
+</td>
+<td style="text-align:left;">
+one sample, the same yes/no variable measured twice on each individual
+(paired)
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(p_1 = p_2\)</span>: the proportion answering
+“yes” is the same both times
+</td>
+<td style="text-align:left;">
+<span class="math inline">\((b - c)^2/(b + c)\)</span>
+</td>
+<td style="text-align:left;">
+<span class="math inline">\(1\)</span>
 </td>
 </tr>
 </tbody>
 </table>
-<p>The <span class="math inline">\(\chi^2\)</span> test statistic can be
-computed as the sum of the elements in the table above</p>
-<p><span class="math display">\[ X_{obs}^2 = 4.36 + 5.16 + \cdots +0.23
-+ 12.6 = 54.04 \]</span></p>
-<p>which follows a <span class="math inline">\(\chi^2\)</span>
-distribution with <span class="math inline">\((3-1)\times (3 - 1) =
-4\)</span> degrees of freedom. The <span
-class="math inline">\(p\)</span>-value is the probability of observing a
-value more extreme than <span class="math inline">\(X_{obs}^2 =
-54.04\)</span> which is</p>
-<p><span class="math display">\[P(\chi^2_4 \geq 54.04|H_0 \ \text{True})
-\approx 0 \]</span></p>
-<p>Thus, at <span class="math inline">\(\alpha = 0.05\)</span> level we
-would conclude that there is significant evidence that income and
-happiness are related.</p>
-<p><br> <br> <br> <br></p>
+<p>The three chi-square tests need every expected count to be at least
+5. McNemar’s test needs at least 10 discordant pairs.</p>
+<p><strong>Practice: which test?</strong> For each study, name the
+test.</p>
+<ol style="list-style-type: decimal">
+<li>A random sample of 500 voters is asked both their age group (18–29,
+30–49, 50–64, 65+) and their preferred news source (TV, print, online,
+social media). Are age group and news source related?</li>
+<li>A candy company says its bags are 20% red, 20% orange, 20% yellow,
+20% green and 20% blue. You count the colors in a random sample of 300
+pieces.</li>
+<li>Separate random samples of 200 first-year students and 200 seniors
+are asked how they usually get to campus (walk, bike, bus, drive). Do
+the two classes commute the same way?</li>
+<li>150 randomly chosen students are asked whether they support a new
+student fee, then asked again after a campus debate on it. Did support
+change?</li>
+</ol>
+<p><strong>Answers.</strong> (1) Independence: one sample, two variables
+measured on each voter. (2) Goodness of fit: one variable compared with
+a claimed distribution, with <span class="math inline">\(E = 300 \times
+0.2 = 60\)</span> for each color and <span class="math inline">\(df =
+4\)</span>. (3) Homogeneity: two separately sampled populations, one
+variable, with <span class="math inline">\(df = (2 - 1)(4 - 1) =
+3\)</span>. (4) McNemar: the same 150 students answer the same yes/no
+question twice, so the answers are paired. Only the students who changed
+their minds enter the statistic.</p>
+<p><em>Fisher’s exact test</em>, for a <span class="math inline">\(2
+\times 2\)</span> table whose expected counts are too small for the
+chi-square test, is written up as optional reading under
+<strong>Resources → Extras → <a
+href="misc/Fisher-Exact-Test.html">Fisher’s Exact Test</a></strong>.</p>
 </div>
-<div id="references" class="section level2">
-<h2>References</h2>
-</div>
+<div id="sources" class="section level1">
+<h1>Sources</h1>
+<ul>
+<li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
+11.3–11.5.</li>
+<li>The test of independence uses OpenStax Examples 11.5 (speeding and
+cell phones, p. 575), 11.6 (volunteers, p. 575) and 11.7 (anxiety and
+the need to succeed, p. 578). The test for homogeneity uses Examples
+11.8 (living arrangements, p. 579) and 11.9 (voters and the earthquake,
+p. 580). The comparison table follows Section 11.5 (p. 582). The book
+gives only two expected counts for Example 11.7; the test that finishes
+it is ours.</li>
+<li>The McNemar examples are real paired data, checked against the
+published tables: C. M. de Oliveira, L. Brochi, L. C. Scarpelli, A. C.
+W. Lopes and J. E. Levi (2021), “SARS-CoV-2 saliva testing is a useful
+tool for Covid-19 diagnosis,” <em>Journal of Virological Methods</em>
+296: 114241, Table 1 (protocol T); and O. Bouska et al. (2022),
+“Evaluation of non-invasive gargle lavage sampling for the detection of
+SARS-CoV-2 using rRT-PCR or antigen assay,” <em>Viruses</em> 14(12):
+2829, Table 2. The McNemar statistics are our computations: the first
+paper reports only “P &lt; 0.001”, and the second does not test this
+table.</li>
+<li>McNemar’s test: A. Agresti (2007), <em>An Introduction to
+Categorical Data Analysis</em>, 2nd ed., Section 8.1.</li>
+</ul>
 </div>
 
 <!--

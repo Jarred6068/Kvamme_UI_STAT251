@@ -1,0 +1,133 @@
+---
+title: "Fisher's Exact Test"
+author: "STAT 251 Section 01"
+output:
+  html_document:
+    ## a non-empty map, so it merges with misc/_output.yml (see the warning there)
+    toc: true
+    toc_depth: 2
+always_allow_html: true
+---
+
+<!--
+  Optional reading under Resources -> Extras (added Nov 16 2026). Fisher's exact test was on the Week 13 schedule
+  but was dropped from the lectures (Jarred's choice); this page is the write-up. Every number is checked in the
+  setup chunk.
+-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+
+fmt <- function(x, d = 4) formatC(x, format = 'f', digits = d)
+tab <- function(df, ...) kable(df, format = 'html', row.names = FALSE, escape = FALSE, ...) %>%
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = 'striped')
+
+# the tea-tasting experiment: 8 cups, 4 milk-first; X = milk-first cups she labels correctly
+px <- dhyper(0:4, 4, 4, 4)                       # P(X = 0), ..., P(X = 4)
+stopifnot(choose(8, 4) == 70, identical(round(px * 70), c(1, 16, 36, 16, 1)))
+p_all <- px[5]                                   # she gets all 4 right
+p_3up <- sum(px[4:5])                            # 3 or more right
+p_two <- sum(px[px <= p_all + 1e-12])            # two-sided: tables at least as unlikely as 4 right
+stopifnot(round(p_all, 4) == 0.0143, round(p_3up, 4) == 0.2429, round(p_two, 4) == 0.0286,
+          round(fisher.test(matrix(c(4, 0, 0, 4), 2), alternative = 'greater')$p.value, 4) == 0.0143,
+          round(fisher.test(matrix(c(4, 0, 0, 4), 2))$p.value, 4) == 0.0286,
+          round(fisher.test(matrix(c(3, 1, 1, 3), 2), alternative = 'greater')$p.value, 4) == 0.2429)
+# what the chi-square test of independence would (wrongly) say about the perfect table: every E = 2
+X2 <- sum((c(4, 0, 0, 4) - 2)^2 / 2)
+stopifnot(X2 == 8, round(pchisq(8, 1, lower.tail = FALSE), 4) == 0.0047)
+```
+
+The chi-square test of independence (Week 13 notes) needs **every expected count to be at least 5**. In a
+small study, a $2 \times 2$ table can easily break that rule. The chi-square curve is then a poor
+approximation, and its P-value can be badly wrong. **Fisher's exact test** avoids the approximation altogether:
+it computes the P-value exactly, by counting.
+
+# The idea: fix the margins and count
+
+Write the $2 \times 2$ table with its margins:
+
+```{r, echo=FALSE}
+tab(data.frame(c('Row 1', 'Row 2', '**Column total**'), c('$a$', '$c$', '$a + c$'), c('$b$', '$d$', '$b + d$'),
+               c('$a + b$', '$c + d$', '$n$')),
+    col.names = c('', 'Column 1', 'Column 2', 'Row total'))
+```
+
+Fisher's insight was to treat **all four margins as fixed** and ask: if the two variables are independent
+($H_0$), how likely is each way of filling in the table? Once the margins are fixed, the single count $a$ fixes
+the whole table ($b$, $c$ and $d$ follow by subtraction), so we only need the distribution of $a$. Under $H_0$
+it is the **hypergeometric distribution**: choosing which $a + c$ of the $n$ individuals land in column 1 is like
+drawing $a + c$ cards from a deck with $a + b$ "row 1" cards and $c + d$ "row 2" cards, so
+
+$$P(a) = \frac{\dbinom{a + b}{a}\dbinom{c + d}{c}}{\dbinom{n}{a + c}}.$$
+
+Here $\binom{m}{k}$ ("$m$ choose $k$") is the number of ways to choose $k$ items from $m$.
+
+The **P-value** adds up $P(a)$ for every table at least as extreme as the one observed, in the direction(s)
+$H_A$ points to. No approximation is involved, which is why the test is called **exact**.
+
+**When to use it:** a $2 \times 2$ table in which some expected count is below 5. (It is valid for large tables
+too, but there the chi-square test gives nearly the same answer with far less arithmetic.)
+
+# Example: the lady tasting tea
+
+The classic example comes from R. A. Fisher's book *The Design of Experiments* (1935). A colleague claimed she
+could taste whether the milk or the tea had been poured into the cup first. Fisher prepared **8 cups, 4 of each
+kind**, served them in random order, and told her there were 4 of each. She had to pick the 4 milk-first cups.
+She picked all 4 correctly.
+
+```{r, echo=FALSE}
+tab(data.frame(c('Truth: milk first', 'Truth: tea first', '**Column total**'), c(4, 0, '**4**'), c(0, 4, '**4**'),
+               c('**4**', '**4**', '**8**')),
+    col.names = c('', 'She says milk first', 'She says tea first', 'Row total'))
+```
+
+1. **Assumptions.** The cups were served in random order, and both margins are fixed by the design (4 of each
+   kind, and she knows to pick 4). The expected counts are all $4 \times 4 / 8 = 2$, below 5, so the
+   chi-square test does not apply.
+2. **Hypotheses.** $H_0$: she cannot taste the difference (her choices are independent of the truth).
+   $H_A$: she can (more correct choices than guessing would give). Upper-tailed.
+3. **The count.** Let $X$ be the number of milk-first cups among her 4 picks. There are $\binom{8}{4} = 70$ equally
+   likely ways to pick 4 cups when she is guessing. The distribution of $X$ is
+   $$P(X = k) = \frac{\dbinom{4}{k}\dbinom{4}{4 - k}}{\dbinom{8}{4}}, \qquad k = 0, 1, 2, 3, 4$$
+
+```{r, echo=FALSE}
+tab(data.frame(t(c('$P(X = k)$', paste0(round(px * 70), '/70 = ', fmt(px))))), col.names = c('$k$', 0:4))
+```
+
+4. **P-value.** Only one table is as extreme as hers (all 4 right):
+   $$\text{P-value} = P(X \geq 4 \mid H_0 \text{ true}) = \frac{1}{70} = 0.0143$$
+5. **Decision.** $0.0143 < \alpha = 0.05$: **reject $H_0$**. Picking all 4 by guessing happens only 1 time in 70,
+   so the data are convincing evidence that she could taste the difference.
+
+**What if she had made one mistake?** With 3 of 4 right, the tables at least as extreme are $X = 3$ and $X = 4$:
+$$\text{P-value} = P(X \geq 3) = \frac{16 + 1}{70} = 0.2429 > \alpha = 0.05,$$
+so one mistake would have left no convincing evidence at all. Eight cups is a very small experiment.
+
+**Two-sided version.** If $H_A$ were only "her choices are related to the truth" (in either direction), we add
+every table that is **no more likely** than the observed one. $P(X = 4) = 1/70$ and $P(X = 0) = 1/70$, so the
+two-sided P-value is $2/70 = 0.0286$.
+
+# Why not the chi-square test?
+
+Running the chi-square test of independence on her table anyway: every $E = 2$, every $(O - E)^2/E = 4/2 = 2$,
+so $X^2 = 8$ with $df = 1$ and an upper-tail area of 0.0047. That is about **six times smaller** than the exact
+two-sided P-value of 0.0286. With expected counts this small, the chi-square curve badly overstates the evidence.
+That is exactly the situation the "every $E \geq 5$" condition guards against, and Fisher's test is the fix.
+
+# In software
+
+R computes the test with `fisher.test()`:
+
+```{r}
+tea <- matrix(c(4, 0, 0, 4), nrow = 2)
+fisher.test(tea, alternative = "greater")$p.value   # upper-tailed: 1/70
+fisher.test(tea)$p.value                            # two-sided: 2/70
+```
+
+# Sources
+
+* R. A. Fisher (1935), *The Design of Experiments*, Chapter 2 (the tea-tasting experiment).
+* A. Agresti (2007), *An Introduction to Categorical Data Analysis*, 2nd ed., Section 2.6 (Fisher's exact test).
