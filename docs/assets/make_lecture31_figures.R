@@ -2,6 +2,7 @@
 #OpenStax Example 11.8) and McNemar's test. The goodness-of-fit and independence slides carried over from
 #Lecture 30 are checked in make_lecture30_figures.R. It draws:
 #
+#  l31_speeding.png      chi-square(1) curve, upper tail beyond X^2 = 0.70 shaded (speeding and cell phones)
 #  l31_saliva.png        chi-square(1) curve: X^2 = 20.63 for saliva vs swab is far beyond the right edge
 #  l31_figure_sizes.csv  the size, in points, each figure is drawn at
 #
@@ -29,6 +30,18 @@ if (is.na(this_file)) stop("Could not determine the script location; run it with
 assets_dir <- dirname(this_file)
 
 pv <- function(x, df) pchisq(x, df, lower.tail = FALSE)
+
+#---- speeding violations and cell phones (independence): OpenStax Example 3.20, Table 3.3 (the book calls the
+#data fictional); the same 755 drivers and margins as Example 11.5
+S <- matrix(c(25, 280, 45, 405), 2, byrow = TRUE)
+SE <- outer(rowSums(S), colSums(S)) / sum(S)
+St <- (S - SE)^2 / SE
+stopifnot(identical(rowSums(S), c(305, 450)), identical(colSums(S), c(70, 685)), sum(S) == 755,
+          identical(round(SE, 2), matrix(c(28.28, 276.72, 41.72, 408.28), 2, byrow = TRUE)),
+          identical(round(St, 3), matrix(c(0.380, 0.039, 0.258, 0.026), 2, byrow = TRUE)),
+          round(sum(round(St, 3)), 3) == 0.703, round(sum(St), 2) == 0.70,
+          round(qchisq(0.75, 1), 3) == 1.323, round(pv(sum(St), 1), 4) == 0.4019,
+          identical(round(c(25 / 305, 45 / 450), 3), c(0.082, 0.100)))
 
 #---- living arrangements (homogeneity): expected counts and contributions shown on the slides
 O <- matrix(c(72, 84, 49, 45, 91, 86, 88, 35), 2, byrow = TRUE)
@@ -88,6 +101,24 @@ gs <- ggplot(d1, aes(x, y)) +
   coord_cartesian(xlim = c(0, 16), ylim = c(0, top), expand = FALSE) +
   labs(x = expression(X^2~'value (mean of'~chi^2*(1)~'is 1)'), y = NULL) + bare
 save_fig(gs, 'l31_saliva.png', 840, 270)
+
+#---- speeding and cell phones: chi-square(1), X^2 = 0.70, P-value = 0.4019 (software), compared with alpha only
+gx <- seq(0.02, 6, length.out = 900)
+d1s <- data.frame(x = gx, y = dchisq(gx, 1)); tops <- 1.2
+gsp <- ggplot(d1s, aes(x, y)) +
+  geom_area(fill = SHADE, alpha = 0.5) +
+  geom_area(data = subset(d1s, x >= 0.70), fill = RED, alpha = 0.85) +
+  geom_line(colour = NAVY, linewidth = 1.1) +
+  geom_vline(xintercept = 0.70, colour = NAVY, linetype = 'dashed') +
+  lab(5.9, tops * 0.95, 'bold("if"~H[0]~"is true:"~~X^2~"~"~chi^2*(1))', NAVY, 1, 'bold', parse = TRUE) +
+  lab(1.6, tops * 0.45, 'P(χ² ≥ 0.70)', RED, 0, 'bold') +
+  annotate('segment', x = 1.55, xend = 1.0, y = tops * 0.4, yend = tops * 0.08, colour = RED,
+           arrow = arrow(length = unit(0.2, 'cm'))) +
+  lab(5.9, tops * 0.62, 'P-value = 0.4019 > α = 0.05', 'black', 1, 'bold') +
+  scale_x_continuous(breaks = c(0, 0.7, 2, 4, 6), labels = c('0', '0.70', '2', '4', '6')) +
+  coord_cartesian(xlim = c(0, 6), ylim = c(0, tops), expand = FALSE) +
+  labs(x = expression(X^2~'(ours: 0.70)'), y = NULL) + bare
+save_fig(gsp, 'l31_speeding.png', 840, 270)
 
 write.csv(sizes, file.path(assets_dir, 'l31_figure_sizes.csv'), row.names = FALSE)
 print(sizes)

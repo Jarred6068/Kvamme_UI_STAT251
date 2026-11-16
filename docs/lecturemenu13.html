@@ -891,6 +891,214 @@ column <span class="math inline">\(c\)</span> total
 </tbody>
 </table>
 </div>
+<div id="example-speeding-tickets-and-cell-phones"
+class="section level2">
+<h2>Example: speeding tickets and cell phones</h2>
+<p>The setup above used only the margins of the speeding study. The
+textbook gives the full table of the same 755 drivers in Chapter 3:</p>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/3-4-contingency-tables">OpenStax
+Introductory Statistics 2e, Section 3.4, Example 3.20</a> (the book
+notes that these data are fictional):</em></p>
+<blockquote>
+<p>Suppose a study of speeding violations and drivers who use cell
+phones produced the following fictional data.</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Speeding violation in the last year
+</th>
+<th style="text-align:left;">
+No speeding violation in the last year
+</th>
+<th style="text-align:left;">
+Row total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Uses cell phone while driving
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+280
+</td>
+<td style="text-align:left;">
+305
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Does not use cell phone while driving
+</td>
+<td style="text-align:left;">
+45
+</td>
+<td style="text-align:left;">
+405
+</td>
+<td style="text-align:left;">
+450
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Column total</strong>
+</td>
+<td style="text-align:left;">
+70
+</td>
+<td style="text-align:left;">
+685
+</td>
+<td style="text-align:left;">
+<strong>755</strong>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Is having a speeding violation related to using a cell phone while
+driving? Test at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p><span class="math inline">\(X\)</span> = cell phone use while driving
+(yes/no), <span class="math inline">\(Y\)</span> = a speeding violation
+in the last year (yes/no), <span class="math inline">\(n = 755\)</span>.
+Both variables were recorded for every driver in <strong>one</strong>
+sample, so this is a test of <strong>independence</strong>.</p>
+<p><strong>Step 1: the expected counts.</strong> Each cell is (row
+total)(column total)/755: <span class="math display">\[E_{11} =
+\frac{305 \times 70}{755} = 28.28, \qquad E_{12} = \frac{305 \times
+685}{755} = 276.72,\]</span> <span class="math display">\[E_{21} =
+\frac{450 \times 70}{755} = 41.72, \qquad E_{22} = \frac{450 \times
+685}{755} = 408.28.\]</span></p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Expected <span class="math inline">\(E\)</span>
+</th>
+<th style="text-align:left;">
+Speeding violation in the last year
+</th>
+<th style="text-align:left;">
+No speeding violation in the last year
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Uses cell phone while driving
+</td>
+<td style="text-align:left;">
+28.28
+</td>
+<td style="text-align:left;">
+276.72
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Does not use cell phone while driving
+</td>
+<td style="text-align:left;">
+41.72
+</td>
+<td style="text-align:left;">
+408.28
+</td>
+</tr>
+</tbody>
+</table>
+<p>Check: each row adds to its row total (<span
+class="math inline">\(28.28 + 276.72 = 305\)</span>), and every expected
+count is at least 5.</p>
+<p><strong>Step 2: the contributions <span class="math inline">\((O -
+E)^2/E\)</span>.</strong> For cell phone users with a violation, <span
+class="math display">\[\frac{(25 - 28.28)^2}{28.28} =
+\frac{(-3.28)^2}{28.28} = \frac{10.76}{28.28} = 0.380.\]</span></p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\((O - E)^2/E\)</span>
+</th>
+<th style="text-align:left;">
+Speeding violation in the last year
+</th>
+<th style="text-align:left;">
+No speeding violation in the last year
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Uses cell phone while driving
+</td>
+<td style="text-align:left;">
+0.380
+</td>
+<td style="text-align:left;">
+0.039
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Does not use cell phone while driving
+</td>
+<td style="text-align:left;">
+0.258
+</td>
+<td style="text-align:left;">
+0.026
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now the five steps.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Assumptions.</strong> One random sample of 755 drivers,
+each classified on both variables; the smallest expected count is 28.28,
+well above 5.</p></li>
+<li><p><strong>Hypotheses.</strong> <span
+class="math inline">\(H_0\)</span>: having a speeding violation is
+independent of using a cell phone while driving. <span
+class="math inline">\(H_A\)</span>: the two are related (not
+independent).</p></li>
+<li><p><strong>Test statistic.</strong> Add the four contributions:
+<span class="math display">\[X^2_{obs} = 0.380 + 0.039 + 0.258 + 0.026 =
+0.70, \qquad df = (2 - 1)(2 - 1) = 1\]</span></p></li>
+<li><p><strong>P-value.</strong> <span class="math inline">\(X^2_{obs} =
+0.70\)</span> is smaller than the first entry in the <span
+class="math inline">\(df = 1\)</span> row of the chi-square table
+(1.323), so the P-value is large. Software gives <span
+class="math display">\[P(\chi^2 \geq 0.70 \mid H_0 \text{ true}) =
+0.4019\]</span></p></li>
+<li><p><strong>Decision.</strong> <span class="math inline">\(0.4019
+&gt; \alpha = 0.05\)</span>: <strong>fail to reject <span
+class="math inline">\(H_0\)</span></strong>. These data give no
+convincing evidence that speeding violations are related to cell phone
+use while driving.</p></li>
+</ol>
+<p><img src="assets/l31_speeding.png" alt="A chi-square distribution with 1 degree of freedom, labelled if H0 is true, X squared follows chi-square with 1 degree of freedom, drawn from 0 to 6. A dashed line marks 0.70, and everything to its right is shaded red and labelled P of chi-square at least 0.70. A label reads: P-value equals 0.4019, greater than alpha equals 0.05." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>Why so little evidence?</strong> Compare the conditional
+distributions: <span class="math inline">\(25/305 = 0.082\)</span> of
+the cell phone users had a violation, against <span
+class="math inline">\(45/450 = 0.100\)</span> of the non-users and <span
+class="math inline">\(70/755 = 0.093\)</span> of all drivers. The rows
+look alike, so every observed count sits close to its expected count,
+and <span class="math inline">\(X^2\)</span> is small. (In these
+fictional data, the cell phone users actually had slightly
+<em>fewer</em> violations.)</p>
+</div>
 <div id="example-volunteers-and-hours" class="section level2">
 <h2>Example: volunteers and hours</h2>
 <p><em>From <a
@@ -2628,12 +2836,13 @@ href="misc/Fisher-Exact-Test.html">Fisher’s Exact Test</a></strong>.</p>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
 11.3–11.5.</li>
 <li>The test of independence uses OpenStax Examples 11.5 (speeding and
-cell phones, p. 575), 11.6 (volunteers, p. 575) and 11.7 (anxiety and
-the need to succeed, p. 578). The test for homogeneity uses Examples
-11.8 (living arrangements, p. 579) and 11.9 (voters and the earthquake,
-p. 580). The comparison table follows Section 11.5 (p. 582). The book
-gives only two expected counts for Example 11.7; the test that finishes
-it is ours.</li>
+cell phones, p. 575; the full table is Example 3.20, Table 3.3, p. 184,
+which the book labels fictional), 11.6 (volunteers, p. 575) and 11.7
+(anxiety and the need to succeed, p. 578). The test for homogeneity uses
+Examples 11.8 (living arrangements, p. 579) and 11.9 (voters and the
+earthquake, p. 580). The comparison table follows Section 11.5 (p. 582).
+The book gives only two expected counts for Example 11.7; the test that
+finishes it is ours.</li>
 <li>The McNemar examples are real paired data, checked against the
 published tables: C. M. de Oliveira, L. Brochi, L. C. Scarpelli, A. C.
 W. Lopes and J. E. Levi (2021), “SARS-CoV-2 saliva testing is a useful

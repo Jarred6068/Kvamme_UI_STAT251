@@ -75,8 +75,15 @@ two_way <- function(M, rows, cols, first, d = 0, totals = TRUE) {
   tab(df, col.names = c(first, cols, if (totals) 'Row total'), align = 'l')
 }
 
-# OpenStax Example 11.5: speeding and cell phones
+# OpenStax Example 11.5: speeding and cell phones; the full table is OpenStax Example 3.20, Table 3.3 (fictional data)
 stopifnot(round(70 * 305 / 755, 1) == 28.3)
+sp <- indep(matrix(c(25, 280, 45, 405), 2, byrow = TRUE))
+stopifnot(identical(round(sp$E, 2), matrix(c(28.28, 276.72, 41.72, 408.28), 2, byrow = TRUE)),
+          identical(round(sp$terms, 3), matrix(c(0.380, 0.039, 0.258, 0.026), 2, byrow = TRUE)),
+          round(sum(round(sp$terms, 3)), 3) == 0.703, round(sp$X2, 2) == 0.70, sp$df == 1,
+          crit(1)[1] == 1.323, is.na(bracket(sp$X2, 1)[1]), round(pv(sp$X2, 1), 4) == 0.4019,
+          identical(round(c(25 / 305, 45 / 450, 70 / 755), 3), c(0.082, 0.100, 0.093)),
+          round(28.28 + 276.72, 2) == 305)
 
 # OpenStax Example 11.6: volunteers and hours
 vo <- indep(matrix(c(111, 96, 48, 96, 133, 61, 91, 150, 53), 3, byrow = TRUE))
@@ -193,6 +200,71 @@ tab(data.frame(c('Row 1', 'Row 2', '$\\vdots$', 'Row $r$', '**Column total**'),
                c('row 1 total', 'row 2 total', '$\\vdots$', 'row $r$ total', '$n$')),
     col.names = c('', 'Column 1', 'Column 2', '$\\cdots$', 'Column $c$', 'Row total'))
 ```
+
+## Example: speeding tickets and cell phones
+
+The setup above used only the margins of the speeding study. The textbook gives the full table of the same 755
+drivers in Chapter 3:
+
+*From [OpenStax Introductory Statistics 2e, Section 3.4, Example 3.20](https://openstax.org/books/introductory-statistics-2e/pages/3-4-contingency-tables)
+(the book notes that these data are fictional):*
+
+> Suppose a study of speeding violations and drivers who use cell phones produced the following fictional data.
+
+```{r, echo=FALSE}
+sp_rows <- c('Uses cell phone while driving', 'Does not use cell phone while driving')
+sp_cols <- c('Speeding violation in the last year', 'No speeding violation in the last year')
+two_way(sp$O, sp_rows, sp_cols, '')
+```
+
+Is having a speeding violation related to using a cell phone while driving? Test at $\alpha = 0.05$.
+
+$X$ = cell phone use while driving (yes/no), $Y$ = a speeding violation in the last year (yes/no), $n = 755$.
+Both variables were recorded for every driver in **one** sample, so this is a test of **independence**.
+
+**Step 1: the expected counts.** Each cell is (row total)(column total)/755:
+$$E_{11} = \frac{305 \times 70}{755} = 28.28, \qquad E_{12} = \frac{305 \times 685}{755} = 276.72,$$
+$$E_{21} = \frac{450 \times 70}{755} = 41.72, \qquad E_{22} = \frac{450 \times 685}{755} = 408.28.$$
+
+```{r, echo=FALSE}
+two_way(sp$E, sp_rows, sp_cols, 'Expected $E$', d = 2, totals = FALSE)
+```
+
+Check: each row adds to its row total ($28.28 + 276.72 = 305$), and every expected count is at least 5.
+
+**Step 2: the contributions $(O - E)^2/E$.** For cell phone users with a violation,
+$$\frac{(25 - 28.28)^2}{28.28} = \frac{(-3.28)^2}{28.28} = \frac{10.76}{28.28} = 0.380.$$
+
+```{r, echo=FALSE}
+two_way(sp$terms, sp_rows, sp_cols, '$(O - E)^2/E$', d = 3, totals = FALSE)
+```
+
+Now the five steps.
+
+1. **Assumptions.** One random sample of 755 drivers, each classified on both variables; the smallest expected
+   count is 28.28, well above 5.
+
+2. **Hypotheses.** $H_0$: having a speeding violation is independent of using a cell phone while driving.
+   $H_A$: the two are related (not independent).
+
+3. **Test statistic.** Add the four contributions:
+   $$X^2_{obs} = 0.380 + 0.039 + 0.258 + 0.026 = 0.70, \qquad df = (2 - 1)(2 - 1) = 1$$
+
+4. **P-value.** $X^2_{obs} = 0.70$ is smaller than the first entry in the $df = 1$ row of the chi-square table
+   (1.323), so the P-value is large. Software gives
+   $$P(\chi^2 \geq 0.70 \mid H_0 \text{ true}) = 0.4019$$
+
+5. **Decision.** $0.4019 > \alpha = 0.05$: **fail to reject $H_0$**. These data give no convincing evidence that
+   speeding violations are related to cell phone use while driving.
+
+```{r, echo=FALSE, out.width='100%', fig.align='center', fig.alt = "A chi-square distribution with 1 degree of freedom, labelled if H0 is true, X squared follows chi-square with 1 degree of freedom, drawn from 0 to 6. A dashed line marks 0.70, and everything to its right is shaded red and labelled P of chi-square at least 0.70. A label reads: P-value equals 0.4019, greater than alpha equals 0.05."}
+knitr::include_graphics('assets/l31_speeding.png')
+```
+
+**Why so little evidence?** Compare the conditional distributions: $25/305 = 0.082$ of the cell phone users had a
+violation, against $45/450 = 0.100$ of the non-users and $70/755 = 0.093$ of all drivers. The rows look alike, so
+every observed count sits close to its expected count, and $X^2$ is small. (In these fictional data, the cell
+phone users actually had slightly *fewer* violations.)
 
 ## Example: volunteers and hours
 
@@ -659,7 +731,8 @@ written up as optional reading under **Resources &rarr; Extras &rarr;
 # Sources
 
 * Textbook: OpenStax *Introductory Statistics 2e*, Sections 11.3&ndash;11.5.
-* The test of independence uses OpenStax Examples 11.5 (speeding and cell phones, p. 575), 11.6 (volunteers,
+* The test of independence uses OpenStax Examples 11.5 (speeding and cell phones, p. 575; the full table is
+  Example 3.20, Table 3.3, p. 184, which the book labels fictional), 11.6 (volunteers,
   p. 575) and 11.7 (anxiety and the need to succeed, p. 578). The test for homogeneity uses Examples 11.8 (living
   arrangements, p. 579) and 11.9 (voters and the earthquake, p. 580). The comparison table follows Section 11.5
   (p. 582). The book gives only two expected counts for Example 11.7; the test that finishes it is ours.
