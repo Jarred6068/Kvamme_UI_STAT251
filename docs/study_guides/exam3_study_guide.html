@@ -439,7 +439,7 @@ display: none;
 
 <!--
   SCOPE (Nov 16 2026, Jarred's instruction): Exam 3 covers from the end of Exam 2 through the chi-square
-  tests - Mon Oct 19 (Week 9) through Mon Nov 16 (Week 13: independence, homogeneity, McNemar). Everything
+  tests - Mon Oct 19 (Week 9) through Mon Nov 16 (Week 13: independence and homogeneity; McNemar's test is NOT on Exam 3 - it was not in Homework 4). Everything
   after that (Cramer's V, measures of association, correlation, regression, ANOVA) is on the cumulative final.
   Topics are taken from the notes pages lecturemenu9-13.Rmd, not from the exam file.
 -->
@@ -496,12 +496,11 @@ the sign test - November 4 and 6</p></li>
 <li><p>Comparing two proportions, two means and matched pairs - November
 6, 9 and 11</p></li>
 <li><p>Categorical data and the chi-square tests: goodness of fit,
-independence, homogeneity, and McNemar’s test - November 11, 13 and
-16</p></li>
+independence and homogeneity - November 11, 13 and 16</p></li>
 </ul>
-<p><strong>Not on Exam 3:</strong> Cramér’s V, measures of association,
-correlation, regression and ANOVA. These are on the cumulative
-<strong>final exam</strong>.</p>
+<p><strong>Not on Exam 3:</strong> McNemar’s test, Cramér’s V, measures
+of association, correlation, regression and ANOVA. These are on the
+cumulative <strong>final exam</strong>.</p>
 <div id="normal-probabilities-and-the-central-limit-theorem" class="section level2">
 <h2>Normal Probabilities and the Central Limit Theorem</h2>
 <ol style="list-style-type: decimal">
@@ -707,15 +706,9 @@ Know how to tell independence from homogeneity by the
 <li><p>Know that a chi-square test only says the distributions differ or
 the variables are related; to say <strong>how</strong>, look at which
 cells contribute most to <span class="math inline">\(X^2\)</span></p></li>
-<li><p>Know <strong>McNemar’s test</strong> for paired yes/no data (the
-same subjects measured twice): why the other chi-square tests do not
-apply, the <strong>discordant</strong> pairs <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span>, <span class="math inline">\(H_0: p_1 =
-p_2\)</span>, <span class="math inline">\(X^2 = (b - c)^2/(b +
-c)\)</span> with <span class="math inline">\(df = 1\)</span>, and the
-condition <span class="math inline">\(b + c \geq 10\)</span></p></li>
 <li><p>Know how to <strong>choose</strong> between the goodness-of-fit
-test, the test of independence, the test for homogeneity and McNemar’s
-test from the description of a study</p></li>
+test, the test of independence and the test for homogeneity from the
+description of a study</p></li>
 </ol>
 <p><br> <br></p>
 </div>
@@ -754,8 +747,8 @@ s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}
 <p><span class="math display">\[ t_{obs} = \frac{\bar{d} -
 0}{s_d/\sqrt{n}} \]</span></p>
 <p><span class="math display">\[ X^2 = \sum \frac{(O - E)^2}{E}, \ \ E =
-n\,p_{i,0}, \ \ E = \frac{(\text{row total})(\text{column total})}{n}, \
-\ X^2 = \frac{(b - c)^2}{b + c} \]</span></p>
+n\,p_{i,0}, \ \ E = \frac{(\text{row total})(\text{column total})}{n}
+\]</span></p>
 </div>
 
 <!--

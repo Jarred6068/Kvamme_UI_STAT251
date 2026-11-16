@@ -7,7 +7,7 @@ output: html_document
 
 <!--
   SCOPE (Nov 16 2026, Jarred's instruction): Exam 3 covers from the end of Exam 2 through the chi-square
-  tests - Mon Oct 19 (Week 9) through Mon Nov 16 (Week 13: independence, homogeneity, McNemar). Everything
+  tests - Mon Oct 19 (Week 9) through Mon Nov 16 (Week 13: independence and homogeneity; McNemar's test is NOT on Exam 3 - it was not in Homework 4). Everything
   after that (Cramer's V, measures of association, correlation, regression, ANOVA) is on the cumulative final.
   Topics are taken from the notes pages lecturemenu9-13.Rmd, not from the exam file.
 -->
@@ -54,9 +54,9 @@ through **Monday of Week 13 (November 16)**, ending with the **chi-square tests*
 
 * Comparing two proportions, two means and matched pairs - November 6, 9 and 11
 
-* Categorical data and the chi-square tests: goodness of fit, independence, homogeneity, and McNemar's test - November 11, 13 and 16
+* Categorical data and the chi-square tests: goodness of fit, independence and homogeneity - November 11, 13 and 16
 
-**Not on Exam 3:** Cramér's V, measures of association, correlation, regression and ANOVA. These are
+**Not on Exam 3:** McNemar's test, Cramér's V, measures of association, correlation, regression and ANOVA. These are
 on the cumulative **final exam**.
 
 ## Normal Probabilities and the Central Limit Theorem
@@ -158,9 +158,7 @@ on the cumulative **final exam**.
 
   9. Know that a chi-square test only says the distributions differ or the variables are related; to say **how**, look at which cells contribute most to $X^2$
 
-  10. Know **McNemar's test** for paired yes/no data (the same subjects measured twice): why the other chi-square tests do not apply, the **discordant** pairs $b$ and $c$, $H_0: p_1 = p_2$, $X^2 = (b - c)^2/(b + c)$ with $df = 1$, and the condition $b + c \geq 10$
-
-  11. Know how to **choose** between the goodness-of-fit test, the test of independence, the test for homogeneity and McNemar's test from the description of a study
+  10. Know how to **choose** between the goodness-of-fit test, the test of independence and the test for homogeneity from the description of a study
 
 <br>
 <br>
@@ -185,4 +183,4 @@ Know what each of these formulas computes and when to use it:
 
 \[ t_{obs} = \frac{\bar{d} - 0}{s_d/\sqrt{n}} \]
 
-\[ X^2 = \sum \frac{(O - E)^2}{E}, \ \ E = n\,p_{i,0}, \ \ E = \frac{(\text{row total})(\text{column total})}{n}, \ \ X^2 = \frac{(b - c)^2}{b + c} \]
+\[ X^2 = \sum \frac{(O - E)^2}{E}, \ \ E = n\,p_{i,0}, \ \ E = \frac{(\text{row total})(\text{column total})}{n} \]
