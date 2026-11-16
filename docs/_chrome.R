@@ -77,5 +77,6 @@ REVIEW_PAGES <- list(
   c("study_guides",    "exam1_study_guide"),
   c("Review_problems", "exam1_review_problems"),
   c("Review_problems", "exam1_review_problems_solns"),
-  c("study_guides",    "exam2_study_guide")
+  c("study_guides",    "exam2_study_guide"),
+  c("study_guides",    "exam3_study_guide")
 )
