@@ -129,7 +129,7 @@ outlined below. Any changes will be announced in class and posted here.**
     * Exam 3 (Nov 20) now stops after goodness-of-fit and tests of independence
       (Nov 16). Cramer's V / McNemar / Fisher move to Nov 30, after the exam,
       and measures of association to Dec 2.
-  The Exam 3 study guide and the Exam 3 review problems were NOT re-scoped -
+  The Exam 3 study guide was re-scoped on Nov 16 2026 (Oct 19 - Nov 16; see below). The Exam 3 review problems (2024) were NOT -
   check them before that exam. Exam 2 is open-note and has no review problems;
   its study guide was checked against Homework 2 and the exam on Oct 12 2026.
 
@@ -289,7 +289,8 @@ outlined below. Any changes will be announced in class and posted here.**
   Extras (misc/Fisher-Exact-Test.Rmd). The independence/homogeneity notes moved from the Week 12 page to Week 13.
     * Nov 30 is still "Correlation and simple linear regression" - Jarred to decide how it splits with the
       Pearson correlation test now on Nov 18.
-    * Exam 3 opens Nov 20: its study guide and review problems were not re-scoped for these moves.
+    * Exam 3 opens Nov 20. Its study guide was re-scoped Nov 16 to Oct 19 - Nov 16 (end of Exam 2 through the chi-square
+      tests, McNemar included; Jarred's choice); everything later is on the final. The 2024 review problems were not re-scoped.
 
   DUE DATES, Oct 28 2026. No lecture dates changed. Homework 3 had not been released yet, so its due
   date moved from Sun Nov 1 to Sun Nov 8 (now on the Fri Nov 6 row), and Homework 4 moved from Sun Nov 15
