@@ -28,6 +28,10 @@ urlcolor: blue
   correlation and simple linear regression, Wed Dec 2 the coefficient of determination and slope tests,
   Fri Dec 4 SLR continued (omnibus F-test, checking assumptions). Measures of association moved to Wed
   Nov 18 (Week 13). Re-check this page against those dates before enabling it in _site.yml.
+  UPDATE (Nov 18 2026). Scatterplots, covariance, correlation and the Pearson correlation test are now taught on
+  Nov 18 and written up on the Week 13 page (lecturemenu13.Rmd). Mon Nov 30 is simple linear regression only.
+  When this page is rewritten, drop "Scatterplots and statistical associations" and "Measures of association"
+  below and link back to the Week 13 sections instead.
 -->
 
 ```{r setup, include=FALSE}

@@ -107,16 +107,18 @@ Chapter 10: Sections 10.1 - 10.5, p. 512 - 535
 Chapter 11: Sections 11.1 - 11.2, p. 563 - 574
 
 ## Week 13
-*Tests of independence and homogeneity; McNemar's test for paired categorical data; Cram&eacute;r's V and measures of association*
+*Tests of independence and homogeneity; Cram&eacute;r's V; scatterplots and correlation; the Pearson correlation test*
 
 Chapter 11: Sections 11.3 - 11.5, p. 574 - 583
 
-McNemar's test and Cram&eacute;r's V are not in the textbook; see the Week 13 notes. Fisher's exact test is optional reading under **Resources &rarr; Extras**.
+Chapter 12: Sections 12.2 - 12.4, p. 620 - 635 (in 12.3, read "The Correlation Coefficient r"; the regression line comes in Week 15)
+
+Cram&eacute;r's V is not in the textbook; see the Week 13 notes. McNemar's test (Week 13 notes) and Fisher's exact test (**Resources &rarr; Extras**) are optional reading.
 
 ## Week 15
-*Correlation and simple linear regression; the coefficient of determination, tests for the slope, checking assumptions*
+*Simple linear regression; the coefficient of determination, tests for the slope, checking assumptions*
 
-Chapter 12: Sections 12.1 - 12.6, p. 617 - 643
+Chapter 12: Sections 12.1, 12.3, 12.5 - 12.6, p. 617 - 620, 623 - 631, 635 - 643
 
 ## Week 16
 *Analysis of variance (ANOVA): comparing several means; multiple comparisons*

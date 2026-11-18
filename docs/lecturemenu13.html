@@ -678,24 +678,43 @@ div.tocify {
   number checks: assets/make_lecture30_figures.R and assets/make_lecture31_figures.R) opened with a short
   goodness-of-fit recap (Lecture 30 stopped after its Pew example), then covered the test of independence, the
   test for homogeneity and McNemar's test. The independence and homogeneity sections were moved here from the
-  Week 12 page. Wed Nov 18 is Cramer's V, measures of association and the Pearson correlation test - add those
-  sections after McNemar's test. Fisher's exact test is not taught; it is written up under Resources -> Extras
+  Week 12 page. Fisher's exact test is not taught; it is written up under Resources -> Extras
   (misc/Fisher-Exact-Test.Rmd).
+  UPDATE (Nov 18 2026). Lecture 31 stopped after slide 20 (the living-arrangements P-value) and was trimmed to
+  slides 1-20. McNemar's test was NOT taught: Wed Nov 18 (Lecture 32; deck
+  lecture_slides/Week 13/2026/Week13_Lecture32_Slides_11_18_2026.pptx; numbers and figures:
+  assets/make_lecture32_figures.R) gives it one summary slide, and its section below is OPTIONAL reading, not on
+  any exam (Jarred's choice). Lecture 32 then covers Cramer's V, scatterplots, covariance and correlation, and the
+  Pearson correlation test (t = r sqrt(n - 2) / sqrt(1 - r^2), df = n - 2). Those sections follow "Which test for
+  categorical data?". The correlation material is adapted from the 2024 Week 15 notes (lecturemenu15.Rmd,
+  "Measures of association"), with the 2010 National League teams (Data/NL_team_statistics.csv) in place of the
+  Cars93 / housing / SOCR data.
   House rules for this page: topic sections only (no lecture numbers or class days in the prose), every book
   example quoted in full with a link, every number asserted in the setup chunk, decisions compare the P-value
   with alpha.
 -->
-<p>This chapter studies data in which <strong>two categorical
-variables</strong> are recorded for the same individuals and summarized
-in a two-way table. The test of independence asks whether two variables
-measured on one sample are related. The test for homogeneity asks
-whether several populations share one distribution. McNemar’s test
-handles the special case where a yes/no variable is measured
-<strong>twice on the same subjects</strong>. All three compare observed
-counts with the counts a null hypothesis predicts, and all three end in
-a chi-square P-value. The textbook sections are <a
+<p>This chapter studies the relationship between <strong>two
+variables</strong> recorded on the same individuals. It starts with two
+categorical variables summarized in a two-way table. The test of
+independence asks whether two variables measured on one sample are
+related. The test for homogeneity asks whether several populations share
+one distribution. McNemar’s test (optional reading) handles the special
+case where a yes/no variable is measured <strong>twice on the same
+subjects</strong>. All three compare observed counts with the counts a
+null hypothesis predicts, and all three end in a chi-square P-value.
+<strong>Cramér’s V</strong> then measures how <em>strong</em> an
+association in a two-way table is.</p>
+<p>The second half turns to two <strong>quantitative</strong> variables:
+the scatterplot, covariance, the <strong>correlation
+coefficient</strong> <span class="math inline">\(r\)</span>, and the
+<strong>Pearson correlation test</strong> of whether a population
+correlation is zero.</p>
+<p>The textbook sections are <a
 href="https://openstax.org/books/introductory-statistics-2e/pages/11-3-test-of-independence">OpenStax
-11.3–11.5</a>. McNemar’s test is not in the textbook.</p>
+11.3–11.5</a> and <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/12-2-scatter-plots">OpenStax
+12.2–12.4</a>. McNemar’s test and Cramér’s V are not in the
+textbook.</p>
 <p>The tools carry over from the Week 12 chapter on <a
 href="lecturemenu12.html#the-chi-square-statistic">the chi-square
 statistic</a> and the <a
@@ -2238,6 +2257,8 @@ after the earthquake.</p></li>
 <div id="mcnemars-test-for-paired-categorical-data"
 class="section level1">
 <h1>McNemar’s test for paired categorical data</h1>
+<p><em>This section is <strong>optional reading</strong>. McNemar’s test
+is not on the exams.</em></p>
 <div id="two-answers-from-the-same-subjects" class="section level2">
 <h2>Two answers from the same subjects</h2>
 <p>Every chi-square test so far has counted each individual
@@ -2781,7 +2802,7 @@ class="math inline">\(E = \text{row} \times \text{column} / n\)</span>
 </tr>
 <tr>
 <td style="text-align:left;">
-<strong>McNemar</strong>
+<strong>McNemar</strong> (optional)
 </td>
 <td style="text-align:left;">
 one sample, the same yes/no variable measured twice on each individual
@@ -2833,11 +2854,1146 @@ chi-square test, is written up as optional reading under
 <strong>Resources → Extras → <a
 href="misc/Fisher-Exact-Test.html">Fisher’s Exact Test</a></strong>.</p>
 </div>
+<div id="cramérs-v-how-strong-is-an-association" class="section level1">
+<h1>Cramér’s V: how strong is an association?</h1>
+<div id="significant-is-not-the-same-as-strong" class="section level2">
+<h2>Significant is not the same as strong</h2>
+<p>A chi-square test answers a yes-or-no question: do the data give
+convincing evidence of <em>some</em> association? It does not say how
+<em>strong</em> the association is, because <span
+class="math inline">\(X^2\)</span> grows with the sample size.</p>
+<p>Take the <a
+href="#example-living-arrangements-of-men-and-women">living-arrangements
+example</a>: <span class="math inline">\(n = 550\)</span>, <span
+class="math inline">\(X^2_{obs} = 10.13\)</span>, P-value <span
+class="math inline">\(= 0.0175\)</span>. Now imagine the same study with
+<strong>ten times as many students</strong> and exactly the same
+percentages: every observed count multiplied by 10. Every expected count
+is also multiplied by 10, so every <span class="math inline">\((O -
+E)^2/E\)</span> term is multiplied by <span
+class="math inline">\(10^2/10 = 10\)</span>: <span
+class="math display">\[n = 5500: \qquad X^2_{obs} = 10 \times 10.13 =
+101.3, \qquad \text{P-value} &lt; 0.0005.\]</span> The association did
+not get any stronger, since 19.6% of the men and 29.3% of the women
+still live with their parents. Only the <strong>evidence</strong> grew,
+because a larger sample makes the same difference harder to blame on
+chance. We need a separate measure of strength that does not grow with
+<span class="math inline">\(n\)</span>.</p>
+</div>
+<div id="the-formula" class="section level2">
+<h2>The formula</h2>
+<p><strong>Cramér’s V</strong> rescales <span
+class="math inline">\(X^2\)</span> to run from 0 to 1: <span
+class="math display">\[V = \sqrt{\frac{X^2_{obs}}{n\,(k - 1)}}, \qquad k
+= \text{the smaller of the number of rows and the number of
+columns.}\]</span></p>
+<ul>
+<li><strong><span class="math inline">\(0 \leq V \leq
+1\)</span>.</strong> <span class="math inline">\(V = 0\)</span> when
+every observed count equals its expected count (no association at all).
+<span class="math inline">\(V = 1\)</span> for a perfect association, in
+which knowing one variable tells you the other exactly.</li>
+<li><strong>It does not grow with <span
+class="math inline">\(n\)</span>.</strong> Dividing by <span
+class="math inline">\(n\)</span> removes the sample size. The
+ten-times-larger study has <span class="math inline">\(V =
+\sqrt{101.3/5500} = 0.136\)</span>, the same as <span
+class="math inline">\(\sqrt{10.13/550} = 0.136\)</span>.</li>
+<li><strong>For a <span class="math inline">\(2 \times 2\)</span>
+table</strong>, <span class="math inline">\(k - 1 = 1\)</span> and <span
+class="math inline">\(V = \sqrt{X^2_{obs}/n}\)</span>. This special case
+is also called the <strong>phi coefficient</strong>, <span
+class="math inline">\(\phi\)</span>.</li>
+<li><strong>It is a description, not a test.</strong> <span
+class="math inline">\(V\)</span> has no P-value of its own. The
+chi-square test tells us whether there is evidence of an association,
+and <span class="math inline">\(V\)</span> tells us how strong it is.
+Report both.</li>
+</ul>
+<p>How large is large? A common rough guide (Cohen, 1988) depends on
+<span class="math inline">\(k - 1\)</span>:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\(k - 1\)</span>
+</th>
+<th style="text-align:left;">
+Small
+</th>
+<th style="text-align:left;">
+Medium
+</th>
+<th style="text-align:left;">
+Large
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1 (any table with two rows or two columns)
+</td>
+<td style="text-align:left;">
+0.10
+</td>
+<td style="text-align:left;">
+0.30
+</td>
+<td style="text-align:left;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0.07
+</td>
+<td style="text-align:left;">
+0.21
+</td>
+<td style="text-align:left;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0.06
+</td>
+<td style="text-align:left;">
+0.17
+</td>
+<td style="text-align:left;">
+0.29
+</td>
+</tr>
+</tbody>
+</table>
+<p>These cut-offs are only a guide. Whether an association matters
+depends on the context.</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<p><strong>Living arrangements</strong> (a <span class="math inline">\(2
+\times 4\)</span> table, so <span class="math inline">\(k = 2\)</span>):
+<span class="math display">\[V = \sqrt{\frac{10.13}{550 \times 1}} =
+0.136.\]</span> That is a <strong>small</strong> association. Men and
+women do differ in where they live (the test rejected <span
+class="math inline">\(H_0\)</span>), but not by much.</p>
+<p><strong>Speeding and cell phones</strong> (a <span
+class="math inline">\(2 \times 2\)</span> table, so <span
+class="math inline">\(k = 2\)</span>): <span class="math display">\[V =
+\sqrt{\frac{0.703}{755 \times 1}} = 0.031.\]</span> That is
+<strong>negligible</strong>, which fits the test’s conclusion that there
+is no evidence of an association.</p>
+<p><strong>Practice: anxiety and the need to succeed.</strong> The <a
+href="#practice-anxiety-and-the-need-to-succeed">anxiety example</a> has
+a <span class="math inline">\(3 \times 5\)</span> table of <span
+class="math inline">\(n = 400\)</span> students and <span
+class="math inline">\(X^2_{obs} = 48.42\)</span>. Find Cramér’s V and
+describe the strength of the association.</p>
+<p><strong>Solution.</strong> <span class="math inline">\(k = 3\)</span>
+(three rows, five columns), so <span class="math inline">\(k - 1 =
+2\)</span>, and <span class="math display">\[V = \sqrt{\frac{48.42}{400
+\times 2}} = 0.246.\]</span> For <span class="math inline">\(k - 1 =
+2\)</span>, 0.246 is between the medium (0.21) and large (0.35) guides:
+a <strong>medium</strong> association between anxiety and the need to
+succeed.</p>
+<p><strong>An aside on the saliva study.</strong> Treated as a test of
+independence, the saliva-and-swab table in the optional McNemar section
+has <span class="math inline">\(X^2 = 256.3\)</span> and <span
+class="math inline">\(V = \sqrt{256.3/400} = 0.80\)</span>, a
+<strong>large</strong> association. That number measures how strongly
+the two tests <strong>agree</strong>. It says nothing about whether one
+test finds more positives than the other, which is the question
+McNemar’s test answers.</p>
+</div>
+</div>
+<div id="scatterplots" class="section level1">
+<h1>Scatterplots</h1>
+<p>Cramér’s V measures the association between two
+<strong>categorical</strong> variables. For two
+<strong>quantitative</strong> variables we start with a picture.</p>
+<p>A <strong>scatterplot</strong> shows the relationship between two
+quantitative variables measured on the same individuals. Each individual
+is one point <span class="math inline">\((x, y)\)</span>. The
+<strong>explanatory</strong> (independent) variable <span
+class="math inline">\(x\)</span> goes on the horizontal axis, and the
+<strong>response</strong> (dependent) variable <span
+class="math inline">\(y\)</span> goes on the vertical axis. When neither
+variable explains the other, either can go on either axis.</p>
+<p>To describe a scatterplot, look at its</p>
+<ul>
+<li><strong>form:</strong> do the points follow a straight line
+(linear), a curve, or no pattern at all? Are there clusters, or points
+far from the rest?</li>
+<li><strong>direction:</strong> two variables are <strong>positively
+associated</strong> when larger values of <span
+class="math inline">\(x\)</span> go with larger values of <span
+class="math inline">\(y\)</span>, and <strong>negatively
+associated</strong> when larger values of <span
+class="math inline">\(x\)</span> go with smaller values of <span
+class="math inline">\(y\)</span>;</li>
+<li><strong>strength:</strong> how closely do the points follow the
+form? Tightly packed points show a strong relationship, and loosely
+scattered points a weak one.</li>
+</ul>
+<p><img src="assets/l32_shapes.png" alt="Four simulated scatterplots labelled A to D. A: points rise from lower left to upper right in a tight straight band. B: points fall from upper left to lower right in a looser band. C: points dip and then climb steeply, a U-shaped curve. D: a shapeless cloud with no trend." width="100%" style="display: block; margin: auto;" /></p>
+<p>Plot A shows a strong, positive, linear relationship and plot B a
+moderate, negative, linear one. Plot C is curved: <span
+class="math inline">\(y\)</span> falls and then rises steeply as <span
+class="math inline">\(x\)</span> increases. Plot D shows no
+association.</p>
+<div id="data-the-2010-national-league" class="section level2">
+<h2>Data: the 2010 National League</h2>
+<p>The 16 National League baseball teams each played 162 games in the
+2010 season. For each team the data give the number of
+<strong>runs</strong> it scored, its runs per game (runs divided by
+162), its <strong>ERA</strong> (earned run average: the runs its
+pitchers allowed per nine innings, so a <em>lower</em> ERA is better)
+and the number of games it <strong>won</strong>. Here <span
+class="math inline">\(n = 16\)</span>.</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:left;">
+Runs
+</th>
+<th style="text-align:left;">
+Runs per game
+</th>
+<th style="text-align:left;">
+ERA
+</th>
+<th style="text-align:left;">
+Wins
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Cincinnati
+</td>
+<td style="text-align:left;">
+790
+</td>
+<td style="text-align:left;">
+4.88
+</td>
+<td style="text-align:left;">
+4.01
+</td>
+<td style="text-align:left;">
+91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Philadelphia
+</td>
+<td style="text-align:left;">
+772
+</td>
+<td style="text-align:left;">
+4.77
+</td>
+<td style="text-align:left;">
+3.67
+</td>
+<td style="text-align:left;">
+97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Colorado
+</td>
+<td style="text-align:left;">
+770
+</td>
+<td style="text-align:left;">
+4.75
+</td>
+<td style="text-align:left;">
+4.14
+</td>
+<td style="text-align:left;">
+83
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Milwaukee
+</td>
+<td style="text-align:left;">
+750
+</td>
+<td style="text-align:left;">
+4.63
+</td>
+<td style="text-align:left;">
+4.58
+</td>
+<td style="text-align:left;">
+77
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlanta
+</td>
+<td style="text-align:left;">
+738
+</td>
+<td style="text-align:left;">
+4.56
+</td>
+<td style="text-align:left;">
+3.56
+</td>
+<td style="text-align:left;">
+91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+St. Louis
+</td>
+<td style="text-align:left;">
+736
+</td>
+<td style="text-align:left;">
+4.54
+</td>
+<td style="text-align:left;">
+3.57
+</td>
+<td style="text-align:left;">
+86
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Florida
+</td>
+<td style="text-align:left;">
+719
+</td>
+<td style="text-align:left;">
+4.44
+</td>
+<td style="text-align:left;">
+4.08
+</td>
+<td style="text-align:left;">
+80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arizona
+</td>
+<td style="text-align:left;">
+713
+</td>
+<td style="text-align:left;">
+4.40
+</td>
+<td style="text-align:left;">
+4.81
+</td>
+<td style="text-align:left;">
+65
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+San Francisco
+</td>
+<td style="text-align:left;">
+697
+</td>
+<td style="text-align:left;">
+4.30
+</td>
+<td style="text-align:left;">
+3.36
+</td>
+<td style="text-align:left;">
+92
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chicago Cubs
+</td>
+<td style="text-align:left;">
+685
+</td>
+<td style="text-align:left;">
+4.23
+</td>
+<td style="text-align:left;">
+4.18
+</td>
+<td style="text-align:left;">
+75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LA Dodgers
+</td>
+<td style="text-align:left;">
+667
+</td>
+<td style="text-align:left;">
+4.12
+</td>
+<td style="text-align:left;">
+4.01
+</td>
+<td style="text-align:left;">
+80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+San Diego
+</td>
+<td style="text-align:left;">
+665
+</td>
+<td style="text-align:left;">
+4.10
+</td>
+<td style="text-align:left;">
+3.39
+</td>
+<td style="text-align:left;">
+90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NY Mets
+</td>
+<td style="text-align:left;">
+656
+</td>
+<td style="text-align:left;">
+4.05
+</td>
+<td style="text-align:left;">
+3.70
+</td>
+<td style="text-align:left;">
+79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Washington
+</td>
+<td style="text-align:left;">
+655
+</td>
+<td style="text-align:left;">
+4.04
+</td>
+<td style="text-align:left;">
+4.13
+</td>
+<td style="text-align:left;">
+69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Houston
+</td>
+<td style="text-align:left;">
+611
+</td>
+<td style="text-align:left;">
+3.77
+</td>
+<td style="text-align:left;">
+4.09
+</td>
+<td style="text-align:left;">
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pittsburgh
+</td>
+<td style="text-align:left;">
+587
+</td>
+<td style="text-align:left;">
+3.62
+</td>
+<td style="text-align:left;">
+5.00
+</td>
+<td style="text-align:left;">
+57
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="assets/l32_nl.png" alt="Two scatterplots of the 16 teams. Left: runs scored (about 590 to 790) against wins (57 to 97); the points drift upward from lower left to upper right with a lot of scatter. Right: team ERA (about 3.4 to 5.0) against wins; the points fall from upper left to lower right in a fairly tight band." width="100%" style="display: block; margin: auto;" /></p>
+<p>Runs and wins have a <strong>positive, linear, moderate</strong>
+relationship: teams that score more runs tend to win more games, with a
+fair amount of scatter. ERA and wins have a <strong>negative, linear,
+strong</strong> relationship: teams whose pitchers allow fewer runs tend
+to win more.</p>
+</div>
+</div>
+<div id="covariance-and-correlation" class="section level1">
+<h1>Covariance and correlation</h1>
+<div id="our-eyes-are-poor-judges" class="section level2">
+<h2>Our eyes are poor judges</h2>
+<p><img src="assets/l32_axes.png" alt="Two scatterplots of team ERA against wins for the same 16 teams. Plot 1 is zoomed in on the data (ERA 3.4 to 5, wins 57 to 97) and the points look widely spread. Plot 2 uses wide axes (ERA 0 to 10, wins 0 to 162) and the same points form a small, tight, downward cluster." width="100%" style="display: block; margin: auto;" /></p>
+<p>Which plot shows the stronger relationship? Most people say Plot 2.
+But the two plots show <strong>exactly the same 16 teams</strong>. Only
+the axes changed: Plot 2 squeezes the points into a small corner, which
+makes them look tightly packed. How strong a relationship <em>looks</em>
+depends on how it is drawn, so, as with every graph in this course, we
+follow the picture with a number.</p>
+</div>
+<div id="covariance" class="section level2">
+<h2>Covariance</h2>
+<p>The <strong>covariance</strong> of <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> is the average product of their
+deviations from their means: <span class="math display">\[\text{Cov}(X,
+Y) = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{n - 1}.\]</span> When
+the association is positive, points above average in <span
+class="math inline">\(x\)</span> tend to be above average in <span
+class="math inline">\(y\)</span> (both deviations positive), and points
+below average in <span class="math inline">\(x\)</span> tend to be below
+average in <span class="math inline">\(y\)</span> (both negative).
+Either way the product is positive, so the covariance is positive. When
+the association is negative, the deviations tend to have opposite signs,
+and the covariance is negative.</p>
+<p><strong>The problem with covariance: it depends on the
+units.</strong> For the 2010 teams, <span
+class="math display">\[\text{Cov}(\text{runs}, \text{wins}) = 392.7,
+\qquad \text{Cov}(\text{runs per game}, \text{wins}) = 2.42.\]</span>
+These are the same teams and the same relationship. Runs per game is
+runs divided by 162, so the covariance is 162 times smaller (<span
+class="math inline">\(392.7/162 = 2.42\)</span>). Measured in runs, the
+covariance looks large; measured in runs per game, it looks small. Its
+units (“runs times wins”) are not meaningful either. A measure of
+strength should not change when we change units.</p>
+</div>
+<div id="the-correlation-coefficient" class="section level2">
+<h2>The correlation coefficient</h2>
+<p>The fix is to <strong>standardize</strong> each variable before
+multiplying. The <strong>correlation coefficient</strong> is the
+covariance of the <span class="math inline">\(z\)</span>-scores: <span
+class="math display">\[r = \frac{1}{n - 1} \sum \left(\frac{x_i -
+\bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)
+    = \frac{\text{Cov}(X, Y)}{s_x \, s_y}.\]</span> It is often called
+<strong>Pearson’s correlation</strong>, after Karl Pearson, who
+developed it around 1900. Its properties:</p>
+<ul>
+<li><strong><span class="math inline">\(-1 \leq r \leq
+1\)</span>.</strong> A positive <span class="math inline">\(r\)</span>
+means a positive association, and a negative <span
+class="math inline">\(r\)</span> a negative one.</li>
+<li><strong><span class="math inline">\(r = 1\)</span> or <span
+class="math inline">\(r = -1\)</span></strong> only when every point
+lies exactly on a straight line. The closer <span
+class="math inline">\(r\)</span> is to <span class="math inline">\(\pm
+1\)</span>, the stronger the linear relationship.</li>
+<li><strong><span class="math inline">\(r\)</span> near 0</strong> means
+little or no <strong>linear</strong> association.</li>
+<li><strong><span class="math inline">\(r\)</span> has no
+units</strong>, so changing units does not change it. Runs and wins have
+<span class="math inline">\(r = 0.624\)</span>, and so do runs per game
+and wins.</li>
+<li><strong><span class="math inline">\(r\)</span> does not care which
+variable is <span class="math inline">\(x\)</span>.</strong> The
+correlation of <span class="math inline">\(x\)</span> with <span
+class="math inline">\(y\)</span> is the correlation of <span
+class="math inline">\(y\)</span> with <span
+class="math inline">\(x\)</span>.</li>
+</ul>
+<p>For the 2010 teams, <span class="math inline">\(r = 0.624\)</span>
+for runs and wins (moderate, positive) and <span class="math inline">\(r
+= -0.850\)</span> for ERA and wins (strong, negative), matching the
+descriptions of the two scatterplots.</p>
+</div>
+<div id="computing-r-by-hand" class="section level2">
+<h2>Computing r by hand</h2>
+<p>Software computes <span class="math inline">\(r\)</span> for real
+data sets, but working a tiny example shows what the formula does. Take
+four of the 2010 teams:</p>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:left;">
+Runs <span class="math inline">\(x\)</span>
+</th>
+<th style="text-align:left;">
+Wins <span class="math inline">\(y\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(z_x = (x - \bar{x})/s_x\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(z_y = (y - \bar{y})/s_y\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(z_x \, z_y\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Philadelphia
+</td>
+<td style="text-align:left;">
+772
+</td>
+<td style="text-align:left;">
+97
+</td>
+<td style="text-align:left;">
+1.033
+</td>
+<td style="text-align:left;">
+0.976
+</td>
+<td style="text-align:left;">
+1.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arizona
+</td>
+<td style="text-align:left;">
+713
+</td>
+<td style="text-align:left;">
+65
+</td>
+<td style="text-align:left;">
+0.269
+</td>
+<td style="text-align:left;">
+−0.647
+</td>
+<td style="text-align:left;">
+−0.174
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+San Francisco
+</td>
+<td style="text-align:left;">
+697
+</td>
+<td style="text-align:left;">
+92
+</td>
+<td style="text-align:left;">
+0.062
+</td>
+<td style="text-align:left;">
+0.723
+</td>
+<td style="text-align:left;">
+0.044
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pittsburgh
+</td>
+<td style="text-align:left;">
+587
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+−1.363
+</td>
+<td style="text-align:left;">
+−1.052
+</td>
+<td style="text-align:left;">
+1.434
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>Mean</strong>
+</td>
+<td style="text-align:left;">
+692.25
+</td>
+<td style="text-align:left;">
+77.75
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<strong>Sum: 2.312</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<strong>SD</strong>
+</td>
+<td style="text-align:left;">
+77.22
+</td>
+<td style="text-align:left;">
+19.72
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>For Philadelphia, <span class="math inline">\(z_x = (772 -
+692.25)/77.22 = 1.033\)</span> and <span class="math inline">\(z_y = (97
+- 77.75)/19.72 = 0.976\)</span>, so the product is <span
+class="math inline">\(1.008\)</span>. Philadelphia is above both means
+and Pittsburgh is below both, so their products are large and positive.
+Arizona scored above-average runs but won below-average games, so its
+product is negative. Then <span class="math display">\[r =
+\frac{2.312}{4 - 1} = 0.77.\]</span></p>
+</div>
+<div id="guess-the-correlation" class="section level2">
+<h2>Guess the correlation</h2>
+<p><img src="assets/l32_guess.png" alt="Six simulated scatterplots of 50 points each, labelled A to F. A: a tight upward band. B: a loose downward band. C: a round cloud. D: a moderately tight upward band. E: a very tight downward band. F: a loose cloud tilted slightly upward." width="100%" style="display: block; margin: auto;" /></p>
+<p>Guess <span class="math inline">\(r\)</span> for each plot before
+reading on.</p>
+<p><strong>Answers.</strong> A: 0.93. B: <span
+class="math inline">\(-0.55\)</span>. C: <span
+class="math inline">\(-0.14\)</span>. D: 0.71. E: <span
+class="math inline">\(-0.94\)</span>. F: 0.40.</p>
+</div>
+<div id="cautions" class="section level2">
+<h2>Cautions</h2>
+<p><img src="assets/l32_cautions.png" alt="Two scatterplots. Left, titled a strong curve: 30 points rise and then fall in a smooth upside-down U. Right, titled one unusual point: 15 points in a shapeless cluster at the lower left and a single point far away at the upper right." width="100%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><strong>Correlation measures linear association only.</strong> The
+left plot shows a very strong relationship, but it is a curve, and <span
+class="math inline">\(r = 0.00\)</span>. A correlation near zero does
+not mean “no relationship”; always look at the scatterplot.</li>
+<li><strong>Correlation is not resistant.</strong> In the right plot,
+the 15 points in the cluster have <span class="math inline">\(r =
+0.22\)</span>. Adding the one point far to the upper right raises it to
+<span class="math inline">\(r = 0.90\)</span>. Like the mean and the
+standard deviation, <span class="math inline">\(r\)</span> can be pulled
+around by a single unusual point.</li>
+<li><strong>Correlation does not imply causation.</strong> A strong
+correlation between <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> does not show that <span
+class="math inline">\(x\)</span> causes <span
+class="math inline">\(y\)</span>. Both may be driven by a third, lurking
+variable, as in an observational study. For example, fires where more
+firefighters show up do more damage, because bigger fires bring more
+firefighters.</li>
+</ul>
+</div>
+</div>
+<div id="the-pearson-correlation-test" class="section level1">
+<h1>The Pearson correlation test</h1>
+<div id="the-setup-2" class="section level2">
+<h2>The setup</h2>
+<p>The correlation <span class="math inline">\(r\)</span> describes a
+<strong>sample</strong>. Is the linear relationship we see in the sample
+strong enough to conclude that there is one in the
+<strong>population</strong>, or could <span
+class="math inline">\(r\)</span> be this far from 0 by chance? The
+textbook calls this testing the <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/12-4-testing-the-significance-of-the-correlation-coefficient">significance
+of the correlation coefficient</a>.</p>
+<ul>
+<li><strong>The parameter.</strong> <span
+class="math inline">\(\rho\)</span> (the Greek letter rho) is the
+<strong>population correlation coefficient</strong>. The sample
+correlation <span class="math inline">\(r\)</span> estimates it.</li>
+<li><strong>The hypotheses.</strong> <span class="math display">\[H_0:
+\rho = 0 \quad \text{(no linear association between } x \text{ and } y
+\text{ in the population)}\]</span> against one of <span
+class="math display">\[H_A: \rho \neq 0 \text{ (two-sided)}, \qquad H_A:
+\rho &gt; 0 \text{ (upper-tailed)}, \qquad
+  H_A: \rho &lt; 0 \text{ (lower-tailed)}.\]</span> The textbook uses
+only the two-sided alternative. A one-sided alternative is chosen, as
+always, from the suspicion stated <em>before</em> looking at the
+data.</li>
+<li><strong>The test statistic.</strong> <span
+class="math inline">\(r\)</span> is standardized into a <span
+class="math inline">\(t\)</span> statistic: <span
+class="math display">\[t_{obs} = \frac{r\sqrt{n - 2}}{\sqrt{1 -
+r^2}}.\]</span> It has the same sign as <span
+class="math inline">\(r\)</span>. It is large when <span
+class="math inline">\(r\)</span> is far from 0, when <span
+class="math inline">\(n\)</span> is large, or both.</li>
+<li><strong>The null distribution.</strong> If <span
+class="math inline">\(H_0\)</span> is true, <span
+class="math inline">\(t_{obs}\)</span> approximately follows a <span
+class="math inline">\(t\)</span> distribution with <span
+class="math display">\[df = n - 2.\]</span> We lose two degrees of
+freedom, not one, because <span class="math inline">\(r\)</span> uses
+both <span class="math inline">\(\bar{x}\)</span> and <span
+class="math inline">\(\bar{y}\)</span>. (If the data come from a
+bivariate normal population, the <span class="math inline">\(t(n -
+2)\)</span> distribution is exact.)</li>
+<li><strong>The P-value.</strong> Found in the <a
+href="misc/t_table.html">course t table</a> in the direction of <span
+class="math inline">\(H_A\)</span>, as for a one-sample <span
+class="math inline">\(t\)</span> test. For <span
+class="math inline">\(H_A: \rho \neq 0\)</span>, <span
+class="math inline">\(P(|T| \geq |t_{obs}| \mid H_0 \text{
+true})\)</span> is both tails; the table’s “two tail” row gives the
+bracket directly.</li>
+<li><strong>The conditions.</strong> The individuals are a random sample
+(or the data come from a randomized experiment); the scatterplot looks
+<strong>linear</strong>; there are <strong>no extreme outliers</strong>;
+and the points scatter roughly evenly and normally about a straight
+line. A correlation test on a curved scatterplot answers the wrong
+question.</li>
+</ul>
+<div id="the-five-steps-1" class="section level3">
+<h3>The five steps</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> Random sample; a linear scatterplot
+with no extreme outliers.</li>
+<li><strong>Hypotheses.</strong> <span class="math inline">\(H_0: \rho =
+0\)</span> and the <span class="math inline">\(H_A\)</span> that matches
+the suspicion, with <span class="math inline">\(\rho\)</span> defined in
+words.</li>
+<li><strong>Test statistic.</strong> <span class="math inline">\(t_{obs}
+= r\sqrt{n - 2}/\sqrt{1 - r^2}\)</span> with <span
+class="math inline">\(df = n - 2\)</span>.</li>
+<li><strong>P-value.</strong> Bracket it in the <span
+class="math inline">\(df = n - 2\)</span> row of the <span
+class="math inline">\(t\)</span> table.</li>
+<li><strong>Decision.</strong> Compare the P-value with <span
+class="math inline">\(\alpha\)</span>, and state the conclusion in
+context.</li>
+</ol>
+</div>
+</div>
+<div id="example-third-exam-and-final-exam" class="section level2">
+<h2>Example: third exam and final exam</h2>
+<p><em>From <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/12-3-the-regression-equation">OpenStax
+Introductory Statistics 2e, Section 12.3, Example 12.6</a> and <a
+href="https://openstax.org/books/introductory-statistics-2e/pages/12-4-testing-the-significance-of-the-correlation-coefficient">Section
+12.4</a>:</em></p>
+<blockquote>
+<p>A random sample of 11 statistics students produced the following
+data, where <span class="math inline">\(x\)</span> is the third exam
+score out of 80, and <span class="math inline">\(y\)</span> is the final
+exam score out of 200. Can you predict the final exam score of a random
+student if you know the third exam score?</p>
+</blockquote>
+<table class=" lightable-classic table table-striped" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Student
+</th>
+<th style="text-align:left;">
+1
+</th>
+<th style="text-align:left;">
+2
+</th>
+<th style="text-align:left;">
+3
+</th>
+<th style="text-align:left;">
+4
+</th>
+<th style="text-align:left;">
+5
+</th>
+<th style="text-align:left;">
+6
+</th>
+<th style="text-align:left;">
+7
+</th>
+<th style="text-align:left;">
+8
+</th>
+<th style="text-align:left;">
+9
+</th>
+<th style="text-align:left;">
+10
+</th>
+<th style="text-align:left;">
+11
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Third exam <span class="math inline">\(x\)</span>
+</td>
+<td style="text-align:left;">
+65
+</td>
+<td style="text-align:left;">
+67
+</td>
+<td style="text-align:left;">
+71
+</td>
+<td style="text-align:left;">
+71
+</td>
+<td style="text-align:left;">
+66
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+67
+</td>
+<td style="text-align:left;">
+70
+</td>
+<td style="text-align:left;">
+71
+</td>
+<td style="text-align:left;">
+69
+</td>
+<td style="text-align:left;">
+69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Final exam <span class="math inline">\(y\)</span>
+</td>
+<td style="text-align:left;">
+175
+</td>
+<td style="text-align:left;">
+133
+</td>
+<td style="text-align:left;">
+185
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+126
+</td>
+<td style="text-align:left;">
+198
+</td>
+<td style="text-align:left;">
+153
+</td>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+159
+</td>
+<td style="text-align:left;">
+151
+</td>
+<td style="text-align:left;">
+159
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The line of best fit is: <span class="math inline">\(\hat{y} =
+-173.51 + 4.83x\)</span> with <span class="math inline">\(r =
+0.6631\)</span> and there are <span class="math inline">\(n =
+11\)</span> data points. Can the regression line be used for prediction?
+Given a third exam score (<span class="math inline">\(x\)</span> value),
+can we use the line to predict the final exam score (predicted <span
+class="math inline">\(y\)</span> value)?</p>
+<p><span class="math inline">\(H_0: \rho = 0\)</span></p>
+<p><span class="math inline">\(H_a: \rho \neq 0\)</span></p>
+<p><span class="math inline">\(\alpha = 0.05\)</span></p>
+</blockquote>
+<p>The regression line comes later in the course. Here the question is
+whether the correlation is significantly different from zero. The book
+finds the P-value with a calculator; the table-based solution below is
+ours.</p>
+<p><img src="lecturemenu13_files/figure-html/unnamed-chunk-31-1.png" alt="Scatterplot of the 11 students' third exam scores (65 to 75) against final exam scores (126 to 198). The points rise from lower left to upper right with moderate scatter; the student with 65 on the third exam and 175 on the final sits above the rest." width="70%" style="display: block; margin: auto;" /></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> The 11 students are a random sample,
+and the scatterplot shows a roughly linear, positive pattern with no
+extreme outliers.</li>
+<li><strong>Hypotheses.</strong> Let <span
+class="math inline">\(\rho\)</span> be the correlation between
+third-exam and final-exam scores for all such students. <span
+class="math display">\[H_0: \rho = 0 \qquad H_A: \rho \neq
+0\]</span></li>
+<li><strong>Test statistic.</strong> With <span class="math inline">\(r
+= 0.663\)</span> and <span class="math inline">\(n = 11\)</span>: <span
+class="math display">\[t_{obs} = \frac{0.663\sqrt{11 - 2}}{\sqrt{1 -
+0.663^2}} = \frac{0.663 \times 3}{\sqrt{0.5604}}
+  = \frac{1.989}{0.7486} = 2.66, \qquad df = 11 - 2 = 9.\]</span></li>
+<li><strong>P-value.</strong> In the <span class="math inline">\(df =
+9\)</span> row of the <span class="math inline">\(t\)</span> table,
+2.262 has a two-tail area of 0.05 and 3.250 has a two-tail area of 0.01.
+Since <span class="math inline">\(2.262 &lt; 2.66 &lt; 3.250\)</span>,
+<span class="math display">\[0.01 &lt; P(|T| \geq 2.66 \mid H_0 \text{
+true}) &lt; 0.05.\]</span> Software gives 0.026, the value in the
+book.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.01 &lt;
+\text{P-value} &lt; \alpha = 0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. There is convincing
+evidence of a linear relationship between third-exam and final-exam
+scores. Higher third-exam scores go with higher final scores.</li>
+</ol>
+<p><img src="assets/l32_exam_t.png" alt="A t distribution with 9 degrees of freedom, labelled if H0: rho = 0 is true, t follows t of 9. Both tails beyond minus 2.66 and plus 2.66 are shaded red. Labels: P-value = sum of both red tails; between 0.01 and 0.05 (software: 0.026)." width="100%" style="display: block; margin: auto;" /></p>
+<p><strong>The book’s other method.</strong> Section 12.4 also gives a
+table of <strong>critical values of <span
+class="math inline">\(r\)</span></strong>: for <span
+class="math inline">\(df = 9\)</span>, a sample correlation beyond <span
+class="math inline">\(\pm 0.602\)</span> is significant at <span
+class="math inline">\(\alpha = 0.05\)</span>. Since <span
+class="math inline">\(0.6631 &gt; 0.602\)</span>, it reaches the same
+decision. That table is just the <span class="math inline">\(t\)</span>
+test solved for <span class="math inline">\(r\)</span>, so in this
+course we use <span class="math inline">\(t_{obs}\)</span> and the <span
+class="math inline">\(t\)</span> table.</p>
+</div>
+<div id="example-do-runs-win-games" class="section level2">
+<h2>Example: do runs win games?</h2>
+<p>Baseball analysts say that scoring runs is how teams win. For the 16
+National League teams in 2010, runs scored and games won have <span
+class="math inline">\(r = 0.624\)</span>. Test at <span
+class="math inline">\(\alpha = 0.05\)</span> whether runs and wins are
+linearly related.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> The scatterplot of runs against wins
+is roughly linear with no extreme outliers. The 16 teams are a whole
+league in one season rather than a random sample, so we treat them as a
+sample of seasons that could have been played.</li>
+<li><strong>Hypotheses.</strong> With <span
+class="math inline">\(\rho\)</span> the correlation between runs and
+wins, <span class="math display">\[H_0: \rho = 0 \qquad H_A: \rho \neq
+0\]</span></li>
+<li><strong>Test statistic.</strong> <span
+class="math display">\[t_{obs} = \frac{0.624\sqrt{16 - 2}}{\sqrt{1 -
+0.624^2}} = \frac{0.624 \times 3.742}{\sqrt{0.6106}}
+  = \frac{2.335}{0.7814} = 2.99, \qquad df = 14.\]</span></li>
+<li><strong>P-value.</strong> In the <span class="math inline">\(df =
+14\)</span> row, 2.977 has a two-tail area of 0.01 and 3.326 has a
+two-tail area of 0.005. Since <span class="math inline">\(2.977 &lt;
+2.99 &lt; 3.326\)</span>, <span class="math inline">\(0.005 &lt;
+\text{P-value} &lt; 0.01\)</span>. Software gives 0.0098.</li>
+<li><strong>Decision.</strong> <span class="math inline">\(0.005 &lt;
+\text{P-value} &lt; 0.01 &lt; \alpha = 0.05\)</span>: <strong>reject
+<span class="math inline">\(H_0\)</span></strong>. Runs scored and games
+won are linearly related: teams that score more runs tend to win more
+games.</li>
+</ol>
+</div>
+<div id="practice-does-a-lower-era-mean-more-wins"
+class="section level2">
+<h2>Practice: does a lower ERA mean more wins?</h2>
+<p>A team’s ERA is the number of runs its pitchers allow per nine
+innings, so a lower ERA is better. A manager claims that teams with
+lower ERAs win more games. For the 16 National League teams in 2010, ERA
+and wins have <span class="math inline">\(r = -0.850\)</span>. Test the
+manager’s claim at <span class="math inline">\(\alpha =
+0.05\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<ol style="list-style-type: decimal">
+<li><strong>Assumptions.</strong> The ERA-vs-wins scatterplot is linear
+with no extreme outliers; the teams are treated as in the runs
+example.</li>
+<li><strong>Hypotheses.</strong> “Lower ERA, more wins” is a
+<strong>negative</strong> correlation, so the test is lower-tailed:
+<span class="math display">\[H_0: \rho = 0 \qquad H_A: \rho &lt;
+0\]</span></li>
+<li><strong>Test statistic.</strong> <span
+class="math display">\[t_{obs} = \frac{-0.850\sqrt{14}}{\sqrt{1 -
+0.850^2}} = \frac{-3.180}{0.5268} = -6.04, \qquad df = 14.\]</span></li>
+<li><strong>P-value.</strong> For a lower-tailed test the P-value is
+<span class="math inline">\(P(T \leq -6.04 \mid H_0 \text{
+true})\)</span>, which by symmetry is the upper tail beyond 6.04. The
+largest entry in the <span class="math inline">\(df = 14\)</span> row is
+4.140 (upper tail 0.0005), and <span class="math inline">\(6.04 &gt;
+4.140\)</span>, so the P-value is below 0.0005. Software gives
+0.000015.</li>
+<li><strong>Decision.</strong> <span
+class="math inline">\(\text{P-value} &lt; 0.0005 &lt; \alpha =
+0.05\)</span>: <strong>reject <span
+class="math inline">\(H_0\)</span></strong>. The data support the
+manager: teams with lower ERAs tend to win more games.</li>
+</ol>
+</div>
+<div id="significant-is-not-the-same-as-strong-1"
+class="section level2">
+<h2>Significant is not the same as strong</h2>
+<p>As with the chi-square tests, a small P-value says the correlation is
+probably not zero. It does not say the correlation is large.</p>
+<ul>
+<li>With <span class="math inline">\(n = 1000\)</span>, even a weak
+correlation of <span class="math inline">\(r = 0.1\)</span> gives <span
+class="math inline">\(t_{obs} = 0.1\sqrt{998}/\sqrt{0.99} =
+3.18\)</span> and a P-value of about 0.0015: <strong>significant, but
+weak</strong>.</li>
+<li>With <span class="math inline">\(n = 6\)</span>, a strong-looking
+<span class="math inline">\(r = 0.776\)</span> gives <span
+class="math inline">\(t_{obs} = 0.776\sqrt{4}/\sqrt{1 - 0.776^2} =
+2.46\)</span>. That is below 2.776, the two-tail 0.05 value for <span
+class="math inline">\(df = 4\)</span>, so the P-value is above 0.05:
+<strong>strong-looking, but not significant</strong> (OpenStax Example
+12.9).</li>
+</ul>
+<p>Report <span class="math inline">\(r\)</span> to describe how strong
+the relationship is, and the test to say whether it is distinguishable
+from zero.</p>
+</div>
+</div>
 <div id="sources" class="section level1">
 <h1>Sources</h1>
 <ul>
 <li>Textbook: OpenStax <em>Introductory Statistics 2e</em>, Sections
-11.3–11.5.</li>
+11.3–11.5 and 12.2–12.4.</li>
 <li>The test of independence uses OpenStax Examples 11.5 (speeding and
 cell phones, p. 575; the full table is Example 3.20, Table 3.3, p. 184,
 which the book labels fictional), 11.6 (volunteers, p. 575) and 11.7
@@ -2858,6 +4014,29 @@ paper reports only “P &lt; 0.001”, and the second does not test this
 table.</li>
 <li>McNemar’s test: A. Agresti (2007), <em>An Introduction to
 Categorical Data Analysis</em>, 2nd ed., Section 8.1.</li>
+<li>Cramér’s V: H. Cramér (1946), <em>Mathematical Methods of
+Statistics</em>, Princeton University Press, p. 282. The
+small/medium/large guide is from J. Cohen (1988), <em>Statistical Power
+Analysis for the Behavioral Sciences</em>, 2nd ed., Chapter 7 (his <span
+class="math inline">\(w\)</span> converted to <span
+class="math inline">\(V = w/\sqrt{k - 1}\)</span>).</li>
+<li>Scatterplots, correlation and the correlation test: OpenStax
+Sections 12.2–12.4 (pp. 620–635). The third-exam/final-exam data are
+Example 12.6 (Table 12.3, p. 623), and the test follows Section 12.4
+(p. 632); the “small <span class="math inline">\(n\)</span>” case is
+Example 12.9 (p. 633). The <span class="math inline">\(t\)</span>
+statistic and its <span class="math inline">\(t(n - 2)\)</span> null
+distribution are the standard Pearson correlation test (see, e.g., the
+<a
+href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Inference">Wikipedia
+article on the Pearson correlation coefficient, “Inference”</a>).</li>
+<li>The 2010 National League team statistics (runs, batting average,
+runs per game, wins, ERA) are in the course data folder
+(<code>Data/NL_team_statistics.csv</code>). The standings match the 2010
+season (Philadelphia 97 wins, San Francisco 92, Cincinnati 91,
+Pittsburgh 57).</li>
+<li>The four-panel, guess-the-correlation and cautions scatterplots are
+simulated (<code>assets/make_lecture32_figures.R</code>).</li>
 </ul>
 </div>
 

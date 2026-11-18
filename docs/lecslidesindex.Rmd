@@ -247,7 +247,13 @@ Categorical data (continued from Lecture 29): two-way tables, observed and expec
 # Week 13
 
 ## Lecture 31 &middot; Monday, November 16
-The goodness-of-fit test (recap); the chi-square test of independence; the test for homogeneity; McNemar's test for paired categorical data
+The goodness-of-fit test (recap); the chi-square test of independence; the test for homogeneity
 
 <a href="./lecture_slides/Week%2013/2026/Week13_Lecture31_Slides_11_16_2026.pdf">Slides (PDF)</a> &middot;
 <a href="./lecture_slides/Week%2013/2026/Week13_Lecture31_Slides_11_16_2026.pptx">Slides (PowerPoint)</a>
+
+## Lecture 32 &middot; Wednesday, November 18
+Which chi-square test?; McNemar's test in brief (optional); Cram&eacute;r's V; scatterplots, covariance and correlation; the Pearson correlation test
+
+<a href="./lecture_slides/Week%2013/2026/Week13_Lecture32_Slides_11_18_2026.pdf">Slides (PDF)</a> &middot;
+<a href="./lecture_slides/Week%2013/2026/Week13_Lecture32_Slides_11_18_2026.pptx">Slides (PowerPoint)</a>
